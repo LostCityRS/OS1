@@ -1,6 +1,7 @@
 package jagex2.io;
 
 import deob.ObfuscatedName;
+
 import java.util.zip.Inflater;
 
 @ObfuscatedName("bf")

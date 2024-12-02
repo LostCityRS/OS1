@@ -1,9 +1,8 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import java.awt.Canvas;
-import java.awt.Component;
-import java.awt.Graphics;
+
+import java.awt.*;
 
 @ObfuscatedName("fk")
 public class GameCanvas extends Canvas {

@@ -1,15 +1,9 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Shape;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-import java.awt.image.DirectColorModel;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
+
+import java.awt.*;
+import java.awt.image.*;
 import java.util.Hashtable;
 
 @ObfuscatedName("di")

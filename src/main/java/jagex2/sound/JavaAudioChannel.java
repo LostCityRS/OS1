@@ -2,12 +2,13 @@ package jagex2.sound;
 
 import deob.ObfuscatedName;
 import deob.Statics;
-import java.awt.Component;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine.Info;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+import java.awt.*;
 
 @ObfuscatedName("ds")
 public class JavaAudioChannel extends AudioChannel {

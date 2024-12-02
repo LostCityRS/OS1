@@ -6,6 +6,7 @@ import jagex2.datastruct.ByteArrayCopier;
 import jagex2.datastruct.LinkList;
 import jagex2.io.FileStream;
 import jagex2.io.Packet;
+
 import java.util.zip.CRC32;
 
 @ObfuscatedName("dq")

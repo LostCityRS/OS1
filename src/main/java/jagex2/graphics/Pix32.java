@@ -2,10 +2,8 @@ package jagex2.graphics;
 
 import deob.ObfuscatedName;
 import deob.Statics;
-import java.awt.Component;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
+
+import java.awt.*;
 import java.awt.image.PixelGrabber;
 
 @ObfuscatedName("fq")

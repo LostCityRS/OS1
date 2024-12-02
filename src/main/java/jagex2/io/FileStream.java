@@ -1,6 +1,7 @@
 package jagex2.io;
 
 import deob.ObfuscatedName;
+
 import java.io.EOFException;
 import java.io.IOException;
 

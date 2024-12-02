@@ -1,7 +1,8 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import java.awt.Component;
+
+import java.awt.*;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 

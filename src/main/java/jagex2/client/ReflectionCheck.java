@@ -3,12 +3,8 @@ package jagex2.client;
 import deob.ObfuscatedName;
 import jagex2.datastruct.LinkList;
 import jagex2.io.PacketBit;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InvalidClassException;
-import java.io.ObjectInputStream;
-import java.io.OptionalDataException;
-import java.io.StreamCorruptedException;
+
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

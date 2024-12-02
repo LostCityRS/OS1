@@ -1,9 +1,8 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Image;
+
+import java.awt.*;
 
 @ObfuscatedName("ab")
 public abstract class PixMap {

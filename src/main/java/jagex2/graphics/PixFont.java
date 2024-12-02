@@ -3,6 +3,7 @@ package jagex2.graphics;
 import deob.ObfuscatedName;
 import deob.Statics;
 import jagex2.datastruct.JStringUtil;
+
 import java.util.Random;
 
 @ObfuscatedName("fs")

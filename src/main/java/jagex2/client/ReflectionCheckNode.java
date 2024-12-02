@@ -2,6 +2,7 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import jagex2.datastruct.Linkable;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 

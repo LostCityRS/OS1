@@ -1,6 +1,7 @@
 package jagex2;
 
 import deob.ObfuscatedName;
+
 import java.util.HashMap;
 
 @ObfuscatedName("bk")

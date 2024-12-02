@@ -1,7 +1,8 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import java.awt.Component;
+
+import java.awt.*;
 
 @ObfuscatedName("w")
 public interface AudioSource {

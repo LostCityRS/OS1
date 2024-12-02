@@ -1,7 +1,8 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import java.awt.Component;
+
+import java.awt.*;
 
 @ObfuscatedName("ac")
 public abstract class MouseWheelProvider {

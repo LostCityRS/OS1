@@ -2,12 +2,9 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import jagex2.datastruct.MonotonicTime;
-import java.awt.Component;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+
+import java.awt.*;
+import java.awt.event.*;
 
 @ObfuscatedName("an")
 public class JavaMouseProvider implements MouseListener, MouseMotionListener, FocusListener {

@@ -1,6 +1,7 @@
 package jagex2.datastruct;
 
 import deob.ObfuscatedName;
+
 import java.nio.ByteBuffer;
 
 @ObfuscatedName("db")

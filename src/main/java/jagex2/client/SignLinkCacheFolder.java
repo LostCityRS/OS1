@@ -5,6 +5,7 @@ import deob.Statics;
 import jagex2.io.BufferedFile;
 import jagex2.io.FileOnDisk;
 import jagex2.io.Packet;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;

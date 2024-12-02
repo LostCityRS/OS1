@@ -5,6 +5,7 @@ import jagex2.client.JagException;
 import jagex2.client.PrivilegedRequest;
 import jagex2.client.SignLink;
 import jagex2.datastruct.PreciseSleep;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;

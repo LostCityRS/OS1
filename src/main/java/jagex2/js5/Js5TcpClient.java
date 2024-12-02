@@ -7,6 +7,7 @@ import jagex2.datastruct.HashTable;
 import jagex2.datastruct.MonotonicTime;
 import jagex2.io.ClientStream;
 import jagex2.io.Packet;
+
 import java.io.IOException;
 import java.util.zip.CRC32;
 

@@ -5,6 +5,7 @@ import jagex2.datastruct.ByteArrayPool;
 import jagex2.datastruct.Linkable;
 import jagex2.jstring.Cp1252;
 import jagex2.jstring.Utf8;
+
 import java.math.BigInteger;
 
 @ObfuscatedName("ev")

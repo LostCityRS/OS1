@@ -2,7 +2,8 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import jagex2.jstring.Cp1252;
-import java.awt.Component;
+
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;

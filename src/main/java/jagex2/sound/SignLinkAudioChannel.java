@@ -3,7 +3,8 @@ package jagex2.sound;
 import deob.ObfuscatedName;
 import deob.Statics;
 import jagex2.client.SignLink;
-import java.awt.Component;
+
+import java.awt.*;
 
 @ObfuscatedName("dv")
 public class SignLinkAudioChannel extends AudioChannel {

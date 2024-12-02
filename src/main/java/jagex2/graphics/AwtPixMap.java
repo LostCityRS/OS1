@@ -1,16 +1,9 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Shape;
-import java.awt.image.ColorModel;
-import java.awt.image.DirectColorModel;
-import java.awt.image.ImageConsumer;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
-import java.util.Hashtable;
+
+import java.awt.*;
+import java.awt.image.*;
 
 @ObfuscatedName("dm")
 public class AwtPixMap extends PixMap implements ImageProducer, ImageObserver {

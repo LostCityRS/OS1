@@ -4,16 +4,13 @@ import deob.ObfuscatedName;
 import deob.Statics;
 import jagex2.datastruct.JStringUtil;
 import jagex2.datastruct.TextUtil;
-import jagex2.graphics.Pix2D;
-import jagex2.graphics.Pix8;
-import jagex2.graphics.PixFont;
-import jagex2.graphics.SoftwareFont;
-import jagex2.graphics.SpriteDataProvider;
+import jagex2.graphics.*;
 import jagex2.io.Packet;
 import jagex2.js5.Js5TcpClient;
 import jagex2.jstring.EnglishLocale;
 import jagex2.sound.MidiPlayer;
-import java.awt.Graphics;
+
+import java.awt.*;
 import java.net.URL;
 
 @ObfuscatedName("g")

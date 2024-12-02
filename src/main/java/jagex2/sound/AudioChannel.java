@@ -6,7 +6,8 @@ import jagex2.client.SignLink;
 import jagex2.datastruct.ArrayUtil;
 import jagex2.datastruct.MonotonicTime;
 import jagex2.datastruct.PreciseSleep;
-import java.awt.Component;
+
+import java.awt.*;
 
 @ObfuscatedName("y")
 public class AudioChannel {

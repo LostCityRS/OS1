@@ -2,6 +2,7 @@ package jagex2.io;
 
 import deob.ObfuscatedName;
 import deob.Statics;
+
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.Hashtable;

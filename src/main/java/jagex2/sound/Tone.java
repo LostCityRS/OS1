@@ -4,6 +4,7 @@ import deob.ObfuscatedName;
 import deob.Statics;
 import jagex2.datastruct.ArrayUtil;
 import jagex2.io.Packet;
+
 import java.util.Random;
 
 @ObfuscatedName("t")

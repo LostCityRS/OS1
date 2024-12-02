@@ -4,11 +4,7 @@ import deob.ObfuscatedName;
 import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
-import jagex2.graphics.Model;
-import jagex2.graphics.Pix2D;
-import jagex2.graphics.Pix32;
-import jagex2.graphics.Pix3D;
-import jagex2.graphics.SoftwareModel;
+import jagex2.graphics.*;
 import jagex2.io.Packet;
 import jagex2.jstring.EnglishLocale;
 

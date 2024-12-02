@@ -2,26 +2,14 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import deob.Statics;
-import jagex2.datastruct.JStringUtil;
-import jagex2.datastruct.MillisTimer;
-import jagex2.datastruct.MonotonicTime;
-import jagex2.datastruct.NanoTimer;
-import jagex2.datastruct.PreciseSleep;
-import jagex2.datastruct.Timer;
+import jagex2.datastruct.*;
 import jagex2.graphics.AwtPixMap;
 import jagex2.graphics.BufferedPixMap;
 import jagex2.graphics.PixMap;
+
 import java.applet.Applet;
-import java.awt.Canvas;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.net.URL;
 
 @ObfuscatedName("dj")

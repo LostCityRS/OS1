@@ -1,6 +1,7 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
+
 import java.math.BigInteger;
 
 @ObfuscatedName("d")

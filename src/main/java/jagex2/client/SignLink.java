@@ -3,8 +3,8 @@ package jagex2.client;
 import deob.ObfuscatedName;
 import deob.Statics;
 import jagex2.sound.AudioSource;
-import java.awt.EventQueue;
-import java.awt.Toolkit;
+
+import java.awt.*;
 import java.io.DataInputStream;
 import java.net.InetAddress;
 import java.net.Socket;

@@ -2,11 +2,7 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import deob.Statics;
-import jagex2.config.EnumType;
-import jagex2.config.IfType;
-import jagex2.config.InvType;
-import jagex2.config.ObjType;
-import jagex2.config.VarBitType;
+import jagex2.config.*;
 import jagex2.datastruct.JStringUtil;
 import jagex2.datastruct.StringComparator;
 import jagex2.datastruct.TextUtil;
@@ -17,6 +13,7 @@ import jagex2.jstring.EnglishLocale;
 import jagex2.jstring.JString;
 import jagex2.sound.MidiPlayer;
 import jagex2.wordenc.WordPack;
+
 import java.util.Calendar;
 import java.util.Date;
 
