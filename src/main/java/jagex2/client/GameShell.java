@@ -1,7 +1,6 @@
 package jagex2.client;
 
-import deob.ObfuscatedName;
-import deob.Statics;
+import deob.*;
 import jagex2.datastruct.*;
 import jagex2.graphics.AwtPixMap;
 import jagex2.graphics.BufferedPixMap;
@@ -118,6 +117,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	@ObfuscatedName("dj.q(I)Z")
 	public final boolean method1367() {
+		if (Settings.SKIP_HOST_CHECK) {
+			return true;
+		}
+
 		String var1 = this.getDocumentBase().getHost().toLowerCase();
 		if (var1.equals("jagex.com") || var1.endsWith(".jagex.com")) {
 			return true;

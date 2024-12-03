@@ -1,7 +1,6 @@
 package jagex2.client;
 
-import deob.ObfuscatedName;
-import deob.Statics;
+import deob.*;
 import jagex2.config.*;
 import jagex2.dash3d.*;
 import jagex2.datastruct.*;
@@ -25,6 +24,7 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.Socket;
+import java.net.URL;
 
 public class client extends GameShell {
 
@@ -801,6 +801,47 @@ public class client extends GameShell {
 
 	@ObfuscatedName("client.f(I)V")
 	public final void method1373() {
+	}
+
+	public static void main(String[] args) {
+		try {
+			Statics.field314 = new ViewBox(765, 503);
+
+			client app = new client();
+			app.init();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@Override
+	public URL getCodeBase() {
+		try {
+			if (Statics.field314 != null) {
+				return new URL("http://localhost");
+			}
+		} catch (Exception ignore) {
+		}
+
+		return super.getDocumentBase();
+	}
+
+	@Override
+	public URL getDocumentBase() {
+		return this.getCodeBase();
+	}
+
+	@Override
+	public String getParameter(String name) {
+		if (name.equals("5")) {
+			// MODEWHAT
+			return String.valueOf(ModeWhat.field848.field851);
+		} else if (name.equals("7")) {
+			// Use ports 40000 & 50000
+			return "2";
+		}
+
+		return null;
 	}
 
 	public final void init() {
