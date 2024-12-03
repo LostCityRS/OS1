@@ -836,7 +836,7 @@ public class IfType extends Linkable {
 			return null;
 		}
 		long var3 = ((long) this.field1812 << 40) + ((this.field1814 ? 1L : 0L) << 39) + ((this.field1849 ? 1L : 0L) << 38) + ((long) this.field1811 << 36) + (long) var2;
-		Pix32 var5 = (Pix32) field1778.method1244(var3);
+		Pix32 var5 = (Pix32) field1778.get(var3);
 		if (var5 != null) {
 			return var5;
 		}
@@ -869,7 +869,7 @@ public class IfType extends Linkable {
 		if (this.field1812 != 0) {
 			var7.method2669(this.field1812);
 		}
-		field1778.method1246(var7, var3);
+		field1778.put(var7, var3);
 		return var7;
 	}
 
@@ -879,7 +879,7 @@ public class IfType extends Linkable {
 		if (this.field1829 == -1) {
 			return null;
 		}
-		SoftwareFont var1 = (SoftwareFont) field1891.method1244((long) this.field1829);
+		SoftwareFont var1 = (SoftwareFont) field1891.get((long) this.field1829);
 		if (var1 != null) {
 			return var1;
 		}
@@ -895,7 +895,7 @@ public class IfType extends Linkable {
 		if (var5 == null) {
 			field1870 = true;
 		} else {
-			field1891.method1246(var5, (long) this.field1829);
+			field1891.put(var5, (long) this.field1829);
 		}
 		return var5;
 	}
@@ -910,7 +910,7 @@ public class IfType extends Linkable {
 		if (var2 == -1) {
 			return null;
 		}
-		Pix32 var3 = (Pix32) field1778.method1244((long) var2);
+		Pix32 var3 = (Pix32) field1778.get((long) var2);
 		if (var3 != null) {
 			return var3;
 		}
@@ -924,7 +924,7 @@ public class IfType extends Linkable {
 		if (var5 == null) {
 			field1870 = true;
 		} else {
-			field1778.method1246(var5, (long) var2);
+			field1778.put(var5, (long) var2);
 		}
 		return var5;
 	}
@@ -946,7 +946,7 @@ public class IfType extends Linkable {
 		} else if (var5 == 1 && var6 == -1) {
 			return null;
 		} else {
-			SoftwareModel var7 = (SoftwareModel) field1850.method1244((long) ((var5 << 16) + var6));
+			SoftwareModel var7 = (SoftwareModel) field1850.get((long) ((var5 << 16) + var6));
 			if (var7 == null) {
 				if (var5 == 1) {
 					Model var8 = Model.method2992(field1776, var6, 0);
@@ -957,7 +957,7 @@ public class IfType extends Linkable {
 					var7 = var8.method2942(64, 768, -50, -10, -50);
 				}
 				if (var5 == 2) {
-					Model var9 = NpcType.method275(var6).method2331();
+					Model var9 = NpcType.get(var6).method2331();
 					if (var9 == null) {
 						field1870 = true;
 						return null;
@@ -976,7 +976,7 @@ public class IfType extends Linkable {
 					var7 = var10.method2942(64, 768, -50, -10, -50);
 				}
 				if (var5 == 4) {
-					ObjType var11 = ObjType.method927(var6);
+					ObjType var11 = ObjType.get(var6);
 					Model var12 = var11.method2521(10);
 					if (var12 == null) {
 						field1870 = true;
@@ -984,7 +984,7 @@ public class IfType extends Linkable {
 					}
 					var7 = var12.method2942(var11.field2472 + 64, var11.field2473 + 768, -50, -10, -50);
 				}
-				field1850.method1246(var7, (long) ((var5 << 16) + var6));
+				field1850.put(var7, (long) ((var5 << 16) + var6));
 			}
 			if (arg0 != null) {
 				var7 = arg0.method2430(var7, arg1);
@@ -995,9 +995,9 @@ public class IfType extends Linkable {
 
 	@ObfuscatedName("ch.y(I)V")
 	public static void method1104() {
-		field1778.method1253();
-		field1850.method1253();
-		field1891.method1253();
+		field1778.clear();
+		field1850.clear();
+		field1891.clear();
 	}
 
 	@ObfuscatedName("eg.t(ILjava/lang/String;B)V")

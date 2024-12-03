@@ -153,8 +153,8 @@ public class ObjType extends DoublyLinkable {
 	public int field2437 = 0;
 
 	@ObfuscatedName("bb.z(II)Lfj;")
-	public static ObjType method927(int arg0) {
-		ObjType var1 = (ObjType) field2432.method1244((long) arg0);
+	public static ObjType get(int arg0) {
+		ObjType var1 = (ObjType) field2432.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
@@ -162,11 +162,11 @@ public class ObjType extends DoublyLinkable {
 		ObjType var3 = new ObjType();
 		var3.field2435 = arg0;
 		if (var2 != null) {
-			var3.method2516(new Packet(var2));
+			var3.decode(new Packet(var2));
 		}
-		var3.method2517();
+		var3.postDecode();
 		if (var3.field2450 != -1) {
-			var3.method2520(method927(var3.field2450), method927(var3.field2459));
+			var3.method2520(get(var3.field2450), get(var3.field2459));
 		}
 		if (!field1462 && var3.field2457) {
 			var3.field2461 = EnglishLocale.field1077;
@@ -174,27 +174,27 @@ public class ObjType extends DoublyLinkable {
 			var3.field2452 = null;
 			var3.field2437 = 0;
 		}
-		field2432.method1246(var3, (long) arg0);
+		field2432.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("fj.g(B)V")
-	public void method2517() {
+	public void postDecode() {
 	}
 
 	@ObfuscatedName("fj.q(Lev;B)V")
-	public void method2516(Packet arg0) {
+	public void decode(Packet arg0) {
 		while (true) {
 			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
-			this.method2519(arg0, var2);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fj.i(Lev;II)V")
-	public void method2519(Packet arg0, int arg1) {
+	public void decodeInner(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			this.field2436 = arg0.g2();
 		} else if (arg1 == 2) {
@@ -323,7 +323,7 @@ public class ObjType extends DoublyLinkable {
 				}
 			}
 			if (var2 != -1) {
-				return method927(var2).method2521(1);
+				return get(var2).method2521(1);
 			}
 		}
 		Model var4 = Model.method2992(field1111, this.field2436, 0);
@@ -356,10 +356,10 @@ public class ObjType extends DoublyLinkable {
 				}
 			}
 			if (var2 != -1) {
-				return method927(var2).method2532(1);
+				return get(var2).method2532(1);
 			}
 		}
-		SoftwareModel var4 = (SoftwareModel) field2433.method1244((long) this.field2435);
+		SoftwareModel var4 = (SoftwareModel) field2433.get((long) this.field2435);
 		if (var4 != null) {
 			return var4;
 		}
@@ -382,7 +382,7 @@ public class ObjType extends DoublyLinkable {
 		}
 		SoftwareModel var8 = var5.method2942(this.field2472 + 64, this.field2473 + 768, -50, -10, -50);
 		var8.field2744 = true;
-		field2433.method1246(var8, (long) this.field2435);
+		field2433.put(var8, (long) this.field2435);
 		return var8;
 	}
 
@@ -396,7 +396,7 @@ public class ObjType extends DoublyLinkable {
 				}
 			}
 			if (var2 != -1) {
-				return method927(var2);
+				return get(var2);
 			}
 		}
 		return this;
@@ -406,12 +406,12 @@ public class ObjType extends DoublyLinkable {
 	public static final Pix32 method1837(int arg0, int arg1, int arg2, int arg3, boolean arg4) {
 		long var5 = ((long) arg3 << 40) + ((long) arg2 << 38) + ((long) arg1 << 16) + (long) arg0;
 		if (!arg4) {
-			Pix32 var7 = (Pix32) field2434.method1244(var5);
+			Pix32 var7 = (Pix32) field2434.get(var5);
 			if (var7 != null) {
 				return var7;
 			}
 		}
-		ObjType var8 = method927(arg0);
+		ObjType var8 = get(arg0);
 		if (arg1 > 1 && var8.field2467 != null) {
 			int var9 = -1;
 			for (int var10 = 0; var10 < 10; var10++) {
@@ -420,7 +420,7 @@ public class ObjType extends DoublyLinkable {
 				}
 			}
 			if (var9 != -1) {
-				var8 = method927(var9);
+				var8 = get(var9);
 			}
 		}
 		SoftwareModel var11 = var8.method2532(1);
@@ -472,7 +472,7 @@ public class ObjType extends DoublyLinkable {
 			field815.method2821(method926(arg1), 0, 9, 16776960, 1);
 		}
 		if (!arg4) {
-			field2434.method1246(var17, var5);
+			field2434.put(var17, var5);
 		}
 		Pix2D.method2583(var13, var14, var15);
 		Pix2D.method2612(var16);
@@ -615,6 +615,6 @@ public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("da.o(S)V")
 	public static void method1352() {
-		field2434.method1253();
+		field2434.clear();
 	}
 }

@@ -179,7 +179,7 @@ public abstract class PathingEntity extends Entity {
 
 	@ObfuscatedName("fz.b(IIZB)V")
 	public final void method2907(int arg0, int arg1, boolean arg2) {
-		if (this.field2643 != -1 && SeqType.method104(this.field2643).field2376 == 1) {
+		if (this.field2643 != -1 && SeqType.get(this.field2643).field2376 == 1) {
 			this.field2643 = -1;
 		}
 		if (!arg2) {
@@ -241,7 +241,7 @@ public abstract class PathingEntity extends Entity {
 			var3++;
 			var4--;
 		}
-		if (this.field2643 != -1 && SeqType.method104(this.field2643).field2376 == 1) {
+		if (this.field2643 != -1 && SeqType.get(this.field2643).field2376 == 1) {
 			this.field2643 = -1;
 		}
 		if (this.field2665 < 9) {

@@ -176,7 +176,7 @@ public class LocType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.g(IB)Ley;")
 	public static LocType get(int arg0) {
-		LocType var1 = (LocType) field2345.method1244((long) arg0);
+		LocType var1 = (LocType) field2345.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
@@ -191,7 +191,7 @@ public class LocType extends DoublyLinkable {
 			var3.field2342 = 0;
 			var3.field2319 = false;
 		}
-		field2345.method1246(var3, (long) arg0);
+		field2345.put(var3, (long) arg0);
 		return var3;
 	}
 
@@ -410,7 +410,7 @@ public class LocType extends DoublyLinkable {
 		} else {
 			var7 = (this.field2309 << 10) + (arg0 << 3) + arg1;
 		}
-		Entity var9 = (Entity) field2306.method1244(var7);
+		Entity var9 = (Entity) field2306.get(var7);
 		if (var9 == null) {
 			Model var10 = this.method2367(arg0, arg1);
 			if (var10 == null) {
@@ -424,7 +424,7 @@ public class LocType extends DoublyLinkable {
 			} else {
 				var9 = var10.method2942(this.field2343 + 64, this.field2326 + 768, -50, -10, -50);
 			}
-			field2306.method1246(var9, var7);
+			field2306.put(var9, var7);
 		}
 		if (this.field2323) {
 			var9 = ((Model) var9).method2982();
@@ -447,14 +447,14 @@ public class LocType extends DoublyLinkable {
 		} else {
 			var7 = (this.field2309 << 10) + (arg0 << 3) + arg1;
 		}
-		SoftwareModel var9 = (SoftwareModel) field2307.method1244(var7);
+		SoftwareModel var9 = (SoftwareModel) field2307.get(var7);
 		if (var9 == null) {
 			Model var10 = this.method2367(arg0, arg1);
 			if (var10 == null) {
 				return null;
 			}
 			var9 = var10.method2942(this.field2343 + 64, this.field2326 + 768, -50, -10, -50);
-			field2307.method1246(var9, var7);
+			field2307.put(var9, var7);
 		}
 		if (this.field2322 >= 0) {
 			var9 = var9.method3054(arg2, arg3, arg4, arg5, true, this.field2322);
@@ -470,14 +470,14 @@ public class LocType extends DoublyLinkable {
 		} else {
 			var9 = (this.field2309 << 10) + (arg0 << 3) + arg1;
 		}
-		SoftwareModel var11 = (SoftwareModel) field2307.method1244(var9);
+		SoftwareModel var11 = (SoftwareModel) field2307.get(var9);
 		if (var11 == null) {
 			Model var12 = this.method2367(arg0, arg1);
 			if (var12 == null) {
 				return null;
 			}
 			var11 = var12.method2942(this.field2343 + 64, this.field2326 + 768, -50, -10, -50);
-			field2307.method1246(var11, var9);
+			field2307.put(var11, var9);
 		}
 		if (arg6 == null && this.field2322 == -1) {
 			return var11;
@@ -514,7 +514,7 @@ public class LocType extends DoublyLinkable {
 				if (var4) {
 					var7 += 65536;
 				}
-				var3 = (Model) modelCacheStatic.method1244((long) var7);
+				var3 = (Model) modelCacheStatic.get((long) var7);
 				if (var3 == null) {
 					var3 = Model.method2992(field2303, var7 & 0xFFFF, 0);
 					if (var3 == null) {
@@ -523,7 +523,7 @@ public class LocType extends DoublyLinkable {
 					if (var4) {
 						var3.method2981();
 					}
-					modelCacheStatic.method1246(var3, (long) var7);
+					modelCacheStatic.put(var3, (long) var7);
 				}
 				if (var5 > 1) {
 					temp[var6] = var3;
@@ -548,7 +548,7 @@ public class LocType extends DoublyLinkable {
 			if (var11) {
 				var10 += 65536;
 			}
-			var3 = (Model) modelCacheStatic.method1244((long) var10);
+			var3 = (Model) modelCacheStatic.get((long) var10);
 			if (var3 == null) {
 				var3 = Model.method2992(field2303, var10 & 0xFFFF, 0);
 				if (var3 == null) {
@@ -557,7 +557,7 @@ public class LocType extends DoublyLinkable {
 				if (var11) {
 					var3.method2981();
 				}
-				modelCacheStatic.method1246(var3, (long) var10);
+				modelCacheStatic.put(var3, (long) var10);
 			}
 		}
 		boolean var12;
@@ -617,10 +617,10 @@ public class LocType extends DoublyLinkable {
 
 	@ObfuscatedName("ba.f(I)V")
 	public static void method916() {
-		field2345.method1253();
-		modelCacheStatic.method1253();
-		field2306.method1253();
-		field2307.method1253();
+		field2345.clear();
+		modelCacheStatic.clear();
+		field2306.clear();
+		field2307.clear();
 	}
 
 	@ObfuscatedName("ey.k(B)Z")

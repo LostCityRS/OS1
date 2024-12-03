@@ -112,15 +112,15 @@ public class MidiPcmStream extends PcmStream {
 			var6 = new int[] { arg3 };
 		}
 		for (ByteArrayNode var7 = (ByteArrayNode) arg0.field1734.method1284(); var7 != null; var7 = (ByteArrayNode) arg0.field1734.method1280()) {
-			int var8 = (int) var7.field1506;
-			MidiInstrument var9 = (MidiInstrument) this.field2230.method1277((long) var8);
+			int var8 = (int) var7.key;
+			MidiInstrument var9 = (MidiInstrument) this.field2230.get((long) var8);
 			if (var9 == null) {
 				var9 = MidiInstrument.method49(arg1, var8);
 				if (var9 == null) {
 					var5 = false;
 					continue;
 				}
-				this.field2230.method1278(var9, (long) var8);
+				this.field2230.put(var9, (long) var8);
 			}
 			if (!var9.method1784(arg2, var7.field1903, var6)) {
 				var5 = false;
@@ -142,7 +142,7 @@ public class MidiPcmStream extends PcmStream {
 	@ObfuscatedName("ed.as(I)V")
 	public synchronized void method2289() {
 		for (MidiInstrument var1 = (MidiInstrument) this.field2230.method1284(); var1 != null; var1 = (MidiInstrument) this.field2230.method1280()) {
-			var1.method1325();
+			var1.unlink();
 		}
 	}
 
@@ -200,7 +200,7 @@ public class MidiPcmStream extends PcmStream {
 	public void method2224(int arg0, int arg1, int arg2) {
 		this.method2258(arg0, arg1, 64);
 		if ((this.field2244[arg0] & 0x2) != 0) {
-			for (MidiNote var4 = (MidiNote) this.field2253.field2255.method1304(); var4 != null; var4 = (MidiNote) this.field2253.field2255.method1300()) {
+			for (MidiNote var4 = (MidiNote) this.field2253.field2255.tail(); var4 != null; var4 = (MidiNote) this.field2253.field2255.prev()) {
 				if (var4.field1760 == arg0 && var4.field1745 < 0) {
 					this.field2245[arg0][var4.field1750] = null;
 					this.field2245[arg0][arg1] = var4;
@@ -213,7 +213,7 @@ public class MidiPcmStream extends PcmStream {
 				}
 			}
 		}
-		MidiInstrument var6 = (MidiInstrument) this.field2230.method1277((long) this.field2231[arg0]);
+		MidiInstrument var6 = (MidiInstrument) this.field2230.get((long) this.field2231[arg0]);
 		if (var6 == null) {
 			return;
 		}
@@ -253,7 +253,7 @@ public class MidiPcmStream extends PcmStream {
 			}
 			this.field2246[arg0][var8.field1749] = var8;
 		}
-		this.field2253.field2255.method1292(var8);
+		this.field2253.field2255.push(var8);
 		this.field2245[arg0][arg1] = var8;
 	}
 
@@ -286,7 +286,7 @@ public class MidiPcmStream extends PcmStream {
 			var4.field1745 = 0;
 			return;
 		}
-		for (MidiNote var5 = (MidiNote) this.field2253.field2255.method1297(); var5 != null; var5 = (MidiNote) this.field2253.field2255.method1299()) {
+		for (MidiNote var5 = (MidiNote) this.field2253.field2255.head(); var5 != null; var5 = (MidiNote) this.field2253.field2255.next()) {
 			if (var4.field1760 == var5.field1760 && var5.field1745 < 0 && var4 != var5) {
 				var4.field1745 = 0;
 				break;
@@ -309,7 +309,7 @@ public class MidiPcmStream extends PcmStream {
 
 	@ObfuscatedName("ed.ar(IB)V")
 	public void method2283(int arg0) {
-		for (MidiNote var2 = (MidiNote) this.field2253.field2255.method1297(); var2 != null; var2 = (MidiNote) this.field2253.field2255.method1299()) {
+		for (MidiNote var2 = (MidiNote) this.field2253.field2255.head(); var2 != null; var2 = (MidiNote) this.field2253.field2255.next()) {
 			if (arg0 < 0 || var2.field1760 == arg0) {
 				if (var2.field1763 != null) {
 					var2.field1763.method2081(AudioChannel.field241 / 100);
@@ -321,7 +321,7 @@ public class MidiPcmStream extends PcmStream {
 				if (var2.field1745 < 0) {
 					this.field2245[var2.field1760][var2.field1750] = null;
 				}
-				var2.method1325();
+				var2.unlink();
 			}
 		}
 	}
@@ -351,7 +351,7 @@ public class MidiPcmStream extends PcmStream {
 
 	@ObfuscatedName("ed.at(II)V")
 	public void method2211(int arg0) {
-		for (MidiNote var2 = (MidiNote) this.field2253.field2255.method1297(); var2 != null; var2 = (MidiNote) this.field2253.field2255.method1299()) {
+		for (MidiNote var2 = (MidiNote) this.field2253.field2255.head(); var2 != null; var2 = (MidiNote) this.field2253.field2255.next()) {
 			if ((arg0 < 0 || var2.field1760 == arg0) && var2.field1745 < 0) {
 				this.field2245[var2.field1760][var2.field1750] = null;
 				var2.field1745 = 0;
@@ -376,7 +376,7 @@ public class MidiPcmStream extends PcmStream {
 		if ((this.field2244[arg0] & 0x2) == 0) {
 			return;
 		}
-		for (MidiNote var2 = (MidiNote) this.field2253.field2255.method1297(); var2 != null; var2 = (MidiNote) this.field2253.field2255.method1299()) {
+		for (MidiNote var2 = (MidiNote) this.field2253.field2255.head(); var2 != null; var2 = (MidiNote) this.field2253.field2255.next()) {
 			if (var2.field1760 == arg0 && this.field2245[arg0][var2.field1750] == null && var2.field1745 < 0) {
 				var2.field1745 = 0;
 			}
@@ -388,7 +388,7 @@ public class MidiPcmStream extends PcmStream {
 		if ((this.field2244[arg0] & 0x4) == 0) {
 			return;
 		}
-		for (MidiNote var2 = (MidiNote) this.field2253.field2255.method1297(); var2 != null; var2 = (MidiNote) this.field2253.field2255.method1299()) {
+		for (MidiNote var2 = (MidiNote) this.field2253.field2255.head(); var2 != null; var2 = (MidiNote) this.field2253.field2255.next()) {
 			if (var2.field1760 == arg0) {
 				var2.field1766 = 0;
 			}
@@ -708,7 +708,7 @@ public class MidiPcmStream extends PcmStream {
 			return false;
 		}
 		if (arg0.field1745 >= 0) {
-			arg0.method1325();
+			arg0.unlink();
 			if (arg0.field1749 > 0 && this.field2246[arg0.field1760][arg0.field1749] == arg0) {
 				this.field2246[arg0.field1760][arg0.field1749] = null;
 			}
@@ -721,7 +721,7 @@ public class MidiPcmStream extends PcmStream {
 		arg0.field1764 = AudioChannel.field241 / 100;
 		if (arg0.field1745 >= 0 && (arg0.field1763 == null || arg0.field1763.method2161())) {
 			arg0.method1787();
-			arg0.method1325();
+			arg0.unlink();
 			if (arg0.field1749 > 0 && this.field2246[arg0.field1760][arg0.field1749] == arg0) {
 				this.field2246[arg0.field1760][arg0.field1749] = null;
 			}
@@ -789,7 +789,7 @@ public class MidiPcmStream extends PcmStream {
 		}
 		arg0.method1787();
 		if (arg0.field1745 >= 0) {
-			arg0.method1325();
+			arg0.unlink();
 			if (arg0.field1749 > 0 && this.field2246[arg0.field1760][arg0.field1749] == arg0) {
 				this.field2246[arg0.field1760][arg0.field1749] = null;
 			}

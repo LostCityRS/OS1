@@ -354,10 +354,10 @@ public class Song extends Linkable {
 						int var18 = var9 >> 16 & 0x7F;
 						if (var18 > 0) {
 							int var19 = var2[var16];
-							ByteArrayNode var20 = (ByteArrayNode) this.field1734.method1277((long) var19);
+							ByteArrayNode var20 = (ByteArrayNode) this.field1734.get((long) var19);
 							if (var20 == null) {
 								var20 = new ByteArrayNode(new byte[128]);
-								this.field1734.method1278(var20, (long) var19);
+								this.field1734.put(var20, (long) var19);
 							}
 							var20.field1903[var17] = 1;
 						}

@@ -6,18 +6,18 @@ import deob.ObfuscatedName;
 public class DoublyLinkable extends Linkable {
 
 	@ObfuscatedName("en.m")
-	public DoublyLinkable field1902;
+	public DoublyLinkable next2;
 
 	@ObfuscatedName("en.c")
-	public DoublyLinkable field1901;
+	public DoublyLinkable prev2;
 
 	@ObfuscatedName("en.c()V")
-	public void method1841() {
-		if (this.field1901 != null) {
-			this.field1901.field1902 = this.field1902;
-			this.field1902.field1901 = this.field1901;
-			this.field1902 = null;
-			this.field1901 = null;
+	public void unlink2() {
+		if (this.prev2 != null) {
+			this.prev2.next2 = this.next2;
+			this.next2.prev2 = this.prev2;
+			this.next2 = null;
+			this.prev2 = null;
 		}
 	}
 }

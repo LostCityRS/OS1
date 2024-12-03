@@ -109,12 +109,12 @@ public class Js5Provider extends Js5Index {
 				FileStream var12 = this.field1578;
 				Js5NetProviderRequest var13 = new Js5NetProviderRequest();
 				var13.field1772 = 0;
-				var13.field1506 = arg0;
+				var13.key = arg0;
 				var13.field1771 = arg1;
 				var13.field1770 = var12;
 				LinkList var14 = Js5ProviderThread.field1208;
 				synchronized (Js5ProviderThread.field1208) {
-					Js5ProviderThread.field1208.method1292(var13);
+					Js5ProviderThread.field1208.push(var13);
 				}
 				Object var16 = Js5ProviderThread.field1207;
 				synchronized (Js5ProviderThread.field1207) {
@@ -138,12 +138,12 @@ public class Js5Provider extends Js5Index {
 			FileStream var6 = this.field1573;
 			Js5NetProviderRequest var7 = new Js5NetProviderRequest();
 			var7.field1772 = 0;
-			var7.field1506 = var5;
+			var7.key = var5;
 			var7.field1771 = arg1;
 			var7.field1770 = var6;
 			LinkList var8 = Js5ProviderThread.field1208;
 			synchronized (Js5ProviderThread.field1208) {
-				Js5ProviderThread.field1208.method1292(var7);
+				Js5ProviderThread.field1208.push(var7);
 			}
 			Object var10 = Js5ProviderThread.field1207;
 			synchronized (Js5ProviderThread.field1207) {
@@ -230,12 +230,12 @@ public class Js5Provider extends Js5Index {
 				FileStream var3 = this.field1578;
 				Js5NetProviderRequest var5 = new Js5NetProviderRequest();
 				var5.field1772 = 1;
-				var5.field1506 = var2;
+				var5.key = var2;
 				var5.field1770 = var3;
 				var5.field1773 = this;
 				LinkList var6 = Js5ProviderThread.field1208;
 				synchronized (Js5ProviderThread.field1208) {
-					Js5ProviderThread.field1208.method1292(var5);
+					Js5ProviderThread.field1208.push(var5);
 				}
 				Object var8 = Js5ProviderThread.field1207;
 				synchronized (Js5ProviderThread.field1207) {

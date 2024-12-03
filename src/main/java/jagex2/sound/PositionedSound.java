@@ -56,7 +56,7 @@ public class PositionedSound extends Linkable {
 
 	@ObfuscatedName("az.c(B)V")
 	public static void method478() {
-		for (PositionedSound var0 = (PositionedSound) field1612.method1297(); var0 != null; var0 = (PositionedSound) field1612.method1299()) {
+		for (PositionedSound var0 = (PositionedSound) field1612.head(); var0 != null; var0 = (PositionedSound) field1612.next()) {
 			if (var0.field1615 != null) {
 				var0.method1492();
 			}
@@ -109,7 +109,7 @@ public class PositionedSound extends Linkable {
 			var5.field1615 = arg3;
 			var5.method1492();
 		}
-		field1612.method1292(var5);
+		field1612.push(var5);
 		if (var5.field1604 != null) {
 			var5.field1613 = var5.field1601 + (int) (Math.random() * (double) (var5.field1611 - var5.field1601));
 		}
@@ -117,7 +117,7 @@ public class PositionedSound extends Linkable {
 
 	@ObfuscatedName("ex.z(IIIII)V")
 	public static void method2297(int arg0, int arg1, int arg2, int arg3) {
-		for (PositionedSound var4 = (PositionedSound) field1612.method1297(); var4 != null; var4 = (PositionedSound) field1612.method1299()) {
+		for (PositionedSound var4 = (PositionedSound) field1612.head(); var4 != null; var4 = (PositionedSound) field1612.next()) {
 			if (var4.field1608 != -1 || var4.field1604 != null) {
 				int var5 = 0;
 				if (arg1 > var4.field1605) {
@@ -159,7 +159,7 @@ public class PositionedSound extends Linkable {
 					}
 					if (var4.field1614 != null) {
 						var4.field1614.method2090(var6);
-						if (!var4.field1614.method1326()) {
+						if (!var4.field1614.isLinked()) {
 							var4.field1614 = null;
 						}
 					} else if (var4.field1604 != null && (var4.field1613 -= arg3) <= 0) {

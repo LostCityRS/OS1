@@ -45,12 +45,12 @@ public class SpotAnimEntity extends Entity {
 		this.field2606 = arg3;
 		this.field2611 = arg4;
 		this.field2603 = arg5 + arg6;
-		int var8 = SpotAnimType.method1133(this.field2608).field2390;
+		int var8 = SpotAnimType.get(this.field2608).field2390;
 		if (var8 == -1) {
 			this.field2605 = true;
 		} else {
 			this.field2605 = false;
-			this.field2607 = SeqType.method104(var8);
+			this.field2607 = SeqType.get(var8);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class SpotAnimEntity extends Entity {
 
 	@ObfuscatedName("fn.g(I)Lfo;")
 	public final SoftwareModel method2643() {
-		SpotAnimType var1 = SpotAnimType.method1133(this.field2608);
+		SpotAnimType var1 = SpotAnimType.get(this.field2608);
 		SoftwareModel var2;
 		if (this.field2605) {
 			var2 = var1.method2455(-1);

@@ -44,7 +44,7 @@ public class LocEntity extends Entity {
 		this.field2595 = arg4;
 		this.field2596 = arg5;
 		if (arg6 != -1) {
-			this.field2597 = SeqType.method104(arg6);
+			this.field2597 = SeqType.get(arg6);
 			this.field2598 = 0;
 			this.field2591 = Client.field1922 - 1;
 			if (this.field2597.field2377 == 0 && arg8 != null && arg8 instanceof LocEntity) {

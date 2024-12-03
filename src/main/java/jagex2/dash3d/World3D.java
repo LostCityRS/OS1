@@ -1111,7 +1111,7 @@ public class World3D {
 
 	@ObfuscatedName("aq.ab(Les;Z)V")
 	public void method679(Ground arg0, boolean arg1) {
-		field625.method1292(arg0);
+		field625.push(arg0);
 		while (true) {
 			Ground var3;
 			int var4;
@@ -1132,7 +1132,7 @@ public class World3D {
 									while (true) {
 										while (true) {
 											do {
-												var3 = (Ground) field625.method1295();
+												var3 = (Ground) field625.pop();
 												if (var3 == null) {
 													return;
 												}
@@ -1307,25 +1307,25 @@ public class World3D {
 												if (var4 < eyeTileX && (var31 & 0x4) != 0) {
 													Ground var32 = var8[var4 + 1][var5];
 													if (var32 != null && var32.field1713) {
-														field625.method1292(var32);
+														field625.push(var32);
 													}
 												}
 												if (var5 < eyeTileZ && (var31 & 0x2) != 0) {
 													Ground var33 = var8[var4][var5 + 1];
 													if (var33 != null && var33.field1713) {
-														field625.method1292(var33);
+														field625.push(var33);
 													}
 												}
 												if (var4 > eyeTileX && (var31 & 0x1) != 0) {
 													Ground var34 = var8[var4 - 1][var5];
 													if (var34 != null && var34.field1713) {
-														field625.method1292(var34);
+														field625.push(var34);
 													}
 												}
 												if (var5 > eyeTileZ && (var31 & 0x8) != 0) {
 													Ground var35 = var8[var4][var5 - 1];
 													if (var35 != null && var35.field1713) {
-														field625.method1292(var35);
+														field625.push(var35);
 													}
 												}
 											}
@@ -1432,9 +1432,9 @@ public class World3D {
 													for (int var61 = var59.field674; var61 <= var59.field667; var61++) {
 														Ground var62 = var8[var60][var61];
 														if (var62.field1715 != 0) {
-															field625.method1292(var62);
+															field625.push(var62);
 														} else if ((var4 != var60 || var5 != var61) && var62.field1713) {
-															field625.method1292(var62);
+															field625.push(var62);
 														}
 													}
 												}
@@ -1525,31 +1525,31 @@ public class World3D {
 			if (var6 < this.field581 - 1) {
 				Ground var77 = this.field585[var6 + 1][var4][var5];
 				if (var77 != null && var77.field1713) {
-					field625.method1292(var77);
+					field625.push(var77);
 				}
 			}
 			if (var4 < eyeTileX) {
 				Ground var78 = var8[var4 + 1][var5];
 				if (var78 != null && var78.field1713) {
-					field625.method1292(var78);
+					field625.push(var78);
 				}
 			}
 			if (var5 < eyeTileZ) {
 				Ground var79 = var8[var4][var5 + 1];
 				if (var79 != null && var79.field1713) {
-					field625.method1292(var79);
+					field625.push(var79);
 				}
 			}
 			if (var4 > eyeTileX) {
 				Ground var80 = var8[var4 - 1][var5];
 				if (var80 != null && var80.field1713) {
-					field625.method1292(var80);
+					field625.push(var80);
 				}
 			}
 			if (var5 > eyeTileZ) {
 				Ground var81 = var8[var4][var5 - 1];
 				if (var81 != null && var81.field1713) {
-					field625.method1292(var81);
+					field625.push(var81);
 				}
 			}
 		}

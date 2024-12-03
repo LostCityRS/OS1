@@ -9,68 +9,68 @@ public class LruCache {
 	public DoublyLinkable field1487 = new DoublyLinkable();
 
 	@ObfuscatedName("ce.d")
-	public int field1490;
+	public int capacity;
 
 	@ObfuscatedName("ce.l")
-	public int field1489;
+	public int available;
 
 	@ObfuscatedName("ce.m")
-	public HashTable field1488;
+	public HashTable hashtable;
 
 	@ObfuscatedName("ce.c")
-	public DoublyLinkList field1491 = new DoublyLinkList();
+	public DoublyLinkList history = new DoublyLinkList();
 
 	public LruCache(int arg0) {
-		this.field1490 = arg0;
-		this.field1489 = arg0;
+		this.capacity = arg0;
+		this.available = arg0;
 		int var2;
 		for (var2 = 1; var2 + var2 < arg0; var2 += var2) {
 		}
-		this.field1488 = new HashTable(var2);
+		this.hashtable = new HashTable(var2);
 	}
 
 	@ObfuscatedName("ce.r(J)Len;")
-	public DoublyLinkable method1244(long arg0) {
-		DoublyLinkable var3 = (DoublyLinkable) this.field1488.method1277(arg0);
+	public DoublyLinkable get(long arg0) {
+		DoublyLinkable var3 = (DoublyLinkable) this.hashtable.get(arg0);
 		if (var3 != null) {
-			this.field1491.method1256(var3);
+			this.history.push(var3);
 		}
 		return var3;
 	}
 
 	@ObfuscatedName("ce.d(J)V")
-	public void method1245(long arg0) {
-		DoublyLinkable var3 = (DoublyLinkable) this.field1488.method1277(arg0);
+	public void remove(long arg0) {
+		DoublyLinkable var3 = (DoublyLinkable) this.hashtable.get(arg0);
 		if (var3 != null) {
-			var3.method1325();
-			var3.method1841();
-			this.field1489++;
+			var3.unlink();
+			var3.unlink2();
+			this.available++;
 		}
 	}
 
 	@ObfuscatedName("ce.l(Len;J)V")
-	public void method1246(DoublyLinkable arg0, long arg1) {
-		if (this.field1489 == 0) {
-			DoublyLinkable var4 = this.field1491.method1258();
-			var4.method1325();
-			var4.method1841();
+	public void put(DoublyLinkable arg0, long arg1) {
+		if (this.available == 0) {
+			DoublyLinkable var4 = this.history.pop();
+			var4.unlink();
+			var4.unlink2();
 			if (this.field1487 == var4) {
-				DoublyLinkable var5 = this.field1491.method1258();
-				var5.method1325();
-				var5.method1841();
+				DoublyLinkable var5 = this.history.pop();
+				var5.unlink();
+				var5.unlink2();
 			}
 		} else {
-			this.field1489--;
+			this.available--;
 		}
-		this.field1488.method1278(arg0, arg1);
-		this.field1491.method1256(arg0);
+		this.hashtable.put(arg0, arg1);
+		this.history.push(arg0);
 	}
 
 	@ObfuscatedName("ce.m()V")
-	public void method1253() {
-		this.field1491.method1260();
-		this.field1488.method1283();
+	public void clear() {
+		this.history.clear();
+		this.hashtable.clear();
 		this.field1487 = new DoublyLinkable();
-		this.field1489 = this.field1490;
+		this.available = this.capacity;
 	}
 }

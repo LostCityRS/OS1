@@ -20,7 +20,7 @@ public class AnimFrameset extends DoublyLinkable {
 			byte[] var9 = arg0.method1044(arg2, var7[var8]);
 			AnimBase var10 = null;
 			int var11 = (var9[0] & 0xFF) << 8 | var9[1] & 0xFF;
-			for (AnimBase var12 = (AnimBase) var5.method1297(); var12 != null; var12 = (AnimBase) var5.method1299()) {
+			for (AnimBase var12 = (AnimBase) var5.head(); var12 != null; var12 = (AnimBase) var5.next()) {
 				if (var12.field1724 == var11) {
 					var10 = var12;
 					break;
@@ -34,7 +34,7 @@ public class AnimFrameset extends DoublyLinkable {
 					var13 = arg1.method1050(var11, 0);
 				}
 				var10 = new AnimBase(var11, var13);
-				var5.method1292(var10);
+				var5.push(var10);
 			}
 			this.field2488[var7[var8]] = new AnimFrame(var9, var10);
 		}

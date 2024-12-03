@@ -40,33 +40,33 @@ public class EnumType extends DoublyLinkable {
 	public String[] field2430;
 
 	@ObfuscatedName("ek.z(II)Lfe;")
-	public static EnumType method1844(int arg0) {
-		EnumType var1 = (EnumType) field2425.method1244((long) arg0);
+	public static EnumType get(int arg0) {
+		EnumType var1 = (EnumType) field2425.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
 		byte[] var2 = field2422.method1044(8, arg0);
 		EnumType var3 = new EnumType();
 		if (var2 != null) {
-			var3.method2509(new Packet(var2));
+			var3.decode(new Packet(var2));
 		}
-		field2425.method1246(var3, (long) arg0);
+		field2425.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("fe.g(Lev;I)V")
-	public void method2509(Packet arg0) {
+	public void decode(Packet arg0) {
 		while (true) {
 			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
-			this.method2512(arg0, var2);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fe.q(Lev;IB)V")
-	public void method2512(Packet arg0, int arg1) {
+	public void decodeInner(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			this.field2423 = arg0.g1();
 		} else if (arg1 == 2) {

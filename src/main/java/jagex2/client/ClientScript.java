@@ -34,7 +34,7 @@ public class ClientScript extends DoublyLinkable {
 
 	@ObfuscatedName("bq.z(II)Lep;")
 	public static ClientScript method872(int arg0) {
-		ClientScript var1 = (ClientScript) field2262.method1244((long) arg0);
+		ClientScript var1 = (ClientScript) field2262.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
@@ -67,7 +67,7 @@ public class ClientScript extends DoublyLinkable {
 			}
 			var3.field2261[var6++] = var7;
 		}
-		field2262.method1246(var3, (long) arg0);
+		field2262.put(var3, (long) arg0);
 		return var3;
 	}
 }

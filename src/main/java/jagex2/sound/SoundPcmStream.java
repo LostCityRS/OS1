@@ -226,12 +226,12 @@ public class SoundPcmStream extends PcmStream {
 	public synchronized void method2081(int arg0) {
 		if (arg0 == 0) {
 			this.method2134(0);
-			this.method1325();
+			this.unlink();
 		} else if (this.field2219 == 0 && this.field2205 == 0) {
 			this.field2216 = 0;
 			this.field2207 = 0;
 			this.field2209 = 0;
-			this.method1325();
+			this.unlink();
 		} else {
 			int var2 = -this.field2209;
 			if (this.field2209 > var2) {
@@ -318,7 +318,7 @@ public class SoundPcmStream extends PcmStream {
 		if (this.field2213 < 0) {
 			if (this.field2206 <= 0) {
 				this.method2069();
-				this.method1325();
+				this.unlink();
 				return;
 			}
 			this.field2213 = 0;
@@ -326,7 +326,7 @@ public class SoundPcmStream extends PcmStream {
 		if (this.field2213 >= var7) {
 			if (this.field2206 >= 0) {
 				this.method2069();
-				this.method1325();
+				this.unlink();
 				return;
 			}
 			this.field2213 = var7 - 1;
@@ -401,14 +401,14 @@ public class SoundPcmStream extends PcmStream {
 				if (this.field2213 < 0) {
 					this.field2213 = -1;
 					this.method2069();
-					this.method1325();
+					this.unlink();
 				}
 			} else {
 				this.method2094(arg0, var9, var7, var10, 0);
 				if (this.field2213 >= var7) {
 					this.field2213 = var7;
 					this.method2069();
-					this.method1325();
+					this.unlink();
 				}
 			}
 		} else if (this.field2210) {
@@ -462,7 +462,7 @@ public class SoundPcmStream extends PcmStream {
 					this.field2205 = 0;
 					this.field2219 = 0;
 					this.field2209 = 0;
-					this.method1325();
+					this.unlink();
 					arg0 = this.field2216;
 				}
 				this.field2216 = 0;
@@ -485,7 +485,7 @@ public class SoundPcmStream extends PcmStream {
 		if (this.field2213 < 0) {
 			if (this.field2206 <= 0) {
 				this.method2069();
-				this.method1325();
+				this.unlink();
 				return;
 			}
 			this.field2213 = 0;
@@ -493,7 +493,7 @@ public class SoundPcmStream extends PcmStream {
 		if (this.field2213 >= var5) {
 			if (this.field2206 >= 0) {
 				this.method2069();
-				this.method1325();
+				this.unlink();
 				return;
 			}
 			this.field2213 = var5 - 1;
@@ -563,12 +563,12 @@ public class SoundPcmStream extends PcmStream {
 				if (this.field2213 < 0) {
 					this.field2213 = -1;
 					this.method2069();
-					this.method1325();
+					this.unlink();
 				}
 			} else if (this.field2213 >= var5) {
 				this.field2213 = var5;
 				this.method2069();
-				this.method1325();
+				this.unlink();
 			}
 		} else if (this.field2210) {
 			if (this.field2206 < 0) {
@@ -738,7 +738,7 @@ public class SoundPcmStream extends PcmStream {
 			this.field2205 = 0;
 			this.field2219 = 0;
 			this.field2209 = 0;
-			this.method1325();
+			this.unlink();
 			return true;
 		} else {
 			this.method2060();

@@ -29,7 +29,7 @@ public class SoundBank {
 		int var4 = arg1 ^ (arg0 << 4 & 0xFFFF | arg0 >>> 12);
 		int var5 = var4 | arg0 << 16;
 		long var6 = (long) var5;
-		PcmSound var8 = (PcmSound) this.field312.method1277(var6);
+		PcmSound var8 = (PcmSound) this.field312.get(var6);
 		if (var8 != null) {
 			return var8;
 		} else if (arg2 == null || arg2[0] > 0) {
@@ -38,7 +38,7 @@ public class SoundBank {
 				return null;
 			}
 			PcmSound var10 = var9.method291();
-			this.field312.method1278(var10, var6);
+			this.field312.put(var10, var6);
 			if (arg2 != null) {
 				arg2[0] -= var10.field2204.length;
 			}
@@ -53,24 +53,24 @@ public class SoundBank {
 		int var4 = arg1 ^ (arg0 << 4 & 0xFFFF | arg0 >>> 12);
 		int var5 = var4 | arg0 << 16;
 		long var6 = (long) var5 ^ 0x100000000L;
-		PcmSound var8 = (PcmSound) this.field312.method1277(var6);
+		PcmSound var8 = (PcmSound) this.field312.get(var6);
 		if (var8 != null) {
 			return var8;
 		} else if (arg2 == null || arg2[0] > 0) {
-			VorbisSound var9 = (VorbisSound) this.field310.method1277(var6);
+			VorbisSound var9 = (VorbisSound) this.field310.get(var6);
 			if (var9 == null) {
 				var9 = VorbisSound.method1543(this.field311, arg0, arg1);
 				if (var9 == null) {
 					return null;
 				}
-				this.field310.method1278(var9, var6);
+				this.field310.put(var9, var6);
 			}
 			PcmSound var10 = var9.method1539(arg2);
 			if (var10 == null) {
 				return null;
 			} else {
-				var9.method1325();
-				this.field312.method1278(var10, var6);
+				var9.unlink();
+				this.field312.put(var10, var6);
 				return var10;
 			}
 		} else {

@@ -21,7 +21,7 @@ public class MidiNoteStream extends PcmStream {
 
 	@ObfuscatedName("ex.n()Ldx;")
 	public PcmStream method1516() {
-		MidiNote var1 = (MidiNote) this.field2255.method1297();
+		MidiNote var1 = (MidiNote) this.field2255.head();
 		if (var1 == null) {
 			return null;
 		} else if (var1.field1763 == null) {
@@ -35,7 +35,7 @@ public class MidiNoteStream extends PcmStream {
 	public PcmStream method1517() {
 		MidiNote var1;
 		do {
-			var1 = (MidiNote) this.field2255.method1299();
+			var1 = (MidiNote) this.field2255.next();
 			if (var1 == null) {
 				return null;
 			}
@@ -51,7 +51,7 @@ public class MidiNoteStream extends PcmStream {
 	@ObfuscatedName("ex.q([III)V")
 	public void method1520(int[] arg0, int arg1, int arg2) {
 		this.field2254.method1520(arg0, arg1, arg2);
-		for (MidiNote var4 = (MidiNote) this.field2255.method1297(); var4 != null; var4 = (MidiNote) this.field2255.method1299()) {
+		for (MidiNote var4 = (MidiNote) this.field2255.head(); var4 != null; var4 = (MidiNote) this.field2255.next()) {
 			if (!this.field2256.method2223(var4)) {
 				int var5 = arg1;
 				int var6 = arg2;
@@ -72,7 +72,7 @@ public class MidiNoteStream extends PcmStream {
 	@ObfuscatedName("ex.i(I)V")
 	public void method1521(int arg0) {
 		this.field2254.method1521(arg0);
-		for (MidiNote var2 = (MidiNote) this.field2255.method1297(); var2 != null; var2 = (MidiNote) this.field2255.method1299()) {
+		for (MidiNote var2 = (MidiNote) this.field2255.head(); var2 != null; var2 = (MidiNote) this.field2255.next()) {
 			if (!this.field2256.method2223(var2)) {
 				int var3 = arg0;
 				do {

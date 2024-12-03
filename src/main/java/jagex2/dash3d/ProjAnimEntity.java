@@ -96,11 +96,11 @@ public class ProjAnimEntity extends Entity {
 		this.field2582 = arg9;
 		this.field2571 = arg10;
 		this.field2587 = false;
-		int var12 = SpotAnimType.method1133(this.field2568).field2390;
+		int var12 = SpotAnimType.get(this.field2568).field2390;
 		if (var12 == -1) {
 			this.field2588 = null;
 		} else {
-			this.field2588 = SeqType.method104(var12);
+			this.field2588 = SeqType.get(var12);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class ProjAnimEntity extends Entity {
 
 	@ObfuscatedName("fh.g(I)Lfo;")
 	public final SoftwareModel method2643() {
-		SpotAnimType var1 = SpotAnimType.method1133(this.field2568);
+		SpotAnimType var1 = SpotAnimType.get(this.field2568);
 		SoftwareModel var2 = var1.method2455(this.field2589);
 		if (var2 == null) {
 			return null;

@@ -18,7 +18,7 @@ public class ClientInvCache extends Linkable {
 
 	@ObfuscatedName("r.c(III)I")
 	public static int method5(int arg0, int arg1) {
-		ClientInvCache var2 = (ClientInvCache) field1623.method1277((long) arg0);
+		ClientInvCache var2 = (ClientInvCache) field1623.get((long) arg0);
 		if (var2 == null) {
 			return 0;
 		} else if (arg1 >= 0 && arg1 < var2.field1624.length) {
@@ -30,7 +30,7 @@ public class ClientInvCache extends Linkable {
 
 	@ObfuscatedName("dj.n(IIB)I")
 	public static int method1446(int arg0, int arg1) {
-		ClientInvCache var2 = (ClientInvCache) field1623.method1277((long) arg0);
+		ClientInvCache var2 = (ClientInvCache) field1623.get((long) arg0);
 		if (var2 == null) {
 			return 0;
 		} else if (arg1 == -1) {
@@ -48,10 +48,10 @@ public class ClientInvCache extends Linkable {
 
 	@ObfuscatedName("fh.j(IIIII)V")
 	public static void method2901(int arg0, int arg1, int arg2, int arg3) {
-		ClientInvCache var4 = (ClientInvCache) field1623.method1277((long) arg0);
+		ClientInvCache var4 = (ClientInvCache) field1623.get((long) arg0);
 		if (var4 == null) {
 			var4 = new ClientInvCache();
-			field1623.method1278(var4, (long) arg0);
+			field1623.put(var4, (long) arg0);
 		}
 		if (var4.field1622.length <= arg1) {
 			int[] var5 = new int[arg1 + 1];
@@ -73,9 +73,9 @@ public class ClientInvCache extends Linkable {
 
 	@ObfuscatedName("n.z(IB)V")
 	public static void method55(int arg0) {
-		ClientInvCache var1 = (ClientInvCache) field1623.method1277((long) arg0);
+		ClientInvCache var1 = (ClientInvCache) field1623.get((long) arg0);
 		if (var1 != null) {
-			var1.method1325();
+			var1.unlink();
 		}
 	}
 }

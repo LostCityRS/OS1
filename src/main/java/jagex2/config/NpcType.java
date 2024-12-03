@@ -125,8 +125,8 @@ public class NpcType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("f.g(IB)Lem;")
-	public static NpcType method275(int arg0) {
-		NpcType var1 = (NpcType) field2274.method1244((long) arg0);
+	public static NpcType get(int arg0) {
+		NpcType var1 = (NpcType) field2274.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
@@ -134,30 +134,30 @@ public class NpcType extends DoublyLinkable {
 		NpcType var3 = new NpcType();
 		var3.field2271 = arg0;
 		if (var2 != null) {
-			var3.method2328(new Packet(var2));
+			var3.decode(new Packet(var2));
 		}
-		var3.method2327();
-		field2274.method1246(var3, (long) arg0);
+		var3.postDecode();
+		field2274.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("em.q(I)V")
-	public void method2327() {
+	public void postDecode() {
 	}
 
 	@ObfuscatedName("em.i(Lev;I)V")
-	public void method2328(Packet arg0) {
+	public void decode(Packet arg0) {
 		while (true) {
 			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
-			this.method2334(arg0, var2);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("em.s(Lev;II)V")
-	public void method2334(Packet arg0, int arg1) {
+	public void decodeInner(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			int var3 = arg0.g1();
 			this.field2292 = new int[var3];
@@ -256,7 +256,7 @@ public class NpcType extends DoublyLinkable {
 			NpcType var5 = this.method2332();
 			return var5 == null ? null : var5.method2330(arg0, arg1, arg2, arg3);
 		}
-		SoftwareModel var6 = (SoftwareModel) field2288.method1244((long) this.field2271);
+		SoftwareModel var6 = (SoftwareModel) field2288.get((long) this.field2271);
 		if (var6 == null) {
 			boolean var7 = false;
 			for (int var8 = 0; var8 < this.field2292.length; var8++) {
@@ -288,7 +288,7 @@ public class NpcType extends DoublyLinkable {
 				}
 			}
 			var6 = var11.method2942(this.field2293 + 64, this.field2269 + 850, -30, -50, -30);
-			field2288.method1246(var6, (long) this.field2271);
+			field2288.put(var6, (long) this.field2271);
 		}
 		SoftwareModel var14;
 		if (arg0 != null && arg2 != null) {
@@ -355,7 +355,7 @@ public class NpcType extends DoublyLinkable {
 		} else if (this.field2299 != -1) {
 			var1 = VarProvider.field1210[this.field2299];
 		}
-		return var1 < 0 || var1 >= this.field2273.length || this.field2273[var1] == -1 ? null : method275(this.field2273[var1]);
+		return var1 < 0 || var1 >= this.field2273.length || this.field2273[var1] == -1 ? null : get(this.field2273[var1]);
 	}
 
 	@ObfuscatedName("em.e(I)Z")
@@ -374,7 +374,7 @@ public class NpcType extends DoublyLinkable {
 
 	@ObfuscatedName("df.b(I)V")
 	public static void method1334() {
-		field2274.method1253();
-		field2288.method1253();
+		field2274.clear();
+		field2288.clear();
 	}
 }

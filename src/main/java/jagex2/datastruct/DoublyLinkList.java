@@ -6,60 +6,60 @@ import deob.ObfuscatedName;
 public class DoublyLinkList {
 
 	@ObfuscatedName("ci.r")
-	public DoublyLinkable field1492 = new DoublyLinkable();
+	public DoublyLinkable sentinel = new DoublyLinkable();
 
 	public DoublyLinkList() {
-		this.field1492.field1902 = this.field1492;
-		this.field1492.field1901 = this.field1492;
+		this.sentinel.next2 = this.sentinel;
+		this.sentinel.prev2 = this.sentinel;
 	}
 
 	@ObfuscatedName("ci.r(Len;)V")
-	public void method1256(DoublyLinkable arg0) {
-		if (arg0.field1901 != null) {
-			arg0.method1841();
+	public void push(DoublyLinkable arg0) {
+		if (arg0.prev2 != null) {
+			arg0.unlink2();
 		}
-		arg0.field1901 = this.field1492.field1901;
-		arg0.field1902 = this.field1492;
-		arg0.field1901.field1902 = arg0;
-		arg0.field1902.field1901 = arg0;
+		arg0.prev2 = this.sentinel.prev2;
+		arg0.next2 = this.sentinel;
+		arg0.prev2.next2 = arg0;
+		arg0.next2.prev2 = arg0;
 	}
 
 	@ObfuscatedName("ci.d(Len;)V")
-	public void method1257(DoublyLinkable arg0) {
-		if (arg0.field1901 != null) {
-			arg0.method1841();
+	public void addHead(DoublyLinkable arg0) {
+		if (arg0.prev2 != null) {
+			arg0.unlink2();
 		}
-		arg0.field1901 = this.field1492;
-		arg0.field1902 = this.field1492.field1902;
-		arg0.field1901.field1902 = arg0;
-		arg0.field1902.field1901 = arg0;
+		arg0.prev2 = this.sentinel;
+		arg0.next2 = this.sentinel.next2;
+		arg0.prev2.next2 = arg0;
+		arg0.next2.prev2 = arg0;
 	}
 
 	@ObfuscatedName("ci.l()Len;")
-	public DoublyLinkable method1258() {
-		DoublyLinkable var1 = this.field1492.field1902;
-		if (this.field1492 == var1) {
+	public DoublyLinkable pop() {
+		DoublyLinkable var1 = this.sentinel.next2;
+		if (this.sentinel == var1) {
 			return null;
 		} else {
-			var1.method1841();
+			var1.unlink2();
 			return var1;
 		}
 	}
 
 	@ObfuscatedName("ci.m()Len;")
-	public DoublyLinkable method1259() {
-		DoublyLinkable var1 = this.field1492.field1902;
-		return this.field1492 == var1 ? null : var1;
+	public DoublyLinkable head() {
+		DoublyLinkable var1 = this.sentinel.next2;
+		return this.sentinel == var1 ? null : var1;
 	}
 
 	@ObfuscatedName("ci.c()V")
-	public void method1260() {
+	public void clear() {
 		while (true) {
-			DoublyLinkable var1 = this.field1492.field1902;
-			if (this.field1492 == var1) {
+			DoublyLinkable var1 = this.sentinel.next2;
+			if (this.sentinel == var1) {
 				return;
 			}
-			var1.method1841();
+			var1.unlink2();
 		}
 	}
 }

@@ -21,12 +21,12 @@ public class MixerPcmStream extends PcmStream {
 
 	@ObfuscatedName("ee.p(Ldx;)V")
 	public final synchronized void method2174(PcmStream arg0) {
-		this.field2223.method1312(arg0);
+		this.field2223.addHead(arg0);
 	}
 
 	@ObfuscatedName("ee.ad(Ldx;)V")
 	public final synchronized void method2175(PcmStream arg0) {
-		arg0.method1325();
+		arg0.unlink();
 	}
 
 	@ObfuscatedName("ee.ac()V")
@@ -34,7 +34,7 @@ public class MixerPcmStream extends PcmStream {
 		if (this.field2222 <= 0) {
 			return;
 		}
-		for (MixerListener var1 = (MixerListener) this.field2221.method1297(); var1 != null; var1 = (MixerListener) this.field2221.method1299()) {
+		for (MixerListener var1 = (MixerListener) this.field2221.head(); var1 != null; var1 = (MixerListener) this.field2221.next()) {
 			var1.field1681 -= this.field2222;
 		}
 		this.field2220 -= this.field2222;
@@ -43,19 +43,19 @@ public class MixerPcmStream extends PcmStream {
 
 	@ObfuscatedName("ee.aa(Ldg;Leb;)V")
 	public void method2177(Linkable arg0, MixerListener arg1) {
-		while (this.field2221.field1500 != arg0 && ((MixerListener) arg0).field1681 <= arg1.field1681) {
-			arg0 = arg0.field1505;
+		while (this.field2221.sentinel != arg0 && ((MixerListener) arg0).field1681 <= arg1.field1681) {
+			arg0 = arg0.next;
 		}
 		LinkList.method1294(arg1, arg0);
-		this.field2220 = ((MixerListener) this.field2221.field1500.field1505).field1681;
+		this.field2220 = ((MixerListener) this.field2221.sentinel.next).field1681;
 	}
 
 	@ObfuscatedName("ee.as(Leb;)V")
 	public void method2178(MixerListener arg0) {
-		arg0.method1325();
+		arg0.unlink();
 		arg0.method1569();
-		Linkable var2 = this.field2221.field1500.field1505;
-		if (this.field2221.field1500 == var2) {
+		Linkable var2 = this.field2221.sentinel.next;
+		if (this.field2221.sentinel == var2) {
 			this.field2220 = -1;
 		} else {
 			this.field2220 = ((MixerListener) var2).field1681;
@@ -64,12 +64,12 @@ public class MixerPcmStream extends PcmStream {
 
 	@ObfuscatedName("ee.n()Ldx;")
 	public PcmStream method1516() {
-		return (PcmStream) this.field2223.method1297();
+		return (PcmStream) this.field2223.head();
 	}
 
 	@ObfuscatedName("ee.j()Ldx;")
 	public PcmStream method1517() {
-		return (PcmStream) this.field2223.method1299();
+		return (PcmStream) this.field2223.next();
 	}
 
 	@ObfuscatedName("ee.z()I")
@@ -95,7 +95,7 @@ public class MixerPcmStream extends PcmStream {
 			arg2 -= var4;
 			this.field2222 += var4;
 			this.method2176();
-			MixerListener var5 = (MixerListener) this.field2221.method1297();
+			MixerListener var5 = (MixerListener) this.field2221.head();
 			synchronized (var5) {
 				int var7 = var5.method1565(this);
 				if (var7 < 0) {
@@ -103,7 +103,7 @@ public class MixerPcmStream extends PcmStream {
 					this.method2178(var5);
 				} else {
 					var5.field1681 = var7;
-					this.method2177(var5.field1505, var5);
+					this.method2177(var5.next, var5);
 				}
 			}
 		} while (arg2 != 0);
@@ -111,7 +111,7 @@ public class MixerPcmStream extends PcmStream {
 
 	@ObfuscatedName("ee.am([III)V")
 	public void method2181(int[] arg0, int arg1, int arg2) {
-		for (PcmStream var4 = (PcmStream) this.field2223.method1297(); var4 != null; var4 = (PcmStream) this.field2223.method1299()) {
+		for (PcmStream var4 = (PcmStream) this.field2223.head(); var4 != null; var4 = (PcmStream) this.field2223.next()) {
 			var4.method1529(arg0, arg1, arg2);
 		}
 	}
@@ -133,7 +133,7 @@ public class MixerPcmStream extends PcmStream {
 			arg0 -= var2;
 			this.field2222 += var2;
 			this.method2176();
-			MixerListener var3 = (MixerListener) this.field2221.method1297();
+			MixerListener var3 = (MixerListener) this.field2221.head();
 			synchronized (var3) {
 				int var5 = var3.method1565(this);
 				if (var5 < 0) {
@@ -141,7 +141,7 @@ public class MixerPcmStream extends PcmStream {
 					this.method2178(var3);
 				} else {
 					var3.field1681 = var5;
-					this.method2177(var3.field1505, var3);
+					this.method2177(var3.next, var3);
 				}
 			}
 		} while (arg0 != 0);
@@ -149,7 +149,7 @@ public class MixerPcmStream extends PcmStream {
 
 	@ObfuscatedName("ee.ap(I)V")
 	public void method2180(int arg0) {
-		for (PcmStream var2 = (PcmStream) this.field2223.method1297(); var2 != null; var2 = (PcmStream) this.field2223.method1299()) {
+		for (PcmStream var2 = (PcmStream) this.field2223.head(); var2 != null; var2 = (PcmStream) this.field2223.next()) {
 			var2.method1521(arg0);
 		}
 	}

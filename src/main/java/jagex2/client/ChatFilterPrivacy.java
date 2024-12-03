@@ -18,7 +18,7 @@ public class ChatFilterPrivacy {
 	public final int field1107;
 
 	@ObfuscatedName("be.r(I)[Lbb;")
-	public static ChatFilterPrivacy[] method907() {
+	public static ChatFilterPrivacy[] values() {
 		return new ChatFilterPrivacy[] { field1105, field1104, field1106 };
 	}
 

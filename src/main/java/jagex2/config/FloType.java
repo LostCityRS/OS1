@@ -46,23 +46,23 @@ public class FloType extends DoublyLinkable {
 	public int field2415;
 
 	@ObfuscatedName("cj.z(II)Lfb;")
-	public static FloType method1002(int arg0) {
-		FloType var1 = (FloType) field2411.method1244((long) arg0);
+	public static FloType get(int arg0) {
+		FloType var1 = (FloType) field2411.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
 		byte[] var2 = field808.method1044(4, arg0);
 		FloType var3 = new FloType();
 		if (var2 != null) {
-			var3.method2499(new Packet(var2), arg0);
+			var3.decode(new Packet(var2), arg0);
 		}
-		var3.method2485();
-		field2411.method1246(var3, (long) arg0);
+		var3.postDecode();
+		field2411.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("fb.g(B)V")
-	public void method2485() {
+	public void postDecode() {
 		if (this.field2414 != -1) {
 			this.method2488(this.field2414);
 			this.field2410 = this.field2409;
@@ -73,18 +73,18 @@ public class FloType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fb.q(Lev;IB)V")
-	public void method2499(Packet arg0, int arg1) {
+	public void decode(Packet arg0, int arg1) {
 		while (true) {
 			int var3 = arg0.g1();
 			if (var3 == 0) {
 				return;
 			}
-			this.method2487(arg0, var3, arg1);
+			this.decodeInner(arg0, var3, arg1);
 		}
 	}
 
 	@ObfuscatedName("fb.i(Lev;III)V")
-	public void method2487(Packet arg0, int arg1, int arg2) {
+	public void decodeInner(Packet arg0, int arg1, int arg2) {
 		if (arg1 == 1) {
 			this.field2406 = arg0.g3();
 		} else if (arg1 == 2) {

@@ -757,7 +757,7 @@ public class World {
 					if (var23 >= 0 && var23 < 104) {
 						int var24 = levelTileUnderlayIds[var6][var23][var22] & 0xFF;
 						if (var24 > 0) {
-							FluType var25 = FluType.method840(var24 - 1);
+							FluType var25 = FluType.get(var24 - 1);
 							blendChroma[var22] += var25.field2357;
 							blendSaturation[var22] += var25.field2356;
 							blendLightness[var22] += var25.field2359;
@@ -769,7 +769,7 @@ public class World {
 					if (var26 >= 0 && var26 < 104) {
 						int var27 = levelTileUnderlayIds[var6][var26][var22] & 0xFF;
 						if (var27 > 0) {
-							FluType var28 = FluType.method840(var27 - 1);
+							FluType var28 = FluType.get(var27 - 1);
 							blendChroma[var22] -= var28.field2357;
 							blendSaturation[var22] -= var28.field2356;
 							blendLightness[var22] -= var28.field2359;
@@ -853,7 +853,7 @@ public class World {
 									if (var38 == 0 && levelTileOverlayShape[var6][var21][var34] != 0) {
 										var55 = false;
 									}
-									if (var39 > 0 && !FloType.method1002(var39 - 1).field2408) {
+									if (var39 > 0 && !FloType.get(var39 - 1).field2408) {
 										var55 = false;
 									}
 									if (var55 && var40 == var41 && var40 == var42 && var40 == var43) {
@@ -869,7 +869,7 @@ public class World {
 								} else {
 									int var57 = levelTileOverlayShape[var6][var21][var34] + 1;
 									byte var58 = levelTileOverlayRotation[var6][var21][var34];
-									FloType var59 = FloType.method1002(var39 - 1);
+									FloType var59 = FloType.get(var39 - 1);
 									int var60 = var59.field2407;
 									int var61;
 									int var62;

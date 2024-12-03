@@ -25,33 +25,33 @@ public class VarBitType extends DoublyLinkable {
 	public int field2420;
 
 	@ObfuscatedName("q.z(II)Lfc;")
-	public static VarBitType method98(int arg0) {
-		VarBitType var1 = (VarBitType) field2417.method1244((long) arg0);
+	public static VarBitType get(int arg0) {
+		VarBitType var1 = (VarBitType) field2417.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
 		byte[] var2 = field2419.method1044(14, arg0);
 		VarBitType var3 = new VarBitType();
 		if (var2 != null) {
-			var3.method2501(new Packet(var2));
+			var3.decode(new Packet(var2));
 		}
-		field2417.method1246(var3, (long) arg0);
+		field2417.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("fc.g(Lev;B)V")
-	public void method2501(Packet arg0) {
+	public void decode(Packet arg0) {
 		while (true) {
 			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
-			this.method2503(arg0, var2);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fc.q(Lev;II)V")
-	public void method2503(Packet arg0, int arg1) {
+	public void decodeInner(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			this.field2418 = arg0.g2();
 			this.field2416 = arg0.g1();

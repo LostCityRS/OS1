@@ -54,33 +54,33 @@ public class IdkType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("p.g(II)Lfd;")
-	public static IdkType method346(int arg0) {
-		IdkType var1 = (IdkType) field2396.method1244((long) arg0);
+	public static IdkType get(int arg0) {
+		IdkType var1 = (IdkType) field2396.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
 		byte[] var2 = field2394.method1044(3, arg0);
 		IdkType var3 = new IdkType();
 		if (var2 != null) {
-			var3.method2464(new Packet(var2));
+			var3.decode(new Packet(var2));
 		}
-		field2396.method1246(var3, (long) arg0);
+		field2396.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("fd.q(Lev;I)V")
-	public void method2464(Packet arg0) {
+	public void decode(Packet arg0) {
 		while (true) {
 			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
-			this.method2478(arg0, var2);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fd.i(Lev;II)V")
-	public void method2478(Packet arg0, int arg1) {
+	public void decodeInner(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			this.field2403 = arg0.g1();
 		} else if (arg1 == 2) {

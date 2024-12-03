@@ -8,17 +8,17 @@ import java.awt.*;
 public class GameCanvas extends Canvas {
 
 	@ObfuscatedName("fk.r")
-	public Component field2493;
+	public Component component;
 
 	public GameCanvas(Component arg0) {
-		this.field2493 = arg0;
+		this.component = arg0;
 	}
 
 	public final void update(Graphics arg0) {
-		this.field2493.update(arg0);
+		this.component.update(arg0);
 	}
 
 	public final void paint(Graphics arg0) {
-		this.field2493.paint(arg0);
+		this.component.paint(arg0);
 	}
 }

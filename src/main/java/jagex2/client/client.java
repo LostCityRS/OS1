@@ -1419,7 +1419,7 @@ public class Client extends GameShell {
 			LinkList var1 = Js5ProviderThread.field1208;
 			Js5NetProviderRequest var2;
 			synchronized (Js5ProviderThread.field1208) {
-				var2 = (Js5NetProviderRequest) Js5ProviderThread.field1206.method1295();
+				var2 = (Js5NetProviderRequest) Js5ProviderThread.field1206.pop();
 			}
 			if (var2 == null) {
 				MidiPlayer.method825();
@@ -1543,7 +1543,7 @@ public class Client extends GameShell {
 							World.blendLuminance = new int[104];
 							World.blendMagnitude = new int[104];
 							int var22 = field1768.length;
-							for (PositionedSound var23 = (PositionedSound) PositionedSound.field1612.method1297(); var23 != null; var23 = (PositionedSound) PositionedSound.field1612.method1299()) {
+							for (PositionedSound var23 = (PositionedSound) PositionedSound.field1612.head(); var23 != null; var23 = (PositionedSound) PositionedSound.field1612.next()) {
 								if (var23.field1603 != null) {
 									field1460.method2175(var23.field1603);
 									var23.field1603 = null;
@@ -1553,7 +1553,7 @@ public class Client extends GameShell {
 									var23.field1614 = null;
 								}
 							}
-							PositionedSound.field1612.method1291();
+							PositionedSound.field1612.clear();
 							method722(true);
 							if (!field1978) {
 								for (int var24 = 0; var24 < var22; var24++) {
@@ -1699,15 +1699,15 @@ public class Client extends GameShell {
 								}
 							}
 							method1351();
-							for (LocSpawned var71 = (LocSpawned) field2057.method1297(); var71 != null; var71 = (LocSpawned) field2057.method1299()) {
+							for (LocSpawned var71 = (LocSpawned) field2057.head(); var71 != null; var71 = (LocSpawned) field2057.next()) {
 								if (var71.field1640 == -1) {
 									var71.field1639 = 0;
 									method1447(var71);
 								} else {
-									var71.method1325();
+									var71.unlink();
 								}
 							}
-							LocType.modelCacheStatic.method1253();
+							LocType.modelCacheStatic.clear();
 							if (GameShell.frame != null) {
 								field1949.pisaac1(210);
 								field1949.p4(1057001181);
@@ -1840,7 +1840,7 @@ public class Client extends GameShell {
 										}
 										if (field1913 == 87) {
 											int var92 = field2100.g4();
-											ComponentPointer var93 = (ComponentPointer) field1918.method1277((long) var92);
+											ComponentPointer var93 = (ComponentPointer) field1918.get((long) var92);
 											if (var93 != null) {
 												method408(var93, true);
 											}
@@ -2027,7 +2027,7 @@ public class Client extends GameShell {
 											int var133 = field2100.g1_alt2();
 											int var134 = field2100.g2_alt2();
 											int var135 = field2100.g4_alt1();
-											ComponentPointer var136 = (ComponentPointer) field1918.method1277((long) var135);
+											ComponentPointer var136 = (ComponentPointer) field1918.get((long) var135);
 											if (var136 != null) {
 												method408(var136, var136.field1598 != var134);
 											}
@@ -2158,11 +2158,11 @@ public class Client extends GameShell {
 											}
 											for (int var164 = var163; var164 <= var161; var164++) {
 												long var165 = ((long) var162 << 32) + (long) var164;
-												Linkable var167 = field2061.method1277(var165);
+												Linkable var167 = field2061.get(var165);
 												if (var167 != null) {
-													var167.method1325();
+													var167.unlink();
 												}
-												field2061.method1278(new ServerKeyProperties(var160), var165);
+												field2061.put(new ServerKeyProperties(var160), var165);
 											}
 											field1913 = -1;
 											var79 = true;
@@ -2247,7 +2247,7 @@ public class Client extends GameShell {
 												int var182 = field2100.g4();
 												int var183 = field2100.g2();
 												int var184 = field2100.g1();
-												ComponentPointer var185 = (ComponentPointer) field1918.method1277((long) var182);
+												ComponentPointer var185 = (ComponentPointer) field1918.get((long) var182);
 												if (var185 != null && var185.field1598 != var183) {
 													method408(var185, true);
 													var185 = null;
@@ -2272,7 +2272,7 @@ public class Client extends GameShell {
 												int var190 = field2100.g4();
 												for (int var191 = var188; var191 <= var189; var191++) {
 													long var192 = ((long) var187 << 32) + (long) var191;
-													field2061.method1278(new ServerKeyProperties(var190), var192);
+													field2061.put(new ServerKeyProperties(var190), var192);
 												}
 											}
 											field1913 = -1;
@@ -2305,7 +2305,7 @@ public class Client extends GameShell {
 										}
 										if (field1913 == 129) {
 											for (int var197 = 0; var197 < VarPlayerType.field2352; var197++) {
-												VarPlayerType var198 = VarPlayerType.method1584(var197);
+												VarPlayerType var198 = VarPlayerType.get(var197);
 												if (var198 != null && var198.field2478 == 0) {
 													VarProvider.field1211[var197] = 0;
 													VarProvider.field1210[var197] = 0;
@@ -2346,7 +2346,7 @@ public class Client extends GameShell {
 													}
 												}
 											}
-											for (LocSpawned var205 = (LocSpawned) field2057.method1297(); var205 != null; var205 = (LocSpawned) field2057.method1299()) {
+											for (LocSpawned var205 = (LocSpawned) field2057.head(); var205 != null; var205 = (LocSpawned) field2057.next()) {
 												if (var205.field1633 >= field351 && var205.field1633 < field351 + 8 && var205.field1632 >= field1485 && var205.field1632 < field1485 + 8 && field534 == var205.field1638) {
 													var205.field1640 = 0;
 												}
@@ -2430,7 +2430,7 @@ public class Client extends GameShell {
 										}
 										if (field1913 == 70) {
 											int var220 = field2100.g1();
-											ChatFilterPrivacy[] var221 = ChatFilterPrivacy.method907();
+											ChatFilterPrivacy[] var221 = ChatFilterPrivacy.values();
 											int var222 = 0;
 											ChatFilterPrivacy var224;
 											while (true) {
@@ -2584,7 +2584,7 @@ public class Client extends GameShell {
 													var237.field1907[var238] = -5;
 												}
 											}
-											ReflectionCheck.field1513.method1292(var237);
+											ReflectionCheck.field1513.push(var237);
 											field1913 = -1;
 											var79 = true;
 											break label3569;
@@ -2654,7 +2654,7 @@ public class Client extends GameShell {
 											if (var265.field1782) {
 												var265.field1791 = var263;
 												var265.field1888 = var264;
-												ObjType var267 = ObjType.method927(var263);
+												ObjType var267 = ObjType.get(var263);
 												var265.field1848 = var267.field2443;
 												var265.field1824 = var267.field2444;
 												var265.field1817 = var267.field2463;
@@ -2672,7 +2672,7 @@ public class Client extends GameShell {
 													var79 = true;
 													break label3569;
 												}
-												ObjType var266 = ObjType.method927(var263);
+												ObjType var266 = ObjType.get(var263);
 												var265.field1815 = 4;
 												var265.field1816 = var263;
 												var265.field1848 = var266.field2443;
@@ -2907,7 +2907,7 @@ public class Client extends GameShell {
 													var321.field1886[var322] = 0;
 												}
 											}
-											ClientInvCache var323 = (ClientInvCache) ClientInvCache.field1623.method1277((long) var320);
+											ClientInvCache var323 = (ClientInvCache) ClientInvCache.field1623.get((long) var320);
 											if (var323 != null) {
 												for (int var324 = 0; var324 < var323.field1622.length; var324++) {
 													var323.field1622[var324] = -1;
@@ -3444,7 +3444,7 @@ public class Client extends GameShell {
 								}
 							}
 							if (field1929 == 30) {
-								for (LocSpawned var423 = (LocSpawned) field2057.method1297(); var423 != null; var423 = (LocSpawned) field2057.method1299()) {
+								for (LocSpawned var423 = (LocSpawned) field2057.head(); var423 != null; var423 = (LocSpawned) field2057.next()) {
 									if (var423.field1640 > 0) {
 										var423.field1640--;
 									}
@@ -3456,14 +3456,14 @@ public class Client extends GameShell {
 											method274(var423.field1638, var423.field1630, var423.field1633, var423.field1632, var423.field1636, var423.field1637, var423.field1631);
 											var423.field1639 = -1;
 											if (var423.field1636 == var423.field1629 && var423.field1629 == -1) {
-												var423.method1325();
+												var423.unlink();
 											} else if (var423.field1636 == var423.field1629 && var423.field1637 == var423.field1634 && var423.field1635 == var423.field1631) {
-												var423.method1325();
+												var423.unlink();
 											}
 										}
 									} else if (var423.field1629 < 0 || World.isLocPrefetched(var423.field1629, var423.field1635)) {
 										method274(var423.field1638, var423.field1630, var423.field1633, var423.field1632, var423.field1629, var423.field1634, var423.field1635);
-										var423.method1325();
+										var423.unlink();
 									}
 								}
 								int var10002;
@@ -3637,21 +3637,21 @@ public class Client extends GameShell {
 												IfType var450;
 												IfType var451;
 												do {
-													var449 = (HookRequest) field2124.method1295();
+													var449 = (HookRequest) field2124.pop();
 													if (var449 == null) {
 														while (true) {
 															HookRequest var452;
 															IfType var453;
 															IfType var454;
 															do {
-																var452 = (HookRequest) field2093.method1295();
+																var452 = (HookRequest) field2093.pop();
 																if (var452 == null) {
 																	while (true) {
 																		HookRequest var455;
 																		IfType var456;
 																		IfType var457;
 																		do {
-																			var455 = (HookRequest) field2123.method1295();
+																			var455 = (HookRequest) field2123.pop();
 																			if (var455 == null) {
 																				if (field2094 != null) {
 																					method1238(field2094);
@@ -4051,7 +4051,7 @@ public class Client extends GameShell {
 				}
 				return;
 			}
-			var2.field1773.method1468(var2.field1770, (int) var2.field1506, var2.field1771, false);
+			var2.field1773.method1468(var2.field1770, (int) var2.key, var2.field1771, false);
 		}
 	}
 
@@ -5181,8 +5181,8 @@ public class Client extends GameShell {
 			field1954[var2] = null;
 		}
 		field1134 = field2073[2047] = new PlayerEntity();
-		field2058.method1291();
-		field2000.method1291();
+		field2058.clear();
+		field2000.clear();
 		for (int var3 = 0; var3 < 4; var3++) {
 			for (int var4 = 0; var4 < 104; var4++) {
 				for (int var5 = 0; var5 < 104; var5++) {
@@ -5194,7 +5194,7 @@ public class Client extends GameShell {
 		field2171 = 0;
 		field2071 = 0;
 		for (int var6 = 0; var6 < VarPlayerType.field2352; var6++) {
-			VarPlayerType var7 = VarPlayerType.method1584(var6);
+			VarPlayerType var7 = VarPlayerType.get(var6);
 			if (var7 != null && var7.field2478 == 0) {
 				VarProvider.field1211[var6] = 0;
 				VarProvider.field1210[var6] = 0;
@@ -5339,7 +5339,7 @@ public class Client extends GameShell {
 		MidiPlayer.field1152 = 2;
 		field2170 = -1;
 		field2189 = false;
-		for (PositionedSound var1 = (PositionedSound) PositionedSound.field1612.method1297(); var1 != null; var1 = (PositionedSound) PositionedSound.field1612.method1299()) {
+		for (PositionedSound var1 = (PositionedSound) PositionedSound.field1612.head(); var1 != null; var1 = (PositionedSound) PositionedSound.field1612.next()) {
 			if (var1.field1603 != null) {
 				field1460.method2175(var1.field1603);
 				var1.field1603 = null;
@@ -5349,29 +5349,29 @@ public class Client extends GameShell {
 				var1.field1614 = null;
 			}
 		}
-		PositionedSound.field1612.method1291();
+		PositionedSound.field1612.clear();
 		method729(10);
 	}
 
 	@ObfuscatedName("bh.da(B)V")
 	public static final void method746() {
-		FloType.field2411.method1253();
+		FloType.field2411.clear();
 		FluType.method2580();
-		IdkType.field2396.method1253();
+		IdkType.field2396.clear();
 		LocType.method916();
 		NpcType.method1334();
-		ObjType.field2432.method1253();
-		ObjType.field2433.method1253();
-		ObjType.field2434.method1253();
+		ObjType.field2432.clear();
+		ObjType.field2433.clear();
+		ObjType.field2434.clear();
 		SeqType.method1123();
-		SpotAnimType.field2379.method1253();
-		SpotAnimType.field2392.method1253();
-		VarBitType.field2417.method1253();
+		SpotAnimType.field2379.clear();
+		SpotAnimType.field2392.clear();
+		VarBitType.field2417.clear();
 		VarPlayerType.method1148();
 		PlayerModel.method912();
 		IfType.method1104();
 		((SceneBuilderProvider) Pix3D.sceneProvider).method749();
-		ClientScript.field2262.method1253();
+		ClientScript.field2262.clear();
 		field1109.method1057();
 		field1720.method1057();
 		field1123.method1057();
@@ -5706,7 +5706,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("ap.dr(Lfz;I)V")
 	public static final void method420(PathingEntity arg0) {
-		if (field1922 == arg0.field2658 || arg0.field2643 == -1 || arg0.field2627 != 0 || arg0.field2645 + 1 > SeqType.method104(arg0.field2643).field2366[arg0.field2653]) {
+		if (field1922 == arg0.field2658 || arg0.field2643 == -1 || arg0.field2627 != 0 || arg0.field2645 + 1 > SeqType.get(arg0.field2643).field2366[arg0.field2653]) {
 			int var1 = arg0.field2658 - arg0.field2628;
 			int var2 = field1922 - arg0.field2628;
 			int var3 = arg0.field2657 * 64 + arg0.field2617 * 128;
@@ -5740,7 +5740,7 @@ public class Client extends GameShell {
 			return;
 		}
 		if (arg0.field2643 != -1 && arg0.field2627 == 0) {
-			SeqType var1 = SeqType.method104(arg0.field2643);
+			SeqType var1 = SeqType.get(arg0.field2643);
 			if (arg0.field2656 > 0 && var1.field2375 == 0) {
 				arg0.field2669++;
 				return;
@@ -5943,7 +5943,7 @@ public class Client extends GameShell {
 	public static final void method345(PathingEntity arg0) {
 		arg0.field2616 = false;
 		if (arg0.field2640 != -1) {
-			SeqType var1 = SeqType.method104(arg0.field2640);
+			SeqType var1 = SeqType.get(arg0.field2640);
 			if (var1 == null || var1.field2364 == null) {
 				arg0.field2640 = -1;
 			} else {
@@ -5964,11 +5964,11 @@ public class Client extends GameShell {
 			if (arg0.field2649 < 0) {
 				arg0.field2649 = 0;
 			}
-			int var2 = SpotAnimType.method1133(arg0.field2648).field2390;
+			int var2 = SpotAnimType.get(arg0.field2648).field2390;
 			if (var2 == -1) {
 				arg0.field2648 = -1;
 			} else {
-				SeqType var3 = SeqType.method104(var2);
+				SeqType var3 = SeqType.get(var2);
 				if (var3 == null || var3.field2364 == null) {
 					arg0.field2648 = -1;
 				} else {
@@ -5985,14 +5985,14 @@ public class Client extends GameShell {
 			}
 		}
 		if (arg0.field2643 != -1 && arg0.field2627 <= 1) {
-			SeqType var4 = SeqType.method104(arg0.field2643);
+			SeqType var4 = SeqType.get(arg0.field2643);
 			if (var4.field2375 == 1 && arg0.field2656 > 0 && arg0.field2628 <= field1922 && arg0.field2658 < field1922) {
 				arg0.field2627 = 1;
 				return;
 			}
 		}
 		if (arg0.field2643 != -1 && arg0.field2627 == 0) {
-			SeqType var5 = SeqType.method104(arg0.field2643);
+			SeqType var5 = SeqType.get(arg0.field2643);
 			if (var5 == null || var5.field2364 == null) {
 				arg0.field2643 = -1;
 			} else {
@@ -6024,7 +6024,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("co.dw(Lfi;III)V")
 	public static void method1040(PlayerEntity arg0, int arg1, int arg2) {
 		if (arg0.field2643 == arg1 && arg1 != -1) {
-			int var3 = SeqType.method104(arg1).field2377;
+			int var3 = SeqType.get(arg1).field2377;
 			if (var3 == 1) {
 				arg0.field2653 = 0;
 				arg0.field2645 = 0;
@@ -6034,7 +6034,7 @@ public class Client extends GameShell {
 			if (var3 == 2) {
 				arg0.field2647 = 0;
 			}
-		} else if (arg1 == -1 || arg0.field2643 == -1 || SeqType.method104(arg1).field2371 >= SeqType.method104(arg0.field2643).field2371) {
+		} else if (arg1 == -1 || arg0.field2643 == -1 || SeqType.get(arg1).field2371 >= SeqType.get(arg0.field2643).field2371) {
 			arg0.field2643 = arg1;
 			arg0.field2653 = 0;
 			arg0.field2645 = 0;
@@ -6147,9 +6147,9 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("r.dx(I)V")
 	public static final void method7() {
-		for (ProjAnimEntity var0 = (ProjAnimEntity) field2058.method1297(); var0 != null; var0 = (ProjAnimEntity) field2058.method1299()) {
+		for (ProjAnimEntity var0 = (ProjAnimEntity) field2058.head(); var0 != null; var0 = (ProjAnimEntity) field2058.next()) {
 			if (field534 != var0.field2583 || field1922 > var0.field2573) {
-				var0.method1325();
+				var0.unlink();
 			} else if (field1922 >= var0.field2572) {
 				if (var0.field2582 > 0) {
 					NpcEntity var1 = field1954[var0.field2582 - 1];
@@ -6177,13 +6177,13 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("bf.dt(I)V")
 	public static final void method839() {
-		for (SpotAnimEntity var0 = (SpotAnimEntity) field2000.method1297(); var0 != null; var0 = (SpotAnimEntity) field2000.method1299()) {
+		for (SpotAnimEntity var0 = (SpotAnimEntity) field2000.head(); var0 != null; var0 = (SpotAnimEntity) field2000.next()) {
 			if (field534 != var0.field2604 || var0.field2605) {
-				var0.method1325();
+				var0.unlink();
 			} else if (field1922 >= var0.field2603) {
 				var0.method2902(field1998);
 				if (var0.field2605) {
-					var0.method1325();
+					var0.unlink();
 				} else {
 					field1133.method603(var0.field2604, var0.field2610, var0.field2606, var0.field2611, 60, var0, 0, -1, false);
 				}
@@ -6470,11 +6470,11 @@ public class Client extends GameShell {
 				}
 			}
 		}
-		for (LocSpawned var28 = (LocSpawned) field2057.method1297(); var28 != null; var28 = (LocSpawned) field2057.method1299()) {
+		for (LocSpawned var28 = (LocSpawned) field2057.head(); var28 != null; var28 = (LocSpawned) field2057.next()) {
 			var28.field1633 -= var7;
 			var28.field1632 -= var8;
 			if (var28.field1633 < 0 || var28.field1632 < 0 || var28.field1633 >= 104 || var28.field1632 >= 104) {
-				var28.method1325();
+				var28.unlink();
 			}
 		}
 		if (field2161 != 0) {
@@ -6484,8 +6484,8 @@ public class Client extends GameShell {
 		field2176 = 0;
 		field2182 = false;
 		field2156 = -1;
-		field2000.method1291();
-		field2058.method1291();
+		field2000.clear();
+		field2058.clear();
 	}
 
 	@ObfuscatedName("at.ej(ZB)V")
@@ -6956,13 +6956,13 @@ public class Client extends GameShell {
 			if (var32 >= 0 && var33 >= 0 && var32 < 104 && var33 < 104) {
 				LinkList var34 = field2088[field534][var32][var33];
 				if (var34 != null) {
-					for (ObjStackEntity var35 = (ObjStackEntity) var34.method1297(); var35 != null; var35 = (ObjStackEntity) var34.method1299()) {
+					for (ObjStackEntity var35 = (ObjStackEntity) var34.head(); var35 != null; var35 = (ObjStackEntity) var34.next()) {
 						if ((var30 & 0x7FFF) == var35.field2600) {
-							var35.method1325();
+							var35.unlink();
 							break;
 						}
 					}
-					if (var34.method1297() == null) {
+					if (var34.head() == null) {
 						field2088[field534][var32][var33] = null;
 					}
 					method1486(var32, var33);
@@ -7058,7 +7058,7 @@ public class Client extends GameShell {
 				if (field2088[field534][var60][var61] == null) {
 					field2088[field534][var60][var61] = new LinkList();
 				}
-				field2088[field534][var60][var61].method1292(var64);
+				field2088[field534][var60][var61].push(var64);
 				method1486(var60, var61);
 			}
 		} else if (field1913 == 106) {
@@ -7071,7 +7071,7 @@ public class Client extends GameShell {
 			if (var66 >= 0 && var67 >= 0 && var66 < 104 && var67 < 104) {
 				LinkList var71 = field2088[field534][var66][var67];
 				if (var71 != null) {
-					for (ObjStackEntity var72 = (ObjStackEntity) var71.method1297(); var72 != null; var72 = (ObjStackEntity) var71.method1299()) {
+					for (ObjStackEntity var72 = (ObjStackEntity) var71.head(); var72 != null; var72 = (ObjStackEntity) var71.next()) {
 						if ((var68 & 0x7FFF) == var72.field2600 && var72.field2601 == var69) {
 							var72.field2601 = var70;
 							break;
@@ -7103,7 +7103,7 @@ public class Client extends GameShell {
 				int var87 = var82 * 128 + 64;
 				int var88 = var83 * 128 + 64;
 				SpotAnimEntity var89 = new SpotAnimEntity(var84, field534, var87, var88, method814(var87, var88, field534) - var85, var86, field1922);
-				field2000.method1292(var89);
+				field2000.push(var89);
 			}
 		} else if (field1913 == 32) {
 			int var90 = field2100.g1();
@@ -7126,7 +7126,7 @@ public class Client extends GameShell {
 				int var106 = var94 * 128 + 64;
 				ProjAnimEntity var107 = new ProjAnimEntity(var96, field534, var103, var104, method814(var103, var104, field534) - var97, field1922 + var99, field1922 + var100, var101, var102, var95, var98);
 				var107.method2896(var105, var106, method814(var105, var106, field534) - var98, field1922 + var99);
-				field2058.method1292(var107);
+				field2058.push(var107);
 			}
 		} else if (field1913 == 215) {
 			int var108 = field2100.g1_alt2();
@@ -7142,7 +7142,7 @@ public class Client extends GameShell {
 				if (field2088[field534][var109][var110] == null) {
 					field2088[field534][var109][var110] = new LinkList();
 				}
-				field2088[field534][var109][var110].method1292(var114);
+				field2088[field534][var109][var110].push(var114);
 				method1486(var109, var110);
 			}
 		} else if (field1913 == 7) {
@@ -7162,7 +7162,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("ap.ew(IIIIIIIIII)V")
 	public static final void method421(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		LocSpawned var9 = null;
-		for (LocSpawned var10 = (LocSpawned) field2057.method1297(); var10 != null; var10 = (LocSpawned) field2057.method1299()) {
+		for (LocSpawned var10 = (LocSpawned) field2057.head(); var10 != null; var10 = (LocSpawned) field2057.next()) {
 			if (var10.field1638 == arg0 && var10.field1633 == arg1 && var10.field1632 == arg2 && var10.field1630 == arg3) {
 				var9 = var10;
 				break;
@@ -7175,7 +7175,7 @@ public class Client extends GameShell {
 			var9.field1633 = arg1;
 			var9.field1632 = arg2;
 			method1447(var9);
-			field2057.method1292(var9);
+			field2057.push(var9);
 		}
 		var9.field1636 = arg4;
 		var9.field1631 = arg5;
@@ -7289,8 +7289,8 @@ public class Client extends GameShell {
 		}
 		int var3 = -99999999;
 		ObjStackEntity var4 = null;
-		for (ObjStackEntity var5 = (ObjStackEntity) var2.method1297(); var5 != null; var5 = (ObjStackEntity) var2.method1299()) {
-			ObjType var6 = ObjType.method927(var5.field2600);
+		for (ObjStackEntity var5 = (ObjStackEntity) var2.head(); var5 != null; var5 = (ObjStackEntity) var2.next()) {
+			ObjType var6 = ObjType.get(var5.field2600);
 			int var7 = var6.field2470;
 			if (var6.field2448 == 1) {
 				var7 = (var5.field2601 + 1) * var7;
@@ -7304,10 +7304,10 @@ public class Client extends GameShell {
 			field1133.method666(field534, arg0, arg1);
 			return;
 		}
-		var2.method1312(var4);
+		var2.addHead(var4);
 		ObjStackEntity var8 = null;
 		ObjStackEntity var9 = null;
-		for (ObjStackEntity var10 = (ObjStackEntity) var2.method1297(); var10 != null; var10 = (ObjStackEntity) var2.method1299()) {
+		for (ObjStackEntity var10 = (ObjStackEntity) var2.head(); var10 != null; var10 = (ObjStackEntity) var2.next()) {
 			if (var4.field2600 != var10.field2600) {
 				if (var8 == null) {
 					var8 = var10;
@@ -7603,7 +7603,7 @@ public class Client extends GameShell {
 						field2045[++field2044 - 1] = var0;
 					}
 					int var6 = field2100.gBit(1);
-					var2.field2804 = NpcType.method275(field2100.gBit(14));
+					var2.field2804 = NpcType.get(field2100.gBit(14));
 					int var7 = field2100.gBit(5);
 					if (var7 > 15) {
 						var7 -= 32;
@@ -7674,7 +7674,7 @@ public class Client extends GameShell {
 				}
 				int var8 = field2100.g1_alt1();
 				if (var2.field2643 == var7 && var7 != -1) {
-					int var9 = SeqType.method104(var7).field2377;
+					int var9 = SeqType.get(var7).field2377;
 					if (var9 == 1) {
 						var2.field2653 = 0;
 						var2.field2645 = 0;
@@ -7684,7 +7684,7 @@ public class Client extends GameShell {
 					if (var9 == 2) {
 						var2.field2647 = 0;
 					}
-				} else if (var7 == -1 || var2.field2643 == -1 || SeqType.method104(var7).field2371 >= SeqType.method104(var2.field2643).field2371) {
+				} else if (var7 == -1 || var2.field2643 == -1 || SeqType.get(var7).field2371 >= SeqType.get(var2.field2643).field2371) {
 					var2.field2643 = var7;
 					var2.field2653 = 0;
 					var2.field2645 = 0;
@@ -7694,7 +7694,7 @@ public class Client extends GameShell {
 				}
 			}
 			if ((var3 & 0x40) != 0) {
-				var2.field2804 = NpcType.method275(field2100.g2());
+				var2.field2804 = NpcType.get(field2100.g2());
 				var2.field2657 = var2.field2804.field2283;
 				var2.field2661 = var2.field2804.field2296;
 				var2.field2621 = var2.field2804.field2279;
@@ -8317,7 +8317,7 @@ public class Client extends GameShell {
 			field502 = var2;
 			field555 = var4;
 			method1238(var45);
-			field2078 = TextUtil.method103(16748608) + ObjType.method927(var4).field2461 + TextUtil.method103(16777215);
+			field2078 = TextUtil.method103(16748608) + ObjType.get(var4).field2461 + TextUtil.method103(16777215);
 			if (field2078 == null) {
 				field2078 = "null";
 			}
@@ -8385,7 +8385,7 @@ public class Client extends GameShell {
 				field1949.pisaac1(49);
 				field1949.p2_alt1(var4);
 			} else {
-				method559(0, "", var48.field1886[var1] + " x " + ObjType.method927(var4).field2461);
+				method559(0, "", var48.field1886[var1] + " x " + ObjType.get(var4).field2461);
 			}
 			field2030 = 0;
 			field855 = IfType.method813(var2);
@@ -9381,8 +9381,8 @@ public class Client extends GameShell {
 											if (var105 == 3) {
 												LinkList var121 = field2088[field534][var103][var104];
 												if (var121 != null) {
-													for (ObjStackEntity var122 = (ObjStackEntity) var121.method1304(); var122 != null; var122 = (ObjStackEntity) var121.method1300()) {
-														ObjType var123 = ObjType.method927(var122.field2600);
+													for (ObjStackEntity var122 = (ObjStackEntity) var121.tail(); var122 != null; var122 = (ObjStackEntity) var121.prev()) {
+														ObjType var123 = ObjType.get(var122.field2600);
 														if (field2077 == 1) {
 															method8(EnglishLocale.field1005, field2078 + " " + TextUtil.field6 + " " + TextUtil.method103(16748608) + var123.field2461, 16, var122.field2600, var103, var104);
 														} else if (!field2079) {
@@ -9480,7 +9480,7 @@ public class Client extends GameShell {
 											field1221 = var10;
 											if (var10.field1885[var133] > 0) {
 												label1831: {
-													ObjType var138 = ObjType.method927(var10.field1885[var133] - 1);
+													ObjType var138 = ObjType.get(var10.field1885[var133] - 1);
 													if (field2077 == 1) {
 														int var139 = method1512(var10);
 														boolean var140 = (var139 >> 30 & 0x1) != 0;
@@ -9627,7 +9627,7 @@ public class Client extends GameShell {
 							if (var10.field1825 != null) {
 								method92(var10.field1825, var10.field1783, var19, var20, var21, var22, var12 - var10.field1796, var13 - var10.field1797, var11);
 							}
-							ComponentPointer var164 = (ComponentPointer) field1918.method1277((long) var10.field1783);
+							ComponentPointer var164 = (ComponentPointer) field1918.get((long) var10.field1783);
 							if (var164 != null) {
 								if (var164.field1597 == 0 && JavaMouseProvider.field488 >= var19 && JavaMouseProvider.field492 >= var20 && JavaMouseProvider.field488 < var21 && JavaMouseProvider.field492 < var22 && !field2066 && !field2092) {
 									field1994[0] = EnglishLocale.field1078;
@@ -9790,7 +9790,7 @@ public class Client extends GameShell {
 											}
 										}
 										if (var10.field1782 && var10.field1791 != -1) {
-											ObjType var190 = ObjType.method927(var10.field1791);
+											ObjType var190 = ObjType.get(var10.field1791);
 											var188 = var190.field2461;
 											if (var188 == null) {
 												var188 = "null";
@@ -9872,7 +9872,7 @@ public class Client extends GameShell {
 									SoftwareModel var202 = null;
 									int var203 = 0;
 									if (var10.field1791 != -1) {
-										ObjType var204 = ObjType.method927(var10.field1791);
+										ObjType var204 = ObjType.get(var10.field1791);
 										if (var204 != null) {
 											ObjType var205 = var204.method2523(var10.field1888);
 											var202 = var205.method2532(1);
@@ -9895,7 +9895,7 @@ public class Client extends GameShell {
 											method1238(var10);
 										}
 									} else {
-										SeqType var206 = SeqType.method104(var201);
+										SeqType var206 = SeqType.get(var201);
 										var202 = var10.method1802(var206, var10.field1779, var200, field1134.field2786);
 										if (var202 == null && IfType.field1870) {
 											method1238(var10);
@@ -9930,7 +9930,7 @@ public class Client extends GameShell {
 										for (int var211 = 0; var211 < var10.field1793; var211++) {
 											for (int var212 = 0; var212 < var10.field1792; var212++) {
 												if (var10.field1885[var210] > 0) {
-													ObjType var213 = ObjType.method927(var10.field1885[var210] - 1);
+													ObjType var213 = ObjType.get(var10.field1885[var210] - 1);
 													String var214;
 													if (var213.field2448 != 1 && var10.field1886[var210] == 1) {
 														var214 = TextUtil.method103(16748608) + var213.field2461 + TextUtil.field1;
@@ -10196,7 +10196,7 @@ public class Client extends GameShell {
 					int var10 = var9 + var2[var4++];
 					IfType var11 = IfType.method813(var10);
 					int var12 = var2[var4++];
-					if (var12 != -1 && (!ObjType.method927(var12).field2457 || field1983)) {
+					if (var12 != -1 && (!ObjType.get(var12).field2457 || field1983)) {
 						for (int var13 = 0; var13 < var11.field1885.length; var13++) {
 							if (var12 + 1 == var11.field1885[var13]) {
 								var7 += var11.field1886[var13];
@@ -10228,7 +10228,7 @@ public class Client extends GameShell {
 					int var16 = var15 + var2[var4++];
 					IfType var17 = IfType.method813(var16);
 					int var18 = var2[var4++];
-					if (var18 != -1 && (!ObjType.method927(var18).field2457 || field1983)) {
+					if (var18 != -1 && (!ObjType.get(var18).field2457 || field1983)) {
 						for (int var19 = 0; var19 < var17.field1885.length; var19++) {
 							if (var18 + 1 == var17.field1885[var19]) {
 								var7 = 999999999;
@@ -10362,7 +10362,7 @@ public class Client extends GameShell {
 							if (var9.field1825 != null) {
 								method1836(var9.field1825, var9.field1783, var12, var13, var14, var15, var10 - var9.field1796, var11 - var9.field1797);
 							}
-							ComponentPointer var24 = (ComponentPointer) field1918.method1277((long) var9.field1783);
+							ComponentPointer var24 = (ComponentPointer) field1918.get((long) var9.field1783);
 							if (var24 != null) {
 								method1145(var24.field1598, var12, var13, var14, var15, var10, var11);
 							}
@@ -10403,7 +10403,7 @@ public class Client extends GameShell {
 									var30.field1590 = var9;
 									var30.field1587 = field2122;
 									var30.field1588 = var9.field1831;
-									field2123.method1292(var30);
+									field2123.push(var30);
 								}
 								if (field2094 != null || field1271 != null || field2066) {
 									var27 = false;
@@ -10418,7 +10418,7 @@ public class Client extends GameShell {
 										var31.field1589 = JavaMouseProvider.field498 - var10;
 										var31.field1587 = JavaMouseProvider.field499 - var11;
 										var31.field1588 = var9.field1852;
-										field2123.method1292(var31);
+										field2123.push(var31);
 									}
 								}
 								if (var9.field1871 && var26 && var9.field1853 != null) {
@@ -10427,7 +10427,7 @@ public class Client extends GameShell {
 									var32.field1589 = JavaMouseProvider.field488 - var10;
 									var32.field1587 = JavaMouseProvider.field492 - var11;
 									var32.field1588 = var9.field1853;
-									field2123.method1292(var32);
+									field2123.push(var32);
 								}
 								if (var9.field1871 && !var26) {
 									var9.field1871 = false;
@@ -10437,7 +10437,7 @@ public class Client extends GameShell {
 										var33.field1589 = JavaMouseProvider.field488 - var10;
 										var33.field1587 = JavaMouseProvider.field492 - var11;
 										var33.field1588 = var9.field1851;
-										field2093.method1292(var33);
+										field2093.push(var33);
 									}
 								}
 								if (var26 && var9.field1855 != null) {
@@ -10446,7 +10446,7 @@ public class Client extends GameShell {
 									var34.field1589 = JavaMouseProvider.field488 - var10;
 									var34.field1587 = JavaMouseProvider.field492 - var11;
 									var34.field1588 = var9.field1855;
-									field2123.method1292(var34);
+									field2123.push(var34);
 								}
 								if (!var9.field1892 && var25) {
 									var9.field1892 = true;
@@ -10456,7 +10456,7 @@ public class Client extends GameShell {
 										var35.field1589 = JavaMouseProvider.field488 - var10;
 										var35.field1587 = JavaMouseProvider.field492 - var11;
 										var35.field1588 = var9.field1856;
-										field2123.method1292(var35);
+										field2123.push(var35);
 									}
 								}
 								if (var9.field1892 && var25 && var9.field1857 != null) {
@@ -10465,7 +10465,7 @@ public class Client extends GameShell {
 									var36.field1589 = JavaMouseProvider.field488 - var10;
 									var36.field1587 = JavaMouseProvider.field492 - var11;
 									var36.field1588 = var9.field1857;
-									field2123.method1292(var36);
+									field2123.push(var36);
 								}
 								if (var9.field1892 && !var25) {
 									var9.field1892 = false;
@@ -10475,21 +10475,21 @@ public class Client extends GameShell {
 										var37.field1589 = JavaMouseProvider.field488 - var10;
 										var37.field1587 = JavaMouseProvider.field492 - var11;
 										var37.field1588 = var9.field1838;
-										field2093.method1292(var37);
+										field2093.push(var37);
 									}
 								}
 								if (var9.field1869 != null) {
 									HookRequest var38 = new HookRequest();
 									var38.field1590 = var9;
 									var38.field1588 = var9.field1869;
-									field2124.method1292(var38);
+									field2124.push(var38);
 								}
 								if (var9.field1839 != null && field2084 > var9.field1895) {
 									if (var9.field1889 == null || field2084 - var9.field1895 > 32) {
 										HookRequest var43 = new HookRequest();
 										var43.field1590 = var9;
 										var43.field1588 = var9.field1839;
-										field2123.method1292(var43);
+										field2123.push(var43);
 									} else {
 										label383: for (int var39 = var9.field1895; var39 < field2084; var39++) {
 											int var40 = field2110[var39 & 0x1F];
@@ -10498,7 +10498,7 @@ public class Client extends GameShell {
 													HookRequest var42 = new HookRequest();
 													var42.field1590 = var9;
 													var42.field1588 = var9.field1839;
-													field2123.method1292(var42);
+													field2123.push(var42);
 													break label383;
 												}
 											}
@@ -10511,7 +10511,7 @@ public class Client extends GameShell {
 										HookRequest var48 = new HookRequest();
 										var48.field1590 = var9;
 										var48.field1588 = var9.field1865;
-										field2123.method1292(var48);
+										field2123.push(var48);
 									} else {
 										label363: for (int var44 = var9.field1879; var44 < field2050; var44++) {
 											int var45 = field2112[var44 & 0x1F];
@@ -10520,7 +10520,7 @@ public class Client extends GameShell {
 													HookRequest var47 = new HookRequest();
 													var47.field1590 = var9;
 													var47.field1588 = var9.field1865;
-													field2123.method1292(var47);
+													field2123.push(var47);
 													break label363;
 												}
 											}
@@ -10533,7 +10533,7 @@ public class Client extends GameShell {
 										HookRequest var53 = new HookRequest();
 										var53.field1590 = var9;
 										var53.field1588 = var9.field1867;
-										field2123.method1292(var53);
+										field2123.push(var53);
 									} else {
 										label343: for (int var49 = var9.field1897; var49 < field1982; var49++) {
 											int var50 = field1999[var49 & 0x1F];
@@ -10542,7 +10542,7 @@ public class Client extends GameShell {
 													HookRequest var52 = new HookRequest();
 													var52.field1590 = var9;
 													var52.field1588 = var9.field1867;
-													field2123.method1292(var52);
+													field2123.push(var52);
 													break label343;
 												}
 											}
@@ -10554,25 +10554,25 @@ public class Client extends GameShell {
 									HookRequest var54 = new HookRequest();
 									var54.field1590 = var9;
 									var54.field1588 = var9.field1872;
-									field2123.method1292(var54);
+									field2123.push(var54);
 								}
 								if (field1977 > var9.field1894 && var9.field1877 != null) {
 									HookRequest var55 = new HookRequest();
 									var55.field1590 = var9;
 									var55.field1588 = var9.field1877;
-									field2123.method1292(var55);
+									field2123.push(var55);
 								}
 								if (field2185 > var9.field1894 && var9.field1875 != null) {
 									HookRequest var56 = new HookRequest();
 									var56.field1590 = var9;
 									var56.field1588 = var9.field1875;
-									field2123.method1292(var56);
+									field2123.push(var56);
 								}
 								if (field2119 > var9.field1894 && var9.field1777 != null) {
 									HookRequest var57 = new HookRequest();
 									var57.field1590 = var9;
 									var57.field1588 = var9.field1777;
-									field2123.method1292(var57);
+									field2123.push(var57);
 								}
 								var9.field1894 = field2117;
 								if (var9.field1873 != null) {
@@ -10582,7 +10582,7 @@ public class Client extends GameShell {
 										var59.field1593 = field2153[var58];
 										var59.field1594 = field2152[var58];
 										var59.field1588 = var9.field1873;
-										field2123.method1292(var59);
+										field2123.push(var59);
 									}
 								}
 							}
@@ -10627,7 +10627,7 @@ public class Client extends GameShell {
 					if (var3.field1825 != null) {
 						method561(var3.field1825, arg1);
 					}
-					ComponentPointer var4 = (ComponentPointer) field1918.method1277((long) var3.field1783);
+					ComponentPointer var4 = (ComponentPointer) field1918.get((long) var3.field1783);
 					if (var4 != null) {
 						method725(var4.field1598, arg1);
 					}
@@ -10688,7 +10688,7 @@ public class Client extends GameShell {
 					}
 				}
 				if (!var2) {
-					int var5 = (int) var0.field1506;
+					int var5 = (int) var0.key;
 					IfType var6 = IfType.method813(var5);
 					if (var6 != null) {
 						method1238(var6);
@@ -10767,7 +10767,7 @@ public class Client extends GameShell {
 					if (var3.field1825 != null) {
 						method1146(var3.field1825, var3.field1783);
 					}
-					ComponentPointer var4 = (ComponentPointer) field1918.method1277((long) var3.field1783);
+					ComponentPointer var4 = (ComponentPointer) field1918.get((long) var3.field1783);
 					if (var4 != null) {
 						int var5 = var4.field1598;
 						if (IfType.method1501(var5)) {
@@ -10785,7 +10785,7 @@ public class Client extends GameShell {
 							var7 = var3.field1863;
 						}
 						if (var7 != -1) {
-							SeqType var8 = SeqType.method104(var7);
+							SeqType var8 = SeqType.get(var7);
 							var3.field1890 += field1998;
 							while (var3.field1890 > var8.field2366[var3.field1779]) {
 								var3.field1890 -= var8.field2366[var3.field1779];
@@ -10818,7 +10818,7 @@ public class Client extends GameShell {
 	public static final void method778(int arg0) {
 		method93();
 		PositionedSound.method478();
-		int var1 = VarPlayerType.method1584(arg0).field2478;
+		int var1 = VarPlayerType.get(arg0).field2478;
 		if (var1 == 0) {
 			return;
 		}
@@ -10959,7 +10959,7 @@ public class Client extends GameShell {
 		ComponentPointer var3 = new ComponentPointer();
 		var3.field1598 = arg1;
 		var3.field1597 = arg2;
-		field1918.method1278(var3, (long) arg0);
+		field1918.put(var3, (long) arg0);
 		method57(arg1);
 		ScriptRunner.method6(arg1);
 		IfType var4 = IfType.method813(arg0);
@@ -10982,8 +10982,8 @@ public class Client extends GameShell {
 	@ObfuscatedName("am.gr(Ldy;ZI)V")
 	public static final void method408(ComponentPointer arg0, boolean arg1) {
 		int var2 = arg0.field1598;
-		int var3 = (int) arg0.field1506;
-		arg0.method1325();
+		int var3 = (int) arg0.key;
+		arg0.unlink();
 		if (arg1 && var2 != -1 && IfType.field1508[var2]) {
 			IfType.field1806.method1086(var2);
 			if (IfType.field373[var2] != null) {
@@ -11406,15 +11406,15 @@ public class Client extends GameShell {
 	@ObfuscatedName("s.gt(II)V")
 	public static void method109(int arg0) {
 		for (ServerKeyProperties var1 = (ServerKeyProperties) field2061.method1284(); var1 != null; var1 = (ServerKeyProperties) field2061.method1280()) {
-			if ((long) arg0 == (var1.field1506 >> 48 & 0xFFFFL)) {
-				var1.method1325();
+			if ((long) arg0 == (var1.key >> 48 & 0xFFFFL)) {
+				var1.unlink();
 			}
 		}
 	}
 
 	@ObfuscatedName("dn.gg(Leg;B)I")
 	public static int method1512(IfType arg0) {
-		ServerKeyProperties var1 = (ServerKeyProperties) field2061.method1277(((long) arg0.field1783 << 32) + (long) arg0.field1823);
+		ServerKeyProperties var1 = (ServerKeyProperties) field2061.get(((long) arg0.field1783 << 32) + (long) arg0.field1823);
 		return var1 == null ? arg0.field1842 : var1.field1900;
 	}
 

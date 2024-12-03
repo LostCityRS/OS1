@@ -76,8 +76,8 @@ public class SeqType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("i.g(IB)Leo;")
-	public static SeqType method104(int arg0) {
-		SeqType var1 = (SeqType) field2362.method1244((long) arg0);
+	public static SeqType get(int arg0) {
+		SeqType var1 = (SeqType) field2362.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
@@ -87,7 +87,7 @@ public class SeqType extends DoublyLinkable {
 			var3.method2415(new Packet(var2));
 		}
 		var3.method2417();
-		field2362.method1246(var3, (long) arg0);
+		field2362.put(var3, (long) arg0);
 		return var3;
 	}
 
@@ -286,7 +286,7 @@ public class SeqType extends DoublyLinkable {
 
 	@ObfuscatedName("bi.y(IB)Lfr;")
 	public static AnimFrameset method760(int arg0) {
-		AnimFrameset var1 = (AnimFrameset) field2370.method1244((long) arg0);
+		AnimFrameset var1 = (AnimFrameset) field2370.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
@@ -317,14 +317,14 @@ public class SeqType extends DoublyLinkable {
 			var10 = null;
 		}
 		if (var10 != null) {
-			field2370.method1246(var10, (long) arg0);
+			field2370.put(var10, (long) arg0);
 		}
 		return var10;
 	}
 
 	@ObfuscatedName("cu.t(I)V")
 	public static void method1123() {
-		field2362.method1253();
-		field2370.method1253();
+		field2362.clear();
+		field2370.clear();
 	}
 }

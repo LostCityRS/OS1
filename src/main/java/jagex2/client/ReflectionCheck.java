@@ -22,7 +22,7 @@ public class ReflectionCheck {
 	@ObfuscatedName("br.r(Lea;IB)V")
 	public static void method919(PacketBit arg0, int arg1) {
 		while (true) {
-			ReflectionCheckNode var2 = (ReflectionCheckNode) field1513.method1297();
+			ReflectionCheckNode var2 = (ReflectionCheckNode) field1513.head();
 			if (var2 == null) {
 				return;
 			}
@@ -106,7 +106,7 @@ public class ReflectionCheck {
 			}
 			arg0.addcrc(var3);
 			arg0.psize1(arg0.pos - var3);
-			var2.method1325();
+			var2.unlink();
 		}
 	}
 

@@ -36,39 +36,39 @@ public class FluType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("bf.g(IB)Lec;")
-	public static FluType method840(int arg0) {
-		FluType var1 = (FluType) field2355.method1244((long) arg0);
+	public static FluType get(int arg0) {
+		FluType var1 = (FluType) field2355.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
 		byte[] var2 = field2358.method1044(1, arg0);
 		FluType var3 = new FluType();
 		if (var2 != null) {
-			var3.method2399(new Packet(var2), arg0);
+			var3.decode(new Packet(var2), arg0);
 		}
-		var3.method2398();
-		field2355.method1246(var3, (long) arg0);
+		var3.postDecode();
+		field2355.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("ec.q(I)V")
-	public void method2398() {
+	public void postDecode() {
 		this.method2401(this.field2354);
 	}
 
 	@ObfuscatedName("ec.i(Lev;II)V")
-	public void method2399(Packet arg0, int arg1) {
+	public void decode(Packet arg0, int arg1) {
 		while (true) {
 			int var3 = arg0.g1();
 			if (var3 == 0) {
 				return;
 			}
-			this.method2400(arg0, var3, arg1);
+			this.decodeInner(arg0, var3, arg1);
 		}
 	}
 
 	@ObfuscatedName("ec.s(Lev;III)V")
-	public void method2400(Packet arg0, int arg1, int arg2) {
+	public void decodeInner(Packet arg0, int arg1, int arg2) {
 		if (arg1 == 1) {
 			this.field2354 = arg0.g3();
 		}
@@ -137,6 +137,6 @@ public class FluType extends DoublyLinkable {
 
 	@ObfuscatedName("fg.v(I)V")
 	public static void method2580() {
-		field2355.method1253();
+		field2355.clear();
 	}
 }

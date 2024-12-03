@@ -200,7 +200,7 @@ public class ScriptRunner {
 						int var20 = var8[var6];
 						var4--;
 						int var21 = field188[var4];
-						VarBitType var22 = VarBitType.method98(var20);
+						VarBitType var22 = VarBitType.get(var20);
 						int var23 = var22.field2418;
 						int var24 = var22.field2416;
 						int var25 = var22.field2420;
@@ -643,7 +643,7 @@ public class ScriptRunner {
 						int var68 = field188[var4 + 1];
 						var66.field1791 = var67;
 						var66.field1888 = var68;
-						ObjType var69 = ObjType.method927(var67);
+						ObjType var69 = ObjType.get(var67);
 						var66.field1848 = var69.field2443;
 						var66.field1824 = var69.field2444;
 						var66.field1817 = var69.field2463;
@@ -1035,7 +1035,7 @@ public class ScriptRunner {
 						if (var367 == 2702) {
 							var4--;
 							int var90 = field188[var4];
-							ComponentPointer var91 = (ComponentPointer) Client.field1918.method1277((long) var90);
+							ComponentPointer var91 = (ComponentPointer) Client.field1918.get((long) var90);
 							if (var91 == null) {
 								field188[var4++] = 0;
 							} else {
@@ -1189,7 +1189,7 @@ public class ScriptRunner {
 							int var116 = field188[var4 + 1];
 							int[] var117 = field188;
 							int var118 = var4++;
-							ClientInvCache var119 = (ClientInvCache) ClientInvCache.field1623.method1277((long) var115);
+							ClientInvCache var119 = (ClientInvCache) ClientInvCache.field1623.get((long) var115);
 							int var120;
 							if (var119 == null) {
 								var120 = -1;
@@ -1220,15 +1220,15 @@ public class ScriptRunner {
 							int var125 = field188[var4];
 							int[] var126 = field188;
 							int var127 = var4++;
-							InvType var128 = (InvType) InvType.field2475.method1244((long) var125);
+							InvType var128 = (InvType) InvType.field2475.get((long) var125);
 							InvType var129;
 							if (var128 == null) {
 								byte[] var130 = InvType.field2476.method1044(5, var125);
 								InvType var131 = new InvType();
 								if (var130 != null) {
-									var131.method2569(new Packet(var130));
+									var131.decode(new Packet(var130));
 								}
-								InvType.field2475.method1246(var131, (long) var125);
+								InvType.field2475.put(var131, (long) var125);
 								var129 = var131;
 							} else {
 								var129 = var128;
@@ -1289,7 +1289,7 @@ public class ScriptRunner {
 							int var142 = field188[var4 + 1];
 							int[] var143 = field188;
 							int var144 = var4++;
-							ClientInvCache var145 = (ClientInvCache) ClientInvCache.field1623.method1277((long) var141);
+							ClientInvCache var145 = (ClientInvCache) ClientInvCache.field1623.get((long) var141);
 							int var146;
 							if (var145 == null) {
 								var146 = -1;
@@ -1352,7 +1352,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var151 = field188[var4];
 							int var152 = field188[var4 + 1];
-							EnumType var153 = EnumType.method1844(var151);
+							EnumType var153 = EnumType.get(var151);
 							if (var153.field2424 != 's') {
 							}
 							for (int var154 = 0; var154 < var153.field2427; var154++) {
@@ -1373,7 +1373,7 @@ public class ScriptRunner {
 							int var156 = field188[var4 + 1];
 							int var157 = field188[var4 + 2];
 							int var158 = field188[var4 + 3];
-							EnumType var159 = EnumType.method1844(var157);
+							EnumType var159 = EnumType.get(var157);
 							if (var159.field2423 == var155 && var159.field2424 == var156) {
 								for (int var160 = 0; var160 < var159.field2427; var160++) {
 									if (var159.field2421[var160] == var158) {
@@ -2097,14 +2097,14 @@ public class ScriptRunner {
 						if (var367 == 4200) {
 							var4--;
 							int var323 = field188[var4];
-							field194[var5++] = ObjType.method927(var323).field2461;
+							field194[var5++] = ObjType.get(var323).field2461;
 							continue;
 						}
 						if (var367 == 4201) {
 							var4 -= 2;
 							int var324 = field188[var4];
 							int var325 = field188[var4 + 1];
-							ObjType var326 = ObjType.method927(var324);
+							ObjType var326 = ObjType.get(var324);
 							if (var325 >= 1 && var325 <= 5 && var326.field2451[var325 - 1] != null) {
 								field194[var5++] = var326.field2451[var325 - 1];
 								continue;
@@ -2116,7 +2116,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var327 = field188[var4];
 							int var328 = field188[var4 + 1];
-							ObjType var329 = ObjType.method927(var327);
+							ObjType var329 = ObjType.get(var327);
 							if (var328 >= 1 && var328 <= 5 && var329.field2452[var328 - 1] != null) {
 								field194[var5++] = var329.field2452[var328 - 1];
 								continue;
@@ -2127,19 +2127,19 @@ public class ScriptRunner {
 						if (var367 == 4203) {
 							var4--;
 							int var330 = field188[var4];
-							field188[var4++] = ObjType.method927(var330).field2470;
+							field188[var4++] = ObjType.get(var330).field2470;
 							continue;
 						}
 						if (var367 == 4204) {
 							var4--;
 							int var331 = field188[var4];
-							field188[var4++] = ObjType.method927(var331).field2448 == 1 ? 1 : 0;
+							field188[var4++] = ObjType.get(var331).field2448 == 1 ? 1 : 0;
 							continue;
 						}
 						if (var367 == 4205) {
 							var4--;
 							int var332 = field188[var4];
-							ObjType var333 = ObjType.method927(var332);
+							ObjType var333 = ObjType.get(var332);
 							if (var333.field2450 == -1 && var333.field2459 >= 0) {
 								field188[var4++] = var333.field2459;
 								continue;
@@ -2150,7 +2150,7 @@ public class ScriptRunner {
 						if (var367 == 4206) {
 							var4--;
 							int var334 = field188[var4];
-							ObjType var335 = ObjType.method927(var334);
+							ObjType var335 = ObjType.get(var334);
 							if (var335.field2450 >= 0 && var335.field2459 >= 0) {
 								field188[var4++] = var335.field2459;
 								continue;
@@ -2161,7 +2161,7 @@ public class ScriptRunner {
 						if (var367 == 4207) {
 							var4--;
 							int var336 = field188[var4];
-							field188[var4++] = ObjType.method927(var336).field2457 ? 1 : 0;
+							field188[var4++] = ObjType.get(var336).field2457 ? 1 : 0;
 							continue;
 						}
 					} else if (var367 < 5100) {
@@ -2173,7 +2173,7 @@ public class ScriptRunner {
 							var4 -= 3;
 							Client.field2145 = field188[var4];
 							int var337 = field188[var4 + 1];
-							ChatFilterPrivacy[] var338 = ChatFilterPrivacy.method907();
+							ChatFilterPrivacy[] var338 = ChatFilterPrivacy.values();
 							int var339 = 0;
 							ChatFilterPrivacy var341;
 							while (true) {
@@ -2433,9 +2433,9 @@ public class ScriptRunner {
 			}
 		} catch (Exception var366) {
 			StringBuilder var364 = new StringBuilder(30);
-			var364.append("").append(var3.field1506).append(" ");
+			var364.append("").append(var3.key).append(" ");
 			for (int var365 = field195 - 1; var365 >= 0; var365--) {
-				var364.append("").append(field196[var365].script.field1506).append(" ");
+				var364.append("").append(field196[var365].script.key).append(" ");
 			}
 			var364.append("").append(var9);
 			JagException.report((String) var364.toString(), (Throwable) var366);

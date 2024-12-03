@@ -31,7 +31,7 @@ public class VarProvider {
 
 	@ObfuscatedName("cc.r(II)I")
 	public static int method1130(int arg0) {
-		VarBitType var1 = VarBitType.method98(arg0);
+		VarBitType var1 = VarBitType.get(arg0);
 		int var2 = var1.field2418;
 		int var3 = var1.field2416;
 		int var4 = var1.field2420;

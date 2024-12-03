@@ -55,19 +55,19 @@ public class SceneBuilderProvider implements SceneProvider {
 		SceneTextureProvider var2 = this.field719[arg0];
 		if (var2 != null) {
 			if (var2.field1694 != null) {
-				this.field722.method1312(var2);
+				this.field722.addHead(var2);
 				var2.field1689 = true;
 				return var2.field1694;
 			}
 			boolean var3 = var2.method1571(this.field720, this.field721, this.field716);
 			if (var3) {
 				if (this.field718 == 0) {
-					SceneTextureProvider var4 = (SceneTextureProvider) this.field722.method1290();
+					SceneTextureProvider var4 = (SceneTextureProvider) this.field722.removeTail();
 					var4.method1572();
 				} else {
 					this.field718--;
 				}
-				this.field722.method1312(var2);
+				this.field722.addHead(var2);
 				var2.field1689 = true;
 				return var2.field1694;
 			}

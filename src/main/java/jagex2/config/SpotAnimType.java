@@ -60,8 +60,8 @@ public class SpotAnimType extends DoublyLinkable {
 	public int field2393 = 0;
 
 	@ObfuscatedName("cm.z(IB)Leu;")
-	public static SpotAnimType method1133(int arg0) {
-		SpotAnimType var1 = (SpotAnimType) field2379.method1244((long) arg0);
+	public static SpotAnimType get(int arg0) {
+		SpotAnimType var1 = (SpotAnimType) field2379.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
@@ -69,25 +69,25 @@ public class SpotAnimType extends DoublyLinkable {
 		SpotAnimType var3 = new SpotAnimType();
 		var3.field2382 = arg0;
 		if (var2 != null) {
-			var3.method2445(new Packet(var2));
+			var3.decode(new Packet(var2));
 		}
-		field2379.method1246(var3, (long) arg0);
+		field2379.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("eu.g(Lev;I)V")
-	public void method2445(Packet arg0) {
+	public void decode(Packet arg0) {
 		while (true) {
 			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
-			this.method2446(arg0, var2);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("eu.q(Lev;II)V")
-	public void method2446(Packet arg0, int arg1) {
+	public void decodeInner(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			this.field2383 = arg0.g2();
 		} else if (arg1 == 2) {
@@ -123,7 +123,7 @@ public class SpotAnimType extends DoublyLinkable {
 
 	@ObfuscatedName("eu.i(IS)Lfo;")
 	public final SoftwareModel method2455(int arg0) {
-		SoftwareModel var2 = (SoftwareModel) field2392.method1244((long) this.field2382);
+		SoftwareModel var2 = (SoftwareModel) field2392.get((long) this.field2382);
 		if (var2 == null) {
 			Model var3 = Model.method2992(field2385, this.field2383, 0);
 			if (var3 == null) {
@@ -140,13 +140,13 @@ public class SpotAnimType extends DoublyLinkable {
 				}
 			}
 			var2 = var3.method2942(this.field2391 + 64, this.field2393 + 850, -30, -50, -30);
-			field2392.method1246(var2, (long) this.field2382);
+			field2392.put(var2, (long) this.field2382);
 		}
 		SoftwareModel var6;
 		if (this.field2390 == -1 || arg0 == -1) {
 			var6 = var2.method3040(true);
 		} else {
-			var6 = SeqType.method104(this.field2390).method2439(var2, arg0);
+			var6 = SeqType.get(this.field2390).method2439(var2, arg0);
 		}
 		if (this.field2378 != 128 || this.field2389 != 128) {
 			var6.method3013(this.field2378, this.field2389, this.field2378);
