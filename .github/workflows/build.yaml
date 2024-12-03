@@ -4,8 +4,7 @@ on:
      - main
 
 jobs:
-  loader-client:
-    name: Build Projects
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -29,3 +28,26 @@ jobs:
         name: os1
         path: |
           build/libs/*
+
+  deob-map:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 21
+
+    - name: Generate deob mapping
+      run: |
+        cp ref/remap.toml deob.toml
+        wget https://github.com/LostCityRS/Deobfuscator/releases/latest/download/Deobfuscator.jar
+        java -jar Deobfuscator.jar
+
+    - name: Upload mapping
+      uses: actions/upload-artifact@v4
+      with:
+        name: remap.txt
+        path: |
+          remap.txt

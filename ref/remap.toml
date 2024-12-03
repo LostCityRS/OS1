@@ -1,0 +1,7 @@
+[profile]
+produce_map = "src/main/java"
+
+[profile.source]
+transformers = [
+    "ProduceMap"
+]
