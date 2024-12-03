@@ -24,15 +24,15 @@ public class Wave {
 
 	public Wave(Packet arg0) {
 		for (int var2 = 0; var2 < 10; var2++) {
-			int var3 = arg0.method1600();
+			int var3 = arg0.g1();
 			if (var3 != 0) {
-				arg0.field1729--;
+				arg0.pos--;
 				this.field307[var2] = new Tone();
 				this.field307[var2].method263(arg0);
 			}
 		}
-		this.field308 = arg0.method1602();
-		this.field309 = arg0.method1602();
+		this.field308 = arg0.g2();
+		this.field309 = arg0.g2();
 	}
 
 	@ObfuscatedName("o.d()Leq;")

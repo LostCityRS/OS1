@@ -43,34 +43,34 @@ public class SceneTextureProvider extends Linkable {
 	public boolean field1689 = false;
 
 	public SceneTextureProvider(Packet arg0) {
-		this.field1687 = arg0.method1602();
-		this.field1686 = arg0.method1600() == 1;
-		int var2 = arg0.method1600();
+		this.field1687 = arg0.g2();
+		this.field1686 = arg0.g1() == 1;
+		int var2 = arg0.g1();
 		if (var2 < 1 || var2 > 4) {
 			throw new RuntimeException();
 		}
 		this.field1696 = new int[var2];
 		for (int var3 = 0; var3 < var2; var3++) {
-			this.field1696[var3] = arg0.method1602();
+			this.field1696[var3] = arg0.g2();
 		}
 		if (var2 > 1) {
 			this.field1688 = new int[var2 - 1];
 			for (int var4 = 0; var4 < var2 - 1; var4++) {
-				this.field1688[var4] = arg0.method1600();
+				this.field1688[var4] = arg0.g1();
 			}
 		}
 		if (var2 > 1) {
 			this.field1690 = new int[var2 - 1];
 			for (int var5 = 0; var5 < var2 - 1; var5++) {
-				this.field1690[var5] = arg0.method1600();
+				this.field1690[var5] = arg0.g1();
 			}
 		}
 		this.field1691 = new int[var2];
 		for (int var6 = 0; var6 < var2; var6++) {
-			this.field1691[var6] = arg0.method1605();
+			this.field1691[var6] = arg0.g4();
 		}
-		this.field1692 = arg0.method1600();
-		this.field1682 = arg0.method1600();
+		this.field1692 = arg0.g1();
+		this.field1682 = arg0.g1();
 		this.field1694 = null;
 	}
 

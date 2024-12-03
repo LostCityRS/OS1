@@ -145,10 +145,10 @@ public class Model extends Entity {
 	public static int field2715 = 0;
 
 	@ObfuscatedName("fw.af")
-	public static int[] field2716 = Pix3D.field2533;
+	public static int[] field2716 = Pix3D.sinTable;
 
 	@ObfuscatedName("fw.bh")
-	public static int[] field2717 = Pix3D.field2530;
+	public static int[] field2717 = Pix3D.cosTable;
 
 	public Model() {
 	}
@@ -176,29 +176,29 @@ public class Model extends Entity {
 		Packet var6 = new Packet(arg0);
 		Packet var7 = new Packet(arg0);
 		Packet var8 = new Packet(arg0);
-		var2.field1729 = arg0.length - 23;
-		int var9 = var2.method1602();
-		int var10 = var2.method1602();
-		int var11 = var2.method1600();
-		int var12 = var2.method1600();
-		int var13 = var2.method1600();
-		int var14 = var2.method1600();
-		int var15 = var2.method1600();
-		int var16 = var2.method1600();
-		int var17 = var2.method1600();
-		int var18 = var2.method1602();
-		int var19 = var2.method1602();
-		int var20 = var2.method1602();
-		int var21 = var2.method1602();
-		int var22 = var2.method1602();
+		var2.pos = arg0.length - 23;
+		int var9 = var2.g2();
+		int var10 = var2.g2();
+		int var11 = var2.g1();
+		int var12 = var2.g1();
+		int var13 = var2.g1();
+		int var14 = var2.g1();
+		int var15 = var2.g1();
+		int var16 = var2.g1();
+		int var17 = var2.g1();
+		int var18 = var2.g2();
+		int var19 = var2.g2();
+		int var20 = var2.g2();
+		int var21 = var2.g2();
+		int var22 = var2.g2();
 		int var23 = 0;
 		int var24 = 0;
 		int var25 = 0;
 		if (var11 > 0) {
 			this.field2687 = new byte[var11];
-			var2.field1729 = 0;
+			var2.pos = 0;
 			for (int var26 = 0; var26 < var11; var26++) {
-				byte var27 = this.field2687[var26] = var2.method1595();
+				byte var27 = this.field2687[var26] = var2.g1b();
 				if (var27 == 0) {
 					var23++;
 				}
@@ -297,27 +297,27 @@ public class Model extends Entity {
 				this.field2696 = new short[var25];
 			}
 		}
-		var2.field1729 = var11;
-		var3.field1729 = var44;
-		var4.field1729 = var46;
-		var5.field1729 = var48;
-		var6.field1729 = var36;
+		var2.pos = var11;
+		var3.pos = var44;
+		var4.pos = var46;
+		var5.pos = var48;
+		var6.pos = var36;
 		int var64 = 0;
 		int var65 = 0;
 		int var66 = 0;
 		for (int var67 = 0; var67 < var9; var67++) {
-			int var68 = var2.method1600();
+			int var68 = var2.g1();
 			int var69 = 0;
 			if ((var68 & 0x1) != 0) {
-				var69 = var3.method1612();
+				var69 = var3.gsmarts();
 			}
 			int var70 = 0;
 			if ((var68 & 0x2) != 0) {
-				var70 = var4.method1612();
+				var70 = var4.gsmarts();
 			}
 			int var71 = 0;
 			if ((var68 & 0x4) != 0) {
-				var71 = var5.method1612();
+				var71 = var5.gsmarts();
 			}
 			this.field2673[var67] = var64 + var69;
 			this.field2672[var67] = var65 + var70;
@@ -326,49 +326,49 @@ public class Model extends Entity {
 			var65 = this.field2672[var67];
 			var66 = this.field2674[var67];
 			if (var17 == 1) {
-				this.field2713[var67] = var6.method1600();
+				this.field2713[var67] = var6.g1();
 			}
 		}
-		var2.field1729 = var42;
-		var3.field1729 = var31;
-		var4.field1729 = var34;
-		var5.field1729 = var37;
-		var6.field1729 = var35;
-		var7.field1729 = var40;
-		var8.field1729 = var39;
+		var2.pos = var42;
+		var3.pos = var31;
+		var4.pos = var34;
+		var5.pos = var37;
+		var6.pos = var35;
+		var7.pos = var40;
+		var8.pos = var39;
 		for (int var72 = 0; var72 < var10; var72++) {
-			this.field2704[var72] = (short) var2.method1602();
+			this.field2704[var72] = (short) var2.g2();
 			if (var12 == 1) {
-				this.field2679[var72] = var3.method1595();
+				this.field2679[var72] = var3.g1b();
 			}
 			if (var13 == 255) {
-				this.field2680[var72] = var4.method1595();
+				this.field2680[var72] = var4.g1b();
 			}
 			if (var14 == 1) {
-				this.field2709[var72] = var5.method1595();
+				this.field2709[var72] = var5.g1b();
 			}
 			if (var15 == 1) {
-				this.field2699[var72] = var6.method1600();
+				this.field2699[var72] = var6.g1();
 			}
 			if (var16 == 1) {
-				this.field2705[var72] = (short) (var7.method1602() - 1);
+				this.field2705[var72] = (short) (var7.g2() - 1);
 			}
 			if (this.field2682 != null && this.field2705[var72] != -1) {
-				this.field2682[var72] = (byte) (var8.method1600() - 1);
+				this.field2682[var72] = (byte) (var8.g1() - 1);
 			}
 		}
-		var2.field1729 = var33;
-		var3.field1729 = var30;
+		var2.pos = var33;
+		var3.pos = var30;
 		int var73 = 0;
 		int var74 = 0;
 		int var75 = 0;
 		int var76 = 0;
 		for (int var77 = 0; var77 < var10; var77++) {
-			int var78 = var3.method1600();
+			int var78 = var3.g1();
 			if (var78 == 1) {
-				var73 = var2.method1612() + var76;
-				var74 = var2.method1612() + var73;
-				var75 = var2.method1612() + var74;
+				var73 = var2.gsmarts() + var76;
+				var74 = var2.gsmarts() + var73;
+				var75 = var2.gsmarts() + var74;
 				var76 = var75;
 				this.field2711[var77] = var73;
 				this.field2677[var77] = var74;
@@ -376,7 +376,7 @@ public class Model extends Entity {
 			}
 			if (var78 == 2) {
 				var74 = var75;
-				var75 = var2.method1612() + var76;
+				var75 = var2.gsmarts() + var76;
 				var76 = var75;
 				this.field2711[var77] = var73;
 				this.field2677[var77] = var74;
@@ -384,7 +384,7 @@ public class Model extends Entity {
 			}
 			if (var78 == 3) {
 				var73 = var75;
-				var75 = var2.method1612() + var76;
+				var75 = var2.gsmarts() + var76;
 				var76 = var75;
 				this.field2711[var77] = var73;
 				this.field2677[var77] = var74;
@@ -394,71 +394,71 @@ public class Model extends Entity {
 				int var81 = var73;
 				var73 = var74;
 				var74 = var81;
-				var75 = var2.method1612() + var76;
+				var75 = var2.gsmarts() + var76;
 				var76 = var75;
 				this.field2711[var77] = var73;
 				this.field2677[var77] = var81;
 				this.field2689[var77] = var75;
 			}
 		}
-		var2.field1729 = var50;
-		var3.field1729 = var52;
-		var4.field1729 = var54;
-		var5.field1729 = var56;
-		var6.field1729 = var58;
-		var7.field1729 = var60;
+		var2.pos = var50;
+		var3.pos = var52;
+		var4.pos = var54;
+		var5.pos = var56;
+		var6.pos = var58;
+		var7.pos = var60;
 		for (int var82 = 0; var82 < var11; var82++) {
 			int var83 = this.field2687[var82] & 0xFF;
 			if (var83 == 0) {
-				this.field2688[var82] = (short) var2.method1602();
-				this.field2681[var82] = (short) var2.method1602();
-				this.field2690[var82] = (short) var2.method1602();
+				this.field2688[var82] = (short) var2.g2();
+				this.field2681[var82] = (short) var2.g2();
+				this.field2690[var82] = (short) var2.g2();
 			}
 			if (var83 == 1) {
-				this.field2688[var82] = (short) var3.method1602();
-				this.field2681[var82] = (short) var3.method1602();
-				this.field2690[var82] = (short) var3.method1602();
-				this.field2691[var82] = (short) var4.method1602();
-				this.field2692[var82] = (short) var4.method1602();
-				this.field2693[var82] = (short) var4.method1602();
-				this.field2694[var82] = (short) var5.method1602();
-				this.field2697[var82] = var6.method1595();
-				this.field2695[var82] = (short) var7.method1602();
+				this.field2688[var82] = (short) var3.g2();
+				this.field2681[var82] = (short) var3.g2();
+				this.field2690[var82] = (short) var3.g2();
+				this.field2691[var82] = (short) var4.g2();
+				this.field2692[var82] = (short) var4.g2();
+				this.field2693[var82] = (short) var4.g2();
+				this.field2694[var82] = (short) var5.g2();
+				this.field2697[var82] = var6.g1b();
+				this.field2695[var82] = (short) var7.g2();
 			}
 			if (var83 == 2) {
-				this.field2688[var82] = (short) var3.method1602();
-				this.field2681[var82] = (short) var3.method1602();
-				this.field2690[var82] = (short) var3.method1602();
-				this.field2691[var82] = (short) var4.method1602();
-				this.field2692[var82] = (short) var4.method1602();
-				this.field2693[var82] = (short) var4.method1602();
-				this.field2694[var82] = (short) var5.method1602();
-				this.field2697[var82] = var6.method1595();
-				this.field2695[var82] = (short) var7.method1602();
-				this.field2696[var82] = (short) var7.method1602();
+				this.field2688[var82] = (short) var3.g2();
+				this.field2681[var82] = (short) var3.g2();
+				this.field2690[var82] = (short) var3.g2();
+				this.field2691[var82] = (short) var4.g2();
+				this.field2692[var82] = (short) var4.g2();
+				this.field2693[var82] = (short) var4.g2();
+				this.field2694[var82] = (short) var5.g2();
+				this.field2697[var82] = var6.g1b();
+				this.field2695[var82] = (short) var7.g2();
+				this.field2696[var82] = (short) var7.g2();
 			}
 			if (var83 == 3) {
-				this.field2688[var82] = (short) var3.method1602();
-				this.field2681[var82] = (short) var3.method1602();
-				this.field2690[var82] = (short) var3.method1602();
-				this.field2691[var82] = (short) var4.method1602();
-				this.field2692[var82] = (short) var4.method1602();
-				this.field2693[var82] = (short) var4.method1602();
-				this.field2694[var82] = (short) var5.method1602();
-				this.field2697[var82] = var6.method1595();
-				this.field2695[var82] = (short) var7.method1602();
+				this.field2688[var82] = (short) var3.g2();
+				this.field2681[var82] = (short) var3.g2();
+				this.field2690[var82] = (short) var3.g2();
+				this.field2691[var82] = (short) var4.g2();
+				this.field2692[var82] = (short) var4.g2();
+				this.field2693[var82] = (short) var4.g2();
+				this.field2694[var82] = (short) var5.g2();
+				this.field2697[var82] = var6.g1b();
+				this.field2695[var82] = (short) var7.g2();
 			}
 		}
-		var2.field1729 = var62;
-		int var84 = var2.method1600();
+		var2.pos = var62;
+		int var84 = var2.g1();
 		if (var84 == 0) {
 			return;
 		}
 		new Unused10();
-		var2.method1602();
-		var2.method1602();
-		var2.method1602();
-		var2.method1605();
+		var2.g2();
+		var2.g2();
+		var2.g2();
+		var2.g4();
 	}
 
 	@ObfuscatedName("fw.t([B)V")
@@ -470,19 +470,19 @@ public class Model extends Entity {
 		Packet var6 = new Packet(arg0);
 		Packet var7 = new Packet(arg0);
 		Packet var8 = new Packet(arg0);
-		var4.field1729 = arg0.length - 18;
-		int var9 = var4.method1602();
-		int var10 = var4.method1602();
-		int var11 = var4.method1600();
-		int var12 = var4.method1600();
-		int var13 = var4.method1600();
-		int var14 = var4.method1600();
-		int var15 = var4.method1600();
-		int var16 = var4.method1600();
-		int var17 = var4.method1602();
-		int var18 = var4.method1602();
-		int var19 = var4.method1602();
-		int var20 = var4.method1602();
+		var4.pos = arg0.length - 18;
+		int var9 = var4.g2();
+		int var10 = var4.g2();
+		int var11 = var4.g1();
+		int var12 = var4.g1();
+		int var13 = var4.g1();
+		int var14 = var4.g1();
+		int var15 = var4.g1();
+		int var16 = var4.g1();
+		int var17 = var4.g2();
+		int var18 = var4.g2();
+		int var19 = var4.g2();
+		int var20 = var4.g2();
 		byte var21 = 0;
 		int var23 = var9 + var21;
 		int var25 = var10 + var23;
@@ -547,27 +547,27 @@ public class Model extends Entity {
 			this.field2699 = new int[var10];
 		}
 		this.field2704 = new short[var10];
-		var4.field1729 = var21;
-		var5.field1729 = var36;
-		var6.field1729 = var38;
-		var7.field1729 = var40;
-		var8.field1729 = var29;
+		var4.pos = var21;
+		var5.pos = var36;
+		var6.pos = var38;
+		var7.pos = var40;
+		var8.pos = var29;
 		int var43 = 0;
 		int var44 = 0;
 		int var45 = 0;
 		for (int var46 = 0; var46 < var9; var46++) {
-			int var47 = var4.method1600();
+			int var47 = var4.g1();
 			int var48 = 0;
 			if ((var47 & 0x1) != 0) {
-				var48 = var5.method1612();
+				var48 = var5.gsmarts();
 			}
 			int var49 = 0;
 			if ((var47 & 0x2) != 0) {
-				var49 = var6.method1612();
+				var49 = var6.gsmarts();
 			}
 			int var50 = 0;
 			if ((var47 & 0x4) != 0) {
-				var50 = var7.method1612();
+				var50 = var7.gsmarts();
 			}
 			this.field2673[var46] = var43 + var48;
 			this.field2672[var46] = var44 + var49;
@@ -576,18 +576,18 @@ public class Model extends Entity {
 			var44 = this.field2672[var46];
 			var45 = this.field2674[var46];
 			if (var16 == 1) {
-				this.field2713[var46] = var8.method1600();
+				this.field2713[var46] = var8.g1();
 			}
 		}
-		var4.field1729 = var32;
-		var5.field1729 = var28;
-		var6.field1729 = var26;
-		var7.field1729 = var30;
-		var8.field1729 = var27;
+		var4.pos = var32;
+		var5.pos = var28;
+		var6.pos = var26;
+		var7.pos = var30;
+		var8.pos = var27;
 		for (int var51 = 0; var51 < var10; var51++) {
-			this.field2704[var51] = (short) var4.method1602();
+			this.field2704[var51] = (short) var4.g2();
 			if (var12 == 1) {
-				int var52 = var5.method1600();
+				int var52 = var5.g1();
 				if ((var52 & 0x1) == 1) {
 					this.field2679[var51] = 1;
 					var2 = true;
@@ -607,27 +607,27 @@ public class Model extends Entity {
 				}
 			}
 			if (var13 == 255) {
-				this.field2680[var51] = var6.method1595();
+				this.field2680[var51] = var6.g1b();
 			}
 			if (var14 == 1) {
-				this.field2709[var51] = var7.method1595();
+				this.field2709[var51] = var7.g1b();
 			}
 			if (var15 == 1) {
-				this.field2699[var51] = var8.method1600();
+				this.field2699[var51] = var8.g1();
 			}
 		}
-		var4.field1729 = var25;
-		var5.field1729 = var23;
+		var4.pos = var25;
+		var5.pos = var23;
 		int var53 = 0;
 		int var54 = 0;
 		int var55 = 0;
 		int var56 = 0;
 		for (int var57 = 0; var57 < var10; var57++) {
-			int var58 = var5.method1600();
+			int var58 = var5.g1();
 			if (var58 == 1) {
-				var53 = var4.method1612() + var56;
-				var54 = var4.method1612() + var53;
-				var55 = var4.method1612() + var54;
+				var53 = var4.gsmarts() + var56;
+				var54 = var4.gsmarts() + var53;
+				var55 = var4.gsmarts() + var54;
 				var56 = var55;
 				this.field2711[var57] = var53;
 				this.field2677[var57] = var54;
@@ -635,7 +635,7 @@ public class Model extends Entity {
 			}
 			if (var58 == 2) {
 				var54 = var55;
-				var55 = var4.method1612() + var56;
+				var55 = var4.gsmarts() + var56;
 				var56 = var55;
 				this.field2711[var57] = var53;
 				this.field2677[var57] = var54;
@@ -643,7 +643,7 @@ public class Model extends Entity {
 			}
 			if (var58 == 3) {
 				var53 = var55;
-				var55 = var4.method1612() + var56;
+				var55 = var4.gsmarts() + var56;
 				var56 = var55;
 				this.field2711[var57] = var53;
 				this.field2677[var57] = var54;
@@ -653,19 +653,19 @@ public class Model extends Entity {
 				int var61 = var53;
 				var53 = var54;
 				var54 = var61;
-				var55 = var4.method1612() + var56;
+				var55 = var4.gsmarts() + var56;
 				var56 = var55;
 				this.field2711[var57] = var53;
 				this.field2677[var57] = var61;
 				this.field2689[var57] = var55;
 			}
 		}
-		var4.field1729 = var34;
+		var4.pos = var34;
 		for (int var62 = 0; var62 < var11; var62++) {
 			this.field2687[var62] = 0;
-			this.field2688[var62] = (short) var4.method1602();
-			this.field2681[var62] = (short) var4.method1602();
-			this.field2690[var62] = (short) var4.method1602();
+			this.field2688[var62] = (short) var4.g2();
+			this.field2681[var62] = (short) var4.g2();
+			this.field2690[var62] = (short) var4.g2();
 		}
 		if (this.field2682 != null) {
 			boolean var63 = false;

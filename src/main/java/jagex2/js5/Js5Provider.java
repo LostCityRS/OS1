@@ -53,9 +53,9 @@ public class Js5Provider extends Js5Index {
 			Js5TcpClient.method827(null, 255, 255, 0, (byte) 0, true);
 			Js5TcpClient.field1200[var8] = this;
 		} else {
-			Statics.field542.field1729 = var8 * 8 + 5;
-			int var9 = Statics.field542.method1605();
-			int var10 = Statics.field542.method1605();
+			Statics.field542.pos = var8 * 8 + 5;
+			int var9 = Statics.field542.g4();
+			int var10 = Statics.field542.g4();
 			this.method1476(var9, var10);
 		}
 	}
@@ -198,13 +198,13 @@ public class Js5Provider extends Js5Index {
 		field1579.update(arg2, 0, arg2.length);
 		int var5 = (int) field1579.getValue();
 		Packet var6 = new Packet(Js5Index.method52(arg2));
-		int var7 = var6.method1600();
+		int var7 = var6.g1();
 		if (var7 != 5 && var7 != 6) {
 			throw new RuntimeException("");
 		}
 		int var8 = 0;
 		if (var7 >= 6) {
-			var8 = var6.method1605();
+			var8 = var6.g4();
 		}
 		if (this.field1580 != var5 || this.field1577 != var8) {
 			Js5TcpClient.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);

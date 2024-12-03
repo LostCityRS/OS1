@@ -173,16 +173,16 @@ public class SoftwareModel extends Entity {
 	public static int[] field2730 = new int[1000];
 
 	@ObfuscatedName("fo.bq")
-	public static int[] field2768 = Pix3D.field2533;
+	public static int[] field2768 = Pix3D.sinTable;
 
 	@ObfuscatedName("fo.bj")
-	public static int[] field2721 = Pix3D.field2530;
+	public static int[] field2721 = Pix3D.cosTable;
 
 	@ObfuscatedName("fo.bz")
 	public static int[] field2769 = Pix3D.field2538;
 
 	@ObfuscatedName("fo.bm")
-	public static int[] field2781 = Pix3D.field2519;
+	public static int[] field2781 = Pix3D.divTable2;
 
 	public SoftwareModel() {
 	}

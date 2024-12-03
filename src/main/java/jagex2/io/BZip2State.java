@@ -6,22 +6,22 @@ import deob.ObfuscatedName;
 public class BZip2State {
 
 	@ObfuscatedName("bg.r")
-	public final int field784 = 4096;
+	public final int MTFA_SIZE = 4096;
 
 	@ObfuscatedName("bg.d")
-	public final int field764 = 16;
+	public final int MTFL_SIZE = 16;
 
 	@ObfuscatedName("bg.l")
-	public final int field752 = 258;
+	public final int BZ_MAX_ALPHA_SIZE = 258;
 
 	@ObfuscatedName("bg.m")
-	public final int field773 = 6;
+	public final int BZ_N_GROUPS = 6;
 
 	@ObfuscatedName("bg.c")
-	public final int field783 = 50;
+	public final int BZ_G_SIZE = 50;
 
 	@ObfuscatedName("bg.n")
-	public final int field756 = 18002;
+	public final int BZ_MAX_SELECTORS = 18002;
 
 	@ObfuscatedName("bg.j")
 	public byte[] field753;

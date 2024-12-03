@@ -90,9 +90,9 @@ public class Js5TcpClient {
 				while (field1188 < 20 && field1186 > 0) {
 					Js5NetRequest var3 = (Js5NetRequest) field1185.method1284();
 					Packet var4 = new Packet(4);
-					var4.method1587(1);
-					var4.method1624((int) var3.field1506);
-					Statics.field169.method396(var4.field1732, 0, 4);
+					var4.p1(1);
+					var4.p3((int) var3.field1506);
+					Statics.field169.method396(var4.data, 0, 4);
 					field1187.method1278(var3, var3.field1506);
 					field1186--;
 					field1188++;
@@ -100,9 +100,9 @@ public class Js5TcpClient {
 				while (field1197 < 20 && field1191 > 0) {
 					Js5NetRequest var5 = (Js5NetRequest) field1189.method1259();
 					Packet var6 = new Packet(4);
-					var6.method1587(0);
-					var6.method1624((int) var5.field1506);
-					Statics.field169.method396(var6.field1732, 0, 4);
+					var6.p1(0);
+					var6.p3((int) var5.field1506);
+					Statics.field169.method396(var6.data, 0, 4);
 					var5.method1841();
 					field1199.method1278(var5, var5.field1506);
 					field1191--;
@@ -124,26 +124,26 @@ public class Js5TcpClient {
 						var9 = 1;
 					}
 					if (var9 > 0) {
-						int var10 = var9 - field1195.field1729;
+						int var10 = var9 - field1195.pos;
 						if (var10 > var8) {
 							var10 = var8;
 						}
-						Statics.field169.method391(field1195.field1732, field1195.field1729, var10);
+						Statics.field169.method391(field1195.data, field1195.pos, var10);
 						if (field1202 != 0) {
 							for (int var11 = 0; var11 < var10; var11++) {
-								field1195.field1732[field1195.field1729 + var11] ^= field1202;
+								field1195.data[field1195.pos + var11] ^= field1202;
 							}
 						}
-						field1195.field1729 += var10;
-						if (field1195.field1729 < var9) {
+						field1195.pos += var10;
+						if (field1195.pos < var9) {
 							break;
 						}
 						if (Statics.field812 == null) {
-							field1195.field1729 = 0;
-							int var12 = field1195.method1600();
-							int var13 = field1195.method1602();
-							int var14 = field1195.method1600();
-							int var15 = field1195.method1605();
+							field1195.pos = 0;
+							int var12 = field1195.g1();
+							int var13 = field1195.g2();
+							int var14 = field1195.g1();
+							int var15 = field1195.g4();
 							long var16 = (long) ((var12 << 16) + var13);
 							Js5NetRequest var18 = (Js5NetRequest) field1187.method1277(var16);
 							Statics.field1194 = true;
@@ -157,50 +157,50 @@ public class Js5TcpClient {
 							int var19 = var14 == 0 ? 5 : 9;
 							Statics.field812 = var18;
 							Statics.field1196 = new Packet(var15 + var19 + Statics.field812.field2490);
-							Statics.field1196.method1587(var14);
-							Statics.field1196.method1761(var15);
+							Statics.field1196.p1(var14);
+							Statics.field1196.p4(var15);
 							field1201 = 8;
-							field1195.field1729 = 0;
+							field1195.pos = 0;
 						} else if (field1201 == 0) {
-							if (field1195.field1732[0] == -1) {
+							if (field1195.data[0] == -1) {
 								field1201 = 1;
-								field1195.field1729 = 0;
+								field1195.pos = 0;
 							} else {
 								Statics.field812 = null;
 							}
 						}
 					} else {
-						int var20 = Statics.field1196.field1732.length - Statics.field812.field2490;
+						int var20 = Statics.field1196.data.length - Statics.field812.field2490;
 						int var21 = 512 - field1201;
-						if (var21 > var20 - Statics.field1196.field1729) {
-							var21 = var20 - Statics.field1196.field1729;
+						if (var21 > var20 - Statics.field1196.pos) {
+							var21 = var20 - Statics.field1196.pos;
 						}
 						if (var21 > var8) {
 							var21 = var8;
 						}
-						Statics.field169.method391(Statics.field1196.field1732, Statics.field1196.field1729, var21);
+						Statics.field169.method391(Statics.field1196.data, Statics.field1196.pos, var21);
 						if (field1202 != 0) {
 							for (int var22 = 0; var22 < var21; var22++) {
-								Statics.field1196.field1732[Statics.field1196.field1729 + var22] ^= field1202;
+								Statics.field1196.data[Statics.field1196.pos + var22] ^= field1202;
 							}
 						}
-						Statics.field1196.field1729 += var21;
+						Statics.field1196.pos += var21;
 						field1201 += var21;
-						if (Statics.field1196.field1729 == var20) {
+						if (Statics.field1196.pos == var20) {
 							if (Statics.field812.field1506 == 16711935L) {
 								Statics.field542 = Statics.field1196;
 								for (int var23 = 0; var23 < 256; var23++) {
 									Js5Provider var24 = field1200[var23];
 									if (var24 != null) {
-										Statics.field542.field1729 = var23 * 8 + 5;
-										int var25 = Statics.field542.method1605();
-										int var26 = Statics.field542.method1605();
+										Statics.field542.pos = var23 * 8 + 5;
+										int var25 = Statics.field542.g4();
+										int var26 = Statics.field542.g4();
 										var24.method1476(var25, var26);
 									}
 								}
 							} else {
 								field1184.reset();
-								field1184.update(Statics.field1196.field1732, 0, var20);
+								field1184.update(Statics.field1196.data, 0, var20);
 								int var27 = (int) field1184.getValue();
 								if (Statics.field812.field2491 != var27) {
 									try {
@@ -214,7 +214,7 @@ public class Js5TcpClient {
 								}
 								field1198 = 0;
 								field1203 = 0;
-								Statics.field812.field2492.method1467((int) (Statics.field812.field1506 & 0xFFFFL), Statics.field1196.field1732, (Statics.field812.field1506 & 0xFF0000L) == 16711680L, Statics.field1194);
+								Statics.field812.field2492.method1467((int) (Statics.field812.field1506 & 0xFFFFL), Statics.field1196.data, (Statics.field812.field1506 & 0xFF0000L) == 16711680L, Statics.field1194);
 							}
 							Statics.field812.method1325();
 							if (Statics.field1194) {
@@ -253,9 +253,9 @@ public class Js5TcpClient {
 		}
 		try {
 			Packet var1 = new Packet(4);
-			var1.method1587(arg0 ? 2 : 3);
-			var1.method1624(0);
-			Statics.field169.method396(var1.field1732, 0, 4);
+			var1.p1(arg0 ? 2 : 3);
+			var1.p3(0);
+			Statics.field169.method396(var1.data, 0, 4);
 		} catch (IOException var5) {
 			try {
 				Statics.field169.method392();
@@ -277,7 +277,7 @@ public class Js5TcpClient {
 		}
 		Statics.field169 = arg0;
 		method343(arg1);
-		field1195.field1729 = 0;
+		field1195.pos = 0;
 		Statics.field812 = null;
 		Statics.field1196 = null;
 		field1201 = 0;
@@ -290,10 +290,10 @@ public class Js5TcpClient {
 						if (field1202 != 0) {
 							try {
 								Packet var5 = new Packet(4);
-								var5.method1587(4);
-								var5.method1587(field1202);
-								var5.method1667(0);
-								Statics.field169.method396(var5.field1732, 0, 4);
+								var5.p1(4);
+								var5.p1(field1202);
+								var5.p2(0);
+								Statics.field169.method396(var5.data, 0, 4);
 							} catch (IOException var9) {
 								try {
 									Statics.field169.method392();
@@ -370,6 +370,6 @@ public class Js5TcpClient {
 	@ObfuscatedName("v.n(III)I")
 	public static int method161(int arg0, int arg1) {
 		long var2 = (long) ((arg0 << 16) + arg1);
-		return Statics.field812 != null && Statics.field812.field1506 == var2 ? Statics.field1196.field1729 * 99 / (Statics.field1196.field1732.length - Statics.field812.field2490) + 1 : 0;
+		return Statics.field812 != null && Statics.field812.field1506 == var2 ? Statics.field1196.pos * 99 / (Statics.field1196.data.length - Statics.field812.field2490) + 1 : 0;
 	}
 }

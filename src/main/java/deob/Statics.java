@@ -254,9 +254,6 @@ public class Statics {
 	@ObfuscatedName("dz.n")
 	public static Js5Index field1517;
 
-	@ObfuscatedName("da.i")
-	public static int[] field1528;
-
 	@ObfuscatedName("g.l")
 	public static Pix8 field153;
 
@@ -283,9 +280,6 @@ public class Statics {
 
 	@ObfuscatedName("dm.ai")
 	public static MouseTracking field1568;
-
-	@ObfuscatedName("dm.u")
-	public static int[] field1569;
 
 	@ObfuscatedName("dq.oq")
 	public static int field1582;
@@ -431,9 +425,6 @@ public class Statics {
 	@ObfuscatedName("eg.j")
 	public static Js5Index field1776;
 
-	@ObfuscatedName("l.c")
-	public static byte[][][] field18;
-
 	@ObfuscatedName("eg.g")
 	public static Js5Index field1800;
 
@@ -449,9 +440,6 @@ public class Statics {
 	@ObfuscatedName("s.d")
 	public static int[] field189;
 
-	@ObfuscatedName("l.m")
-	public static byte[][][] field19;
-
 	@ObfuscatedName("s.l")
 	public static String[] field191;
 
@@ -466,12 +454,6 @@ public class Statics {
 
 	@ObfuscatedName("s.f")
 	public static String field199;
-
-	@ObfuscatedName("l.j")
-	public static byte[][][] field20;
-
-	@ObfuscatedName("l.z")
-	public static byte[][][] field21;
 
 	@ObfuscatedName("client.lh")
 	public static int field2106;
@@ -496,9 +478,6 @@ public class Statics {
 
 	@ObfuscatedName("e.i")
 	public static int[] field229;
-
-	@ObfuscatedName("l.v")
-	public static int[] field23;
 
 	@ObfuscatedName("e.s")
 	public static boolean[] field230;
@@ -605,9 +584,6 @@ public class Statics {
 	@ObfuscatedName("fs.o")
 	public static Pix8[] field2553;
 
-	@ObfuscatedName("l.n")
-	public static byte[][][] field26;
-
 	@ObfuscatedName("fn.aq")
 	public static Pix8[] field2612;
 
@@ -634,9 +610,6 @@ public class Statics {
 
 	@ObfuscatedName("a.de")
 	public static int field315;
-
-	@ObfuscatedName("l.s")
-	public static int[] field33;
 
 	@ObfuscatedName("p.q")
 	public static IfType field335;
@@ -782,9 +755,6 @@ public class Statics {
 	@ObfuscatedName("ag.b")
 	public static String[] field553;
 
-	@ObfuscatedName("ag.g")
-	public static int[][] field554;
-
 	@ObfuscatedName("ag.iz")
 	public static int field555;
 
@@ -871,9 +841,6 @@ public class Statics {
 
 	@ObfuscatedName("au.at")
 	public static Pix8[] field681;
-
-	@ObfuscatedName("ax.q")
-	public static int[] field690;
 
 	@ObfuscatedName("af.dr")
 	public static SoftwareFont field704;
@@ -964,9 +931,6 @@ public class Statics {
 
 	@ObfuscatedName("bp.g")
 	public static byte[][] field863;
-
-	@ObfuscatedName("bp.w")
-	public static int[][][] field864;
 
 	@ObfuscatedName("bp.og")
 	public static int field865;

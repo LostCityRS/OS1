@@ -63,7 +63,7 @@ public class WorldList {
 				}
 				this.field182 += this.field180.read(this.field185, this.field182, var1);
 				if (this.field182 == 4) {
-					int var2 = (new Packet(this.field185)).method1605();
+					int var2 = (new Packet(this.field185)).g4();
 					this.field178 = new byte[var2];
 					this.field179 = 2;
 				}

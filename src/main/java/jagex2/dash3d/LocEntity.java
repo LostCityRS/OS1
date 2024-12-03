@@ -104,7 +104,7 @@ public class LocEntity extends Entity {
 		int var6 = (var3 + 1 >> 1) + this.field2595;
 		int var7 = (var4 >> 1) + this.field2596;
 		int var8 = (var4 + 1 >> 1) + this.field2596;
-		int[][] var9 = World.field29[this.field2594];
+		int[][] var9 = World.levelHeightmap[this.field2594];
 		int var10 = var9[var5][var7] + var9[var6][var7] + var9[var5][var8] + var9[var6][var8] >> 2;
 		int var11 = (this.field2595 << 7) + (var3 << 6);
 		int var12 = (this.field2596 << 7) + (var4 << 6);

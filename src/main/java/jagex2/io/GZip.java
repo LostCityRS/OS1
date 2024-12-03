@@ -19,14 +19,14 @@ public class GZip {
 
 	@ObfuscatedName("bf.r(Lev;[BB)V")
 	public void method834(Packet arg0, byte[] arg1) {
-		if (arg0.field1732[arg0.field1729] != 31 || arg0.field1732[arg0.field1729 + 1] != -117) {
+		if (arg0.data[arg0.pos] != 31 || arg0.data[arg0.pos + 1] != -117) {
 			throw new RuntimeException("");
 		}
 		if (this.field814 == null) {
 			this.field814 = new Inflater(true);
 		}
 		try {
-			this.field814.setInput(arg0.field1732, arg0.field1729 + 10, arg0.field1732.length - (arg0.field1729 + 10 + 8));
+			this.field814.setInput(arg0.data, arg0.pos + 10, arg0.data.length - (arg0.pos + 10 + 8));
 			this.field814.inflate(arg1);
 		} catch (Exception var4) {
 			this.field814.reset();

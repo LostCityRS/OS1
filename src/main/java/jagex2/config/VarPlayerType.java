@@ -40,7 +40,7 @@ public class VarPlayerType extends DoublyLinkable {
 	@ObfuscatedName("fg.q(Lev;I)V")
 	public void method2571(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -51,7 +51,7 @@ public class VarPlayerType extends DoublyLinkable {
 	@ObfuscatedName("fg.i(Lev;II)V")
 	public void method2572(Packet arg0, int arg1) {
 		if (arg1 == 5) {
-			this.field2478 = arg0.method1602();
+			this.field2478 = arg0.g2();
 		}
 	}
 

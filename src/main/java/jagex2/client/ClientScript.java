@@ -45,26 +45,26 @@ public class ClientScript extends DoublyLinkable {
 		}
 		ClientScript var3 = new ClientScript();
 		Packet var4 = new Packet(var2);
-		var4.field1729 = var4.field1732.length - 12;
-		int var5 = var4.method1605();
-		var3.field2263 = var4.method1602();
-		var3.field2265 = var4.method1602();
-		var3.field2266 = var4.method1602();
-		var3.field2267 = var4.method1602();
-		var4.field1729 = 0;
-		var4.method1671();
+		var4.pos = var4.data.length - 12;
+		int var5 = var4.g4();
+		var3.field2263 = var4.g2();
+		var3.field2265 = var4.g2();
+		var3.field2266 = var4.g2();
+		var3.field2267 = var4.g2();
+		var4.pos = 0;
+		var4.fastgstr();
 		var3.field2261 = new int[var5];
 		var3.field2260 = new int[var5];
 		var3.field2264 = new String[var5];
 		int var6 = 0;
-		while (var4.field1729 < var4.field1732.length - 12) {
-			int var7 = var4.method1602();
+		while (var4.pos < var4.data.length - 12) {
+			int var7 = var4.g2();
 			if (var7 == 3) {
-				var3.field2264[var6] = var4.method1693();
+				var3.field2264[var6] = var4.gjstr();
 			} else if (var7 >= 100 || var7 == 21 || var7 == 38 || var7 == 39) {
-				var3.field2260[var6] = var4.method1600();
+				var3.field2260[var6] = var4.g1();
 			} else {
-				var3.field2260[var6] = var4.method1605();
+				var3.field2260[var6] = var4.g4();
 			}
 			var3.field2261[var6++] = var7;
 		}

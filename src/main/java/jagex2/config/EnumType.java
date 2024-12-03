@@ -54,7 +54,7 @@ public class EnumType extends DoublyLinkable {
 	@ObfuscatedName("fe.g(Lev;I)V")
 	public void method2509(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -65,28 +65,28 @@ public class EnumType extends DoublyLinkable {
 	@ObfuscatedName("fe.q(Lev;IB)V")
 	public void method2512(Packet arg0, int arg1) {
 		if (arg1 == 1) {
-			this.field2423 = arg0.method1600();
+			this.field2423 = arg0.g1();
 		} else if (arg1 == 2) {
-			this.field2424 = (char) arg0.method1600();
+			this.field2424 = (char) arg0.g1();
 		} else if (arg1 == 3) {
-			this.field2428 = arg0.method1693();
+			this.field2428 = arg0.gjstr();
 		} else if (arg1 == 4) {
-			this.field2426 = arg0.method1605();
+			this.field2426 = arg0.g4();
 		} else if (arg1 == 5) {
-			this.field2427 = arg0.method1602();
+			this.field2427 = arg0.g2();
 			this.field2421 = new int[this.field2427];
 			this.field2430 = new String[this.field2427];
 			for (int var3 = 0; var3 < this.field2427; var3++) {
-				this.field2421[var3] = arg0.method1605();
-				this.field2430[var3] = arg0.method1693();
+				this.field2421[var3] = arg0.g4();
+				this.field2430[var3] = arg0.gjstr();
 			}
 		} else if (arg1 == 6) {
-			this.field2427 = arg0.method1602();
+			this.field2427 = arg0.g2();
 			this.field2421 = new int[this.field2427];
 			this.field2429 = new int[this.field2427];
 			for (int var4 = 0; var4 < this.field2427; var4++) {
-				this.field2421[var4] = arg0.method1605();
-				this.field2429[var4] = arg0.method1605();
+				this.field2421[var4] = arg0.g4();
+				this.field2429[var4] = arg0.g4();
 			}
 		}
 	}

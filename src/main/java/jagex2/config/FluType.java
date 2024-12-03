@@ -57,7 +57,7 @@ public class FluType extends DoublyLinkable {
 	@ObfuscatedName("ec.i(Lev;II)V")
 	public void method2399(Packet arg0, int arg1) {
 		while (true) {
-			int var3 = arg0.method1600();
+			int var3 = arg0.g1();
 			if (var3 == 0) {
 				return;
 			}
@@ -68,7 +68,7 @@ public class FluType extends DoublyLinkable {
 	@ObfuscatedName("ec.s(Lev;III)V")
 	public void method2400(Packet arg0, int arg1, int arg2) {
 		if (arg1 == 1) {
-			this.field2354 = arg0.method1728();
+			this.field2354 = arg0.g3();
 		}
 	}
 

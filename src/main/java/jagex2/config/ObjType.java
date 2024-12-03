@@ -173,7 +173,7 @@ public class ObjType extends DoublyLinkable {
 	@ObfuscatedName("fj.q(Lev;B)V")
 	public void method2516(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -184,101 +184,101 @@ public class ObjType extends DoublyLinkable {
 	@ObfuscatedName("fj.i(Lev;II)V")
 	public void method2519(Packet arg0, int arg1) {
 		if (arg1 == 1) {
-			this.field2436 = arg0.method1602();
+			this.field2436 = arg0.g2();
 		} else if (arg1 == 2) {
-			this.field2461 = arg0.method1693();
+			this.field2461 = arg0.gjstr();
 		} else if (arg1 == 4) {
-			this.field2442 = arg0.method1602();
+			this.field2442 = arg0.g2();
 		} else if (arg1 == 5) {
-			this.field2443 = arg0.method1602();
+			this.field2443 = arg0.g2();
 		} else if (arg1 == 6) {
-			this.field2444 = arg0.method1602();
+			this.field2444 = arg0.g2();
 		} else if (arg1 == 7) {
-			this.field2471 = arg0.method1602();
+			this.field2471 = arg0.g2();
 			if (this.field2471 > 32767) {
 				this.field2471 -= 65536;
 			}
 		} else if (arg1 == 8) {
-			this.field2447 = arg0.method1602();
+			this.field2447 = arg0.g2();
 			if (this.field2447 > 32767) {
 				this.field2447 -= 65536;
 			}
 		} else if (arg1 == 11) {
 			this.field2448 = 1;
 		} else if (arg1 == 12) {
-			this.field2470 = arg0.method1605();
+			this.field2470 = arg0.g4();
 		} else if (arg1 == 16) {
 			this.field2457 = true;
 		} else if (arg1 == 23) {
-			this.field2453 = arg0.method1602();
-			this.field2455 = arg0.method1600();
+			this.field2453 = arg0.g2();
+			this.field2455 = arg0.g1();
 		} else if (arg1 == 24) {
-			this.field2454 = arg0.method1602();
+			this.field2454 = arg0.g2();
 		} else if (arg1 == 25) {
-			this.field2474 = arg0.method1602();
-			this.field2458 = arg0.method1600();
+			this.field2474 = arg0.g2();
+			this.field2458 = arg0.g1();
 		} else if (arg1 == 26) {
-			this.field2460 = arg0.method1602();
+			this.field2460 = arg0.g2();
 		} else if (arg1 >= 30 && arg1 < 35) {
-			this.field2451[arg1 - 30] = arg0.method1693();
+			this.field2451[arg1 - 30] = arg0.gjstr();
 			if (this.field2451[arg1 - 30].equalsIgnoreCase(EnglishLocale.field869)) {
 				this.field2451[arg1 - 30] = null;
 			}
 		} else if (arg1 >= 35 && arg1 < 40) {
-			this.field2452[arg1 - 35] = arg0.method1693();
+			this.field2452[arg1 - 35] = arg0.gjstr();
 		} else if (arg1 == 40) {
-			int var3 = arg0.method1600();
+			int var3 = arg0.g1();
 			this.field2438 = new short[var3];
 			this.field2439 = new short[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.field2438[var4] = (short) arg0.method1602();
-				this.field2439[var4] = (short) arg0.method1602();
+				this.field2438[var4] = (short) arg0.g2();
+				this.field2439[var4] = (short) arg0.g2();
 			}
 		} else if (arg1 == 41) {
-			int var5 = arg0.method1600();
+			int var5 = arg0.g1();
 			this.field2440 = new short[var5];
 			this.field2441 = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.field2440[var6] = (short) arg0.method1602();
-				this.field2441[var6] = (short) arg0.method1602();
+				this.field2440[var6] = (short) arg0.g2();
+				this.field2441[var6] = (short) arg0.g2();
 			}
 		} else if (arg1 == 78) {
-			this.field2462 = arg0.method1602();
+			this.field2462 = arg0.g2();
 		} else if (arg1 == 79) {
-			this.field2465 = arg0.method1602();
+			this.field2465 = arg0.g2();
 		} else if (arg1 == 90) {
-			this.field2431 = arg0.method1602();
+			this.field2431 = arg0.g2();
 		} else if (arg1 == 91) {
-			this.field2446 = arg0.method1602();
+			this.field2446 = arg0.g2();
 		} else if (arg1 == 92) {
-			this.field2468 = arg0.method1602();
+			this.field2468 = arg0.g2();
 		} else if (arg1 == 93) {
-			this.field2464 = arg0.method1602();
+			this.field2464 = arg0.g2();
 		} else if (arg1 == 95) {
-			this.field2463 = arg0.method1602();
+			this.field2463 = arg0.g2();
 		} else if (arg1 == 97) {
-			this.field2459 = arg0.method1602();
+			this.field2459 = arg0.g2();
 		} else if (arg1 == 98) {
-			this.field2450 = arg0.method1602();
+			this.field2450 = arg0.g2();
 		} else if (arg1 >= 100 && arg1 < 110) {
 			if (this.field2467 == null) {
 				this.field2467 = new int[10];
 				this.field2466 = new int[10];
 			}
-			this.field2467[arg1 - 100] = arg0.method1602();
-			this.field2466[arg1 - 100] = arg0.method1602();
+			this.field2467[arg1 - 100] = arg0.g2();
+			this.field2466[arg1 - 100] = arg0.g2();
 		} else if (arg1 == 110) {
-			this.field2469 = arg0.method1602();
+			this.field2469 = arg0.g2();
 		} else if (arg1 == 111) {
-			this.field2445 = arg0.method1602();
+			this.field2445 = arg0.g2();
 		} else if (arg1 == 112) {
-			this.field2456 = arg0.method1602();
+			this.field2456 = arg0.g2();
 		} else if (arg1 == 113) {
-			this.field2472 = arg0.method1595();
+			this.field2472 = arg0.g1b();
 		} else if (arg1 == 114) {
-			this.field2473 = arg0.method1595() * 5;
+			this.field2473 = arg0.g1b() * 5;
 		} else if (arg1 == 115) {
-			this.field2437 = arg0.method1600();
+			this.field2437 = arg0.g1();
 		}
 	}
 
@@ -439,8 +439,8 @@ public class ObjType extends DoublyLinkable {
 		} else if (arg2 == 2) {
 			var18 = (int) ((double) var18 * 1.04D);
 		}
-		int var19 = Pix3D.field2533[var8.field2443] * var18 >> 16;
-		int var20 = Pix3D.field2530[var8.field2443] * var18 >> 16;
+		int var19 = Pix3D.sinTable[var8.field2443] * var18 >> 16;
+		int var20 = Pix3D.cosTable[var8.field2443] * var18 >> 16;
 		var11.method3002();
 		var11.method3014(0, var8.field2444, var8.field2463, var8.field2443, var8.field2471, var8.field2447 + var11.field2487 / 2 + var19, var8.field2447 + var20);
 		if (arg2 >= 1) {

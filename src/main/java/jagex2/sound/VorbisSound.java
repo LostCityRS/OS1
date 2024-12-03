@@ -103,25 +103,25 @@ public class VorbisSound extends Linkable {
 	@ObfuscatedName("dt.g([B)V")
 	public void method1535(byte[] arg0) {
 		Packet var2 = new Packet(arg0);
-		this.field1648 = var2.method1605();
-		this.field1670 = var2.method1605();
-		this.field1676 = var2.method1605();
-		this.field1677 = var2.method1605();
+		this.field1648 = var2.g4();
+		this.field1670 = var2.g4();
+		this.field1676 = var2.g4();
+		this.field1677 = var2.g4();
 		if (this.field1677 < 0) {
 			this.field1677 = ~this.field1677;
 			this.field1652 = true;
 		}
-		int var3 = var2.method1605();
+		int var3 = var2.g4();
 		this.field1674 = new byte[var3][];
 		for (int var4 = 0; var4 < var3; var4++) {
 			int var5 = 0;
 			int var6;
 			do {
-				var6 = var2.method1600();
+				var6 = var2.g1();
 				var5 += var6;
 			} while (var6 >= 255);
 			byte[] var7 = new byte[var5];
-			var2.method1611(var7, 0, var5);
+			var2.gdata(var7, 0, var5);
 			this.field1674[var4] = var7;
 		}
 	}

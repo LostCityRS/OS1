@@ -809,10 +809,10 @@ public class World3D {
 		boolean[][][][] var5 = new boolean[9][32][53][53];
 		for (int var6 = 128; var6 <= 384; var6 += 32) {
 			for (int var7 = 0; var7 < 2048; var7 += 64) {
-				Statics.field621 = Pix3D.field2533[var6];
-				Statics.field616 = Pix3D.field2530[var6];
-				Statics.field609 = Pix3D.field2533[var7];
-				Statics.field610 = Pix3D.field2530[var7];
+				Statics.field621 = Pix3D.sinTable[var6];
+				Statics.field616 = Pix3D.cosTable[var6];
+				Statics.field609 = Pix3D.sinTable[var7];
+				Statics.field610 = Pix3D.cosTable[var7];
 				int var8 = (var6 - 128) / 32;
 				int var9 = var7 / 64;
 				for (int var10 = -26; var10 <= 26; var10++) {
@@ -901,10 +901,10 @@ public class World3D {
 			arg2 = this.field589 * 128 - 1;
 		}
 		Statics.field597++;
-		Statics.field621 = Pix3D.field2533[arg3];
-		Statics.field616 = Pix3D.field2530[arg3];
-		Statics.field609 = Pix3D.field2533[arg4];
-		Statics.field610 = Pix3D.field2530[arg4];
+		Statics.field621 = Pix3D.sinTable[arg3];
+		Statics.field616 = Pix3D.cosTable[arg3];
+		Statics.field609 = Pix3D.sinTable[arg4];
+		Statics.field610 = Pix3D.cosTable[arg4];
 		Statics.field633 = field642[(arg3 - 128) / 32][arg4 / 64];
 		Statics.field626 = arg0;
 		Statics.field605 = arg1;

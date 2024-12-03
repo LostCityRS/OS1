@@ -29,27 +29,27 @@ public class Pix3D extends Pix2D {
 	public static int[] field2538 = new int[65536];
 
 	@ObfuscatedName("fx.ak")
-	public static int[] field2540 = new int[512];
+	public static int[] divTable = new int[512];
 
 	@ObfuscatedName("fx.az")
-	public static int[] field2519 = new int[2048];
+	public static int[] divTable2 = new int[2048];
 
 	@ObfuscatedName("fx.an")
-	public static int[] field2533 = new int[2048];
+	public static int[] sinTable = new int[2048];
 
 	@ObfuscatedName("fx.ah")
-	public static int[] field2530 = new int[2048];
+	public static int[] cosTable = new int[2048];
 
 	static {
 		for (int var0 = 1; var0 < 512; var0++) {
-			field2540[var0] = 32768 / var0;
+			divTable[var0] = 32768 / var0;
 		}
 		for (int var1 = 1; var1 < 2048; var1++) {
-			field2519[var1] = 65536 / var1;
+			divTable2[var1] = 65536 / var1;
 		}
 		for (int var2 = 0; var2 < 2048; var2++) {
-			field2533[var2] = (int) (Math.sin((double) var2 * 0.0030679615D) * 65536.0D);
-			field2530[var2] = (int) (Math.cos((double) var2 * 0.0030679615D) * 65536.0D);
+			sinTable[var2] = (int) (Math.sin((double) var2 * 0.0030679615D) * 65536.0D);
+			cosTable[var2] = (int) (Math.cos((double) var2 * 0.0030679615D) * 65536.0D);
 		}
 	}
 

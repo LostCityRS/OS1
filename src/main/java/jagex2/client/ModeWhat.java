@@ -6,16 +6,16 @@ import deob.ObfuscatedName;
 public class ModeWhat {
 
 	@ObfuscatedName("be.r")
-	public static final ModeWhat field849 = new ModeWhat("LIVE", 0);
+	public static final ModeWhat LIVE = new ModeWhat("LIVE", 0);
 
 	@ObfuscatedName("be.d")
-	public static final ModeWhat field847 = new ModeWhat("BUILDLIVE", 3);
+	public static final ModeWhat BUILDLIVE = new ModeWhat("BUILDLIVE", 3);
 
 	@ObfuscatedName("be.l")
-	public static final ModeWhat field846 = new ModeWhat("RC", 1);
+	public static final ModeWhat RC = new ModeWhat("RC", 1);
 
 	@ObfuscatedName("be.m")
-	public static final ModeWhat field848 = new ModeWhat("WIP", 2);
+	public static final ModeWhat WIP = new ModeWhat("WIP", 2);
 
 	@ObfuscatedName("be.c")
 	public final String field850;

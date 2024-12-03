@@ -9,6 +9,7 @@ public class ViewBox extends Frame {
 	public ViewBox(int width, int height) {
 		this.setTitle("Jagex");
 		this.setResizable(false);
+		this.setBackground(Color.BLACK);
 		this.show();
 		this.toFront();
 		this.insets = this.getInsets();

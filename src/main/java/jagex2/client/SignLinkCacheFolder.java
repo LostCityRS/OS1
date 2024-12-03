@@ -37,31 +37,31 @@ public class SignLinkCacheFolder {
 			try {
 				FileOnDisk var7 = new FileOnDisk(Statics.field518, "rw", 10000L);
 				Packet var8 = new Packet((int) var7.method113());
-				while (var8.field1729 < var8.field1732.length) {
-					int var9 = var7.method114(var8.field1732, var8.field1729, var8.field1732.length - var8.field1729);
+				while (var8.pos < var8.data.length) {
+					int var9 = var7.method114(var8.data, var8.pos, var8.data.length - var8.pos);
 					if (var9 == -1) {
 						throw new IOException();
 					}
-					var8.field1729 += var9;
+					var8.pos += var9;
 				}
-				var8.field1729 = 0;
-				int var10 = var8.method1600();
+				var8.pos = 0;
+				int var10 = var8.g1();
 				if (var10 < 1 || var10 > 3) {
 					throw new IOException("" + var10);
 				}
 				int var11 = 0;
 				if (var10 > 1) {
-					var11 = var8.method1600();
+					var11 = var8.g1();
 				}
 				if (var10 <= 2) {
-					var4 = var8.method1737();
+					var4 = var8.gjstr2();
 					if (var11 == 1) {
-						var5 = var8.method1737();
+						var5 = var8.gjstr2();
 					}
 				} else {
-					var4 = var8.method1617();
+					var4 = var8.gUTF8();
 					if (var11 == 1) {
-						var5 = var8.method1617();
+						var5 = var8.gUTF8();
 					}
 				}
 				var7.method112();
@@ -151,13 +151,13 @@ public class SignLinkCacheFolder {
 			try {
 				FileOnDisk var38 = new FileOnDisk(Statics.field518, "rw", 10000L);
 				Packet var39 = new Packet(500);
-				var39.method1587(3);
-				var39.method1587(var37 == null ? 0 : 1);
-				var39.method1593(var36.getPath());
+				var39.p1(3);
+				var39.p1(var37 == null ? 0 : 1);
+				var39.pUTF8(var36.getPath());
 				if (var37 != null) {
-					var39.method1593(((File) var37).getPath());
+					var39.pUTF8(((File) var37).getPath());
 				}
-				var38.method111(var39.field1732, 0, var39.field1729);
+				var38.method111(var39.data, 0, var39.pos);
 				var38.method112();
 			} catch (IOException var41) {
 				var41.printStackTrace();
@@ -213,7 +213,7 @@ public class SignLinkCacheFolder {
 				var1[var4] = -1;
 			}
 		}
-		arg0.method1729(var1, 0, 24);
+		arg0.pdata(var1, 0, 24);
 	}
 
 	@ObfuscatedName("ex.m(Lev;II)V")
@@ -223,7 +223,7 @@ public class SignLinkCacheFolder {
 		}
 		try {
 			field522.method132(0L);
-			field522.method153(arg0.field1732, arg1, 24);
+			field522.method153(arg0.data, arg1, 24);
 		} catch (Exception var3) {
 		}
 	}

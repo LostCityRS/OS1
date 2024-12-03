@@ -72,7 +72,7 @@ public class SpotAnimType extends DoublyLinkable {
 	@ObfuscatedName("eu.g(Lev;I)V")
 	public void method2445(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -83,34 +83,34 @@ public class SpotAnimType extends DoublyLinkable {
 	@ObfuscatedName("eu.q(Lev;II)V")
 	public void method2446(Packet arg0, int arg1) {
 		if (arg1 == 1) {
-			this.field2383 = arg0.method1602();
+			this.field2383 = arg0.g2();
 		} else if (arg1 == 2) {
-			this.field2390 = arg0.method1602();
+			this.field2390 = arg0.g2();
 		} else if (arg1 == 4) {
-			this.field2378 = arg0.method1602();
+			this.field2378 = arg0.g2();
 		} else if (arg1 == 5) {
-			this.field2389 = arg0.method1602();
+			this.field2389 = arg0.g2();
 		} else if (arg1 == 6) {
-			this.field2380 = arg0.method1602();
+			this.field2380 = arg0.g2();
 		} else if (arg1 == 7) {
-			this.field2391 = arg0.method1600();
+			this.field2391 = arg0.g1();
 		} else if (arg1 == 8) {
-			this.field2393 = arg0.method1600();
+			this.field2393 = arg0.g1();
 		} else if (arg1 == 40) {
-			int var3 = arg0.method1600();
+			int var3 = arg0.g1();
 			this.field2384 = new short[var3];
 			this.field2386 = new short[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.field2384[var4] = (short) arg0.method1602();
-				this.field2386[var4] = (short) arg0.method1602();
+				this.field2384[var4] = (short) arg0.g2();
+				this.field2386[var4] = (short) arg0.g2();
 			}
 		} else if (arg1 == 41) {
-			int var5 = arg0.method1600();
+			int var5 = arg0.g1();
 			this.field2387 = new short[var5];
 			this.field2388 = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.field2387[var6] = (short) arg0.method1602();
-				this.field2388[var6] = (short) arg0.method1602();
+				this.field2387[var6] = (short) arg0.g2();
+				this.field2388[var6] = (short) arg0.g2();
 			}
 		}
 	}

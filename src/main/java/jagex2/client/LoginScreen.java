@@ -874,17 +874,17 @@ public class LoginScreen {
 				byte[] var0 = Statics.field35.method99();
 				if (var0 != null) {
 					Packet var1 = new Packet(var0);
-					field161 = var1.method1602();
+					field161 = var1.g2();
 					Statics.field214 = new WorldEntry[field161];
 					int var2 = 0;
 					while (var2 < field161) {
 						WorldEntry var3 = Statics.field214[var2] = new WorldEntry();
-						int var4 = var1.method1602();
+						int var4 = var1.g2();
 						var3.field49 = var4 & 0x7FFF;
 						var3.field50 = (var4 & 0x8000) != 0;
-						var3.field45 = var1.method1693();
-						var3.field48 = var1.method1600();
-						var3.field46 = var1.method1603();
+						var3.field45 = var1.gjstr();
+						var3.field48 = var1.g1();
+						var3.field46 = var1.g2b();
 						var3.field47 = var2++;
 					}
 					method747(Statics.field214, 0, Statics.field214.length - 1, field130, field167);

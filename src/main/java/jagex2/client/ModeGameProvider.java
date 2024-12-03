@@ -6,5 +6,5 @@ import deob.ObfuscatedName;
 public interface ModeGameProvider {
 
 	@ObfuscatedName("bt.r(B)I")
-	int method797();
+	int getGame();
 }

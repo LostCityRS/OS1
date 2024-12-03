@@ -72,7 +72,7 @@ public class FloType extends DoublyLinkable {
 	@ObfuscatedName("fb.q(Lev;IB)V")
 	public void method2499(Packet arg0, int arg1) {
 		while (true) {
-			int var3 = arg0.method1600();
+			int var3 = arg0.g1();
 			if (var3 == 0) {
 				return;
 			}
@@ -83,13 +83,13 @@ public class FloType extends DoublyLinkable {
 	@ObfuscatedName("fb.i(Lev;III)V")
 	public void method2487(Packet arg0, int arg1, int arg2) {
 		if (arg1 == 1) {
-			this.field2406 = arg0.method1728();
+			this.field2406 = arg0.g3();
 		} else if (arg1 == 2) {
-			this.field2407 = arg0.method1600();
+			this.field2407 = arg0.g1();
 		} else if (arg1 == 5) {
 			this.field2408 = false;
 		} else if (arg1 == 7) {
-			this.field2414 = arg0.method1728();
+			this.field2414 = arg0.g3();
 		} else if (arg1 == 8) {
 		}
 	}

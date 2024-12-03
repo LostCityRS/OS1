@@ -6,10 +6,10 @@ import deob.ObfuscatedName;
 public class PlayerStats {
 
 	@ObfuscatedName("bm.d")
-	public static final boolean[] field831 = new boolean[] { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false };
+	public static final boolean[] enabled = new boolean[] { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false };
 
 	@ObfuscatedName("bm.l")
-	public static int[] field830 = new int[99];
+	public static int[] levelExperience = new int[99];
 
 	static {
 		int var0 = 0;
@@ -17,7 +17,7 @@ public class PlayerStats {
 			int var2 = var1 + 1;
 			int var3 = (int) ((double) var2 + Math.pow(2.0D, (double) var2 / 7.0D) * 300.0D);
 			var0 += var3;
-			field830[var1] = var0 / 4;
+			levelExperience[var1] = var0 / 4;
 		}
 	}
 

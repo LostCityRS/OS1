@@ -115,17 +115,17 @@ public class PlayerModel {
 
 	@ObfuscatedName("ct.c(Lev;I)V")
 	public void method1172(Packet arg0) {
-		arg0.method1587(this.field1222 ? 1 : 0);
+		arg0.p1(this.field1222 ? 1 : 0);
 		for (int var2 = 0; var2 < 7; var2++) {
 			int var3 = this.field1228[field1230[var2]];
 			if (var3 == 0) {
-				arg0.method1587(-1);
+				arg0.p1(-1);
 			} else {
-				arg0.method1587(var3 - 256);
+				arg0.p1(var3 - 256);
 			}
 		}
 		for (int var4 = 0; var4 < 5; var4++) {
-			arg0.method1587(this.field1223[var4]);
+			arg0.p1(this.field1223[var4]);
 		}
 	}
 

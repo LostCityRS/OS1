@@ -17,7 +17,7 @@ public class InvType extends DoublyLinkable {
 	@ObfuscatedName("fp.z(Lev;I)V")
 	public void method2569(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -28,7 +28,7 @@ public class InvType extends DoublyLinkable {
 	@ObfuscatedName("fp.g(Lev;II)V")
 	public void method2566(Packet arg0, int arg1) {
 		if (arg1 == 2) {
-			this.field2477 = arg0.method1602();
+			this.field2477 = arg0.g2();
 		}
 	}
 }

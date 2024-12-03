@@ -63,7 +63,7 @@ public class IdkType extends DoublyLinkable {
 	@ObfuscatedName("fd.q(Lev;I)V")
 	public void method2464(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -74,33 +74,33 @@ public class IdkType extends DoublyLinkable {
 	@ObfuscatedName("fd.i(Lev;II)V")
 	public void method2478(Packet arg0, int arg1) {
 		if (arg1 == 1) {
-			this.field2403 = arg0.method1600();
+			this.field2403 = arg0.g1();
 		} else if (arg1 == 2) {
-			int var3 = arg0.method1600();
+			int var3 = arg0.g1();
 			this.field2398 = new int[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.field2398[var4] = arg0.method1602();
+				this.field2398[var4] = arg0.g2();
 			}
 		} else if (arg1 == 3) {
 			this.field2404 = true;
 		} else if (arg1 == 40) {
-			int var5 = arg0.method1600();
+			int var5 = arg0.g1();
 			this.field2399 = new short[var5];
 			this.field2400 = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.field2399[var6] = (short) arg0.method1602();
-				this.field2400[var6] = (short) arg0.method1602();
+				this.field2399[var6] = (short) arg0.g2();
+				this.field2400[var6] = (short) arg0.g2();
 			}
 		} else if (arg1 == 41) {
-			int var7 = arg0.method1600();
+			int var7 = arg0.g1();
 			this.field2401 = new short[var7];
 			this.field2402 = new short[var7];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.field2401[var8] = (short) arg0.method1602();
-				this.field2402[var8] = (short) arg0.method1602();
+				this.field2401[var8] = (short) arg0.g2();
+				this.field2402[var8] = (short) arg0.g2();
 			}
 		} else if (arg1 >= 60 && arg1 < 70) {
-			this.field2395[arg1 - 60] = arg0.method1602();
+			this.field2395[arg1 - 60] = arg0.g2();
 		}
 	}
 

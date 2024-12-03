@@ -39,7 +39,7 @@ public class VarBitType extends DoublyLinkable {
 	@ObfuscatedName("fc.g(Lev;B)V")
 	public void method2501(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -50,9 +50,9 @@ public class VarBitType extends DoublyLinkable {
 	@ObfuscatedName("fc.q(Lev;II)V")
 	public void method2503(Packet arg0, int arg1) {
 		if (arg1 == 1) {
-			this.field2418 = arg0.method1602();
-			this.field2416 = arg0.method1600();
-			this.field2420 = arg0.method1600();
+			this.field2418 = arg0.g2();
+			this.field2416 = arg0.g1();
+			this.field2420 = arg0.g1();
 		}
 	}
 }

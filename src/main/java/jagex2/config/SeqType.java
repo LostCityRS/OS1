@@ -86,7 +86,7 @@ public class SeqType extends DoublyLinkable {
 	@ObfuscatedName("eo.q(Lev;S)V")
 	public void method2415(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -97,57 +97,57 @@ public class SeqType extends DoublyLinkable {
 	@ObfuscatedName("eo.i(Lev;IB)V")
 	public void method2416(Packet arg0, int arg1) {
 		if (arg1 == 1) {
-			int var3 = arg0.method1602();
+			int var3 = arg0.g2();
 			this.field2366 = new int[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.field2366[var4] = arg0.method1602();
+				this.field2366[var4] = arg0.g2();
 			}
 			this.field2364 = new int[var3];
 			for (int var5 = 0; var5 < var3; var5++) {
-				this.field2364[var5] = arg0.method1602();
+				this.field2364[var5] = arg0.g2();
 			}
 			for (int var6 = 0; var6 < var3; var6++) {
-				this.field2364[var6] += arg0.method1602() << 16;
+				this.field2364[var6] += arg0.g2() << 16;
 			}
 		} else if (arg1 == 2) {
-			this.field2368 = arg0.method1602();
+			this.field2368 = arg0.g2();
 		} else if (arg1 == 3) {
-			int var7 = arg0.method1600();
+			int var7 = arg0.g1();
 			this.field2369 = new int[var7 + 1];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.field2369[var8] = arg0.method1600();
+				this.field2369[var8] = arg0.g1();
 			}
 			this.field2369[var7] = 9999999;
 		} else if (arg1 == 4) {
 			this.field2374 = true;
 		} else if (arg1 == 5) {
-			this.field2371 = arg0.method1600();
+			this.field2371 = arg0.g1();
 		} else if (arg1 == 6) {
-			this.field2372 = arg0.method1602();
+			this.field2372 = arg0.g2();
 		} else if (arg1 == 7) {
-			this.field2373 = arg0.method1602();
+			this.field2373 = arg0.g2();
 		} else if (arg1 == 8) {
-			this.field2363 = arg0.method1600();
+			this.field2363 = arg0.g1();
 		} else if (arg1 == 9) {
-			this.field2375 = arg0.method1600();
+			this.field2375 = arg0.g1();
 		} else if (arg1 == 10) {
-			this.field2376 = arg0.method1600();
+			this.field2376 = arg0.g1();
 		} else if (arg1 == 11) {
-			this.field2377 = arg0.method1600();
+			this.field2377 = arg0.g1();
 		} else if (arg1 == 12) {
-			int var9 = arg0.method1600();
+			int var9 = arg0.g1();
 			this.field2365 = new int[var9];
 			for (int var10 = 0; var10 < var9; var10++) {
-				this.field2365[var10] = arg0.method1602();
+				this.field2365[var10] = arg0.g2();
 			}
 			for (int var11 = 0; var11 < var9; var11++) {
-				this.field2365[var11] += arg0.method1602() << 16;
+				this.field2365[var11] += arg0.g2() << 16;
 			}
 		} else if (arg1 == 13) {
-			int var12 = arg0.method1600();
+			int var12 = arg0.g1();
 			this.field2367 = new int[var12];
 			for (int var13 = 0; var13 < var12; var13++) {
-				this.field2367[var13] = arg0.method1728();
+				this.field2367[var13] = arg0.g3();
 			}
 		}
 	}

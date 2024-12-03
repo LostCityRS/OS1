@@ -43,13 +43,13 @@ public class AnimFrame {
 		this.field659 = arg1;
 		Packet var3 = new Packet(arg0);
 		Packet var4 = new Packet(arg0);
-		var3.field1729 = 2;
-		int var5 = var3.method1600();
+		var3.pos = 2;
+		int var5 = var3.g1();
 		int var6 = -1;
 		int var7 = 0;
-		var4.field1729 = var3.field1729 + var5;
+		var4.pos = var3.pos + var5;
 		for (int var8 = 0; var8 < var5; var8++) {
-			int var9 = var3.method1600();
+			int var9 = var3.g1();
 			if (var9 > 0) {
 				if (this.field659.field1723[var8] != 0) {
 					for (int var10 = var8 - 1; var10 > var6; var10--) {
@@ -71,17 +71,17 @@ public class AnimFrame {
 				if ((var9 & 0x1) == 0) {
 					field656[var7] = var11;
 				} else {
-					field656[var7] = var4.method1612();
+					field656[var7] = var4.gsmarts();
 				}
 				if ((var9 & 0x2) == 0) {
 					field657[var7] = var11;
 				} else {
-					field657[var7] = var4.method1612();
+					field657[var7] = var4.gsmarts();
 				}
 				if ((var9 & 0x4) == 0) {
 					field665[var7] = var11;
 				} else {
-					field665[var7] = var4.method1612();
+					field665[var7] = var4.gsmarts();
 				}
 				var6 = var8;
 				var7++;
@@ -90,7 +90,7 @@ public class AnimFrame {
 				}
 			}
 		}
-		if (var4.field1729 != arg0.length) {
+		if (var4.pos != arg0.length) {
 			throw new RuntimeException();
 		}
 		this.field660 = var7;

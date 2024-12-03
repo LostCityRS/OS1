@@ -1071,7 +1071,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (var367 == 3103) {
-							Client.field1949.method2301(129);
+							Client.field1949.pisaac1(129);
 							for (ComponentPointer var95 = (ComponentPointer) Client.field1918.method1284(); var95 != null; var95 = (ComponentPointer) Client.field1918.method1280()) {
 								if (var95.field1597 == 0 || var95.field1597 == 3) {
 									Client.method408(var95, true);
@@ -1091,24 +1091,24 @@ public class ScriptRunner {
 								int var98 = JStringUtil.method91(var96, 10, true);
 								var97 = var98;
 							}
-							Client.field1949.method2301(27);
-							Client.field1949.method1761(var97);
+							Client.field1949.pisaac1(27);
+							Client.field1949.p4(var97);
 							continue;
 						}
 						if (var367 == 3105) {
 							var5--;
 							String var99 = field194[var5];
-							Client.field1949.method2301(223);
-							Client.field1949.method1587(var99.length() + 1);
-							Client.field1949.method1592(var99);
+							Client.field1949.pisaac1(223);
+							Client.field1949.p1(var99.length() + 1);
+							Client.field1949.pjstr(var99);
 							continue;
 						}
 						if (var367 == 3106) {
 							var5--;
 							String var100 = field194[var5];
-							Client.field1949.method2301(127);
-							Client.field1949.method1587(var100.length() + 1);
-							Client.field1949.method1592(var100);
+							Client.field1949.pisaac1(127);
+							Client.field1949.p1(var100.length() + 1);
+							Client.field1949.pjstr(var100);
 							continue;
 						}
 						if (var367 == 3107) {
@@ -1437,10 +1437,10 @@ public class ScriptRunner {
 							String var164 = field194[var5];
 							var4--;
 							int var165 = field188[var4];
-							Client.field1949.method2301(252);
-							Client.field1949.method1587(Packet.method2323(var164) + 1);
-							Client.field1949.method1592(var164);
-							Client.field1949.method1621(var165);
+							Client.field1949.pisaac1(252);
+							Client.field1949.p1(Packet.pjstrlen(var164) + 1);
+							Client.field1949.pjstr(var164);
+							Client.field1949.p1_alt1(var165);
 							continue;
 						}
 						if (var367 == 3605) {
@@ -1493,9 +1493,9 @@ public class ScriptRunner {
 										Client.field2196[var176] = Client.field2196[var176 + 1];
 									}
 									Client.field1977 = Client.field2117;
-									Client.field1949.method2301(248);
-									Client.field1949.method1587(Packet.method2323(var169));
-									Client.field1949.method1592(var169);
+									Client.field1949.pisaac1(248);
+									Client.field1949.p1(Packet.pjstrlen(var169));
+									Client.field1949.pjstr(var169);
 									continue label2279;
 								}
 								var171++;
@@ -1571,9 +1571,9 @@ public class ScriptRunner {
 							var5--;
 							String var186 = field194[var5];
 							if (Statics.field1774 != null) {
-								Client.field1949.method2301(245);
-								Client.field1949.method1587(Packet.method2323(var186));
-								Client.field1949.method1592(var186);
+								Client.field1949.pisaac1(245);
+								Client.field1949.p1(Packet.pjstrlen(var186));
+								Client.field1949.pjstr(var186);
 							}
 							continue;
 						}
@@ -2182,10 +2182,10 @@ public class ScriptRunner {
 								Statics.field680 = ChatFilterPrivacy.field1106;
 							}
 							Client.field2146 = field188[var4 + 2];
-							Client.field1949.method2301(167);
-							Client.field1949.method1587(Client.field2145);
-							Client.field1949.method1587(Statics.field680.field1107);
-							Client.field1949.method1587(Client.field2146);
+							Client.field1949.pisaac1(167);
+							Client.field1949.p1(Client.field2145);
+							Client.field1949.p1(Statics.field680.field1107);
+							Client.field1949.p1(Client.field2146);
 							continue;
 						}
 						if (var367 == 5002) {
@@ -2194,11 +2194,11 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var343 = field188[var4];
 							int var344 = field188[var4 + 1];
-							Client.field1949.method2301(96);
-							Client.field1949.method1587(Packet.method2323(var342) + 2);
-							Client.field1949.method1592(var342);
-							Client.field1949.method1587(var343 - 1);
-							Client.field1949.method1587(var344);
+							Client.field1949.pisaac1(96);
+							Client.field1949.p1(Packet.pjstrlen(var342) + 2);
+							Client.field1949.pjstr(var342);
+							Client.field1949.p1(var343 - 1);
+							Client.field1949.p1(var344);
 							continue;
 						}
 						if (var367 == 5003) {
@@ -2350,13 +2350,13 @@ public class ScriptRunner {
 										var349 = var349.substring(EnglishLocale.field878.length());
 									}
 								}
-								Client.field1949.method2301(205);
-								Client.field1949.method1587(0);
-								int var354 = Client.field1949.field1729;
-								Client.field1949.method1587(var351);
-								Client.field1949.method1587(var353);
+								Client.field1949.pisaac1(205);
+								Client.field1949.p1(0);
+								int var354 = Client.field1949.pos;
+								Client.field1949.p1(var351);
+								Client.field1949.p1(var353);
 								WordPack.method911(Client.field1949, var349);
-								Client.field1949.method1715(Client.field1949.field1729 - var354);
+								Client.field1949.psize1(Client.field1949.pos - var354);
 							}
 							continue;
 						}
@@ -2364,12 +2364,12 @@ public class ScriptRunner {
 							var5 -= 2;
 							String var355 = field194[var5];
 							String var356 = field194[var5 + 1];
-							Client.field1949.method2301(211);
-							Client.field1949.method1667(0);
-							int var357 = Client.field1949.field1729;
-							Client.field1949.method1592(var355);
+							Client.field1949.pisaac1(211);
+							Client.field1949.p2(0);
+							int var357 = Client.field1949.pos;
+							Client.field1949.pjstr(var355);
 							WordPack.method911(Client.field1949, var356);
-							Client.field1949.method1699(Client.field1949.field1729 - var357);
+							Client.field1949.psize2(Client.field1949.pos - var357);
 							continue;
 						}
 						if (var367 == 5010) {

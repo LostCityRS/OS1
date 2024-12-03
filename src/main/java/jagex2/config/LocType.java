@@ -211,7 +211,7 @@ public class LocType extends DoublyLinkable {
 	@ObfuscatedName("ey.i(Lev;I)V")
 	public void method2360(Packet arg0) {
 		while (true) {
-			int var2 = arg0.method1600();
+			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
@@ -222,45 +222,45 @@ public class LocType extends DoublyLinkable {
 	@ObfuscatedName("ey.s(Lev;II)V")
 	public void method2365(Packet arg0, int arg1) {
 		if (arg1 == 1) {
-			int var3 = arg0.method1600();
+			int var3 = arg0.g1();
 			if (var3 > 0) {
 				if (this.field2329 == null || field2340) {
 					this.field2338 = new int[var3];
 					this.field2329 = new int[var3];
 					for (int var4 = 0; var4 < var3; var4++) {
-						this.field2329[var4] = arg0.method1602();
-						this.field2338[var4] = arg0.method1600();
+						this.field2329[var4] = arg0.g2();
+						this.field2338[var4] = arg0.g1();
 					}
 				} else {
-					arg0.field1729 += var3 * 3;
+					arg0.pos += var3 * 3;
 				}
 			}
 		} else if (arg1 == 2) {
-			this.field2310 = arg0.method1693();
+			this.field2310 = arg0.gjstr();
 		} else if (arg1 == 5) {
-			int var5 = arg0.method1600();
+			int var5 = arg0.g1();
 			if (var5 > 0) {
 				if (this.field2329 == null || field2340) {
 					this.field2338 = null;
 					this.field2329 = new int[var5];
 					for (int var6 = 0; var6 < var5; var6++) {
-						this.field2329[var6] = arg0.method1602();
+						this.field2329[var6] = arg0.g2();
 					}
 				} else {
-					arg0.field1729 += var5 * 2;
+					arg0.pos += var5 * 2;
 				}
 			}
 		} else if (arg1 == 14) {
-			this.field2344 = arg0.method1600();
+			this.field2344 = arg0.g1();
 		} else if (arg1 == 15) {
-			this.field2318 = arg0.method1600();
+			this.field2318 = arg0.g1();
 		} else if (arg1 == 17) {
 			this.field2342 = 0;
 			this.field2319 = false;
 		} else if (arg1 == 18) {
 			this.field2319 = false;
 		} else if (arg1 == 19) {
-			this.field2321 = arg0.method1600();
+			this.field2321 = arg0.g1();
 		} else if (arg1 == 21) {
 			this.field2322 = 0;
 		} else if (arg1 == 22) {
@@ -268,98 +268,98 @@ public class LocType extends DoublyLinkable {
 		} else if (arg1 == 23) {
 			this.field2324 = true;
 		} else if (arg1 == 24) {
-			this.field2325 = arg0.method1602();
+			this.field2325 = arg0.g2();
 			if (this.field2325 == 65535) {
 				this.field2325 = -1;
 			}
 		} else if (arg1 == 27) {
 			this.field2342 = 1;
 		} else if (arg1 == 28) {
-			this.field2327 = arg0.method1600();
+			this.field2327 = arg0.g1();
 		} else if (arg1 == 29) {
-			this.field2343 = arg0.method1595();
+			this.field2343 = arg0.g1b();
 		} else if (arg1 == 39) {
-			this.field2326 = arg0.method1595() * 25;
+			this.field2326 = arg0.g1b() * 25;
 		} else if (arg1 >= 30 && arg1 < 35) {
-			this.field2328[arg1 - 30] = arg0.method1693();
+			this.field2328[arg1 - 30] = arg0.gjstr();
 			if (this.field2328[arg1 - 30].equalsIgnoreCase(EnglishLocale.field869)) {
 				this.field2328[arg1 - 30] = null;
 			}
 		} else if (arg1 == 40) {
-			int var7 = arg0.method1600();
+			int var7 = arg0.g1();
 			this.field2313 = new short[var7];
 			this.field2311 = new short[var7];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.field2313[var8] = (short) arg0.method1602();
-				this.field2311[var8] = (short) arg0.method1602();
+				this.field2313[var8] = (short) arg0.g2();
+				this.field2311[var8] = (short) arg0.g2();
 			}
 		} else if (arg1 == 41) {
-			int var9 = arg0.method1600();
+			int var9 = arg0.g1();
 			this.field2315 = new short[var9];
 			this.field2316 = new short[var9];
 			for (int var10 = 0; var10 < var9; var10++) {
-				this.field2315[var10] = (short) arg0.method1602();
-				this.field2316[var10] = (short) arg0.method1602();
+				this.field2315[var10] = (short) arg0.g2();
+				this.field2316[var10] = (short) arg0.g2();
 			}
 		} else if (arg1 == 60) {
-			this.field2330 = arg0.method1602();
+			this.field2330 = arg0.g2();
 		} else if (arg1 == 62) {
 			this.field2332 = true;
 		} else if (arg1 == 64) {
 			this.field2333 = false;
 		} else if (arg1 == 65) {
-			this.field2334 = arg0.method1602();
+			this.field2334 = arg0.g2();
 		} else if (arg1 == 66) {
-			this.field2335 = arg0.method1602();
+			this.field2335 = arg0.g2();
 		} else if (arg1 == 67) {
-			this.field2336 = arg0.method1602();
+			this.field2336 = arg0.g2();
 		} else if (arg1 == 68) {
-			this.field2320 = arg0.method1602();
+			this.field2320 = arg0.g2();
 		} else if (arg1 == 69) {
-			this.field2314 = arg0.method1600();
+			this.field2314 = arg0.g1();
 		} else if (arg1 == 70) {
-			this.field2304 = arg0.method1603();
+			this.field2304 = arg0.g2b();
 		} else if (arg1 == 71) {
-			this.field2350 = arg0.method1603();
+			this.field2350 = arg0.g2b();
 		} else if (arg1 == 72) {
-			this.field2339 = arg0.method1603();
+			this.field2339 = arg0.g2b();
 		} else if (arg1 == 73) {
 			this.field2341 = true;
 		} else if (arg1 == 74) {
 			this.field2347 = true;
 		} else if (arg1 == 75) {
-			this.field2337 = arg0.method1600();
+			this.field2337 = arg0.g1();
 		} else if (arg1 == 77) {
-			this.field2331 = arg0.method1602();
+			this.field2331 = arg0.g2();
 			if (this.field2331 == 65535) {
 				this.field2331 = -1;
 			}
-			this.field2346 = arg0.method1602();
+			this.field2346 = arg0.g2();
 			if (this.field2346 == 65535) {
 				this.field2346 = -1;
 			}
-			int var11 = arg0.method1600();
+			int var11 = arg0.g1();
 			this.field2317 = new int[var11 + 1];
 			for (int var12 = 0; var12 <= var11; var12++) {
-				this.field2317[var12] = arg0.method1602();
+				this.field2317[var12] = arg0.g2();
 				if (this.field2317[var12] == 65535) {
 					this.field2317[var12] = -1;
 				}
 			}
 		} else if (arg1 == 78) {
-			this.field2312 = arg0.method1602();
-			this.field2348 = arg0.method1600();
+			this.field2312 = arg0.g2();
+			this.field2348 = arg0.g1();
 		} else if (arg1 == 79) {
-			this.field2349 = arg0.method1602();
-			this.field2302 = arg0.method1602();
-			this.field2348 = arg0.method1600();
-			int var13 = arg0.method1600();
+			this.field2349 = arg0.g2();
+			this.field2302 = arg0.g2();
+			this.field2348 = arg0.g1();
+			int var13 = arg0.g1();
 			this.field2351 = new int[var13];
 			for (int var14 = 0; var14 < var13; var14++) {
-				this.field2351[var14] = arg0.method1602();
+				this.field2351[var14] = arg0.g2();
 			}
 		} else if (arg1 == 81) {
-			this.field2322 = arg0.method1600() * 256;
+			this.field2322 = arg0.g1() * 256;
 		}
 	}
 

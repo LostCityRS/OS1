@@ -206,53 +206,53 @@ public class SpriteDataProvider {
 	@ObfuscatedName("a.s([BB)V")
 	public static void method314(byte[] arg0) {
 		Packet var1 = new Packet(arg0);
-		var1.field1729 = arg0.length - 2;
-		Statics.field528 = var1.method1602();
+		var1.pos = arg0.length - 2;
+		Statics.field528 = var1.g2();
 		Statics.field531 = new int[Statics.field528];
 		Statics.field532 = new int[Statics.field528];
 		Statics.field41 = new int[Statics.field528];
 		Statics.field1151 = new int[Statics.field528];
 		Statics.field863 = new byte[Statics.field528][];
-		var1.field1729 = arg0.length - 7 - Statics.field528 * 8;
-		Statics.field533 = var1.method1602();
-		Statics.field530 = var1.method1602();
-		int var2 = (var1.method1600() & 0xFF) + 1;
+		var1.pos = arg0.length - 7 - Statics.field528 * 8;
+		Statics.field533 = var1.g2();
+		Statics.field530 = var1.g2();
+		int var2 = (var1.g1() & 0xFF) + 1;
 		for (int var3 = 0; var3 < Statics.field528; var3++) {
-			Statics.field531[var3] = var1.method1602();
+			Statics.field531[var3] = var1.g2();
 		}
 		for (int var4 = 0; var4 < Statics.field528; var4++) {
-			Statics.field532[var4] = var1.method1602();
+			Statics.field532[var4] = var1.g2();
 		}
 		for (int var5 = 0; var5 < Statics.field528; var5++) {
-			Statics.field41[var5] = var1.method1602();
+			Statics.field41[var5] = var1.g2();
 		}
 		for (int var6 = 0; var6 < Statics.field528; var6++) {
-			Statics.field1151[var6] = var1.method1602();
+			Statics.field1151[var6] = var1.g2();
 		}
-		var1.field1729 = arg0.length - 7 - Statics.field528 * 8 - (var2 - 1) * 3;
+		var1.pos = arg0.length - 7 - Statics.field528 * 8 - (var2 - 1) * 3;
 		Statics.field529 = new int[var2];
 		for (int var7 = 1; var7 < var2; var7++) {
-			Statics.field529[var7] = var1.method1728();
+			Statics.field529[var7] = var1.g3();
 			if (Statics.field529[var7] == 0) {
 				Statics.field529[var7] = 1;
 			}
 		}
-		var1.field1729 = 0;
+		var1.pos = 0;
 		for (int var8 = 0; var8 < Statics.field528; var8++) {
 			int var9 = Statics.field41[var8];
 			int var10 = Statics.field1151[var8];
 			int var11 = var9 * var10;
 			byte[] var12 = new byte[var11];
 			Statics.field863[var8] = var12;
-			int var13 = var1.method1600();
+			int var13 = var1.g1();
 			if (var13 == 0) {
 				for (int var14 = 0; var14 < var11; var14++) {
-					var12[var14] = var1.method1595();
+					var12[var14] = var1.g1b();
 				}
 			} else if (var13 == 1) {
 				for (int var15 = 0; var15 < var9; var15++) {
 					for (int var16 = 0; var16 < var10; var16++) {
-						var12[var9 * var16 + var15] = var1.method1595();
+						var12[var9 * var16 + var15] = var1.g1b();
 					}
 				}
 			}

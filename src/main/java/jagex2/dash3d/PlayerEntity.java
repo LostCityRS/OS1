@@ -71,22 +71,22 @@ public class PlayerEntity extends PathingEntity {
 
 	@ObfuscatedName("fi.am(Lev;I)V")
 	public final void method3061(Packet arg0) {
-		arg0.field1729 = 0;
-		int var2 = arg0.method1600();
-		this.field2787 = arg0.method1595();
-		this.field2800 = arg0.method1595();
+		arg0.pos = 0;
+		int var2 = arg0.g1();
+		this.field2787 = arg0.g1b();
+		this.field2800 = arg0.g1b();
 		int var3 = -1;
 		this.field2803 = 0;
 		int[] var4 = new int[12];
 		for (int var5 = 0; var5 < 12; var5++) {
-			int var6 = arg0.method1600();
+			int var6 = arg0.g1();
 			if (var6 == 0) {
 				var4[var5] = 0;
 			} else {
-				int var7 = arg0.method1600();
+				int var7 = arg0.g1();
 				var4[var5] = (var6 << 8) + var7;
 				if (var5 == 0 && var4[0] == 65535) {
-					var3 = arg0.method1602();
+					var3 = arg0.g2();
 					break;
 				}
 				if (var4[var5] >= 512) {
@@ -99,47 +99,47 @@ public class PlayerEntity extends PathingEntity {
 		}
 		int[] var9 = new int[5];
 		for (int var10 = 0; var10 < 5; var10++) {
-			int var11 = arg0.method1600();
+			int var11 = arg0.g1();
 			if (var11 < 0 || var11 >= Statics.field800[var10].length) {
 				var11 = 0;
 			}
 			var9[var10] = var11;
 		}
-		this.field2622 = arg0.method1602();
+		this.field2622 = arg0.g2();
 		if (this.field2622 == 65535) {
 			this.field2622 = -1;
 		}
-		this.field2619 = arg0.method1602();
+		this.field2619 = arg0.g2();
 		if (this.field2619 == 65535) {
 			this.field2619 = -1;
 		}
 		this.field2620 = this.field2619;
-		this.field2621 = arg0.method1602();
+		this.field2621 = arg0.g2();
 		if (this.field2621 == 65535) {
 			this.field2621 = -1;
 		}
-		this.field2664 = arg0.method1602();
+		this.field2664 = arg0.g2();
 		if (this.field2664 == 65535) {
 			this.field2664 = -1;
 		}
-		this.field2623 = arg0.method1602();
+		this.field2623 = arg0.g2();
 		if (this.field2623 == 65535) {
 			this.field2623 = -1;
 		}
-		this.field2624 = arg0.method1602();
+		this.field2624 = arg0.g2();
 		if (this.field2624 == 65535) {
 			this.field2624 = -1;
 		}
-		this.field2625 = arg0.method1602();
+		this.field2625 = arg0.g2();
 		if (this.field2625 == 65535) {
 			this.field2625 = -1;
 		}
-		this.field2796 = arg0.method1693();
+		this.field2796 = arg0.gjstr();
 		if (Statics.field1134 == this) {
 			Statics.field2497 = this.field2796;
 		}
-		this.field2789 = arg0.method1600();
-		this.field2790 = arg0.method1602();
+		this.field2789 = arg0.g1();
+		this.field2790 = arg0.g2();
 		if (this.field2786 == null) {
 			this.field2786 = new PlayerModel();
 		}
