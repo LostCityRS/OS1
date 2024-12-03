@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import java.net.Socket;
 import java.net.URL;
 
+@ObfuscatedName("client")
 public class Client extends GameShell {
 
 	@ObfuscatedName("cd.ad")
