@@ -1,4 +1,4 @@
-package jagex2.client;
+package deob;
 
 import java.awt.*;
 

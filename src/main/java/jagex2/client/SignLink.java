@@ -1,7 +1,6 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.sound.AudioSource;
 
 import java.awt.*;
@@ -12,6 +11,12 @@ import java.net.URL;
 
 @ObfuscatedName("ak")
 public class SignLink implements Runnable {
+
+	@ObfuscatedName("ak.r")
+	public static String javaVendor;
+
+	@ObfuscatedName("ak.d")
+	public static String javaVersion;
 
 	@ObfuscatedName("ak.l")
 	public AudioSource field376;
@@ -32,11 +37,11 @@ public class SignLink implements Runnable {
 	public EventQueue field381;
 
 	public SignLink() {
-		Statics.field380 = "Unknown";
-		Statics.field375 = "1.1";
+		javaVendor = "Unknown";
+		javaVersion = "1.1";
 		try {
-			Statics.field380 = System.getProperty("java.vendor");
-			Statics.field375 = System.getProperty("java.version");
+			javaVendor = System.getProperty("java.vendor");
+			javaVersion = System.getProperty("java.version");
 		} catch (Exception var4) {
 		}
 		try {

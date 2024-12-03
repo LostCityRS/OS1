@@ -1,7 +1,6 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.dash3d.PlayerModel;
 import jagex2.datastruct.Linkable;
 import jagex2.datastruct.LruCache;
@@ -12,6 +11,24 @@ import jagex2.jstring.EnglishLocale;
 
 @ObfuscatedName("eg")
 public class IfType extends Linkable {
+
+	@ObfuscatedName("av.m")
+	public static IfType[][] field373;
+
+	@ObfuscatedName("df.c")
+	public static boolean[] field1508;
+
+	@ObfuscatedName("eg.n")
+	public static Js5Index field1806;
+
+	@ObfuscatedName("eg.j")
+	public static Js5Index field1776;
+
+	@ObfuscatedName("dc.z")
+	public static Js5Index field1564;
+
+	@ObfuscatedName("eg.g")
+	public static Js5Index field1800;
 
 	@ObfuscatedName("eg.q")
 	public static LruCache field1778 = new LruCache(200);
@@ -381,25 +398,25 @@ public class IfType extends Linkable {
 
 	@ObfuscatedName("ay.c(Lch;Lch;Lch;Lch;I)V")
 	public static void method512(Js5Index arg0, Js5Index arg1, Js5Index arg2, Js5Index arg3) {
-		Statics.field1806 = arg0;
-		Statics.field1776 = arg1;
-		Statics.field1564 = arg2;
-		Statics.field1800 = arg3;
-		Statics.field373 = new IfType[Statics.field1806.method1055()][];
-		Statics.field1508 = new boolean[Statics.field1806.method1055()];
+		field1806 = arg0;
+		field1776 = arg1;
+		field1564 = arg2;
+		field1800 = arg3;
+		field373 = new IfType[field1806.method1055()][];
+		field1508 = new boolean[field1806.method1055()];
 	}
 
 	@ObfuscatedName("bw.n(IB)Leg;")
 	public static IfType method813(int arg0) {
 		int var1 = arg0 >> 16;
 		int var2 = arg0 & 0xFFFF;
-		if (Statics.field373[var1] == null || Statics.field373[var1][var2] == null) {
+		if (field373[var1] == null || field373[var1][var2] == null) {
 			boolean var3 = method1501(var1);
 			if (!var3) {
 				return null;
 			}
 		}
-		return Statics.field373[var1][var2];
+		return field373[var1][var2];
 	}
 
 	@ObfuscatedName("bd.j(IIB)Leg;")
@@ -416,32 +433,32 @@ public class IfType extends Linkable {
 
 	@ObfuscatedName("dw.z(II)Z")
 	public static boolean method1501(int arg0) {
-		if (Statics.field1508[arg0]) {
+		if (field1508[arg0]) {
 			return true;
-		} else if (Statics.field1806.method1093(arg0)) {
-			int var1 = Statics.field1806.method1054(arg0);
+		} else if (field1806.method1093(arg0)) {
+			int var1 = field1806.method1054(arg0);
 			if (var1 == 0) {
-				Statics.field1508[arg0] = true;
+				field1508[arg0] = true;
 				return true;
 			}
-			if (Statics.field373[arg0] == null) {
-				Statics.field373[arg0] = new IfType[var1];
+			if (field373[arg0] == null) {
+				field373[arg0] = new IfType[var1];
 			}
 			for (int var2 = 0; var2 < var1; var2++) {
-				if (Statics.field373[arg0][var2] == null) {
-					byte[] var3 = Statics.field1806.method1044(arg0, var2);
+				if (field373[arg0][var2] == null) {
+					byte[] var3 = field1806.method1044(arg0, var2);
 					if (var3 != null) {
-						Statics.field373[arg0][var2] = new IfType();
-						Statics.field373[arg0][var2].field1783 = (arg0 << 16) + var2;
+						field373[arg0][var2] = new IfType();
+						field373[arg0][var2].field1783 = (arg0 << 16) + var2;
 						if (var3[0] == -1) {
-							Statics.field373[arg0][var2].method1796(new Packet(var3));
+							field373[arg0][var2].method1796(new Packet(var3));
 						} else {
-							Statics.field373[arg0][var2].method1794(new Packet(var3));
+							field373[arg0][var2].method1794(new Packet(var3));
 						}
 					}
 				}
 			}
-			Statics.field1508[arg0] = true;
+			field1508[arg0] = true;
 			return true;
 		} else {
 			return false;
@@ -823,7 +840,7 @@ public class IfType extends Linkable {
 		if (var5 != null) {
 			return var5;
 		}
-		Js5Index var6 = Statics.field1564;
+		Js5Index var6 = field1564;
 		Pix32 var7;
 		if (SpriteDataProvider.method905(var6, var2, 0)) {
 			var7 = SpriteDataProvider.method759();
@@ -866,8 +883,8 @@ public class IfType extends Linkable {
 		if (var1 != null) {
 			return var1;
 		}
-		Js5Index var2 = Statics.field1564;
-		Js5Index var3 = Statics.field1800;
+		Js5Index var2 = field1564;
+		Js5Index var3 = field1800;
 		int var4 = this.field1829;
 		SoftwareFont var5;
 		if (SpriteDataProvider.method905(var2, var4, 0)) {
@@ -897,7 +914,7 @@ public class IfType extends Linkable {
 		if (var3 != null) {
 			return var3;
 		}
-		Js5Index var4 = Statics.field1564;
+		Js5Index var4 = field1564;
 		Pix32 var5;
 		if (SpriteDataProvider.method905(var4, var2, 0)) {
 			var5 = SpriteDataProvider.method759();
@@ -932,7 +949,7 @@ public class IfType extends Linkable {
 			SoftwareModel var7 = (SoftwareModel) field1850.method1244((long) ((var5 << 16) + var6));
 			if (var7 == null) {
 				if (var5 == 1) {
-					Model var8 = Model.method2992(Statics.field1776, var6, 0);
+					Model var8 = Model.method2992(field1776, var6, 0);
 					if (var8 == null) {
 						field1870 = true;
 						return null;

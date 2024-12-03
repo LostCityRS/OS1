@@ -86,7 +86,7 @@ public class Js5ProviderThread implements Runnable {
 				}
 			}
 		} catch (Exception var18) {
-			JagException.method1490(null, var18);
+			JagException.report(null, (Throwable) var18);
 		}
 	}
 

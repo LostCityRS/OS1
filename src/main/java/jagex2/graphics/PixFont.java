@@ -1,7 +1,6 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.JStringUtil;
 
 import java.util.Random;
@@ -35,6 +34,9 @@ public abstract class PixFont extends Pix2D {
 
 	@ObfuscatedName("fs.k")
 	public int field2546;
+
+	@ObfuscatedName("fs.o")
+	public static Pix8[] field2553;
 
 	@ObfuscatedName("fs.a")
 	public byte[] field2547;
@@ -213,7 +215,7 @@ public abstract class PixFont extends Pix2D {
 								try {
 									String var8 = var7.substring(4);
 									int var9 = JStringUtil.method91(var8, 10, true);
-									var4 += Statics.field2553[var9].field2517;
+									var4 += field2553[var9].field2517;
 									var3 = -1;
 								} catch (Exception var12) {
 								}
@@ -287,7 +289,7 @@ public abstract class PixFont extends Pix2D {
 						try {
 							String var17 = var16.substring(4);
 							int var18 = JStringUtil.method91(var17, 10, true);
-							var4 += Statics.field2553[var18].field2517;
+							var4 += field2553[var18].field2517;
 							var11 = 0;
 						} catch (Exception var22) {
 						}
@@ -597,7 +599,7 @@ public abstract class PixFont extends Pix2D {
 								try {
 									String var10 = var9.substring(4);
 									int var11 = JStringUtil.method91(var10, 10, true);
-									Pix8 var13 = Statics.field2553[var11];
+									Pix8 var13 = field2553[var11];
 									var13.method2747(arg1, this.field2550 + var4 - var13.field2518);
 									arg1 += var13.field2517;
 									var6 = -1;
@@ -686,7 +688,7 @@ public abstract class PixFont extends Pix2D {
 									var9++;
 									String var15 = var12.substring(4);
 									int var16 = JStringUtil.method91(var15, 10, true);
-									Pix8 var18 = Statics.field2553[var16];
+									Pix8 var18 = field2553[var16];
 									var18.method2747(arg1 + var13, this.field2550 + var6 - var18.field2518 + var14);
 									arg1 += var18.field2517;
 									var8 = -1;
@@ -755,37 +757,37 @@ public abstract class PixFont extends Pix2D {
 
 	@ObfuscatedName("fs.ct([BIIIII)V")
 	public static void method2836(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-		int var6 = Statics.field2481 * arg2 + arg1;
-		int var7 = Statics.field2481 - arg3;
+		int var6 = Pix2D.width2d * arg2 + arg1;
+		int var7 = Pix2D.width2d - arg3;
 		int var8 = 0;
 		int var9 = 0;
-		if (arg2 < field2483) {
-			int var10 = field2483 - arg2;
+		if (arg2 < top) {
+			int var10 = top - arg2;
 			arg4 -= var10;
-			arg2 = field2483;
+			arg2 = top;
 			var9 += arg3 * var10;
-			var6 += Statics.field2481 * var10;
+			var6 += Pix2D.width2d * var10;
 		}
-		if (arg2 + arg4 > field2482) {
-			arg4 -= arg2 + arg4 - field2482;
+		if (arg2 + arg4 > bottom) {
+			arg4 -= arg2 + arg4 - bottom;
 		}
-		if (arg1 < field2485) {
-			int var11 = field2485 - arg1;
+		if (arg1 < left) {
+			int var11 = left - arg1;
 			arg3 -= var11;
-			arg1 = field2485;
+			arg1 = left;
 			var9 += var11;
 			var6 += var11;
 			var8 += var11;
 			var7 += var11;
 		}
-		if (arg1 + arg3 > field2484) {
-			int var12 = arg1 + arg3 - field2484;
+		if (arg1 + arg3 > right) {
+			int var12 = arg1 + arg3 - right;
 			arg3 -= var12;
 			var8 += var12;
 			var7 += var12;
 		}
 		if (arg3 > 0 && arg4 > 0) {
-			method2834(Statics.field2486, arg0, arg5, var9, var6, arg3, arg4, var7, var8);
+			method2834(Pix2D.data, arg0, arg5, var9, var6, arg3, arg4, var7, var8);
 		}
 	}
 
@@ -830,37 +832,37 @@ public abstract class PixFont extends Pix2D {
 
 	@ObfuscatedName("fs.cy([BIIIIII)V")
 	public static void method2838(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
-		int var7 = Statics.field2481 * arg2 + arg1;
-		int var8 = Statics.field2481 - arg3;
+		int var7 = Pix2D.width2d * arg2 + arg1;
+		int var8 = Pix2D.width2d - arg3;
 		int var9 = 0;
 		int var10 = 0;
-		if (arg2 < field2483) {
-			int var11 = field2483 - arg2;
+		if (arg2 < top) {
+			int var11 = top - arg2;
 			arg4 -= var11;
-			arg2 = field2483;
+			arg2 = top;
 			var10 += arg3 * var11;
-			var7 += Statics.field2481 * var11;
+			var7 += Pix2D.width2d * var11;
 		}
-		if (arg2 + arg4 > field2482) {
-			arg4 -= arg2 + arg4 - field2482;
+		if (arg2 + arg4 > bottom) {
+			arg4 -= arg2 + arg4 - bottom;
 		}
-		if (arg1 < field2485) {
-			int var12 = field2485 - arg1;
+		if (arg1 < left) {
+			int var12 = left - arg1;
 			arg3 -= var12;
-			arg1 = field2485;
+			arg1 = left;
 			var10 += var12;
 			var7 += var12;
 			var9 += var12;
 			var8 += var12;
 		}
-		if (arg1 + arg3 > field2484) {
-			int var13 = arg1 + arg3 - field2484;
+		if (arg1 + arg3 > right) {
+			int var13 = arg1 + arg3 - right;
 			arg3 -= var13;
 			var9 += var13;
 			var8 += var13;
 		}
 		if (arg3 > 0 && arg4 > 0) {
-			method2839(Statics.field2486, arg0, arg5, var10, var7, arg3, arg4, var8, var9, arg6);
+			method2839(Pix2D.data, arg0, arg5, var10, var7, arg3, arg4, var8, var9, arg6);
 		}
 	}
 

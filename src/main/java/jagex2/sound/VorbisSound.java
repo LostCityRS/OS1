@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.IntUtil;
 import jagex2.datastruct.Linkable;
 import jagex2.io.Packet;
@@ -28,6 +27,39 @@ public class VorbisSound extends Linkable {
 	@ObfuscatedName("dt.g")
 	public boolean field1652;
 
+	@ObfuscatedName("dt.q")
+	public static byte[] field1653;
+
+	@ObfuscatedName("dt.i")
+	public static int field1654;
+
+	@ObfuscatedName("dt.s")
+	public static int field1655;
+
+	@ObfuscatedName("dt.u")
+	public static int field1650;
+
+	@ObfuscatedName("dt.v")
+	public static int field1657;
+
+	@ObfuscatedName("dt.w")
+	public static VorbisCookbook[] field1658;
+
+	@ObfuscatedName("dt.e")
+	public static VorbisFloor[] field1659;
+
+	@ObfuscatedName("dt.b")
+	public static VorbisResidue[] field1668;
+
+	@ObfuscatedName("dt.y")
+	public static VorbisMapping[] field1661;
+
+	@ObfuscatedName("dt.t")
+	public static boolean[] field1662;
+
+	@ObfuscatedName("dt.f")
+	public static int[] field1663;
+
 	@ObfuscatedName("dt.k")
 	public static boolean field1664 = false;
 
@@ -42,6 +74,33 @@ public class VorbisSound extends Linkable {
 
 	@ObfuscatedName("dt.x")
 	public boolean field1651;
+
+	@ObfuscatedName("dt.p")
+	public static float[] field1649;
+
+	@ObfuscatedName("dt.ad")
+	public static float[] field1669;
+
+	@ObfuscatedName("dt.ac")
+	public static float[] field1671;
+
+	@ObfuscatedName("dt.aa")
+	public static float[] field1672;
+
+	@ObfuscatedName("dt.as")
+	public static float[] field1673;
+
+	@ObfuscatedName("dt.am")
+	public static float[] field1678;
+
+	@ObfuscatedName("dt.ap")
+	public static float[] field1675;
+
+	@ObfuscatedName("dt.av")
+	public static int[] field1656;
+
+	@ObfuscatedName("dt.ak")
+	public static int[] field1647;
 
 	@ObfuscatedName("dt.az")
 	public byte[] field1660;
@@ -65,17 +124,17 @@ public class VorbisSound extends Linkable {
 
 	@ObfuscatedName("dt.n([BI)V")
 	public static void method1536(byte[] arg0, int arg1) {
-		Statics.field1653 = arg0;
-		Statics.field1654 = arg1;
-		Statics.field1655 = 0;
+		field1653 = arg0;
+		field1654 = arg1;
+		field1655 = 0;
 	}
 
 	@ObfuscatedName("dt.j()I")
 	public static int method1553() {
-		int var0 = Statics.field1653[Statics.field1654] >> Statics.field1655 & 0x1;
-		Statics.field1655++;
-		Statics.field1654 += Statics.field1655 >> 3;
-		Statics.field1655 &= 0x7;
+		int var0 = field1653[field1654] >> field1655 & 0x1;
+		field1655++;
+		field1654 += field1655 >> 3;
+		field1655 &= 0x7;
 		return var0;
 	}
 
@@ -83,19 +142,19 @@ public class VorbisSound extends Linkable {
 	public static int method1561(int arg0) {
 		int var1 = 0;
 		int var2 = 0;
-		while (arg0 >= 8 - Statics.field1655) {
-			int var3 = 8 - Statics.field1655;
+		while (arg0 >= 8 - field1655) {
+			int var3 = 8 - field1655;
 			int var4 = (0x1 << var3) - 1;
-			var1 += (Statics.field1653[Statics.field1654] >> Statics.field1655 & var4) << var2;
-			Statics.field1655 = 0;
-			Statics.field1654++;
+			var1 += (field1653[field1654] >> field1655 & var4) << var2;
+			field1655 = 0;
+			field1654++;
 			var2 += var3;
 			arg0 -= var3;
 		}
 		if (arg0 > 0) {
 			int var5 = (0x1 << arg0) - 1;
-			var1 += (Statics.field1653[Statics.field1654] >> Statics.field1655 & var5) << var2;
-			Statics.field1655 += arg0;
+			var1 += (field1653[field1654] >> field1655 & var5) << var2;
+			field1655 += arg0;
 		}
 		return var1;
 	}
@@ -129,11 +188,11 @@ public class VorbisSound extends Linkable {
 	@ObfuscatedName("dt.q([B)V")
 	public static void method1551(byte[] arg0) {
 		method1536(arg0, 0);
-		Statics.field1650 = 0x1 << method1561(4);
-		Statics.field1657 = 0x1 << method1561(4);
-		Statics.field1649 = new float[Statics.field1657];
+		field1650 = 0x1 << method1561(4);
+		field1657 = 0x1 << method1561(4);
+		field1649 = new float[field1657];
 		for (int var1 = 0; var1 < 2; var1++) {
-			int var2 = var1 == 0 ? Statics.field1650 : Statics.field1657;
+			int var2 = var1 == 0 ? field1650 : field1657;
 			int var3 = var2 >> 1;
 			int var4 = var2 >> 2;
 			int var5 = var2 >> 3;
@@ -166,49 +225,49 @@ public class VorbisSound extends Linkable {
 				var12[var14] = var19;
 			}
 			if (var1 == 0) {
-				Statics.field1669 = var6;
-				Statics.field1671 = var8;
-				Statics.field1672 = var10;
-				Statics.field1656 = var12;
+				field1669 = var6;
+				field1671 = var8;
+				field1672 = var10;
+				field1656 = var12;
 			} else {
-				Statics.field1673 = var6;
-				Statics.field1678 = var8;
-				Statics.field1675 = var10;
-				Statics.field1647 = var12;
+				field1673 = var6;
+				field1678 = var8;
+				field1675 = var10;
+				field1647 = var12;
 			}
 		}
 		int var21 = method1561(8) + 1;
-		Statics.field1658 = new VorbisCookbook[var21];
+		field1658 = new VorbisCookbook[var21];
 		for (int var22 = 0; var22 < var21; var22++) {
-			Statics.field1658[var22] = new VorbisCookbook();
+			field1658[var22] = new VorbisCookbook();
 		}
 		int var23 = method1561(6) + 1;
 		for (int var24 = 0; var24 < var23; var24++) {
 			method1561(16);
 		}
 		int var25 = method1561(6) + 1;
-		Statics.field1659 = new VorbisFloor[var25];
+		field1659 = new VorbisFloor[var25];
 		for (int var26 = 0; var26 < var25; var26++) {
-			Statics.field1659[var26] = new VorbisFloor();
+			field1659[var26] = new VorbisFloor();
 		}
 		int var27 = method1561(6) + 1;
-		Statics.field1668 = new VorbisResidue[var27];
+		field1668 = new VorbisResidue[var27];
 		for (int var28 = 0; var28 < var27; var28++) {
-			Statics.field1668[var28] = new VorbisResidue();
+			field1668[var28] = new VorbisResidue();
 		}
 		int var29 = method1561(6) + 1;
-		Statics.field1661 = new VorbisMapping[var29];
+		field1661 = new VorbisMapping[var29];
 		for (int var30 = 0; var30 < var29; var30++) {
-			Statics.field1661[var30] = new VorbisMapping();
+			field1661[var30] = new VorbisMapping();
 		}
 		int var31 = method1561(6) + 1;
-		Statics.field1662 = new boolean[var31];
-		Statics.field1663 = new int[var31];
+		field1662 = new boolean[var31];
+		field1663 = new int[var31];
 		for (int var32 = 0; var32 < var31; var32++) {
-			Statics.field1662[var32] = method1553() != 0;
+			field1662[var32] = method1553() != 0;
 			method1561(16);
 			method1561(16);
-			Statics.field1663[var32] = method1561(8);
+			field1663[var32] = method1561(8);
 		}
 	}
 
@@ -216,9 +275,9 @@ public class VorbisSound extends Linkable {
 	public float[] method1541(int arg0) {
 		method1536(this.field1674[arg0], 0);
 		method1553();
-		int var2 = method1561(IntUtil.method479(Statics.field1663.length - 1));
-		boolean var3 = Statics.field1662[var2];
-		int var4 = var3 ? Statics.field1657 : Statics.field1650;
+		int var2 = method1561(IntUtil.method479(field1663.length - 1));
+		boolean var3 = field1662[var2];
+		int var4 = var3 ? field1657 : field1650;
 		boolean var5 = false;
 		boolean var6 = false;
 		if (var3) {
@@ -230,9 +289,9 @@ public class VorbisSound extends Linkable {
 		int var9;
 		int var10;
 		if (var3 && !var5) {
-			var8 = (var4 >> 2) - (Statics.field1650 >> 2);
-			var9 = (Statics.field1650 >> 2) + (var4 >> 2);
-			var10 = Statics.field1650 >> 1;
+			var8 = (var4 >> 2) - (field1650 >> 2);
+			var9 = (field1650 >> 2) + (var4 >> 2);
+			var10 = field1650 >> 1;
 		} else {
 			var8 = 0;
 			var9 = var7;
@@ -242,48 +301,48 @@ public class VorbisSound extends Linkable {
 		int var12;
 		int var13;
 		if (var3 && !var6) {
-			var11 = var4 - (var4 >> 2) - (Statics.field1650 >> 2);
-			var12 = (Statics.field1650 >> 2) + (var4 - (var4 >> 2));
-			var13 = Statics.field1650 >> 1;
+			var11 = var4 - (var4 >> 2) - (field1650 >> 2);
+			var12 = (field1650 >> 2) + (var4 - (var4 >> 2));
+			var13 = field1650 >> 1;
 		} else {
 			var11 = var7;
 			var12 = var4;
 			var13 = var4 >> 1;
 		}
-		VorbisMapping var14 = Statics.field1661[Statics.field1663[var2]];
+		VorbisMapping var14 = field1661[field1663[var2]];
 		int var15 = var14.field232;
 		int var16 = var14.field234[var15];
-		boolean var17 = !Statics.field1659[var16].method187();
+		boolean var17 = !field1659[var16].method187();
 		boolean var18 = var17;
 		for (int var19 = 0; var19 < var14.field231; var19++) {
-			VorbisResidue var20 = Statics.field1668[var14.field233[var19]];
-			float[] var21 = Statics.field1649;
+			VorbisResidue var20 = field1668[var14.field233[var19]];
+			float[] var21 = field1649;
 			var20.method317(var21, var4 >> 1, var18);
 		}
 		if (!var17) {
 			int var22 = var14.field232;
 			int var23 = var14.field234[var22];
-			Statics.field1659[var23].method188(Statics.field1649, var4 >> 1);
+			field1659[var23].method188(field1649, var4 >> 1);
 		}
 		if (var17) {
 			for (int var24 = var4 >> 1; var24 < var4; var24++) {
-				Statics.field1649[var24] = 0.0F;
+				field1649[var24] = 0.0F;
 			}
 		} else {
 			int var25 = var4 >> 1;
 			int var26 = var4 >> 2;
 			int var27 = var4 >> 3;
-			float[] var28 = Statics.field1649;
+			float[] var28 = field1649;
 			for (int var29 = 0; var29 < var25; var29++) {
 				var28[var29] *= 0.5F;
 			}
 			for (int var30 = var25; var30 < var4; var30++) {
 				var28[var30] = -var28[var4 - var30 - 1];
 			}
-			float[] var31 = var3 ? Statics.field1673 : Statics.field1669;
-			float[] var32 = var3 ? Statics.field1678 : Statics.field1671;
-			float[] var33 = var3 ? Statics.field1675 : Statics.field1672;
-			int[] var34 = var3 ? Statics.field1647 : Statics.field1656;
+			float[] var31 = var3 ? field1673 : field1669;
+			float[] var32 = var3 ? field1678 : field1671;
+			float[] var33 = var3 ? field1675 : field1672;
+			int[] var34 = var3 ? field1647 : field1656;
 			for (int var35 = 0; var35 < var26; var35++) {
 				float var36 = var28[var35 * 4] - var28[var4 - var35 * 4 - 1];
 				float var37 = var28[var35 * 4 + 2] - var28[var4 - var35 * 4 - 3];
@@ -386,11 +445,11 @@ public class VorbisSound extends Linkable {
 			}
 			for (int var86 = var8; var86 < var9; var86++) {
 				float var87 = (float) Math.sin(((double) (var86 - var8) + 0.5D) / (double) var10 * 0.5D * 3.141592653589793D);
-				Statics.field1649[var86] *= (float) Math.sin((double) var87 * 1.5707963267948966D * (double) var87);
+				field1649[var86] *= (float) Math.sin((double) var87 * 1.5707963267948966D * (double) var87);
 			}
 			for (int var88 = var11; var88 < var12; var88++) {
 				float var89 = (float) Math.sin(((double) (var88 - var11) + 0.5D) / (double) var13 * 0.5D * 3.141592653589793D + 1.5707963267948966D);
-				Statics.field1649[var88] *= (float) Math.sin((double) var89 * 1.5707963267948966D * (double) var89);
+				field1649[var88] *= (float) Math.sin((double) var89 * 1.5707963267948966D * (double) var89);
 			}
 		}
 		float[] var90 = null;
@@ -406,13 +465,13 @@ public class VorbisSound extends Linkable {
 			if (!var17) {
 				for (int var94 = var8; var94 < var4 >> 1; var94++) {
 					int var95 = var90.length - (var4 >> 1) + var94;
-					var90[var95] += Statics.field1649[var94];
+					var90[var95] += field1649[var94];
 				}
 			}
 		}
 		float[] var96 = this.field1665;
-		this.field1665 = Statics.field1649;
-		Statics.field1649 = var96;
+		this.field1665 = field1649;
+		field1649 = var96;
 		this.field1666 = var4;
 		this.field1667 = var12 - (var4 >> 1);
 		this.field1651 = var17;
@@ -454,7 +513,7 @@ public class VorbisSound extends Linkable {
 		}
 		if (this.field1660 == null) {
 			this.field1666 = 0;
-			this.field1665 = new float[Statics.field1657];
+			this.field1665 = new float[field1657];
 			this.field1660 = new byte[this.field1670];
 			this.field1679 = 0;
 			this.field1680 = 0;

@@ -5,6 +5,7 @@ import deob.Statics;
 import jagex2.datastruct.JStringUtil;
 import jagex2.datastruct.TextUtil;
 import jagex2.graphics.*;
+import jagex2.io.ClientStream;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Provider;
 import jagex2.js5.Js5TcpClient;
@@ -17,17 +18,65 @@ import java.net.URL;
 @ObfuscatedName("g")
 public class LoginScreen {
 
+	@ObfuscatedName("g.r")
+	public static ClientStream field169;
+
+	@ObfuscatedName("g.d")
+	public static Pix8 field137;
+
+	@ObfuscatedName("g.l")
+	public static Pix8 field153;
+
+	@ObfuscatedName("g.m")
+	public static Pix8[] field165;
+
+	@ObfuscatedName("g.c")
+	public static Pix32 field146;
+
+	@ObfuscatedName("ac.n")
+	public static Pix32 field348;
+
+	@ObfuscatedName("g.j")
+	public static Pix8 field131;
+
+	@ObfuscatedName("g.z")
+	public static Pix8[] field132;
+
 	@ObfuscatedName("g.g")
 	public static boolean field142 = false;
 
 	@ObfuscatedName("g.w")
 	public static int[] field139 = new int[256];
 
+	@ObfuscatedName("g.e")
+	public static int[] field140;
+
+	@ObfuscatedName("bq.b")
+	public static int[] field827;
+
+	@ObfuscatedName("bx.y")
+	public static int[] field813;
+
+	@ObfuscatedName("g.t")
+	public static int[] field141;
+
 	@ObfuscatedName("g.f")
 	public static int field129 = 0;
 
 	@ObfuscatedName("g.k")
 	public static int field143 = 0;
+
+	@ObfuscatedName("an.o")
+	public static int[] field489;
+
+	@ObfuscatedName("ay.a")
+	public static int[] field527;
+
+	@ObfuscatedName("g.h")
+	public static int[] field144;
+
+	@ObfuscatedName("r.x")
+	public static int[] field9;
 
 	@ObfuscatedName("g.p")
 	public static int field145 = 0;
@@ -74,8 +123,32 @@ public class LoginScreen {
 	@ObfuscatedName("g.ao")
 	public static boolean field160 = false;
 
+	@ObfuscatedName("l.ag")
+	public static WorldList field35;
+
+	@ObfuscatedName("da.ar")
+	public static Pix32[] field1530;
+
+	@ObfuscatedName("be.aq")
+	public static String field852;
+
+	@ObfuscatedName("fn.aq")
+	public static Pix8[] field2612;
+
+	@ObfuscatedName("au.at")
+	public static Pix8[] field681;
+
+	@ObfuscatedName("bx.ae")
+	public static Pix8[] field811;
+
+	@ObfuscatedName("v.au")
+	public static Pix8 field215;
+
 	@ObfuscatedName("g.ax")
 	public static int field161 = 0;
+
+	@ObfuscatedName("v.ai")
+	public static WorldEntry[] field214;
 
 	@ObfuscatedName("g.bi")
 	public static int[] field130 = new int[] { 0, 1, 2, 3 };
@@ -100,33 +173,33 @@ public class LoginScreen {
 		if (!Statics.field1507) {
 			return;
 		}
-		Statics.field137 = null;
-		Statics.field153 = null;
-		Statics.field165 = null;
-		Statics.field146 = null;
-		Statics.field348 = null;
-		Statics.field131 = null;
-		Statics.field132 = null;
-		Statics.field1530 = null;
-		Statics.field2612 = null;
-		Statics.field681 = null;
-		Statics.field811 = null;
-		Statics.field215 = null;
-		Statics.field827 = null;
-		Statics.field813 = null;
-		Statics.field141 = null;
-		Statics.field140 = null;
-		Statics.field489 = null;
-		Statics.field527 = null;
-		Statics.field144 = null;
-		Statics.field9 = null;
+		field137 = null;
+		field153 = null;
+		field165 = null;
+		field146 = null;
+		field348 = null;
+		field131 = null;
+		field132 = null;
+		field1530 = null;
+		field2612 = null;
+		field681 = null;
+		field811 = null;
+		field215 = null;
+		field827 = null;
+		field813 = null;
+		field141 = null;
+		field140 = null;
+		field489 = null;
+		field527 = null;
+		field144 = null;
+		field9 = null;
 		MidiPlayer.field1117 = 1;
-		Statics.field1118 = null;
-		Statics.field349 = -1;
-		Statics.field1121 = -1;
-		Statics.field1120 = 0;
-		Statics.field1625 = false;
-		Statics.field1152 = 2;
+		MidiPlayer.field1118 = null;
+		MidiPlayer.field349 = -1;
+		MidiPlayer.field1121 = -1;
+		MidiPlayer.field1120 = 0;
+		MidiPlayer.field1625 = false;
+		MidiPlayer.field1152 = 2;
 		Js5TcpClient.method343(true);
 		Statics.field1507 = false;
 	}
@@ -142,7 +215,7 @@ public class LoginScreen {
 			if (field142) {
 				MidiPlayer.method917();
 			} else {
-				Js5Provider var1 = Statics.field1110;
+				Js5Provider var1 = Client.field1110;
 				int var2 = var1.method1059("scape main");
 				int var3 = var1.method1064(var2, "");
 				MidiPlayer.method1125(var1, var2, var3, 255, false);
@@ -166,7 +239,7 @@ public class LoginScreen {
 					return;
 				}
 			}
-			if (Statics.field35 != null) {
+			if (field35 != null) {
 				method377();
 			}
 		}
@@ -230,7 +303,7 @@ public class LoginScreen {
 							var19 = false;
 						} else {
 							Statics.field114 = JavaKeyboardProvider.field478[JavaKeyboardProvider.field479];
-							Statics.field1162 = JavaKeyboardProvider.field477[JavaKeyboardProvider.field479];
+							Client.field1162 = JavaKeyboardProvider.field477[JavaKeyboardProvider.field479];
 							JavaKeyboardProvider.field479 = JavaKeyboardProvider.field479 + 1 & 0x7F;
 							var19 = true;
 						}
@@ -240,7 +313,7 @@ public class LoginScreen {
 					}
 					boolean var21 = false;
 					for (int var22 = 0; var22 < field158.length(); var22++) {
-						if (Statics.field1162 == field158.charAt(var22)) {
+						if (Client.field1162 == field158.charAt(var22)) {
 							var21 = true;
 							break;
 						}
@@ -253,7 +326,7 @@ public class LoginScreen {
 							field150 = 1;
 						}
 						if (var21 && field164.length() < 320) {
-							field164 = field164 + Statics.field1162;
+							field164 = field164 + Client.field1162;
 						}
 					} else if (field150 == 1) {
 						if (Statics.field114 == 85 && field133.length() > 0) {
@@ -277,7 +350,7 @@ public class LoginScreen {
 							return;
 						}
 						if (var21 && field133.length() < 20) {
-							field133 = field133 + Statics.field1162;
+							field133 = field133 + Client.field1162;
 						}
 					}
 				}
@@ -308,7 +381,7 @@ public class LoginScreen {
 			arg0.method2880(field156, 382, 276 - var2, 16777215, -1);
 		}
 		if (Client.field1929 == 20) {
-			Statics.field137.method2747(382 - Statics.field137.field2513 / 2, 271 - Statics.field137.field2514 / 2);
+			field137.method2747(382 - field137.field2513 / 2, 271 - field137.field2514 / 2);
 			short var4 = 211;
 			arg0.method2880(field152, 382, var4, 16776960, 0);
 			int var89 = var4 + 15;
@@ -331,17 +404,17 @@ public class LoginScreen {
 			var89 += 15;
 		}
 		if (Client.field1929 == 10) {
-			Statics.field137.method2747(202, 171);
+			field137.method2747(202, 171);
 			if (field151 == 0) {
 				short var11 = 251;
 				arg0.method2880(EnglishLocale.field1074, 382, var11, 16776960, 0);
 				int var93 = var11 + 30;
 				short var12 = 302;
 				short var13 = 291;
-				Statics.field153.method2747(var12 - 73, var13 - 20);
+				field153.method2747(var12 - 73, var13 - 20);
 				arg0.method2824(EnglishLocale.field989, var12 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 				short var14 = 462;
-				Statics.field153.method2747(var14 - 73, var13 - 20);
+				field153.method2747(var14 - 73, var13 - 20);
 				arg0.method2824(EnglishLocale.field1076, var14 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 			} else if (field151 == 2) {
 				short var15 = 211;
@@ -366,10 +439,10 @@ public class LoginScreen {
 				var94 += 15;
 				short var22 = 302;
 				short var23 = 321;
-				Statics.field153.method2747(var22 - 73, var23 - 20);
+				field153.method2747(var22 - 73, var23 - 20);
 				arg0.method2880(EnglishLocale.field995, var22, var23 + 5, 16777215, 0);
 				short var24 = 462;
-				Statics.field153.method2747(var24 - 73, var23 - 20);
+				field153.method2747(var24 - 73, var23 - 20);
 				arg0.method2880(EnglishLocale.field1078, var24, var23 + 5, 16777215, 0);
 			} else if (field151 == 3) {
 				arg0.method2880(EnglishLocale.field1079, 382, 211, 16776960, 0);
@@ -384,7 +457,7 @@ public class LoginScreen {
 				int var101 = var100 + 15;
 				short var26 = 382;
 				short var27 = 321;
-				Statics.field153.method2747(var26 - 73, var27 - 20);
+				field153.method2747(var26 - 73, var27 - 20);
 				arg0.method2880(EnglishLocale.field1078, var26, var27 + 5, 16777215, 0);
 			}
 		}
@@ -392,29 +465,29 @@ public class LoginScreen {
 			int var28 = field147;
 			short var29 = 256;
 			field145 += var28 * 128;
-			if (field145 > Statics.field489.length) {
-				field145 -= Statics.field489.length;
+			if (field145 > field489.length) {
+				field145 -= field489.length;
 				int var30 = (int) (Math.random() * 12.0D);
-				method920(Statics.field165[var30]);
+				method920(field165[var30]);
 			}
 			int var31 = 0;
 			int var32 = var28 * 128;
 			int var33 = (var29 - var28) * 128;
 			for (int var34 = 0; var34 < var33; var34++) {
-				int var35 = Statics.field144[var31 + var32] - Statics.field489[field145 + var31 & Statics.field489.length - 1] * var28 / 6;
+				int var35 = field144[var31 + var32] - field489[field145 + var31 & field489.length - 1] * var28 / 6;
 				if (var35 < 0) {
 					var35 = 0;
 				}
-				Statics.field144[var31++] = var35;
+				field144[var31++] = var35;
 			}
 			for (int var36 = var29 - var28; var36 < var29; var36++) {
 				int var37 = var36 * 128;
 				for (int var38 = 0; var38 < 128; var38++) {
 					int var39 = (int) (Math.random() * 100.0D);
 					if (var39 < 50 && var38 > 10 && var38 < 118) {
-						Statics.field144[var37 + var38] = 255;
+						field144[var37 + var38] = 255;
 					} else {
-						Statics.field144[var37 + var38] = 0;
+						field144[var37 + var38] = 0;
 					}
 				}
 			}
@@ -446,7 +519,7 @@ public class LoginScreen {
 				for (int var44 = 0; var44 < field128 * 1196724044; var44++) {
 					int var45 = (int) (Math.random() * 124.0D) + 2;
 					int var46 = (int) (Math.random() * 128.0D) + 128;
-					Statics.field144[(var46 << 7) + var45] = 192;
+					field144[(var46 << 7) + var45] = 192;
 				}
 				field128 = 0;
 				int var47 = 0;
@@ -461,13 +534,13 @@ public class LoginScreen {
 							for (int var53 = -var43; var53 < var29; var53++) {
 								int var54 = var53 * 128;
 								if (var43 + var53 < var29) {
-									var52 += Statics.field9[var43 * 128 + var51 + var54];
+									var52 += field9[var43 * 128 + var51 + var54];
 								}
 								if (var53 - (var43 + 1) >= 0) {
-									var52 -= Statics.field9[var51 + var54 - (var43 + 1) * 128];
+									var52 -= field9[var51 + var54 - (var43 + 1) * 128];
 								}
 								if (var53 >= 0) {
-									Statics.field144[var51 + var54] = var52 / (var43 * 2 + 1);
+									field144[var51 + var54] = var52 / (var43 * 2 + 1);
 								}
 							}
 							var51++;
@@ -477,13 +550,13 @@ public class LoginScreen {
 					int var49 = var47 * 128;
 					for (int var50 = -var43; var50 < 128; var50++) {
 						if (var43 + var50 < 128) {
-							var48 += Statics.field144[var49 + var50 + var43];
+							var48 += field144[var49 + var50 + var43];
 						}
 						if (var50 - (var43 + 1) >= 0) {
-							var48 -= Statics.field144[var49 + var50 - (var43 + 1)];
+							var48 -= field144[var49 + var50 - (var43 + 1)];
 						}
 						if (var50 >= 0) {
-							Statics.field9[var49 + var50] = var48 / (var43 * 2 + 1);
+							field9[var49 + var50] = var48 / (var43 * 2 + 1);
 						}
 					}
 					var47++;
@@ -495,30 +568,30 @@ public class LoginScreen {
 		if (field129 > 0) {
 			for (int var56 = 0; var56 < 256; var56++) {
 				if (field129 > 768) {
-					Statics.field140[var56] = method1792(Statics.field827[var56], Statics.field813[var56], 1024 - field129);
+					field140[var56] = method1792(field827[var56], field813[var56], 1024 - field129);
 				} else if (field129 > 256) {
-					Statics.field140[var56] = Statics.field813[var56];
+					field140[var56] = field813[var56];
 				} else {
-					Statics.field140[var56] = method1792(Statics.field813[var56], Statics.field827[var56], 256 - field129);
+					field140[var56] = method1792(field813[var56], field827[var56], 256 - field129);
 				}
 			}
 		} else if (field143 > 0) {
 			for (int var57 = 0; var57 < 256; var57++) {
 				if (field143 > 768) {
-					Statics.field140[var57] = method1792(Statics.field827[var57], Statics.field141[var57], 1024 - field143);
+					field140[var57] = method1792(field827[var57], field141[var57], 1024 - field143);
 				} else if (field143 > 256) {
-					Statics.field140[var57] = Statics.field141[var57];
+					field140[var57] = field141[var57];
 				} else {
-					Statics.field140[var57] = method1792(Statics.field141[var57], Statics.field827[var57], 256 - field143);
+					field140[var57] = method1792(field141[var57], field827[var57], 256 - field143);
 				}
 			}
 		} else {
 			for (int var58 = 0; var58 < 256; var58++) {
-				Statics.field140[var58] = Statics.field827[var58];
+				field140[var58] = field827[var58];
 			}
 		}
 		Pix2D.method2605(0, 9, 128, var55 + 7);
-		Statics.field146.method2667(0, 0);
+		field146.method2667(0, 0);
 		Pix2D.method2584();
 		int var59 = 0;
 		int var60 = 6885;
@@ -530,20 +603,20 @@ public class LoginScreen {
 			}
 			var59 += var63;
 			for (int var64 = var63; var64 < 128; var64++) {
-				int var65 = Statics.field144[var59++];
+				int var65 = field144[var59++];
 				if (var65 == 0) {
 					var60++;
 				} else {
 					int var67 = 256 - var65;
-					int var68 = Statics.field140[var65];
-					int var69 = Statics.field1546.field538[var60];
-					Statics.field1546.field538[var60++] = ((var68 & 0xFF00) * var65 + (var69 & 0xFF00) * var67 & 0xFF0000) + ((var68 & 0xFF00FF) * var65 + (var69 & 0xFF00FF) * var67 & 0xFF00FF00) >> 8;
+					int var68 = field140[var65];
+					int var69 = GameShell.drawArea.field538[var60];
+					GameShell.drawArea.field538[var60++] = ((var68 & 0xFF00) * var65 + (var69 & 0xFF00) * var67 & 0xFF0000) + ((var68 & 0xFF00FF) * var65 + (var69 & 0xFF00FF) * var67 & 0xFF00FF00) >> 8;
 				}
 			}
 			var60 += var63 + 765 - 128;
 		}
 		Pix2D.method2605(637, 9, 765, var55 + 7);
-		Statics.field348.method2667(382, 0);
+		field348.method2667(382, 0);
 		Pix2D.method2584();
 		int var70 = 0;
 		int var71 = 7546;
@@ -552,31 +625,31 @@ public class LoginScreen {
 			int var74 = 103 - var73;
 			int var75 = var71 + var73;
 			for (int var76 = 0; var76 < var74; var76++) {
-				int var77 = Statics.field144[var70++];
+				int var77 = field144[var70++];
 				if (var77 == 0) {
 					var75++;
 				} else {
 					int var79 = 256 - var77;
-					int var80 = Statics.field140[var77];
-					int var81 = Statics.field1546.field538[var75];
-					Statics.field1546.field538[var75++] = ((var80 & 0xFF00FF) * var77 + (var81 & 0xFF00FF) * var79 & 0xFF00FF00) + ((var80 & 0xFF00) * var77 + (var81 & 0xFF00) * var79 & 0xFF0000) >> 8;
+					int var80 = field140[var77];
+					int var81 = GameShell.drawArea.field538[var75];
+					GameShell.drawArea.field538[var75++] = ((var80 & 0xFF00FF) * var77 + (var81 & 0xFF00FF) * var79 & 0xFF00FF00) + ((var80 & 0xFF00) * var77 + (var81 & 0xFF00) * var79 & 0xFF0000) >> 8;
 				}
 			}
 			var70 += 128 - var74;
 			var71 = 765 - var74 - var73 + var75;
 		}
-		Statics.field132[field142 ? 1 : 0].method2747(725, 463);
+		field132[field142 ? 1 : 0].method2747(725, 463);
 		if (Client.field1929 > 5 && Client.field2047 == 0) {
-			if (Statics.field215 == null) {
-				Statics.field215 = SpriteDataProvider.method457(Statics.field1944, "sl_button", "");
+			if (field215 == null) {
+				field215 = SpriteDataProvider.method457(Client.field1944, "sl_button", "");
 			} else {
 				byte var82 = 5;
 				short var83 = 463;
 				byte var84 = 100;
 				byte var85 = 35;
-				Statics.field215.method2747(var82, var83);
+				field215.method2747(var82, var83);
 				arg0.method2880(EnglishLocale.field1043 + " " + Client.field2075, var84 / 2 + var82, var85 / 2 + var83 - 2, 16777215, 0);
-				if (Statics.field35 == null) {
+				if (field35 == null) {
 					arg1.method2880(EnglishLocale.field1072, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
 				} else {
 					arg1.method2880(EnglishLocale.field1093, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
@@ -584,10 +657,10 @@ public class LoginScreen {
 			}
 		}
 		try {
-			Graphics var86 = Statics.field54.getGraphics();
-			Statics.field1546.method545(var86, 0, 0);
+			Graphics var86 = GameShell.canvas.getGraphics();
+			GameShell.drawArea.method545(var86, 0, 0);
 		} catch (Exception var88) {
-			Statics.field54.repaint();
+			GameShell.canvas.repaint();
 		}
 	}
 
@@ -601,23 +674,23 @@ public class LoginScreen {
 	@ObfuscatedName("br.n(Lft;B)V")
 	public static final void method920(Pix8 arg0) {
 		short var1 = 256;
-		for (int var2 = 0; var2 < Statics.field489.length; var2++) {
-			Statics.field489[var2] = 0;
+		for (int var2 = 0; var2 < field489.length; var2++) {
+			field489[var2] = 0;
 		}
 		for (int var3 = 0; var3 < 5000; var3++) {
 			int var4 = (int) (Math.random() * 128.0D * (double) var1);
-			Statics.field489[var4] = (int) (Math.random() * 256.0D);
+			field489[var4] = (int) (Math.random() * 256.0D);
 		}
 		for (int var5 = 0; var5 < 20; var5++) {
 			for (int var6 = 1; var6 < var1 - 1; var6++) {
 				for (int var7 = 1; var7 < 127; var7++) {
 					int var8 = (var6 << 7) + var7;
-					Statics.field527[var8] = (Statics.field489[var8 - 1] + Statics.field489[var8 + 1] + Statics.field489[var8 - 128] + Statics.field489[var8 + 128]) / 4;
+					field527[var8] = (field489[var8 - 1] + field489[var8 + 1] + field489[var8 - 128] + field489[var8 + 128]) / 4;
 				}
 			}
-			int[] var9 = Statics.field489;
-			Statics.field489 = Statics.field527;
-			Statics.field527 = var9;
+			int[] var9 = field489;
+			field489 = field527;
+			field527 = var9;
 		}
 		if (arg0 == null) {
 			return;
@@ -629,7 +702,7 @@ public class LoginScreen {
 					int var13 = var12 + 16 + arg0.field2515;
 					int var14 = var11 + 16 + arg0.field2516;
 					int var15 = (var14 << 7) + var13;
-					Statics.field489[var15] = 0;
+					field489[var15] = 0;
 				}
 			}
 		}
@@ -643,82 +716,82 @@ public class LoginScreen {
 
 	@ObfuscatedName("de.z(Lfm;Lfm;I)V")
 	public static void method1500(SoftwareFont arg0, SoftwareFont arg1) {
-		if (Statics.field1530 == null) {
-			Statics.field1530 = SpriteDataProvider.method830(Statics.field1944, "sl_back", "");
+		if (field1530 == null) {
+			field1530 = SpriteDataProvider.method830(Client.field1944, "sl_back", "");
 		}
-		if (Statics.field2612 == null) {
-			Statics.field2612 = SpriteDataProvider.method541(Statics.field1944, "sl_flags", "");
+		if (field2612 == null) {
+			field2612 = SpriteDataProvider.method541(Client.field1944, "sl_flags", "");
 		}
-		if (Statics.field681 == null) {
-			Statics.field681 = SpriteDataProvider.method541(Statics.field1944, "sl_arrows", "");
+		if (field681 == null) {
+			field681 = SpriteDataProvider.method541(Client.field1944, "sl_arrows", "");
 		}
-		if (Statics.field811 == null) {
-			Statics.field811 = SpriteDataProvider.method541(Statics.field1944, "sl_stars", "");
+		if (field811 == null) {
+			field811 = SpriteDataProvider.method541(Client.field1944, "sl_stars", "");
 		}
 		Pix2D.method2637(0, 23, 765, 480, 0);
 		Pix2D.method2592(0, 0, 125, 23, 12425273, 9135624);
 		Pix2D.method2592(125, 0, 640, 23, 5197647, 2697513);
 		arg0.method2880(EnglishLocale.field1066, 62, 15, 0, -1);
-		if (Statics.field811 != null) {
-			Statics.field811[1].method2747(140, 1);
+		if (field811 != null) {
+			field811[1].method2747(140, 1);
 			arg1.method2821(EnglishLocale.field1085, 152, 10, 16777215, -1);
-			Statics.field811[0].method2747(140, 12);
+			field811[0].method2747(140, 12);
 			arg1.method2821(EnglishLocale.field916, 152, 21, 16777215, -1);
 		}
-		if (Statics.field681 != null) {
+		if (field681 != null) {
 			short var2 = 280;
 			if (field130[0] == 0 && field167[0] == 0) {
-				Statics.field681[2].method2747(var2, 4);
+				field681[2].method2747(var2, 4);
 			} else {
-				Statics.field681[0].method2747(var2, 4);
+				field681[0].method2747(var2, 4);
 			}
 			if (field130[0] == 0 && field167[0] == 1) {
-				Statics.field681[3].method2747(var2 + 15, 4);
+				field681[3].method2747(var2 + 15, 4);
 			} else {
-				Statics.field681[1].method2747(var2 + 15, 4);
+				field681[1].method2747(var2 + 15, 4);
 			}
 			arg0.method2821(EnglishLocale.field1087, var2 + 32, 17, 16777215, -1);
 			short var3 = 390;
 			if (field130[0] == 1 && field167[0] == 0) {
-				Statics.field681[2].method2747(var3, 4);
+				field681[2].method2747(var3, 4);
 			} else {
-				Statics.field681[0].method2747(var3, 4);
+				field681[0].method2747(var3, 4);
 			}
 			if (field130[0] == 1 && field167[0] == 1) {
-				Statics.field681[3].method2747(var3 + 15, 4);
+				field681[3].method2747(var3 + 15, 4);
 			} else {
-				Statics.field681[1].method2747(var3 + 15, 4);
+				field681[1].method2747(var3 + 15, 4);
 			}
 			arg0.method2821(EnglishLocale.field894, var3 + 32, 17, 16777215, -1);
 			short var4 = 500;
 			if (field130[0] == 2 && field167[0] == 0) {
-				Statics.field681[2].method2747(var4, 4);
+				field681[2].method2747(var4, 4);
 			} else {
-				Statics.field681[0].method2747(var4, 4);
+				field681[0].method2747(var4, 4);
 			}
 			if (field130[0] == 2 && field167[0] == 1) {
-				Statics.field681[3].method2747(var4 + 15, 4);
+				field681[3].method2747(var4 + 15, 4);
 			} else {
-				Statics.field681[1].method2747(var4 + 15, 4);
+				field681[1].method2747(var4 + 15, 4);
 			}
 			arg0.method2821(EnglishLocale.field1091, var4 + 32, 17, 16777215, -1);
 			short var5 = 610;
 			if (field130[0] == 3 && field167[0] == 0) {
-				Statics.field681[2].method2747(var5, 4);
+				field681[2].method2747(var5, 4);
 			} else {
-				Statics.field681[0].method2747(var5, 4);
+				field681[0].method2747(var5, 4);
 			}
 			if (field130[0] == 3 && field167[0] == 1) {
-				Statics.field681[3].method2747(var5 + 15, 4);
+				field681[3].method2747(var5 + 15, 4);
 			} else {
-				Statics.field681[1].method2747(var5 + 15, 4);
+				field681[1].method2747(var5 + 15, 4);
 			}
 			arg0.method2821(EnglishLocale.field1090, var5 + 32, 17, 16777215, -1);
 		}
 		Pix2D.method2637(708, 4, 50, 16, 0);
 		arg1.method2880(EnglishLocale.field1078, 733, 16, 16777215, -1);
 		field168 = -1;
-		if (Statics.field1530 != null) {
+		if (field1530 != null) {
 			byte var6 = 88;
 			byte var7 = 19;
 			int var8 = 765 / (var6 + 1);
@@ -752,7 +825,7 @@ public class LoginScreen {
 			int var17 = var14;
 			int var18 = 0;
 			for (int var19 = 0; var19 < field161; var19++) {
-				WorldEntry var20 = Statics.field214[var19];
+				WorldEntry var20 = field214[var19];
 				boolean var21 = true;
 				String var22 = Integer.toString(var20.field46);
 				if (var20.field46 == -1) {
@@ -764,12 +837,12 @@ public class LoginScreen {
 				}
 				if (JavaMouseProvider.field488 >= var17 && JavaMouseProvider.field492 >= var16 && JavaMouseProvider.field488 < var6 + var17 && JavaMouseProvider.field492 < var7 + var16 && var21) {
 					field168 = var19;
-					Statics.field1530[var20.field50 ? 1 : 0].method2699(var17, var16, 128, 16777215);
+					field1530[var20.field50 ? 1 : 0].method2699(var17, var16, 128, 16777215);
 				} else {
-					Statics.field1530[var20.field50 ? 1 : 0].method2667(var17, var16);
+					field1530[var20.field50 ? 1 : 0].method2667(var17, var16);
 				}
-				if (Statics.field2612 != null) {
-					Statics.field2612[var20.field48 + (var20.field50 ? 8 : 0)].method2747(var17 + 29, var16);
+				if (field2612 != null) {
+					field2612[var20.field48 + (var20.field50 ? 8 : 0)].method2747(var17 + 29, var16);
 				}
 				arg0.method2880(Integer.toString(var20.field49), var17 + 15, var7 / 2 + var16 + 5, 0, -1);
 				arg1.method2880(var22, var17 + 60, var7 / 2 + var16 + 5, 268435455, -1);
@@ -783,10 +856,10 @@ public class LoginScreen {
 			}
 		}
 		try {
-			Graphics var23 = Statics.field54.getGraphics();
-			Statics.field1546.method545(var23, 0, 0);
+			Graphics var23 = GameShell.canvas.getGraphics();
+			GameShell.drawArea.method545(var23, 0, 0);
 		} catch (Exception var25) {
-			Statics.field54.repaint();
+			GameShell.canvas.repaint();
 		}
 	}
 
@@ -833,25 +906,25 @@ public class LoginScreen {
 		}
 		if (JavaMouseProvider.field498 >= 708 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field498 <= 758 && JavaMouseProvider.field499 <= 20) {
 			field160 = false;
-			Statics.field146.method2667(0, 0);
-			Statics.field348.method2667(382, 0);
-			Statics.field131.method2747(382 - Statics.field131.field2513 / 2, 18);
+			field146.method2667(0, 0);
+			field348.method2667(382, 0);
+			field131.method2747(382 - field131.field2513 / 2, 18);
 			return;
 		}
 		if (field168 == -1) {
 			return;
 		}
-		WorldEntry var5 = Statics.field214[field168];
+		WorldEntry var5 = field214[field168];
 		if (Client.field1983 == var5.field50) {
-			Statics.field52 = var5.field45;
+			Client.field52 = var5.field45;
 			Client.field2075 = var5.field49;
-			Statics.field1641 = Client.field1915 == 0 ? 43594 : var5.field49 + 40000;
-			Statics.field13 = Client.field1915 == 0 ? 443 : var5.field49 + 50000;
-			Statics.field1204 = Statics.field1641;
+			Client.field1641 = Client.field1915 == 0 ? 43594 : var5.field49 + 40000;
+			Client.field13 = Client.field1915 == 0 ? 443 : var5.field49 + 50000;
+			Client.field1204 = Client.field1641;
 			field160 = false;
-			Statics.field146.method2667(0, 0);
-			Statics.field348.method2667(382, 0);
-			Statics.field131.method2747(382 - Statics.field131.field2513 / 2, 18);
+			field146.method2667(0, 0);
+			field348.method2667(382, 0);
+			field131.method2747(382 - field131.field2513 / 2, 18);
 			return;
 		}
 		String var6 = "";
@@ -868,17 +941,17 @@ public class LoginScreen {
 	@ObfuscatedName("ac.q(I)V")
 	public static void method377() {
 		try {
-			if (Statics.field35 == null) {
-				Statics.field35 = new WorldList(Statics.field1542, new URL(Statics.field852));
+			if (field35 == null) {
+				field35 = new WorldList(GameShell.signlink, new URL(field852));
 			} else {
-				byte[] var0 = Statics.field35.method99();
+				byte[] var0 = field35.method99();
 				if (var0 != null) {
 					Packet var1 = new Packet(var0);
 					field161 = var1.g2();
-					Statics.field214 = new WorldEntry[field161];
+					field214 = new WorldEntry[field161];
 					int var2 = 0;
 					while (var2 < field161) {
-						WorldEntry var3 = Statics.field214[var2] = new WorldEntry();
+						WorldEntry var3 = field214[var2] = new WorldEntry();
 						int var4 = var1.g2();
 						var3.field49 = var4 & 0x7FFF;
 						var3.field50 = (var4 & 0x8000) != 0;
@@ -887,14 +960,14 @@ public class LoginScreen {
 						var3.field46 = var1.g2b();
 						var3.field47 = var2++;
 					}
-					method747(Statics.field214, 0, Statics.field214.length - 1, field130, field167);
+					method747(field214, 0, field214.length - 1, field130, field167);
 					field160 = true;
-					Statics.field35 = null;
+					field35 = null;
 				}
 			}
 		} catch (Exception var6) {
 			var6.printStackTrace();
-			Statics.field35 = null;
+			field35 = null;
 		}
 	}
 
@@ -914,7 +987,7 @@ public class LoginScreen {
 		}
 		field130 = var2;
 		field167 = var3;
-		method747(Statics.field214, 0, Statics.field214.length - 1, field130, field167);
+		method747(field214, 0, field214.length - 1, field130, field167);
 	}
 
 	@ObfuscatedName("bh.s([Lc;II[I[II)V")

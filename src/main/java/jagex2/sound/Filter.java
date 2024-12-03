@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.io.Packet;
 
 @ObfuscatedName("ad")
@@ -24,6 +23,12 @@ public class Filter {
 
 	@ObfuscatedName("ad.j")
 	public static int[][] field342 = new int[2][8];
+
+	@ObfuscatedName("ad.z")
+	public static float field343;
+
+	@ObfuscatedName("ad.g")
+	public static int field344;
 
 	@ObfuscatedName("ad.r(IIF)F")
 	public float method348(int arg0, int arg1, float arg2) {
@@ -50,8 +55,8 @@ public class Filter {
 		if (arg0 == 0) {
 			float var3 = (float) (this.field340[1] - this.field340[0]) * arg1 + (float) this.field340[0];
 			float var4 = var3 * 0.0030517578F;
-			Statics.field343 = (float) Math.pow(0.1D, (double) (var4 / 20.0F));
-			Statics.field344 = (int) (Statics.field343 * 65536.0F);
+			field343 = (float) Math.pow(0.1D, (double) (var4 / 20.0F));
+			field344 = (int) (field343 * 65536.0F);
 		}
 		if (this.field338[arg0] == 0) {
 			return 0;
@@ -73,7 +78,7 @@ public class Filter {
 		}
 		if (arg0 == 0) {
 			for (int var11 = 0; var11 < this.field338[0] * 2; var11++) {
-				field341[0][var11] *= Statics.field343;
+				field341[0][var11] *= field343;
 			}
 		}
 		for (int var12 = 0; var12 < this.field338[arg0] * 2; var12++) {

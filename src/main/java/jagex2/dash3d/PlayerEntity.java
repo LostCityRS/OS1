@@ -1,8 +1,8 @@
 package jagex2.dash3d;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.client.Client;
+import jagex2.client.JagException;
 import jagex2.config.ObjType;
 import jagex2.config.SeqType;
 import jagex2.config.SpotAnimType;
@@ -100,7 +100,7 @@ public class PlayerEntity extends PathingEntity {
 		int[] var9 = new int[5];
 		for (int var10 = 0; var10 < 5; var10++) {
 			int var11 = arg0.g1();
-			if (var11 < 0 || var11 >= Statics.field800[var10].length) {
+			if (var11 < 0 || var11 >= PlayerModel.field800[var10].length) {
 				var11 = 0;
 			}
 			var9[var10] = var11;
@@ -135,8 +135,8 @@ public class PlayerEntity extends PathingEntity {
 			this.field2625 = -1;
 		}
 		this.field2796 = arg0.gjstr();
-		if (Statics.field1134 == this) {
-			Statics.field2497 = this.field2796;
+		if (Client.field1134 == this) {
+			JagException.username = this.field2796;
 		}
 		this.field2789 = arg0.g1();
 		this.field2790 = arg0.g2();

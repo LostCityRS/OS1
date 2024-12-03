@@ -1,13 +1,16 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
+import jagex2.js5.Js5Index;
 
 @ObfuscatedName("fb")
 public class FloType extends DoublyLinkable {
+
+	@ObfuscatedName("by.n")
+	public static Js5Index field808;
 
 	@ObfuscatedName("fb.j")
 	public static LruCache field2411 = new LruCache(64);
@@ -48,7 +51,7 @@ public class FloType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field808.method1044(4, arg0);
+		byte[] var2 = field808.method1044(4, arg0);
 		FloType var3 = new FloType();
 		if (var2 != null) {
 			var3.method2499(new Packet(var2), arg0);

@@ -1,7 +1,6 @@
 package jagex2.io;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -13,6 +12,9 @@ public class CacheUtil {
 	@ObfuscatedName("av.r")
 	public static boolean field370 = false;
 
+	@ObfuscatedName("av.d")
+	public static File field369;
+
 	@ObfuscatedName("av.l")
 	public static Hashtable field371 = new Hashtable(16);
 
@@ -22,8 +24,8 @@ public class CacheUtil {
 
 	@ObfuscatedName("j.r(Ljava/io/File;I)V")
 	public static void method61(File arg0) {
-		Statics.field369 = arg0;
-		if (!Statics.field369.exists()) {
+		field369 = arg0;
+		if (!field369.exists()) {
 			throw new RuntimeException("");
 		}
 		field370 = true;
@@ -38,7 +40,7 @@ public class CacheUtil {
 		if (var1 != null) {
 			return var1;
 		}
-		File var2 = new File(Statics.field369, arg0);
+		File var2 = new File(field369, arg0);
 		RandomAccessFile var3 = null;
 		try {
 			File var4 = new File(var2.getParent());

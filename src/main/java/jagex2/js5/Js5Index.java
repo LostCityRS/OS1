@@ -369,7 +369,7 @@ public abstract class Js5Index {
 				var23 = var23 >>> 8 ^ Packet.crctable[(var23 ^ var8[var24]) & 0xFF];
 			}
 			int var25 = ~var23;
-			throw JagException.method748(var43, var21 + var25 + "," + this.field1169[arg0] + "," + this.field1175);
+			throw JagException.report((Throwable) var43, (String) (var21 + var25 + "," + this.field1169[arg0] + "," + this.field1175));
 		}
 		if (this.field1166) {
 			this.field1178[arg0] = null;

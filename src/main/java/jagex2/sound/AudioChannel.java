@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.client.SignLink;
 import jagex2.datastruct.ArrayUtil;
 import jagex2.datastruct.MonotonicTime;
@@ -11,6 +10,18 @@ import java.awt.*;
 
 @ObfuscatedName("y")
 public class AudioChannel {
+
+	@ObfuscatedName("y.r")
+	public static int field241;
+
+	@ObfuscatedName("y.d")
+	public static boolean field236;
+
+	@ObfuscatedName("y.l")
+	public static int field239;
+
+	@ObfuscatedName("y.m")
+	public static AudioThread field238;
 
 	@ObfuscatedName("y.j")
 	public int[] field243;
@@ -65,14 +76,14 @@ public class AudioChannel {
 		if (arg0 < 8000 || arg0 > 48000) {
 			throw new IllegalArgumentException();
 		}
-		Statics.field241 = arg0;
-		Statics.field236 = arg1;
-		Statics.field239 = arg2;
+		field241 = arg0;
+		field236 = arg1;
+		field239 = arg2;
 	}
 
 	@ObfuscatedName("cm.d(Lak;Ljava/awt/Component;III)Ly;")
 	public static final AudioChannel method1132(SignLink arg0, Component arg1, int arg2, int arg3) {
-		if (Statics.field241 == 0) {
+		if (field241 == 0) {
 			throw new IllegalStateException();
 		} else if (arg2 >= 0 && arg2 < 2) {
 			if (arg3 < 256) {
@@ -80,7 +91,7 @@ public class AudioChannel {
 			}
 			try {
 				JavaAudioChannel var4 = new JavaAudioChannel();
-				var4.field243 = new int[(Statics.field236 ? 2 : 1) * 256];
+				var4.field243 = new int[(field236 ? 2 : 1) * 256];
 				var4.field246 = arg3;
 				var4.method209(arg1);
 				var4.field245 = (arg3 & 0xFFFFFC00) + 1024;
@@ -88,36 +99,36 @@ public class AudioChannel {
 					var4.field245 = 16384;
 				}
 				var4.method214(var4.field245);
-				if (Statics.field239 > 0 && Statics.field238 == null) {
-					Statics.field238 = new AudioThread();
-					Statics.field238.field290 = arg0;
-					arg0.method437(Statics.field238, Statics.field239);
+				if (field239 > 0 && field238 == null) {
+					field238 = new AudioThread();
+					field238.field290 = arg0;
+					arg0.method437(field238, field239);
 				}
-				if (Statics.field238 != null) {
-					if (Statics.field238.field293[arg2] != null) {
+				if (field238 != null) {
+					if (field238.field293[arg2] != null) {
 						throw new IllegalArgumentException();
 					}
-					Statics.field238.field293[arg2] = var4;
+					field238.field293[arg2] = var4;
 				}
 				return var4;
 			} catch (Throwable var9) {
 				try {
 					SignLinkAudioChannel var6 = new SignLinkAudioChannel(arg0, arg2);
-					var6.field243 = new int[(Statics.field236 ? 2 : 1) * 256];
+					var6.field243 = new int[(field236 ? 2 : 1) * 256];
 					var6.field246 = arg3;
 					var6.method209(arg1);
 					var6.field245 = 16384;
 					var6.method214(var6.field245);
-					if (Statics.field239 > 0 && Statics.field238 == null) {
-						Statics.field238 = new AudioThread();
-						Statics.field238.field290 = arg0;
-						arg0.method437(Statics.field238, Statics.field239);
+					if (field239 > 0 && field238 == null) {
+						field238 = new AudioThread();
+						field238.field290 = arg0;
+						arg0.method437(field238, field239);
 					}
-					if (Statics.field238 != null) {
-						if (Statics.field238.field293[arg2] != null) {
+					if (field238 != null) {
+						if (field238.field293[arg2] != null) {
 							throw new IllegalArgumentException();
 						}
-						Statics.field238.field293[arg2] = var6;
+						field238.field293[arg2] = var6;
 					}
 					return var6;
 				} catch (Throwable var8) {
@@ -201,7 +212,7 @@ public class AudioChannel {
 			}
 			while (var1 > this.field244 + 5000L) {
 				this.method210(256);
-				this.field244 += 256000 / Statics.field241;
+				this.field244 += 256000 / field241;
 			}
 		} catch (Exception var7) {
 			this.field244 = var1;
@@ -226,22 +237,22 @@ public class AudioChannel {
 
 	@ObfuscatedName("y.j(I)V")
 	public final synchronized void method248() {
-		if (Statics.field238 != null) {
+		if (field238 != null) {
 			boolean var1 = true;
 			for (int var2 = 0; var2 < 2; var2++) {
-				if (Statics.field238.field293[var2] == this) {
-					Statics.field238.field293[var2] = null;
+				if (field238.field293[var2] == this) {
+					field238.field293[var2] = null;
 				}
-				if (Statics.field238.field293[var2] != null) {
+				if (field238.field293[var2] != null) {
 					var1 = false;
 				}
 			}
 			if (var1) {
-				Statics.field238.field292 = true;
-				while (Statics.field238.field291) {
+				field238.field292 = true;
+				while (field238.field291) {
 					PreciseSleep.method1020(50L);
 				}
-				Statics.field238 = null;
+				field238 = null;
 			}
 		}
 		this.method217();
@@ -262,13 +273,13 @@ public class AudioChannel {
 	@ObfuscatedName("y.g([II)V")
 	public final void method250(int[] arg0, int arg1) {
 		int var3 = arg1;
-		if (Statics.field236) {
+		if (field236) {
 			var3 = arg1 << 1;
 		}
 		ArrayUtil.method883(arg0, 0, var3);
 		this.field259 -= arg1;
 		if (this.field242 != null && this.field259 <= 0) {
-			this.field259 += Statics.field241 >> 4;
+			this.field259 += field241 >> 4;
 			method815(this.field242);
 			this.method212(this.field242, this.field242.method1514());
 			int var4 = 0;

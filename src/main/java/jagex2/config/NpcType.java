@@ -1,7 +1,6 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.client.VarProvider;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
@@ -13,6 +12,12 @@ import jagex2.jstring.EnglishLocale;
 
 @ObfuscatedName("em")
 public class NpcType extends DoublyLinkable {
+
+	@ObfuscatedName("em.n")
+	public static Js5Index field2281;
+
+	@ObfuscatedName("dy.j")
+	public static Js5Index field1600;
 
 	@ObfuscatedName("em.z")
 	public static LruCache field2274 = new LruCache(64);
@@ -115,8 +120,8 @@ public class NpcType extends DoublyLinkable {
 
 	@ObfuscatedName("by.z(Lch;Lch;B)V")
 	public static void method828(Js5Index arg0, Js5Index arg1) {
-		Statics.field2281 = arg0;
-		Statics.field1600 = arg1;
+		field2281 = arg0;
+		field1600 = arg1;
 	}
 
 	@ObfuscatedName("f.g(IB)Lem;")
@@ -125,7 +130,7 @@ public class NpcType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field2281.method1044(9, arg0);
+		byte[] var2 = field2281.method1044(9, arg0);
 		NpcType var3 = new NpcType();
 		var3.field2271 = arg0;
 		if (var2 != null) {
@@ -255,7 +260,7 @@ public class NpcType extends DoublyLinkable {
 		if (var6 == null) {
 			boolean var7 = false;
 			for (int var8 = 0; var8 < this.field2292.length; var8++) {
-				if (!Statics.field1600.method1046(this.field2292[var8], 0)) {
+				if (!field1600.method1046(this.field2292[var8], 0)) {
 					var7 = true;
 				}
 			}
@@ -264,7 +269,7 @@ public class NpcType extends DoublyLinkable {
 			}
 			Model[] var9 = new Model[this.field2292.length];
 			for (int var10 = 0; var10 < this.field2292.length; var10++) {
-				var9[var10] = Model.method2992(Statics.field1600, this.field2292[var10], 0);
+				var9[var10] = Model.method2992(field1600, this.field2292[var10], 0);
 			}
 			Model var11;
 			if (var9.length == 1) {
@@ -311,7 +316,7 @@ public class NpcType extends DoublyLinkable {
 		} else {
 			boolean var2 = false;
 			for (int var3 = 0; var3 < this.field2275.length; var3++) {
-				if (!Statics.field1600.method1046(this.field2275[var3], 0)) {
+				if (!field1600.method1046(this.field2275[var3], 0)) {
 					var2 = true;
 				}
 			}
@@ -320,7 +325,7 @@ public class NpcType extends DoublyLinkable {
 			}
 			Model[] var4 = new Model[this.field2275.length];
 			for (int var5 = 0; var5 < this.field2275.length; var5++) {
-				var4[var5] = Model.method2992(Statics.field1600, this.field2275[var5], 0);
+				var4[var5] = Model.method2992(field1600, this.field2275[var5], 0);
 			}
 			Model var6;
 			if (var4.length == 1) {

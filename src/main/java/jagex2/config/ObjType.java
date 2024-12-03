@@ -1,15 +1,24 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.*;
 import jagex2.io.Packet;
+import jagex2.js5.Js5Index;
 import jagex2.jstring.EnglishLocale;
 
 @ObfuscatedName("fj")
 public class ObjType extends DoublyLinkable {
+
+	@ObfuscatedName("fj.n")
+	public static Js5Index field2449;
+
+	@ObfuscatedName("bb.j")
+	public static Js5Index field1111;
+
+	@ObfuscatedName("cq.z")
+	public static boolean field1462;
 
 	@ObfuscatedName("fj.g")
 	public static LruCache field2432 = new LruCache(64);
@@ -19,6 +28,9 @@ public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.i")
 	public static LruCache field2434 = new LruCache(100);
+
+	@ObfuscatedName("bf.s")
+	public static SoftwareFont field815;
 
 	@ObfuscatedName("fj.u")
 	public int field2435;
@@ -146,7 +158,7 @@ public class ObjType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field2449.method1044(10, arg0);
+		byte[] var2 = field2449.method1044(10, arg0);
 		ObjType var3 = new ObjType();
 		var3.field2435 = arg0;
 		if (var2 != null) {
@@ -156,7 +168,7 @@ public class ObjType extends DoublyLinkable {
 		if (var3.field2450 != -1) {
 			var3.method2520(method927(var3.field2450), method927(var3.field2459));
 		}
-		if (!Statics.field1462 && var3.field2457) {
+		if (!field1462 && var3.field2457) {
 			var3.field2461 = EnglishLocale.field1077;
 			var3.field2451 = null;
 			var3.field2452 = null;
@@ -314,7 +326,7 @@ public class ObjType extends DoublyLinkable {
 				return method927(var2).method2521(1);
 			}
 		}
-		Model var4 = Model.method2992(Statics.field1111, this.field2436, 0);
+		Model var4 = Model.method2992(field1111, this.field2436, 0);
 		if (var4 == null) {
 			return null;
 		}
@@ -351,7 +363,7 @@ public class ObjType extends DoublyLinkable {
 		if (var4 != null) {
 			return var4;
 		}
-		Model var5 = Model.method2992(Statics.field1111, this.field2436, 0);
+		Model var5 = Model.method2992(field1111, this.field2436, 0);
 		if (var5 == null) {
 			return null;
 		}
@@ -422,9 +434,9 @@ public class ObjType extends DoublyLinkable {
 				return null;
 			}
 		}
-		int[] var13 = Statics.field2486;
-		int var14 = Statics.field2481;
-		int var15 = Statics.field2480;
+		int[] var13 = Pix2D.data;
+		int var14 = Pix2D.width2d;
+		int var15 = Pix2D.height2d;
 		int[] var16 = new int[4];
 		Pix2D.method2587(var16);
 		Pix32 var17 = new Pix32(36, 32);
@@ -457,7 +469,7 @@ public class ObjType extends DoublyLinkable {
 			var12.method2671(0, 0);
 		}
 		if (!arg4 && (var8.field2448 == 1 || arg1 != 1) && arg1 != -1) {
-			Statics.field815.method2821(method926(arg1), 0, 9, 16776960, 1);
+			field815.method2821(method926(arg1), 0, 9, 16776960, 1);
 		}
 		if (!arg4) {
 			field2434.method1246(var17, var5);
@@ -494,13 +506,13 @@ public class ObjType extends DoublyLinkable {
 			return true;
 		}
 		boolean var5 = true;
-		if (!Statics.field1111.method1046(var2, 0)) {
+		if (!field1111.method1046(var2, 0)) {
 			var5 = false;
 		}
-		if (var3 != -1 && !Statics.field1111.method1046(var3, 0)) {
+		if (var3 != -1 && !field1111.method1046(var3, 0)) {
 			var5 = false;
 		}
-		if (var4 != -1 && !Statics.field1111.method1046(var4, 0)) {
+		if (var4 != -1 && !field1111.method1046(var4, 0)) {
 			var5 = false;
 		}
 		return var5;
@@ -519,14 +531,14 @@ public class ObjType extends DoublyLinkable {
 		if (var2 == -1) {
 			return null;
 		}
-		Model var5 = Model.method2992(Statics.field1111, var2, 0);
+		Model var5 = Model.method2992(field1111, var2, 0);
 		if (var3 != -1) {
-			Model var6 = Model.method2992(Statics.field1111, var3, 0);
+			Model var6 = Model.method2992(field1111, var3, 0);
 			if (var4 == -1) {
 				Model[] var9 = new Model[] { var5, var6 };
 				var5 = new Model(var9, 2);
 			} else {
-				Model var7 = Model.method2992(Statics.field1111, var4, 0);
+				Model var7 = Model.method2992(field1111, var4, 0);
 				Model[] var8 = new Model[] { var5, var6, var7 };
 				var5 = new Model(var8, 3);
 			}
@@ -562,10 +574,10 @@ public class ObjType extends DoublyLinkable {
 			return true;
 		}
 		boolean var4 = true;
-		if (!Statics.field1111.method1046(var2, 0)) {
+		if (!field1111.method1046(var2, 0)) {
 			var4 = false;
 		}
-		if (var3 != -1 && !Statics.field1111.method1046(var3, 0)) {
+		if (var3 != -1 && !field1111.method1046(var3, 0)) {
 			var4 = false;
 		}
 		return var4;
@@ -582,9 +594,9 @@ public class ObjType extends DoublyLinkable {
 		if (var2 == -1) {
 			return null;
 		}
-		Model var4 = Model.method2992(Statics.field1111, var2, 0);
+		Model var4 = Model.method2992(field1111, var2, 0);
 		if (var3 != -1) {
-			Model var5 = Model.method2992(Statics.field1111, var3, 0);
+			Model var5 = Model.method2992(field1111, var3, 0);
 			Model[] var6 = new Model[] { var4, var5 };
 			var4 = new Model(var6, 2);
 		}

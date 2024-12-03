@@ -1,13 +1,16 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
+import jagex2.js5.Js5Index;
 
 @ObfuscatedName("fc")
 public class VarBitType extends DoublyLinkable {
+
+	@ObfuscatedName("fc.n")
+	public static Js5Index field2419;
 
 	@ObfuscatedName("fc.j")
 	public static LruCache field2417 = new LruCache(64);
@@ -27,7 +30,7 @@ public class VarBitType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field2419.method1044(14, arg0);
+		byte[] var2 = field2419.method1044(14, arg0);
 		VarBitType var3 = new VarBitType();
 		if (var2 != null) {
 			var3.method2501(new Packet(var2));

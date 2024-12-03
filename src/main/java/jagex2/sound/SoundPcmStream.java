@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 
 @ObfuscatedName("et")
 public class SoundPcmStream extends PcmStream {
@@ -99,7 +98,7 @@ public class SoundPcmStream extends PcmStream {
 
 	@ObfuscatedName("et.ac(Leq;II)Let;")
 	public static SoundPcmStream method2144(PcmSound arg0, int arg1, int arg2) {
-		return arg0.field2204 == null || arg0.field2204.length == 0 ? null : new SoundPcmStream(arg0, (int) ((long) arg0.field2200 * 256L * (long) arg1 / (long) (Statics.field241 * 100)), arg2 << 6);
+		return arg0.field2204 == null || arg0.field2204.length == 0 ? null : new SoundPcmStream(arg0, (int) ((long) arg0.field2200 * 256L * (long) arg1 / (long) (AudioChannel.field241 * 100)), arg2 << 6);
 	}
 
 	@ObfuscatedName("et.aa(Leq;III)Let;")
@@ -610,12 +609,12 @@ public class SoundPcmStream extends PcmStream {
 				}
 				this.field2216 += arg1;
 				if (this.field2206 == 256 && (this.field2213 & 0xFF) == 0) {
-					if (Statics.field236) {
+					if (AudioChannel.field236) {
 						arg1 = method2087(0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2219, this.field2205, this.field2218, this.field2211, 0, var6, arg2, this);
 					} else {
 						arg1 = method2121(((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2209, this.field2217, 0, var6, arg2, this);
 					}
-				} else if (Statics.field236) {
+				} else if (AudioChannel.field236) {
 					arg1 = method2082(0, 0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2219, this.field2205, this.field2218, this.field2211, 0, var6, arg2, this, this.field2206, arg4);
 				} else {
 					arg1 = method2131(0, 0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2209, this.field2217, 0, var6, arg2, this, this.field2206, arg4);
@@ -630,12 +629,12 @@ public class SoundPcmStream extends PcmStream {
 				return arg3;
 			}
 			if (this.field2206 == 256 && (this.field2213 & 0xFF) == 0) {
-				if (Statics.field236) {
+				if (AudioChannel.field236) {
 					return method2079(0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2219, this.field2205, 0, arg3, arg2, this);
 				}
 				return method2078(((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2209, 0, arg3, arg2, this);
 			}
-			if (Statics.field236) {
+			if (AudioChannel.field236) {
 				return method2083(0, 0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2219, this.field2205, 0, arg3, arg2, this, this.field2206, arg4);
 			}
 			return method2072(0, 0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2209, 0, arg3, arg2, this, this.field2206, arg4);
@@ -652,12 +651,12 @@ public class SoundPcmStream extends PcmStream {
 				}
 				this.field2216 += arg1;
 				if (this.field2206 == -256 && (this.field2213 & 0xFF) == 0) {
-					if (Statics.field236) {
+					if (AudioChannel.field236) {
 						arg1 = method2089(0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2219, this.field2205, this.field2218, this.field2211, 0, var6, arg2, this);
 					} else {
 						arg1 = method2088(((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2209, this.field2217, 0, var6, arg2, this);
 					}
-				} else if (Statics.field236) {
+				} else if (AudioChannel.field236) {
 					arg1 = method2093(0, 0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2219, this.field2205, this.field2218, this.field2211, 0, var6, arg2, this, this.field2206, arg4);
 				} else {
 					arg1 = method2136(0, 0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2209, this.field2217, 0, var6, arg2, this, this.field2206, arg4);
@@ -672,12 +671,12 @@ public class SoundPcmStream extends PcmStream {
 				return arg3;
 			}
 			if (this.field2206 == -256 && (this.field2213 & 0xFF) == 0) {
-				if (Statics.field236) {
+				if (AudioChannel.field236) {
 					return method2133(0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2219, this.field2205, 0, arg3, arg2, this);
 				}
 				return method2080(((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2209, 0, arg3, arg2, this);
 			}
-			if (Statics.field236) {
+			if (AudioChannel.field236) {
 				return method2085(0, 0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2219, this.field2205, 0, arg3, arg2, this, this.field2206, arg4);
 			}
 			return method2068(0, 0, ((PcmSound) this.field1644).field2204, arg0, this.field2213, arg1, this.field2209, 0, arg3, arg2, this, this.field2206, arg4);

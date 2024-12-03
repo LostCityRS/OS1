@@ -1,10 +1,15 @@
 package jagex2.datastruct;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 
 @ObfuscatedName("bx")
 public class MonotonicTime {
+
+	@ObfuscatedName("bx.r")
+	public static long field809;
+
+	@ObfuscatedName("bx.d")
+	public static long field810;
 
 	public MonotonicTime() throws Throwable {
 		throw new Error();
@@ -13,10 +18,10 @@ public class MonotonicTime {
 	@ObfuscatedName("cm.r(I)J")
 	public static synchronized long method1135() {
 		long var0 = System.currentTimeMillis();
-		if (var0 < Statics.field809) {
-			Statics.field810 += Statics.field809 - var0;
+		if (var0 < field809) {
+			field810 += field809 - var0;
 		}
-		Statics.field809 = var0;
-		return Statics.field810 + var0;
+		field809 = var0;
+		return field810 + var0;
 	}
 }

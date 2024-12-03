@@ -1,7 +1,6 @@
 package jagex2.dash3d;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.client.Client;
 import jagex2.config.FloType;
 import jagex2.config.FluType;
@@ -276,7 +275,7 @@ public class World {
 					int var14 = arg1 + var12;
 					int var15 = arg2 + var11;
 					if (var14 > 0 && var15 > 0 && var14 < 103 && var15 < 103) {
-						LocType var16 = LocType.method2564(var5);
+						LocType var16 = LocType.get(var5);
 						if (var13 != 22 || !Client.field1917 || var16.field2321 != 0 || var16.field2342 == 1 || var16.field2341) {
 							if (!var16.method2366()) {
 								Client.field1974++;
@@ -359,7 +358,7 @@ public class World {
 				int var19 = var18 >> 2;
 				int var20 = var18 & 0x3;
 				if (arg4 == var17 && var16 >= arg5 && var16 < arg5 + 8 && var15 >= arg6 && var15 < arg6 + 8) {
-					LocType var21 = LocType.method2564(var11);
+					LocType var21 = LocType.get(var11);
 					int var22 = arg2 + WorldRegion.method837(var16 & 0x7, var15 & 0x7, arg7, var21.field2344, var21.field2318, var20);
 					int var23 = arg3 + WorldRegion.method783(var16 & 0x7, var15 & 0x7, arg7, var21.field2344, var21.field2318, var20);
 					if (var22 > 0 && var23 > 0 && var22 < 103 && var23 < 103) {
@@ -399,7 +398,7 @@ public class World {
 		if (arg0 < currentLevel) {
 			currentLevel = arg0;
 		}
-		LocType var9 = LocType.method2564(arg3);
+		LocType var9 = LocType.get(arg3);
 		int var10;
 		int var11;
 		if (arg4 == 1 || arg4 == 3) {
@@ -645,7 +644,7 @@ public class World {
 			int var32 = 16;
 			int var33 = arg6.method590(arg0, arg1, arg2);
 			if (var33 != 0) {
-				var32 = LocType.method2564(var33 >> 14 & 0x7FFF).field2327;
+				var32 = LocType.get(var33 >> 14 & 0x7FFF).field2327;
 			}
 			Entity var34;
 			if (var9.field2325 == -1 && var9.field2317 == null) {
@@ -658,7 +657,7 @@ public class World {
 			int var35 = 8;
 			int var36 = arg6.method590(arg0, arg1, arg2);
 			if (var36 != 0) {
-				var35 = LocType.method2564(var36 >> 14 & 0x7FFF).field2327 / 2;
+				var35 = LocType.get(var36 >> 14 & 0x7FFF).field2327 / 2;
 			}
 			Entity var37;
 			if (var9.field2325 == -1 && var9.field2317 == null) {
@@ -680,7 +679,7 @@ public class World {
 			int var40 = 8;
 			int var41 = arg6.method590(arg0, arg1, arg2);
 			if (var41 != 0) {
-				var40 = LocType.method2564(var41 >> 14 & 0x7FFF).field2327 / 2;
+				var40 = LocType.get(var41 >> 14 & 0x7FFF).field2327 / 2;
 			}
 			int var42 = arg4 + 2 & 0x3;
 			Entity var43;
@@ -875,7 +874,7 @@ public class World {
 									int var61;
 									int var62;
 									if (var60 >= 0) {
-										var61 = Statics.field2539.method731(var60);
+										var61 = Pix3D.sceneProvider.method731(var60);
 										var62 = -1;
 									} else if (var59.field2406 == 16711935) {
 										var62 = -2;
@@ -1177,7 +1176,7 @@ public class World {
 
 	@ObfuscatedName("bk.y(III)Z")
 	public static final boolean isLocPrefetched(int arg0, int arg1) {
-		LocType var2 = LocType.method2564(arg0);
+		LocType var2 = LocType.get(arg0);
 		if (arg1 == 11) {
 			arg1 = 10;
 		}
@@ -1189,7 +1188,7 @@ public class World {
 
 	@ObfuscatedName("bc.t(IIIIIIILaq;Lck;I)V")
 	public static final void method918(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, World3D arg7, CollisionMap arg8) {
-		LocType var9 = LocType.method2564(arg4);
+		LocType var9 = LocType.get(arg4);
 		int var10;
 		int var11;
 		if (arg5 == 1 || arg5 == 3) {
@@ -1335,7 +1334,7 @@ public class World {
 			int var32 = 16;
 			int var33 = arg7.method590(arg0, arg2, arg3);
 			if (var33 != 0) {
-				var32 = LocType.method2564(var33 >> 14 & 0x7FFF).field2327;
+				var32 = LocType.get(var33 >> 14 & 0x7FFF).field2327;
 			}
 			Entity var34;
 			if (var9.field2325 == -1 && var9.field2317 == null) {
@@ -1348,7 +1347,7 @@ public class World {
 			int var35 = 8;
 			int var36 = arg7.method590(arg0, arg2, arg3);
 			if (var36 != 0) {
-				var35 = LocType.method2564(var36 >> 14 & 0x7FFF).field2327 / 2;
+				var35 = LocType.get(var36 >> 14 & 0x7FFF).field2327 / 2;
 			}
 			Entity var37;
 			if (var9.field2325 == -1 && var9.field2317 == null) {
@@ -1370,7 +1369,7 @@ public class World {
 			int var40 = 8;
 			int var41 = arg7.method590(arg0, arg2, arg3);
 			if (var41 != 0) {
-				var40 = LocType.method2564(var41 >> 14 & 0x7FFF).field2327 / 2;
+				var40 = LocType.get(var41 >> 14 & 0x7FFF).field2327 / 2;
 			}
 			int var42 = arg5 + 2 & 0x3;
 			Entity var43;

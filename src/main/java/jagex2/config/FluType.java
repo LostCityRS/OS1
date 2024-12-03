@@ -1,7 +1,6 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
@@ -9,6 +8,9 @@ import jagex2.js5.Js5Index;
 
 @ObfuscatedName("ec")
 public class FluType extends DoublyLinkable {
+
+	@ObfuscatedName("ec.n")
+	public static Js5Index field2358;
 
 	@ObfuscatedName("ec.j")
 	public static LruCache field2355 = new LruCache(64);
@@ -30,7 +32,7 @@ public class FluType extends DoublyLinkable {
 
 	@ObfuscatedName("u.z(Lch;I)V")
 	public static void method128(Js5Index arg0) {
-		Statics.field2358 = arg0;
+		field2358 = arg0;
 	}
 
 	@ObfuscatedName("bf.g(IB)Lec;")
@@ -39,7 +41,7 @@ public class FluType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field2358.method1044(1, arg0);
+		byte[] var2 = field2358.method1044(1, arg0);
 		FluType var3 = new FluType();
 		if (var2 != null) {
 			var3.method2399(new Packet(var2), arg0);

@@ -1,7 +1,6 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.AnimFrameset;
@@ -11,6 +10,15 @@ import jagex2.js5.Js5Index;
 
 @ObfuscatedName("eo")
 public class SeqType extends DoublyLinkable {
+
+	@ObfuscatedName("dz.n")
+	public static Js5Index field1517;
+
+	@ObfuscatedName("ag.j")
+	public static Js5Index field556;
+
+	@ObfuscatedName("eo.z")
+	public static Js5Index field2361;
 
 	@ObfuscatedName("eo.g")
 	public static LruCache field2362 = new LruCache(64);
@@ -62,9 +70,9 @@ public class SeqType extends DoublyLinkable {
 
 	@ObfuscatedName("ai.z(Lch;Lch;Lch;I)V")
 	public static void method727(Js5Index arg0, Js5Index arg1, Js5Index arg2) {
-		Statics.field1517 = arg0;
-		Statics.field556 = arg1;
-		Statics.field2361 = arg2;
+		field1517 = arg0;
+		field556 = arg1;
+		field2361 = arg2;
 	}
 
 	@ObfuscatedName("i.g(IB)Leo;")
@@ -73,7 +81,7 @@ public class SeqType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field1517.method1044(12, arg0);
+		byte[] var2 = field1517.method1044(12, arg0);
 		SeqType var3 = new SeqType();
 		if (var2 != null) {
 			var3.method2415(new Packet(var2));
@@ -282,8 +290,8 @@ public class SeqType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		Js5Index var2 = Statics.field556;
-		Js5Index var3 = Statics.field2361;
+		Js5Index var2 = field556;
+		Js5Index var3 = field2361;
 		boolean var4 = true;
 		int[] var5 = var2.method1053(arg0);
 		for (int var6 = 0; var6 < var5.length; var6++) {

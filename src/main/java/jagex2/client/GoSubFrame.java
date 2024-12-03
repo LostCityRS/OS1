@@ -6,14 +6,14 @@ import deob.ObfuscatedName;
 public class GoSubFrame {
 
 	@ObfuscatedName("z.r")
-	public ClientScript field122;
+	public ClientScript script;
 
 	@ObfuscatedName("z.d")
-	public int field121 = -1;
+	public int pc = -1;
 
 	@ObfuscatedName("z.l")
-	public int[] field123;
+	public int[] intLocals;
 
 	@ObfuscatedName("z.m")
-	public String[] field124;
+	public String[] stringLocals;
 }

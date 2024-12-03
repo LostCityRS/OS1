@@ -1,7 +1,6 @@
 package jagex2.dash3d;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.config.IdkType;
 import jagex2.config.NpcType;
 import jagex2.config.ObjType;
@@ -32,6 +31,18 @@ public class PlayerModel {
 	@ObfuscatedName("ct.n")
 	public long field1227;
 
+	@ObfuscatedName("c.j")
+	public static short[] field51;
+
+	@ObfuscatedName("bw.z")
+	public static short[][] field800;
+
+	@ObfuscatedName("ct.g")
+	public static short[] field1224;
+
+	@ObfuscatedName("ct.q")
+	public static short[][] field1229;
+
 	@ObfuscatedName("ct.i")
 	public static final int[] field1230 = new int[] { 8, 11, 4, 6, 9, 7, 10 };
 
@@ -43,7 +54,7 @@ public class PlayerModel {
 		if (arg0 == null) {
 			arg0 = new int[12];
 			for (int var5 = 0; var5 < 7; var5++) {
-				for (int var6 = 0; var6 < Statics.field1628; var6++) {
+				for (int var6 = 0; var6 < IdkType.field1628; var6++) {
 					IdkType var7 = IdkType.method346(var6);
 					if (var7 != null && !var7.field2404 && var7.field2403 == var5 + (arg2 ? 7 : 0)) {
 						arg0[field1230[var5]] = var6 + 256;
@@ -73,13 +84,13 @@ public class PlayerModel {
 		do {
 			if (arg1) {
 				var3++;
-				if (var3 >= Statics.field1628) {
+				if (var3 >= IdkType.field1628) {
 					var3 = 0;
 				}
 			} else {
 				var3--;
 				if (var3 < 0) {
-					var3 = Statics.field1628 - 1;
+					var3 = IdkType.field1628 - 1;
 				}
 			}
 			var4 = IdkType.method346(var3);
@@ -93,13 +104,13 @@ public class PlayerModel {
 		int var3 = this.field1223[arg0];
 		if (arg1) {
 			var3++;
-			if (var3 >= Statics.field800[arg0].length) {
+			if (var3 >= field800[arg0].length) {
 				var3 = 0;
 			}
 		} else {
 			var3--;
 			if (var3 < 0) {
-				var3 = Statics.field800[arg0].length - 1;
+				var3 = field800[arg0].length - 1;
 			}
 		}
 		this.field1223[arg0] = var3;
@@ -223,11 +234,11 @@ public class PlayerModel {
 				}
 				Model var19 = new Model(var13, var14);
 				for (int var20 = 0; var20 < 5; var20++) {
-					if (this.field1223[var20] < Statics.field800[var20].length) {
-						var19.method2935(Statics.field51[var20], Statics.field800[var20][this.field1223[var20]]);
+					if (this.field1223[var20] < field800[var20].length) {
+						var19.method2935(field51[var20], field800[var20][this.field1223[var20]]);
 					}
-					if (this.field1223[var20] < Statics.field1229[var20].length) {
-						var19.method2935(Statics.field1224[var20], Statics.field1229[var20][this.field1223[var20]]);
+					if (this.field1223[var20] < field1229[var20].length) {
+						var19.method2935(field1224[var20], field1229[var20][this.field1223[var20]]);
 					}
 				}
 				var9 = var19.method2942(64, 850, -30, -50, -30);
@@ -286,11 +297,11 @@ public class PlayerModel {
 		}
 		Model var10 = new Model(var4, var5);
 		for (int var11 = 0; var11 < 5; var11++) {
-			if (this.field1223[var11] < Statics.field800[var11].length) {
-				var10.method2935(Statics.field51[var11], Statics.field800[var11][this.field1223[var11]]);
+			if (this.field1223[var11] < field800[var11].length) {
+				var10.method2935(field51[var11], field800[var11][this.field1223[var11]]);
 			}
-			if (this.field1223[var11] < Statics.field1229[var11].length) {
-				var10.method2935(Statics.field1224[var11], Statics.field1229[var11][this.field1223[var11]]);
+			if (this.field1223[var11] < field1229[var11].length) {
+				var10.method2935(field1224[var11], field1229[var11][this.field1223[var11]]);
 			}
 		}
 		return var10;

@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.ArrayUtil;
 import jagex2.io.Packet;
 
@@ -206,7 +205,7 @@ public class Tone {
 					var34 = arg0 - var31;
 				}
 				while (var33 < var34) {
-					int var35 = (int) ((long) field270[var31 + var33] * (long) Statics.field344 >> 16);
+					int var35 = (int) ((long) field270[var31 + var33] * (long) Filter.field344 >> 16);
 					for (int var36 = 0; var36 < var31; var36++) {
 						var35 += (int) ((long) field270[var31 + var33 - 1 - var36] * (long) Filter.field342[0][var36] >> 16);
 					}
@@ -223,7 +222,7 @@ public class Tone {
 						var38 = arg0 - var31;
 					}
 					while (var33 < var38) {
-						int var39 = (int) ((long) field270[var31 + var33] * (long) Statics.field344 >> 16);
+						int var39 = (int) ((long) field270[var31 + var33] * (long) Filter.field344 >> 16);
 						for (int var40 = 0; var40 < var31; var40++) {
 							var39 += (int) ((long) field270[var31 + var33 - 1 - var40] * (long) Filter.field342[0][var40] >> 16);
 						}

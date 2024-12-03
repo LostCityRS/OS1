@@ -20,6 +20,12 @@ import java.util.Date;
 @ObfuscatedName("s")
 public class ScriptRunner {
 
+	@ObfuscatedName("s.d")
+	public static int[] intLocals;
+
+	@ObfuscatedName("s.l")
+	public static String[] stringLocals;
+
 	@ObfuscatedName("s.m")
 	public static int[] field193 = new int[5];
 
@@ -37,6 +43,12 @@ public class ScriptRunner {
 
 	@ObfuscatedName("s.g")
 	public static GoSubFrame[] field196 = new GoSubFrame[50];
+
+	@ObfuscatedName("p.q")
+	public static IfType activeComponent;
+
+	@ObfuscatedName("bb.i")
+	public static IfType activeComponent2;
 
 	@ObfuscatedName("s.s")
 	public static Calendar field197 = Calendar.getInstance();
@@ -64,9 +76,9 @@ public class ScriptRunner {
 		byte var9 = -1;
 		field195 = 0;
 		try {
-			Statics.field189 = new int[var3.field2263];
+			intLocals = new int[var3.field2263];
 			int var10 = 0;
-			Statics.field191 = new String[var3.field2265];
+			stringLocals = new String[var3.field2265];
 			int var11 = 0;
 			for (int var12 = 1; var12 < var1.length; var12++) {
 				if (var1[var12] instanceof Integer) {
@@ -98,13 +110,13 @@ public class ScriptRunner {
 					if (var13 == -2147483639) {
 						var13 = arg0.field1594;
 					}
-					Statics.field189[var10++] = var13;
+					intLocals[var10++] = var13;
 				} else if (var1[var12] instanceof String) {
 					String var14 = (String) var1[var12];
 					if (var14.equals("event_opbase")) {
 						var14 = arg0.field1595;
 					}
-					Statics.field191[var11++] = var14;
+					stringLocals[var11++] = var14;
 				}
 			}
 			int var15 = 0;
@@ -172,12 +184,12 @@ public class ScriptRunner {
 							return;
 						}
 						GoSubFrame var18 = field196[--field195];
-						var3 = var18.field122;
+						var3 = var18.script;
 						var7 = var3.field2261;
 						var8 = var3.field2260;
-						var6 = var18.field121;
-						Statics.field189 = var18.field123;
-						Statics.field191 = var18.field124;
+						var6 = var18.pc;
+						intLocals = var18.intLocals;
+						stringLocals = var18.stringLocals;
 						continue;
 					}
 					if (var367 == 25) {
@@ -216,24 +228,24 @@ public class ScriptRunner {
 						continue;
 					}
 					if (var367 == 33) {
-						field188[var4++] = Statics.field189[var8[var6]];
+						field188[var4++] = intLocals[var8[var6]];
 						continue;
 					}
 					int var10001;
 					if (var367 == 34) {
 						var10001 = var8[var6];
 						var4--;
-						Statics.field189[var10001] = field188[var4];
+						intLocals[var10001] = field188[var4];
 						continue;
 					}
 					if (var367 == 35) {
-						field194[var5++] = Statics.field191[var8[var6]];
+						field194[var5++] = stringLocals[var8[var6]];
 						continue;
 					}
 					if (var367 == 36) {
 						var10001 = var8[var6];
 						var5--;
-						Statics.field191[var10001] = field194[var5];
+						stringLocals[var10001] = field194[var5];
 						continue;
 					}
 					if (var367 == 37) {
@@ -265,17 +277,17 @@ public class ScriptRunner {
 						var4 -= var31.field2266;
 						var5 -= var31.field2267;
 						GoSubFrame var36 = new GoSubFrame();
-						var36.field122 = var3;
-						var36.field121 = var6;
-						var36.field123 = Statics.field189;
-						var36.field124 = Statics.field191;
+						var36.script = var3;
+						var36.pc = var6;
+						var36.intLocals = intLocals;
+						var36.stringLocals = stringLocals;
 						field196[++field195 - 1] = var36;
 						var3 = var31;
 						var7 = var31.field2261;
 						var8 = var31.field2260;
 						var6 = -1;
-						Statics.field189 = var32;
-						Statics.field191 = var33;
+						intLocals = var32;
+						stringLocals = var33;
 						continue;
 					}
 					if (var367 == 42) {
@@ -381,15 +393,15 @@ public class ScriptRunner {
 						var54.field1782 = true;
 						var51.field1825[var50] = var54;
 						if (var47) {
-							Statics.field1108 = var54;
+							activeComponent2 = var54;
 						} else {
-							Statics.field335 = var54;
+							activeComponent = var54;
 						}
 						Client.method1238(var51);
 						continue;
 					}
 					if (var367 == 101) {
-						IfType var55 = var47 ? Statics.field1108 : Statics.field335;
+						IfType var55 = var47 ? activeComponent2 : activeComponent;
 						IfType var56 = IfType.method813(var55.field1783);
 						var56.field1825[var55.field1823] = null;
 						Client.method1238(var56);
@@ -410,9 +422,9 @@ public class ScriptRunner {
 						if (var60 != null && var59 != -1) {
 							field188[var4++] = 1;
 							if (var47) {
-								Statics.field1108 = var60;
+								activeComponent2 = var60;
 							} else {
-								Statics.field335 = var60;
+								activeComponent = var60;
 							}
 							continue;
 						}
@@ -426,7 +438,7 @@ public class ScriptRunner {
 						var4--;
 						var61 = IfType.method813(field188[var4]);
 					} else {
-						var61 = var47 ? Statics.field1108 : Statics.field335;
+						var61 = var47 ? activeComponent2 : activeComponent;
 					}
 					if (var367 == 1000) {
 						var4 -= 2;
@@ -458,7 +470,7 @@ public class ScriptRunner {
 						var4--;
 						var63 = IfType.method813(field188[var4]);
 					} else {
-						var63 = var47 ? Statics.field1108 : Statics.field335;
+						var63 = var47 ? activeComponent2 : activeComponent;
 					}
 					if (var367 == 1100) {
 						var4 -= 2;
@@ -623,7 +635,7 @@ public class ScriptRunner {
 						var4--;
 						var66 = IfType.method813(field188[var4]);
 					} else {
-						var66 = var47 ? Statics.field1108 : Statics.field335;
+						var66 = var47 ? activeComponent2 : activeComponent;
 					}
 					Client.method1238(var66);
 					if (var367 == 1200) {
@@ -652,7 +664,7 @@ public class ScriptRunner {
 					}
 					if (var367 == 1202) {
 						var66.field1815 = 3;
-						var66.field1816 = Statics.field1134.field2786.method1176();
+						var66.field1816 = Client.field1134.field2786.method1176();
 						continue;
 					}
 				} else if (var367 >= 1300 && var367 < 1400 || var367 >= 2300 && var367 < 2400) {
@@ -662,7 +674,7 @@ public class ScriptRunner {
 						var4--;
 						var70 = IfType.method813(field188[var4]);
 					} else {
-						var70 = var47 ? Statics.field1108 : Statics.field335;
+						var70 = var47 ? activeComponent2 : activeComponent;
 					}
 					if (var367 == 1300) {
 						var4--;
@@ -719,7 +731,7 @@ public class ScriptRunner {
 							var4--;
 							var74 = IfType.method813(field188[var4]);
 						} else {
-							var74 = var47 ? Statics.field1108 : Statics.field335;
+							var74 = var47 ? activeComponent2 : activeComponent;
 						}
 						var5--;
 						String var75 = field194[var5];
@@ -832,7 +844,7 @@ public class ScriptRunner {
 						continue;
 					}
 					if (var367 < 1600) {
-						IfType var81 = var47 ? Statics.field1108 : Statics.field335;
+						IfType var81 = var47 ? activeComponent2 : activeComponent;
 						if (var367 == 1500) {
 							field188[var4++] = var81.field1788;
 							continue;
@@ -858,7 +870,7 @@ public class ScriptRunner {
 							continue;
 						}
 					} else if (var367 < 1700) {
-						IfType var82 = var47 ? Statics.field1108 : Statics.field335;
+						IfType var82 = var47 ? activeComponent2 : activeComponent;
 						if (var367 == 1600) {
 							field188[var4++] = var82.field1796;
 							continue;
@@ -896,7 +908,7 @@ public class ScriptRunner {
 							continue;
 						}
 					} else if (var367 < 1800) {
-						IfType var83 = var47 ? Statics.field1108 : Statics.field335;
+						IfType var83 = var47 ? activeComponent2 : activeComponent;
 						if (var367 == 1700) {
 							field188[var4++] = var83.field1791;
 							continue;
@@ -914,7 +926,7 @@ public class ScriptRunner {
 							continue;
 						}
 					} else if (var367 < 1900) {
-						IfType var84 = var47 ? Statics.field1108 : Statics.field335;
+						IfType var84 = var47 ? activeComponent2 : activeComponent;
 						if (var367 == 1800) {
 							field188[var4++] = WorldEntrySettings.method1350(Client.method1512(var84));
 							continue;
@@ -1067,7 +1079,7 @@ public class ScriptRunner {
 						}
 						if (var367 == 3101) {
 							var4 -= 2;
-							Client.method1040(Statics.field1134, field188[var4], field188[var4 + 1]);
+							Client.method1040(Client.field1134, field188[var4], field188[var4 + 1]);
 							continue;
 						}
 						if (var367 == 3103) {
@@ -1132,7 +1144,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var107 = field188[var4];
 							int var108 = field188[var4 + 1];
-							IfType var109 = var47 ? Statics.field1108 : Statics.field335;
+							IfType var109 = var47 ? activeComponent2 : activeComponent;
 							Client.method1102(var109, var107, var108);
 							continue;
 						}
@@ -1162,7 +1174,7 @@ public class ScriptRunner {
 							int var113 = field188[var4];
 							int var10000 = field188[var4 + 1];
 							if (Client.field2169 != 0 && var113 != -1) {
-								MidiPlayer.method1125(Statics.field1515, var113, 0, Client.field2169, false);
+								MidiPlayer.method1125(Client.field1515, var113, 0, Client.field2169, false);
 								Client.field2189 = true;
 							}
 							continue;
@@ -1244,9 +1256,9 @@ public class ScriptRunner {
 							continue;
 						}
 						if (var367 == 3308) {
-							int var135 = Statics.field534;
-							int var136 = (Statics.field1134.field2615 >> 7) + Statics.field315;
-							int var137 = (Statics.field1134.field2614 >> 7) + Statics.field653;
+							int var135 = Client.field534;
+							int var136 = (Client.field1134.field2615 >> 7) + Client.field315;
+							int var137 = (Client.field1134.field2614 >> 7) + Client.field653;
 							field188[var4++] = (var135 << 28) + (var136 << 14) + var137;
 							continue;
 						}
@@ -1529,15 +1541,15 @@ public class ScriptRunner {
 							if (Client.field1955 == null) {
 								field188[var4++] = 0;
 							} else {
-								field188[var4++] = Statics.field1220;
+								field188[var4++] = Client.field1220;
 							}
 							continue;
 						}
 						if (var367 == 3613) {
 							var4--;
 							int var183 = field188[var4];
-							if (Client.field1955 != null && var183 < Statics.field1220) {
-								field194[var5++] = Statics.field1774[var183].field1617;
+							if (Client.field1955 != null && var183 < Client.field1220) {
+								field194[var5++] = Client.field1774[var183].field1617;
 								continue;
 							}
 							field194[var5++] = "";
@@ -1546,8 +1558,8 @@ public class ScriptRunner {
 						if (var367 == 3614) {
 							var4--;
 							int var184 = field188[var4];
-							if (Client.field1955 != null && var184 < Statics.field1220) {
-								field188[var4++] = Statics.field1774[var184].field1620;
+							if (Client.field1955 != null && var184 < Client.field1220) {
+								field188[var4++] = Client.field1774[var184].field1620;
 								continue;
 							}
 							field188[var4++] = 0;
@@ -1556,21 +1568,21 @@ public class ScriptRunner {
 						if (var367 == 3615) {
 							var4--;
 							int var185 = field188[var4];
-							if (Client.field1955 != null && var185 < Statics.field1220) {
-								field188[var4++] = Statics.field1774[var185].field1619;
+							if (Client.field1955 != null && var185 < Client.field1220) {
+								field188[var4++] = Client.field1774[var185].field1619;
 								continue;
 							}
 							field188[var4++] = 0;
 							continue;
 						}
 						if (var367 == 3616) {
-							field188[var4++] = Statics.field1511;
+							field188[var4++] = Client.field1511;
 							continue;
 						}
 						if (var367 == 3617) {
 							var5--;
 							String var186 = field194[var5];
-							if (Statics.field1774 != null) {
+							if (Client.field1774 != null) {
 								Client.field1949.pisaac1(245);
 								Client.field1949.p1(Packet.pjstrlen(var186));
 								Client.field1949.pjstr(var186);
@@ -1578,7 +1590,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (var367 == 3618) {
-							field188[var4++] = Statics.field1217;
+							field188[var4++] = Client.field1217;
 							continue;
 						}
 						if (var367 == 3619) {
@@ -1621,7 +1633,7 @@ public class ScriptRunner {
 						if (var367 == 3624) {
 							var4--;
 							int var190 = field188[var4];
-							if (Statics.field1774 != null && var190 < Statics.field1220 && Statics.field1774[var190].field1617.equalsIgnoreCase(Statics.field1134.field2796)) {
+							if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].field1617.equalsIgnoreCase(Client.field1134.field2796)) {
 								field188[var4++] = 1;
 								continue;
 							}
@@ -1812,7 +1824,7 @@ public class ScriptRunner {
 							var5 -= 2;
 							String var242 = field194[var5];
 							String var243 = field194[var5 + 1];
-							if (Statics.field1134.field2786 != null && Statics.field1134.field2786.field1222) {
+							if (Client.field1134.field2786 != null && Client.field1134.field2786.field1222) {
 								field194[var5++] = var243;
 								continue;
 							}
@@ -1950,7 +1962,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var282 = field188[var4];
 							int var283 = field188[var4 + 1];
-							byte[] var284 = Statics.field1150.method1044(var283, 0);
+							byte[] var284 = Client.field1150.method1044(var283, 0);
 							SoftwareFont var285 = new SoftwareFont(var284);
 							field188[var4++] = var285.method2889(var281, var282);
 							continue;
@@ -1961,7 +1973,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var287 = field188[var4];
 							int var288 = field188[var4 + 1];
-							byte[] var289 = Statics.field1150.method1044(var288, 0);
+							byte[] var289 = Client.field1150.method1044(var288, 0);
 							SoftwareFont var290 = new SoftwareFont(var289);
 							field188[var4++] = var290.method2818(var286, var287);
 							continue;
@@ -2177,14 +2189,14 @@ public class ScriptRunner {
 								}
 								var339++;
 							}
-							Statics.field680 = var341;
-							if (Statics.field680 == null) {
-								Statics.field680 = ChatFilterPrivacy.field1106;
+							Client.field680 = var341;
+							if (Client.field680 == null) {
+								Client.field680 = ChatFilterPrivacy.field1106;
 							}
 							Client.field2146 = field188[var4 + 2];
 							Client.field1949.pisaac1(167);
 							Client.field1949.p1(Client.field2145);
-							Client.field1949.p1(Statics.field680.field1107);
+							Client.field1949.p1(Client.field680.field1107);
 							Client.field1949.p1(Client.field2146);
 							continue;
 						}
@@ -2225,10 +2237,10 @@ public class ScriptRunner {
 							continue;
 						}
 						if (var367 == 5005) {
-							if (Statics.field680 == null) {
+							if (Client.field680 == null) {
 								field188[var4++] = -1;
 							} else {
-								field188[var4++] = Statics.field680.field1107;
+								field188[var4++] = Client.field680.field1107;
 							}
 							continue;
 						}
@@ -2400,10 +2412,10 @@ public class ScriptRunner {
 						}
 						if (var367 == 5015) {
 							String var362;
-							if (Statics.field1134 == null || Statics.field1134.field2796 == null) {
+							if (Client.field1134 == null || Client.field1134.field2796 == null) {
 								var362 = "";
 							} else {
-								var362 = Statics.field1134.field2796;
+								var362 = Client.field1134.field2796;
 							}
 							field194[var5++] = var362;
 							continue;
@@ -2424,10 +2436,10 @@ public class ScriptRunner {
 			StringBuilder var364 = new StringBuilder(30);
 			var364.append("").append(var3.field1506).append(" ");
 			for (int var365 = field195 - 1; var365 >= 0; var365--) {
-				var364.append("").append(field196[var365].field122.field1506).append(" ");
+				var364.append("").append(field196[var365].script.field1506).append(" ");
 			}
 			var364.append("").append(var9);
-			JagException.method1490(var364.toString(), var366);
+			JagException.report((String) var364.toString(), (Throwable) var366);
 		}
 	}
 
@@ -2436,7 +2448,7 @@ public class ScriptRunner {
 		if (arg0 == -1 || !IfType.method1501(arg0)) {
 			return;
 		}
-		IfType[] var1 = Statics.field373[arg0];
+		IfType[] var1 = IfType.field373[arg0];
 		for (int var2 = 0; var2 < var1.length; var2++) {
 			IfType var3 = var1[var2];
 			if (var3.field1775 != null) {

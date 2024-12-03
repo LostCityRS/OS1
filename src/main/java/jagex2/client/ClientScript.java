@@ -1,7 +1,6 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
@@ -39,7 +38,7 @@ public class ClientScript extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field1232.method1044(arg0, 0);
+		byte[] var2 = Client.field1232.method1044(arg0, 0);
 		if (var2 == null) {
 			return null;
 		}

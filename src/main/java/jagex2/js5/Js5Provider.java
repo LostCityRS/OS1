@@ -1,7 +1,7 @@
 package jagex2.js5;
 
 import deob.ObfuscatedName;
-import deob.Statics;
+import jagex2.client.GameShell;
 import jagex2.datastruct.ByteArrayCopier;
 import jagex2.datastruct.LinkList;
 import jagex2.io.FileStream;
@@ -49,13 +49,13 @@ public class Js5Provider extends Js5Index {
 		this.field1574 = arg2;
 		this.field1576 = arg5;
 		int var8 = this.field1574;
-		if (Statics.field542 == null) {
+		if (Js5TcpClient.field542 == null) {
 			Js5TcpClient.method827(null, 255, 255, 0, (byte) 0, true);
 			Js5TcpClient.field1200[var8] = this;
 		} else {
-			Statics.field542.pos = var8 * 8 + 5;
-			int var9 = Statics.field542.g4();
-			int var10 = Statics.field542.g4();
+			Js5TcpClient.field542.pos = var8 * 8 + 5;
+			int var9 = Js5TcpClient.field542.g4();
+			int var10 = Js5TcpClient.field542.g4();
 			this.method1476(var9, var10);
 		}
 	}
@@ -119,7 +119,7 @@ public class Js5Provider extends Js5Index {
 				Object var16 = Js5ProviderThread.field1207;
 				synchronized (Js5ProviderThread.field1207) {
 					if (Js5ProviderThread.field1205 == 0) {
-						Statics.field1542.method437(new Js5ProviderThread(), 5);
+						GameShell.signlink.method437(new Js5ProviderThread(), 5);
 					}
 					Js5ProviderThread.field1205 = 600;
 				}
@@ -148,7 +148,7 @@ public class Js5Provider extends Js5Index {
 			Object var10 = Js5ProviderThread.field1207;
 			synchronized (Js5ProviderThread.field1207) {
 				if (Js5ProviderThread.field1205 == 0) {
-					Statics.field1542.method437(new Js5ProviderThread(), 5);
+					GameShell.signlink.method437(new Js5ProviderThread(), 5);
 				}
 				Js5ProviderThread.field1205 = 600;
 			}
@@ -240,7 +240,7 @@ public class Js5Provider extends Js5Index {
 				Object var8 = Js5ProviderThread.field1207;
 				synchronized (Js5ProviderThread.field1207) {
 					if (Js5ProviderThread.field1205 == 0) {
-						Statics.field1542.method437(new Js5ProviderThread(), 5);
+						GameShell.signlink.method437(new Js5ProviderThread(), 5);
 					}
 					Js5ProviderThread.field1205 = 600;
 				}

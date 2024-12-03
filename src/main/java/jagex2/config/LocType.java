@@ -1,7 +1,6 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.client.VarProvider;
 import jagex2.dash3d.Entity;
 import jagex2.datastruct.DoublyLinkable;
@@ -18,11 +17,17 @@ public class LocType extends DoublyLinkable {
 	@ObfuscatedName("ey.n")
 	public static boolean field2340 = false;
 
+	@ObfuscatedName("j.j")
+	public static Js5Index field120;
+
+	@ObfuscatedName("ey.z")
+	public static Js5Index field2303;
+
 	@ObfuscatedName("ey.g")
 	public static LruCache field2345 = new LruCache(64);
 
 	@ObfuscatedName("ey.q")
-	public static LruCache field2305 = new LruCache(500);
+	public static LruCache modelCacheStatic = new LruCache(500);
 
 	@ObfuscatedName("ey.i")
 	public static LruCache field2306 = new LruCache(30);
@@ -31,7 +36,7 @@ public class LocType extends DoublyLinkable {
 	public static LruCache field2307 = new LruCache(30);
 
 	@ObfuscatedName("ey.u")
-	public static Model[] field2308 = new Model[4];
+	public static Model[] temp = new Model[4];
 
 	@ObfuscatedName("ey.v")
 	public int field2309;
@@ -163,25 +168,25 @@ public class LocType extends DoublyLinkable {
 	public int[] field2351;
 
 	@ObfuscatedName("av.z(Lch;Lch;ZI)V")
-	public static void method431(Js5Index arg0, Js5Index arg1, boolean arg2) {
-		Statics.field120 = arg0;
-		Statics.field2303 = arg1;
+	public static void init(Js5Index arg0, Js5Index arg1, boolean arg2) {
+		field120 = arg0;
+		field2303 = arg1;
 		field2340 = arg2;
 	}
 
 	@ObfuscatedName("fj.g(IB)Ley;")
-	public static LocType method2564(int arg0) {
+	public static LocType get(int arg0) {
 		LocType var1 = (LocType) field2345.method1244((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field120.method1044(6, arg0);
+		byte[] var2 = field120.method1044(6, arg0);
 		LocType var3 = new LocType();
 		var3.field2309 = arg0;
 		if (var2 != null) {
-			var3.method2360(new Packet(var2));
+			var3.decode(new Packet(var2));
 		}
-		var3.method2361();
+		var3.postDecode();
 		if (var3.field2347) {
 			var3.field2342 = 0;
 			var3.field2319 = false;
@@ -191,7 +196,7 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.q(B)V")
-	public void method2361() {
+	public void postDecode() {
 		if (this.field2321 == -1) {
 			this.field2321 = 0;
 			if (this.field2329 != null && (this.field2338 == null || this.field2338[0] == 10)) {
@@ -209,18 +214,18 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.i(Lev;I)V")
-	public void method2360(Packet arg0) {
+	public void decode(Packet arg0) {
 		while (true) {
 			int var2 = arg0.g1();
 			if (var2 == 0) {
 				return;
 			}
-			this.method2365(arg0, var2);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("ey.s(Lev;II)V")
-	public void method2365(Packet arg0, int arg1) {
+	public void decodeInner(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			int var3 = arg0.g1();
 			if (var3 > 0) {
@@ -368,7 +373,7 @@ public class LocType extends DoublyLinkable {
 		if (this.field2338 != null) {
 			for (int var4 = 0; var4 < this.field2338.length; var4++) {
 				if (this.field2338[var4] == arg0) {
-					return Statics.field2303.method1046(this.field2329[var4] & 0xFFFF, 0);
+					return field2303.method1046(this.field2329[var4] & 0xFFFF, 0);
 				}
 			}
 			return true;
@@ -377,7 +382,7 @@ public class LocType extends DoublyLinkable {
 		} else if (arg0 == 10) {
 			boolean var2 = true;
 			for (int var3 = 0; var3 < this.field2329.length; var3++) {
-				var2 &= Statics.field2303.method1046(this.field2329[var3] & 0xFFFF, 0);
+				var2 &= field2303.method1046(this.field2329[var3] & 0xFFFF, 0);
 			}
 			return var2;
 		} else {
@@ -392,7 +397,7 @@ public class LocType extends DoublyLinkable {
 		}
 		boolean var1 = true;
 		for (int var2 = 0; var2 < this.field2329.length; var2++) {
-			var1 &= Statics.field2303.method1046(this.field2329[var2] & 0xFFFF, 0);
+			var1 &= field2303.method1046(this.field2329[var2] & 0xFFFF, 0);
 		}
 		return var1;
 	}
@@ -509,23 +514,23 @@ public class LocType extends DoublyLinkable {
 				if (var4) {
 					var7 += 65536;
 				}
-				var3 = (Model) field2305.method1244((long) var7);
+				var3 = (Model) modelCacheStatic.method1244((long) var7);
 				if (var3 == null) {
-					var3 = Model.method2992(Statics.field2303, var7 & 0xFFFF, 0);
+					var3 = Model.method2992(field2303, var7 & 0xFFFF, 0);
 					if (var3 == null) {
 						return null;
 					}
 					if (var4) {
 						var3.method2981();
 					}
-					field2305.method1246(var3, (long) var7);
+					modelCacheStatic.method1246(var3, (long) var7);
 				}
 				if (var5 > 1) {
-					field2308[var6] = var3;
+					temp[var6] = var3;
 				}
 			}
 			if (var5 > 1) {
-				var3 = new Model(field2308, var5);
+				var3 = new Model(temp, var5);
 			}
 		} else {
 			int var8 = -1;
@@ -543,16 +548,16 @@ public class LocType extends DoublyLinkable {
 			if (var11) {
 				var10 += 65536;
 			}
-			var3 = (Model) field2305.method1244((long) var10);
+			var3 = (Model) modelCacheStatic.method1244((long) var10);
 			if (var3 == null) {
-				var3 = Model.method2992(Statics.field2303, var10 & 0xFFFF, 0);
+				var3 = Model.method2992(field2303, var10 & 0xFFFF, 0);
 				if (var3 == null) {
 					return null;
 				}
 				if (var11) {
 					var3.method2981();
 				}
-				field2305.method1246(var3, (long) var10);
+				modelCacheStatic.method1246(var3, (long) var10);
 			}
 		}
 		boolean var12;
@@ -607,13 +612,13 @@ public class LocType extends DoublyLinkable {
 		} else if (this.field2346 != -1) {
 			var1 = VarProvider.field1210[this.field2346];
 		}
-		return var1 < 0 || var1 >= this.field2317.length || this.field2317[var1] == -1 ? null : method2564(this.field2317[var1]);
+		return var1 < 0 || var1 >= this.field2317.length || this.field2317[var1] == -1 ? null : get(this.field2317[var1]);
 	}
 
 	@ObfuscatedName("ba.f(I)V")
 	public static void method916() {
 		field2345.method1253();
-		field2305.method1253();
+		modelCacheStatic.method1253();
 		field2306.method1253();
 		field2307.method1253();
 	}
@@ -625,7 +630,7 @@ public class LocType extends DoublyLinkable {
 		}
 		for (int var1 = 0; var1 < this.field2317.length; var1++) {
 			if (this.field2317[var1] != -1) {
-				LocType var2 = method2564(this.field2317[var1]);
+				LocType var2 = get(this.field2317[var1]);
 				if (var2.field2312 != -1 || var2.field2351 != null) {
 					return true;
 				}

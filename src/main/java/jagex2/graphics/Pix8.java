@@ -1,7 +1,6 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 
 @ObfuscatedName("ft")
 public class Pix8 extends Pix2D {
@@ -81,39 +80,39 @@ public class Pix8 extends Pix2D {
 	public void method2747(int arg0, int arg1) {
 		int var3 = this.field2515 + arg0;
 		int var4 = this.field2516 + arg1;
-		int var5 = Statics.field2481 * var4 + var3;
+		int var5 = Pix2D.width2d * var4 + var3;
 		int var6 = 0;
 		int var7 = this.field2514;
 		int var8 = this.field2513;
-		int var9 = Statics.field2481 - var8;
+		int var9 = Pix2D.width2d - var8;
 		int var10 = 0;
-		if (var4 < field2483) {
-			int var11 = field2483 - var4;
+		if (var4 < top) {
+			int var11 = top - var4;
 			var7 -= var11;
-			var4 = field2483;
+			var4 = top;
 			var6 += var8 * var11;
-			var5 += Statics.field2481 * var11;
+			var5 += Pix2D.width2d * var11;
 		}
-		if (var4 + var7 > field2482) {
-			var7 -= var4 + var7 - field2482;
+		if (var4 + var7 > bottom) {
+			var7 -= var4 + var7 - bottom;
 		}
-		if (var3 < field2485) {
-			int var12 = field2485 - var3;
+		if (var3 < left) {
+			int var12 = left - var3;
 			var8 -= var12;
-			var3 = field2485;
+			var3 = left;
 			var6 += var12;
 			var5 += var12;
 			var10 += var12;
 			var9 += var12;
 		}
-		if (var3 + var8 > field2484) {
-			int var13 = var3 + var8 - field2484;
+		if (var3 + var8 > right) {
+			int var13 = var3 + var8 - right;
 			var8 -= var13;
 			var10 += var13;
 			var9 += var13;
 		}
 		if (var8 > 0 && var7 > 0) {
-			method2745(Statics.field2486, this.field2511, this.field2512, var6, var5, var8, var7, var9, var10);
+			method2745(Pix2D.data, this.field2511, this.field2512, var6, var5, var8, var7, var9, var10);
 		}
 	}
 

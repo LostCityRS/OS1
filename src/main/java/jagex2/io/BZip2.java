@@ -1,13 +1,15 @@
 package jagex2.io;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 
 @ObfuscatedName("bu")
 public class BZip2 {
 
 	@ObfuscatedName("bu.z")
 	public static BZip2State field822 = new BZip2State();
+
+	@ObfuscatedName("bg.x")
+	public static int[] field775;
 
 	public BZip2() throws Throwable {
 		throw new Error();
@@ -40,7 +42,7 @@ public class BZip2 {
 		int var2 = arg0.field765;
 		int var3 = arg0.field762;
 		int var4 = arg0.field771;
-		int[] var5 = Statics.field775;
+		int[] var5 = field775;
 		int var6 = arg0.field770;
 		byte[] var7 = arg0.field760;
 		int var8 = arg0.field761;
@@ -142,7 +144,7 @@ public class BZip2 {
 		arg0.field765 = var2;
 		arg0.field762 = var3;
 		arg0.field771 = var4;
-		Statics.field775 = var5;
+		field775 = var5;
 		arg0.field770 = var6;
 		arg0.field760 = var7;
 		arg0.field761 = var8;
@@ -174,8 +176,8 @@ public class BZip2 {
 		int[] var21 = null;
 		int[] var22 = null;
 		arg0.field768 = 1;
-		if (Statics.field775 == null) {
-			Statics.field775 = new int[arg0.field768 * 100000];
+		if (field775 == null) {
+			field775 = new int[arg0.field768 * 100000];
 		}
 		boolean var23 = true;
 		while (true) {
@@ -354,7 +356,7 @@ public class BZip2 {
 							byte var100 = arg0.field779[arg0.field789[arg0.field781[0]] & 0xFF];
 							arg0.field751[var100 & 0xFF] += var95;
 							while (var95 > 0) {
-								Statics.field775[var71] = var100 & 0xFF;
+								field775[var71] = var100 & 0xFF;
 								var71++;
 								var95--;
 							}
@@ -406,7 +408,7 @@ public class BZip2 {
 								}
 							}
 							arg0.field751[arg0.field779[var83 & 0xFF] & 0xFF]++;
-							Statics.field775[var71] = arg0.field779[var83 & 0xFF] & 0xFF;
+							field775[var71] = arg0.field779[var83 & 0xFF] & 0xFF;
 							var71++;
 							if (var103 == 0) {
 								var65++;
@@ -438,13 +440,13 @@ public class BZip2 {
 						arg0.field774[var77] += arg0.field774[var77 - 1];
 					}
 					for (int var78 = 0; var78 < var71; var78++) {
-						byte var79 = (byte) (Statics.field775[var78] & 0xFF);
-						Statics.field775[arg0.field774[var79 & 0xFF]] |= var78 << 8;
+						byte var79 = (byte) (field775[var78] & 0xFF);
+						field775[arg0.field774[var79 & 0xFF]] |= var78 << 8;
 						arg0.field774[var79 & 0xFF]++;
 					}
-					arg0.field770 = Statics.field775[arg0.field769] >> 8;
+					arg0.field770 = field775[arg0.field769] >> 8;
 					arg0.field762 = 0;
-					arg0.field770 = Statics.field775[arg0.field770];
+					arg0.field770 = field775[arg0.field770];
 					arg0.field771 = (byte) (arg0.field770 & 0xFF);
 					arg0.field770 >>= 0x8;
 					arg0.field762++;

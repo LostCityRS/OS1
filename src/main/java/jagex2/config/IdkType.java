@@ -1,7 +1,6 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.Model;
@@ -10,6 +9,15 @@ import jagex2.js5.Js5Index;
 
 @ObfuscatedName("fd")
 public class IdkType extends DoublyLinkable {
+
+	@ObfuscatedName("fd.n")
+	public static Js5Index field2394;
+
+	@ObfuscatedName("fd.j")
+	public static Js5Index field2397;
+
+	@ObfuscatedName("dl.z")
+	public static int field1628;
 
 	@ObfuscatedName("fd.g")
 	public static LruCache field2396 = new LruCache(64);
@@ -40,9 +48,9 @@ public class IdkType extends DoublyLinkable {
 
 	@ObfuscatedName("ct.z(Lch;Lch;I)V")
 	public static void method1194(Js5Index arg0, Js5Index arg1) {
-		Statics.field2394 = arg0;
-		Statics.field2397 = arg1;
-		Statics.field1628 = Statics.field2394.method1054(3);
+		field2394 = arg0;
+		field2397 = arg1;
+		field1628 = field2394.method1054(3);
 	}
 
 	@ObfuscatedName("p.g(II)Lfd;")
@@ -51,7 +59,7 @@ public class IdkType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field2394.method1044(3, arg0);
+		byte[] var2 = field2394.method1044(3, arg0);
 		IdkType var3 = new IdkType();
 		if (var2 != null) {
 			var3.method2464(new Packet(var2));
@@ -111,7 +119,7 @@ public class IdkType extends DoublyLinkable {
 		}
 		boolean var1 = true;
 		for (int var2 = 0; var2 < this.field2398.length; var2++) {
-			if (!Statics.field2397.method1046(this.field2398[var2], 0)) {
+			if (!field2397.method1046(this.field2398[var2], 0)) {
 				var1 = false;
 			}
 		}
@@ -125,7 +133,7 @@ public class IdkType extends DoublyLinkable {
 		}
 		Model[] var1 = new Model[this.field2398.length];
 		for (int var2 = 0; var2 < this.field2398.length; var2++) {
-			var1[var2] = Model.method2992(Statics.field2397, this.field2398[var2], 0);
+			var1[var2] = Model.method2992(field2397, this.field2398[var2], 0);
 		}
 		Model var3;
 		if (var1.length == 1) {
@@ -150,7 +158,7 @@ public class IdkType extends DoublyLinkable {
 	public boolean method2463() {
 		boolean var1 = true;
 		for (int var2 = 0; var2 < 5; var2++) {
-			if (this.field2395[var2] != -1 && !Statics.field2397.method1046(this.field2395[var2], 0)) {
+			if (this.field2395[var2] != -1 && !field2397.method1046(this.field2395[var2], 0)) {
 				var1 = false;
 			}
 		}
@@ -163,7 +171,7 @@ public class IdkType extends DoublyLinkable {
 		int var2 = 0;
 		for (int var3 = 0; var3 < 5; var3++) {
 			if (this.field2395[var3] != -1) {
-				var1[var2++] = Model.method2992(Statics.field2397, this.field2395[var3], 0);
+				var1[var2++] = Model.method2992(field2397, this.field2395[var3], 0);
 			}
 		}
 		Model var4 = new Model(var1, var2);

@@ -1,7 +1,6 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.io.BufferedFile;
 import jagex2.io.FileOnDisk;
 import jagex2.io.Packet;
@@ -13,14 +12,35 @@ import java.io.RandomAccessFile;
 @ObfuscatedName("ay")
 public class SignLinkCacheFolder {
 
+	@ObfuscatedName("ay.m")
+	public static File cacheLocator;
+
+	@ObfuscatedName("ay.c")
+	public static File cacheDirectory;
+
+	@ObfuscatedName("ay.n")
+	public static int archiveCount;
+
 	@ObfuscatedName("ay.i")
-	public static BufferedFile field522 = null;
+	public static BufferedFile uidDat = null;
 
 	@ObfuscatedName("ay.s")
-	public static BufferedFile field523 = null;
+	public static BufferedFile cacheDat = null;
 
 	@ObfuscatedName("ay.u")
-	public static BufferedFile field524 = null;
+	public static BufferedFile masterIndex = null;
+
+	@ObfuscatedName("av.v")
+	public static BufferedFile[] cacheIndex;
+
+	@ObfuscatedName("by.e")
+	public static String[] historicCacheLocations;
+
+	@ObfuscatedName("ag.b")
+	public static String[] historicCacheDirectories;
+
+	@ObfuscatedName("ez.o")
+	public static String homeDir;
 
 	public SignLinkCacheFolder() throws Throwable {
 		throw new Error();
@@ -29,13 +49,13 @@ public class SignLinkCacheFolder {
 	@ObfuscatedName("i.r(Ljava/lang/String;Ljava/lang/String;II)Ljava/io/File;")
 	public static File method102(String arg0, String arg1, int arg2) {
 		String var3 = arg2 == 0 ? "" : "" + arg2;
-		Statics.field518 = new File(Statics.field1725, "jagex_cl_" + arg0 + "_" + arg1 + var3 + ".dat");
+		cacheLocator = new File(homeDir, "jagex_cl_" + arg0 + "_" + arg1 + var3 + ".dat");
 		String var4 = null;
 		String var5 = null;
 		boolean var6 = false;
-		if (Statics.field518.exists()) {
+		if (cacheLocator.exists()) {
 			try {
-				FileOnDisk var7 = new FileOnDisk(Statics.field518, "rw", 10000L);
+				FileOnDisk var7 = new FileOnDisk(cacheLocator, "rw", 10000L);
 				Packet var8 = new Packet((int) var7.method113());
 				while (var8.pos < var8.data.length) {
 					int var9 = var7.method114(var8.data, var8.pos, var8.data.length - var8.pos);
@@ -95,9 +115,9 @@ public class SignLinkCacheFolder {
 			}
 		}
 		if (var4 == null && arg2 == 0) {
-			label134: for (int var19 = 0; var19 < Statics.field553.length; var19++) {
-				for (int var20 = 0; var20 < Statics.field805.length; var20++) {
-					File var21 = new File(Statics.field805[var20] + Statics.field553[var19] + File.separatorChar + arg0 + File.separatorChar);
+			label134: for (int var19 = 0; var19 < historicCacheDirectories.length; var19++) {
+				for (int var20 = 0; var20 < historicCacheLocations.length; var20++) {
+					File var21 = new File(historicCacheLocations[var20] + historicCacheDirectories[var19] + File.separatorChar + arg0 + File.separatorChar);
 					if (var21.exists()) {
 						File var22 = new File(var21, "test.dat");
 						boolean var25;
@@ -123,7 +143,7 @@ public class SignLinkCacheFolder {
 			}
 		}
 		if (var4 == null) {
-			var4 = Statics.field1725 + File.separatorChar + "jagexcache" + var3 + File.separatorChar + arg0 + File.separatorChar + arg1 + File.separatorChar;
+			var4 = homeDir + File.separatorChar + "jagexcache" + var3 + File.separatorChar + arg0 + File.separatorChar + arg1 + File.separatorChar;
 			var6 = true;
 		}
 		if (var5 != null) {
@@ -149,7 +169,7 @@ public class SignLinkCacheFolder {
 			File var36 = new File(var4);
 			Object var37 = null;
 			try {
-				FileOnDisk var38 = new FileOnDisk(Statics.field518, "rw", 10000L);
+				FileOnDisk var38 = new FileOnDisk(cacheLocator, "rw", 10000L);
 				Packet var39 = new Packet(500);
 				var39.p1(3);
 				var39.p1(var37 == null ? 0 : 1);
@@ -169,28 +189,28 @@ public class SignLinkCacheFolder {
 	@ObfuscatedName("cv.d(B)V")
 	public static void method1166() {
 		try {
-			File var0 = new File(Statics.field1725, "random.dat");
+			File var0 = new File(homeDir, "random.dat");
 			if (var0.exists()) {
-				field522 = new BufferedFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
+				uidDat = new BufferedFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
 			} else {
-				label34: for (int var1 = 0; var1 < Statics.field553.length; var1++) {
-					for (int var2 = 0; var2 < Statics.field805.length; var2++) {
-						File var3 = new File(Statics.field805[var2] + Statics.field553[var1] + File.separatorChar + "random.dat");
+				label34: for (int var1 = 0; var1 < historicCacheDirectories.length; var1++) {
+					for (int var2 = 0; var2 < historicCacheLocations.length; var2++) {
+						File var3 = new File(historicCacheLocations[var2] + historicCacheDirectories[var1] + File.separatorChar + "random.dat");
 						if (var3.exists()) {
-							field522 = new BufferedFile(new FileOnDisk(var3, "rw", 25L), 24, 0);
+							uidDat = new BufferedFile(new FileOnDisk(var3, "rw", 25L), 24, 0);
 							break label34;
 						}
 					}
 				}
 			}
-			if (field522 == null) {
+			if (uidDat == null) {
 				RandomAccessFile var4 = new RandomAccessFile(var0, "rw");
 				int var5 = var4.read();
 				var4.seek(0L);
 				var4.write(var5);
 				var4.seek(0L);
 				var4.close();
-				field522 = new BufferedFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
+				uidDat = new BufferedFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
 			}
 		} catch (IOException var7) {
 		}
@@ -200,8 +220,8 @@ public class SignLinkCacheFolder {
 	public static void method47(Packet arg0) {
 		byte[] var1 = new byte[24];
 		try {
-			field522.method132(0L);
-			field522.method134(var1);
+			uidDat.method132(0L);
+			uidDat.method134(var1);
 			int var2;
 			for (var2 = 0; var2 < 24 && var1[var2] == 0; var2++) {
 			}
@@ -218,12 +238,12 @@ public class SignLinkCacheFolder {
 
 	@ObfuscatedName("ex.m(Lev;II)V")
 	public static void method2298(Packet arg0, int arg1) {
-		if (field522 == null) {
+		if (uidDat == null) {
 			return;
 		}
 		try {
-			field522.method132(0L);
-			field522.method153(arg0.data, arg1, 24);
+			uidDat.method132(0L);
+			uidDat.method153(arg0.data, arg1, 24);
 		} catch (Exception var3) {
 		}
 	}
@@ -231,12 +251,12 @@ public class SignLinkCacheFolder {
 	@ObfuscatedName("cw.c(I)V")
 	public static void method1141() {
 		try {
-			field523.method137();
-			for (int var0 = 0; var0 < Statics.field512; var0++) {
-				Statics.field372[var0].method137();
+			cacheDat.method137();
+			for (int var0 = 0; var0 < archiveCount; var0++) {
+				cacheIndex[var0].method137();
 			}
-			field524.method137();
-			field522.method137();
+			masterIndex.method137();
+			uidDat.method137();
 		} catch (Exception var2) {
 		}
 	}

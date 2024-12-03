@@ -84,7 +84,7 @@ public class LocEntity extends Entity {
 			}
 			this.field2591 = Client.field1922 - var1;
 		}
-		LocType var2 = LocType.method2564(this.field2599);
+		LocType var2 = LocType.get(this.field2599);
 		if (var2.field2317 != null) {
 			var2 = var2.method2368();
 		}

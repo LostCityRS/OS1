@@ -1,7 +1,6 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.dash3d.Entity;
 
 @ObfuscatedName("fo")
@@ -156,6 +155,15 @@ public class SoftwareModel extends Entity {
 
 	@ObfuscatedName("fo.bg")
 	public static int[] field2734 = new int[10];
+
+	@ObfuscatedName("fo.bl")
+	public static int baseX;
+
+	@ObfuscatedName("fo.bt")
+	public static int baseY;
+
+	@ObfuscatedName("fo.bw")
+	public static int baseZ;
 
 	@ObfuscatedName("fo.by")
 	public static boolean field2773 = false;
@@ -506,9 +514,9 @@ public class SoftwareModel extends Entity {
 		}
 		AnimFrame var3 = arg0.field2488[arg1];
 		AnimBase var4 = var3.field659;
-		Statics.field2762 = 0;
-		Statics.field2771 = 0;
-		Statics.field2772 = 0;
+		baseX = 0;
+		baseY = 0;
+		baseZ = 0;
 		for (int var5 = 0; var5 < var3.field660; var5++) {
 			int var6 = var3.field661[var5];
 			this.method3007(var4.field1723[var6], var4.field1721[var6], var3.field662[var5], var3.field663[var5], var3.field664[var5]);
@@ -528,9 +536,9 @@ public class SoftwareModel extends Entity {
 		AnimFrame var6 = arg0.field2488[arg1];
 		AnimFrame var7 = arg2.field2488[arg3];
 		AnimBase var8 = var6.field659;
-		Statics.field2762 = 0;
-		Statics.field2771 = 0;
-		Statics.field2772 = 0;
+		baseX = 0;
+		baseY = 0;
+		baseZ = 0;
 		byte var9 = 0;
 		int var17 = var9 + 1;
 		int var10 = arg4[var9];
@@ -543,9 +551,9 @@ public class SoftwareModel extends Entity {
 				this.method3007(var8.field1723[var12], var8.field1721[var12], var6.field662[var11], var6.field663[var11], var6.field664[var11]);
 			}
 		}
-		Statics.field2762 = 0;
-		Statics.field2771 = 0;
-		Statics.field2772 = 0;
+		baseX = 0;
+		baseY = 0;
+		baseZ = 0;
 		byte var13 = 0;
 		int var18 = var13 + 1;
 		int var14 = arg4[var13];
@@ -566,30 +574,30 @@ public class SoftwareModel extends Entity {
 		int var6 = arg1.length;
 		if (arg0 == 0) {
 			int var7 = 0;
-			Statics.field2762 = 0;
-			Statics.field2771 = 0;
-			Statics.field2772 = 0;
+			baseX = 0;
+			baseY = 0;
+			baseZ = 0;
 			for (int var8 = 0; var8 < var6; var8++) {
 				int var9 = arg1[var8];
 				if (var9 < this.field2742.length) {
 					int[] var10 = this.field2742[var9];
 					for (int var11 = 0; var11 < var10.length; var11++) {
 						int var12 = var10[var11];
-						Statics.field2762 += this.field2723[var12];
-						Statics.field2771 += this.field2724[var12];
-						Statics.field2772 += this.field2779[var12];
+						baseX += this.field2723[var12];
+						baseY += this.field2724[var12];
+						baseZ += this.field2779[var12];
 						var7++;
 					}
 				}
 			}
 			if (var7 > 0) {
-				Statics.field2762 = Statics.field2762 / var7 + arg2;
-				Statics.field2771 = Statics.field2771 / var7 + arg3;
-				Statics.field2772 = Statics.field2772 / var7 + arg4;
+				baseX = baseX / var7 + arg2;
+				baseY = baseY / var7 + arg3;
+				baseZ = baseZ / var7 + arg4;
 			} else {
-				Statics.field2762 = arg2;
-				Statics.field2771 = arg3;
-				Statics.field2772 = arg4;
+				baseX = arg2;
+				baseY = arg3;
+				baseZ = arg4;
 			}
 		} else if (arg0 == 1) {
 			for (int var13 = 0; var13 < var6; var13++) {
@@ -611,9 +619,9 @@ public class SoftwareModel extends Entity {
 					int[] var20 = this.field2742[var19];
 					for (int var21 = 0; var21 < var20.length; var21++) {
 						int var22 = var20[var21];
-						this.field2723[var22] -= Statics.field2762;
-						this.field2724[var22] -= Statics.field2771;
-						this.field2779[var22] -= Statics.field2772;
+						this.field2723[var22] -= baseX;
+						this.field2724[var22] -= baseY;
+						this.field2779[var22] -= baseZ;
 						int var23 = (arg2 & 0xFF) * 8;
 						int var24 = (arg3 & 0xFF) * 8;
 						int var25 = (arg4 & 0xFF) * 8;
@@ -638,9 +646,9 @@ public class SoftwareModel extends Entity {
 							this.field2779[var22] = this.field2779[var22] * var33 - this.field2723[var22] * var32 >> 16;
 							this.field2723[var22] = var34;
 						}
-						this.field2723[var22] += Statics.field2762;
-						this.field2724[var22] += Statics.field2771;
-						this.field2779[var22] += Statics.field2772;
+						this.field2723[var22] += baseX;
+						this.field2724[var22] += baseY;
+						this.field2779[var22] += baseZ;
 					}
 				}
 			}
@@ -651,15 +659,15 @@ public class SoftwareModel extends Entity {
 					int[] var37 = this.field2742[var36];
 					for (int var38 = 0; var38 < var37.length; var38++) {
 						int var39 = var37[var38];
-						this.field2723[var39] -= Statics.field2762;
-						this.field2724[var39] -= Statics.field2771;
-						this.field2779[var39] -= Statics.field2772;
+						this.field2723[var39] -= baseX;
+						this.field2724[var39] -= baseY;
+						this.field2779[var39] -= baseZ;
 						this.field2723[var39] = this.field2723[var39] * arg2 / 128;
 						this.field2724[var39] = this.field2724[var39] * arg3 / 128;
 						this.field2779[var39] = this.field2779[var39] * arg4 / 128;
-						this.field2723[var39] += Statics.field2762;
-						this.field2724[var39] += Statics.field2771;
-						this.field2779[var39] += Statics.field2772;
+						this.field2723[var39] += baseX;
+						this.field2724[var39] += baseY;
+						this.field2779[var39] += baseZ;
 					}
 				}
 			}
@@ -750,8 +758,8 @@ public class SoftwareModel extends Entity {
 		if (this.field2745 != 2 && this.field2745 != 1) {
 			this.method3003();
 		}
-		int var8 = Statics.field2529;
-		int var9 = Statics.field2541;
+		int var8 = Pix3D.centerX;
+		int var9 = Pix3D.centerY;
 		int var10 = field2768[arg0];
 		int var11 = field2721[arg0];
 		int var12 = field2768[arg1];
@@ -806,8 +814,8 @@ public class SoftwareModel extends Entity {
 		if (this.field2745 != 2 && this.field2745 != 1) {
 			this.method3003();
 		}
-		int var9 = Statics.field2529;
-		int var10 = Statics.field2541;
+		int var9 = Pix3D.centerX;
+		int var10 = Pix3D.centerY;
 		int var11 = field2768[arg0];
 		int var12 = field2721[arg0];
 		int var13 = field2768[arg1];
@@ -871,22 +879,22 @@ public class SoftwareModel extends Entity {
 		}
 		int var14 = arg3 * arg7 + arg4 * arg5 >> 16;
 		int var15 = var14 - this.field2747 << 9;
-		if (var15 / var13 >= Statics.field2534) {
+		if (var15 / var13 >= Pix3D.field2534) {
 			return;
 		}
 		int var16 = this.field2747 + var14 << 9;
-		if (var16 / var13 <= Statics.field2542) {
+		if (var16 / var13 <= Pix3D.field2542) {
 			return;
 		}
 		int var17 = arg2 * arg6 - arg1 * var10 >> 16;
 		int var18 = this.field2747 * arg1 >> 16;
 		int var19 = var17 + var18 << 9;
-		if (var19 / var13 <= Statics.field2535) {
+		if (var19 / var13 <= Pix3D.field2535) {
 			return;
 		}
 		int var20 = (this.field2487 * arg2 >> 16) + var18;
 		int var21 = var17 - var20 << 9;
-		if (var21 / var13 >= Statics.field2537) {
+		if (var21 / var13 >= Pix3D.field2537) {
 			return;
 		}
 		int var22 = (this.field2487 * arg1 >> 16) + var12;
@@ -920,8 +928,8 @@ public class SoftwareModel extends Entity {
 				var31 = var19 / var13;
 				var30 = var21 / var27;
 			}
-			int var32 = field2719 - Statics.field2529;
-			int var33 = field2775 - Statics.field2541;
+			int var32 = field2719 - Pix3D.centerX;
+			int var33 = field2775 - Pix3D.centerY;
 			if (var32 > var28 && var32 < var29 && var33 > var30 && var33 < var31) {
 				if (this.field2744) {
 					field2730[field2741++] = arg8;
@@ -930,8 +938,8 @@ public class SoftwareModel extends Entity {
 				}
 			}
 		}
-		int var34 = Statics.field2529;
-		int var35 = Statics.field2541;
+		int var34 = Pix3D.centerX;
+		int var35 = Pix3D.centerY;
 		int var36 = 0;
 		int var37 = 0;
 		if (arg0 != 0) {
@@ -1021,7 +1029,7 @@ public class SoftwareModel extends Entity {
 					}
 					if ((field2754[var8] - field2754[var7]) * (var9 - var10) - (field2754[var6] - field2754[var7]) * (var11 - var10) > 0) {
 						field2752[var5] = false;
-						if (var9 >= 0 && var10 >= 0 && var11 >= 0 && var9 <= Statics.field2536 && var10 <= Statics.field2536 && var11 <= Statics.field2536) {
+						if (var9 >= 0 && var10 >= 0 && var11 >= 0 && var9 <= Pix3D.boundX && var10 <= Pix3D.boundX && var11 <= Pix3D.boundX) {
 							field2751[var5] = false;
 						} else {
 							field2751[var5] = true;
@@ -1203,8 +1211,8 @@ public class SoftwareModel extends Entity {
 
 	@ObfuscatedName("fo.ah(I)V")
 	public final void method3059(int arg0) {
-		int var2 = Statics.field2529;
-		int var3 = Statics.field2541;
+		int var2 = Pix3D.centerX;
+		int var3 = Pix3D.centerY;
 		int var4 = 0;
 		int var5 = this.field2727[arg0];
 		int var6 = this.field2726[arg0];
@@ -1288,7 +1296,7 @@ public class SoftwareModel extends Entity {
 		int var31 = field2736[2];
 		Pix3D.field2524 = false;
 		if (var4 == 3) {
-			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Statics.field2536 || var27 > Statics.field2536 || var28 > Statics.field2536) {
+			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX) {
 				Pix3D.field2524 = true;
 			}
 			if (this.field2718 != null && this.field2718[arg0] != -1) {
@@ -1319,7 +1327,7 @@ public class SoftwareModel extends Entity {
 		if (var4 != 4) {
 			return;
 		}
-		if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Statics.field2536 || var27 > Statics.field2536 || var28 > Statics.field2536 || field2740[3] < 0 || field2740[3] > Statics.field2536) {
+		if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX || field2740[3] < 0 || field2740[3] > Pix3D.boundX) {
 			Pix3D.field2524 = true;
 		}
 		if (this.field2718 != null && this.field2718[arg0] != -1) {

@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.IntUtil;
 
 @ObfuscatedName("e")
@@ -33,6 +32,15 @@ public class VorbisFloor {
 
 	@ObfuscatedName("e.g")
 	public int[][] field227;
+
+	@ObfuscatedName("e.q")
+	public static int[] field223;
+
+	@ObfuscatedName("e.i")
+	public static int[] field229;
+
+	@ObfuscatedName("e.s")
+	public static boolean[] field230;
 
 	@ObfuscatedName("e.r([II)I")
 	public static int method199(int[] arg0, int arg1) {
@@ -106,24 +114,24 @@ public class VorbisFloor {
 			return;
 		}
 		int var3 = arg0;
-		int var4 = Statics.field223[arg0];
-		int var5 = Statics.field229[arg0];
-		boolean var6 = Statics.field230[arg0];
+		int var4 = field223[arg0];
+		int var5 = field229[arg0];
+		boolean var6 = field230[arg0];
 		for (int var7 = arg0 + 1; var7 <= arg1; var7++) {
-			int var8 = Statics.field223[var7];
+			int var8 = field223[var7];
 			if (var8 < var4) {
-				Statics.field223[var3] = var8;
-				Statics.field229[var3] = Statics.field229[var7];
-				Statics.field230[var3] = Statics.field230[var7];
+				field223[var3] = var8;
+				field229[var3] = field229[var7];
+				field230[var3] = field230[var7];
 				var3++;
-				Statics.field223[var7] = Statics.field223[var3];
-				Statics.field229[var7] = Statics.field229[var3];
-				Statics.field230[var7] = Statics.field230[var3];
+				field223[var7] = field223[var3];
+				field229[var7] = field229[var3];
+				field230[var7] = field230[var3];
 			}
 		}
-		Statics.field223[var3] = var4;
-		Statics.field229[var3] = var5;
-		Statics.field230[var3] = var6;
+		field223[var3] = var4;
+		field229[var3] = var5;
+		field230[var3] = var6;
 		this.method194(arg0, var3 - 1);
 		this.method194(var3 + 1, arg1);
 	}
@@ -176,10 +184,10 @@ public class VorbisFloor {
 				this.field222[var14++] = VorbisSound.method1561(var11);
 			}
 		}
-		if (Statics.field223 == null || Statics.field223.length < var14) {
-			Statics.field223 = new int[var14];
-			Statics.field229 = new int[var14];
-			Statics.field230 = new boolean[var14];
+		if (field223 == null || field223.length < var14) {
+			field223 = new int[var14];
+			field229 = new int[var14];
+			field230 = new boolean[var14];
 		}
 	}
 
@@ -191,12 +199,12 @@ public class VorbisFloor {
 		}
 		int var2 = this.field222.length;
 		for (int var3 = 0; var3 < var2; var3++) {
-			Statics.field223[var3] = this.field222[var3];
+			field223[var3] = this.field222[var3];
 		}
 		int var4 = field219[this.field221 - 1];
 		int var5 = IntUtil.method479(var4 - 1);
-		Statics.field229[0] = VorbisSound.method1561(var5);
-		Statics.field229[1] = VorbisSound.method1561(var5);
+		field229[0] = VorbisSound.method1561(var5);
+		field229[1] = VorbisSound.method1561(var5);
 		int var6 = 2;
 		for (int var7 = 0; var7 < this.field228.length; var7++) {
 			int var8 = this.field228[var7];
@@ -205,12 +213,12 @@ public class VorbisFloor {
 			int var11 = (0x1 << var10) - 1;
 			int var12 = 0;
 			if (var10 > 0) {
-				var12 = Statics.field1658[this.field226[var8]].method320();
+				var12 = VorbisSound.field1658[this.field226[var8]].method320();
 			}
 			for (int var13 = 0; var13 < var9; var13++) {
 				int var14 = this.field227[var8][var12 & var11];
 				var12 >>>= var10;
-				Statics.field229[var6++] = var14 >= 0 ? Statics.field1658[var14].method320() : 0;
+				field229[var6++] = var14 >= 0 ? VorbisSound.field1658[var14].method320() : 0;
 			}
 		}
 		return true;
@@ -220,38 +228,38 @@ public class VorbisFloor {
 	public void method188(float[] arg0, int arg1) {
 		int var3 = this.field222.length;
 		int var4 = field219[this.field221 - 1];
-		boolean[] var5 = Statics.field230;
-		Statics.field230[1] = true;
+		boolean[] var5 = field230;
+		field230[1] = true;
 		var5[0] = true;
 		for (int var6 = 2; var6 < var3; var6++) {
-			int var7 = method199(Statics.field223, var6);
-			int var8 = method182(Statics.field223, var6);
-			int var9 = this.method185(Statics.field223[var7], Statics.field229[var7], Statics.field223[var8], Statics.field229[var8], Statics.field223[var6]);
-			int var10 = Statics.field229[var6];
+			int var7 = method199(field223, var6);
+			int var8 = method182(field223, var6);
+			int var9 = this.method185(field223[var7], field229[var7], field223[var8], field229[var8], field223[var6]);
+			int var10 = field229[var6];
 			int var11 = var4 - var9;
 			int var13 = (var11 < var9 ? var11 : var9) << 1;
 			if (var10 == 0) {
-				Statics.field230[var6] = false;
-				Statics.field229[var6] = var9;
+				field230[var6] = false;
+				field229[var6] = var9;
 			} else {
-				boolean[] var14 = Statics.field230;
-				Statics.field230[var8] = true;
+				boolean[] var14 = field230;
+				field230[var8] = true;
 				var14[var7] = true;
-				Statics.field230[var6] = true;
+				field230[var6] = true;
 				if (var10 >= var13) {
-					Statics.field229[var6] = var11 > var9 ? var10 - var9 + var9 : var9 - var10 + var11 - 1;
+					field229[var6] = var11 > var9 ? var10 - var9 + var9 : var9 - var10 + var11 - 1;
 				} else {
-					Statics.field229[var6] = (var10 & 0x1) == 0 ? var10 / 2 + var9 : var9 - (var10 + 1) / 2;
+					field229[var6] = (var10 & 0x1) == 0 ? var10 / 2 + var9 : var9 - (var10 + 1) / 2;
 				}
 			}
 		}
 		this.method194(0, var3 - 1);
 		int var16 = 0;
-		int var17 = Statics.field229[0] * this.field221;
+		int var17 = field229[0] * this.field221;
 		for (int var18 = 1; var18 < var3; var18++) {
-			if (Statics.field230[var18]) {
-				int var19 = Statics.field223[var18];
-				int var20 = Statics.field229[var18] * this.field221;
+			if (field230[var18]) {
+				int var19 = field223[var18];
+				int var20 = field229[var18] * this.field221;
 				this.method184(var16, var17, var19, var20, arg0, arg1);
 				if (var19 >= arg1) {
 					return;

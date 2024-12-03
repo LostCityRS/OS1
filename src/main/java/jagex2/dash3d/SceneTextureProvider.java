@@ -1,7 +1,6 @@
 package jagex2.dash3d;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.Linkable;
 import jagex2.graphics.Pix3D;
 import jagex2.graphics.Pix8;
@@ -41,6 +40,9 @@ public class SceneTextureProvider extends Linkable {
 
 	@ObfuscatedName("er.b")
 	public boolean field1689 = false;
+
+	@ObfuscatedName("er.y")
+	public static int[] field1693;
 
 	public SceneTextureProvider(Packet arg0) {
 		this.field1687 = arg0.g2();
@@ -159,8 +161,8 @@ public class SceneTextureProvider extends Linkable {
 			return;
 		}
 		if (this.field1692 == 1 || this.field1692 == 3) {
-			if (Statics.field1693 == null || Statics.field1693.length < this.field1694.length) {
-				Statics.field1693 = new int[this.field1694.length];
+			if (field1693 == null || field1693.length < this.field1694.length) {
+				field1693 = new int[this.field1694.length];
 			}
 			short var2;
 			if (this.field1694.length == 4096) {
@@ -176,17 +178,17 @@ public class SceneTextureProvider extends Linkable {
 			}
 			for (int var6 = 0; var6 < var3; var6++) {
 				int var7 = var4 + var6 & var5;
-				Statics.field1693[var6] = this.field1694[var7];
+				field1693[var6] = this.field1694[var7];
 			}
 			int[] var8 = this.field1694;
-			this.field1694 = Statics.field1693;
-			Statics.field1693 = var8;
+			this.field1694 = field1693;
+			field1693 = var8;
 		}
 		if (this.field1692 != 2 && this.field1692 != 4) {
 			return;
 		}
-		if (Statics.field1693 == null || Statics.field1693.length < this.field1694.length) {
-			Statics.field1693 = new int[this.field1694.length];
+		if (field1693 == null || field1693.length < this.field1694.length) {
+			field1693 = new int[this.field1694.length];
 		}
 		short var9;
 		if (this.field1694.length == 4096) {
@@ -204,11 +206,11 @@ public class SceneTextureProvider extends Linkable {
 			for (int var14 = 0; var14 < var9; var14++) {
 				int var15 = var13 + var14;
 				int var16 = (var11 + var14 & var12) + var13;
-				Statics.field1693[var15] = this.field1694[var16];
+				field1693[var15] = this.field1694[var16];
 			}
 		}
 		int[] var17 = this.field1694;
-		this.field1694 = Statics.field1693;
-		Statics.field1693 = var17;
+		this.field1694 = field1693;
+		field1693 = var17;
 	}
 }

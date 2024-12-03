@@ -190,7 +190,7 @@ public class ClientStream implements Runnable {
 				break;
 			}
 		} catch (Exception var15) {
-			JagException.method1490(null, var15);
+			JagException.report(null, (Throwable) var15);
 		}
 	}
 }

@@ -1,13 +1,22 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 
+import java.applet.Applet;
 import java.io.*;
 import java.net.URL;
 
 @ObfuscatedName("fa")
 public class JagException extends RuntimeException {
+
+	@ObfuscatedName("fa.r")
+	public static Applet applet;
+
+	@ObfuscatedName("fa.d")
+	public static String username;
+
+	@ObfuscatedName("fa.l")
+	public static int revision;
 
 	@ObfuscatedName("fa.m")
 	public String field2494;
@@ -21,7 +30,7 @@ public class JagException extends RuntimeException {
 	}
 
 	@ObfuscatedName("dy.r(Ljava/lang/String;Ljava/lang/Throwable;I)V")
-	public static void method1490(String arg0, Throwable arg1) {
+	public static void report(String arg0, Throwable arg1) {
 		try {
 			String var2 = "";
 			if (arg1 != null) {
@@ -77,10 +86,10 @@ public class JagException extends RuntimeException {
 			String var23 = var22.replace('@', '_');
 			String var24 = var23.replace('&', '_');
 			String var25 = var24.replace('#', '_');
-			if (Statics.field2495 == null) {
+			if (applet == null) {
 				return;
 			}
-			URL var26 = new URL(Statics.field2495.getCodeBase(), "clienterror.ws?c=" + Statics.field2496 + "&u=" + Statics.field2497 + "&v1=" + Statics.field380 + "&v2=" + Statics.field375 + "&e=" + var25);
+			URL var26 = new URL(applet.getCodeBase(), "clienterror.ws?c=" + revision + "&u=" + username + "&v1=" + SignLink.javaVendor + "&v2=" + SignLink.javaVersion + "&e=" + var25);
 			DataInputStream var27 = new DataInputStream(var26.openStream());
 			var27.read();
 			var27.close();
@@ -89,7 +98,7 @@ public class JagException extends RuntimeException {
 	}
 
 	@ObfuscatedName("bh.d(Ljava/lang/Throwable;Ljava/lang/String;)Lfa;")
-	public static JagException method748(Throwable arg0, String arg1) {
+	public static JagException report(Throwable arg0, String arg1) {
 		JagException var2;
 		if (arg0 instanceof JagException) {
 			var2 = (JagException) arg0;

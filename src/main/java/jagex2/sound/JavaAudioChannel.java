@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.IntUtil;
 
 import javax.sound.sampled.AudioFormat;
@@ -28,14 +27,14 @@ public class JavaAudioChannel extends AudioChannel {
 
 	@ObfuscatedName("ds.s(Ljava/awt/Component;)V")
 	public void method209(Component arg0) {
-		this.field1554 = new AudioFormat((float) Statics.field241, 16, Statics.field236 ? 2 : 1, true, false);
-		this.field1553 = new byte[0x100 << (Statics.field236 ? 2 : 1)];
+		this.field1554 = new AudioFormat((float) AudioChannel.field241, 16, AudioChannel.field236 ? 2 : 1, true, false);
+		this.field1553 = new byte[0x100 << (AudioChannel.field236 ? 2 : 1)];
 	}
 
 	@ObfuscatedName("ds.u(I)V")
 	public void method214(int arg0) throws LineUnavailableException {
 		try {
-			Info var2 = new Info(SourceDataLine.class, this.field1554, arg0 << (Statics.field236 ? 2 : 1));
+			Info var2 = new Info(SourceDataLine.class, this.field1554, arg0 << (AudioChannel.field236 ? 2 : 1));
 			this.field1556 = (SourceDataLine) AudioSystem.getLine(var2);
 			this.field1556.open();
 			this.field1556.start();
@@ -58,13 +57,13 @@ public class JavaAudioChannel extends AudioChannel {
 
 	@ObfuscatedName("ds.v()I")
 	public int method215() {
-		return this.field1555 - (this.field1556.available() >> (Statics.field236 ? 2 : 1));
+		return this.field1555 - (this.field1556.available() >> (AudioChannel.field236 ? 2 : 1));
 	}
 
 	@ObfuscatedName("ds.w()V")
 	public void method216() {
 		int var1 = 256;
-		if (Statics.field236) {
+		if (AudioChannel.field236) {
 			var1 <<= 0x1;
 		}
 		for (int var2 = 0; var2 < var1; var2++) {

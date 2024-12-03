@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.LinkList;
 
 @ObfuscatedName("ex")
@@ -92,7 +91,7 @@ public class MidiNoteStream extends PcmStream {
 	@ObfuscatedName("ex.p(Lej;[IIIII)V")
 	public void method2291(MidiNote arg0, int[] arg1, int arg2, int arg3, int arg4) {
 		if ((this.field2256.field2244[arg0.field1760] & 0x4) != 0 && arg0.field1745 < 0) {
-			int var6 = this.field2256.field2250[arg0.field1760] / Statics.field241;
+			int var6 = this.field2256.field2250[arg0.field1760] / AudioChannel.field241;
 			while (true) {
 				int var7 = (var6 + 1048575 - arg0.field1766) / var6;
 				if (var7 > arg3) {
@@ -103,7 +102,7 @@ public class MidiNoteStream extends PcmStream {
 				arg2 += var7;
 				arg3 -= var7;
 				arg0.field1766 += var6 * var7 - 1048576;
-				int var8 = Statics.field241 / 100;
+				int var8 = AudioChannel.field241 / 100;
 				int var9 = 262144 / var6;
 				if (var9 < var8) {
 					var8 = var9;
@@ -132,7 +131,7 @@ public class MidiNoteStream extends PcmStream {
 	@ObfuscatedName("ex.ad(Lej;II)V")
 	public void method2292(MidiNote arg0, int arg1) {
 		if ((this.field2256.field2244[arg0.field1760] & 0x4) != 0 && arg0.field1745 < 0) {
-			int var3 = this.field2256.field2250[arg0.field1760] / Statics.field241;
+			int var3 = this.field2256.field2250[arg0.field1760] / AudioChannel.field241;
 			int var4 = (var3 + 1048575 - arg0.field1766) / var3;
 			arg0.field1766 = arg0.field1766 + arg1 * var3 & 0xFFFFF;
 			if (var4 <= arg1) {

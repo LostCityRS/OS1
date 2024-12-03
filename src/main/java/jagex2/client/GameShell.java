@@ -2,7 +2,6 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import deob.Settings;
-import deob.Statics;
 import jagex2.datastruct.*;
 import jagex2.graphics.AwtPixMap;
 import jagex2.graphics.BufferedPixMap;
@@ -16,20 +15,26 @@ import java.net.URL;
 @ObfuscatedName("dj")
 public abstract class GameShell extends Applet implements Runnable, FocusListener, WindowListener {
 
+	@ObfuscatedName("dj.r")
+	public static SignLink signlink;
+
 	@ObfuscatedName("dj.d")
-	public static GameShell field1532 = null;
+	public static GameShell shell = null;
 
 	@ObfuscatedName("dj.l")
 	public static int field1533 = 0;
 
 	@ObfuscatedName("dj.m")
-	public static long field1550 = 0L;
+	public static long killtime = 0L;
 
 	@ObfuscatedName("dj.c")
-	public static boolean field1545 = false;
+	public static boolean alreadyshutdown = false;
 
 	@ObfuscatedName("dj.n")
-	public boolean field1531 = false;
+	public boolean alreadyerrored = false;
+
+	@ObfuscatedName("dj.j")
+	public static int field1537;
 
 	@ObfuscatedName("dj.z")
 	public static int field1538 = 20;
@@ -40,85 +45,112 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("dj.q")
 	public static int field1540 = 0;
 
+	@ObfuscatedName("bc.i")
+	public static Timer field1100;
+
 	@ObfuscatedName("dj.u")
 	public static long[] field1534 = new long[32];
+
+	@ObfuscatedName("bm.v")
+	public static int field833;
 
 	@ObfuscatedName("dj.w")
 	public static long[] field1543 = new long[32];
 
+	@ObfuscatedName("cv.e")
+	public static int field1218;
+
+	@ObfuscatedName("dj.b")
+	public static int canvasWid;
+
+	@ObfuscatedName("ao.t")
+	public static int canvasHei;
+
+	@ObfuscatedName("dj.o")
+	public static PixMap drawArea;
+
+	@ObfuscatedName("a.a")
+	public static Frame frame;
+
+	@ObfuscatedName("c.h")
+	public static Canvas canvas;
+
 	@ObfuscatedName("dj.p")
-	public static volatile boolean field1536 = true;
+	public static volatile boolean fullredraw = true;
 
 	@ObfuscatedName("dj.ac")
 	public static int field1547 = 500;
 
 	@ObfuscatedName("dj.aa")
-	public static volatile boolean field1548 = false;
+	public static volatile boolean canvasReplaceRecommended = false;
 
 	@ObfuscatedName("dj.as")
-	public static volatile long field1549 = 0L;
+	public static volatile long lastCanvasReplace = 0L;
 
 	@ObfuscatedName("dj.am")
-	public static volatile boolean field1535 = true;
+	public static volatile boolean focus_in = true;
+
+	@ObfuscatedName("z.ap")
+	public static boolean focus;
 
 	@ObfuscatedName("dj.z(IIIB)V")
 	public final void method1354(int arg0, int arg1, int arg2) {
 		try {
-			if (field1532 != null) {
+			if (shell != null) {
 				field1533++;
 				if (field1533 >= 3) {
-					this.method1372("alreadyloaded");
+					this.error("alreadyloaded");
 					return;
 				}
 				this.getAppletContext().showDocument(this.getDocumentBase(), "_self");
 				return;
 			}
-			field1532 = this;
-			Statics.field1544 = arg0;
-			Statics.field549 = arg1;
-			Statics.field2496 = arg2;
-			Statics.field2495 = this;
-			if (Statics.field1542 == null) {
-				Statics.field1542 = new SignLink();
+			shell = this;
+			canvasWid = arg0;
+			canvasHei = arg1;
+			JagException.revision = arg2;
+			JagException.applet = this;
+			if (signlink == null) {
+				signlink = new SignLink();
 			}
-			Statics.field1542.method437(this, 1);
+			signlink.method437(this, 1);
 		} catch (Exception var5) {
-			JagException.method1490(null, var5);
-			this.method1372("crash");
+			JagException.report(null, (Throwable) var5);
+			this.error("crash");
 		}
 	}
 
 	@ObfuscatedName("dj.g(I)V")
-	public final synchronized void method1391() {
+	public final synchronized void addcanvas() {
 		Container var1;
-		if (Statics.field314 == null) {
+		if (frame == null) {
 			var1 = this;
 		} else {
-			var1 = Statics.field314;
+			var1 = frame;
 		}
-		if (Statics.field54 != null) {
-			Statics.field54.removeFocusListener(this);
-			var1.remove(Statics.field54);
+		if (canvas != null) {
+			canvas.removeFocusListener(this);
+			var1.remove(canvas);
 		}
-		Statics.field54 = new GameCanvas(this);
-		var1.add(Statics.field54);
-		Statics.field54.setSize(Statics.field1544, Statics.field549);
-		Statics.field54.setVisible(true);
-		if (Statics.field314 == null) {
-			Statics.field54.setLocation(0, 0);
+		canvas = new GameCanvas(this);
+		var1.add(canvas);
+		canvas.setSize(canvasWid, canvasHei);
+		canvas.setVisible(true);
+		if (frame == null) {
+			canvas.setLocation(0, 0);
 		} else {
-			Insets var2 = Statics.field314.getInsets();
-			Statics.field54.setLocation(var2.left, var2.top);
+			Insets var2 = frame.getInsets();
+			canvas.setLocation(var2.left, var2.top);
 		}
-		Statics.field54.addFocusListener(this);
-		Statics.field54.requestFocus();
-		field1536 = true;
-		field1548 = false;
-		field1549 = MonotonicTime.method1135();
+		canvas.addFocusListener(this);
+		canvas.requestFocus();
+		fullredraw = true;
+		canvasReplaceRecommended = false;
+		lastCanvasReplace = MonotonicTime.method1135();
 	}
 
 	@ObfuscatedName("dj.q(I)Z")
-	public final boolean method1367() {
+	public final boolean checkhost() {
 		if (Settings.SKIP_HOST_CHECK) {
 			return true;
 		}
@@ -139,7 +171,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			if (var1.endsWith("192.168.1.")) {
 				return true;
 			} else {
-				this.method1372("invalidhost");
+				this.error("invalidhost");
 				return false;
 			}
 		}
@@ -147,12 +179,12 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	public void run() {
 		try {
-			if (Statics.field380 != null) {
-				String var1 = Statics.field380.toLowerCase();
+			if (SignLink.javaVendor != null) {
+				String var1 = SignLink.javaVendor.toLowerCase();
 				if (var1.indexOf("sun") != -1 || var1.indexOf("apple") != -1) {
-					String var2 = Statics.field375;
+					String var2 = SignLink.javaVersion;
 					if (var2.equals("1.1") || var2.startsWith("1.1.") || var2.equals("1.2") || var2.startsWith("1.2.") || var2.equals("1.3") || var2.startsWith("1.3.") || var2.equals("1.4") || var2.startsWith("1.4.") || var2.equals("1.5") || var2.startsWith("1.5.") || var2.equals("1.6.0")) {
-						this.method1372("wrongjava");
+						this.error("wrongjava");
 						return;
 					}
 					if (var2.startsWith("1.6.0_")) {
@@ -168,7 +200,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 						if (JStringUtil.method62(var6)) {
 							int var7 = JStringUtil.method91(var6, 10, true);
 							if (var7 < 10) {
-								this.method1372("wrongjava");
+								this.error("wrongjava");
 								return;
 							}
 						}
@@ -177,10 +209,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 				}
 			}
 			this.setFocusCycleRoot(true);
-			this.method1391();
-			int var8 = Statics.field1544;
-			int var9 = Statics.field549;
-			Canvas var10 = Statics.field54;
+			this.addcanvas();
+			int var8 = canvasWid;
+			int var9 = canvasHei;
+			Canvas var10 = canvas;
 			PixMap var12;
 			try {
 				BufferedPixMap var11 = new BufferedPixMap();
@@ -191,29 +223,29 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 				var14.method548(var8, var9, var10);
 				var12 = var14;
 			}
-			Statics.field1546 = var12;
-			this.method1368();
+			drawArea = var12;
+			this.maininit();
 			Timer var15;
 			try {
 				var15 = new NanoTimer();
 			} catch (Throwable var22) {
 				var15 = new MillisTimer();
 			}
-			Statics.field1100 = var15;
+			field1100 = var15;
 			label99: while (true) {
 				SignLink var18;
 				Canvas var19;
 				do {
-					if (field1550 != 0L && MonotonicTime.method1135() >= field1550) {
+					if (killtime != 0L && MonotonicTime.method1135() >= killtime) {
 						break label99;
 					}
-					Statics.field1537 = Statics.field1100.method380(field1538, field1539);
-					for (int var17 = 0; var17 < Statics.field1537; var17++) {
-						this.method1357();
+					field1537 = field1100.method380(field1538, field1539);
+					for (int var17 = 0; var17 < field1537; var17++) {
+						this.mainloopwrapper();
 					}
-					this.method1358();
-					var18 = Statics.field1542;
-					var19 = Statics.field54;
+					this.mainredrawwrapper();
+					var18 = signlink;
+					var19 = canvas;
 				} while (var18.field381 == null);
 				for (int var20 = 0; var20 < 50 && var18.field381.peekEvent() != null; var20++) {
 					PreciseSleep.method1020(1L);
@@ -223,74 +255,74 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 				}
 			}
 		} catch (Exception var24) {
-			JagException.method1490(null, var24);
-			this.method1372("crash");
+			JagException.report(null, (Throwable) var24);
+			this.error("crash");
 		}
-		this.method1382();
+		this.shutdown();
 	}
 
 	@ObfuscatedName("dj.i(I)V")
-	public void method1357() {
+	public void mainloopwrapper() {
 		long var1 = MonotonicTime.method1135();
-		long var3 = field1543[Statics.field1218];
-		field1543[Statics.field1218] = var1;
-		Statics.field1218 = Statics.field1218 + 1 & 0x1F;
+		long var3 = field1543[field1218];
+		field1543[field1218] = var1;
+		field1218 = field1218 + 1 & 0x1F;
 		if (var3 != 0L && var1 > var3) {
 		}
 		synchronized (this) {
-			Statics.field125 = field1535;
+			focus = focus_in;
 		}
-		this.method1369();
+		this.mainloop();
 	}
 
 	@ObfuscatedName("dj.s(I)V")
-	public void method1358() {
+	public void mainredrawwrapper() {
 		long var1 = MonotonicTime.method1135();
-		long var3 = field1534[Statics.field833];
-		field1534[Statics.field833] = var1;
-		Statics.field833 = Statics.field833 + 1 & 0x1F;
+		long var3 = field1534[field833];
+		field1534[field833] = var1;
+		field833 = field833 + 1 & 0x1F;
 		if (var3 != 0L && var1 > var3) {
 			int var5 = (int) (var1 - var3);
 			field1540 = ((var5 >> 1) + 32000) / var5;
 		}
 		if (++field1547 - 1 > 50) {
 			field1547 -= 50;
-			field1536 = true;
-			Statics.field54.setSize(Statics.field1544, Statics.field549);
-			Statics.field54.setVisible(true);
-			if (Statics.field314 == null) {
-				Statics.field54.setLocation(0, 0);
+			fullredraw = true;
+			canvas.setSize(canvasWid, canvasHei);
+			canvas.setVisible(true);
+			if (frame == null) {
+				canvas.setLocation(0, 0);
 			} else {
-				Insets var6 = Statics.field314.getInsets();
-				Statics.field54.setLocation(var6.left, var6.top);
+				Insets var6 = frame.getInsets();
+				canvas.setLocation(var6.left, var6.top);
 			}
 		}
-		this.method1414();
+		this.mainredraw();
 	}
 
 	@ObfuscatedName("dj.u(I)V")
-	public final synchronized void method1382() {
-		if (field1545) {
+	public final synchronized void shutdown() {
+		if (alreadyshutdown) {
 			return;
 		}
-		field1545 = true;
+		alreadyshutdown = true;
 		try {
-			Statics.field54.removeFocusListener(this);
+			canvas.removeFocusListener(this);
 		} catch (Exception var8) {
 		}
 		try {
-			this.method1361();
+			this.mainquit();
 		} catch (Exception var7) {
 		}
-		if (Statics.field314 != null) {
+		if (frame != null) {
 			try {
 				System.exit(0);
 			} catch (Throwable var6) {
 			}
 		}
-		if (Statics.field1542 != null) {
+		if (signlink != null) {
 			try {
-				Statics.field1542.method436();
+				signlink.method436();
 			} catch (Exception var5) {
 			}
 		}
@@ -299,33 +331,33 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	@ObfuscatedName("bk.v(B)V")
 	public static final void method770() {
-		Statics.field1100.method381();
+		field1100.method381();
 		for (int var0 = 0; var0 < 32; var0++) {
 			field1534[var0] = 0L;
 		}
 		for (int var1 = 0; var1 < 32; var1++) {
 			field1543[var1] = 0L;
 		}
-		Statics.field1537 = 0;
+		field1537 = 0;
 	}
 
 	public void start() {
-		if (field1532 == this && !field1545) {
-			field1550 = 0L;
+		if (shell == this && !alreadyshutdown) {
+			killtime = 0L;
 		}
 	}
 
 	public void stop() {
-		if (field1532 == this && !field1545) {
-			field1550 = MonotonicTime.method1135() + 4000L;
+		if (shell == this && !alreadyshutdown) {
+			killtime = MonotonicTime.method1135() + 4000L;
 		}
 	}
 
 	public void destroy() {
-		if (field1532 == this && !field1545) {
-			field1550 = MonotonicTime.method1135();
+		if (shell == this && !alreadyshutdown) {
+			killtime = MonotonicTime.method1135();
 			PreciseSleep.method1020(5000L);
-			this.method1382();
+			this.shutdown();
 		}
 	}
 
@@ -334,25 +366,25 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	}
 
 	public final synchronized void paint(Graphics arg0) {
-		if (field1532 != this || field1545) {
+		if (shell != this || alreadyshutdown) {
 			return;
 		}
-		field1536 = true;
-		if (Statics.field375 != null && Statics.field375.startsWith("1.5") && MonotonicTime.method1135() - field1549 > 1000L) {
+		fullredraw = true;
+		if (SignLink.javaVersion != null && SignLink.javaVersion.startsWith("1.5") && MonotonicTime.method1135() - lastCanvasReplace > 1000L) {
 			Rectangle var2 = arg0.getClipBounds();
-			if (var2 == null || var2.width >= Statics.field1544 && var2.height >= Statics.field549) {
-				field1548 = true;
+			if (var2 == null || var2.width >= canvasWid && var2.height >= canvasHei) {
+				canvasReplaceRecommended = true;
 			}
 		}
 	}
 
 	public final void focusGained(FocusEvent arg0) {
-		field1535 = true;
-		field1536 = true;
+		focus_in = true;
+		fullredraw = true;
 	}
 
 	public final void focusLost(FocusEvent arg0) {
-		field1535 = false;
+		focus_in = false;
 	}
 
 	public final void windowActivated(WindowEvent arg0) {
@@ -378,11 +410,11 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	}
 
 	@ObfuscatedName("dj.t(Ljava/lang/String;I)V")
-	public void method1372(String arg0) {
-		if (this.field1531) {
+	public void error(String arg0) {
+		if (this.alreadyerrored) {
 			return;
 		}
-		this.field1531 = true;
+		this.alreadyerrored = true;
 		System.out.println("error_game_" + arg0);
 		try {
 			this.getAppletContext().showDocument(new URL(this.getCodeBase(), "error_game_" + arg0 + ".ws"), "_self");
@@ -391,13 +423,13 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	}
 
 	@ObfuscatedName("dj.y(B)V")
-	public abstract void method1361();
+	public abstract void mainquit();
 
 	@ObfuscatedName("dj.w(I)V")
-	public abstract void method1368();
+	public abstract void maininit();
 
 	@ObfuscatedName("dj.e(B)V")
-	public abstract void method1369();
+	public abstract void mainloop();
 
 	@ObfuscatedName("dj.f(I)V")
 	public abstract void method1373();
@@ -405,5 +437,5 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public abstract void init();
 
 	@ObfuscatedName("dj.b(I)V")
-	public abstract void method1414();
+	public abstract void mainredraw();
 }

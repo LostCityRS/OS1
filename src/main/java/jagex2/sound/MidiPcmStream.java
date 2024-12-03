@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.ByteArrayNode;
 import jagex2.datastruct.HashTable;
 import jagex2.js5.Js5Index;
@@ -313,7 +312,7 @@ public class MidiPcmStream extends PcmStream {
 		for (MidiNote var2 = (MidiNote) this.field2253.field2255.method1297(); var2 != null; var2 = (MidiNote) this.field2253.field2255.method1299()) {
 			if (arg0 < 0 || var2.field1760 == arg0) {
 				if (var2.field1763 != null) {
-					var2.field1763.method2081(Statics.field241 / 100);
+					var2.field1763.method2081(AudioChannel.field241 / 100);
 					if (var2.field1763.method2076()) {
 						this.field2253.field2254.method2174(var2.field1763);
 					}
@@ -567,7 +566,7 @@ public class MidiPcmStream extends PcmStream {
 			double var8 = Math.sin((double) (arg0.field1762 & 0x1FF) * 0.01227184630308513D);
 			var3 += (int) ((double) var7 * var8);
 		}
-		int var10 = (int) ((double) (arg0.field1759.field2200 * 256) * Math.pow(2.0D, (double) var3 * 3.255208333333333E-4D) / (double) Statics.field241 + 0.5D);
+		int var10 = (int) ((double) (arg0.field1759.field2200 * 256) * Math.pow(2.0D, (double) var3 * 3.255208333333333E-4D) / (double) AudioChannel.field241 + 0.5D);
 		return var10 < 1 ? 1 : var10;
 	}
 
@@ -628,7 +627,7 @@ public class MidiPcmStream extends PcmStream {
 	@ObfuscatedName("ed.q([III)V")
 	public synchronized void method1520(int[] arg0, int arg1, int arg2) {
 		if (this.field2247.method955()) {
-			int var4 = this.field2235 * this.field2247.field1148 / Statics.field241;
+			int var4 = this.field2235 * this.field2247.field1148 / AudioChannel.field241;
 			do {
 				long var5 = (long) arg2 * (long) var4 + this.field2251;
 				if (this.field2252 - var5 >= 0L) {
@@ -649,7 +648,7 @@ public class MidiPcmStream extends PcmStream {
 	@ObfuscatedName("ed.i(I)V")
 	public synchronized void method1521(int arg0) {
 		if (this.field2247.method955()) {
-			int var2 = this.field2235 * this.field2247.field1148 / Statics.field241;
+			int var2 = this.field2235 * this.field2247.field1148 / AudioChannel.field241;
 			do {
 				long var3 = (long) arg0 * (long) var2 + this.field2251;
 				if (this.field2252 - var3 >= 0L) {
@@ -719,7 +718,7 @@ public class MidiPcmStream extends PcmStream {
 
 	@ObfuscatedName("ed.bk(Lej;[IIIB)Z")
 	public boolean method2260(MidiNote arg0, int[] arg1, int arg2, int arg3) {
-		arg0.field1764 = Statics.field241 / 100;
+		arg0.field1764 = AudioChannel.field241 / 100;
 		if (arg0.field1745 >= 0 && (arg0.field1763 == null || arg0.field1763.method2161())) {
 			arg0.method1787();
 			arg0.method1325();

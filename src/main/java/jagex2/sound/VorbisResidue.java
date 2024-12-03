@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 
 @ObfuscatedName("h")
 public class VorbisResidue {
@@ -52,7 +51,7 @@ public class VorbisResidue {
 		if (arg2) {
 			return;
 		}
-		int var5 = Statics.field1658[this.field321].field324;
+		int var5 = VorbisSound.field1658[this.field321].field324;
 		int var6 = this.field320 - this.field317;
 		int var7 = var6 / this.field318;
 		int[] var8 = new int[var7];
@@ -60,7 +59,7 @@ public class VorbisResidue {
 			int var10 = 0;
 			while (var10 < var7) {
 				if (var9 == 0) {
-					int var11 = Statics.field1658[this.field321].method320();
+					int var11 = VorbisSound.field1658[this.field321].method320();
 					for (int var12 = var5 - 1; var12 >= 0; var12--) {
 						if (var10 + var12 < var7) {
 							var8[var10 + var12] = var11 % this.field316;
@@ -73,7 +72,7 @@ public class VorbisResidue {
 					int var15 = this.field322[var14 * 8 + var9];
 					if (var15 >= 0) {
 						int var16 = this.field318 * var10 + this.field317;
-						VorbisCookbook var17 = Statics.field1658[var15];
+						VorbisCookbook var17 = VorbisSound.field1658[var15];
 						if (this.field319 == 0) {
 							int var18 = this.field318 / var17.field324;
 							for (int var19 = 0; var19 < var18; var19++) {

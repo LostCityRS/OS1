@@ -45,7 +45,7 @@ public class AudioThread implements Runnable {
 				}
 			}
 		} catch (Exception var10) {
-			JagException.method1490(null, var10);
+			JagException.report(null, (Throwable) var10);
 		} finally {
 			this.field291 = false;
 		}

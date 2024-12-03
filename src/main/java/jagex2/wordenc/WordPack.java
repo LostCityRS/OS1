@@ -1,12 +1,14 @@
 package jagex2.wordenc;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.io.Packet;
 import jagex2.jstring.Cp1252;
 
 @ObfuscatedName("dz")
 public class WordPack {
+
+	@ObfuscatedName("dz.r")
+	public static Huffman huffman;
 
 	public WordPack() throws Throwable {
 		throw new Error();
@@ -14,7 +16,7 @@ public class WordPack {
 
 	@ObfuscatedName("bw.r(Lby;I)V")
 	public static void method816(Huffman arg0) {
-		Statics.field1514 = arg0;
+		huffman = arg0;
 	}
 
 	@ObfuscatedName("bp.d(Lev;Ljava/lang/String;B)I")
@@ -22,7 +24,7 @@ public class WordPack {
 		int var2 = arg0.pos;
 		byte[] var3 = Cp1252.method1231(arg1);
 		arg0.psmart(var3.length);
-		arg0.pos += Statics.field1514.method819(var3, 0, var3.length, arg0.data, arg0.pos);
+		arg0.pos += huffman.method819(var3, 0, var3.length, arg0.data, arg0.pos);
 		return arg0.pos - var2;
 	}
 
@@ -35,7 +37,7 @@ public class WordPack {
 				var1 = 32767;
 			}
 			byte[] var2 = new byte[var1];
-			arg0.pos += Statics.field1514.method818(arg0.data, arg0.pos, var2, 0, var1);
+			arg0.pos += huffman.method818(arg0.data, arg0.pos, var2, 0, var1);
 			String var3 = Cp1252.method2397(var2, 0, var1);
 			var4 = var3;
 		} catch (Exception var6) {

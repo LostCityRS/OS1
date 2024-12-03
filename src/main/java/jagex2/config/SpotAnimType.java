@@ -1,15 +1,21 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.Model;
 import jagex2.graphics.SoftwareModel;
 import jagex2.io.Packet;
+import jagex2.js5.Js5Index;
 
 @ObfuscatedName("eu")
 public class SpotAnimType extends DoublyLinkable {
+
+	@ObfuscatedName("eu.n")
+	public static Js5Index field2381;
+
+	@ObfuscatedName("eu.j")
+	public static Js5Index field2385;
 
 	@ObfuscatedName("eu.z")
 	public static LruCache field2379 = new LruCache(64);
@@ -59,7 +65,7 @@ public class SpotAnimType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Statics.field2381.method1044(13, arg0);
+		byte[] var2 = field2381.method1044(13, arg0);
 		SpotAnimType var3 = new SpotAnimType();
 		var3.field2382 = arg0;
 		if (var2 != null) {
@@ -119,7 +125,7 @@ public class SpotAnimType extends DoublyLinkable {
 	public final SoftwareModel method2455(int arg0) {
 		SoftwareModel var2 = (SoftwareModel) field2392.method1244((long) this.field2382);
 		if (var2 == null) {
-			Model var3 = Model.method2992(Statics.field2385, this.field2383, 0);
+			Model var3 = Model.method2992(field2385, this.field2383, 0);
 			if (var3 == null) {
 				return null;
 			}
