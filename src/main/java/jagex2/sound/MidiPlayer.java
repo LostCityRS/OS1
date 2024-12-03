@@ -50,6 +50,17 @@ public class MidiPlayer {
 		Statics.field1118 = null;
 	}
 
+	@ObfuscatedName("q.c(ILch;IIIZI)V")
+	public static void method95(int arg0, Js5Index arg1, int arg2, int arg3, int arg4, boolean arg5) {
+		field1117 = 1;
+		Statics.field1118 = arg1;
+		Statics.field349 = arg2;
+		Statics.field1121 = arg3;
+		Statics.field1120 = arg4;
+		Statics.field1625 = arg5;
+		Statics.field1152 = arg0;
+	}
+
 	@ObfuscatedName("eu.n(I)Z")
 	public static boolean method2456() {
 		return field1117 == 0 ? Statics.field1116.method2200() : true;

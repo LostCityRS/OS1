@@ -3,6 +3,7 @@ package jagex2.sound;
 import deob.ObfuscatedName;
 import jagex2.datastruct.Linkable;
 import jagex2.io.Packet;
+import jagex2.js5.Js5Index;
 
 @ObfuscatedName("ef")
 public class MidiInstrument extends Linkable {
@@ -30,6 +31,12 @@ public class MidiInstrument extends Linkable {
 
 	@ObfuscatedName("ef.i")
 	public int[] field1739 = new int[128];
+
+	@ObfuscatedName("l.c(Lch;II)Lef;")
+	public static MidiInstrument method49(Js5Index arg0, int arg1) {
+		byte[] var2 = arg0.method1092(arg1);
+		return var2 == null ? null : new MidiInstrument(var2);
+	}
 
 	public MidiInstrument(byte[] arg0) {
 		Packet var2 = new Packet(arg0);

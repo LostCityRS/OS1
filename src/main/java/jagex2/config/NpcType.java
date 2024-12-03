@@ -216,7 +216,7 @@ public class NpcType extends DoublyLinkable {
 		} else if (arg1 == 100) {
 			this.field2293 = arg0.method1595();
 		} else if (arg1 == 101) {
-			this.field2269 = arg0.method1595();
+			this.field2269 = arg0.method1595() * 5;
 		} else if (arg1 == 102) {
 			this.field2295 = arg0.method1602();
 		} else if (arg1 == 103) {
@@ -282,7 +282,7 @@ public class NpcType extends DoublyLinkable {
 					var11.method2976(this.field2285[var13], this.field2286[var13]);
 				}
 			}
-			var6 = var11.method2942(this.field2293 + 64, this.field2269 * 5 + 850, -30, -50, -30);
+			var6 = var11.method2942(this.field2293 + 64, this.field2269 + 850, -30, -50, -30);
 			field2288.method1246(var6, (long) this.field2271);
 		}
 		SoftwareModel var14;
@@ -346,7 +346,7 @@ public class NpcType extends DoublyLinkable {
 	public final NpcType method2332() {
 		int var1 = -1;
 		if (this.field2297 != -1) {
-			var1 = Statics.method1130(this.field2297);
+			var1 = VarProvider.method1130(this.field2297);
 		} else if (this.field2299 != -1) {
 			var1 = VarProvider.field1210[this.field2299];
 		}
@@ -360,7 +360,7 @@ public class NpcType extends DoublyLinkable {
 		}
 		int var1 = -1;
 		if (this.field2297 != -1) {
-			var1 = Statics.method1130(this.field2297);
+			var1 = VarProvider.method1130(this.field2297);
 		} else if (this.field2299 != -1) {
 			var1 = VarProvider.field1210[this.field2299];
 		}

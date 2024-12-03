@@ -6,7 +6,7 @@ import deob.ObfuscatedName;
 public class Namespace {
 
 	@ObfuscatedName("da.r")
-	public static final Namespace field1527 = new Namespace(6, 0, "", "");
+	public static final Namespace OLDSCAPE = new Namespace(6, 0, "", "");
 
 	@ObfuscatedName("da.d")
 	public static final Namespace field1521 = new Namespace(1, 1, "", "");
@@ -27,7 +27,7 @@ public class Namespace {
 	public static final Namespace field1519 = new Namespace(2, 6, "", "");
 
 	@ObfuscatedName("da.z")
-	public static final Namespace field1525 = new Namespace(4, -1, "", "", true, new Namespace[] { field1527, field1521, field1520, field1522, field1524 });
+	public static final Namespace LEGACY = new Namespace(4, -1, "", "", true, new Namespace[] { OLDSCAPE, field1521, field1520, field1522, field1524 });
 
 	@ObfuscatedName("da.g")
 	public final int field1526;

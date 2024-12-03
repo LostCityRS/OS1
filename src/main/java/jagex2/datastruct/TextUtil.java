@@ -37,4 +37,9 @@ public class TextUtil {
 	public static String method63(int arg0) {
 		return "<img=" + arg0 + ">";
 	}
+
+	@ObfuscatedName("i.d(II)Ljava/lang/String;")
+	public static String method103(int arg0) {
+		return "<col=" + Integer.toHexString(arg0) + ">";
+	}
 }

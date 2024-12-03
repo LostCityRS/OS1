@@ -1,6 +1,8 @@
 package jagex2.client;
 
-import deob.*;
+import deob.ObfuscatedName;
+import deob.Settings;
+import deob.Statics;
 import jagex2.datastruct.*;
 import jagex2.graphics.AwtPixMap;
 import jagex2.graphics.BufferedPixMap;

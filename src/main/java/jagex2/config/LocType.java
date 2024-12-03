@@ -603,7 +603,7 @@ public class LocType extends DoublyLinkable {
 	public final LocType method2368() {
 		int var1 = -1;
 		if (this.field2331 != -1) {
-			var1 = Statics.method1130(this.field2331);
+			var1 = VarProvider.method1130(this.field2331);
 		} else if (this.field2346 != -1) {
 			var1 = VarProvider.field1210[this.field2346];
 		}

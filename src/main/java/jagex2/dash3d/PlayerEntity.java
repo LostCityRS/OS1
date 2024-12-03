@@ -2,7 +2,7 @@ package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import deob.Statics;
-import jagex2.client.client;
+import jagex2.client.Client;
 import jagex2.config.ObjType;
 import jagex2.config.SeqType;
 import jagex2.config.SpotAnimType;
@@ -168,10 +168,10 @@ public class PlayerEntity extends PathingEntity {
 			}
 		}
 		if (!this.field2795 && this.field2801 != null) {
-			if (client.field1922 >= this.field2793) {
+			if (Client.field1922 >= this.field2793) {
 				this.field2801 = null;
 			}
-			if (client.field1922 >= this.field2792 && client.field1922 < this.field2793) {
+			if (Client.field1922 >= this.field2792 && Client.field1922 < this.field2793) {
 				SoftwareModel var6 = this.field2801;
 				var6.method3012(this.field2794 - this.field2615, this.field2797 - this.field2791, this.field2799 - this.field2614);
 				if (this.field2618 == 512) {

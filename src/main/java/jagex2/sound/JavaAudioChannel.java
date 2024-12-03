@@ -2,6 +2,7 @@ package jagex2.sound;
 
 import deob.ObfuscatedName;
 import deob.Statics;
+import jagex2.datastruct.IntUtil;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -40,7 +41,7 @@ public class JavaAudioChannel extends AudioChannel {
 			this.field1556.start();
 			this.field1555 = arg0;
 		} catch (LineUnavailableException var11) {
-			if (Statics.method1838(arg0) == 1) {
+			if (IntUtil.method1838(arg0) == 1) {
 				this.field1556 = null;
 				throw var11;
 			}

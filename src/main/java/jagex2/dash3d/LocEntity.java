@@ -1,7 +1,7 @@
 package jagex2.dash3d;
 
 import deob.ObfuscatedName;
-import jagex2.client.client;
+import jagex2.client.Client;
 import jagex2.config.LocType;
 import jagex2.config.SeqType;
 import jagex2.graphics.SoftwareModel;
@@ -46,7 +46,7 @@ public class LocEntity extends Entity {
 		if (arg6 != -1) {
 			this.field2597 = SeqType.method104(arg6);
 			this.field2598 = 0;
-			this.field2591 = client.field1922 - 1;
+			this.field2591 = Client.field1922 - 1;
 			if (this.field2597.field2377 == 0 && arg8 != null && arg8 instanceof LocEntity) {
 				LocEntity var10 = (LocEntity) arg8;
 				if (this.field2597 == var10.field2597) {
@@ -65,7 +65,7 @@ public class LocEntity extends Entity {
 	@ObfuscatedName("ff.g(I)Lfo;")
 	public final SoftwareModel method2643() {
 		if (this.field2597 != null) {
-			int var1 = client.field1922 - this.field2591;
+			int var1 = Client.field1922 - this.field2591;
 			if (var1 > 100 && this.field2597.field2368 > 0) {
 				var1 = 100;
 			}
@@ -82,7 +82,7 @@ public class LocEntity extends Entity {
 				} while (this.field2598 >= 0 && this.field2598 < this.field2597.field2364.length);
 				this.field2597 = null;
 			}
-			this.field2591 = client.field1922 - var1;
+			this.field2591 = Client.field1922 - var1;
 		}
 		LocType var2 = LocType.method2564(this.field2599);
 		if (var2.field2317 != null) {

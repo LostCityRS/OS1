@@ -965,7 +965,7 @@ public class IfType extends Linkable {
 						field1870 = true;
 						return null;
 					}
-					var7 = var12.method2942(var11.field2472 + 64, var11.field2473 * 5 + 768, -50, -10, -50);
+					var7 = var12.method2942(var11.field2472 + 64, var11.field2473 + 768, -50, -10, -50);
 				}
 				field1850.method1246(var7, (long) ((var5 << 16) + var6));
 			}

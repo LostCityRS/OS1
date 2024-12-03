@@ -4,6 +4,7 @@ import deob.ObfuscatedName;
 import jagex2.client.JagException;
 import jagex2.datastruct.LinkList;
 import jagex2.datastruct.PreciseSleep;
+import jagex2.io.FileStream;
 
 @ObfuscatedName("cc")
 public class Js5ProviderThread implements Runnable {
@@ -19,6 +20,26 @@ public class Js5ProviderThread implements Runnable {
 
 	@ObfuscatedName("cc.m")
 	public static Object field1207 = new Object();
+
+	@ObfuscatedName("cu.m(ILap;Ldq;I)V")
+	public static void method1122(int arg0, FileStream arg1, Js5Provider arg2) {
+		byte[] var3 = null;
+		LinkList var4 = field1208;
+		synchronized (field1208) {
+			for (Js5NetProviderRequest var5 = (Js5NetProviderRequest) field1208.method1297(); var5 != null; var5 = (Js5NetProviderRequest) field1208.method1299()) {
+				if ((long) arg0 == var5.field1506 && var5.field1770 == arg1 && var5.field1772 == 0) {
+					var3 = var5.field1771;
+					break;
+				}
+			}
+		}
+		if (var3 == null) {
+			byte[] var7 = arg1.method418(arg0);
+			arg2.method1468(arg1, arg0, var7, true);
+		} else {
+			arg2.method1468(arg1, arg0, var3, true);
+		}
+	}
 
 	public void run() {
 		try {

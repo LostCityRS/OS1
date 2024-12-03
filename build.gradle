@@ -9,13 +9,13 @@ java {
 }
 
 application {
-    mainClass = "jagex2.client.client"
+    mainClass = "jagex2.client.Client"
 }
 
 jar {
     manifest {
         attributes(
-            'Main-Class': 'jagex2.client.client'
+            'Main-Class': 'jagex2.client.Client'
         )
     }
 

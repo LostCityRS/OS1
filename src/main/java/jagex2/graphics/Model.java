@@ -1,8 +1,8 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import jagex2.Unused10;
 import jagex2.dash3d.Entity;
+import jagex2.dash3d.Unused10;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 

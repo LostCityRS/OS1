@@ -50,7 +50,7 @@ public class Js5Provider extends Js5Index {
 		this.field1576 = arg5;
 		int var8 = this.field1574;
 		if (Statics.field542 == null) {
-			Statics.method827(null, 255, 255, 0, (byte) 0, true);
+			Js5TcpClient.method827(null, 255, 255, 0, (byte) 0, true);
 			Js5TcpClient.field1200[var8] = this;
 		} else {
 			Statics.field542.field1729 = var8 * 8 + 5;
@@ -83,9 +83,9 @@ public class Js5Provider extends Js5Index {
 	@ObfuscatedName("dq.i(IB)V")
 	public void method1052(int arg0) {
 		if (this.field1578 == null || this.field1572 == null || !this.field1572[arg0]) {
-			Statics.method827(this, this.field1574, arg0, this.field1169[arg0], (byte) 2, true);
+			Js5TcpClient.method827(this, this.field1574, arg0, this.field1169[arg0], (byte) 2, true);
 		} else {
-			Statics.method1122(arg0, this.field1578, this);
+			Js5ProviderThread.method1122(arg0, this.field1578, this);
 		}
 	}
 
@@ -94,9 +94,9 @@ public class Js5Provider extends Js5Index {
 		this.field1580 = arg0;
 		this.field1577 = arg1;
 		if (this.field1573 == null) {
-			Statics.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
+			Js5TcpClient.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
 		} else {
-			Statics.method1122(this.field1574, this.field1573, this);
+			Js5ProviderThread.method1122(this.field1574, this.field1573, this);
 		}
 	}
 
@@ -166,7 +166,7 @@ public class Js5Provider extends Js5Index {
 			if (arg2 == null || arg2.length <= 2) {
 				this.field1572[arg1] = false;
 				if (this.field1576 || arg3) {
-					Statics.method827(this, this.field1574, arg1, this.field1169[arg1], (byte) 2, arg3);
+					Js5TcpClient.method827(this, this.field1574, arg1, this.field1169[arg1], (byte) 2, arg3);
 				}
 				return;
 			}
@@ -177,7 +177,7 @@ public class Js5Provider extends Js5Index {
 			if (this.field1169[arg1] != var9 || this.field1179[arg1] != var10) {
 				this.field1572[arg1] = false;
 				if (this.field1576 || arg3) {
-					Statics.method827(this, this.field1574, arg1, this.field1169[arg1], (byte) 2, arg3);
+					Js5TcpClient.method827(this, this.field1574, arg1, this.field1169[arg1], (byte) 2, arg3);
 				}
 				return;
 			}
@@ -191,7 +191,7 @@ public class Js5Provider extends Js5Index {
 			throw new RuntimeException();
 		}
 		if (arg2 == null) {
-			Statics.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
+			Js5TcpClient.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
 			return;
 		}
 		field1579.reset();
@@ -207,7 +207,7 @@ public class Js5Provider extends Js5Index {
 			var8 = var6.method1605();
 		}
 		if (this.field1580 != var5 || this.field1577 != var8) {
-			Statics.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
+			Js5TcpClient.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
 			return;
 		}
 		this.method1042(arg2);

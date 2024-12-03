@@ -1,8 +1,8 @@
 package jagex2.datastruct;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.jstring.Cp1252;
+import jagex2.jstring.JString;
 
 @ObfuscatedName("cl")
 public class JStringUtil {
@@ -215,7 +215,7 @@ public class JStringUtil {
 			if (var3 == 0) {
 				var5 = Character.toLowerCase(var5);
 			} else if (var3 == 2 || Character.isUpperCase(var5)) {
-				var5 = Statics.method261(var5);
+				var5 = JString.method261(var5);
 			}
 			if (Character.isLetter(var5)) {
 				var3 = 0;

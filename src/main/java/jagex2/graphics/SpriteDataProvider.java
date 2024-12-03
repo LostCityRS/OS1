@@ -43,6 +43,54 @@ public class SpriteDataProvider {
 		return var5;
 	}
 
+	@ObfuscatedName("ak.d(Lch;Ljava/lang/String;Ljava/lang/String;I)Lft;")
+	public static Pix8 method457(Js5Index arg0, String arg1, String arg2) {
+		int var3 = arg0.method1059(arg1);
+		int var4 = arg0.method1064(var3, arg2);
+		Pix8 var5;
+		if (method905(arg0, var3, var4)) {
+			var5 = method556();
+		} else {
+			var5 = null;
+		}
+		return var5;
+	}
+
+	@ObfuscatedName("bx.l(Lch;Ljava/lang/String;Ljava/lang/String;I)[Lfq;")
+	public static Pix32[] method830(Js5Index arg0, String arg1, String arg2) {
+		int var3 = arg0.method1059(arg1);
+		int var4 = arg0.method1064(var3, arg2);
+		Pix32[] var5;
+		if (method905(arg0, var3, var4)) {
+			Pix32[] var6 = new Pix32[Statics.field528];
+			for (int var7 = 0; var7 < Statics.field528; var7++) {
+				Pix32 var8 = var6[var7] = new Pix32();
+				var8.field2504 = Statics.field533;
+				var8.field2505 = Statics.field530;
+				var8.field2502 = Statics.field531[var7];
+				var8.field2499 = Statics.field532[var7];
+				var8.field2508 = Statics.field41[var7];
+				var8.field2501 = Statics.field1151[var7];
+				int var9 = var8.field2508 * var8.field2501;
+				byte[] var10 = Statics.field863[var7];
+				var8.field2506 = new int[var9];
+				for (int var11 = 0; var11 < var9; var11++) {
+					var8.field2506[var11] = Statics.field529[var10[var11] & 0xFF];
+				}
+			}
+			Statics.field531 = null;
+			Statics.field532 = null;
+			Statics.field41 = null;
+			Statics.field1151 = null;
+			Statics.field529 = null;
+			Statics.field863 = null;
+			var5 = var6;
+		} else {
+			var5 = null;
+		}
+		return var5;
+	}
+
 	@ObfuscatedName("r.m(Lch;Ljava/lang/String;Ljava/lang/String;I)Lfq;")
 	public static Pix32 method4(Js5Index arg0, String arg1, String arg2) {
 		int var3 = arg0.method1059(arg1);

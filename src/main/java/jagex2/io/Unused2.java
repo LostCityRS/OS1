@@ -1,4 +1,4 @@
-package jagex2;
+package jagex2.io;
 
 import deob.ObfuscatedName;
 

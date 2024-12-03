@@ -276,7 +276,7 @@ public class ObjType extends DoublyLinkable {
 		} else if (arg1 == 113) {
 			this.field2472 = arg0.method1595();
 		} else if (arg1 == 114) {
-			this.field2473 = arg0.method1595();
+			this.field2473 = arg0.method1595() * 5;
 		} else if (arg1 == 115) {
 			this.field2437 = arg0.method1600();
 		}
@@ -368,7 +368,7 @@ public class ObjType extends DoublyLinkable {
 				var5.method2976(this.field2440[var7], this.field2441[var7]);
 			}
 		}
-		SoftwareModel var8 = var5.method2942(this.field2472 + 64, this.field2473 * 5 + 768, -50, -10, -50);
+		SoftwareModel var8 = var5.method2942(this.field2472 + 64, this.field2473 + 768, -50, -10, -50);
 		var8.field2744 = true;
 		field2433.method1246(var8, (long) this.field2435);
 		return var8;
@@ -599,5 +599,10 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 		return var4;
+	}
+
+	@ObfuscatedName("da.o(S)V")
+	public static void method1352() {
+		field2434.method1253();
 	}
 }

@@ -60,6 +60,16 @@ public class AudioChannel {
 	@ObfuscatedName("y.ad")
 	public PcmStream[] field261 = new PcmStream[8];
 
+	@ObfuscatedName("bx.r(IZII)V")
+	public static final void method832(int arg0, boolean arg1, int arg2) {
+		if (arg0 < 8000 || arg0 > 48000) {
+			throw new IllegalArgumentException();
+		}
+		Statics.field241 = arg0;
+		Statics.field236 = arg1;
+		Statics.field239 = arg2;
+	}
+
 	@ObfuscatedName("cm.d(Lak;Ljava/awt/Component;III)Ly;")
 	public static final AudioChannel method1132(SignLink arg0, Component arg1, int arg2, int arg3) {
 		if (Statics.field241 == 0) {

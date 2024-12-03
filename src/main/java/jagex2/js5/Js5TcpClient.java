@@ -319,6 +319,45 @@ public class Js5TcpClient {
 		}
 	}
 
+	@ObfuscatedName("by.m(Ldq;IIIBZI)V")
+	public static void method827(Js5Provider arg0, int arg1, int arg2, int arg3, byte arg4, boolean arg5) {
+		long var6 = (long) ((arg1 << 16) + arg2);
+		Js5NetRequest var8 = (Js5NetRequest) field1185.method1277(var6);
+		if (var8 != null) {
+			return;
+		}
+		Js5NetRequest var9 = (Js5NetRequest) field1187.method1277(var6);
+		if (var9 != null) {
+			return;
+		}
+		Js5NetRequest var10 = (Js5NetRequest) field1193.method1277(var6);
+		if (var10 == null) {
+			if (!arg5) {
+				Js5NetRequest var11 = (Js5NetRequest) field1199.method1277(var6);
+				if (var11 != null) {
+					return;
+				}
+			}
+			Js5NetRequest var12 = new Js5NetRequest();
+			var12.field2492 = arg0;
+			var12.field2491 = arg3;
+			var12.field2490 = arg4;
+			if (arg5) {
+				field1185.method1278(var12, var6);
+				field1186++;
+			} else {
+				field1189.method1256(var12);
+				field1193.method1278(var12, var6);
+				field1191++;
+			}
+		} else if (arg5) {
+			var10.method1841();
+			field1185.method1278(var10, var6);
+			field1191--;
+			field1186++;
+		}
+	}
+
 	@ObfuscatedName("ab.c(IIS)V")
 	public static void method555(int arg0, int arg1) {
 		long var2 = (long) ((arg0 << 16) + arg1);

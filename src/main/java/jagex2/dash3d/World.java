@@ -2,7 +2,7 @@ package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import deob.Statics;
-import jagex2.client.client;
+import jagex2.client.Client;
 import jagex2.config.FloType;
 import jagex2.config.FluType;
 import jagex2.config.LocType;
@@ -214,6 +214,51 @@ public class World {
 		}
 	}
 
+	@ObfuscatedName("as.n([BIII)Z")
+	public static final boolean method389(byte[] arg0, int arg1, int arg2) {
+		boolean var3 = true;
+		Packet var4 = new Packet(arg0);
+		int var5 = -1;
+		label57: while (true) {
+			int var6 = var4.method1640();
+			if (var6 == 0) {
+				return var3;
+			}
+			var5 += var6;
+			int var7 = 0;
+			boolean var8 = false;
+			while (true) {
+				while (!var8) {
+					int var10 = var4.method1640();
+					if (var10 == 0) {
+						continue label57;
+					}
+					var7 += var10 - 1;
+					int var11 = var7 & 0x3F;
+					int var12 = var7 >> 6 & 0x3F;
+					int var13 = var4.method1600() >> 2;
+					int var14 = arg1 + var12;
+					int var15 = arg2 + var11;
+					if (var14 > 0 && var15 > 0 && var14 < 103 && var15 < 103) {
+						LocType var16 = LocType.method2564(var5);
+						if (var13 != 22 || !Client.field1917 || var16.field2321 != 0 || var16.field2342 == 1 || var16.field2341) {
+							if (!var16.method2366()) {
+								Client.field1974++;
+								var3 = false;
+							}
+							var8 = true;
+						}
+					}
+				}
+				int var9 = var4.method1640();
+				if (var9 == 0) {
+					break;
+				}
+				var4.method1600();
+			}
+		}
+	}
+
 	@ObfuscatedName("dk.j([BIILaq;[Lck;I)V")
 	public static final void method1337(byte[] arg0, int arg1, int arg2, World3D arg3, CollisionMap[] arg4) {
 		Packet var5 = new Packet(arg0);
@@ -299,7 +344,7 @@ public class World {
 
 	@ObfuscatedName("bi.g(IIIIIILaq;Lck;I)V")
 	public static final void method758(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, World3D arg6, CollisionMap arg7) {
-		if (client.field1917 && (field15[0][arg1][arg2] & 0x2) == 0) {
+		if (Client.field1917 && (field15[0][arg1][arg2] & 0x2) == 0) {
 			if ((field15[arg0][arg1][arg2] & 0x10) != 0) {
 				return;
 			}
@@ -311,7 +356,7 @@ public class World {
 			} else {
 				var8 = arg0 - 1;
 			}
-			if (client.field2128 != var8) {
+			if (Client.field2128 != var8) {
 				return;
 			}
 		}
@@ -362,7 +407,7 @@ public class World {
 			PositionedSound.method763(arg0, arg1, arg2, var9, arg4);
 		}
 		if (arg5 == 22) {
-			if (!client.field1917 || var9.field2321 != 0 || var9.field2342 == 1 || var9.field2341) {
+			if (!Client.field1917 || var9.field2321 != 0 || var9.field2342 == 1 || var9.field2341) {
 				Entity var22;
 				if (var9.field2325 == -1 && var9.field2317 == null) {
 					var22 = var9.method2364(22, arg4, var16, var18, var17, var19);
@@ -722,7 +767,7 @@ public class World {
 							var33 -= Statics.field23[var36];
 						}
 						if (var34 >= 1 && var34 < 103) {
-							if (client.field1917 && (field15[0][var21][var34] & 0x2) == 0) {
+							if (Client.field1917 && (field15[0][var21][var34] & 0x2) == 0) {
 								if ((field15[var6][var21][var34] & 0x10) != 0) {
 									continue;
 								}
@@ -734,7 +779,7 @@ public class World {
 								} else {
 									var37 = var6 - 1;
 								}
-								if (client.field2128 != var37) {
+								if (Client.field2128 != var37) {
 									continue;
 								}
 							}
@@ -1013,16 +1058,24 @@ public class World {
 		int var4 = arg0 & arg2 - 1;
 		int var5 = arg1 / arg2;
 		int var6 = arg1 & arg2 - 1;
-		int var7 = Statics.method1144(var3, var5);
-		int var8 = Statics.method1144(var3 + 1, var5);
-		int var9 = Statics.method1144(var3, var5 + 1);
-		int var10 = Statics.method1144(var3 + 1, var5 + 1);
+		int var7 = method1144(var3, var5);
+		int var8 = method1144(var3 + 1, var5);
+		int var9 = method1144(var3, var5 + 1);
+		int var10 = method1144(var3 + 1, var5 + 1);
 		int var11 = 65536 - Pix3D.field2530[var4 * 1024 / arg2] >> 1;
 		int var12 = ((65536 - var11) * var7 >> 16) + (var8 * var11 >> 16);
 		int var14 = 65536 - Pix3D.field2530[var4 * 1024 / arg2] >> 1;
 		int var15 = ((65536 - var14) * var9 >> 16) + (var10 * var14 >> 16);
 		int var17 = 65536 - Pix3D.field2530[var6 * 1024 / arg2] >> 1;
 		return ((65536 - var17) * var12 >> 16) + (var15 * var17 >> 16);
+	}
+
+	@ObfuscatedName("cw.u(III)I")
+	public static final int method1144(int arg0, int arg1) {
+		int var2 = method1786(arg0 - 1, arg1 - 1) + method1786(arg0 + 1, arg1 - 1) + method1786(arg0 - 1, arg1 + 1) + method1786(arg0 + 1, arg1 + 1);
+		int var3 = method1786(arg0 - 1, arg1) + method1786(arg0 + 1, arg1) + method1786(arg0, arg1 - 1) + method1786(arg0, arg1 + 1);
+		int var4 = method1786(arg0, arg1);
+		return var4 / 4 + var2 / 16 + var3 / 8;
 	}
 
 	@ObfuscatedName("ef.v(III)I")

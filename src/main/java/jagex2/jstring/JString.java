@@ -85,4 +85,18 @@ public class JString {
 			return var5.toString();
 		}
 	}
+
+	@ObfuscatedName("y.l(CB)C")
+	public static char method261(char arg0) {
+		return arg0 == 181 || arg0 == 402 ? arg0 : Character.toTitleCase(arg0);
+	}
+
+	@ObfuscatedName("bs.m(Ljava/lang/CharSequence;I)Ljava/lang/String;")
+	public static String method762(CharSequence arg0) {
+		String var1 = method768(method1001(arg0));
+		if (var1 == null) {
+			var1 = "";
+		}
+		return var1;
+	}
 }

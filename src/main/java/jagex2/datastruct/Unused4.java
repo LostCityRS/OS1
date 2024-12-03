@@ -1,4 +1,4 @@
-package jagex2;
+package jagex2.datastruct;
 
 import deob.ObfuscatedName;
 

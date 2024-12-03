@@ -6,6 +6,7 @@ import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.Model;
 import jagex2.io.Packet;
+import jagex2.js5.Js5Index;
 
 @ObfuscatedName("fd")
 public class IdkType extends DoublyLinkable {
@@ -36,6 +37,13 @@ public class IdkType extends DoublyLinkable {
 
 	@ObfuscatedName("fd.b")
 	public boolean field2404 = false;
+
+	@ObfuscatedName("ct.z(Lch;Lch;I)V")
+	public static void method1194(Js5Index arg0, Js5Index arg1) {
+		Statics.field2394 = arg0;
+		Statics.field2397 = arg1;
+		Statics.field1628 = Statics.field2394.method1054(3);
+	}
 
 	@ObfuscatedName("p.g(II)Lfd;")
 	public static IdkType method346(int arg0) {

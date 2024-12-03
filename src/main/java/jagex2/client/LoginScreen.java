@@ -6,6 +6,7 @@ import jagex2.datastruct.JStringUtil;
 import jagex2.datastruct.TextUtil;
 import jagex2.graphics.*;
 import jagex2.io.Packet;
+import jagex2.js5.Js5Provider;
 import jagex2.js5.Js5TcpClient;
 import jagex2.jstring.EnglishLocale;
 import jagex2.sound.MidiPlayer;
@@ -130,13 +131,173 @@ public class LoginScreen {
 		Statics.field1507 = false;
 	}
 
+	@ObfuscatedName("r.l(Ldj;I)V")
+	public static void method3(GameShell arg0) {
+		if (field160) {
+			method1134(arg0);
+			return;
+		}
+		if (JavaMouseProvider.field497 == 1 && JavaMouseProvider.field498 >= 715 && JavaMouseProvider.field499 >= 453) {
+			field142 = !field142;
+			if (field142) {
+				MidiPlayer.method917();
+			} else {
+				Js5Provider var1 = Statics.field1110;
+				int var2 = var1.method1059("scape main");
+				int var3 = var1.method1064(var2, "");
+				MidiPlayer.method1125(var1, var2, var3, 255, false);
+			}
+		}
+		if (Client.field1929 == 5) {
+			return;
+		}
+		field147++;
+		if (Client.field1929 != 10) {
+			return;
+		}
+		if (Client.field2047 == 0) {
+			if (JavaMouseProvider.field497 == 1) {
+				byte var4 = 5;
+				short var5 = 463;
+				byte var6 = 100;
+				byte var7 = 35;
+				if (JavaMouseProvider.field498 >= var4 && JavaMouseProvider.field498 <= var4 + var6 && JavaMouseProvider.field499 >= var5 && JavaMouseProvider.field499 <= var5 + var7) {
+					method377();
+					return;
+				}
+			}
+			if (Statics.field35 != null) {
+				method377();
+			}
+		}
+		int var8 = JavaMouseProvider.field497;
+		int var9 = JavaMouseProvider.field498;
+		int var10 = JavaMouseProvider.field499;
+		if (field151 == 0) {
+			short var11 = 302;
+			short var12 = 291;
+			if (var8 == 1 && var9 >= var11 - 75 && var9 <= var11 + 75 && var10 >= var12 - 20 && var10 <= var12 + 20) {
+				field151 = 3;
+				field150 = 0;
+			}
+			short var13 = 462;
+			if (var8 == 1 && var9 >= var13 - 75 && var9 <= var13 + 75 && var10 >= var12 - 20 && var10 <= var12 + 20) {
+				field152 = EnglishLocale.field924;
+				field127 = EnglishLocale.field1007;
+				field154 = EnglishLocale.field1068;
+				field151 = 2;
+				field150 = 0;
+			}
+		} else if (field151 == 2) {
+			short var14 = 231;
+			int var26 = var14 + 30;
+			if (var8 == 1 && var10 >= var26 - 15 && var10 < var26) {
+				field150 = 0;
+			}
+			var26 += 15;
+			if (var8 == 1 && var10 >= var26 - 15 && var10 < var26) {
+				field150 = 1;
+			}
+			var26 += 15;
+			short var15 = 302;
+			short var16 = 321;
+			if (var8 == 1 && var9 >= var15 - 75 && var9 <= var15 + 75 && var10 >= var16 - 20 && var10 <= var16 + 20) {
+				field164 = field164.trim();
+				if (field164.length() == 0) {
+					method2357(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
+					return;
+				}
+				if (field133.length() == 0) {
+					method2357(EnglishLocale.field981, EnglishLocale.field982, EnglishLocale.field983);
+					return;
+				}
+				method2357(EnglishLocale.field905, EnglishLocale.field1070, EnglishLocale.field998);
+				Client.method729(20);
+				return;
+			}
+			short var17 = 462;
+			if (var8 == 1 && var9 >= var17 - 75 && var9 <= var17 + 75 && var10 >= var16 - 20 && var10 <= var16 + 20) {
+				field151 = 0;
+				field164 = "";
+				field133 = "";
+			}
+			while (true) {
+				while (true) {
+					JavaKeyboardProvider var18 = JavaKeyboardProvider.field460;
+					boolean var19;
+					synchronized (JavaKeyboardProvider.field460) {
+						if (JavaKeyboardProvider.field479 == JavaKeyboardProvider.field424) {
+							var19 = false;
+						} else {
+							Statics.field114 = JavaKeyboardProvider.field478[JavaKeyboardProvider.field479];
+							Statics.field1162 = JavaKeyboardProvider.field477[JavaKeyboardProvider.field479];
+							JavaKeyboardProvider.field479 = JavaKeyboardProvider.field479 + 1 & 0x7F;
+							var19 = true;
+						}
+					}
+					if (!var19) {
+						return;
+					}
+					boolean var21 = false;
+					for (int var22 = 0; var22 < field158.length(); var22++) {
+						if (Statics.field1162 == field158.charAt(var22)) {
+							var21 = true;
+							break;
+						}
+					}
+					if (field150 == 0) {
+						if (Statics.field114 == 85 && field164.length() > 0) {
+							field164 = field164.substring(0, field164.length() - 1);
+						}
+						if (Statics.field114 == 84 || Statics.field114 == 80) {
+							field150 = 1;
+						}
+						if (var21 && field164.length() < 320) {
+							field164 = field164 + Statics.field1162;
+						}
+					} else if (field150 == 1) {
+						if (Statics.field114 == 85 && field133.length() > 0) {
+							field133 = field133.substring(0, field133.length() - 1);
+						}
+						if (Statics.field114 == 84 || Statics.field114 == 80) {
+							field150 = 0;
+						}
+						if (Client.field1915 == 2 && Statics.field114 == 84) {
+							field164 = field164.trim();
+							if (field164.length() == 0) {
+								method2357(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
+								return;
+							}
+							if (field133.length() == 0) {
+								method2357(EnglishLocale.field981, EnglishLocale.field982, EnglishLocale.field983);
+								return;
+							}
+							method2357(EnglishLocale.field905, EnglishLocale.field1070, EnglishLocale.field998);
+							Client.method729(20);
+							return;
+						}
+						if (var21 && field133.length() < 20) {
+							field133 = field133 + Statics.field1162;
+						}
+					}
+				}
+			}
+		} else if (field151 == 3) {
+			short var23 = 382;
+			short var24 = 321;
+			if (var8 == 1 && var9 >= var23 - 75 && var9 <= var23 + 75 && var10 >= var24 - 20 && var10 <= var24 + 20) {
+				field151 = 0;
+			}
+		}
+	}
+
 	@ObfuscatedName("bg.m(Lfm;Lfm;I)V")
 	public static void method784(SoftwareFont arg0, SoftwareFont arg1) {
 		if (field160) {
 			method1500(arg0, arg1);
 			return;
 		}
-		if (client.field1929 == 0 || client.field1929 == 5) {
+		if (Client.field1929 == 0 || Client.field1929 == 5) {
 			byte var2 = 20;
 			arg0.method2880(EnglishLocale.field1065, 382, 245 - var2, 16777215, -1);
 			int var3 = 253 - var2;
@@ -146,7 +307,7 @@ public class LoginScreen {
 			Pix2D.method2637(field149 * 3 + 232, var3 + 2, 300 - field149 * 3, 30, 0);
 			arg0.method2880(field156, 382, 276 - var2, 16777215, -1);
 		}
-		if (client.field1929 == 20) {
+		if (Client.field1929 == 20) {
 			Statics.field137.method2747(382 - Statics.field137.field2513 / 2, 271 - Statics.field137.field2514 / 2);
 			short var4 = 211;
 			arg0.method2880(field152, 382, var4, 16776960, 0);
@@ -169,7 +330,7 @@ public class LoginScreen {
 			arg0.method2821(var8 + var10, 274, var89, 16777215, 0);
 			var89 += 15;
 		}
-		if (client.field1929 == 10) {
+		if (Client.field1929 == 10) {
 			Statics.field137.method2747(202, 171);
 			if (field151 == 0) {
 				short var11 = 251;
@@ -196,12 +357,12 @@ public class LoginScreen {
 				String var17;
 				for (var17 = field164; arg0.method2882(var17) > var16; var17 = var17.substring(1)) {
 				}
-				arg0.method2821(PixFont.method2844(var17) + (field150 == 0 & client.field1922 % 40 < 20 ? Statics.method103(16776960) + TextUtil.field3 : ""), 312, var97, 16777215, 0);
+				arg0.method2821(PixFont.method2844(var17) + (field150 == 0 & Client.field1922 % 40 < 20 ? TextUtil.method103(16776960) + TextUtil.field3 : ""), 312, var97, 16777215, 0);
 				var94 = var97 + 15;
 				String var19 = EnglishLocale.field1073;
 				String var20 = field133;
 				String var21 = JStringUtil.method946('*', var20.length());
-				arg0.method2821(var19 + var21 + (field150 == 1 & client.field1922 % 40 < 20 ? Statics.method103(16776960) + TextUtil.field3 : ""), 274, var94, 16777215, 0);
+				arg0.method2821(var19 + var21 + (field150 == 1 & Client.field1922 % 40 < 20 ? TextUtil.method103(16776960) + TextUtil.field3 : ""), 274, var94, 16777215, 0);
 				var94 += 15;
 				short var22 = 302;
 				short var23 = 321;
@@ -280,7 +441,7 @@ public class LoginScreen {
 				field148++;
 			}
 			field128 += var28 * 381703395;
-			int var43 = ((client.field1922 & 0x1) + var28) / 2;
+			int var43 = ((Client.field1922 & 0x1) + var28) / 2;
 			if (var43 > 0) {
 				for (int var44 = 0; var44 < field128 * 1196724044; var44++) {
 					int var45 = (int) (Math.random() * 124.0D) + 2;
@@ -405,16 +566,16 @@ public class LoginScreen {
 			var71 = 765 - var74 - var73 + var75;
 		}
 		Statics.field132[field142 ? 1 : 0].method2747(725, 463);
-		if (client.field1929 > 5 && client.field2047 == 0) {
+		if (Client.field1929 > 5 && Client.field2047 == 0) {
 			if (Statics.field215 == null) {
-				Statics.field215 = Statics.method457(Statics.field1944, "sl_button", "");
+				Statics.field215 = SpriteDataProvider.method457(Statics.field1944, "sl_button", "");
 			} else {
 				byte var82 = 5;
 				short var83 = 463;
 				byte var84 = 100;
 				byte var85 = 35;
 				Statics.field215.method2747(var82, var83);
-				arg0.method2880(EnglishLocale.field1043 + " " + client.field2075, var84 / 2 + var82, var85 / 2 + var83 - 2, 16777215, 0);
+				arg0.method2880(EnglishLocale.field1043 + " " + Client.field2075, var84 / 2 + var82, var85 / 2 + var83 - 2, 16777215, 0);
 				if (Statics.field35 == null) {
 					arg1.method2880(EnglishLocale.field1072, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
 				} else {
@@ -483,7 +644,7 @@ public class LoginScreen {
 	@ObfuscatedName("de.z(Lfm;Lfm;I)V")
 	public static void method1500(SoftwareFont arg0, SoftwareFont arg1) {
 		if (Statics.field1530 == null) {
-			Statics.field1530 = Statics.method830(Statics.field1944, "sl_back", "");
+			Statics.field1530 = SpriteDataProvider.method830(Statics.field1944, "sl_back", "");
 		}
 		if (Statics.field2612 == null) {
 			Statics.field2612 = SpriteDataProvider.method541(Statics.field1944, "sl_flags", "");
@@ -681,11 +842,11 @@ public class LoginScreen {
 			return;
 		}
 		WorldEntry var5 = Statics.field214[field168];
-		if (client.field1983 == var5.field50) {
+		if (Client.field1983 == var5.field50) {
 			Statics.field52 = var5.field45;
-			client.field2075 = var5.field49;
-			Statics.field1641 = client.field1915 == 0 ? 43594 : var5.field49 + 40000;
-			Statics.field13 = client.field1915 == 0 ? 443 : var5.field49 + 50000;
+			Client.field2075 = var5.field49;
+			Statics.field1641 = Client.field1915 == 0 ? 43594 : var5.field49 + 40000;
+			Statics.field13 = Client.field1915 == 0 ? 443 : var5.field49 + 50000;
 			Statics.field1204 = Statics.field1641;
 			field160 = false;
 			Statics.field146.method2667(0, 0);
@@ -694,10 +855,10 @@ public class LoginScreen {
 			return;
 		}
 		String var6 = "";
-		if (client.field1915 != 0) {
+		if (Client.field1915 != 0) {
 			var6 = ":" + (var5.field49 + 7000);
 		}
-		String var7 = "http://" + var5.field45 + var6 + "/j" + client.field2074;
+		String var7 = "http://" + var5.field45 + var6 + "/j" + Client.field2074;
 		try {
 			arg0.getAppletContext().showDocument(new URL(var7), "_self");
 		} catch (Exception var9) {

@@ -116,7 +116,7 @@ public class MidiPcmStream extends PcmStream {
 			int var8 = (int) var7.field1506;
 			MidiInstrument var9 = (MidiInstrument) this.field2230.method1277((long) var8);
 			if (var9 == null) {
-				var9 = Statics.method49(arg1, var8);
+				var9 = MidiInstrument.method49(arg1, var8);
 				if (var9 == null) {
 					var5 = false;
 					continue;
