@@ -15,7 +15,7 @@ public class EnglishLocale {
 	public static String field868 = "Drop";
 
 	@ObfuscatedName("ba.m")
-	public static String field869 = "Hidden";
+	public static String hidden = "Hidden";
 
 	@ObfuscatedName("ba.c")
 	public static String field966 = "Ok";

@@ -16,7 +16,7 @@ public class FluType extends DoublyLinkable {
 	public static LruCache field2355 = new LruCache(64);
 
 	@ObfuscatedName("ec.z")
-	public int field2354 = 0;
+	public int rgb = 0;
 
 	@ObfuscatedName("ec.g")
 	public int field2357;
@@ -53,24 +53,24 @@ public class FluType extends DoublyLinkable {
 
 	@ObfuscatedName("ec.q(I)V")
 	public void postDecode() {
-		this.method2401(this.field2354);
+		this.method2401(this.rgb);
 	}
 
 	@ObfuscatedName("ec.i(Lev;II)V")
-	public void decode(Packet arg0, int arg1) {
+	public void decode(Packet buf, int arg1) {
 		while (true) {
-			int var3 = arg0.g1();
-			if (var3 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var3, arg1);
+			this.decodeInner(buf, code, arg1);
 		}
 	}
 
 	@ObfuscatedName("ec.s(Lev;III)V")
-	public void decodeInner(Packet arg0, int arg1, int arg2) {
-		if (arg1 == 1) {
-			this.field2354 = arg0.g3();
+	public void decodeInner(Packet buf, int code, int arg2) {
+		if (code == 1) {
+			this.rgb = buf.g3();
 		}
 	}
 

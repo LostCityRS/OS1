@@ -27,46 +27,46 @@ public class SeqType extends DoublyLinkable {
 	public static LruCache field2370 = new LruCache(100);
 
 	@ObfuscatedName("eo.i")
-	public int[] field2364;
+	public int[] frames;
 
 	@ObfuscatedName("eo.s")
 	public int[] field2365;
 
 	@ObfuscatedName("eo.u")
-	public int[] field2366;
+	public int[] delay;
 
 	@ObfuscatedName("eo.v")
-	public int[] field2367;
+	public int[] sound;
 
 	@ObfuscatedName("eo.w")
-	public int field2368 = -1;
+	public int replayoff = -1;
 
 	@ObfuscatedName("eo.e")
-	public int[] field2369;
+	public int[] walkmerge;
 
 	@ObfuscatedName("eo.b")
-	public boolean field2374 = false;
+	public boolean stretches = false;
 
 	@ObfuscatedName("eo.y")
-	public int field2371 = 5;
+	public int priority = 5;
 
 	@ObfuscatedName("eo.t")
-	public int field2372 = -1;
+	public int righthand = -1;
 
 	@ObfuscatedName("eo.f")
-	public int field2373 = -1;
+	public int lefthand = -1;
 
 	@ObfuscatedName("eo.k")
-	public int field2363 = 99;
+	public int replaycount = 99;
 
 	@ObfuscatedName("eo.o")
-	public int field2375 = -1;
+	public int preanim_move = -1;
 
 	@ObfuscatedName("eo.a")
-	public int field2376 = -1;
+	public int postanim_move = -1;
 
 	@ObfuscatedName("eo.h")
-	public int field2377 = 2;
+	public int replacemode = 2;
 
 	@ObfuscatedName("ai.z(Lch;Lch;Lch;I)V")
 	public static void method727(Js5Index arg0, Js5Index arg1, Js5Index arg2) {
@@ -84,104 +84,103 @@ public class SeqType extends DoublyLinkable {
 		byte[] var2 = field1517.method1044(12, arg0);
 		SeqType var3 = new SeqType();
 		if (var2 != null) {
-			var3.method2415(new Packet(var2));
+			var3.decode(new Packet(var2));
 		}
-		var3.method2417();
+		var3.postDecode();
 		field2362.put(var3, (long) arg0);
 		return var3;
 	}
 
 	@ObfuscatedName("eo.q(Lev;S)V")
-	public void method2415(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.method2416(arg0, var2);
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("eo.i(Lev;IB)V")
-	public void method2416(Packet arg0, int arg1) {
-		if (arg1 == 1) {
-			int var3 = arg0.g2();
-			this.field2366 = new int[var3];
+	public void decodeInner(Packet buf, int code) {
+		if (code == 1) {
+			int var3 = buf.g2();
+			this.delay = new int[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.field2366[var4] = arg0.g2();
+				this.delay[var4] = buf.g2();
 			}
-			this.field2364 = new int[var3];
+			this.frames = new int[var3];
 			for (int var5 = 0; var5 < var3; var5++) {
-				this.field2364[var5] = arg0.g2();
+				this.frames[var5] = buf.g2();
 			}
 			for (int var6 = 0; var6 < var3; var6++) {
-				this.field2364[var6] += arg0.g2() << 16;
+				this.frames[var6] += buf.g2() << 16;
 			}
-		} else if (arg1 == 2) {
-			this.field2368 = arg0.g2();
-		} else if (arg1 == 3) {
-			int var7 = arg0.g1();
-			this.field2369 = new int[var7 + 1];
+		} else if (code == 2) {
+			this.replayoff = buf.g2();
+		} else if (code == 3) {
+			int var7 = buf.g1();
+			this.walkmerge = new int[var7 + 1];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.field2369[var8] = arg0.g1();
+				this.walkmerge[var8] = buf.g1();
 			}
-			this.field2369[var7] = 9999999;
-		} else if (arg1 == 4) {
-			this.field2374 = true;
-		} else if (arg1 == 5) {
-			this.field2371 = arg0.g1();
-		} else if (arg1 == 6) {
-			this.field2372 = arg0.g2();
-		} else if (arg1 == 7) {
-			this.field2373 = arg0.g2();
-		} else if (arg1 == 8) {
-			this.field2363 = arg0.g1();
-		} else if (arg1 == 9) {
-			this.field2375 = arg0.g1();
-		} else if (arg1 == 10) {
-			this.field2376 = arg0.g1();
-		} else if (arg1 == 11) {
-			this.field2377 = arg0.g1();
-		} else if (arg1 == 12) {
-			int var9 = arg0.g1();
+			this.walkmerge[var7] = 9999999;
+		} else if (code == 4) {
+			this.stretches = true;
+		} else if (code == 5) {
+			this.priority = buf.g1();
+		} else if (code == 6) {
+			this.righthand = buf.g2();
+		} else if (code == 7) {
+			this.lefthand = buf.g2();
+		} else if (code == 8) {
+			this.replaycount = buf.g1();
+		} else if (code == 9) {
+			this.preanim_move = buf.g1();
+		} else if (code == 10) {
+			this.postanim_move = buf.g1();
+		} else if (code == 11) {
+			this.replacemode = buf.g1();
+		} else if (code == 12) {
+			int var9 = buf.g1();
 			this.field2365 = new int[var9];
 			for (int var10 = 0; var10 < var9; var10++) {
-				this.field2365[var10] = arg0.g2();
+				this.field2365[var10] = buf.g2();
 			}
 			for (int var11 = 0; var11 < var9; var11++) {
-				this.field2365[var11] += arg0.g2() << 16;
+				this.field2365[var11] += buf.g2() << 16;
 			}
-		} else if (arg1 == 13) {
-			int var12 = arg0.g1();
-			this.field2367 = new int[var12];
+		} else if (code == 13) {
+			int var12 = buf.g1();
+			this.sound = new int[var12];
 			for (int var13 = 0; var13 < var12; var13++) {
-				this.field2367[var13] = arg0.g3();
+				this.sound[var13] = buf.g3();
 			}
 		}
 	}
 
 	@ObfuscatedName("eo.s(B)V")
-	public void method2417() {
-		if (this.field2375 == -1) {
-			if (this.field2369 == null) {
-				this.field2375 = 0;
+	public void postDecode() {
+		if (this.preanim_move == -1) {
+			if (this.walkmerge == null) {
+				this.preanim_move = 0;
 			} else {
-				this.field2375 = 2;
+				this.preanim_move = 2;
 			}
 		}
-		if (this.field2376 != -1) {
-			return;
-		}
-		if (this.field2369 == null) {
-			this.field2376 = 0;
-		} else {
-			this.field2376 = 2;
-		}
-	}
+        if (this.postanim_move == -1) {
+            if (this.walkmerge == null) {
+                this.postanim_move = 0;
+            } else {
+                this.postanim_move = 2;
+            }
+        }
+    }
 
 	@ObfuscatedName("eo.u(Lfo;II)Lfo;")
 	public SoftwareModel method2436(SoftwareModel arg0, int arg1) {
-		int var3 = this.field2364[arg1];
+		int var3 = this.frames[arg1];
 		AnimFrameset var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
@@ -195,7 +194,7 @@ public class SeqType extends DoublyLinkable {
 
 	@ObfuscatedName("eo.v(Lfo;IIB)Lfo;")
 	public SoftwareModel method2419(SoftwareModel arg0, int arg1, int arg2) {
-		int var4 = this.field2364[arg1];
+		int var4 = this.frames[arg1];
 		AnimFrameset var5 = method760(var4 >> 16);
 		int var6 = var4 & 0xFFFF;
 		if (var5 == null) {
@@ -223,7 +222,7 @@ public class SeqType extends DoublyLinkable {
 
 	@ObfuscatedName("eo.w(Lfo;II)Lfo;")
 	public SoftwareModel method2439(SoftwareModel arg0, int arg1) {
-		int var3 = this.field2364[arg1];
+		int var3 = this.frames[arg1];
 		AnimFrameset var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
@@ -237,13 +236,13 @@ public class SeqType extends DoublyLinkable {
 
 	@ObfuscatedName("eo.e(Lfo;ILeo;II)Lfo;")
 	public SoftwareModel method2421(SoftwareModel arg0, int arg1, SeqType arg2, int arg3) {
-		int var5 = this.field2364[arg1];
+		int var5 = this.frames[arg1];
 		AnimFrameset var6 = method760(var5 >> 16);
 		int var7 = var5 & 0xFFFF;
 		if (var6 == null) {
 			return arg2.method2436(arg0, arg3);
 		}
-		int var8 = arg2.field2364[arg3];
+		int var8 = arg2.frames[arg3];
 		AnimFrameset var9 = method760(var8 >> 16);
 		int var10 = var8 & 0xFFFF;
 		if (var9 == null) {
@@ -252,14 +251,14 @@ public class SeqType extends DoublyLinkable {
 			return var11;
 		} else {
 			SoftwareModel var12 = arg0.method2999(!var6.method2652(var7) & !var9.method2652(var10));
-			var12.method3006(var6, var7, var9, var10, this.field2369);
+			var12.method3006(var6, var7, var9, var10, this.walkmerge);
 			return var12;
 		}
 	}
 
 	@ObfuscatedName("eo.b(Lfo;IB)Lfo;")
 	public SoftwareModel method2430(SoftwareModel arg0, int arg1) {
-		int var3 = this.field2364[arg1];
+		int var3 = this.frames[arg1];
 		AnimFrameset var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {

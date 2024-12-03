@@ -16,23 +16,23 @@ public class InvType extends DoublyLinkable {
 	public static LruCache field2475 = new LruCache(64);
 
 	@ObfuscatedName("fp.z")
-	public int field2477 = 0;
+	public int size = 0;
 
 	@ObfuscatedName("fp.z(Lev;I)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("fp.g(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 2) {
-			this.field2477 = arg0.g2();
+	public void decodeInner(Packet buf, int code) {
+		if (code == 2) {
+			this.size = buf.g2();
 		}
 	}
 }

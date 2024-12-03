@@ -90,7 +90,7 @@ public class PlayerEntity extends PathingEntity {
 					break;
 				}
 				if (var4[var5] >= 512) {
-					int var8 = ObjType.get(var4[var5] - 512).field2437;
+					int var8 = ObjType.get(var4[var5] - 512).team;
 					if (var8 != 0) {
 						this.field2803 = var8;
 					}

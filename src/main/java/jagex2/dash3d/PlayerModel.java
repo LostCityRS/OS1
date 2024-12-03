@@ -56,7 +56,7 @@ public class PlayerModel {
 			for (int var5 = 0; var5 < 7; var5++) {
 				for (int var6 = 0; var6 < IdkType.field1628; var6++) {
 					IdkType var7 = IdkType.get(var6);
-					if (var7 != null && !var7.field2404 && var7.field2403 == var5 + (arg2 ? 7 : 0)) {
+					if (var7 != null && !var7.disable && var7.type == var5 + (arg2 ? 7 : 0)) {
 						arg0[field1230[var5]] = var6 + 256;
 						break;
 					}
@@ -94,7 +94,7 @@ public class PlayerModel {
 				}
 			}
 			var4 = IdkType.get(var3);
-		} while (var4 == null || var4.field2404 || var4.field2403 != (this.field1222 ? 7 : 0) + arg0);
+		} while (var4 == null || var4.disable || var4.type != (this.field1222 ? 7 : 0) + arg0);
 		this.field1228[field1230[arg0]] = var3 + 256;
 		this.method1173();
 	}
@@ -180,18 +180,18 @@ public class PlayerModel {
 		}
 		long var5 = this.field1226;
 		int[] var7 = this.field1228;
-		if (arg0 != null && (arg0.field2372 >= 0 || arg0.field2373 >= 0)) {
+		if (arg0 != null && (arg0.righthand >= 0 || arg0.lefthand >= 0)) {
 			var7 = new int[12];
 			for (int var8 = 0; var8 < 12; var8++) {
 				var7[var8] = this.field1228[var8];
 			}
-			if (arg0.field2372 >= 0) {
-				var5 += arg0.field2372 - this.field1228[5] << 40;
-				var7[5] = arg0.field2372;
+			if (arg0.righthand >= 0) {
+				var5 += arg0.righthand - this.field1228[5] << 40;
+				var7[5] = arg0.righthand;
 			}
-			if (arg0.field2373 >= 0) {
-				var5 += arg0.field2373 - this.field1228[3] << 48;
-				var7[3] = arg0.field2373;
+			if (arg0.lefthand >= 0) {
+				var5 += arg0.lefthand - this.field1228[3] << 48;
+				var7[3] = arg0.lefthand;
 			}
 		}
 		SoftwareModel var9 = (SoftwareModel) field1231.get(var5);

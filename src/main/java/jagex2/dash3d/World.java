@@ -276,7 +276,7 @@ public class World {
 					int var15 = arg2 + var11;
 					if (var14 > 0 && var15 > 0 && var14 < 103 && var15 < 103) {
 						LocType var16 = LocType.get(var5);
-						if (var13 != 22 || !Client.field1917 || var16.field2321 != 0 || var16.field2342 == 1 || var16.field2341) {
+						if (var13 != 22 || !Client.field1917 || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
 							if (!var16.method2366()) {
 								Client.field1974++;
 								var3 = false;
@@ -359,8 +359,8 @@ public class World {
 				int var20 = var18 & 0x3;
 				if (arg4 == var17 && var16 >= arg5 && var16 < arg5 + 8 && var15 >= arg6 && var15 < arg6 + 8) {
 					LocType var21 = LocType.get(var11);
-					int var22 = arg2 + WorldRegion.method837(var16 & 0x7, var15 & 0x7, arg7, var21.field2344, var21.field2318, var20);
-					int var23 = arg3 + WorldRegion.method783(var16 & 0x7, var15 & 0x7, arg7, var21.field2344, var21.field2318, var20);
+					int var22 = arg2 + WorldRegion.method837(var16 & 0x7, var15 & 0x7, arg7, var21.width, var21.length, var20);
+					int var23 = arg3 + WorldRegion.method783(var16 & 0x7, var15 & 0x7, arg7, var21.width, var21.length, var20);
 					if (var22 > 0 && var23 > 0 && var22 < 103 && var23 < 103) {
 						int var24 = arg1;
 						if ((levelTileFlags[1][var22][var23] & 0x2) == 2) {
@@ -402,11 +402,11 @@ public class World {
 		int var10;
 		int var11;
 		if (arg4 == 1 || arg4 == 3) {
-			var10 = var9.field2318;
-			var11 = var9.field2344;
+			var10 = var9.length;
+			var11 = var9.width;
 		} else {
-			var10 = var9.field2344;
-			var11 = var9.field2318;
+			var10 = var9.width;
+			var11 = var9.length;
 		}
 		int var12;
 		int var13;
@@ -431,37 +431,37 @@ public class World {
 		int var18 = (arg1 << 7) + (var10 << 6);
 		int var19 = (arg2 << 7) + (var11 << 6);
 		int var20 = (arg3 << 14) + (arg2 << 7) + arg1 + 1073741824;
-		if (var9.field2321 == 0) {
+		if (var9.active == 0) {
 			var20 -= Integer.MIN_VALUE;
 		}
 		int var21 = (arg4 << 6) + arg5;
-		if (var9.field2337 == 1) {
+		if (var9.raiseobject == 1) {
 			var21 += 256;
 		}
 		if (var9.method2374()) {
 			PositionedSound.method763(arg0, arg1, arg2, var9, arg4);
 		}
 		if (arg5 == 22) {
-			if (!Client.field1917 || var9.field2321 != 0 || var9.field2342 == 1 || var9.field2341) {
+			if (!Client.field1917 || var9.active != 0 || var9.blockwalk == 1 || var9.forcedecor) {
 				Entity var22;
-				if (var9.field2325 == -1 && var9.field2317 == null) {
+				if (var9.anim == -1 && var9.multiloc == null) {
 					var22 = var9.method2364(22, arg4, var16, var18, var17, var19);
 				} else {
-					var22 = new LocEntity(arg3, 22, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+					var22 = new LocEntity(arg3, 22, arg4, arg0, arg1, arg2, var9.anim, true, null);
 				}
 				arg6.method714(arg0, arg1, arg2, var17, var22, var20, var21);
-				if (var9.field2342 == 1 && arg7 != null) {
+				if (var9.blockwalk == 1 && arg7 != null) {
 					arg7.method1213(arg1, arg2);
 				}
 			}
 		} else if (arg5 == 10 || arg5 == 11) {
 			Entity var45;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var45 = var9.method2364(10, arg4, var16, var18, var17, var19);
 			} else {
-				var45 = new LocEntity(arg3, 10, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+				var45 = new LocEntity(arg3, 10, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			if (var45 != null && arg6.method585(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.field2333) {
+			if (var45 != null && arg6.method585(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.shadow) {
 				int var46 = 15;
 				if (var45 instanceof SoftwareModel) {
 					var46 = ((SoftwareModel) var45).method3004() / 4;
@@ -477,79 +477,79 @@ public class World {
 					}
 				}
 			}
-			if (var9.field2342 != 0 && arg7 != null) {
-				arg7.method1198(arg1, arg2, var10, var11, var9.field2319);
+			if (var9.blockwalk != 0 && arg7 != null) {
+				arg7.method1198(arg1, arg2, var10, var11, var9.blockrange);
 			}
 		} else if (arg5 >= 12) {
 			Entity var23;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var23 = var9.method2364(arg5, arg4, var16, var18, var17, var19);
 			} else {
-				var23 = new LocEntity(arg3, arg5, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+				var23 = new LocEntity(arg3, arg5, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method585(arg0, arg1, arg2, var17, 1, 1, var23, 0, var20, var21);
 			if (arg5 >= 12 && arg5 <= 17 && arg5 != 13 && arg0 > 0) {
 				levelOccludemap[arg0][arg1][arg2] |= 0x924;
 			}
-			if (var9.field2342 != 0 && arg7 != null) {
-				arg7.method1198(arg1, arg2, var10, var11, var9.field2319);
+			if (var9.blockwalk != 0 && arg7 != null) {
+				arg7.method1198(arg1, arg2, var10, var11, var9.blockrange);
 			}
 		} else if (arg5 == 0) {
 			Entity var24;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var24 = var9.method2364(0, arg4, var16, var18, var17, var19);
 			} else {
-				var24 = new LocEntity(arg3, 0, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+				var24 = new LocEntity(arg3, 0, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method572(arg0, arg1, arg2, var17, var24, null, ROTATION_WALL_TYPE[arg4], 0, var20, var21);
 			if (arg4 == 0) {
-				if (var9.field2333) {
+				if (var9.shadow) {
 					levelShademap[arg0][arg1][arg2] = 50;
 					levelShademap[arg0][arg1][arg2 + 1] = 50;
 				}
-				if (var9.field2324) {
+				if (var9.occlude) {
 					levelOccludemap[arg0][arg1][arg2] |= 0x249;
 				}
 			} else if (arg4 == 1) {
-				if (var9.field2333) {
+				if (var9.shadow) {
 					levelShademap[arg0][arg1][arg2 + 1] = 50;
 					levelShademap[arg0][arg1 + 1][arg2 + 1] = 50;
 				}
-				if (var9.field2324) {
+				if (var9.occlude) {
 					levelOccludemap[arg0][arg1][arg2 + 1] |= 0x492;
 				}
 			} else if (arg4 == 2) {
-				if (var9.field2333) {
+				if (var9.shadow) {
 					levelShademap[arg0][arg1 + 1][arg2] = 50;
 					levelShademap[arg0][arg1 + 1][arg2 + 1] = 50;
 				}
-				if (var9.field2324) {
+				if (var9.occlude) {
 					levelOccludemap[arg0][arg1 + 1][arg2] |= 0x249;
 				}
 			} else if (arg4 == 3) {
-				if (var9.field2333) {
+				if (var9.shadow) {
 					levelShademap[arg0][arg1][arg2] = 50;
 					levelShademap[arg0][arg1 + 1][arg2] = 50;
 				}
-				if (var9.field2324) {
+				if (var9.occlude) {
 					levelOccludemap[arg0][arg1][arg2] |= 0x492;
 				}
 			}
-			if (var9.field2342 != 0 && arg7 != null) {
-				arg7.method1195(arg1, arg2, arg5, arg4, var9.field2319);
+			if (var9.blockwalk != 0 && arg7 != null) {
+				arg7.method1195(arg1, arg2, arg5, arg4, var9.blockrange);
 			}
-			if (var9.field2327 != 16) {
-				arg6.method580(arg0, arg1, arg2, var9.field2327);
+			if (var9.wallwidth != 16) {
+				arg6.method580(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 1) {
 			Entity var25;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var25 = var9.method2364(1, arg4, var16, var18, var17, var19);
 			} else {
-				var25 = new LocEntity(arg3, 1, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+				var25 = new LocEntity(arg3, 1, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method572(arg0, arg1, arg2, var17, var25, null, ROTATION_WALL_CORNER_TYPE[arg4], 0, var20, var21);
-			if (var9.field2333) {
+			if (var9.shadow) {
 				if (arg4 == 0) {
 					levelShademap[arg0][arg1][arg2 + 1] = 50;
 				} else if (arg4 == 1) {
@@ -560,22 +560,22 @@ public class World {
 					levelShademap[arg0][arg1][arg2] = 50;
 				}
 			}
-			if (var9.field2342 != 0 && arg7 != null) {
-				arg7.method1195(arg1, arg2, arg5, arg4, var9.field2319);
+			if (var9.blockwalk != 0 && arg7 != null) {
+				arg7.method1195(arg1, arg2, arg5, arg4, var9.blockrange);
 			}
 		} else if (arg5 == 2) {
 			int var26 = arg4 + 1 & 0x3;
 			Entity var27;
 			Entity var28;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var27 = var9.method2364(2, arg4 + 4, var16, var18, var17, var19);
 				var28 = var9.method2364(2, var26, var16, var18, var17, var19);
 			} else {
-				var27 = new LocEntity(arg3, 2, arg4 + 4, arg0, arg1, arg2, var9.field2325, true, null);
-				var28 = new LocEntity(arg3, 2, var26, arg0, arg1, arg2, var9.field2325, true, null);
+				var27 = new LocEntity(arg3, 2, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
+				var28 = new LocEntity(arg3, 2, var26, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method572(arg0, arg1, arg2, var17, var27, var28, ROTATION_WALL_TYPE[arg4], ROTATION_WALL_TYPE[var26], var20, var21);
-			if (var9.field2324) {
+			if (var9.occlude) {
 				if (arg4 == 0) {
 					levelOccludemap[arg0][arg1][arg2] |= 0x249;
 					levelOccludemap[arg0][arg1][arg2 + 1] |= 0x492;
@@ -590,21 +590,21 @@ public class World {
 					levelOccludemap[arg0][arg1][arg2] |= 0x249;
 				}
 			}
-			if (var9.field2342 != 0 && arg7 != null) {
-				arg7.method1195(arg1, arg2, arg5, arg4, var9.field2319);
+			if (var9.blockwalk != 0 && arg7 != null) {
+				arg7.method1195(arg1, arg2, arg5, arg4, var9.blockrange);
 			}
-			if (var9.field2327 != 16) {
-				arg6.method580(arg0, arg1, arg2, var9.field2327);
+			if (var9.wallwidth != 16) {
+				arg6.method580(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 3) {
 			Entity var29;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var29 = var9.method2364(3, arg4, var16, var18, var17, var19);
 			} else {
-				var29 = new LocEntity(arg3, 3, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+				var29 = new LocEntity(arg3, 3, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method572(arg0, arg1, arg2, var17, var29, null, ROTATION_WALL_CORNER_TYPE[arg4], 0, var20, var21);
-			if (var9.field2333) {
+			if (var9.shadow) {
 				if (arg4 == 0) {
 					levelShademap[arg0][arg1][arg2 + 1] = 50;
 				} else if (arg4 == 1) {
@@ -615,81 +615,81 @@ public class World {
 					levelShademap[arg0][arg1][arg2] = 50;
 				}
 			}
-			if (var9.field2342 != 0 && arg7 != null) {
-				arg7.method1195(arg1, arg2, arg5, arg4, var9.field2319);
+			if (var9.blockwalk != 0 && arg7 != null) {
+				arg7.method1195(arg1, arg2, arg5, arg4, var9.blockrange);
 			}
 		} else if (arg5 == 9) {
 			Entity var30;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var30 = var9.method2364(arg5, arg4, var16, var18, var17, var19);
 			} else {
-				var30 = new LocEntity(arg3, arg5, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+				var30 = new LocEntity(arg3, arg5, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method585(arg0, arg1, arg2, var17, 1, 1, var30, 0, var20, var21);
-			if (var9.field2342 != 0 && arg7 != null) {
-				arg7.method1198(arg1, arg2, var10, var11, var9.field2319);
+			if (var9.blockwalk != 0 && arg7 != null) {
+				arg7.method1198(arg1, arg2, var10, var11, var9.blockrange);
 			}
-			if (var9.field2327 != 16) {
-				arg6.method580(arg0, arg1, arg2, var9.field2327);
+			if (var9.wallwidth != 16) {
+				arg6.method580(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 4) {
 			Entity var31;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var31 = var9.method2364(4, arg4, var16, var18, var17, var19);
 			} else {
-				var31 = new LocEntity(arg3, 4, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+				var31 = new LocEntity(arg3, 4, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method589(arg0, arg1, arg2, var17, var31, null, ROTATION_WALL_TYPE[arg4], 0, 0, 0, var20, var21);
 		} else if (arg5 == 5) {
 			int var32 = 16;
 			int var33 = arg6.method590(arg0, arg1, arg2);
 			if (var33 != 0) {
-				var32 = LocType.get(var33 >> 14 & 0x7FFF).field2327;
+				var32 = LocType.get(var33 >> 14 & 0x7FFF).wallwidth;
 			}
 			Entity var34;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var34 = var9.method2364(4, arg4, var16, var18, var17, var19);
 			} else {
-				var34 = new LocEntity(arg3, 4, arg4, arg0, arg1, arg2, var9.field2325, true, null);
+				var34 = new LocEntity(arg3, 4, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method589(arg0, arg1, arg2, var17, var34, null, ROTATION_WALL_TYPE[arg4], 0, WALL_DECORATION_ROTATION_FORWARD_X[arg4] * var32, WALL_DECORATION_ROTATION_FORWARD_Z[arg4] * var32, var20, var21);
 		} else if (arg5 == 6) {
 			int var35 = 8;
 			int var36 = arg6.method590(arg0, arg1, arg2);
 			if (var36 != 0) {
-				var35 = LocType.get(var36 >> 14 & 0x7FFF).field2327 / 2;
+				var35 = LocType.get(var36 >> 14 & 0x7FFF).wallwidth / 2;
 			}
 			Entity var37;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var37 = var9.method2364(4, arg4 + 4, var16, var18, var17, var19);
 			} else {
-				var37 = new LocEntity(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.field2325, true, null);
+				var37 = new LocEntity(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method589(arg0, arg1, arg2, var17, var37, null, 256, arg4, field31[arg4] * var35, field32[arg4] * var35, var20, var21);
 		} else if (arg5 == 7) {
 			int var38 = arg4 + 2 & 0x3;
 			Entity var39;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var39 = var9.method2364(4, var38 + 4, var16, var18, var17, var19);
 			} else {
-				var39 = new LocEntity(arg3, 4, var38 + 4, arg0, arg1, arg2, var9.field2325, true, null);
+				var39 = new LocEntity(arg3, 4, var38 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method589(arg0, arg1, arg2, var17, var39, null, 256, var38, 0, 0, var20, var21);
 		} else if (arg5 == 8) {
 			int var40 = 8;
 			int var41 = arg6.method590(arg0, arg1, arg2);
 			if (var41 != 0) {
-				var40 = LocType.get(var41 >> 14 & 0x7FFF).field2327 / 2;
+				var40 = LocType.get(var41 >> 14 & 0x7FFF).wallwidth / 2;
 			}
 			int var42 = arg4 + 2 & 0x3;
 			Entity var43;
 			Entity var44;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var43 = var9.method2364(4, arg4 + 4, var16, var18, var17, var19);
 				var44 = var9.method2364(4, var42 + 4, var16, var18, var17, var19);
 			} else {
-				var43 = new LocEntity(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.field2325, true, null);
-				var44 = new LocEntity(arg3, 4, var42 + 4, arg0, arg1, arg2, var9.field2325, true, null);
+				var43 = new LocEntity(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
+				var44 = new LocEntity(arg3, 4, var42 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
 			arg6.method589(arg0, arg1, arg2, var17, var43, var44, 256, arg4, field31[arg4] * var40, field32[arg4] * var40, var20, var21);
 		}
@@ -853,7 +853,7 @@ public class World {
 									if (var38 == 0 && levelTileOverlayShape[var6][var21][var34] != 0) {
 										var55 = false;
 									}
-									if (var39 > 0 && !FloType.get(var39 - 1).field2408) {
+									if (var39 > 0 && !FloType.get(var39 - 1).occlude) {
 										var55 = false;
 									}
 									if (var55 && var40 == var41 && var40 == var42 && var40 == var43) {
@@ -870,13 +870,13 @@ public class World {
 									int var57 = levelTileOverlayShape[var6][var21][var34] + 1;
 									byte var58 = levelTileOverlayRotation[var6][var21][var34];
 									FloType var59 = FloType.get(var39 - 1);
-									int var60 = var59.field2407;
+									int var60 = var59.texture;
 									int var61;
 									int var62;
 									if (var60 >= 0) {
 										var61 = Pix3D.sceneProvider.method731(var60);
 										var62 = -1;
-									} else if (var59.field2406 == 16711935) {
+									} else if (var59.rgb == 16711935) {
 										var62 = -2;
 										var60 = -1;
 										var61 = -2;
@@ -895,7 +895,7 @@ public class World {
 									if (var61 != -2) {
 										var65 = Pix3D.field2538[adjustLightness(var61, 96)];
 									}
-									if (var59.field2414 != -1) {
+									if (var59.averageRgb != -1) {
 										int var66 = randomHueOffset + var59.field2410 & 0xFF;
 										int var67 = randomLightnessOffset + var59.field2415;
 										if (var67 < 0) {
@@ -1192,11 +1192,11 @@ public class World {
 		int var10;
 		int var11;
 		if (arg5 == 1 || arg5 == 3) {
-			var10 = var9.field2318;
-			var11 = var9.field2344;
+			var10 = var9.length;
+			var11 = var9.width;
 		} else {
-			var10 = var9.field2344;
-			var11 = var9.field2318;
+			var10 = var9.width;
+			var11 = var9.length;
 		}
 		int var12;
 		int var13;
@@ -1221,165 +1221,165 @@ public class World {
 		int var18 = (arg2 << 7) + (var10 << 6);
 		int var19 = (arg3 << 7) + (var11 << 6);
 		int var20 = (arg4 << 14) + (arg3 << 7) + arg2 + 1073741824;
-		if (var9.field2321 == 0) {
+		if (var9.active == 0) {
 			var20 -= Integer.MIN_VALUE;
 		}
 		int var21 = (arg5 << 6) + arg6;
-		if (var9.field2337 == 1) {
+		if (var9.raiseobject == 1) {
 			var21 += 256;
 		}
 		if (arg6 == 22) {
 			Entity var22;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var22 = var9.method2386(22, arg5, var16, var18, var17, var19);
 			} else {
-				var22 = new LocEntity(arg4, 22, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var22 = new LocEntity(arg4, 22, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method714(arg0, arg2, arg3, var17, var22, var20, var21);
-			if (var9.field2342 == 1) {
+			if (var9.blockwalk == 1) {
 				arg8.method1213(arg2, arg3);
 			}
 		} else if (arg6 == 10 || arg6 == 11) {
 			Entity var45;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var45 = var9.method2386(10, arg5, var16, var18, var17, var19);
 			} else {
-				var45 = new LocEntity(arg4, 10, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var45 = new LocEntity(arg4, 10, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			if (var45 != null) {
 				arg7.method585(arg0, arg2, arg3, var17, var10, var11, var45, arg6 == 11 ? 256 : 0, var20, var21);
 			}
-			if (var9.field2342 != 0) {
-				arg8.method1198(arg2, arg3, var10, var11, var9.field2319);
+			if (var9.blockwalk != 0) {
+				arg8.method1198(arg2, arg3, var10, var11, var9.blockrange);
 			}
 		} else if (arg6 >= 12) {
 			Entity var23;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var23 = var9.method2386(arg6, arg5, var16, var18, var17, var19);
 			} else {
-				var23 = new LocEntity(arg4, arg6, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var23 = new LocEntity(arg4, arg6, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method585(arg0, arg2, arg3, var17, 1, 1, var23, 0, var20, var21);
-			if (var9.field2342 != 0) {
-				arg8.method1198(arg2, arg3, var10, var11, var9.field2319);
+			if (var9.blockwalk != 0) {
+				arg8.method1198(arg2, arg3, var10, var11, var9.blockrange);
 			}
 		} else if (arg6 == 0) {
 			Entity var24;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var24 = var9.method2386(0, arg5, var16, var18, var17, var19);
 			} else {
-				var24 = new LocEntity(arg4, 0, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var24 = new LocEntity(arg4, 0, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method572(arg0, arg2, arg3, var17, var24, null, ROTATION_WALL_TYPE[arg5], 0, var20, var21);
-			if (var9.field2342 != 0) {
-				arg8.method1195(arg2, arg3, arg6, arg5, var9.field2319);
+			if (var9.blockwalk != 0) {
+				arg8.method1195(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
 		} else if (arg6 == 1) {
 			Entity var25;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var25 = var9.method2386(1, arg5, var16, var18, var17, var19);
 			} else {
-				var25 = new LocEntity(arg4, 1, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var25 = new LocEntity(arg4, 1, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method572(arg0, arg2, arg3, var17, var25, null, ROTATION_WALL_CORNER_TYPE[arg5], 0, var20, var21);
-			if (var9.field2342 != 0) {
-				arg8.method1195(arg2, arg3, arg6, arg5, var9.field2319);
+			if (var9.blockwalk != 0) {
+				arg8.method1195(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
 		} else if (arg6 == 2) {
 			int var26 = arg5 + 1 & 0x3;
 			Entity var27;
 			Entity var28;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var27 = var9.method2386(2, arg5 + 4, var16, var18, var17, var19);
 				var28 = var9.method2386(2, var26, var16, var18, var17, var19);
 			} else {
-				var27 = new LocEntity(arg4, 2, arg5 + 4, arg1, arg2, arg3, var9.field2325, true, null);
-				var28 = new LocEntity(arg4, 2, var26, arg1, arg2, arg3, var9.field2325, true, null);
+				var27 = new LocEntity(arg4, 2, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
+				var28 = new LocEntity(arg4, 2, var26, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method572(arg0, arg2, arg3, var17, var27, var28, ROTATION_WALL_TYPE[arg5], ROTATION_WALL_TYPE[var26], var20, var21);
-			if (var9.field2342 != 0) {
-				arg8.method1195(arg2, arg3, arg6, arg5, var9.field2319);
+			if (var9.blockwalk != 0) {
+				arg8.method1195(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
 		} else if (arg6 == 3) {
 			Entity var29;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var29 = var9.method2386(3, arg5, var16, var18, var17, var19);
 			} else {
-				var29 = new LocEntity(arg4, 3, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var29 = new LocEntity(arg4, 3, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method572(arg0, arg2, arg3, var17, var29, null, ROTATION_WALL_CORNER_TYPE[arg5], 0, var20, var21);
-			if (var9.field2342 != 0) {
-				arg8.method1195(arg2, arg3, arg6, arg5, var9.field2319);
+			if (var9.blockwalk != 0) {
+				arg8.method1195(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
 		} else if (arg6 == 9) {
 			Entity var30;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var30 = var9.method2386(arg6, arg5, var16, var18, var17, var19);
 			} else {
-				var30 = new LocEntity(arg4, arg6, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var30 = new LocEntity(arg4, arg6, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method585(arg0, arg2, arg3, var17, 1, 1, var30, 0, var20, var21);
-			if (var9.field2342 != 0) {
-				arg8.method1198(arg2, arg3, var10, var11, var9.field2319);
+			if (var9.blockwalk != 0) {
+				arg8.method1198(arg2, arg3, var10, var11, var9.blockrange);
 			}
 		} else if (arg6 == 4) {
 			Entity var31;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var31 = var9.method2386(4, arg5, var16, var18, var17, var19);
 			} else {
-				var31 = new LocEntity(arg4, 4, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var31 = new LocEntity(arg4, 4, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method589(arg0, arg2, arg3, var17, var31, null, ROTATION_WALL_TYPE[arg5], 0, 0, 0, var20, var21);
 		} else if (arg6 == 5) {
 			int var32 = 16;
 			int var33 = arg7.method590(arg0, arg2, arg3);
 			if (var33 != 0) {
-				var32 = LocType.get(var33 >> 14 & 0x7FFF).field2327;
+				var32 = LocType.get(var33 >> 14 & 0x7FFF).wallwidth;
 			}
 			Entity var34;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var34 = var9.method2386(4, arg5, var16, var18, var17, var19);
 			} else {
-				var34 = new LocEntity(arg4, 4, arg5, arg1, arg2, arg3, var9.field2325, true, null);
+				var34 = new LocEntity(arg4, 4, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method589(arg0, arg2, arg3, var17, var34, null, ROTATION_WALL_TYPE[arg5], 0, WALL_DECORATION_ROTATION_FORWARD_X[arg5] * var32, WALL_DECORATION_ROTATION_FORWARD_Z[arg5] * var32, var20, var21);
 		} else if (arg6 == 6) {
 			int var35 = 8;
 			int var36 = arg7.method590(arg0, arg2, arg3);
 			if (var36 != 0) {
-				var35 = LocType.get(var36 >> 14 & 0x7FFF).field2327 / 2;
+				var35 = LocType.get(var36 >> 14 & 0x7FFF).wallwidth / 2;
 			}
 			Entity var37;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var37 = var9.method2386(4, arg5 + 4, var16, var18, var17, var19);
 			} else {
-				var37 = new LocEntity(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.field2325, true, null);
+				var37 = new LocEntity(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method589(arg0, arg2, arg3, var17, var37, null, 256, arg5, field31[arg5] * var35, field32[arg5] * var35, var20, var21);
 		} else if (arg6 == 7) {
 			int var38 = arg5 + 2 & 0x3;
 			Entity var39;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var39 = var9.method2386(4, var38 + 4, var16, var18, var17, var19);
 			} else {
-				var39 = new LocEntity(arg4, 4, var38 + 4, arg1, arg2, arg3, var9.field2325, true, null);
+				var39 = new LocEntity(arg4, 4, var38 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method589(arg0, arg2, arg3, var17, var39, null, 256, var38, 0, 0, var20, var21);
 		} else if (arg6 == 8) {
 			int var40 = 8;
 			int var41 = arg7.method590(arg0, arg2, arg3);
 			if (var41 != 0) {
-				var40 = LocType.get(var41 >> 14 & 0x7FFF).field2327 / 2;
+				var40 = LocType.get(var41 >> 14 & 0x7FFF).wallwidth / 2;
 			}
 			int var42 = arg5 + 2 & 0x3;
 			Entity var43;
 			Entity var44;
-			if (var9.field2325 == -1 && var9.field2317 == null) {
+			if (var9.anim == -1 && var9.multiloc == null) {
 				var43 = var9.method2386(4, arg5 + 4, var16, var18, var17, var19);
 				var44 = var9.method2386(4, var42 + 4, var16, var18, var17, var19);
 			} else {
-				var43 = new LocEntity(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.field2325, true, null);
-				var44 = new LocEntity(arg4, 4, var42 + 4, arg1, arg2, arg3, var9.field2325, true, null);
+				var43 = new LocEntity(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
+				var44 = new LocEntity(arg4, 4, var42 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			arg7.method589(arg0, arg2, arg3, var17, var43, var44, 256, arg5, field31[arg5] * var40, field32[arg5] * var40, var20, var21);
 		}

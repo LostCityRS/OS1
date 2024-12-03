@@ -23,28 +23,28 @@ public class IdkType extends DoublyLinkable {
 	public static LruCache field2396 = new LruCache(64);
 
 	@ObfuscatedName("fd.q")
-	public int field2403 = -1;
+	public int type = -1;
 
 	@ObfuscatedName("fd.i")
-	public int[] field2398;
+	public int[] models;
 
 	@ObfuscatedName("fd.s")
-	public short[] field2399;
+	public short[] recol_s;
 
 	@ObfuscatedName("fd.u")
-	public short[] field2400;
+	public short[] recol_d;
 
 	@ObfuscatedName("fd.v")
-	public short[] field2401;
+	public short[] retex_s;
 
 	@ObfuscatedName("fd.w")
-	public short[] field2402;
+	public short[] retex_d;
 
 	@ObfuscatedName("fd.e")
-	public int[] field2395 = new int[] { -1, -1, -1, -1, -1 };
+	public int[] heads = new int[] { -1, -1, -1, -1, -1 };
 
 	@ObfuscatedName("fd.b")
-	public boolean field2404 = false;
+	public boolean disable = false;
 
 	@ObfuscatedName("ct.z(Lch;Lch;I)V")
 	public static void method1194(Js5Index arg0, Js5Index arg1) {
@@ -69,57 +69,57 @@ public class IdkType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fd.q(Lev;I)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("fd.i(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 1) {
-			this.field2403 = arg0.g1();
-		} else if (arg1 == 2) {
-			int var3 = arg0.g1();
-			this.field2398 = new int[var3];
+	public void decodeInner(Packet buf, int code) {
+		if (code == 1) {
+			this.type = buf.g1();
+		} else if (code == 2) {
+			int var3 = buf.g1();
+			this.models = new int[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.field2398[var4] = arg0.g2();
+				this.models[var4] = buf.g2();
 			}
-		} else if (arg1 == 3) {
-			this.field2404 = true;
-		} else if (arg1 == 40) {
-			int var5 = arg0.g1();
-			this.field2399 = new short[var5];
-			this.field2400 = new short[var5];
+		} else if (code == 3) {
+			this.disable = true;
+		} else if (code == 40) {
+			int var5 = buf.g1();
+			this.recol_s = new short[var5];
+			this.recol_d = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.field2399[var6] = (short) arg0.g2();
-				this.field2400[var6] = (short) arg0.g2();
+				this.recol_s[var6] = (short) buf.g2();
+				this.recol_d[var6] = (short) buf.g2();
 			}
-		} else if (arg1 == 41) {
-			int var7 = arg0.g1();
-			this.field2401 = new short[var7];
-			this.field2402 = new short[var7];
+		} else if (code == 41) {
+			int var7 = buf.g1();
+			this.retex_s = new short[var7];
+			this.retex_d = new short[var7];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.field2401[var8] = (short) arg0.g2();
-				this.field2402[var8] = (short) arg0.g2();
+				this.retex_s[var8] = (short) buf.g2();
+				this.retex_d[var8] = (short) buf.g2();
 			}
-		} else if (arg1 >= 60 && arg1 < 70) {
-			this.field2395[arg1 - 60] = arg0.g2();
+		} else if (code >= 60 && code < 70) {
+			this.heads[code - 60] = buf.g2();
 		}
 	}
 
 	@ObfuscatedName("fd.s(I)Z")
 	public boolean method2461() {
-		if (this.field2398 == null) {
+		if (this.models == null) {
 			return true;
 		}
 		boolean var1 = true;
-		for (int var2 = 0; var2 < this.field2398.length; var2++) {
-			if (!field2397.method1046(this.field2398[var2], 0)) {
+		for (int var2 = 0; var2 < this.models.length; var2++) {
+			if (!field2397.method1046(this.models[var2], 0)) {
 				var1 = false;
 			}
 		}
@@ -128,12 +128,12 @@ public class IdkType extends DoublyLinkable {
 
 	@ObfuscatedName("fd.u(S)Lfw;")
 	public Model method2465() {
-		if (this.field2398 == null) {
+		if (this.models == null) {
 			return null;
 		}
-		Model[] var1 = new Model[this.field2398.length];
-		for (int var2 = 0; var2 < this.field2398.length; var2++) {
-			var1[var2] = Model.method2992(field2397, this.field2398[var2], 0);
+		Model[] var1 = new Model[this.models.length];
+		for (int var2 = 0; var2 < this.models.length; var2++) {
+			var1[var2] = Model.method2992(field2397, this.models[var2], 0);
 		}
 		Model var3;
 		if (var1.length == 1) {
@@ -141,14 +141,14 @@ public class IdkType extends DoublyLinkable {
 		} else {
 			var3 = new Model(var1, var1.length);
 		}
-		if (this.field2399 != null) {
-			for (int var4 = 0; var4 < this.field2399.length; var4++) {
-				var3.method2935(this.field2399[var4], this.field2400[var4]);
+		if (this.recol_s != null) {
+			for (int var4 = 0; var4 < this.recol_s.length; var4++) {
+				var3.method2935(this.recol_s[var4], this.recol_d[var4]);
 			}
 		}
-		if (this.field2401 != null) {
-			for (int var5 = 0; var5 < this.field2401.length; var5++) {
-				var3.method2976(this.field2401[var5], this.field2402[var5]);
+		if (this.retex_s != null) {
+			for (int var5 = 0; var5 < this.retex_s.length; var5++) {
+				var3.method2976(this.retex_s[var5], this.retex_d[var5]);
 			}
 		}
 		return var3;
@@ -158,7 +158,7 @@ public class IdkType extends DoublyLinkable {
 	public boolean method2463() {
 		boolean var1 = true;
 		for (int var2 = 0; var2 < 5; var2++) {
-			if (this.field2395[var2] != -1 && !field2397.method1046(this.field2395[var2], 0)) {
+			if (this.heads[var2] != -1 && !field2397.method1046(this.heads[var2], 0)) {
 				var1 = false;
 			}
 		}
@@ -170,19 +170,19 @@ public class IdkType extends DoublyLinkable {
 		Model[] var1 = new Model[5];
 		int var2 = 0;
 		for (int var3 = 0; var3 < 5; var3++) {
-			if (this.field2395[var3] != -1) {
-				var1[var2++] = Model.method2992(field2397, this.field2395[var3], 0);
+			if (this.heads[var3] != -1) {
+				var1[var2++] = Model.method2992(field2397, this.heads[var3], 0);
 			}
 		}
 		Model var4 = new Model(var1, var2);
-		if (this.field2399 != null) {
-			for (int var5 = 0; var5 < this.field2399.length; var5++) {
-				var4.method2935(this.field2399[var5], this.field2400[var5]);
+		if (this.recol_s != null) {
+			for (int var5 = 0; var5 < this.recol_s.length; var5++) {
+				var4.method2935(this.recol_s[var5], this.recol_d[var5]);
 			}
 		}
-		if (this.field2401 != null) {
-			for (int var6 = 0; var6 < this.field2401.length; var6++) {
-				var4.method2976(this.field2401[var6], this.field2402[var6]);
+		if (this.retex_s != null) {
+			for (int var6 = 0; var6 < this.retex_s.length; var6++) {
+				var4.method2976(this.retex_s[var6], this.retex_d[var6]);
 			}
 		}
 		return var4;

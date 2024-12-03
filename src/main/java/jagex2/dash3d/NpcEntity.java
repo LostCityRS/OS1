@@ -33,7 +33,7 @@ public class NpcEntity extends PathingEntity {
 				var3 = new SoftwareModel(var5, 2);
 			}
 		}
-		if (this.field2804.field2283 == 1) {
+		if (this.field2804.size == 1) {
 			var3.field2744 = true;
 		}
 		return var3;

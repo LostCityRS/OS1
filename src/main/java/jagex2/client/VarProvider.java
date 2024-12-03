@@ -32,9 +32,9 @@ public class VarProvider {
 	@ObfuscatedName("cc.r(II)I")
 	public static int method1130(int arg0) {
 		VarBitType var1 = VarBitType.get(arg0);
-		int var2 = var1.field2418;
-		int var3 = var1.field2416;
-		int var4 = var1.field2420;
+		int var2 = var1.basevar;
+		int var3 = var1.startbit;
+		int var4 = var1.endbit;
 		int var5 = field1212[var4 - var3];
 		return field1210[var2] >> var3 & var5;
 	}

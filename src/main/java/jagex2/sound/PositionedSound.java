@@ -74,11 +74,11 @@ public class PositionedSound extends Linkable {
 			this.field1611 = 0;
 			this.field1604 = null;
 		} else {
-			this.field1608 = var2.field2312;
-			this.field1607 = var2.field2348 * 128;
-			this.field1601 = var2.field2349;
-			this.field1611 = var2.field2302;
-			this.field1604 = var2.field2351;
+			this.field1608 = var2.bgsound_sound;
+			this.field1607 = var2.bgsound_range * 128;
+			this.field1601 = var2.bgsound_mindelay;
+			this.field1611 = var2.bgsound_maxdelay;
+			this.field1604 = var2.bgsound_random;
 		}
 		if (this.field1608 != var1 && this.field1603 != null) {
 			Client.field1460.method2175(this.field1603);
@@ -92,20 +92,20 @@ public class PositionedSound extends Linkable {
 		var5.field1602 = arg0;
 		var5.field1609 = arg1 * 128;
 		var5.field1606 = arg2 * 128;
-		int var6 = arg3.field2344;
-		int var7 = arg3.field2318;
+		int var6 = arg3.width;
+		int var7 = arg3.length;
 		if (arg4 == 1 || arg4 == 3) {
-			var6 = arg3.field2318;
-			var7 = arg3.field2344;
+			var6 = arg3.length;
+			var7 = arg3.width;
 		}
 		var5.field1605 = (arg1 + var6) * 128;
 		var5.field1610 = (arg2 + var7) * 128;
-		var5.field1608 = arg3.field2312;
-		var5.field1607 = arg3.field2348 * 128;
-		var5.field1601 = arg3.field2349;
-		var5.field1611 = arg3.field2302;
-		var5.field1604 = arg3.field2351;
-		if (arg3.field2317 != null) {
+		var5.field1608 = arg3.bgsound_sound;
+		var5.field1607 = arg3.bgsound_range * 128;
+		var5.field1601 = arg3.bgsound_mindelay;
+		var5.field1611 = arg3.bgsound_maxdelay;
+		var5.field1604 = arg3.bgsound_random;
+		if (arg3.multiloc != null) {
 			var5.field1615 = arg3;
 			var5.method1492();
 		}

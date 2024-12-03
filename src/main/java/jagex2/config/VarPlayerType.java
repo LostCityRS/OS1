@@ -19,7 +19,7 @@ public class VarPlayerType extends DoublyLinkable {
 	public static LruCache field2479 = new LruCache(64);
 
 	@ObfuscatedName("fg.g")
-	public int field2478 = 0;
+	public int clientcode = 0;
 
 	@ObfuscatedName("cy.z(Lch;I)V")
 	public static void method1237(Js5Index arg0) {
@@ -43,20 +43,20 @@ public class VarPlayerType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fg.q(Lev;I)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("fg.i(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 5) {
-			this.field2478 = arg0.g2();
+	public void decodeInner(Packet code, int buf) {
+		if (buf == 5) {
+			this.clientcode = code.g2();
 		}
 	}
 

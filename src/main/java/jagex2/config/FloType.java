@@ -16,16 +16,16 @@ public class FloType extends DoublyLinkable {
 	public static LruCache field2411 = new LruCache(64);
 
 	@ObfuscatedName("fb.z")
-	public int field2406 = 0;
+	public int rgb = 0;
 
 	@ObfuscatedName("fb.g")
-	public int field2407 = -1;
+	public int texture = -1;
 
 	@ObfuscatedName("fb.q")
-	public boolean field2408 = true;
+	public boolean occlude = true;
 
 	@ObfuscatedName("fb.i")
-	public int field2414 = -1;
+	public int averageRgb = -1;
 
 	@ObfuscatedName("fb.s")
 	public int field2409;
@@ -63,37 +63,37 @@ public class FloType extends DoublyLinkable {
 
 	@ObfuscatedName("fb.g(B)V")
 	public void postDecode() {
-		if (this.field2414 != -1) {
-			this.method2488(this.field2414);
+		if (this.averageRgb != -1) {
+			this.method2488(this.averageRgb);
 			this.field2410 = this.field2409;
 			this.field2412 = this.field2413;
 			this.field2415 = this.field2405;
 		}
-		this.method2488(this.field2406);
+		this.method2488(this.rgb);
 	}
 
 	@ObfuscatedName("fb.q(Lev;IB)V")
-	public void decode(Packet arg0, int arg1) {
+	public void decode(Packet buf, int arg1) {
 		while (true) {
-			int var3 = arg0.g1();
-			if (var3 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var3, arg1);
+			this.decodeInner(buf, code, arg1);
 		}
 	}
 
 	@ObfuscatedName("fb.i(Lev;III)V")
-	public void decodeInner(Packet arg0, int arg1, int arg2) {
-		if (arg1 == 1) {
-			this.field2406 = arg0.g3();
-		} else if (arg1 == 2) {
-			this.field2407 = arg0.g1();
-		} else if (arg1 == 5) {
-			this.field2408 = false;
-		} else if (arg1 == 7) {
-			this.field2414 = arg0.g3();
-		} else if (arg1 == 8) {
+	public void decodeInner(Packet buf, int code, int arg2) {
+		if (code == 1) {
+			this.rgb = buf.g3();
+		} else if (code == 2) {
+			this.texture = buf.g1();
+		} else if (code == 5) {
+			this.occlude = false;
+		} else if (code == 7) {
+			this.averageRgb = buf.g3();
+		} else if (code == 8) {
 		}
 	}
 

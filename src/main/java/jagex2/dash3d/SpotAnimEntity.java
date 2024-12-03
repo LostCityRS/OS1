@@ -45,7 +45,7 @@ public class SpotAnimEntity extends Entity {
 		this.field2606 = arg3;
 		this.field2611 = arg4;
 		this.field2603 = arg5 + arg6;
-		int var8 = SpotAnimType.get(this.field2608).field2390;
+		int var8 = SpotAnimType.get(this.field2608).anim;
 		if (var8 == -1) {
 			this.field2605 = true;
 		} else {
@@ -60,10 +60,10 @@ public class SpotAnimEntity extends Entity {
 			return;
 		}
 		this.field2602 += arg0;
-		while (this.field2602 > this.field2607.field2366[this.field2609]) {
-			this.field2602 -= this.field2607.field2366[this.field2609];
+		while (this.field2602 > this.field2607.delay[this.field2609]) {
+			this.field2602 -= this.field2607.delay[this.field2609];
 			this.field2609++;
-			if (this.field2609 >= this.field2607.field2364.length) {
+			if (this.field2609 >= this.field2607.frames.length) {
 				this.field2605 = true;
 				break;
 			}

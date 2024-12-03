@@ -29,19 +29,19 @@ public class NpcType extends DoublyLinkable {
 	public int field2271;
 
 	@ObfuscatedName("em.i")
-	public String field2272 = "null";
+	public String name = "null";
 
 	@ObfuscatedName("em.s")
-	public int field2283 = 1;
+	public int size = 1;
 
 	@ObfuscatedName("em.u")
-	public int[] field2292;
+	public int[] models;
 
 	@ObfuscatedName("em.v")
-	public int[] field2275;
+	public int[] heads;
 
 	@ObfuscatedName("em.w")
-	public int field2276 = -1;
+	public int readyanim = -1;
 
 	@ObfuscatedName("em.e")
 	public int field2287 = -1;
@@ -50,73 +50,73 @@ public class NpcType extends DoublyLinkable {
 	public int field2278 = -1;
 
 	@ObfuscatedName("em.y")
-	public int field2279 = -1;
+	public int walkanim = -1;
 
 	@ObfuscatedName("em.t")
-	public int field2280 = -1;
+	public int walkanim_b = -1;
 
 	@ObfuscatedName("em.f")
-	public int field2294 = -1;
+	public int walkanim_r = -1;
 
 	@ObfuscatedName("em.k")
-	public int field2282 = -1;
+	public int walkanim_l = -1;
 
 	@ObfuscatedName("em.o")
-	public short[] field2277;
+	public short[] recol_s;
 
 	@ObfuscatedName("em.a")
-	public short[] field2284;
+	public short[] recol_d;
 
 	@ObfuscatedName("em.h")
-	public short[] field2285;
+	public short[] retex_s;
 
 	@ObfuscatedName("em.x")
-	public short[] field2286;
+	public short[] retex_d;
 
 	@ObfuscatedName("em.p")
-	public String[] field2268 = new String[5];
+	public String[] op = new String[5];
 
 	@ObfuscatedName("em.ad")
-	public boolean field2298 = true;
+	public boolean minimap = true;
 
 	@ObfuscatedName("em.ac")
-	public int field2289 = -1;
+	public int vislevel = -1;
 
 	@ObfuscatedName("em.aa")
-	public int field2270 = 128;
+	public int resizeh = 128;
 
 	@ObfuscatedName("em.as")
-	public int field2291 = 128;
+	public int resizev = 128;
 
 	@ObfuscatedName("em.am")
-	public boolean field2290 = false;
+	public boolean alwaysontop = false;
 
 	@ObfuscatedName("em.ap")
-	public int field2293 = 0;
+	public int ambient = 0;
 
 	@ObfuscatedName("em.av")
-	public int field2269 = 0;
+	public int contrast = 0;
 
 	@ObfuscatedName("em.ak")
-	public int field2295 = -1;
+	public int headicon = -1;
 
 	@ObfuscatedName("em.az")
-	public int field2296 = 32;
+	public int turnspeed = 32;
 
 	@ObfuscatedName("em.an")
-	public int[] field2273;
+	public int[] multinpc;
 
 	@ObfuscatedName("em.ah")
-	public int field2297 = -1;
+	public int multivarbit = -1;
 
 	@ObfuscatedName("em.ay")
-	public int field2299 = -1;
+	public int multivarp = -1;
 
 	@ObfuscatedName("em.al")
-	public boolean field2300 = true;
+	public boolean active = true;
 
 	@ObfuscatedName("em.ab")
-	public boolean field2301 = true;
+	public boolean walksmoothing = true; // todo: real name
 
 	@ObfuscatedName("by.z(Lch;Lch;B)V")
 	public static void method828(Js5Index arg0, Js5Index arg1) {
@@ -146,130 +146,130 @@ public class NpcType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("em.i(Lev;I)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("em.s(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 1) {
-			int var3 = arg0.g1();
-			this.field2292 = new int[var3];
+	public void decodeInner(Packet buf, int code) {
+		if (code == 1) {
+			int var3 = buf.g1();
+			this.models = new int[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.field2292[var4] = arg0.g2();
+				this.models[var4] = buf.g2();
 			}
-		} else if (arg1 == 2) {
-			this.field2272 = arg0.gjstr();
-		} else if (arg1 == 12) {
-			this.field2283 = arg0.g1();
-		} else if (arg1 == 13) {
-			this.field2276 = arg0.g2();
-		} else if (arg1 == 14) {
-			this.field2279 = arg0.g2();
-		} else if (arg1 == 15) {
-			this.field2287 = arg0.g2();
-		} else if (arg1 == 16) {
-			this.field2278 = arg0.g2();
-		} else if (arg1 == 17) {
-			this.field2279 = arg0.g2();
-			this.field2280 = arg0.g2();
-			this.field2294 = arg0.g2();
-			this.field2282 = arg0.g2();
-		} else if (arg1 >= 30 && arg1 < 35) {
-			this.field2268[arg1 - 30] = arg0.gjstr();
-			if (this.field2268[arg1 - 30].equalsIgnoreCase(EnglishLocale.field869)) {
-				this.field2268[arg1 - 30] = null;
+		} else if (code == 2) {
+			this.name = buf.gjstr();
+		} else if (code == 12) {
+			this.size = buf.g1();
+		} else if (code == 13) {
+			this.readyanim = buf.g2();
+		} else if (code == 14) {
+			this.walkanim = buf.g2();
+		} else if (code == 15) {
+			this.field2287 = buf.g2();
+		} else if (code == 16) {
+			this.field2278 = buf.g2();
+		} else if (code == 17) {
+			this.walkanim = buf.g2();
+			this.walkanim_b = buf.g2();
+			this.walkanim_r = buf.g2();
+			this.walkanim_l = buf.g2();
+		} else if (code >= 30 && code < 35) {
+			this.op[code - 30] = buf.gjstr();
+			if (this.op[code - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
+				this.op[code - 30] = null;
 			}
-		} else if (arg1 == 40) {
-			int var5 = arg0.g1();
-			this.field2277 = new short[var5];
-			this.field2284 = new short[var5];
+		} else if (code == 40) {
+			int var5 = buf.g1();
+			this.recol_s = new short[var5];
+			this.recol_d = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.field2277[var6] = (short) arg0.g2();
-				this.field2284[var6] = (short) arg0.g2();
+				this.recol_s[var6] = (short) buf.g2();
+				this.recol_d[var6] = (short) buf.g2();
 			}
-		} else if (arg1 == 41) {
-			int var7 = arg0.g1();
-			this.field2285 = new short[var7];
-			this.field2286 = new short[var7];
+		} else if (code == 41) {
+			int var7 = buf.g1();
+			this.retex_s = new short[var7];
+			this.retex_d = new short[var7];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.field2285[var8] = (short) arg0.g2();
-				this.field2286[var8] = (short) arg0.g2();
+				this.retex_s[var8] = (short) buf.g2();
+				this.retex_d[var8] = (short) buf.g2();
 			}
-		} else if (arg1 == 60) {
-			int var9 = arg0.g1();
-			this.field2275 = new int[var9];
+		} else if (code == 60) {
+			int var9 = buf.g1();
+			this.heads = new int[var9];
 			for (int var10 = 0; var10 < var9; var10++) {
-				this.field2275[var10] = arg0.g2();
+				this.heads[var10] = buf.g2();
 			}
-		} else if (arg1 == 93) {
-			this.field2298 = false;
-		} else if (arg1 == 95) {
-			this.field2289 = arg0.g2();
-		} else if (arg1 == 97) {
-			this.field2270 = arg0.g2();
-		} else if (arg1 == 98) {
-			this.field2291 = arg0.g2();
-		} else if (arg1 == 99) {
-			this.field2290 = true;
-		} else if (arg1 == 100) {
-			this.field2293 = arg0.g1b();
-		} else if (arg1 == 101) {
-			this.field2269 = arg0.g1b() * 5;
-		} else if (arg1 == 102) {
-			this.field2295 = arg0.g2();
-		} else if (arg1 == 103) {
-			this.field2296 = arg0.g2();
-		} else if (arg1 == 106) {
-			this.field2297 = arg0.g2();
-			if (this.field2297 == 65535) {
-				this.field2297 = -1;
+		} else if (code == 93) {
+			this.minimap = false;
+		} else if (code == 95) {
+			this.vislevel = buf.g2();
+		} else if (code == 97) {
+			this.resizeh = buf.g2();
+		} else if (code == 98) {
+			this.resizev = buf.g2();
+		} else if (code == 99) {
+			this.alwaysontop = true;
+		} else if (code == 100) {
+			this.ambient = buf.g1b();
+		} else if (code == 101) {
+			this.contrast = buf.g1b() * 5;
+		} else if (code == 102) {
+			this.headicon = buf.g2();
+		} else if (code == 103) {
+			this.turnspeed = buf.g2();
+		} else if (code == 106) {
+			this.multivarbit = buf.g2();
+			if (this.multivarbit == 65535) {
+				this.multivarbit = -1;
 			}
-			this.field2299 = arg0.g2();
-			if (this.field2299 == 65535) {
-				this.field2299 = -1;
+			this.multivarp = buf.g2();
+			if (this.multivarp == 65535) {
+				this.multivarp = -1;
 			}
-			int var11 = arg0.g1();
-			this.field2273 = new int[var11 + 1];
+			int var11 = buf.g1();
+			this.multinpc = new int[var11 + 1];
 			for (int var12 = 0; var12 <= var11; var12++) {
-				this.field2273[var12] = arg0.g2();
-				if (this.field2273[var12] == 65535) {
-					this.field2273[var12] = -1;
+				this.multinpc[var12] = buf.g2();
+				if (this.multinpc[var12] == 65535) {
+					this.multinpc[var12] = -1;
 				}
 			}
-		} else if (arg1 == 107) {
-			this.field2300 = false;
-		} else if (arg1 == 109) {
-			this.field2301 = false;
+		} else if (code == 107) {
+			this.active = false;
+		} else if (code == 109) {
+			this.walksmoothing = false;
 		}
 	}
 
 	@ObfuscatedName("em.u(Leo;ILeo;IB)Lfo;")
 	public final SoftwareModel method2330(SeqType arg0, int arg1, SeqType arg2, int arg3) {
-		if (this.field2273 != null) {
+		if (this.multinpc != null) {
 			NpcType var5 = this.method2332();
 			return var5 == null ? null : var5.method2330(arg0, arg1, arg2, arg3);
 		}
 		SoftwareModel var6 = (SoftwareModel) field2288.get((long) this.field2271);
 		if (var6 == null) {
 			boolean var7 = false;
-			for (int var8 = 0; var8 < this.field2292.length; var8++) {
-				if (!field1600.method1046(this.field2292[var8], 0)) {
+			for (int var8 = 0; var8 < this.models.length; var8++) {
+				if (!field1600.method1046(this.models[var8], 0)) {
 					var7 = true;
 				}
 			}
 			if (var7) {
 				return null;
 			}
-			Model[] var9 = new Model[this.field2292.length];
-			for (int var10 = 0; var10 < this.field2292.length; var10++) {
-				var9[var10] = Model.method2992(field1600, this.field2292[var10], 0);
+			Model[] var9 = new Model[this.models.length];
+			for (int var10 = 0; var10 < this.models.length; var10++) {
+				var9[var10] = Model.method2992(field1600, this.models[var10], 0);
 			}
 			Model var11;
 			if (var9.length == 1) {
@@ -277,17 +277,17 @@ public class NpcType extends DoublyLinkable {
 			} else {
 				var11 = new Model(var9, var9.length);
 			}
-			if (this.field2277 != null) {
-				for (int var12 = 0; var12 < this.field2277.length; var12++) {
-					var11.method2935(this.field2277[var12], this.field2284[var12]);
+			if (this.recol_s != null) {
+				for (int var12 = 0; var12 < this.recol_s.length; var12++) {
+					var11.method2935(this.recol_s[var12], this.recol_d[var12]);
 				}
 			}
-			if (this.field2285 != null) {
-				for (int var13 = 0; var13 < this.field2285.length; var13++) {
-					var11.method2976(this.field2285[var13], this.field2286[var13]);
+			if (this.retex_s != null) {
+				for (int var13 = 0; var13 < this.retex_s.length; var13++) {
+					var11.method2976(this.retex_s[var13], this.retex_d[var13]);
 				}
 			}
-			var6 = var11.method2942(this.field2293 + 64, this.field2269 + 850, -30, -50, -30);
+			var6 = var11.method2942(this.ambient + 64, this.contrast + 850, -30, -50, -30);
 			field2288.put(var6, (long) this.field2271);
 		}
 		SoftwareModel var14;
@@ -300,32 +300,32 @@ public class NpcType extends DoublyLinkable {
 		} else {
 			var14 = arg2.method2436(var6, arg3);
 		}
-		if (this.field2270 != 128 || this.field2291 != 128) {
-			var14.method3013(this.field2270, this.field2291, this.field2270);
+		if (this.resizeh != 128 || this.resizev != 128) {
+			var14.method3013(this.resizeh, this.resizev, this.resizeh);
 		}
 		return var14;
 	}
 
 	@ObfuscatedName("em.v(I)Lfw;")
 	public final Model method2331() {
-		if (this.field2273 != null) {
+		if (this.multinpc != null) {
 			NpcType var1 = this.method2332();
 			return var1 == null ? null : var1.method2331();
-		} else if (this.field2275 == null) {
+		} else if (this.heads == null) {
 			return null;
 		} else {
 			boolean var2 = false;
-			for (int var3 = 0; var3 < this.field2275.length; var3++) {
-				if (!field1600.method1046(this.field2275[var3], 0)) {
+			for (int var3 = 0; var3 < this.heads.length; var3++) {
+				if (!field1600.method1046(this.heads[var3], 0)) {
 					var2 = true;
 				}
 			}
 			if (var2) {
 				return null;
 			}
-			Model[] var4 = new Model[this.field2275.length];
-			for (int var5 = 0; var5 < this.field2275.length; var5++) {
-				var4[var5] = Model.method2992(field1600, this.field2275[var5], 0);
+			Model[] var4 = new Model[this.heads.length];
+			for (int var5 = 0; var5 < this.heads.length; var5++) {
+				var4[var5] = Model.method2992(field1600, this.heads[var5], 0);
 			}
 			Model var6;
 			if (var4.length == 1) {
@@ -333,14 +333,14 @@ public class NpcType extends DoublyLinkable {
 			} else {
 				var6 = new Model(var4, var4.length);
 			}
-			if (this.field2277 != null) {
-				for (int var7 = 0; var7 < this.field2277.length; var7++) {
-					var6.method2935(this.field2277[var7], this.field2284[var7]);
+			if (this.recol_s != null) {
+				for (int var7 = 0; var7 < this.recol_s.length; var7++) {
+					var6.method2935(this.recol_s[var7], this.recol_d[var7]);
 				}
 			}
-			if (this.field2285 != null) {
-				for (int var8 = 0; var8 < this.field2285.length; var8++) {
-					var6.method2976(this.field2285[var8], this.field2286[var8]);
+			if (this.retex_s != null) {
+				for (int var8 = 0; var8 < this.retex_s.length; var8++) {
+					var6.method2976(this.retex_s[var8], this.retex_d[var8]);
 				}
 			}
 			return var6;
@@ -350,26 +350,26 @@ public class NpcType extends DoublyLinkable {
 	@ObfuscatedName("em.w(B)Lem;")
 	public final NpcType method2332() {
 		int var1 = -1;
-		if (this.field2297 != -1) {
-			var1 = VarProvider.method1130(this.field2297);
-		} else if (this.field2299 != -1) {
-			var1 = VarProvider.field1210[this.field2299];
+		if (this.multivarbit != -1) {
+			var1 = VarProvider.method1130(this.multivarbit);
+		} else if (this.multivarp != -1) {
+			var1 = VarProvider.field1210[this.multivarp];
 		}
-		return var1 < 0 || var1 >= this.field2273.length || this.field2273[var1] == -1 ? null : get(this.field2273[var1]);
+		return var1 < 0 || var1 >= this.multinpc.length || this.multinpc[var1] == -1 ? null : get(this.multinpc[var1]);
 	}
 
 	@ObfuscatedName("em.e(I)Z")
 	public boolean method2339() {
-		if (this.field2273 == null) {
+		if (this.multinpc == null) {
 			return true;
 		}
 		int var1 = -1;
-		if (this.field2297 != -1) {
-			var1 = VarProvider.method1130(this.field2297);
-		} else if (this.field2299 != -1) {
-			var1 = VarProvider.field1210[this.field2299];
+		if (this.multivarbit != -1) {
+			var1 = VarProvider.method1130(this.multivarbit);
+		} else if (this.multivarp != -1) {
+			var1 = VarProvider.field1210[this.multivarp];
 		}
-		return var1 >= 0 && var1 < this.field2273.length && this.field2273[var1] != -1;
+		return var1 >= 0 && var1 < this.multinpc.length && this.multinpc[var1] != -1;
 	}
 
 	@ObfuscatedName("df.b(I)V")

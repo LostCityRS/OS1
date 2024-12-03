@@ -36,121 +36,121 @@ public class ObjType extends DoublyLinkable {
 	public int field2435;
 
 	@ObfuscatedName("fj.v")
-	public int field2436;
+	public int model;
 
 	@ObfuscatedName("fj.w")
-	public String field2461 = "null";
+	public String name = "null";
 
 	@ObfuscatedName("fj.e")
-	public short[] field2438;
+	public short[] recol_s;
 
 	@ObfuscatedName("fj.b")
-	public short[] field2439;
+	public short[] recol_d;
 
 	@ObfuscatedName("fj.y")
-	public short[] field2440;
+	public short[] retex_s;
 
 	@ObfuscatedName("fj.t")
-	public short[] field2441;
+	public short[] retex_d;
 
 	@ObfuscatedName("fj.f")
-	public int field2442 = 2000;
+	public int zoom2d = 2000;
 
 	@ObfuscatedName("fj.k")
-	public int field2443 = 0;
+	public int xan2d = 0;
 
 	@ObfuscatedName("fj.o")
-	public int field2444 = 0;
+	public int yan2d = 0;
 
 	@ObfuscatedName("fj.a")
-	public int field2463 = 0;
+	public int zan2d = 0;
 
 	@ObfuscatedName("fj.h")
-	public int field2471 = 0;
+	public int xof2d = 0;
 
 	@ObfuscatedName("fj.x")
-	public int field2447 = 0;
+	public int yof2d = 0;
 
 	@ObfuscatedName("fj.p")
-	public int field2448 = 0;
+	public int stackable = 0;
 
 	@ObfuscatedName("fj.ad")
-	public int field2470 = 1;
+	public int cost = 1;
 
 	@ObfuscatedName("fj.ac")
-	public boolean field2457 = false;
+	public boolean members = false;
 
 	@ObfuscatedName("fj.aa")
-	public String[] field2451 = new String[] { null, null, EnglishLocale.field867, null, null };
+	public String[] op = new String[] { null, null, EnglishLocale.field867, null, null };
 
 	@ObfuscatedName("fj.as")
-	public String[] field2452 = new String[] { null, null, null, null, EnglishLocale.field868 };
+	public String[] iop = new String[] { null, null, null, null, EnglishLocale.field868 };
 
 	@ObfuscatedName("fj.am")
-	public int field2453 = -1;
+	public int manwear = -1;
 
 	@ObfuscatedName("fj.ap")
-	public int field2454 = -1;
+	public int manwear2 = -1;
 
 	@ObfuscatedName("fj.av")
-	public int field2455 = 0;
+	public int manwearOffsetY = 0;
 
 	@ObfuscatedName("fj.ak")
-	public int field2474 = -1;
+	public int womanwear = -1;
 
 	@ObfuscatedName("fj.az")
-	public int field2460 = -1;
+	public int womanwear2 = -1;
 
 	@ObfuscatedName("fj.an")
-	public int field2458 = 0;
+	public int womanwearOffsetY = 0;
 
 	@ObfuscatedName("fj.ah")
-	public int field2462 = -1;
+	public int manwear3 = -1;
 
 	@ObfuscatedName("fj.ay")
-	public int field2465 = -1;
+	public int womanwear3 = -1;
 
 	@ObfuscatedName("fj.al")
-	public int field2431 = -1;
+	public int manhead = -1;
 
 	@ObfuscatedName("fj.ab")
-	public int field2468 = -1;
+	public int manhead2 = -1;
 
 	@ObfuscatedName("fj.ao")
-	public int field2446 = -1;
+	public int womanhead = -1;
 
 	@ObfuscatedName("fj.ag")
-	public int field2464 = -1;
+	public int womanhead2 = -1;
 
 	@ObfuscatedName("fj.ar")
-	public int[] field2467;
+	public int[] countobj;
 
 	@ObfuscatedName("fj.aq")
-	public int[] field2466;
+	public int[] countco;
 
 	@ObfuscatedName("fj.at")
-	public int field2459 = -1;
+	public int certlink = -1;
 
 	@ObfuscatedName("fj.ae")
-	public int field2450 = -1;
+	public int certtemplate = -1;
 
 	@ObfuscatedName("fj.au")
-	public int field2469 = 128;
+	public int resizex = 128;
 
 	@ObfuscatedName("fj.ax")
-	public int field2445 = 128;
+	public int resizey = 128;
 
 	@ObfuscatedName("fj.ai")
-	public int field2456 = 128;
+	public int resizez = 128;
 
 	@ObfuscatedName("fj.aj")
-	public int field2472 = 0;
+	public int ambient = 0;
 
 	@ObfuscatedName("fj.aw")
-	public int field2473 = 0;
+	public int contrast = 0;
 
 	@ObfuscatedName("fj.af")
-	public int field2437 = 0;
+	public int team = 0;
 
 	@ObfuscatedName("bb.z(II)Lfj;")
 	public static ObjType get(int arg0) {
@@ -165,14 +165,14 @@ public class ObjType extends DoublyLinkable {
 			var3.decode(new Packet(var2));
 		}
 		var3.postDecode();
-		if (var3.field2450 != -1) {
-			var3.method2520(get(var3.field2450), get(var3.field2459));
+		if (var3.certtemplate != -1) {
+			var3.method2520(get(var3.certtemplate), get(var3.certlink));
 		}
-		if (!field1462 && var3.field2457) {
-			var3.field2461 = EnglishLocale.field1077;
-			var3.field2451 = null;
-			var3.field2452 = null;
-			var3.field2437 = 0;
+		if (!field1462 && var3.members) {
+			var3.name = EnglishLocale.field1077;
+			var3.op = null;
+			var3.iop = null;
+			var3.team = 0;
 		}
 		field2432.put(var3, (long) arg0);
 		return var3;
@@ -183,164 +183,164 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.q(Lev;B)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("fj.i(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 1) {
-			this.field2436 = arg0.g2();
-		} else if (arg1 == 2) {
-			this.field2461 = arg0.gjstr();
-		} else if (arg1 == 4) {
-			this.field2442 = arg0.g2();
-		} else if (arg1 == 5) {
-			this.field2443 = arg0.g2();
-		} else if (arg1 == 6) {
-			this.field2444 = arg0.g2();
-		} else if (arg1 == 7) {
-			this.field2471 = arg0.g2();
-			if (this.field2471 > 32767) {
-				this.field2471 -= 65536;
+	public void decodeInner(Packet buf, int code) {
+		if (code == 1) {
+			this.model = buf.g2();
+		} else if (code == 2) {
+			this.name = buf.gjstr();
+		} else if (code == 4) {
+			this.zoom2d = buf.g2();
+		} else if (code == 5) {
+			this.xan2d = buf.g2();
+		} else if (code == 6) {
+			this.yan2d = buf.g2();
+		} else if (code == 7) {
+			this.xof2d = buf.g2();
+			if (this.xof2d > 32767) {
+				this.xof2d -= 65536;
 			}
-		} else if (arg1 == 8) {
-			this.field2447 = arg0.g2();
-			if (this.field2447 > 32767) {
-				this.field2447 -= 65536;
+		} else if (code == 8) {
+			this.yof2d = buf.g2();
+			if (this.yof2d > 32767) {
+				this.yof2d -= 65536;
 			}
-		} else if (arg1 == 11) {
-			this.field2448 = 1;
-		} else if (arg1 == 12) {
-			this.field2470 = arg0.g4();
-		} else if (arg1 == 16) {
-			this.field2457 = true;
-		} else if (arg1 == 23) {
-			this.field2453 = arg0.g2();
-			this.field2455 = arg0.g1();
-		} else if (arg1 == 24) {
-			this.field2454 = arg0.g2();
-		} else if (arg1 == 25) {
-			this.field2474 = arg0.g2();
-			this.field2458 = arg0.g1();
-		} else if (arg1 == 26) {
-			this.field2460 = arg0.g2();
-		} else if (arg1 >= 30 && arg1 < 35) {
-			this.field2451[arg1 - 30] = arg0.gjstr();
-			if (this.field2451[arg1 - 30].equalsIgnoreCase(EnglishLocale.field869)) {
-				this.field2451[arg1 - 30] = null;
+		} else if (code == 11) {
+			this.stackable = 1;
+		} else if (code == 12) {
+			this.cost = buf.g4();
+		} else if (code == 16) {
+			this.members = true;
+		} else if (code == 23) {
+			this.manwear = buf.g2();
+			this.manwearOffsetY = buf.g1();
+		} else if (code == 24) {
+			this.manwear2 = buf.g2();
+		} else if (code == 25) {
+			this.womanwear = buf.g2();
+			this.womanwearOffsetY = buf.g1();
+		} else if (code == 26) {
+			this.womanwear2 = buf.g2();
+		} else if (code >= 30 && code < 35) {
+			this.op[code - 30] = buf.gjstr();
+			if (this.op[code - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
+				this.op[code - 30] = null;
 			}
-		} else if (arg1 >= 35 && arg1 < 40) {
-			this.field2452[arg1 - 35] = arg0.gjstr();
-		} else if (arg1 == 40) {
-			int var3 = arg0.g1();
-			this.field2438 = new short[var3];
-			this.field2439 = new short[var3];
+		} else if (code >= 35 && code < 40) {
+			this.iop[code - 35] = buf.gjstr();
+		} else if (code == 40) {
+			int var3 = buf.g1();
+			this.recol_s = new short[var3];
+			this.recol_d = new short[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.field2438[var4] = (short) arg0.g2();
-				this.field2439[var4] = (short) arg0.g2();
+				this.recol_s[var4] = (short) buf.g2();
+				this.recol_d[var4] = (short) buf.g2();
 			}
-		} else if (arg1 == 41) {
-			int var5 = arg0.g1();
-			this.field2440 = new short[var5];
-			this.field2441 = new short[var5];
+		} else if (code == 41) {
+			int var5 = buf.g1();
+			this.retex_s = new short[var5];
+			this.retex_d = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.field2440[var6] = (short) arg0.g2();
-				this.field2441[var6] = (short) arg0.g2();
+				this.retex_s[var6] = (short) buf.g2();
+				this.retex_d[var6] = (short) buf.g2();
 			}
-		} else if (arg1 == 78) {
-			this.field2462 = arg0.g2();
-		} else if (arg1 == 79) {
-			this.field2465 = arg0.g2();
-		} else if (arg1 == 90) {
-			this.field2431 = arg0.g2();
-		} else if (arg1 == 91) {
-			this.field2446 = arg0.g2();
-		} else if (arg1 == 92) {
-			this.field2468 = arg0.g2();
-		} else if (arg1 == 93) {
-			this.field2464 = arg0.g2();
-		} else if (arg1 == 95) {
-			this.field2463 = arg0.g2();
-		} else if (arg1 == 97) {
-			this.field2459 = arg0.g2();
-		} else if (arg1 == 98) {
-			this.field2450 = arg0.g2();
-		} else if (arg1 >= 100 && arg1 < 110) {
-			if (this.field2467 == null) {
-				this.field2467 = new int[10];
-				this.field2466 = new int[10];
+		} else if (code == 78) {
+			this.manwear3 = buf.g2();
+		} else if (code == 79) {
+			this.womanwear3 = buf.g2();
+		} else if (code == 90) {
+			this.manhead = buf.g2();
+		} else if (code == 91) {
+			this.womanhead = buf.g2();
+		} else if (code == 92) {
+			this.manhead2 = buf.g2();
+		} else if (code == 93) {
+			this.womanhead2 = buf.g2();
+		} else if (code == 95) {
+			this.zan2d = buf.g2();
+		} else if (code == 97) {
+			this.certlink = buf.g2();
+		} else if (code == 98) {
+			this.certtemplate = buf.g2();
+		} else if (code >= 100 && code < 110) {
+			if (this.countobj == null) {
+				this.countobj = new int[10];
+				this.countco = new int[10];
 			}
-			this.field2467[arg1 - 100] = arg0.g2();
-			this.field2466[arg1 - 100] = arg0.g2();
-		} else if (arg1 == 110) {
-			this.field2469 = arg0.g2();
-		} else if (arg1 == 111) {
-			this.field2445 = arg0.g2();
-		} else if (arg1 == 112) {
-			this.field2456 = arg0.g2();
-		} else if (arg1 == 113) {
-			this.field2472 = arg0.g1b();
-		} else if (arg1 == 114) {
-			this.field2473 = arg0.g1b() * 5;
-		} else if (arg1 == 115) {
-			this.field2437 = arg0.g1();
+			this.countobj[code - 100] = buf.g2();
+			this.countco[code - 100] = buf.g2();
+		} else if (code == 110) {
+			this.resizex = buf.g2();
+		} else if (code == 111) {
+			this.resizey = buf.g2();
+		} else if (code == 112) {
+			this.resizez = buf.g2();
+		} else if (code == 113) {
+			this.ambient = buf.g1b();
+		} else if (code == 114) {
+			this.contrast = buf.g1b() * 5;
+		} else if (code == 115) {
+			this.team = buf.g1();
 		}
 	}
 
 	@ObfuscatedName("fj.s(Lfj;Lfj;I)V")
 	public void method2520(ObjType arg0, ObjType arg1) {
-		this.field2436 = arg0.field2436;
-		this.field2442 = arg0.field2442;
-		this.field2443 = arg0.field2443;
-		this.field2444 = arg0.field2444;
-		this.field2463 = arg0.field2463;
-		this.field2471 = arg0.field2471;
-		this.field2447 = arg0.field2447;
-		this.field2438 = arg0.field2438;
-		this.field2439 = arg0.field2439;
-		this.field2440 = arg0.field2440;
-		this.field2441 = arg0.field2441;
-		this.field2461 = arg1.field2461;
-		this.field2457 = arg1.field2457;
-		this.field2470 = arg1.field2470;
-		this.field2448 = 1;
+		this.model = arg0.model;
+		this.zoom2d = arg0.zoom2d;
+		this.xan2d = arg0.xan2d;
+		this.yan2d = arg0.yan2d;
+		this.zan2d = arg0.zan2d;
+		this.xof2d = arg0.xof2d;
+		this.yof2d = arg0.yof2d;
+		this.recol_s = arg0.recol_s;
+		this.recol_d = arg0.recol_d;
+		this.retex_s = arg0.retex_s;
+		this.retex_d = arg0.retex_d;
+		this.name = arg1.name;
+		this.members = arg1.members;
+		this.cost = arg1.cost;
+		this.stackable = 1;
 	}
 
 	@ObfuscatedName("fj.u(II)Lfw;")
 	public final Model method2521(int arg0) {
-		if (this.field2467 != null && arg0 > 1) {
+		if (this.countobj != null && arg0 > 1) {
 			int var2 = -1;
 			for (int var3 = 0; var3 < 10; var3++) {
-				if (arg0 >= this.field2466[var3] && this.field2466[var3] != 0) {
-					var2 = this.field2467[var3];
+				if (arg0 >= this.countco[var3] && this.countco[var3] != 0) {
+					var2 = this.countobj[var3];
 				}
 			}
 			if (var2 != -1) {
 				return get(var2).method2521(1);
 			}
 		}
-		Model var4 = Model.method2992(field1111, this.field2436, 0);
+		Model var4 = Model.method2992(field1111, this.model, 0);
 		if (var4 == null) {
 			return null;
 		}
-		if (this.field2469 != 128 || this.field2445 != 128 || this.field2456 != 128) {
-			var4.method2937(this.field2469, this.field2445, this.field2456);
+		if (this.resizex != 128 || this.resizey != 128 || this.resizez != 128) {
+			var4.method2937(this.resizex, this.resizey, this.resizez);
 		}
-		if (this.field2438 != null) {
-			for (int var5 = 0; var5 < this.field2438.length; var5++) {
-				var4.method2935(this.field2438[var5], this.field2439[var5]);
+		if (this.recol_s != null) {
+			for (int var5 = 0; var5 < this.recol_s.length; var5++) {
+				var4.method2935(this.recol_s[var5], this.recol_d[var5]);
 			}
 		}
-		if (this.field2440 != null) {
-			for (int var6 = 0; var6 < this.field2440.length; var6++) {
-				var4.method2976(this.field2440[var6], this.field2441[var6]);
+		if (this.retex_s != null) {
+			for (int var6 = 0; var6 < this.retex_s.length; var6++) {
+				var4.method2976(this.retex_s[var6], this.retex_d[var6]);
 			}
 		}
 		return var4;
@@ -348,11 +348,11 @@ public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.v(IB)Lfo;")
 	public final SoftwareModel method2532(int arg0) {
-		if (this.field2467 != null && arg0 > 1) {
+		if (this.countobj != null && arg0 > 1) {
 			int var2 = -1;
 			for (int var3 = 0; var3 < 10; var3++) {
-				if (arg0 >= this.field2466[var3] && this.field2466[var3] != 0) {
-					var2 = this.field2467[var3];
+				if (arg0 >= this.countco[var3] && this.countco[var3] != 0) {
+					var2 = this.countobj[var3];
 				}
 			}
 			if (var2 != -1) {
@@ -363,24 +363,24 @@ public class ObjType extends DoublyLinkable {
 		if (var4 != null) {
 			return var4;
 		}
-		Model var5 = Model.method2992(field1111, this.field2436, 0);
+		Model var5 = Model.method2992(field1111, this.model, 0);
 		if (var5 == null) {
 			return null;
 		}
-		if (this.field2469 != 128 || this.field2445 != 128 || this.field2456 != 128) {
-			var5.method2937(this.field2469, this.field2445, this.field2456);
+		if (this.resizex != 128 || this.resizey != 128 || this.resizez != 128) {
+			var5.method2937(this.resizex, this.resizey, this.resizez);
 		}
-		if (this.field2438 != null) {
-			for (int var6 = 0; var6 < this.field2438.length; var6++) {
-				var5.method2935(this.field2438[var6], this.field2439[var6]);
+		if (this.recol_s != null) {
+			for (int var6 = 0; var6 < this.recol_s.length; var6++) {
+				var5.method2935(this.recol_s[var6], this.recol_d[var6]);
 			}
 		}
-		if (this.field2440 != null) {
-			for (int var7 = 0; var7 < this.field2440.length; var7++) {
-				var5.method2976(this.field2440[var7], this.field2441[var7]);
+		if (this.retex_s != null) {
+			for (int var7 = 0; var7 < this.retex_s.length; var7++) {
+				var5.method2976(this.retex_s[var7], this.retex_d[var7]);
 			}
 		}
-		SoftwareModel var8 = var5.method2942(this.field2472 + 64, this.field2473 + 768, -50, -10, -50);
+		SoftwareModel var8 = var5.method2942(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 		var8.field2744 = true;
 		field2433.put(var8, (long) this.field2435);
 		return var8;
@@ -388,11 +388,11 @@ public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.w(II)Lfj;")
 	public ObjType method2523(int arg0) {
-		if (this.field2467 != null && arg0 > 1) {
+		if (this.countobj != null && arg0 > 1) {
 			int var2 = -1;
 			for (int var3 = 0; var3 < 10; var3++) {
-				if (arg0 >= this.field2466[var3] && this.field2466[var3] != 0) {
-					var2 = this.field2467[var3];
+				if (arg0 >= this.countco[var3] && this.countco[var3] != 0) {
+					var2 = this.countobj[var3];
 				}
 			}
 			if (var2 != -1) {
@@ -412,11 +412,11 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 		ObjType var8 = get(arg0);
-		if (arg1 > 1 && var8.field2467 != null) {
+		if (arg1 > 1 && var8.countobj != null) {
 			int var9 = -1;
 			for (int var10 = 0; var10 < 10; var10++) {
-				if (arg1 >= var8.field2466[var10] && var8.field2466[var10] != 0) {
-					var9 = var8.field2467[var10];
+				if (arg1 >= var8.countco[var10] && var8.countco[var10] != 0) {
+					var9 = var8.countobj[var10];
 				}
 			}
 			if (var9 != -1) {
@@ -428,8 +428,8 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 		Pix32 var12 = null;
-		if (var8.field2450 != -1) {
-			var12 = method1837(var8.field2459, 10, 1, 0, true);
+		if (var8.certtemplate != -1) {
+			var12 = method1837(var8.certlink, 10, 1, 0, true);
 			if (var12 == null) {
 				return null;
 			}
@@ -445,16 +445,16 @@ public class ObjType extends DoublyLinkable {
 		Pix3D.method2808();
 		Pix3D.method2784(16, 16);
 		Pix3D.field2522 = false;
-		int var18 = var8.field2442;
+		int var18 = var8.zoom2d;
 		if (arg4) {
 			var18 = (int) ((double) var18 * 1.5D);
 		} else if (arg2 == 2) {
 			var18 = (int) ((double) var18 * 1.04D);
 		}
-		int var19 = Pix3D.sinTable[var8.field2443] * var18 >> 16;
-		int var20 = Pix3D.cosTable[var8.field2443] * var18 >> 16;
+		int var19 = Pix3D.sinTable[var8.xan2d] * var18 >> 16;
+		int var20 = Pix3D.cosTable[var8.xan2d] * var18 >> 16;
 		var11.method3002();
-		var11.method3014(0, var8.field2444, var8.field2463, var8.field2443, var8.field2471, var8.field2447 + var11.field2487 / 2 + var19, var8.field2447 + var20);
+		var11.method3014(0, var8.yan2d, var8.zan2d, var8.xan2d, var8.xof2d, var8.yof2d + var11.field2487 / 2 + var19, var8.yof2d + var20);
 		if (arg2 >= 1) {
 			var17.method2714(1);
 		}
@@ -465,10 +465,10 @@ public class ObjType extends DoublyLinkable {
 			var17.method2669(arg3);
 		}
 		Pix2D.method2583(var17.field2506, 36, 32);
-		if (var8.field2450 != -1) {
+		if (var8.certtemplate != -1) {
 			var12.method2671(0, 0);
 		}
-		if (!arg4 && (var8.field2448 == 1 || arg1 != 1) && arg1 != -1) {
+		if (!arg4 && (var8.stackable == 1 || arg1 != 1) && arg1 != -1) {
 			field815.method2821(method926(arg1), 0, 9, 16776960, 1);
 		}
 		if (!arg4) {
@@ -494,13 +494,13 @@ public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.y(ZI)Z")
 	public final boolean method2547(boolean arg0) {
-		int var2 = this.field2453;
-		int var3 = this.field2454;
-		int var4 = this.field2462;
+		int var2 = this.manwear;
+		int var3 = this.manwear2;
+		int var4 = this.manwear3;
 		if (arg0) {
-			var2 = this.field2474;
-			var3 = this.field2460;
-			var4 = this.field2465;
+			var2 = this.womanwear;
+			var3 = this.womanwear2;
+			var4 = this.womanwear3;
 		}
 		if (var2 == -1) {
 			return true;
@@ -520,13 +520,13 @@ public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.t(ZI)Lfw;")
 	public final Model method2525(boolean arg0) {
-		int var2 = this.field2453;
-		int var3 = this.field2454;
-		int var4 = this.field2462;
+		int var2 = this.manwear;
+		int var3 = this.manwear2;
+		int var4 = this.manwear3;
 		if (arg0) {
-			var2 = this.field2474;
-			var3 = this.field2460;
-			var4 = this.field2465;
+			var2 = this.womanwear;
+			var3 = this.womanwear2;
+			var4 = this.womanwear3;
 		}
 		if (var2 == -1) {
 			return null;
@@ -543,20 +543,20 @@ public class ObjType extends DoublyLinkable {
 				var5 = new Model(var8, 3);
 			}
 		}
-		if (!arg0 && this.field2455 != 0) {
-			var5.method2934(0, this.field2455, 0);
+		if (!arg0 && this.manwearOffsetY != 0) {
+			var5.method2934(0, this.manwearOffsetY, 0);
 		}
-		if (arg0 && this.field2458 != 0) {
-			var5.method2934(0, this.field2458, 0);
+		if (arg0 && this.womanwearOffsetY != 0) {
+			var5.method2934(0, this.womanwearOffsetY, 0);
 		}
-		if (this.field2438 != null) {
-			for (int var10 = 0; var10 < this.field2438.length; var10++) {
-				var5.method2935(this.field2438[var10], this.field2439[var10]);
+		if (this.recol_s != null) {
+			for (int var10 = 0; var10 < this.recol_s.length; var10++) {
+				var5.method2935(this.recol_s[var10], this.recol_d[var10]);
 			}
 		}
-		if (this.field2440 != null) {
-			for (int var11 = 0; var11 < this.field2440.length; var11++) {
-				var5.method2976(this.field2440[var11], this.field2441[var11]);
+		if (this.retex_s != null) {
+			for (int var11 = 0; var11 < this.retex_s.length; var11++) {
+				var5.method2976(this.retex_s[var11], this.retex_d[var11]);
 			}
 		}
 		return var5;
@@ -564,11 +564,11 @@ public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.f(ZB)Z")
 	public final boolean method2554(boolean arg0) {
-		int var2 = this.field2431;
-		int var3 = this.field2468;
+		int var2 = this.manhead;
+		int var3 = this.manhead2;
 		if (arg0) {
-			var2 = this.field2446;
-			var3 = this.field2464;
+			var2 = this.womanhead;
+			var3 = this.womanhead2;
 		}
 		if (var2 == -1) {
 			return true;
@@ -585,11 +585,11 @@ public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.k(ZI)Lfw;")
 	public final Model method2527(boolean arg0) {
-		int var2 = this.field2431;
-		int var3 = this.field2468;
+		int var2 = this.manhead;
+		int var3 = this.manhead2;
 		if (arg0) {
-			var2 = this.field2446;
-			var3 = this.field2464;
+			var2 = this.womanhead;
+			var3 = this.womanhead2;
 		}
 		if (var2 == -1) {
 			return null;
@@ -600,14 +600,14 @@ public class ObjType extends DoublyLinkable {
 			Model[] var6 = new Model[] { var4, var5 };
 			var4 = new Model(var6, 2);
 		}
-		if (this.field2438 != null) {
-			for (int var7 = 0; var7 < this.field2438.length; var7++) {
-				var4.method2935(this.field2438[var7], this.field2439[var7]);
+		if (this.recol_s != null) {
+			for (int var7 = 0; var7 < this.recol_s.length; var7++) {
+				var4.method2935(this.recol_s[var7], this.recol_d[var7]);
 			}
 		}
-		if (this.field2440 != null) {
-			for (int var8 = 0; var8 < this.field2440.length; var8++) {
-				var4.method2976(this.field2440[var8], this.field2441[var8]);
+		if (this.retex_s != null) {
+			for (int var8 = 0; var8 < this.retex_s.length; var8++) {
+				var4.method2976(this.retex_s[var8], this.retex_d[var8]);
 			}
 		}
 		return var4;

@@ -201,9 +201,9 @@ public class ScriptRunner {
 						var4--;
 						int var21 = field188[var4];
 						VarBitType var22 = VarBitType.get(var20);
-						int var23 = var22.field2418;
-						int var24 = var22.field2416;
-						int var25 = var22.field2420;
+						int var23 = var22.basevar;
+						int var24 = var22.startbit;
+						int var25 = var22.endbit;
 						int var26 = VarProvider.field1212[var25 - var24];
 						if (var21 < 0 || var21 > var26) {
 							var21 = 0;
@@ -644,12 +644,12 @@ public class ScriptRunner {
 						var66.field1791 = var67;
 						var66.field1888 = var68;
 						ObjType var69 = ObjType.get(var67);
-						var66.field1848 = var69.field2443;
-						var66.field1824 = var69.field2444;
-						var66.field1817 = var69.field2463;
-						var66.field1821 = var69.field2471;
-						var66.field1798 = var69.field2447;
-						var66.field1826 = var69.field2442;
+						var66.field1848 = var69.xan2d;
+						var66.field1824 = var69.yan2d;
+						var66.field1817 = var69.zan2d;
+						var66.field1821 = var69.xof2d;
+						var66.field1798 = var69.yof2d;
+						var66.field1826 = var69.zoom2d;
 						if (var66.field1792 > 0) {
 							var66.field1826 = var66.field1826 * 32 / var66.field1792;
 						}
@@ -1233,7 +1233,7 @@ public class ScriptRunner {
 							} else {
 								var129 = var128;
 							}
-							var126[var127] = var129.field2477;
+							var126[var127] = var129.size;
 							continue;
 						}
 						if (var367 == 3305) {
@@ -1353,17 +1353,17 @@ public class ScriptRunner {
 							int var151 = field188[var4];
 							int var152 = field188[var4 + 1];
 							EnumType var153 = EnumType.get(var151);
-							if (var153.field2424 != 's') {
+							if (var153.outputtype != 's') {
 							}
-							for (int var154 = 0; var154 < var153.field2427; var154++) {
-								if (var153.field2421[var154] == var152) {
-									field194[var5++] = var153.field2430[var154];
+							for (int var154 = 0; var154 < var153.count; var154++) {
+								if (var153.keys[var154] == var152) {
+									field194[var5++] = var153.stringValues[var154];
 									var153 = null;
 									break;
 								}
 							}
 							if (var153 != null) {
-								field194[var5++] = var153.field2428;
+								field194[var5++] = var153.defaultString;
 							}
 							continue;
 						}
@@ -1374,13 +1374,13 @@ public class ScriptRunner {
 							int var157 = field188[var4 + 2];
 							int var158 = field188[var4 + 3];
 							EnumType var159 = EnumType.get(var157);
-							if (var159.field2423 == var155 && var159.field2424 == var156) {
-								for (int var160 = 0; var160 < var159.field2427; var160++) {
-									if (var159.field2421[var160] == var158) {
+							if (var159.inputtype == var155 && var159.outputtype == var156) {
+								for (int var160 = 0; var160 < var159.count; var160++) {
+									if (var159.keys[var160] == var158) {
 										if (var156 == 115) {
-											field194[var5++] = var159.field2430[var160];
+											field194[var5++] = var159.stringValues[var160];
 										} else {
-											field188[var4++] = var159.field2429[var160];
+											field188[var4++] = var159.intValues[var160];
 										}
 										var159 = null;
 										break;
@@ -1388,9 +1388,9 @@ public class ScriptRunner {
 								}
 								if (var159 != null) {
 									if (var156 == 115) {
-										field194[var5++] = var159.field2428;
+										field194[var5++] = var159.defaultString;
 									} else {
-										field188[var4++] = var159.field2426;
+										field188[var4++] = var159.defaultInt;
 									}
 								}
 								continue;
@@ -2097,7 +2097,7 @@ public class ScriptRunner {
 						if (var367 == 4200) {
 							var4--;
 							int var323 = field188[var4];
-							field194[var5++] = ObjType.get(var323).field2461;
+							field194[var5++] = ObjType.get(var323).name;
 							continue;
 						}
 						if (var367 == 4201) {
@@ -2105,8 +2105,8 @@ public class ScriptRunner {
 							int var324 = field188[var4];
 							int var325 = field188[var4 + 1];
 							ObjType var326 = ObjType.get(var324);
-							if (var325 >= 1 && var325 <= 5 && var326.field2451[var325 - 1] != null) {
-								field194[var5++] = var326.field2451[var325 - 1];
+							if (var325 >= 1 && var325 <= 5 && var326.op[var325 - 1] != null) {
+								field194[var5++] = var326.op[var325 - 1];
 								continue;
 							}
 							field194[var5++] = "";
@@ -2117,8 +2117,8 @@ public class ScriptRunner {
 							int var327 = field188[var4];
 							int var328 = field188[var4 + 1];
 							ObjType var329 = ObjType.get(var327);
-							if (var328 >= 1 && var328 <= 5 && var329.field2452[var328 - 1] != null) {
-								field194[var5++] = var329.field2452[var328 - 1];
+							if (var328 >= 1 && var328 <= 5 && var329.iop[var328 - 1] != null) {
+								field194[var5++] = var329.iop[var328 - 1];
 								continue;
 							}
 							field194[var5++] = "";
@@ -2127,21 +2127,21 @@ public class ScriptRunner {
 						if (var367 == 4203) {
 							var4--;
 							int var330 = field188[var4];
-							field188[var4++] = ObjType.get(var330).field2470;
+							field188[var4++] = ObjType.get(var330).cost;
 							continue;
 						}
 						if (var367 == 4204) {
 							var4--;
 							int var331 = field188[var4];
-							field188[var4++] = ObjType.get(var331).field2448 == 1 ? 1 : 0;
+							field188[var4++] = ObjType.get(var331).stackable == 1 ? 1 : 0;
 							continue;
 						}
 						if (var367 == 4205) {
 							var4--;
 							int var332 = field188[var4];
 							ObjType var333 = ObjType.get(var332);
-							if (var333.field2450 == -1 && var333.field2459 >= 0) {
-								field188[var4++] = var333.field2459;
+							if (var333.certtemplate == -1 && var333.certlink >= 0) {
+								field188[var4++] = var333.certlink;
 								continue;
 							}
 							field188[var4++] = var332;
@@ -2151,8 +2151,8 @@ public class ScriptRunner {
 							var4--;
 							int var334 = field188[var4];
 							ObjType var335 = ObjType.get(var334);
-							if (var335.field2450 >= 0 && var335.field2459 >= 0) {
-								field188[var4++] = var335.field2459;
+							if (var335.certtemplate >= 0 && var335.certlink >= 0) {
+								field188[var4++] = var335.certlink;
 								continue;
 							}
 							field188[var4++] = var334;
@@ -2161,7 +2161,7 @@ public class ScriptRunner {
 						if (var367 == 4207) {
 							var4--;
 							int var336 = field188[var4];
-							field188[var4++] = ObjType.get(var336).field2457 ? 1 : 0;
+							field188[var4++] = ObjType.get(var336).members ? 1 : 0;
 							continue;
 						}
 					} else if (var367 < 5100) {

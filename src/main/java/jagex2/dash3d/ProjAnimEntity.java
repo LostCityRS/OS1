@@ -96,7 +96,7 @@ public class ProjAnimEntity extends Entity {
 		this.field2582 = arg9;
 		this.field2571 = arg10;
 		this.field2587 = false;
-		int var12 = SpotAnimType.get(this.field2568).field2390;
+		int var12 = SpotAnimType.get(this.field2568).anim;
 		if (var12 == -1) {
 			this.field2588 = null;
 		} else {
@@ -140,14 +140,14 @@ public class ProjAnimEntity extends Entity {
 		while (true) {
 			do {
 				do {
-					if (this.field2590 <= this.field2588.field2366[this.field2589]) {
+					if (this.field2590 <= this.field2588.delay[this.field2589]) {
 						return;
 					}
-					this.field2590 -= this.field2588.field2366[this.field2589];
+					this.field2590 -= this.field2588.delay[this.field2589];
 					this.field2589++;
-				} while (this.field2589 < this.field2588.field2364.length);
-				this.field2589 -= this.field2588.field2368;
-			} while (this.field2589 >= 0 && this.field2589 < this.field2588.field2364.length);
+				} while (this.field2589 < this.field2588.frames.length);
+				this.field2589 -= this.field2588.replayoff;
+			} while (this.field2589 >= 0 && this.field2589 < this.field2588.frames.length);
 			this.field2589 = 0;
 		}
 	}

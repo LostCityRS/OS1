@@ -16,13 +16,13 @@ public class VarBitType extends DoublyLinkable {
 	public static LruCache field2417 = new LruCache(64);
 
 	@ObfuscatedName("fc.z")
-	public int field2418;
+	public int basevar;
 
 	@ObfuscatedName("fc.g")
-	public int field2416;
+	public int startbit;
 
 	@ObfuscatedName("fc.q")
-	public int field2420;
+	public int endbit;
 
 	@ObfuscatedName("q.z(II)Lfc;")
 	public static VarBitType get(int arg0) {
@@ -40,22 +40,22 @@ public class VarBitType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fc.g(Lev;B)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("fc.q(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 1) {
-			this.field2418 = arg0.g2();
-			this.field2416 = arg0.g1();
-			this.field2420 = arg0.g1();
+	public void decodeInner(Packet buf, int code) {
+		if (code == 1) {
+			this.basevar = buf.g2();
+			this.startbit = buf.g1();
+			this.endbit = buf.g1();
 		}
 	}
 }

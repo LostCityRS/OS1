@@ -28,13 +28,13 @@ public class LocEntity extends Entity {
 	public int field2596;
 
 	@ObfuscatedName("ff.u")
-	public SeqType field2597;
+	public SeqType anim;
 
 	@ObfuscatedName("ff.v")
-	public int field2598;
+	public int animFrame;
 
 	@ObfuscatedName("ff.w")
-	public int field2591;
+	public int animCycle;
 
 	public LocEntity(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, boolean arg7, Entity arg8) {
 		this.field2599 = arg0;
@@ -44,48 +44,48 @@ public class LocEntity extends Entity {
 		this.field2595 = arg4;
 		this.field2596 = arg5;
 		if (arg6 != -1) {
-			this.field2597 = SeqType.get(arg6);
-			this.field2598 = 0;
-			this.field2591 = Client.field1922 - 1;
-			if (this.field2597.field2377 == 0 && arg8 != null && arg8 instanceof LocEntity) {
+			this.anim = SeqType.get(arg6);
+			this.animFrame = 0;
+			this.animCycle = Client.field1922 - 1;
+			if (this.anim.replacemode == 0 && arg8 != null && arg8 instanceof LocEntity) {
 				LocEntity var10 = (LocEntity) arg8;
-				if (this.field2597 == var10.field2597) {
-					this.field2598 = var10.field2598;
-					this.field2591 = var10.field2591;
+				if (this.anim == var10.anim) {
+					this.animFrame = var10.animFrame;
+					this.animCycle = var10.animCycle;
 					return;
 				}
 			}
-			if (arg7 && this.field2597.field2368 != -1) {
-				this.field2598 = (int) (Math.random() * (double) this.field2597.field2364.length);
-				this.field2591 -= (int) (Math.random() * (double) this.field2597.field2366[this.field2598]);
+			if (arg7 && this.anim.replayoff != -1) {
+				this.animFrame = (int) (Math.random() * (double) this.anim.frames.length);
+				this.animCycle -= (int) (Math.random() * (double) this.anim.delay[this.animFrame]);
 			}
 		}
 	}
 
 	@ObfuscatedName("ff.g(I)Lfo;")
 	public final SoftwareModel method2643() {
-		if (this.field2597 != null) {
-			int var1 = Client.field1922 - this.field2591;
-			if (var1 > 100 && this.field2597.field2368 > 0) {
+		if (this.anim != null) {
+			int var1 = Client.field1922 - this.animCycle;
+			if (var1 > 100 && this.anim.replayoff > 0) {
 				var1 = 100;
 			}
 			label47: {
 				do {
 					do {
-						if (var1 <= this.field2597.field2366[this.field2598]) {
+						if (var1 <= this.anim.delay[this.animFrame]) {
 							break label47;
 						}
-						var1 -= this.field2597.field2366[this.field2598];
-						this.field2598++;
-					} while (this.field2598 < this.field2597.field2364.length);
-					this.field2598 -= this.field2597.field2368;
-				} while (this.field2598 >= 0 && this.field2598 < this.field2597.field2364.length);
-				this.field2597 = null;
+						var1 -= this.anim.delay[this.animFrame];
+						this.animFrame++;
+					} while (this.animFrame < this.anim.frames.length);
+					this.animFrame -= this.anim.replayoff;
+				} while (this.animFrame >= 0 && this.animFrame < this.anim.frames.length);
+				this.anim = null;
 			}
-			this.field2591 = Client.field1922 - var1;
+			this.animCycle = Client.field1922 - var1;
 		}
 		LocType var2 = LocType.get(this.field2599);
-		if (var2.field2317 != null) {
+		if (var2.multiloc != null) {
 			var2 = var2.method2368();
 		}
 		if (var2 == null) {
@@ -94,11 +94,11 @@ public class LocEntity extends Entity {
 		int var3;
 		int var4;
 		if (this.field2593 == 1 || this.field2593 == 3) {
-			var3 = var2.field2318;
-			var4 = var2.field2344;
+			var3 = var2.length;
+			var4 = var2.width;
 		} else {
-			var3 = var2.field2344;
-			var4 = var2.field2318;
+			var3 = var2.width;
+			var4 = var2.length;
 		}
 		int var5 = (var3 >> 1) + this.field2595;
 		int var6 = (var3 + 1 >> 1) + this.field2595;
@@ -108,6 +108,6 @@ public class LocEntity extends Entity {
 		int var10 = var9[var5][var7] + var9[var6][var7] + var9[var5][var8] + var9[var6][var8] >> 2;
 		int var11 = (this.field2595 << 7) + (var3 << 6);
 		int var12 = (this.field2596 << 7) + (var4 << 6);
-		return var2.method2376(this.field2592, this.field2593, var9, var11, var10, var12, this.field2597, this.field2598);
+		return var2.method2376(this.field2592, this.field2593, var9, var11, var10, var12, this.anim, this.animFrame);
 	}
 }
