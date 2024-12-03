@@ -18,6 +18,12 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 	@ObfuscatedName("az.cu")
 	public static boolean[] field473 = new boolean[112];
 
+	@ObfuscatedName("ca.cc")
+	public static char field1162;
+
+	@ObfuscatedName("n.cm")
+	public static int field114;
+
 	@ObfuscatedName("az.cw")
 	public static int[] field474 = new int[128];
 

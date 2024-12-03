@@ -1,7 +1,6 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.config.*;
 import jagex2.datastruct.JStringUtil;
 import jagex2.datastruct.StringComparator;
@@ -1224,7 +1223,7 @@ public class ScriptRunner {
 							InvType var128 = (InvType) InvType.field2475.method1244((long) var125);
 							InvType var129;
 							if (var128 == null) {
-								byte[] var130 = Statics.field2476.method1044(5, var125);
+								byte[] var130 = InvType.field2476.method1044(5, var125);
 								InvType var131 = new InvType();
 								if (var130 != null) {
 									var131.method2569(new Packet(var130));

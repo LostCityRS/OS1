@@ -1,7 +1,6 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.datastruct.JStringUtil;
 import jagex2.datastruct.TextUtil;
 import jagex2.graphics.*;
@@ -170,7 +169,7 @@ public class LoginScreen {
 
 	@ObfuscatedName("bx.d(I)V")
 	public static void method831() {
-		if (!Statics.field1507) {
+		if (!Js5TcpClient.field1507) {
 			return;
 		}
 		field137 = null;
@@ -201,7 +200,7 @@ public class LoginScreen {
 		MidiPlayer.field1625 = false;
 		MidiPlayer.field1152 = 2;
 		Js5TcpClient.method343(true);
-		Statics.field1507 = false;
+		Js5TcpClient.field1507 = false;
 	}
 
 	@ObfuscatedName("r.l(Ldj;I)V")
@@ -302,8 +301,8 @@ public class LoginScreen {
 						if (JavaKeyboardProvider.field479 == JavaKeyboardProvider.field424) {
 							var19 = false;
 						} else {
-							Statics.field114 = JavaKeyboardProvider.field478[JavaKeyboardProvider.field479];
-							Client.field1162 = JavaKeyboardProvider.field477[JavaKeyboardProvider.field479];
+							JavaKeyboardProvider.field114 = JavaKeyboardProvider.field478[JavaKeyboardProvider.field479];
+							JavaKeyboardProvider.field1162 = JavaKeyboardProvider.field477[JavaKeyboardProvider.field479];
 							JavaKeyboardProvider.field479 = JavaKeyboardProvider.field479 + 1 & 0x7F;
 							var19 = true;
 						}
@@ -313,29 +312,29 @@ public class LoginScreen {
 					}
 					boolean var21 = false;
 					for (int var22 = 0; var22 < field158.length(); var22++) {
-						if (Client.field1162 == field158.charAt(var22)) {
+						if (JavaKeyboardProvider.field1162 == field158.charAt(var22)) {
 							var21 = true;
 							break;
 						}
 					}
 					if (field150 == 0) {
-						if (Statics.field114 == 85 && field164.length() > 0) {
+						if (JavaKeyboardProvider.field114 == 85 && field164.length() > 0) {
 							field164 = field164.substring(0, field164.length() - 1);
 						}
-						if (Statics.field114 == 84 || Statics.field114 == 80) {
+						if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
 							field150 = 1;
 						}
 						if (var21 && field164.length() < 320) {
-							field164 = field164 + Client.field1162;
+							field164 = field164 + JavaKeyboardProvider.field1162;
 						}
 					} else if (field150 == 1) {
-						if (Statics.field114 == 85 && field133.length() > 0) {
+						if (JavaKeyboardProvider.field114 == 85 && field133.length() > 0) {
 							field133 = field133.substring(0, field133.length() - 1);
 						}
-						if (Statics.field114 == 84 || Statics.field114 == 80) {
+						if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
 							field150 = 0;
 						}
-						if (Client.field1915 == 2 && Statics.field114 == 84) {
+						if (Client.field1915 == 2 && JavaKeyboardProvider.field114 == 84) {
 							field164 = field164.trim();
 							if (field164.length() == 0) {
 								method2357(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
@@ -350,7 +349,7 @@ public class LoginScreen {
 							return;
 						}
 						if (var21 && field133.length() < 20) {
-							field133 = field133 + Client.field1162;
+							field133 = field133 + JavaKeyboardProvider.field1162;
 						}
 					}
 				}

@@ -1,7 +1,6 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import deob.ViewBox;
 import jagex2.config.*;
 import jagex2.dash3d.*;
@@ -188,9 +187,6 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("ey.cu")
 	public static Js5Provider field2353;
-
-	@ObfuscatedName("ca.cc")
-	public static char field1162;
 
 	@ObfuscatedName("z.cc")
 	public static Js5Provider field126;
@@ -1116,6 +1112,9 @@ public class Client extends GameShell {
 	@ObfuscatedName("be.hf")
 	public static IfType field855;
 
+	@ObfuscatedName("cq.oc")
+	public static MixerPcmStream field1460;
+
 	@ObfuscatedName("dl.ns")
 	public static Pix32 field1627;
 
@@ -1284,13 +1283,13 @@ public class Client extends GameShell {
 		byte var19 = 0;
 		try {
 			SignLinkCacheFolder.archiveCount = 16;
-			Statics.field368 = var19;
+			SignLinkCacheFolder.field368 = var19;
 			try {
-				Statics.field294 = System.getProperty("os.name");
+				SignLinkCacheFolder.field294 = System.getProperty("os.name");
 			} catch (Exception var37) {
-				Statics.field294 = "Unknown";
+				SignLinkCacheFolder.field294 = "Unknown";
 			}
-			Statics.field199 = Statics.field294.toLowerCase();
+			SignLinkCacheFolder.field199 = SignLinkCacheFolder.field294.toLowerCase();
 			try {
 				SignLinkCacheFolder.homeDir = System.getProperty("user.home");
 				if (SignLinkCacheFolder.homeDir != null) {
@@ -1299,7 +1298,7 @@ public class Client extends GameShell {
 			} catch (Exception var36) {
 			}
 			try {
-				if (Statics.field199.startsWith("win")) {
+				if (SignLinkCacheFolder.field199.startsWith("win")) {
 					if (SignLinkCacheFolder.homeDir == null) {
 						SignLinkCacheFolder.homeDir = System.getenv("USERPROFILE");
 					}
@@ -1315,7 +1314,7 @@ public class Client extends GameShell {
 				SignLinkCacheFolder.homeDir = "~/";
 			}
 			SignLinkCacheFolder.historicCacheLocations = new String[] { "c:/rscache/", "/rscache/", "c:/windows/", "c:/winnt/", "c:/", SignLinkCacheFolder.homeDir, "/tmp/", "" };
-			SignLinkCacheFolder.historicCacheDirectories = new String[] { ".jagex_cache_" + Statics.field368, ".file_store_" + Statics.field368 };
+			SignLinkCacheFolder.historicCacheDirectories = new String[] { ".jagex_cache_" + SignLinkCacheFolder.field368, ".file_store_" + SignLinkCacheFolder.field368 };
 			label130: for (int var23 = 0; var23 < 4; var23++) {
 				SignLinkCacheFolder.cacheDirectory = SignLinkCacheFolder.method102("oldschool", var18, var23);
 				if (!SignLinkCacheFolder.cacheDirectory.exists()) {
@@ -1546,11 +1545,11 @@ public class Client extends GameShell {
 							int var22 = field1768.length;
 							for (PositionedSound var23 = (PositionedSound) PositionedSound.field1612.method1297(); var23 != null; var23 = (PositionedSound) PositionedSound.field1612.method1299()) {
 								if (var23.field1603 != null) {
-									Statics.field1460.method2175(var23.field1603);
+									field1460.method2175(var23.field1603);
 									var23.field1603 = null;
 								}
 								if (var23.field1614 != null) {
-									Statics.field1460.method2175(var23.field1614);
+									field1460.method2175(var23.field1614);
 									var23.field1614 = null;
 								}
 							}
@@ -3511,7 +3510,7 @@ public class Client extends GameShell {
 												PcmSound var434 = var426.method291().method2050(field1733);
 												SoundPcmStream var435 = SoundPcmStream.method2144(var434, 100, var433);
 												var435.method2061(field2006[var424] - 1);
-												Statics.field1460.method2174(var435);
+												field1460.method2174(var435);
 											}
 											field2179[var424] = -100;
 										}
@@ -3624,8 +3623,8 @@ public class Client extends GameShell {
 											if (JavaKeyboardProvider.field479 == JavaKeyboardProvider.field424) {
 												var447 = false;
 											} else {
-												Statics.field114 = JavaKeyboardProvider.field478[JavaKeyboardProvider.field479];
-												field1162 = JavaKeyboardProvider.field477[JavaKeyboardProvider.field479];
+												JavaKeyboardProvider.field114 = JavaKeyboardProvider.field478[JavaKeyboardProvider.field479];
+												JavaKeyboardProvider.field1162 = JavaKeyboardProvider.field477[JavaKeyboardProvider.field479];
 												JavaKeyboardProvider.field479 = JavaKeyboardProvider.field479 + 1 & 0x7F;
 												var447 = true;
 											}
@@ -4033,8 +4032,8 @@ public class Client extends GameShell {
 												ScriptRunner.method777(var449);
 											}
 										}
-										field2153[field2151] = Statics.field114;
-										field2152[field2151] = field1162;
+										field2153[field2151] = JavaKeyboardProvider.field114;
+										field2152[field2151] = JavaKeyboardProvider.field1162;
 										field2151++;
 									}
 								} else if (field1964 > 0) {
@@ -4085,9 +4084,9 @@ public class Client extends GameShell {
 			Color var5 = null;
 			try {
 				Graphics var6 = GameShell.canvas.getGraphics();
-				if (Statics.field1159 == null) {
-					Statics.field1159 = new Font("Helvetica", 1, 13);
-					Statics.field2489 = GameShell.canvas.getFontMetrics(Statics.field1159);
+				if (GameShell.field1159 == null) {
+					GameShell.field1159 = new Font("Helvetica", 1, 13);
+					GameShell.field2489 = GameShell.canvas.getFontMetrics(GameShell.field1159);
 				}
 				if (fullredraw) {
 					fullredraw = false;
@@ -4108,9 +4107,9 @@ public class Client extends GameShell {
 					var7.setColor(Color.black);
 					var7.drawRect(1, 1, 301, 31);
 					var7.fillRect(var3 * 3 + 2, 2, 300 - var3 * 3, 30);
-					var7.setFont(Statics.field1159);
+					var7.setFont(GameShell.field1159);
 					var7.setColor(Color.white);
-					var7.drawString(var4, (304 - Statics.field2489.stringWidth(var4)) / 2, 22);
+					var7.drawString(var4, (304 - GameShell.field2489.stringWidth(var4)) / 2, 22);
 					var6.drawImage(field1475, GameShell.canvasWid / 2 - 152, GameShell.canvasHei / 2 - 18, null);
 				} catch (Exception var49) {
 					int var9 = GameShell.canvasWid / 2 - 152;
@@ -4121,9 +4120,9 @@ public class Client extends GameShell {
 					var6.setColor(Color.black);
 					var6.drawRect(var9 + 1, var10 + 1, 301, 31);
 					var6.fillRect(var3 * 3 + var9 + 2, var10 + 2, 300 - var3 * 3, 30);
-					var6.setFont(Statics.field1159);
+					var6.setFont(GameShell.field1159);
 					var6.setColor(Color.white);
-					var6.drawString(var4, var9 + (304 - Statics.field2489.stringWidth(var4)) / 2, var10 + 22);
+					var6.drawString(var4, var9 + (304 - GameShell.field2489.stringWidth(var4)) / 2, var10 + 22);
 				}
 			} catch (Exception var50) {
 				GameShell.canvas.repaint();
@@ -4331,8 +4330,8 @@ public class Client extends GameShell {
 		}
 		if (field1929 == 0) {
 			field1475 = null;
-			Statics.field1159 = null;
-			Statics.field2489 = null;
+			GameShell.field1159 = null;
+			GameShell.field2489 = null;
 		}
 		if (arg0 == 20 || arg0 == 40) {
 			field1947 = 0;
@@ -4354,7 +4353,7 @@ public class Client extends GameShell {
 			Canvas var1 = GameShell.canvas;
 			Js5Provider var2 = field544;
 			Js5Provider var3 = field1944;
-			if (!Statics.field1507) {
+			if (!Js5TcpClient.field1507) {
 				Pix2D.method2589();
 				byte[] var4 = var2.method1061("title.jpg", "");
 				LoginScreen.field146 = new Pix32(var4, var1);
@@ -4433,7 +4432,7 @@ public class Client extends GameShell {
 					MidiPlayer.method95(2, var17, var18, var19, 255, false);
 				}
 				Js5TcpClient.method343(false);
-				Statics.field1507 = true;
+				Js5TcpClient.field1507 = true;
 				LoginScreen.field146.method2667(0, 0);
 				LoginScreen.field348.method2667(382, 0);
 				LoginScreen.field131.method2747(382 - LoginScreen.field131.field2513 / 2, 18);
@@ -4631,8 +4630,8 @@ public class Client extends GameShell {
 			field38.method240(var23);
 			MidiPlayer.method1511(field126, field2353, field1509, var23);
 			field1585 = AudioChannel.method1132(GameShell.signlink, GameShell.canvas, 1, 2048);
-			Statics.field1460 = new MixerPcmStream();
-			field1585.method240(Statics.field1460);
+			field1460 = new MixerPcmStream();
+			field1585.method240(field1460);
 			field1733 = new PcmResampler(22050, AudioChannel.field241);
 			LoginScreen.field156 = EnglishLocale.field911;
 			LoginScreen.field149 = 35;
@@ -4726,7 +4725,7 @@ public class Client extends GameShell {
 				VarPlayerType.method1237(field1209);
 				IfType.method512(field1123, field350, field1944, field1150);
 				Js5Provider var39 = field1209;
-				Statics.field2476 = var39;
+				InvType.field2476 = var39;
 				Js5Provider var40 = field1209;
 				EnumType.field2422 = var40;
 				LoginScreen.field156 = EnglishLocale.field887;
@@ -5342,11 +5341,11 @@ public class Client extends GameShell {
 		field2189 = false;
 		for (PositionedSound var1 = (PositionedSound) PositionedSound.field1612.method1297(); var1 != null; var1 = (PositionedSound) PositionedSound.field1612.method1299()) {
 			if (var1.field1603 != null) {
-				Statics.field1460.method2175(var1.field1603);
+				field1460.method2175(var1.field1603);
 				var1.field1603 = null;
 			}
 			if (var1.field1614 != null) {
-				Statics.field1460.method2175(var1.field1614);
+				field1460.method2175(var1.field1614);
 				var1.field1614 = null;
 			}
 		}

@@ -4,9 +4,13 @@ import deob.ObfuscatedName;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
+import jagex2.js5.Js5Index;
 
 @ObfuscatedName("fp")
 public class InvType extends DoublyLinkable {
+
+	@ObfuscatedName("fp.n")
+	public static Js5Index field2476;
 
 	@ObfuscatedName("fp.j")
 	public static LruCache field2475 = new LruCache(64);

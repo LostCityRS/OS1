@@ -14,6 +14,9 @@ import java.util.zip.CRC32;
 @ObfuscatedName("cu")
 public class Js5TcpClient {
 
+	@ObfuscatedName("df.r")
+	public static boolean field1507;
+
 	@ObfuscatedName("cu.d")
 	public static int field1190 = 0;
 

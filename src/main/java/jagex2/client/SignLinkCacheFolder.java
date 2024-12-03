@@ -33,11 +33,20 @@ public class SignLinkCacheFolder {
 	@ObfuscatedName("av.v")
 	public static BufferedFile[] cacheIndex;
 
+	@ObfuscatedName("ap.w")
+	public static int field368;
+
 	@ObfuscatedName("by.e")
 	public static String[] historicCacheLocations;
 
 	@ObfuscatedName("ag.b")
 	public static String[] historicCacheDirectories;
+
+	@ObfuscatedName("s.f")
+	public static String field199;
+
+	@ObfuscatedName("f.k")
+	public static String field294;
 
 	@ObfuscatedName("ez.o")
 	public static String homeDir;

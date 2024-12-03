@@ -66,6 +66,12 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("ao.t")
 	public static int canvasHei;
 
+	@ObfuscatedName("ca.f")
+	public static Font field1159;
+
+	@ObfuscatedName("fr.k")
+	public static FontMetrics field2489;
+
 	@ObfuscatedName("dj.o")
 	public static PixMap drawArea;
 

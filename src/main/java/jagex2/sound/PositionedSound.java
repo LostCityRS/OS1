@@ -1,7 +1,6 @@
 package jagex2.sound;
 
 import deob.ObfuscatedName;
-import deob.Statics;
 import jagex2.client.Client;
 import jagex2.config.LocType;
 import jagex2.datastruct.LinkList;
@@ -82,7 +81,7 @@ public class PositionedSound extends Linkable {
 			this.field1604 = var2.field2351;
 		}
 		if (this.field1608 != var1 && this.field1603 != null) {
-			Statics.field1460.method2175(this.field1603);
+			Client.field1460.method2175(this.field1603);
 			this.field1603 = null;
 		}
 	}
@@ -133,11 +132,11 @@ public class PositionedSound extends Linkable {
 				}
 				if (var5 - 64 > var4.field1607 || Client.field2174 == 0 || var4.field1602 != arg0) {
 					if (var4.field1603 != null) {
-						Statics.field1460.method2175(var4.field1603);
+						Client.field1460.method2175(var4.field1603);
 						var4.field1603 = null;
 					}
 					if (var4.field1614 != null) {
-						Statics.field1460.method2175(var4.field1614);
+						Client.field1460.method2175(var4.field1614);
 						var4.field1614 = null;
 					}
 				} else {
@@ -154,7 +153,7 @@ public class PositionedSound extends Linkable {
 							PcmSound var8 = var7.method291().method2050(Client.field1733);
 							SoundPcmStream var9 = SoundPcmStream.method2144(var8, 100, var6);
 							var9.method2061(-1);
-							Statics.field1460.method2174(var9);
+							Client.field1460.method2174(var9);
 							var4.field1603 = var9;
 						}
 					}
@@ -170,7 +169,7 @@ public class PositionedSound extends Linkable {
 							PcmSound var12 = var11.method291().method2050(Client.field1733);
 							SoundPcmStream var13 = SoundPcmStream.method2144(var12, 100, var6);
 							var13.method2061(0);
-							Statics.field1460.method2174(var13);
+							Client.field1460.method2174(var13);
 							var4.field1614 = var13;
 							var4.field1613 = var4.field1601 + (int) (Math.random() * (double) (var4.field1611 - var4.field1601));
 						}
