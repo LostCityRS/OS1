@@ -55,7 +55,7 @@ public class Client extends GameShell {
 	public static boolean field1983 = false;
 
 	@ObfuscatedName("client.ao")
-	public static boolean field1917 = false;
+	public static boolean lowMemory = false;
 
 	@ObfuscatedName("client.ag")
 	public static int field2047 = 0;
@@ -151,7 +151,7 @@ public class Client extends GameShell {
 	public static Js5Provider field1720;
 
 	@ObfuscatedName("cc.bc")
-	public static Js5Provider field1209;
+	public static Js5Provider configJs5;
 
 	@ObfuscatedName("bd.br")
 	public static Js5Provider field1123;
@@ -166,7 +166,7 @@ public class Client extends GameShell {
 	public static Js5Provider field1110;
 
 	@ObfuscatedName("aa.cs")
-	public static Js5Provider field350;
+	public static Js5Provider modelJs5;
 
 	@ObfuscatedName("client.cj")
 	public static Js5Provider field1944;
@@ -1278,7 +1278,7 @@ public class Client extends GameShell {
 			}
 		}
 		World3D.field593 = false;
-		field1917 = false;
+		lowMemory = false;
 		field52 = this.getCodeBase().getHost();
 		String var18 = modewhat.field850;
 		byte var19 = 0;
@@ -1689,7 +1689,7 @@ public class Client extends GameShell {
 							if (var67 < field534 - 1) {
 								int var68 = field534 - 1;
 							}
-							if (field1917) {
+							if (lowMemory) {
 								field1133.method565(World.currentLevel);
 							} else {
 								field1133.method565(0);
@@ -3366,7 +3366,7 @@ public class Client extends GameShell {
 								field1949.pisaac1(178);
 								field1949.p1(0);
 							}
-							if (field1917 && field2128 != field534) {
+							if (lowMemory && field2128 != field534) {
 								method390(field1473, field217, field534, field1134.field2666[0], field1134.field2667[0]);
 							} else if (field2156 != field534) {
 								field2156 = field534;
@@ -4080,8 +4080,8 @@ public class Client extends GameShell {
 			}
 		}
 		if (field1929 == 0) {
-			int var3 = LoginScreen.field149;
-			String var4 = LoginScreen.field156;
+			int var3 = LoginScreen.progress;
+			String var4 = LoginScreen.message;
 			Color var5 = null;
 			try {
 				Graphics var6 = GameShell.canvas.getGraphics();
@@ -4560,8 +4560,8 @@ public class Client extends GameShell {
 				field2114[var0] = new CollisionMap(104, 104);
 			}
 			field1627 = new Pix32(512, 512);
-			LoginScreen.field156 = EnglishLocale.field876;
-			LoginScreen.field149 = 5;
+			LoginScreen.message = EnglishLocale.field876;
+			LoginScreen.progress = 5;
 			field1940 = 20;
 		} else if (field1940 == 20) {
 			int[] var1 = new int[9];
@@ -4572,18 +4572,18 @@ public class Client extends GameShell {
 				var1[var2] = var4 * var5 >> 16;
 			}
 			World3D.method599(var1, 500, 800, 512, 334);
-			LoginScreen.field156 = EnglishLocale.field1026;
-			LoginScreen.field149 = 10;
+			LoginScreen.message = EnglishLocale.field1026;
+			LoginScreen.progress = 10;
 			field1940 = 30;
 		} else if (field1940 == 30) {
 			field1109 = method129(0, false, true, true);
 			field1720 = method129(1, false, true, true);
-			field1209 = method129(2, true, false, true);
+			configJs5 = method129(2, true, false, true);
 			field1123 = method129(3, false, true, true);
 			field1509 = method129(4, false, true, true);
 			field1270 = method129(5, true, true, true);
 			field1110 = method129(6, true, true, false);
-			field350 = method129(7, false, true, true);
+			modelJs5 = method129(7, false, true, true);
 			field1944 = method129(8, false, true, true);
 			field1966 = method129(9, false, true, true);
 			field544 = method129(10, false, true, true);
@@ -4592,19 +4592,19 @@ public class Client extends GameShell {
 			field1150 = method129(13, true, false, true);
 			field2353 = method129(14, false, true, false);
 			field126 = method129(15, false, true, true);
-			LoginScreen.field156 = EnglishLocale.field960;
-			LoginScreen.field149 = 20;
+			LoginScreen.message = EnglishLocale.field960;
+			LoginScreen.progress = 20;
 			field1940 = 40;
 		} else if (field1940 == 40) {
 			byte var6 = 0;
 			int var7 = var6 + field1109.method1483() * 4 / 100;
 			int var8 = var7 + field1720.method1483() * 4 / 100;
-			int var9 = var8 + field1209.method1483() * 2 / 100;
+			int var9 = var8 + configJs5.method1483() * 2 / 100;
 			int var10 = var9 + field1123.method1483() * 2 / 100;
 			int var11 = var10 + field1509.method1483() * 6 / 100;
 			int var12 = var11 + field1270.method1483() * 4 / 100;
 			int var13 = var12 + field1110.method1483() * 2 / 100;
-			int var14 = var13 + field350.method1483() * 60 / 100;
+			int var14 = var13 + modelJs5.method1483() * 60 / 100;
 			int var15 = var14 + field1944.method1483() * 2 / 100;
 			int var16 = var15 + field1966.method1483() * 2 / 100;
 			int var17 = var16 + field544.method1483() * 2 / 100;
@@ -4614,17 +4614,17 @@ public class Client extends GameShell {
 			int var21 = var20 + field2353.method1483() * 2 / 100;
 			int var22 = var21 + field126.method1483() * 2 / 100;
 			if (var22 == 100) {
-				LoginScreen.field156 = EnglishLocale.field880;
-				LoginScreen.field149 = 30;
+				LoginScreen.message = EnglishLocale.field880;
+				LoginScreen.progress = 30;
 				field1940 = 45;
 			} else {
 				if (var22 != 0) {
-					LoginScreen.field156 = EnglishLocale.field1049 + var22 + "%";
+					LoginScreen.message = EnglishLocale.field1049 + var22 + "%";
 				}
-				LoginScreen.field149 = 30;
+				LoginScreen.progress = 30;
 			}
 		} else if (field1940 == 45) {
-			AudioChannel.method832(22050, !field1917, 2);
+			AudioChannel.method832(22050, !lowMemory, 2);
 			MidiPcmStream var23 = new MidiPcmStream();
 			var23.method2201(9, 128);
 			field38 = AudioChannel.method1132(GameShell.signlink, GameShell.canvas, 0, 22050);
@@ -4634,8 +4634,8 @@ public class Client extends GameShell {
 			field1460 = new MixerPcmStream();
 			field1585.method240(field1460);
 			field1733 = new PcmResampler(22050, AudioChannel.field241);
-			LoginScreen.field156 = EnglishLocale.field911;
-			LoginScreen.field149 = 35;
+			LoginScreen.message = EnglishLocale.field911;
+			LoginScreen.progress = 35;
 			field1940 = 50;
 		} else if (field1940 == 50) {
 			int var24 = 0;
@@ -4655,11 +4655,11 @@ public class Client extends GameShell {
 				var24++;
 			}
 			if (var24 < 3) {
-				LoginScreen.field156 = EnglishLocale.field882 + var24 * 100 / 3 + "%";
-				LoginScreen.field149 = 40;
+				LoginScreen.message = EnglishLocale.field882 + var24 * 100 / 3 + "%";
+				LoginScreen.progress = 40;
 			} else {
-				LoginScreen.field156 = EnglishLocale.field883;
-				LoginScreen.field149 = 40;
+				LoginScreen.message = EnglishLocale.field883;
+				LoginScreen.progress = 40;
 				field1940 = 60;
 			}
 		} else if (field1940 == 60) {
@@ -4691,50 +4691,53 @@ public class Client extends GameShell {
 			var26.method1076("sl_button", "");
 			int var30 = LoginScreen.method162();
 			if (var27 < var30) {
-				LoginScreen.field156 = EnglishLocale.field884 + var27 * 100 / var30 + "%";
-				LoginScreen.field149 = 50;
+				LoginScreen.message = EnglishLocale.field884 + var27 * 100 / var30 + "%";
+				LoginScreen.progress = 50;
 			} else {
-				LoginScreen.field156 = EnglishLocale.field885;
-				LoginScreen.field149 = 50;
+				LoginScreen.message = EnglishLocale.field885;
+				LoginScreen.progress = 50;
 				method729(5);
 				field1940 = 70;
 			}
 		} else if (field1940 == 70) {
-			if (field1209.method1048()) {
-				Js5Provider var31 = field1209;
-				FloType.field808 = var31;
-				FluType.method128(field1209);
-				IdkType.method1194(field1209, field350);
-				LocType.init(field1209, field350, field1917);
-				NpcType.method828(field1209, field350);
-				Js5Provider var32 = field1209;
-				Js5Provider var33 = field350;
-				boolean var34 = field1983;
-				SoftwareFont var35 = field1621;
-				ObjType.field2449 = var32;
-				ObjType.field1111 = var33;
-				ObjType.field1462 = var34;
-				ObjType.field2449.method1054(10);
-				ObjType.field815 = var35;
-				SeqType.method727(field1209, field1109, field1720);
-				Js5Provider var36 = field1209;
-				Js5Provider var37 = field350;
-				SpotAnimType.field2381 = var36;
-				SpotAnimType.field2385 = var37;
-				Js5Provider var38 = field1209;
-				VarBitType.field2419 = var38;
-				VarPlayerType.method1237(field1209);
-				IfType.method512(field1123, field350, field1944, field1150);
-				Js5Provider var39 = field1209;
-				InvType.field2476 = var39;
-				Js5Provider var40 = field1209;
-				EnumType.field2422 = var40;
-				LoginScreen.field156 = EnglishLocale.field887;
-				LoginScreen.field149 = 60;
+			if (configJs5.method1048()) {
+				FloType.configJs5 = configJs5;
+
+				FluType.init(configJs5);
+
+				IdkType.init(configJs5, modelJs5);
+
+				LocType.init(configJs5, modelJs5, lowMemory);
+
+				NpcType.init(configJs5, modelJs5);
+
+				ObjType.configJs5 = configJs5;
+				ObjType.modelJs5 = modelJs5;
+				ObjType.field1462 = field1983;
+				ObjType.configJs5.method1054(10);
+				ObjType.field815 = field1621;
+
+				SeqType.init(configJs5, field1109, field1720);
+
+				SpotAnimType.configJs5 = configJs5;
+				SpotAnimType.modelJs5 = modelJs5;
+
+				VarBitType.configJs5 = configJs5;
+
+				VarPlayerType.init(configJs5);
+
+				IfType.init(field1123, modelJs5, field1944, field1150);
+
+				InvType.configJs5 = configJs5;
+
+				EnumType.configJs5 = configJs5;
+
+				LoginScreen.message = EnglishLocale.field887;
+				LoginScreen.progress = 60;
 				field1940 = 80;
 			} else {
-				LoginScreen.field156 = EnglishLocale.field962 + field1209.method1470() + "%";
-				LoginScreen.field149 = 60;
+				LoginScreen.message = EnglishLocale.field962 + configJs5.method1470() + "%";
+				LoginScreen.progress = 60;
 			}
 		} else if (field1940 == 80) {
 			int var41 = 0;
@@ -4809,8 +4812,8 @@ public class Client extends GameShell {
 				var41++;
 			}
 			if (var41 < 14) {
-				LoginScreen.field156 = EnglishLocale.field888 + var41 * 100 / 14 + "%";
-				LoginScreen.field149 = 70;
+				LoginScreen.message = EnglishLocale.field888 + var41 * 100 / 14 + "%";
+				LoginScreen.progress = 70;
 			} else {
 				PixFont.field2553 = field1769;
 				field1510.method2741();
@@ -4858,53 +4861,53 @@ public class Client extends GameShell {
 					field829[var51 - 5] = var52 - 25;
 					field1474[var51 - 5] = var53 - var52;
 				}
-				LoginScreen.field156 = EnglishLocale.field889;
-				LoginScreen.field149 = 70;
+				LoginScreen.message = EnglishLocale.field889;
+				LoginScreen.progress = 70;
 				field1940 = 90;
 			}
 		} else if (field1940 == 90) {
 			if (field1966.method1048()) {
-				SceneBuilderProvider var55 = new SceneBuilderProvider(field1966, field1944, 20, 0.8D, field1917 ? 64 : 128);
+				SceneBuilderProvider var55 = new SceneBuilderProvider(field1966, field1944, 20, 0.8D, lowMemory ? 64 : 128);
 				Pix3D.method2760(var55);
 				Pix3D.method2761(0.8D);
-				LoginScreen.field156 = EnglishLocale.field891;
-				LoginScreen.field149 = 90;
+				LoginScreen.message = EnglishLocale.field891;
+				LoginScreen.progress = 90;
 				field1940 = 110;
 			} else {
-				LoginScreen.field156 = EnglishLocale.field890 + field1966.method1470() + "%";
-				LoginScreen.field149 = 90;
+				LoginScreen.message = EnglishLocale.field890 + field1966.method1470() + "%";
+				LoginScreen.progress = 90;
 			}
 		} else if (field1940 == 110) {
 			field1568 = new MouseTracking();
 			GameShell.signlink.method437(field1568, 10);
-			LoginScreen.field156 = EnglishLocale.field892;
-			LoginScreen.field149 = 94;
+			LoginScreen.message = EnglishLocale.field892;
+			LoginScreen.progress = 94;
 			field1940 = 120;
 		} else if (field1940 == 120) {
 			if (field544.method1076("huffman", "")) {
 				Huffman var56 = new Huffman(field544.method1061("huffman", ""));
 				WordPack.method816(var56);
-				LoginScreen.field156 = EnglishLocale.field1051;
-				LoginScreen.field149 = 96;
+				LoginScreen.message = EnglishLocale.field1051;
+				LoginScreen.progress = 96;
 				field1940 = 130;
 			} else {
-				LoginScreen.field156 = EnglishLocale.field1062 + "%";
-				LoginScreen.field149 = 96;
+				LoginScreen.message = EnglishLocale.field1062 + "%";
+				LoginScreen.progress = 96;
 			}
 		} else if (field1940 == 130) {
 			if (!field1123.method1048()) {
-				LoginScreen.field156 = EnglishLocale.field1017 + field1123.method1470() * 4 / 5 + "%";
-				LoginScreen.field149 = 100;
+				LoginScreen.message = EnglishLocale.field1017 + field1123.method1470() * 4 / 5 + "%";
+				LoginScreen.progress = 100;
 			} else if (!field1232.method1048()) {
-				LoginScreen.field156 = EnglishLocale.field1017 + (field1232.method1470() / 6 + 80) + "%";
-				LoginScreen.field149 = 100;
+				LoginScreen.message = EnglishLocale.field1017 + (field1232.method1470() / 6 + 80) + "%";
+				LoginScreen.progress = 100;
 			} else if (field1150.method1048()) {
-				LoginScreen.field156 = EnglishLocale.field1045;
-				LoginScreen.field149 = 100;
+				LoginScreen.message = EnglishLocale.field1045;
+				LoginScreen.progress = 100;
 				field1940 = 140;
 			} else {
-				LoginScreen.field156 = EnglishLocale.field1017 + (field1150.method1470() / 20 + 96) + "%";
-				LoginScreen.field149 = 100;
+				LoginScreen.message = EnglishLocale.field1017 + (field1150.method1470() / 20 + 96) + "%";
+				LoginScreen.progress = 100;
 			}
 		} else if (field1940 == 140) {
 			method729(10);
@@ -4997,16 +5000,16 @@ public class Client extends GameShell {
 				field2143.pdata(field1949.data, 0, field1949.pos);
 				int var3 = field2143.pos;
 				field2143.pjstr(LoginScreen.field164);
-				field2143.p1(field1917 ? 1 : 0);
+				field2143.p1(lowMemory ? 1 : 0);
 				SignLinkCacheFolder.method47(field2143);
 				field2143.p4(field1109.field1175);
 				field2143.p4(field1720.field1175);
-				field2143.p4(field1209.field1175);
+				field2143.p4(configJs5.field1175);
 				field2143.p4(field1123.field1175);
 				field2143.p4(field1509.field1175);
 				field2143.p4(field1270.field1175);
 				field2143.p4(field1110.field1175);
-				field2143.p4(field350.field1175);
+				field2143.p4(modelJs5.field1175);
 				field2143.p4(field1944.field1175);
 				field2143.p4(field1966.field1175);
 				field2143.p4(field544.field1175);
@@ -5359,7 +5362,7 @@ public class Client extends GameShell {
 		FloType.field2411.clear();
 		FluType.method2580();
 		IdkType.field2396.clear();
-		LocType.method916();
+		LocType.unload();
 		NpcType.method1334();
 		ObjType.field2432.clear();
 		ObjType.field2433.clear();
@@ -5379,7 +5382,7 @@ public class Client extends GameShell {
 		field1509.method1057();
 		field1270.method1057();
 		field1110.method1057();
-		field350.method1057();
+		modelJs5.method1057();
 		field1944.method1057();
 		field1966.method1057();
 		field544.method1057();
@@ -6097,7 +6100,7 @@ public class Client extends GameShell {
 			}
 			if (var3 != null && var3.method2915()) {
 				var3.field2795 = false;
-				if ((field1917 && field2134 > 50 || field2134 > 200) && !arg0 && var3.field2640 == var3.field2622) {
+				if ((lowMemory && field2134 > 50 || field2134 > 200) && !arg0 && var3.field2640 == var3.field2622) {
 					var3.field2795 = true;
 				}
 				int var5 = var3.field2615 >> 7;
@@ -6232,10 +6235,10 @@ public class Client extends GameShell {
 		Runtime var8 = Runtime.getRuntime();
 		int var9 = (int) ((var8.totalMemory() - var8.freeMemory()) / 1024L);
 		int var10 = 16776960;
-		if (var9 > 32768 && field1917) {
+		if (var9 > 32768 && lowMemory) {
 			var10 = 16711680;
 		}
-		if (var9 > 65536 && !field1917) {
+		if (var9 > 65536 && !lowMemory) {
 			var10 = 16711680;
 		}
 		field1122.method2864("Mem:" + var9 + "k", var6, var11, var10, -1);
@@ -6399,13 +6402,13 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("as.ef(IIIIII)V")
 	public static final void method390(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (field1473 == arg0 && field217 == arg1 && (field2128 == arg2 || !field1917)) {
+		if (field1473 == arg0 && field217 == arg1 && (field2128 == arg2 || !lowMemory)) {
 			return;
 		}
 		field1473 = arg0;
 		field217 = arg1;
 		field2128 = arg2;
-		if (!field1917) {
+		if (!lowMemory) {
 			field2128 = 0;
 		}
 		method729(25);
@@ -7219,7 +7222,7 @@ public class Client extends GameShell {
 		if (arg2 < 1 || arg3 < 1 || arg2 > 102 || arg3 > 102) {
 			return;
 		}
-		if (field1917 && field534 != arg0) {
+		if (lowMemory && field534 != arg0) {
 			return;
 		}
 		int var7 = 0;
@@ -9303,7 +9306,7 @@ public class Client extends GameShell {
 											if (var105 == 2 && field1133.method594(field534, var103, var104, var102) >= 0) {
 												LocType var107 = LocType.get(var106);
 												if (var107.multiloc != null) {
-													var107 = var107.method2368();
+													var107 = var107.getMultiLoc();
 												}
 												if (var107 == null) {
 													continue;
@@ -9338,7 +9341,7 @@ public class Client extends GameShell {
 															}
 														}
 													}
-													method8(EnglishLocale.field1075, TextUtil.method103(65535) + var107.name, 1002, var107.field2309 << 14, var103, var104);
+													method8(EnglishLocale.field1075, TextUtil.method103(65535) + var107.name, 1002, var107.id << 14, var103, var104);
 												} else if ((field386 & 0x4) == 4) {
 													method8(field2048, field2082 + " " + TextUtil.field6 + " " + TextUtil.method103(65535) + var107.name, 2, var102, var103, var104);
 												}

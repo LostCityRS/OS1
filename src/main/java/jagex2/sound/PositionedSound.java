@@ -66,7 +66,7 @@ public class PositionedSound extends Linkable {
 	@ObfuscatedName("de.n(I)V")
 	public void method1492() {
 		int var1 = this.field1608;
-		LocType var2 = this.field1615.method2368();
+		LocType var2 = this.field1615.getMultiLoc();
 		if (var2 == null) {
 			this.field1608 = -1;
 			this.field1607 = 0;

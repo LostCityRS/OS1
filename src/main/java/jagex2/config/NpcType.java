@@ -119,7 +119,7 @@ public class NpcType extends DoublyLinkable {
 	public boolean walksmoothing = true; // todo: real name
 
 	@ObfuscatedName("by.z(Lch;Lch;B)V")
-	public static void method828(Js5Index arg0, Js5Index arg1) {
+	public static void init(Js5Index arg0, Js5Index arg1) {
 		field2281 = arg0;
 		field1600 = arg1;
 	}
@@ -269,7 +269,7 @@ public class NpcType extends DoublyLinkable {
 			}
 			Model[] var9 = new Model[this.models.length];
 			for (int var10 = 0; var10 < this.models.length; var10++) {
-				var9[var10] = Model.method2992(field1600, this.models[var10], 0);
+				var9[var10] = Model.tryGet(field1600, this.models[var10], 0);
 			}
 			Model var11;
 			if (var9.length == 1) {
@@ -279,12 +279,12 @@ public class NpcType extends DoublyLinkable {
 			}
 			if (this.recol_s != null) {
 				for (int var12 = 0; var12 < this.recol_s.length; var12++) {
-					var11.method2935(this.recol_s[var12], this.recol_d[var12]);
+					var11.recolour(this.recol_s[var12], this.recol_d[var12]);
 				}
 			}
 			if (this.retex_s != null) {
 				for (int var13 = 0; var13 < this.retex_s.length; var13++) {
-					var11.method2976(this.retex_s[var13], this.retex_d[var13]);
+					var11.retexture(this.retex_s[var13], this.retex_d[var13]);
 				}
 			}
 			var6 = var11.method2942(this.ambient + 64, this.contrast + 850, -30, -50, -30);
@@ -325,7 +325,7 @@ public class NpcType extends DoublyLinkable {
 			}
 			Model[] var4 = new Model[this.heads.length];
 			for (int var5 = 0; var5 < this.heads.length; var5++) {
-				var4[var5] = Model.method2992(field1600, this.heads[var5], 0);
+				var4[var5] = Model.tryGet(field1600, this.heads[var5], 0);
 			}
 			Model var6;
 			if (var4.length == 1) {
@@ -335,12 +335,12 @@ public class NpcType extends DoublyLinkable {
 			}
 			if (this.recol_s != null) {
 				for (int var7 = 0; var7 < this.recol_s.length; var7++) {
-					var6.method2935(this.recol_s[var7], this.recol_d[var7]);
+					var6.recolour(this.recol_s[var7], this.recol_d[var7]);
 				}
 			}
 			if (this.retex_s != null) {
 				for (int var8 = 0; var8 < this.retex_s.length; var8++) {
-					var6.method2976(this.retex_s[var8], this.retex_d[var8]);
+					var6.retexture(this.retex_s[var8], this.retex_d[var8]);
 				}
 			}
 			return var6;

@@ -235,10 +235,10 @@ public class PlayerModel {
 				Model var19 = new Model(var13, var14);
 				for (int var20 = 0; var20 < 5; var20++) {
 					if (this.field1223[var20] < field800[var20].length) {
-						var19.method2935(field51[var20], field800[var20][this.field1223[var20]]);
+						var19.recolour(field51[var20], field800[var20][this.field1223[var20]]);
 					}
 					if (this.field1223[var20] < field1229[var20].length) {
-						var19.method2935(field1224[var20], field1229[var20][this.field1223[var20]]);
+						var19.recolour(field1224[var20], field1229[var20][this.field1223[var20]]);
 					}
 				}
 				var9 = var19.method2942(64, 850, -30, -50, -30);
@@ -298,10 +298,10 @@ public class PlayerModel {
 		Model var10 = new Model(var4, var5);
 		for (int var11 = 0; var11 < 5; var11++) {
 			if (this.field1223[var11] < field800[var11].length) {
-				var10.method2935(field51[var11], field800[var11][this.field1223[var11]]);
+				var10.recolour(field51[var11], field800[var11][this.field1223[var11]]);
 			}
 			if (this.field1223[var11] < field1229[var11].length) {
-				var10.method2935(field1224[var11], field1229[var11][this.field1223[var11]]);
+				var10.recolour(field1224[var11], field1229[var11][this.field1223[var11]]);
 			}
 		}
 		return var10;

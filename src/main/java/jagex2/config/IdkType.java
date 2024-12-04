@@ -47,7 +47,7 @@ public class IdkType extends DoublyLinkable {
 	public boolean disable = false;
 
 	@ObfuscatedName("ct.z(Lch;Lch;I)V")
-	public static void method1194(Js5Index arg0, Js5Index arg1) {
+	public static void init(Js5Index arg0, Js5Index arg1) {
 		field2394 = arg0;
 		field2397 = arg1;
 		field1628 = field2394.method1054(3);
@@ -133,7 +133,7 @@ public class IdkType extends DoublyLinkable {
 		}
 		Model[] var1 = new Model[this.models.length];
 		for (int var2 = 0; var2 < this.models.length; var2++) {
-			var1[var2] = Model.method2992(field2397, this.models[var2], 0);
+			var1[var2] = Model.tryGet(field2397, this.models[var2], 0);
 		}
 		Model var3;
 		if (var1.length == 1) {
@@ -143,12 +143,12 @@ public class IdkType extends DoublyLinkable {
 		}
 		if (this.recol_s != null) {
 			for (int var4 = 0; var4 < this.recol_s.length; var4++) {
-				var3.method2935(this.recol_s[var4], this.recol_d[var4]);
+				var3.recolour(this.recol_s[var4], this.recol_d[var4]);
 			}
 		}
 		if (this.retex_s != null) {
 			for (int var5 = 0; var5 < this.retex_s.length; var5++) {
-				var3.method2976(this.retex_s[var5], this.retex_d[var5]);
+				var3.retexture(this.retex_s[var5], this.retex_d[var5]);
 			}
 		}
 		return var3;
@@ -171,18 +171,18 @@ public class IdkType extends DoublyLinkable {
 		int var2 = 0;
 		for (int var3 = 0; var3 < 5; var3++) {
 			if (this.heads[var3] != -1) {
-				var1[var2++] = Model.method2992(field2397, this.heads[var3], 0);
+				var1[var2++] = Model.tryGet(field2397, this.heads[var3], 0);
 			}
 		}
 		Model var4 = new Model(var1, var2);
 		if (this.recol_s != null) {
 			for (int var5 = 0; var5 < this.recol_s.length; var5++) {
-				var4.method2935(this.recol_s[var5], this.recol_d[var5]);
+				var4.recolour(this.recol_s[var5], this.recol_d[var5]);
 			}
 		}
 		if (this.retex_s != null) {
 			for (int var6 = 0; var6 < this.retex_s.length; var6++) {
-				var4.method2976(this.retex_s[var6], this.retex_d[var6]);
+				var4.retexture(this.retex_s[var6], this.retex_d[var6]);
 			}
 		}
 		return var4;

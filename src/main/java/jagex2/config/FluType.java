@@ -31,7 +31,7 @@ public class FluType extends DoublyLinkable {
 	public int field2360;
 
 	@ObfuscatedName("u.z(Lch;I)V")
-	public static void method128(Js5Index arg0) {
+	public static void init(Js5Index arg0) {
 		field2358 = arg0;
 	}
 

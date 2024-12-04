@@ -276,8 +276,8 @@ public class World {
 					int var15 = arg2 + var11;
 					if (var14 > 0 && var15 > 0 && var14 < 103 && var15 < 103) {
 						LocType var16 = LocType.get(var5);
-						if (var13 != 22 || !Client.field1917 || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
-							if (!var16.method2366()) {
+						if (var13 != 22 || !Client.lowMemory || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
+							if (!var16.isPrefetched()) {
 								Client.field1974++;
 								var3 = false;
 							}
@@ -379,7 +379,7 @@ public class World {
 
 	@ObfuscatedName("bi.g(IIIIIILaq;Lck;I)V")
 	public static final void addLocation(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, World3D arg6, CollisionMap arg7) {
-		if (Client.field1917 && (levelTileFlags[0][arg1][arg2] & 0x2) == 0) {
+		if (Client.lowMemory && (levelTileFlags[0][arg1][arg2] & 0x2) == 0) {
 			if ((levelTileFlags[arg0][arg1][arg2] & 0x10) != 0) {
 				return;
 			}
@@ -438,11 +438,11 @@ public class World {
 		if (var9.raiseobject == 1) {
 			var21 += 256;
 		}
-		if (var9.method2374()) {
+		if (var9.hasSound()) {
 			PositionedSound.method763(arg0, arg1, arg2, var9, arg4);
 		}
 		if (arg5 == 22) {
-			if (!Client.field1917 || var9.active != 0 || var9.blockwalk == 1 || var9.forcedecor) {
+			if (!Client.lowMemory || var9.active != 0 || var9.blockwalk == 1 || var9.forcedecor) {
 				Entity var22;
 				if (var9.anim == -1 && var9.multiloc == null) {
 					var22 = var9.method2364(22, arg4, var16, var18, var17, var19);
@@ -802,7 +802,7 @@ public class World {
 							var33 -= blendMagnitude[var36];
 						}
 						if (var34 >= 1 && var34 < 103) {
-							if (Client.field1917 && (levelTileFlags[0][var21][var34] & 0x2) == 0) {
+							if (Client.lowMemory && (levelTileFlags[0][var21][var34] & 0x2) == 0) {
 								if ((levelTileFlags[var6][var21][var34] & 0x10) != 0) {
 									continue;
 								}
@@ -1183,7 +1183,7 @@ public class World {
 		if (arg1 >= 5 && arg1 <= 8) {
 			arg1 = 4;
 		}
-		return var2.method2362(arg1);
+		return var2.isPrefetched(arg1);
 	}
 
 	@ObfuscatedName("bc.t(IIIIIIILaq;Lck;I)V")

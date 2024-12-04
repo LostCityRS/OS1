@@ -12,10 +12,10 @@ import jagex2.jstring.EnglishLocale;
 public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.n")
-	public static Js5Index field2449;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("bb.j")
-	public static Js5Index field1111;
+	public static Js5Index modelJs5;
 
 	@ObfuscatedName("cq.z")
 	public static boolean field1462;
@@ -158,7 +158,7 @@ public class ObjType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field2449.method1044(10, arg0);
+		byte[] var2 = configJs5.method1044(10, arg0);
 		ObjType var3 = new ObjType();
 		var3.field2435 = arg0;
 		if (var2 != null) {
@@ -326,21 +326,21 @@ public class ObjType extends DoublyLinkable {
 				return get(var2).method2521(1);
 			}
 		}
-		Model var4 = Model.method2992(field1111, this.model, 0);
+		Model var4 = Model.tryGet(modelJs5, this.model, 0);
 		if (var4 == null) {
 			return null;
 		}
 		if (this.resizex != 128 || this.resizey != 128 || this.resizez != 128) {
-			var4.method2937(this.resizex, this.resizey, this.resizez);
+			var4.scale(this.resizex, this.resizey, this.resizez);
 		}
 		if (this.recol_s != null) {
 			for (int var5 = 0; var5 < this.recol_s.length; var5++) {
-				var4.method2935(this.recol_s[var5], this.recol_d[var5]);
+				var4.recolour(this.recol_s[var5], this.recol_d[var5]);
 			}
 		}
 		if (this.retex_s != null) {
 			for (int var6 = 0; var6 < this.retex_s.length; var6++) {
-				var4.method2976(this.retex_s[var6], this.retex_d[var6]);
+				var4.retexture(this.retex_s[var6], this.retex_d[var6]);
 			}
 		}
 		return var4;
@@ -363,21 +363,21 @@ public class ObjType extends DoublyLinkable {
 		if (var4 != null) {
 			return var4;
 		}
-		Model var5 = Model.method2992(field1111, this.model, 0);
+		Model var5 = Model.tryGet(modelJs5, this.model, 0);
 		if (var5 == null) {
 			return null;
 		}
 		if (this.resizex != 128 || this.resizey != 128 || this.resizez != 128) {
-			var5.method2937(this.resizex, this.resizey, this.resizez);
+			var5.scale(this.resizex, this.resizey, this.resizez);
 		}
 		if (this.recol_s != null) {
 			for (int var6 = 0; var6 < this.recol_s.length; var6++) {
-				var5.method2935(this.recol_s[var6], this.recol_d[var6]);
+				var5.recolour(this.recol_s[var6], this.recol_d[var6]);
 			}
 		}
 		if (this.retex_s != null) {
 			for (int var7 = 0; var7 < this.retex_s.length; var7++) {
-				var5.method2976(this.retex_s[var7], this.retex_d[var7]);
+				var5.retexture(this.retex_s[var7], this.retex_d[var7]);
 			}
 		}
 		SoftwareModel var8 = var5.method2942(this.ambient + 64, this.contrast + 768, -50, -10, -50);
@@ -506,13 +506,13 @@ public class ObjType extends DoublyLinkable {
 			return true;
 		}
 		boolean var5 = true;
-		if (!field1111.method1046(var2, 0)) {
+		if (!modelJs5.method1046(var2, 0)) {
 			var5 = false;
 		}
-		if (var3 != -1 && !field1111.method1046(var3, 0)) {
+		if (var3 != -1 && !modelJs5.method1046(var3, 0)) {
 			var5 = false;
 		}
-		if (var4 != -1 && !field1111.method1046(var4, 0)) {
+		if (var4 != -1 && !modelJs5.method1046(var4, 0)) {
 			var5 = false;
 		}
 		return var5;
@@ -531,32 +531,32 @@ public class ObjType extends DoublyLinkable {
 		if (var2 == -1) {
 			return null;
 		}
-		Model var5 = Model.method2992(field1111, var2, 0);
+		Model var5 = Model.tryGet(modelJs5, var2, 0);
 		if (var3 != -1) {
-			Model var6 = Model.method2992(field1111, var3, 0);
+			Model var6 = Model.tryGet(modelJs5, var3, 0);
 			if (var4 == -1) {
 				Model[] var9 = new Model[] { var5, var6 };
 				var5 = new Model(var9, 2);
 			} else {
-				Model var7 = Model.method2992(field1111, var4, 0);
+				Model var7 = Model.tryGet(modelJs5, var4, 0);
 				Model[] var8 = new Model[] { var5, var6, var7 };
 				var5 = new Model(var8, 3);
 			}
 		}
 		if (!arg0 && this.manwearOffsetY != 0) {
-			var5.method2934(0, this.manwearOffsetY, 0);
+			var5.translate(0, this.manwearOffsetY, 0);
 		}
 		if (arg0 && this.womanwearOffsetY != 0) {
-			var5.method2934(0, this.womanwearOffsetY, 0);
+			var5.translate(0, this.womanwearOffsetY, 0);
 		}
 		if (this.recol_s != null) {
 			for (int var10 = 0; var10 < this.recol_s.length; var10++) {
-				var5.method2935(this.recol_s[var10], this.recol_d[var10]);
+				var5.recolour(this.recol_s[var10], this.recol_d[var10]);
 			}
 		}
 		if (this.retex_s != null) {
 			for (int var11 = 0; var11 < this.retex_s.length; var11++) {
-				var5.method2976(this.retex_s[var11], this.retex_d[var11]);
+				var5.retexture(this.retex_s[var11], this.retex_d[var11]);
 			}
 		}
 		return var5;
@@ -574,10 +574,10 @@ public class ObjType extends DoublyLinkable {
 			return true;
 		}
 		boolean var4 = true;
-		if (!field1111.method1046(var2, 0)) {
+		if (!modelJs5.method1046(var2, 0)) {
 			var4 = false;
 		}
-		if (var3 != -1 && !field1111.method1046(var3, 0)) {
+		if (var3 != -1 && !modelJs5.method1046(var3, 0)) {
 			var4 = false;
 		}
 		return var4;
@@ -594,20 +594,20 @@ public class ObjType extends DoublyLinkable {
 		if (var2 == -1) {
 			return null;
 		}
-		Model var4 = Model.method2992(field1111, var2, 0);
+		Model var4 = Model.tryGet(modelJs5, var2, 0);
 		if (var3 != -1) {
-			Model var5 = Model.method2992(field1111, var3, 0);
+			Model var5 = Model.tryGet(modelJs5, var3, 0);
 			Model[] var6 = new Model[] { var4, var5 };
 			var4 = new Model(var6, 2);
 		}
 		if (this.recol_s != null) {
 			for (int var7 = 0; var7 < this.recol_s.length; var7++) {
-				var4.method2935(this.recol_s[var7], this.recol_d[var7]);
+				var4.recolour(this.recol_s[var7], this.recol_d[var7]);
 			}
 		}
 		if (this.retex_s != null) {
 			for (int var8 = 0; var8 < this.retex_s.length; var8++) {
-				var4.method2976(this.retex_s[var8], this.retex_d[var8]);
+				var4.retexture(this.retex_s[var8], this.retex_d[var8]);
 			}
 		}
 		return var4;

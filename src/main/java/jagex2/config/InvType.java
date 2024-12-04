@@ -10,7 +10,7 @@ import jagex2.js5.Js5Index;
 public class InvType extends DoublyLinkable {
 
 	@ObfuscatedName("fp.n")
-	public static Js5Index field2476;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("fp.j")
 	public static LruCache field2475 = new LruCache(64);

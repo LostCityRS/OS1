@@ -397,7 +397,7 @@ public class IfType extends Linkable {
 	public int field1899 = -1;
 
 	@ObfuscatedName("ay.c(Lch;Lch;Lch;Lch;I)V")
-	public static void method512(Js5Index arg0, Js5Index arg1, Js5Index arg2, Js5Index arg3) {
+	public static void init(Js5Index arg0, Js5Index arg1, Js5Index arg2, Js5Index arg3) {
 		field1806 = arg0;
 		field1776 = arg1;
 		field1564 = arg2;
@@ -949,7 +949,7 @@ public class IfType extends Linkable {
 			SoftwareModel var7 = (SoftwareModel) field1850.get((long) ((var5 << 16) + var6));
 			if (var7 == null) {
 				if (var5 == 1) {
-					Model var8 = Model.method2992(field1776, var6, 0);
+					Model var8 = Model.tryGet(field1776, var6, 0);
 					if (var8 == null) {
 						field1870 = true;
 						return null;

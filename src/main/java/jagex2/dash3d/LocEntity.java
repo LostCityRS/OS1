@@ -86,7 +86,7 @@ public class LocEntity extends Entity {
 		}
 		LocType var2 = LocType.get(this.field2599);
 		if (var2.multiloc != null) {
-			var2 = var2.method2368();
+			var2 = var2.getMultiLoc();
 		}
 		if (var2 == null) {
 			return null;

@@ -22,7 +22,7 @@ public class VarPlayerType extends DoublyLinkable {
 	public int clientcode = 0;
 
 	@ObfuscatedName("cy.z(Lch;I)V")
-	public static void method1237(Js5Index arg0) {
+	public static void init(Js5Index arg0) {
 		field537 = arg0;
 		field2352 = field537.method1054(16);
 	}

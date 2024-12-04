@@ -10,7 +10,7 @@ import jagex2.js5.Js5Index;
 public class FloType extends DoublyLinkable {
 
 	@ObfuscatedName("by.n")
-	public static Js5Index field808;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("fb.j")
 	public static LruCache field2411 = new LruCache(64);
@@ -51,7 +51,7 @@ public class FloType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field808.method1044(4, arg0);
+		byte[] var2 = configJs5.method1044(4, arg0);
 		FloType var3 = new FloType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2), arg0);

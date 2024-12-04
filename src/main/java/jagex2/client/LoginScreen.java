@@ -90,10 +90,10 @@ public class LoginScreen {
 	public static int field148 = 0;
 
 	@ObfuscatedName("g.as")
-	public static int field149 = 10;
+	public static int progress = 10;
 
 	@ObfuscatedName("g.am")
-	public static String field156 = "";
+	public static String message = "";
 
 	@ObfuscatedName("g.ap")
 	public static int field151 = 0;
@@ -375,9 +375,9 @@ public class LoginScreen {
 			int var3 = 253 - var2;
 			Pix2D.method2639(230, var3, 304, 34, 9179409);
 			Pix2D.method2639(231, var3 + 1, 302, 32, 0);
-			Pix2D.method2637(232, var3 + 2, field149 * 3, 30, 9179409);
-			Pix2D.method2637(field149 * 3 + 232, var3 + 2, 300 - field149 * 3, 30, 0);
-			arg0.method2880(field156, 382, 276 - var2, 16777215, -1);
+			Pix2D.method2637(232, var3 + 2, progress * 3, 30, 9179409);
+			Pix2D.method2637(progress * 3 + 232, var3 + 2, 300 - progress * 3, 30, 0);
+			arg0.method2880(message, 382, 276 - var2, 16777215, -1);
 		}
 		if (Client.field1929 == 20) {
 			field137.method2747(382 - field137.field2513 / 2, 271 - field137.field2514 / 2);

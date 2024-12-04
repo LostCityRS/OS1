@@ -10,7 +10,7 @@ import jagex2.js5.Js5Index;
 public class EnumType extends DoublyLinkable {
 
 	@ObfuscatedName("fe.n")
-	public static Js5Index field2422;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("fe.j")
 	public static LruCache field2425 = new LruCache(64);
@@ -45,7 +45,7 @@ public class EnumType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field2422.method1044(8, arg0);
+		byte[] var2 = configJs5.method1044(8, arg0);
 		EnumType var3 = new EnumType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2));

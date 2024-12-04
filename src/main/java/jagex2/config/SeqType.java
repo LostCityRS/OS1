@@ -69,7 +69,7 @@ public class SeqType extends DoublyLinkable {
 	public int replacemode = 2;
 
 	@ObfuscatedName("ai.z(Lch;Lch;Lch;I)V")
-	public static void method727(Js5Index arg0, Js5Index arg1, Js5Index arg2) {
+	public static void init(Js5Index arg0, Js5Index arg1, Js5Index arg2) {
 		field1517 = arg0;
 		field556 = arg1;
 		field2361 = arg2;

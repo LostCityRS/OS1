@@ -10,7 +10,7 @@ import jagex2.js5.Js5Index;
 public class VarBitType extends DoublyLinkable {
 
 	@ObfuscatedName("fc.n")
-	public static Js5Index field2419;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("fc.j")
 	public static LruCache field2417 = new LruCache(64);
@@ -30,7 +30,7 @@ public class VarBitType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field2419.method1044(14, arg0);
+		byte[] var2 = configJs5.method1044(14, arg0);
 		VarBitType var3 = new VarBitType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2));

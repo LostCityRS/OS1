@@ -12,10 +12,10 @@ import jagex2.js5.Js5Index;
 public class SpotAnimType extends DoublyLinkable {
 
 	@ObfuscatedName("eu.n")
-	public static Js5Index field2381;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("eu.j")
-	public static Js5Index field2385;
+	public static Js5Index modelJs5;
 
 	@ObfuscatedName("eu.z")
 	public static LruCache field2379 = new LruCache(64);
@@ -65,7 +65,7 @@ public class SpotAnimType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field2381.method1044(13, arg0);
+		byte[] var2 = configJs5.method1044(13, arg0);
 		SpotAnimType var3 = new SpotAnimType();
 		var3.field2382 = arg0;
 		if (var2 != null) {
@@ -125,18 +125,18 @@ public class SpotAnimType extends DoublyLinkable {
 	public final SoftwareModel method2455(int arg0) {
 		SoftwareModel var2 = (SoftwareModel) field2392.get((long) this.field2382);
 		if (var2 == null) {
-			Model var3 = Model.method2992(field2385, this.model, 0);
+			Model var3 = Model.tryGet(modelJs5, this.model, 0);
 			if (var3 == null) {
 				return null;
 			}
 			if (this.recol_s != null) {
 				for (int var4 = 0; var4 < this.recol_s.length; var4++) {
-					var3.method2935(this.recol_s[var4], this.recol_d[var4]);
+					var3.recolour(this.recol_s[var4], this.recol_d[var4]);
 				}
 			}
 			if (this.retex_s != null) {
 				for (int var5 = 0; var5 < this.retex_s.length; var5++) {
-					var3.method2976(this.retex_s[var5], this.retex_d[var5]);
+					var3.retexture(this.retex_s[var5], this.retex_d[var5]);
 				}
 			}
 			var2 = var3.method2942(this.ambient + 64, this.contrast + 850, -30, -50, -30);
