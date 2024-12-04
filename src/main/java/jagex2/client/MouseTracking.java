@@ -10,7 +10,7 @@ public class MouseTracking implements Runnable {
 	public boolean active = true;
 
 	@ObfuscatedName("j.d")
-	public Object lock = new Object();
+	public final Object lock = new Object();
 
 	@ObfuscatedName("j.l")
 	public int length = 0;
@@ -23,7 +23,6 @@ public class MouseTracking implements Runnable {
 
 	public void run() {
 		while (this.active) {
-			Object var1 = this.lock;
 			synchronized (this.lock) {
 				if (this.length < 500) {
 					this.x[this.length] = JavaMouseProvider.field488;
@@ -31,7 +30,8 @@ public class MouseTracking implements Runnable {
 					this.length++;
 				}
 			}
-			PreciseSleep.method1020(50L);
+
+			PreciseSleep.sleep(50L);
 		}
 	}
 }

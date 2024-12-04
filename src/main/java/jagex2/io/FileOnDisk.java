@@ -11,76 +11,80 @@ import java.io.RandomAccessFile;
 public class FileOnDisk {
 
 	@ObfuscatedName("u.r")
-	public RandomAccessFile field202;
+	public RandomAccessFile file;
 
 	@ObfuscatedName("u.d")
-	public long field201;
+	public long maxLength;
 
 	@ObfuscatedName("u.l")
-	public long field200;
+	public long pos;
 
-	public FileOnDisk(File arg0, String arg1, long arg2) throws IOException {
-		if (arg2 == -1L) {
-			arg2 = Long.MAX_VALUE;
+	public FileOnDisk(File file, String arg1, long maxLength) throws IOException {
+		if (maxLength == -1L) {
+			maxLength = Long.MAX_VALUE;
 		}
-		if (arg0.length() >= arg2) {
-			arg0.delete();
+
+		if (file.length() >= maxLength) {
+			file.delete();
 		}
-		this.field202 = new RandomAccessFile(arg0, arg1);
-		this.field201 = arg2;
-		this.field200 = 0L;
-		int var5 = this.field202.read();
-		if (var5 != -1 && !arg1.equals("r")) {
-			this.field202.seek(0L);
-			this.field202.write(var5);
+
+		this.file = new RandomAccessFile(file, arg1);
+		this.maxLength = maxLength;
+		this.pos = 0L;
+
+		int test = this.file.read();
+		if (test != -1 && !arg1.equals("r")) {
+			this.file.seek(0L);
+			this.file.write(test);
 		}
-		this.field202.seek(0L);
+
+		this.file.seek(0L);
 	}
 
 	@ObfuscatedName("u.r(J)V")
-	public final void method110(long arg0) throws IOException {
-		this.field202.seek(arg0);
-		this.field200 = arg0;
+	public final void seek(long off) throws IOException {
+		this.file.seek(off);
+		this.pos = off;
 	}
 
 	@ObfuscatedName("u.d([BIII)V")
-	public final void method111(byte[] arg0, int arg1, int arg2) throws IOException {
-		if (this.field200 + (long) arg2 > this.field201) {
-			this.field202.seek(this.field201 + 1L);
-			this.field202.write(1);
+	public final void write(byte[] data, int off, int len) throws IOException {
+		if (this.pos + (long) len > this.maxLength) {
+			this.file.seek(this.maxLength + 1L);
+			this.file.write(1);
 			throw new EOFException();
 		} else {
-			this.field202.write(arg0, arg1, arg2);
-			this.field200 += arg2;
+			this.file.write(data, off, len);
+			this.pos += len;
 		}
 	}
 
 	@ObfuscatedName("u.l(I)V")
-	public final void method112() throws IOException {
-		if (this.field202 != null) {
-			this.field202.close();
-			this.field202 = null;
+	public final void close() throws IOException {
+		if (this.file != null) {
+			this.file.close();
+			this.file = null;
 		}
 	}
 
 	@ObfuscatedName("u.m(I)J")
-	public final long method113() throws IOException {
-		return this.field202.length();
+	public final long length() throws IOException {
+		return this.file.length();
 	}
 
 	@ObfuscatedName("u.c([BIII)I")
-	public final int method114(byte[] arg0, int arg1, int arg2) throws IOException {
-		int var4 = this.field202.read(arg0, arg1, arg2);
-		if (var4 > 0) {
-			this.field200 += var4;
+	public final int read(byte[] data, int off, int len) throws IOException {
+		int bytes = this.file.read(data, off, len);
+		if (bytes > 0) {
+			this.pos += bytes;
 		}
-		return var4;
+		return bytes;
 	}
 
-	public void finalize() throws Throwable {
-		if (this.field202 != null) {
+	protected void finalize() throws Throwable {
+		if (this.file != null) {
 			System.out.println("");
-			this.method112();
+			this.close();
 		}
 	}
 }

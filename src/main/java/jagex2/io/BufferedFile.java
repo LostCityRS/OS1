@@ -43,7 +43,7 @@ public class BufferedFile {
 
 	public BufferedFile(FileOnDisk arg0, int arg1, int arg2) throws IOException {
 		this.field204 = arg0;
-		this.field213 = this.field211 = arg0.method113();
+		this.field213 = this.field211 = arg0.length();
 		this.field208 = new byte[arg1];
 		this.field207 = new byte[arg2];
 		this.field210 = 0L;
@@ -52,7 +52,7 @@ public class BufferedFile {
 	@ObfuscatedName("v.r(I)V")
 	public void method137() throws IOException {
 		this.method138();
-		this.field204.method112();
+		this.field204.close();
 	}
 
 	@ObfuscatedName("v.d(J)V")
@@ -98,10 +98,10 @@ public class BufferedFile {
 				arg2 -= var8;
 			}
 			if (arg2 > this.field208.length) {
-				this.field204.method110(this.field210);
+				this.field204.seek(this.field210);
 				this.field206 = this.field210;
 				while (arg2 > 0) {
-					int var9 = this.field204.method114(arg0, arg1, arg2);
+					int var9 = this.field204.read(arg0, arg1, arg2);
 					if (var9 == -1) {
 						break;
 					}
@@ -167,12 +167,12 @@ public class BufferedFile {
 	public void method130() throws IOException {
 		this.field203 = 0;
 		if (this.field210 != this.field206) {
-			this.field204.method110(this.field210);
+			this.field204.seek(this.field210);
 			this.field206 = this.field210;
 		}
 		this.field205 = this.field210;
 		while (this.field203 < this.field208.length) {
-			int var1 = this.field204.method114(this.field208, this.field203, this.field208.length - this.field203);
+			int var1 = this.field204.read(this.field208, this.field203, this.field208.length - this.field203);
 			if (var1 == -1) {
 				break;
 			}
@@ -201,10 +201,10 @@ public class BufferedFile {
 			}
 			if (arg2 > this.field207.length) {
 				if (this.field210 != this.field206) {
-					this.field204.method110(this.field210);
+					this.field204.seek(this.field210);
 					this.field206 = this.field210;
 				}
-				this.field204.method111(arg0, arg1, arg2);
+				this.field204.write(arg0, arg1, arg2);
 				this.field206 += arg2;
 				if (this.field206 > this.field211) {
 					this.field211 = this.field206;
@@ -248,10 +248,10 @@ public class BufferedFile {
 			return;
 		}
 		if (this.field212 != this.field206) {
-			this.field204.method110(this.field212);
+			this.field204.seek(this.field212);
 			this.field206 = this.field212;
 		}
-		this.field204.method111(this.field207, 0, this.field209);
+		this.field204.write(this.field207, 0, this.field209);
 		this.field206 += (long) (this.field209 * 1278705117) * 1663746677L;
 		if (this.field206 > this.field211) {
 			this.field211 = this.field206;

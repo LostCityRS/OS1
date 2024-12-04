@@ -20,7 +20,7 @@ public class NanoTimer extends Timer {
 		if (var5 < var3) {
 			var5 = var3;
 		}
-		PreciseSleep.method1020(var5 / 1000000L);
+		PreciseSleep.sleep(var5 / 1000000L);
 		long var7 = System.nanoTime();
 		int var9 = 0;
 		while (var9 < 10 && (var9 < 1 || this.field1565 < var7)) {

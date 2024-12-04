@@ -16,119 +16,131 @@ import java.net.Socket;
 public class ClientStream implements Runnable {
 
 	@ObfuscatedName("am.r")
-	public InputStream field361;
+	public InputStream in;
 
 	@ObfuscatedName("am.d")
-	public OutputStream field353;
+	public OutputStream out;
 
 	@ObfuscatedName("am.l")
-	public Socket field354;
+	public Socket socket;
 
 	@ObfuscatedName("am.m")
-	public boolean field352 = false;
+	public boolean dummy = false; // name comes from a debug method in 317
 
 	@ObfuscatedName("am.c")
-	public SignLink field358;
+	public SignLink signlink;
 
 	@ObfuscatedName("am.n")
-	public PrivilegedRequest field357;
+	public PrivilegedRequest writer;
 
 	@ObfuscatedName("am.j")
-	public byte[] field355;
+	public byte[] buf;
 
 	@ObfuscatedName("am.z")
-	public int field359 = 0;
+	public int tcyl = 0; // name comes from a debug method in 317
 
 	@ObfuscatedName("am.g")
-	public int field360 = 0;
+	public int tnum = 0; // name comes from a debug method in 317
 
 	@ObfuscatedName("am.q")
-	public boolean field356 = false;
+	public boolean ioerror = false; // name comes from a debug method in 317
 
-	public ClientStream(Socket arg0, SignLink arg1) throws IOException {
-		this.field358 = arg1;
-		this.field354 = arg0;
-		this.field354.setSoTimeout(30000);
-		this.field354.setTcpNoDelay(true);
-		this.field361 = this.field354.getInputStream();
-		this.field353 = this.field354.getOutputStream();
+	public ClientStream(Socket socket, SignLink signlink) throws IOException {
+		this.signlink = signlink;
+		this.socket = socket;
+		this.socket.setSoTimeout(30000);
+		this.socket.setTcpNoDelay(true);
+		this.in = this.socket.getInputStream();
+		this.out = this.socket.getOutputStream();
 	}
 
 	@ObfuscatedName("am.m(I)V")
-	public void method392() {
-		if (this.field352) {
+	public void close() {
+		if (this.dummy) {
 			return;
 		}
+
 		synchronized (this) {
-			this.field352 = true;
+			this.dummy = true;
 			this.notifyAll();
 		}
-		if (this.field357 != null) {
-			while (this.field357.field507 == 0) {
-				PreciseSleep.method1020(1L);
+
+		if (this.writer != null) {
+			while (this.writer.field507 == 0) {
+				PreciseSleep.sleep(1L);
 			}
-			if (this.field357.field507 == 1) {
+
+			if (this.writer.field507 == 1) {
 				try {
-					((Thread) this.field357.field511).join();
-				} catch (InterruptedException var4) {
+					((Thread) this.writer.field511).join();
+				} catch (InterruptedException ignore) {
 				}
 			}
 		}
-		this.field357 = null;
+
+		this.writer = null;
 	}
 
-	public void finalize() {
-		this.method392();
+	protected void finalize() {
+		this.close();
 	}
 
 	@ObfuscatedName("am.c(I)I")
-	public int method398() throws IOException {
-		return this.field352 ? 0 : this.field361.read();
+	public int read() throws IOException {
+		return this.dummy ? 0 : this.in.read();
 	}
 
 	@ObfuscatedName("am.n(I)I")
-	public int method394() throws IOException {
-		return this.field352 ? 0 : this.field361.available();
+	public int available() throws IOException {
+		return this.dummy ? 0 : this.in.available();
 	}
 
 	@ObfuscatedName("am.j([BIII)V")
-	public void method391(byte[] arg0, int arg1, int arg2) throws IOException {
-		if (this.field352) {
+	public void read(byte[] dest, int off, int len) throws IOException {
+		if (this.dummy) {
 			return;
 		}
-		while (arg2 > 0) {
-			int var4 = this.field361.read(arg0, arg1, arg2);
-			if (var4 <= 0) {
+
+		while (len > 0) {
+			int read = this.in.read(dest, off, len);
+			if (read <= 0) {
 				throw new EOFException();
 			}
-			arg1 += var4;
-			arg2 -= var4;
+
+			off += read;
+			len -= read;
 		}
 	}
 
 	@ObfuscatedName("am.z([BIII)V")
-	public void method396(byte[] arg0, int arg1, int arg2) throws IOException {
-		if (this.field352) {
+	public void write(byte[] src, int off, int len) throws IOException {
+		if (this.dummy) {
 			return;
 		}
-		if (this.field356) {
-			this.field356 = false;
-			throw new IOException();
+
+		if (this.ioerror) {
+			this.ioerror = false;
+			throw new IOException("Error in writer thread");
 		}
-		if (this.field355 == null) {
-			this.field355 = new byte[5000];
+
+		if (this.buf == null) {
+			this.buf = new byte[5000];
 		}
+
 		synchronized (this) {
-			for (int var5 = 0; var5 < arg2; var5++) {
-				this.field355[this.field360] = arg0[arg1 + var5];
-				this.field360 = (this.field360 + 1) % 5000;
-				if ((this.field359 + 4900) % 5000 == this.field360) {
-					throw new IOException();
+			for (int i = 0; i < len; i++) {
+				this.buf[this.tnum] = src[off + i];
+				this.tnum = (this.tnum + 1) % 5000;
+
+				if (this.tnum == (this.tcyl + 4900) % 5000) {
+					throw new IOException("buffer overflow");
 				}
 			}
-			if (this.field357 == null) {
-				this.field357 = this.field358.method437(this, 3);
+
+			if (this.writer == null) {
+				this.writer = this.signlink.startThread(this, 3);
 			}
+
 			this.notifyAll();
 		}
 	}
@@ -136,61 +148,70 @@ public class ClientStream implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				label84: {
-					int var3;
-					int var4;
+				loop: {
+					int off;
+					int available;
 					synchronized (this) {
-						if (this.field360 == this.field359) {
-							if (this.field352) {
-								break label84;
+						if (this.tnum == this.tcyl) {
+							if (this.dummy) {
+								break loop;
 							}
+
 							try {
 								this.wait();
-							} catch (InterruptedException var13) {
+							} catch (InterruptedException ignore) {
 							}
 						}
-						var3 = this.field359;
-						if (this.field360 >= this.field359) {
-							var4 = this.field360 - this.field359;
+
+						off = this.tcyl;
+						if (this.tnum >= this.tcyl) {
+							available = this.tnum - this.tcyl;
 						} else {
-							var4 = 5000 - this.field359;
+							available = 5000 - this.tcyl;
 						}
 					}
-					if (var4 <= 0) {
-						continue;
-					}
-					try {
-						this.field353.write(this.field355, var3, var4);
-					} catch (IOException var12) {
-						this.field356 = true;
-					}
-					this.field359 = (this.field359 + var4) % 5000;
-					try {
-						if (this.field360 == this.field359) {
-							this.field353.flush();
-						}
-					} catch (IOException var11) {
-						this.field356 = true;
-					}
+
+                    if (available > 0) {
+                        try {
+                            this.out.write(this.buf, off, available);
+                        } catch (IOException ignore) {
+                            this.ioerror = true;
+                        }
+
+                        this.tcyl = (this.tcyl + available) % 5000;
+
+                        try {
+                            if (this.tnum == this.tcyl) {
+                                this.out.flush();
+                            }
+                        } catch (IOException ignore) {
+                            this.ioerror = true;
+                        }
+                    }
+
 					continue;
-				}
+                }
+
 				try {
-					if (this.field361 != null) {
-						this.field361.close();
+					if (this.in != null) {
+						this.in.close();
 					}
-					if (this.field353 != null) {
-						this.field353.close();
+
+					if (this.out != null) {
+						this.out.close();
 					}
-					if (this.field354 != null) {
-						this.field354.close();
+
+					if (this.socket != null) {
+						this.socket.close();
 					}
-				} catch (IOException var10) {
+				} catch (IOException ignore) {
 				}
-				this.field355 = null;
+
+				this.buf = null;
 				break;
 			}
-		} catch (Exception var15) {
-			JagException.report(null, (Throwable) var15);
+		} catch (Exception ex) {
+			JagException.report(null, ex);
 		}
 	}
 }

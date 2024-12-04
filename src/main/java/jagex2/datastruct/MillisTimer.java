@@ -71,7 +71,7 @@ public class MillisTimer extends Timer {
 		if (this.field1560 < arg1) {
 			this.field1560 = arg1;
 		}
-		PreciseSleep.method1020((long) this.field1560);
+		PreciseSleep.sleep((long) this.field1560);
 		int var6 = 0;
 		while (this.field1562 < 256) {
 			var6++;

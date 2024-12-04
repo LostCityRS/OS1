@@ -50,7 +50,7 @@ public class Js5ProviderThread implements Runnable {
 					var2 = (Js5NetProviderRequest) field1208.head();
 				}
 				if (var2 == null) {
-					PreciseSleep.method1020(100L);
+					PreciseSleep.sleep(100L);
 					Object var10 = field1207;
 					synchronized (field1207) {
 						if (field1205 <= 1) {

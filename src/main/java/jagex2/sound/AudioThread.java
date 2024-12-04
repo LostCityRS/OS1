@@ -32,12 +32,12 @@ public class AudioThread implements Runnable {
 						var2.method235();
 					}
 				}
-				PreciseSleep.method1020(10L);
+				PreciseSleep.sleep(10L);
 				SignLink var3 = this.field290;
 				Object var4 = null;
 				if (var3.field381 != null) {
 					for (int var5 = 0; var5 < 50 && var3.field381.peekEvent() != null; var5++) {
-						PreciseSleep.method1020(1L);
+						PreciseSleep.sleep(1L);
 					}
 					if (var4 != null) {
 						var3.field381.postEvent(new ActionEvent(var4, 1001, "dummy"));

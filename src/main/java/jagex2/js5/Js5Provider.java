@@ -119,7 +119,7 @@ public class Js5Provider extends Js5Index {
 				Object var16 = Js5ProviderThread.field1207;
 				synchronized (Js5ProviderThread.field1207) {
 					if (Js5ProviderThread.field1205 == 0) {
-						GameShell.signlink.method437(new Js5ProviderThread(), 5);
+						GameShell.signlink.startThread(new Js5ProviderThread(), 5);
 					}
 					Js5ProviderThread.field1205 = 600;
 				}
@@ -148,7 +148,7 @@ public class Js5Provider extends Js5Index {
 			Object var10 = Js5ProviderThread.field1207;
 			synchronized (Js5ProviderThread.field1207) {
 				if (Js5ProviderThread.field1205 == 0) {
-					GameShell.signlink.method437(new Js5ProviderThread(), 5);
+					GameShell.signlink.startThread(new Js5ProviderThread(), 5);
 				}
 				Js5ProviderThread.field1205 = 600;
 			}
@@ -240,7 +240,7 @@ public class Js5Provider extends Js5Index {
 				Object var8 = Js5ProviderThread.field1207;
 				synchronized (Js5ProviderThread.field1207) {
 					if (Js5ProviderThread.field1205 == 0) {
-						GameShell.signlink.method437(new Js5ProviderThread(), 5);
+						GameShell.signlink.startThread(new Js5ProviderThread(), 5);
 					}
 					Js5ProviderThread.field1205 = 600;
 				}

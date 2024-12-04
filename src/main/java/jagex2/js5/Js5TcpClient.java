@@ -110,7 +110,7 @@ public class Js5TcpClient {
 					Packet var4 = new Packet(4);
 					var4.p1(1);
 					var4.p3((int) var3.key);
-					LoginScreen.field169.method396(var4.data, 0, 4);
+					LoginScreen.field169.write(var4.data, 0, 4);
 					field1187.put(var3, var3.key);
 					field1186--;
 					field1188++;
@@ -120,14 +120,14 @@ public class Js5TcpClient {
 					Packet var6 = new Packet(4);
 					var6.p1(0);
 					var6.p3((int) var5.key);
-					LoginScreen.field169.method396(var6.data, 0, 4);
+					LoginScreen.field169.write(var6.data, 0, 4);
 					var5.unlink2();
 					field1199.put(var5, var5.key);
 					field1191--;
 					field1197++;
 				}
 				for (int var7 = 0; var7 < 100; var7++) {
-					int var8 = LoginScreen.field169.method394();
+					int var8 = LoginScreen.field169.available();
 					if (var8 < 0) {
 						throw new IOException();
 					}
@@ -146,7 +146,7 @@ public class Js5TcpClient {
 						if (var10 > var8) {
 							var10 = var8;
 						}
-						LoginScreen.field169.method391(field1195.data, field1195.pos, var10);
+						LoginScreen.field169.read(field1195.data, field1195.pos, var10);
 						if (field1202 != 0) {
 							for (int var11 = 0; var11 < var10; var11++) {
 								field1195.data[field1195.pos + var11] ^= field1202;
@@ -196,7 +196,7 @@ public class Js5TcpClient {
 						if (var21 > var8) {
 							var21 = var8;
 						}
-						LoginScreen.field169.method391(field1196.data, field1196.pos, var21);
+						LoginScreen.field169.read(field1196.data, field1196.pos, var21);
 						if (field1202 != 0) {
 							for (int var22 = 0; var22 < var21; var22++) {
 								field1196.data[field1196.pos + var22] ^= field1202;
@@ -222,7 +222,7 @@ public class Js5TcpClient {
 								int var27 = (int) field1184.getValue();
 								if (field812.field2491 != var27) {
 									try {
-										LoginScreen.field169.method392();
+										LoginScreen.field169.close();
 									} catch (Exception var32) {
 									}
 									field1198++;
@@ -254,7 +254,7 @@ public class Js5TcpClient {
 				return true;
 			} catch (IOException var33) {
 				try {
-					LoginScreen.field169.method392();
+					LoginScreen.field169.close();
 				} catch (Exception var31) {
 				}
 				field1203++;
@@ -273,10 +273,10 @@ public class Js5TcpClient {
 			Packet var1 = new Packet(4);
 			var1.p1(arg0 ? 2 : 3);
 			var1.p3(0);
-			LoginScreen.field169.method396(var1.data, 0, 4);
+			LoginScreen.field169.write(var1.data, 0, 4);
 		} catch (IOException var5) {
 			try {
-				LoginScreen.field169.method392();
+				LoginScreen.field169.close();
 			} catch (Exception var4) {
 			}
 			field1203++;
@@ -288,7 +288,7 @@ public class Js5TcpClient {
 	public static void method96(ClientStream arg0, boolean arg1) {
 		if (LoginScreen.field169 != null) {
 			try {
-				LoginScreen.field169.method392();
+				LoginScreen.field169.close();
 			} catch (Exception var10) {
 			}
 			LoginScreen.field169 = null;
@@ -311,10 +311,10 @@ public class Js5TcpClient {
 								var5.p1(4);
 								var5.p1(field1202);
 								var5.p2(0);
-								LoginScreen.field169.method396(var5.data, 0, 4);
+								LoginScreen.field169.write(var5.data, 0, 4);
 							} catch (IOException var9) {
 								try {
-									LoginScreen.field169.method392();
+									LoginScreen.field169.close();
 								} catch (Exception var8) {
 								}
 								field1203++;

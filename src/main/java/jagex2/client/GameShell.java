@@ -119,7 +119,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			if (signlink == null) {
 				signlink = new SignLink();
 			}
-			signlink.method437(this, 1);
+			signlink.startThread(this, 1);
 		} catch (Exception var5) {
 			JagException.report(null, (Throwable) var5);
 			this.error("crash");
@@ -254,7 +254,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 					var19 = canvas;
 				} while (var18.field381 == null);
 				for (int var20 = 0; var20 < 50 && var18.field381.peekEvent() != null; var20++) {
-					PreciseSleep.method1020(1L);
+					PreciseSleep.sleep(1L);
 				}
 				if (var19 != null) {
 					var18.field381.postEvent(new ActionEvent(var19, 1001, "dummy"));
@@ -362,7 +362,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public void destroy() {
 		if (shell == this && !alreadyshutdown) {
 			killtime = MonotonicTime.method1135();
-			PreciseSleep.method1020(5000L);
+			PreciseSleep.sleep(5000L);
 			this.shutdown();
 		}
 	}

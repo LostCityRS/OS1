@@ -102,7 +102,7 @@ public class AudioChannel {
 				if (field239 > 0 && field238 == null) {
 					field238 = new AudioThread();
 					field238.field290 = arg0;
-					arg0.method437(field238, field239);
+					arg0.startThread(field238, field239);
 				}
 				if (field238 != null) {
 					if (field238.field293[arg2] != null) {
@@ -122,7 +122,7 @@ public class AudioChannel {
 					if (field239 > 0 && field238 == null) {
 						field238 = new AudioThread();
 						field238.field290 = arg0;
-						arg0.method437(field238, field239);
+						arg0.startThread(field238, field239);
 					}
 					if (field238 != null) {
 						if (field238.field293[arg2] != null) {
@@ -250,7 +250,7 @@ public class AudioChannel {
 			if (var1) {
 				field238.field292 = true;
 				while (field238.field291) {
-					PreciseSleep.method1020(50L);
+					PreciseSleep.sleep(50L);
 				}
 				field238 = null;
 			}

@@ -65,9 +65,9 @@ public class SignLinkCacheFolder {
 		if (cacheLocator.exists()) {
 			try {
 				FileOnDisk var7 = new FileOnDisk(cacheLocator, "rw", 10000L);
-				Packet var8 = new Packet((int) var7.method113());
+				Packet var8 = new Packet((int) var7.length());
 				while (var8.pos < var8.data.length) {
-					int var9 = var7.method114(var8.data, var8.pos, var8.data.length - var8.pos);
+					int var9 = var7.read(var8.data, var8.pos, var8.data.length - var8.pos);
 					if (var9 == -1) {
 						throw new IOException();
 					}
@@ -93,7 +93,7 @@ public class SignLinkCacheFolder {
 						var5 = var8.gUTF8();
 					}
 				}
-				var7.method112();
+				var7.close();
 			} catch (IOException var45) {
 				var45.printStackTrace();
 			}
@@ -186,8 +186,8 @@ public class SignLinkCacheFolder {
 				if (var37 != null) {
 					var39.pUTF8(((File) var37).getPath());
 				}
-				var38.method111(var39.data, 0, var39.pos);
-				var38.method112();
+				var38.write(var39.data, 0, var39.pos);
+				var38.close();
 			} catch (IOException var41) {
 				var41.printStackTrace();
 			}

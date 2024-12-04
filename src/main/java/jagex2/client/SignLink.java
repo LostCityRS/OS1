@@ -138,7 +138,7 @@ public class SignLink implements Runnable {
 	}
 
 	@ObfuscatedName("ak.j(Ljava/lang/Runnable;II)Lah;")
-	public final PrivilegedRequest method437(Runnable arg0, int arg1) {
+	public final PrivilegedRequest startThread(Runnable arg0, int arg1) {
 		return this.method435(2, arg1, 0, arg0);
 	}
 

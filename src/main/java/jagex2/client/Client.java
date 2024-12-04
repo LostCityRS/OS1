@@ -1763,13 +1763,13 @@ public class Client extends GameShell {
 							} else {
 								label3569: {
 									try {
-										int var80 = field652.method394();
+										int var80 = field652.available();
 										if (var80 == 0) {
 											var79 = false;
 											break label3569;
 										}
 										if (field1913 == -1) {
-											field652.method391(field2100.data, 0, 1);
+											field652.read(field2100.data, 0, 1);
 											field2100.pos = 0;
 											field1913 = field2100.gisaac1();
 											field2064 = ServerProt.sizes[field1913];
@@ -1780,7 +1780,7 @@ public class Client extends GameShell {
 												var79 = false;
 												break label3569;
 											}
-											field652.method391(field2100.data, 0, 1);
+											field652.read(field2100.data, 0, 1);
 											field2064 = field2100.data[0] & 0xFF;
 											var80--;
 										}
@@ -1789,7 +1789,7 @@ public class Client extends GameShell {
 												var79 = false;
 												break label3569;
 											}
-											field652.method391(field2100.data, 0, 2);
+											field652.read(field2100.data, 0, 2);
 											field2100.pos = 0;
 											field2064 = field2100.g2();
 											var80 -= 2;
@@ -1799,7 +1799,7 @@ public class Client extends GameShell {
 											break label3569;
 										}
 										field2100.pos = 0;
-										field652.method391(field2100.data, 0, field2064);
+										field652.read(field2100.data, 0, field2064);
 										field1962 = 0;
 										field1938 = field2190;
 										field2190 = field1965;
@@ -3989,7 +3989,7 @@ public class Client extends GameShell {
 																				}
 																				try {
 																					if (field652 != null && field1949.pos > 0) {
-																						field652.method396(field1949.data, 0, field1949.pos);
+																						field652.write(field1949.data, 0, field1949.pos);
 																						field1949.pos = 0;
 																						field1963 = 0;
 																						return;
@@ -4300,7 +4300,7 @@ public class Client extends GameShell {
 		}
 		field1568 = null;
 		if (field652 != null) {
-			field652.method392();
+			field652.close();
 			field652 = null;
 		}
 		JavaKeyboardProvider.method1502();
@@ -4318,7 +4318,7 @@ public class Client extends GameShell {
 			field1585.method248();
 		}
 		if (LoginScreen.field169 != null) {
-			LoginScreen.field169.method392();
+			LoginScreen.field169.close();
 		}
 		Js5ProviderThread.method781();
 		SignLinkCacheFolder.method1141();
@@ -4340,7 +4340,7 @@ public class Client extends GameShell {
 			field2105 = 0;
 		}
 		if (arg0 != 20 && arg0 != 40 && field53 != null) {
-			field53.method392();
+			field53.close();
 			field53 = null;
 		}
 		if (field1929 == 25) {
@@ -4492,13 +4492,13 @@ public class Client extends GameShell {
 				Packet var1 = new Packet(5);
 				var1.p1(15);
 				var1.p4(1);
-				field1102.method396(var1.data, 0, 5);
+				field1102.write(var1.data, 0, 5);
 				field2090++;
 				field1943 = MonotonicTime.method1135();
 			}
 			if (field2090 == 3) {
-				if (field1929 <= 5 || field1102.method394() > 0) {
-					int var2 = field1102.method398();
+				if (field1929 <= 5 || field1102.available() > 0) {
+					int var2 = field1102.read();
 					if (var2 != 0) {
 						this.method1851(var2);
 						return;
@@ -4879,7 +4879,7 @@ public class Client extends GameShell {
 			}
 		} else if (field1940 == 110) {
 			field1568 = new MouseTracking();
-			GameShell.signlink.method437(field1568, 10);
+			GameShell.signlink.startThread(field1568, 10);
 			LoginScreen.message = EnglishLocale.field892;
 			LoginScreen.progress = 94;
 			field1940 = 120;
@@ -4928,7 +4928,7 @@ public class Client extends GameShell {
 		try {
 			if (field1947 == 0) {
 				if (field652 != null) {
-					field652.method392();
+					field652.close();
 					field652 = null;
 				}
 				field806 = null;
@@ -4952,7 +4952,7 @@ public class Client extends GameShell {
 			if (field1947 == 2) {
 				field1949.pos = 0;
 				field1949.p1(14);
-				field652.method396(field1949.data, 0, 1);
+				field652.write(field1949.data, 0, 1);
 				field2100.pos = 0;
 				field1947 = 3;
 			}
@@ -4963,7 +4963,7 @@ public class Client extends GameShell {
 				if (field1585 != null) {
 					field1585.method207();
 				}
-				int var0 = field652.method398();
+				int var0 = field652.read();
 				if (field38 != null) {
 					field38.method207();
 				}
@@ -5020,7 +5020,7 @@ public class Client extends GameShell {
 				field2143.p4(field126.crc);
 				field2143.tinyenc(var1, var3, field2143.pos);
 				field2143.psize2(field2143.pos - var2);
-				field652.method396(field2143.data, 0, field2143.pos);
+				field652.write(field2143.data, 0, field2143.pos);
 				field1949.seed(var1);
 				for (int var4 = 0; var4 < 4; var4++) {
 					var1[var4] += 50;
@@ -5028,8 +5028,8 @@ public class Client extends GameShell {
 				field2100.seed(var1);
 				field1947 = 6;
 			}
-			if (field1947 == 6 && field652.method394() > 0) {
-				int var5 = field652.method398();
+			if (field1947 == 6 && field652.available() > 0) {
+				int var5 = field652.read();
 				if (var5 == 21 && field1929 == 20) {
 					field1947 = 7;
 				} else if (var5 == 2) {
@@ -5072,8 +5072,8 @@ public class Client extends GameShell {
 					return;
 				}
 			}
-			if (field1947 == 7 && field652.method394() > 0) {
-				field1950 = (field652.method398() + 3) * 60;
+			if (field1947 == 7 && field652.available() > 0) {
+				field1950 = (field652.read() + 3) * 60;
 				field1947 = 8;
 			}
 			if (field1947 == 8) {
@@ -5083,17 +5083,17 @@ public class Client extends GameShell {
 					field1947 = 0;
 				}
 			} else {
-				if (field1947 == 9 && field652.method394() >= 8) {
-					field2049 = field652.method398();
-					field2091 = field652.method398() == 1;
-					field2005 = field652.method398();
+				if (field1947 == 9 && field652.available() >= 8) {
+					field2049 = field652.read();
+					field2091 = field652.read() == 1;
+					field2005 = field652.read();
 					field2005 <<= 0x8;
-					field2005 += field652.method398();
-					field2130 = field652.method398();
-					field652.method391(field2100.data, 0, 1);
+					field2005 += field652.read();
+					field2130 = field652.read();
+					field652.read(field2100.data, 0, 1);
 					field2100.pos = 0;
 					field1913 = field2100.gisaac1();
-					field652.method391(field2100.data, 0, 2);
+					field652.read(field2100.data, 0, 2);
 					field2100.pos = 0;
 					field2064 = field2100.g2();
 					field1947 = 10;
@@ -5113,9 +5113,9 @@ public class Client extends GameShell {
 							method838(-3);
 						}
 					}
-				} else if (field652.method394() >= field2064) {
+				} else if (field652.available() >= field2064) {
 					field2100.pos = 0;
-					field652.method391(field2100.data, 0, field2064);
+					field652.read(field2100.data, 0, field2064);
 					method1485();
 					field1473 = -1;
 					method1235(false);
@@ -5325,7 +5325,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("dq.dz(B)V")
 	public static final void method1484() {
 		if (field652 != null) {
-			field652.method392();
+			field652.close();
 			field652 = null;
 		}
 		method746();
@@ -6505,7 +6505,7 @@ public class Client extends GameShell {
 		}
 		field1949.pisaac1(228);
 		try {
-			field652.method396(field1949.data, 0, field1949.pos);
+			field652.write(field1949.data, 0, field1949.pos);
 			field1949.pos = 0;
 		} catch (IOException var2) {
 			field1968 = true;
