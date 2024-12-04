@@ -34,6 +34,20 @@ public class Packet extends Linkable {
 		}
 	}
 
+	// inlined, added back
+	public static int getcrc(byte[] src, int off, int len) {
+		int crc = -1;
+		for (int i = off; i < len; i++) {
+			crc = crc >>> 8 ^ crctable[(crc ^ src[i]) & 0xFF];
+		}
+		return ~crc;
+	}
+
+	// inlined, added back
+	public static int getcrc(byte[] src, int len) {
+		return getcrc(src, 0, len);
+	}
+
 	public Packet(int arg0) {
 		this.data = ByteArrayPool.method773(arg0);
 		this.pos = 0;
@@ -396,30 +410,18 @@ public class Packet extends Linkable {
 	}
 
 	@ObfuscatedName("ev.ay(II)I")
-	public int addcrc(int arg0) {
-		byte[] var2 = this.data;
-		int var3 = this.pos;
-		int var4 = -1;
-		for (int var5 = arg0; var5 < var3; var5++) {
-			var4 = var4 >>> 8 ^ crctable[(var4 ^ var2[var5]) & 0xFF];
-		}
-		int var6 = ~var4;
-		this.p4(var6);
-		return var6;
+	public int addcrc(int off) {
+		int crc = getcrc(this.data, off, this.pos);
+		this.p4(crc);
+		return crc;
 	}
 
 	@ObfuscatedName("ev.al(I)Z")
 	public boolean checkcrc() {
 		this.pos -= 4;
-		byte[] var1 = this.data;
-		int var2 = this.pos;
-		int var3 = -1;
-		for (int var4 = 0; var4 < var2; var4++) {
-			var3 = var3 >>> 8 ^ crctable[(var3 ^ var1[var4]) & 0xFF];
-		}
-		int var5 = ~var3;
-		int var8 = this.g4();
-		return var5 == var8;
+		int crc = getcrc(this.data, 0, this.pos);
+		int expected = this.g4();
+		return crc == expected;
 	}
 
 	@ObfuscatedName("ev.ab(II)V")

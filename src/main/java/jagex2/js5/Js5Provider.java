@@ -64,7 +64,7 @@ public class Js5Provider extends Js5Index {
 	public int method1483() {
 		if (this.field1575) {
 			return 100;
-		} else if (this.field1178 == null) {
+		} else if (this.packed == null) {
 			int var1 = Js5TcpClient.method161(255, this.field1574);
 			if (var1 >= 100) {
 				var1 = 99;
@@ -83,7 +83,7 @@ public class Js5Provider extends Js5Index {
 	@ObfuscatedName("dq.i(IB)V")
 	public void method1052(int arg0) {
 		if (this.field1578 == null || this.field1572 == null || !this.field1572[arg0]) {
-			Js5TcpClient.method827(this, this.field1574, arg0, this.field1169[arg0], (byte) 2, true);
+			Js5TcpClient.method827(this, this.field1574, arg0, this.groupChecksums[arg0], (byte) 2, true);
 		} else {
 			Js5ProviderThread.method1122(arg0, this.field1578, this);
 		}
@@ -103,8 +103,8 @@ public class Js5Provider extends Js5Index {
 	@ObfuscatedName("dq.bj(I[BZZB)V")
 	public void method1467(int arg0, byte[] arg1, boolean arg2, boolean arg3) {
 		if (!arg2) {
-			arg1[arg1.length - 2] = (byte) (this.field1179[arg0] >> 8);
-			arg1[arg1.length - 1] = (byte) this.field1179[arg0];
+			arg1[arg1.length - 2] = (byte) (this.groupVersions[arg0] >> 8);
+			arg1[arg1.length - 1] = (byte) this.groupVersions[arg0];
 			if (this.field1578 != null) {
 				FileStream var12 = this.field1578;
 				Js5NetProviderRequest var13 = new Js5NetProviderRequest();
@@ -126,7 +126,7 @@ public class Js5Provider extends Js5Index {
 				this.field1572[arg0] = true;
 			}
 			if (arg3) {
-				this.field1178[arg0] = ByteArrayCopier.method1131(arg1, false);
+				this.packed[arg0] = ByteArrayCopier.method1131(arg1, false);
 			}
 			return;
 		}
@@ -153,7 +153,7 @@ public class Js5Provider extends Js5Index {
 				Js5ProviderThread.field1205 = 600;
 			}
 		}
-		this.method1042(arg1);
+		this.decode(arg1);
 		this.method1469();
 	}
 
@@ -166,7 +166,7 @@ public class Js5Provider extends Js5Index {
 			if (arg2 == null || arg2.length <= 2) {
 				this.field1572[arg1] = false;
 				if (this.field1576 || arg3) {
-					Js5TcpClient.method827(this, this.field1574, arg1, this.field1169[arg1], (byte) 2, arg3);
+					Js5TcpClient.method827(this, this.field1574, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
 				}
 				return;
 			}
@@ -174,16 +174,16 @@ public class Js5Provider extends Js5Index {
 			field1579.update(arg2, 0, arg2.length - 2);
 			int var9 = (int) field1579.getValue();
 			int var10 = ((arg2[arg2.length - 2] & 0xFF) << 8) + (arg2[arg2.length - 1] & 0xFF);
-			if (this.field1169[arg1] != var9 || this.field1179[arg1] != var10) {
+			if (this.groupChecksums[arg1] != var9 || this.groupVersions[arg1] != var10) {
 				this.field1572[arg1] = false;
 				if (this.field1576 || arg3) {
-					Js5TcpClient.method827(this, this.field1574, arg1, this.field1169[arg1], (byte) 2, arg3);
+					Js5TcpClient.method827(this, this.field1574, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
 				}
 				return;
 			}
 			this.field1572[arg1] = true;
 			if (arg3) {
-				this.field1178[arg1] = ByteArrayCopier.method1131(arg2, false);
+				this.packed[arg1] = ByteArrayCopier.method1131(arg2, false);
 			}
 			return;
 		}
@@ -197,7 +197,7 @@ public class Js5Provider extends Js5Index {
 		field1579.reset();
 		field1579.update(arg2, 0, arg2.length);
 		int var5 = (int) field1579.getValue();
-		Packet var6 = new Packet(Js5Index.method52(arg2));
+		Packet var6 = new Packet(Js5Index.decompress(arg2));
 		int var7 = var6.g1();
 		if (var7 != 5 && var7 != 6) {
 			throw new RuntimeException("");
@@ -210,13 +210,13 @@ public class Js5Provider extends Js5Index {
 			Js5TcpClient.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
 			return;
 		}
-		this.method1042(arg2);
+		this.decode(arg2);
 		this.method1469();
 	}
 
 	@ObfuscatedName("dq.bm(S)V")
 	public void method1469() {
-		this.field1572 = new boolean[this.field1178.length];
+		this.field1572 = new boolean[this.packed.length];
 		for (int var1 = 0; var1 < this.field1572.length; var1++) {
 			this.field1572[var1] = false;
 		}
@@ -226,7 +226,7 @@ public class Js5Provider extends Js5Index {
 		}
 		this.field1581 = -1;
 		for (int var2 = 0; var2 < this.field1572.length; var2++) {
-			if (this.field1171[var2] > 0) {
+			if (this.groupSizes[var2] > 0) {
 				FileStream var3 = this.field1578;
 				Js5NetProviderRequest var5 = new Js5NetProviderRequest();
 				var5.field1772 = 1;
@@ -254,7 +254,7 @@ public class Js5Provider extends Js5Index {
 
 	@ObfuscatedName("dq.bn(II)I")
 	public int method1472(int arg0) {
-		if (this.field1178[arg0] == null) {
+		if (this.packed[arg0] == null) {
 			return this.field1572[arg0] ? 100 : Js5TcpClient.method161(this.field1574, arg0);
 		} else {
 			return 100;
@@ -265,8 +265,8 @@ public class Js5Provider extends Js5Index {
 	public int method1470() {
 		int var1 = 0;
 		int var2 = 0;
-		for (int var3 = 0; var3 < this.field1178.length; var3++) {
-			if (this.field1171[var3] > 0) {
+		for (int var3 = 0; var3 < this.packed.length; var3++) {
+			if (this.groupSizes[var3] > 0) {
 				var1 += 100;
 				var2 += this.method1472(var3);
 			}

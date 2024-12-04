@@ -13,170 +13,187 @@ import jagex2.io.Packet;
 public abstract class Js5Index {
 
 	@ObfuscatedName("ch.r")
-	public int field1181;
+	public int size;
 
 	@ObfuscatedName("ch.d")
-	public int[] field1165;
+	public int[] groupIds;
 
 	@ObfuscatedName("ch.l")
-	public int[] field1167;
+	public int[] groupNameHash;
 
 	@ObfuscatedName("ch.m")
-	public IntHashTable field1168;
+	public IntHashTable groupNameHashTable;
 
 	@ObfuscatedName("ch.c")
-	public int[] field1169;
+	public int[] groupChecksums;
 
 	@ObfuscatedName("ch.n")
-	public int[] field1179;
+	public int[] groupVersions;
 
 	@ObfuscatedName("ch.j")
-	public int[] field1171;
+	public int[] groupSizes;
 
 	@ObfuscatedName("ch.z")
-	public int[][] field1172;
+	public int[][] fileIds;
 
 	@ObfuscatedName("ch.g")
-	public int[][] field1173;
+	public int[][] fileNameHashes;
 
 	@ObfuscatedName("ch.q")
-	public IntHashTable[] field1174;
+	public IntHashTable[] fileNameHashTables;
 
 	@ObfuscatedName("ch.i")
-	public Object[] field1178;
+	public Object[] packed;
 
 	@ObfuscatedName("ch.s")
-	public Object[][] field1170;
+	public Object[][] unpacked;
 
 	@ObfuscatedName("ch.u")
 	public static GZip field1177 = new GZip();
 
 	@ObfuscatedName("ch.v")
-	public int field1175;
+	public int crc;
 
 	@ObfuscatedName("ch.w")
-	public boolean field1166;
+	public boolean discardPacked;
 
 	@ObfuscatedName("ch.e")
-	public boolean field1180;
+	public boolean discardUnpacked;
 
 	@ObfuscatedName("ch.b")
 	public static int field1176 = 0;
 
-	public Js5Index(boolean arg0, boolean arg1) {
-		this.field1166 = arg0;
-		this.field1180 = arg1;
+	public Js5Index(boolean discardPacked, boolean discardUnpacked) {
+		this.discardPacked = discardPacked;
+		this.discardUnpacked = discardUnpacked;
 	}
 
 	@ObfuscatedName("ch.r([BI)V")
-	public void method1042(byte[] arg0) {
-		int var2 = arg0.length;
-		int var3 = -1;
-		for (int var4 = 0; var4 < var2; var4++) {
-			var3 = var3 >>> 8 ^ Packet.crctable[(var3 ^ arg0[var4]) & 0xFF];
+	public void decode(byte[] data) {
+		this.crc = Packet.getcrc(data, data.length);
+
+		Packet buf = new Packet(decompress(data));
+
+		int protocol = buf.g1();
+		if (protocol < 5 || protocol > 7) {
+			throw new RuntimeException("Incorrect JS5 protocol number: " + protocol);
 		}
-		int var5 = ~var3;
-		this.field1175 = var5;
-		Packet var8 = new Packet(method52(arg0));
-		int var9 = var8.g1();
-		if (var9 < 5 || var9 > 7) {
-			throw new RuntimeException("");
+
+		if (protocol >= 6) {
+			// version
+			buf.g4();
 		}
-		if (var9 >= 6) {
-			var8.g4();
-		}
-		int var10 = var8.g1();
-		if (var9 >= 7) {
-			this.field1181 = var8.gSmart2or4();
+
+		int info = buf.g1();
+		boolean hasNames = (info & 0x1) != 0;
+
+		if (protocol >= 7) {
+			this.size = buf.gSmart2or4();
 		} else {
-			this.field1181 = var8.g2();
+			this.size = buf.g2();
 		}
-		int var11 = 0;
-		int var12 = -1;
-		this.field1165 = new int[this.field1181];
-		if (var9 >= 7) {
-			for (int var13 = 0; var13 < this.field1181; var13++) {
-				this.field1165[var13] = var11 += var8.gSmart2or4();
-				if (this.field1165[var13] > var12) {
-					var12 = this.field1165[var13];
+
+		int prevGroupId = 0;
+		int maxGroupId = -1;
+		this.groupIds = new int[this.size];
+		if (protocol >= 7) {
+			for (int i = 0; i < this.size; i++) {
+				this.groupIds[i] = prevGroupId += buf.gSmart2or4();
+				if (this.groupIds[i] > maxGroupId) {
+					maxGroupId = this.groupIds[i];
 				}
 			}
 		} else {
-			for (int var14 = 0; var14 < this.field1181; var14++) {
-				this.field1165[var14] = var11 += var8.g2();
-				if (this.field1165[var14] > var12) {
-					var12 = this.field1165[var14];
+			for (int i = 0; i < this.size; i++) {
+				this.groupIds[i] = prevGroupId += buf.g2();
+				if (this.groupIds[i] > maxGroupId) {
+					maxGroupId = this.groupIds[i];
 				}
 			}
 		}
-		this.field1169 = new int[var12 + 1];
-		this.field1179 = new int[var12 + 1];
-		this.field1171 = new int[var12 + 1];
-		this.field1172 = new int[var12 + 1][];
-		this.field1178 = new Object[var12 + 1];
-		this.field1170 = new Object[var12 + 1][];
-		if (var10 != 0) {
-			this.field1167 = new int[var12 + 1];
-			for (int var15 = 0; var15 < this.field1181; var15++) {
-				this.field1167[this.field1165[var15]] = var8.g4();
+
+		this.groupChecksums = new int[maxGroupId + 1];
+		this.groupVersions = new int[maxGroupId + 1];
+		this.groupSizes = new int[maxGroupId + 1];
+		this.fileIds = new int[maxGroupId + 1][];
+		this.packed = new Object[maxGroupId + 1];
+		this.unpacked = new Object[maxGroupId + 1][];
+
+		if (hasNames) {
+			this.groupNameHash = new int[maxGroupId + 1];
+
+			for (int i = 0; i < this.size; i++) {
+				this.groupNameHash[this.groupIds[i]] = buf.g4();
 			}
-			this.field1168 = new IntHashTable(this.field1167);
+
+			this.groupNameHashTable = new IntHashTable(this.groupNameHash);
 		}
-		for (int var16 = 0; var16 < this.field1181; var16++) {
-			this.field1169[this.field1165[var16]] = var8.g4();
+
+		for (int i = 0; i < this.size; i++) {
+			this.groupChecksums[this.groupIds[i]] = buf.g4();
 		}
-		for (int var17 = 0; var17 < this.field1181; var17++) {
-			this.field1179[this.field1165[var17]] = var8.g4();
+
+		for (int i = 0; i < this.size; i++) {
+			this.groupVersions[this.groupIds[i]] = buf.g4();
 		}
-		for (int var18 = 0; var18 < this.field1181; var18++) {
-			this.field1171[this.field1165[var18]] = var8.g2();
+
+		for (int i = 0; i < this.size; i++) {
+			this.groupSizes[this.groupIds[i]] = buf.g2();
 		}
-		if (var9 >= 7) {
-			for (int var19 = 0; var19 < this.field1181; var19++) {
-				int var20 = this.field1165[var19];
-				int var21 = this.field1171[var20];
-				int var22 = 0;
-				int var23 = -1;
-				this.field1172[var20] = new int[var21];
-				for (int var24 = 0; var24 < var21; var24++) {
-					int var25 = this.field1172[var20][var24] = var22 += var8.gSmart2or4();
-					if (var25 > var23) {
-						var23 = var25;
+
+		if (protocol >= 7) {
+			for (int i = 0; i < this.size; i++) {
+				int id = this.groupIds[i];
+				int size = this.groupSizes[id];
+				int prevFileId = 0;
+				int maxFileId = -1;
+
+				this.fileIds[id] = new int[size];
+				for (int j = 0; j < size; j++) {
+					int fileId = this.fileIds[id][j] = prevFileId += buf.gSmart2or4();
+					if (fileId > maxFileId) {
+						maxFileId = fileId;
 					}
 				}
-				this.field1170[var20] = new Object[var23 + 1];
+
+				this.unpacked[id] = new Object[maxFileId + 1];
 			}
 		} else {
-			for (int var26 = 0; var26 < this.field1181; var26++) {
-				int var27 = this.field1165[var26];
-				int var28 = this.field1171[var27];
-				int var29 = 0;
-				int var30 = -1;
-				this.field1172[var27] = new int[var28];
-				for (int var31 = 0; var31 < var28; var31++) {
-					int var32 = this.field1172[var27][var31] = var29 += var8.g2();
-					if (var32 > var30) {
-						var30 = var32;
+			for (int i = 0; i < this.size; i++) {
+				int id = this.groupIds[i];
+				int size = this.groupSizes[id];
+				int prevFileId = 0;
+				int maxFileId = -1;
+
+				this.fileIds[id] = new int[size];
+				for (int j = 0; j < size; j++) {
+					int fileId = this.fileIds[id][j] = prevFileId += buf.g2();
+					if (fileId > maxFileId) {
+						maxFileId = fileId;
 					}
 				}
-				this.field1170[var27] = new Object[var30 + 1];
+
+				this.unpacked[id] = new Object[maxFileId + 1];
 			}
 		}
-		if (var10 == 0) {
-			return;
-		}
-		this.field1173 = new int[var12 + 1][];
-		this.field1174 = new IntHashTable[var12 + 1];
-		for (int var33 = 0; var33 < this.field1181; var33++) {
-			int var34 = this.field1165[var33];
-			int var35 = this.field1171[var34];
-			this.field1173[var34] = new int[this.field1170[var34].length];
-			for (int var36 = 0; var36 < var35; var36++) {
-				this.field1173[var34][this.field1172[var34][var36]] = var8.g4();
-			}
-			this.field1174[var34] = new IntHashTable(this.field1173[var34]);
-		}
-	}
+
+        if (hasNames) {
+            this.fileNameHashes = new int[maxGroupId + 1][];
+            this.fileNameHashTables = new IntHashTable[maxGroupId + 1];
+
+            for (int i = 0; i < this.size; i++) {
+                int id = this.groupIds[i];
+                int size = this.groupSizes[id];
+
+                this.fileNameHashes[id] = new int[this.unpacked[id].length];
+                for (int j = 0; j < size; j++) {
+                    this.fileNameHashes[id][this.fileIds[id][j]] = buf.g4();
+                }
+
+                this.fileNameHashTables[id] = new IntHashTable(this.fileNameHashes[id]);
+            }
+        }
+    }
 
 	@ObfuscatedName("ch.d(IB)V")
 	public void method1043(int arg0) {
@@ -189,35 +206,35 @@ public abstract class Js5Index {
 
 	@ObfuscatedName("ch.m(II[IS)[B")
 	public byte[] method1079(int arg0, int arg1, int[] arg2) {
-		if (arg0 < 0 || arg0 >= this.field1170.length || this.field1170[arg0] == null || arg1 < 0 || arg1 >= this.field1170[arg0].length) {
+		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
 			return null;
 		}
-		if (this.field1170[arg0][arg1] == null) {
-			boolean var4 = this.method1058(arg0, arg2);
+		if (this.unpacked[arg0][arg1] == null) {
+			boolean var4 = this.unpackGroup(arg0, arg2);
 			if (!var4) {
 				this.method1052(arg0);
-				boolean var5 = this.method1058(arg0, arg2);
+				boolean var5 = this.unpackGroup(arg0, arg2);
 				if (!var5) {
 					return null;
 				}
 			}
 		}
-		byte[] var6 = ByteArrayCopier.method108(this.field1170[arg0][arg1], false);
-		if (this.field1180) {
-			this.field1170[arg0][arg1] = null;
+		byte[] var6 = ByteArrayCopier.method108(this.unpacked[arg0][arg1], false);
+		if (this.discardUnpacked) {
+			this.unpacked[arg0][arg1] = null;
 		}
 		return var6;
 	}
 
 	@ObfuscatedName("ch.c(III)Z")
 	public boolean method1046(int arg0, int arg1) {
-		if (arg0 < 0 || arg0 >= this.field1170.length || this.field1170[arg0] == null || arg1 < 0 || arg1 >= this.field1170[arg0].length) {
+		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
 			return false;
-		} else if (this.field1170[arg0][arg1] != null) {
+		} else if (this.unpacked[arg0][arg1] != null) {
 			return true;
-		} else if (this.field1178[arg0] == null) {
+		} else if (this.packed[arg0] == null) {
 			this.method1052(arg0);
-			return this.field1178[arg0] != null;
+			return this.packed[arg0] != null;
 		} else {
 			return true;
 		}
@@ -225,9 +242,9 @@ public abstract class Js5Index {
 
 	@ObfuscatedName("ch.n(II)Z")
 	public boolean method1093(int arg0) {
-		if (this.field1178[arg0] == null) {
+		if (this.packed[arg0] == null) {
 			this.method1052(arg0);
-			return this.field1178[arg0] != null;
+			return this.packed[arg0] != null;
 		} else {
 			return true;
 		}
@@ -236,11 +253,11 @@ public abstract class Js5Index {
 	@ObfuscatedName("ch.j(B)Z")
 	public boolean method1048() {
 		boolean var1 = true;
-		for (int var2 = 0; var2 < this.field1165.length; var2++) {
-			int var3 = this.field1165[var2];
-			if (this.field1178[var3] == null) {
+		for (int var2 = 0; var2 < this.groupIds.length; var2++) {
+			int var3 = this.groupIds[var2];
+			if (this.packed[var3] == null) {
 				this.method1052(var3);
-				if (this.field1178[var3] == null) {
+				if (this.packed[var3] == null) {
 					var1 = false;
 				}
 			}
@@ -250,9 +267,9 @@ public abstract class Js5Index {
 
 	@ObfuscatedName("ch.z(II)[B")
 	public byte[] method1092(int arg0) {
-		if (this.field1170.length == 1) {
+		if (this.unpacked.length == 1) {
 			return this.method1044(0, arg0);
-		} else if (this.field1170[arg0].length == 1) {
+		} else if (this.unpacked[arg0].length == 1) {
 			return this.method1044(arg0, 0);
 		} else {
 			throw new RuntimeException();
@@ -261,27 +278,27 @@ public abstract class Js5Index {
 
 	@ObfuscatedName("ch.g(III)[B")
 	public byte[] method1050(int arg0, int arg1) {
-		if (arg0 < 0 || arg0 >= this.field1170.length || this.field1170[arg0] == null || arg1 < 0 || arg1 >= this.field1170[arg0].length) {
+		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
 			return null;
 		}
-		if (this.field1170[arg0][arg1] == null) {
-			boolean var3 = this.method1058(arg0, null);
+		if (this.unpacked[arg0][arg1] == null) {
+			boolean var3 = this.unpackGroup(arg0, null);
 			if (!var3) {
 				this.method1052(arg0);
-				boolean var4 = this.method1058(arg0, null);
+				boolean var4 = this.unpackGroup(arg0, null);
 				if (!var4) {
 					return null;
 				}
 			}
 		}
-		return ByteArrayCopier.method108(this.field1170[arg0][arg1], false);
+		return ByteArrayCopier.method108(this.unpacked[arg0][arg1], false);
 	}
 
 	@ObfuscatedName("ch.q(II)[B")
 	public byte[] method1051(int arg0) {
-		if (this.field1170.length == 1) {
+		if (this.unpacked.length == 1) {
 			return this.method1050(0, arg0);
-		} else if (this.field1170[arg0].length == 1) {
+		} else if (this.unpacked[arg0].length == 1) {
 			return this.method1050(arg0, 0);
 		} else {
 			throw new RuntimeException();
@@ -294,150 +311,156 @@ public abstract class Js5Index {
 
 	@ObfuscatedName("ch.s(II)[I")
 	public int[] method1053(int arg0) {
-		return this.field1172[arg0];
+		return this.fileIds[arg0];
 	}
 
 	@ObfuscatedName("ch.u(IS)I")
 	public int method1054(int arg0) {
-		return this.field1170[arg0].length;
+		return this.unpacked[arg0].length;
 	}
 
 	@ObfuscatedName("ch.v(I)I")
 	public int method1055() {
-		return this.field1170.length;
+		return this.unpacked.length;
 	}
 
 	@ObfuscatedName("ch.w(II)V")
 	public void method1086(int arg0) {
-		for (int var2 = 0; var2 < this.field1170[arg0].length; var2++) {
-			this.field1170[arg0][var2] = null;
+		for (int var2 = 0; var2 < this.unpacked[arg0].length; var2++) {
+			this.unpacked[arg0][var2] = null;
 		}
 	}
 
 	@ObfuscatedName("ch.e(I)V")
 	public void method1057() {
-		for (int var1 = 0; var1 < this.field1170.length; var1++) {
-			if (this.field1170[var1] != null) {
-				for (int var2 = 0; var2 < this.field1170[var1].length; var2++) {
-					this.field1170[var1][var2] = null;
+		for (int var1 = 0; var1 < this.unpacked.length; var1++) {
+			if (this.unpacked[var1] != null) {
+				for (int var2 = 0; var2 < this.unpacked[var1].length; var2++) {
+					this.unpacked[var1][var2] = null;
 				}
 			}
 		}
 	}
 
 	@ObfuscatedName("ch.b(I[II)Z")
-	public boolean method1058(int arg0, int[] arg1) {
-		if (this.field1178[arg0] == null) {
+	public boolean unpackGroup(int group, int[] key) {
+		if (this.packed[group] == null) {
 			return false;
 		}
-		int var3 = this.field1171[arg0];
-		int[] var4 = this.field1172[arg0];
-		Object[] var5 = this.field1170[arg0];
+
+		int groupSize = this.groupSizes[group];
+		int[] fileIds = this.fileIds[group];
+		Object[] unpacked = this.unpacked[group];
+
 		boolean var6 = true;
-		for (int var7 = 0; var7 < var3; var7++) {
-			if (var5[var4[var7]] == null) {
+		for (int var7 = 0; var7 < groupSize; var7++) {
+			if (unpacked[fileIds[var7]] == null) {
 				var6 = false;
 				break;
 			}
 		}
+
 		if (var6) {
 			return true;
 		}
-		byte[] var8;
-		if (arg1 == null || arg1[0] == 0 && arg1[1] == 0 && arg1[2] == 0 && arg1[3] == 0) {
-			var8 = ByteArrayCopier.method108(this.field1178[arg0], false);
+
+		byte[] compressed;
+		if (key == null || key[0] == 0 && key[1] == 0 && key[2] == 0 && key[3] == 0) {
+			compressed = ByteArrayCopier.method108(this.packed[group], false);
 		} else {
-			var8 = ByteArrayCopier.method108(this.field1178[arg0], true);
-			Packet var9 = new Packet(var8);
-			var9.tinydec(arg1, 5, var9.data.length);
+			compressed = ByteArrayCopier.method108(this.packed[group], true);
+			Packet buf = new Packet(compressed);
+			buf.tinydec(key, 5, buf.data.length);
 		}
-		byte[] var10;
+
+		byte[] uncompressed;
 		try {
-			var10 = method52(var8);
-		} catch (RuntimeException var43) {
-			String var13 = "" + (arg1 != null) + "," + arg0 + "," + var8.length + ",";
-			int var14 = var8.length;
-			int var15 = -1;
-			for (int var16 = 0; var16 < var14; var16++) {
-				var15 = var15 >>> 8 ^ Packet.crctable[(var15 ^ var8[var16]) & 0xFF];
-			}
-			int var17 = ~var15;
-			String var21 = var13 + var17 + ",";
-			int var22 = var8.length - 2;
-			int var23 = -1;
-			for (int var24 = 0; var24 < var22; var24++) {
-				var23 = var23 >>> 8 ^ Packet.crctable[(var23 ^ var8[var24]) & 0xFF];
-			}
-			int var25 = ~var23;
-			throw JagException.report((Throwable) var43, (String) (var21 + var25 + "," + this.field1169[arg0] + "," + this.field1175));
+			uncompressed = decompress(compressed);
+		} catch (RuntimeException ex) {
+			String message = "" + (key != null) + "," + group + "," + compressed.length + ",";
+
+			message += Packet.getcrc(compressed, compressed.length) + ",";
+			message += Packet.getcrc(compressed, compressed.length - 2) + ",";
+			message += this.groupChecksums[group] + "," + this.crc;
+
+			throw JagException.report(ex, message);
 		}
-		if (this.field1166) {
-			this.field1178[arg0] = null;
+
+		if (this.discardPacked) {
+			this.packed[group] = null;
 		}
-		if (var3 > 1) {
-			int var28 = var10.length;
-			int var44 = var28 - 1;
-			int var29 = var10[var44] & 0xFF;
-			int var30 = var44 - var3 * var29 * 4;
-			Packet var31 = new Packet(var10);
-			int[] var32 = new int[var3];
-			var31.pos = var30;
-			for (int var33 = 0; var33 < var29; var33++) {
-				int var34 = 0;
-				for (int var35 = 0; var35 < var3; var35++) {
-					var34 += var31.g4();
-					var32[var35] += var34;
+
+		if (groupSize > 1) {
+			int pos = uncompressed.length;
+			pos -= 1;
+
+			int stripes = uncompressed[pos] & 0xFF;
+			pos -= groupSize * stripes * 4;
+
+			Packet buf = new Packet(uncompressed);
+			int[] lens = new int[groupSize];
+			buf.pos = pos;
+			for (int i = 0; i < stripes; i++) {
+				int len = 0;
+				for (int j = 0; j < groupSize; j++) {
+					len += buf.g4();
+					lens[j] += len;
 				}
 			}
-			byte[][] var36 = new byte[var3][];
-			for (int var37 = 0; var37 < var3; var37++) {
-				var36[var37] = new byte[var32[var37]];
-				var32[var37] = 0;
+
+			byte[][] extracted = new byte[groupSize][];
+			for (int i = 0; i < groupSize; i++) {
+				extracted[i] = new byte[lens[i]];
+				lens[i] = 0;
 			}
-			var31.pos = var30;
-			int var38 = 0;
-			for (int var39 = 0; var39 < var29; var39++) {
-				int var40 = 0;
-				for (int var41 = 0; var41 < var3; var41++) {
-					var40 += var31.g4();
-					System.arraycopy(var10, var38, var36[var41], var32[var41], var40);
-					var32[var41] += var40;
-					var38 += var40;
+
+			buf.pos = pos;
+			int off = 0;
+
+			for (int i = 0; i < stripes; i++) {
+				int len = 0;
+				for (int j = 0; j < groupSize; j++) {
+					len += buf.g4();
+					System.arraycopy(uncompressed, off, extracted[j], lens[j], len);
+					lens[j] += len;
+					off += len;
 				}
 			}
-			for (int var42 = 0; var42 < var3; var42++) {
-				if (this.field1180) {
-					var5[var4[var42]] = var36[var42];
+
+			for (int i = 0; i < groupSize; i++) {
+				if (this.discardUnpacked) {
+					unpacked[fileIds[i]] = extracted[i];
 				} else {
-					var5[var4[var42]] = ByteArrayCopier.method1131(var36[var42], false);
+					unpacked[fileIds[i]] = ByteArrayCopier.method1131(extracted[i], false);
 				}
 			}
-		} else if (this.field1180) {
-			var5[var4[0]] = var10;
+		} else if (this.discardUnpacked) {
+			unpacked[fileIds[0]] = uncompressed;
 		} else {
-			var5[var4[0]] = ByteArrayCopier.method1131(var10, false);
+			unpacked[fileIds[0]] = ByteArrayCopier.method1131(uncompressed, false);
 		}
+
 		return true;
 	}
 
 	@ObfuscatedName("ch.y(Ljava/lang/String;I)I")
 	public int method1059(String arg0) {
 		String var2 = arg0.toLowerCase();
-		return this.field1168.method1241(JStringUtil.method1234(var2));
+		return this.groupNameHashTable.method1241(JStringUtil.method1234(var2));
 	}
 
 	@ObfuscatedName("ch.t(ILjava/lang/String;B)I")
 	public int method1064(int arg0, String arg1) {
 		String var3 = arg1.toLowerCase();
-		return this.field1174[arg0].method1241(JStringUtil.method1234(var3));
+		return this.fileNameHashTables[arg0].method1241(JStringUtil.method1234(var3));
 	}
 
 	@ObfuscatedName("ch.f(Ljava/lang/String;Ljava/lang/String;I)[B")
 	public byte[] method1061(String arg0, String arg1) {
 		String var3 = arg0.toLowerCase();
 		String var4 = arg1.toLowerCase();
-		int var5 = this.field1168.method1241(JStringUtil.method1234(var3));
-		int var6 = this.field1174[var5].method1241(JStringUtil.method1234(var4));
+		int var5 = this.groupNameHashTable.method1241(JStringUtil.method1234(var3));
+		int var6 = this.fileNameHashTables[var5].method1241(JStringUtil.method1234(var4));
 		return this.method1044(var5, var6);
 	}
 
@@ -445,22 +468,22 @@ public abstract class Js5Index {
 	public boolean method1076(String arg0, String arg1) {
 		String var3 = arg0.toLowerCase();
 		String var4 = arg1.toLowerCase();
-		int var5 = this.field1168.method1241(JStringUtil.method1234(var3));
-		int var6 = this.field1174[var5].method1241(JStringUtil.method1234(var4));
+		int var5 = this.groupNameHashTable.method1241(JStringUtil.method1234(var3));
+		int var6 = this.fileNameHashTables[var5].method1241(JStringUtil.method1234(var4));
 		return this.method1046(var5, var6);
 	}
 
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
 	public void method1056(String arg0) {
 		String var2 = arg0.toLowerCase();
-		int var3 = this.field1168.method1241(JStringUtil.method1234(var2));
+		int var3 = this.groupNameHashTable.method1241(JStringUtil.method1234(var2));
 		if (var3 >= 0) {
 			this.method1043(var3);
 		}
 	}
 
 	@ObfuscatedName("c.a([BI)[B")
-	public static final byte[] method52(byte[] arg0) {
+	public static final byte[] decompress(byte[] arg0) {
 		Packet var1 = new Packet(arg0);
 		int var2 = var1.g1();
 		int var3 = var1.g4();
