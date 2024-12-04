@@ -481,7 +481,7 @@ public class VorbisSound extends Linkable {
 	@ObfuscatedName("dt.s(Lch;)Z")
 	public static boolean method1542(Js5Index arg0) {
 		if (!field1664) {
-			byte[] var1 = arg0.method1044(0, 0);
+			byte[] var1 = arg0.getFile(0, 0);
 			if (var1 == null) {
 				return false;
 			}
@@ -494,10 +494,10 @@ public class VorbisSound extends Linkable {
 	@ObfuscatedName("dt.u(Lch;II)Ldt;")
 	public static VorbisSound method1543(Js5Index arg0, int arg1, int arg2) {
 		if (method1542(arg0)) {
-			byte[] var3 = arg0.method1044(arg1, arg2);
+			byte[] var3 = arg0.getFile(arg1, arg2);
 			return var3 == null ? null : new VorbisSound(var3);
 		} else {
-			arg0.method1046(arg1, arg2);
+			arg0.requestDownload(arg1, arg2);
 			return null;
 		}
 	}

@@ -1223,7 +1223,7 @@ public class ScriptRunner {
 							InvType var128 = (InvType) InvType.field2475.get((long) var125);
 							InvType var129;
 							if (var128 == null) {
-								byte[] var130 = InvType.configJs5.method1044(5, var125);
+								byte[] var130 = InvType.configJs5.getFile(5, var125);
 								InvType var131 = new InvType();
 								if (var130 != null) {
 									var131.decode(new Packet(var130));
@@ -1961,7 +1961,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var282 = field188[var4];
 							int var283 = field188[var4 + 1];
-							byte[] var284 = Client.field1150.method1044(var283, 0);
+							byte[] var284 = Client.field1150.getFile(var283, 0);
 							SoftwareFont var285 = new SoftwareFont(var284);
 							field188[var4++] = var285.method2889(var281, var282);
 							continue;
@@ -1972,7 +1972,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var287 = field188[var4];
 							int var288 = field188[var4 + 1];
-							byte[] var289 = Client.field1150.method1044(var288, 0);
+							byte[] var289 = Client.field1150.getFile(var288, 0);
 							SoftwareFont var290 = new SoftwareFont(var289);
 							field188[var4++] = var290.method2818(var286, var287);
 							continue;

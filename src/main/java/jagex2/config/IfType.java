@@ -402,8 +402,8 @@ public class IfType extends Linkable {
 		field1776 = arg1;
 		field1564 = arg2;
 		field1800 = arg3;
-		field373 = new IfType[field1806.method1055()][];
-		field1508 = new boolean[field1806.method1055()];
+		field373 = new IfType[field1806.getGroupCount()][];
+		field1508 = new boolean[field1806.getGroupCount()];
 	}
 
 	@ObfuscatedName("bw.n(IB)Leg;")
@@ -435,8 +435,8 @@ public class IfType extends Linkable {
 	public static boolean method1501(int arg0) {
 		if (field1508[arg0]) {
 			return true;
-		} else if (field1806.method1093(arg0)) {
-			int var1 = field1806.method1054(arg0);
+		} else if (field1806.isGroupReady(arg0)) {
+			int var1 = field1806.getFileCount(arg0);
 			if (var1 == 0) {
 				field1508[arg0] = true;
 				return true;
@@ -446,7 +446,7 @@ public class IfType extends Linkable {
 			}
 			for (int var2 = 0; var2 < var1; var2++) {
 				if (field373[arg0][var2] == null) {
-					byte[] var3 = field1806.method1044(arg0, var2);
+					byte[] var3 = field1806.getFile(arg0, var2);
 					if (var3 != null) {
 						field373[arg0][var2] = new IfType();
 						field373[arg0][var2].field1783 = (arg0 << 16) + var2;
@@ -888,7 +888,7 @@ public class IfType extends Linkable {
 		int var4 = this.field1829;
 		SoftwareFont var5;
 		if (SpriteDataProvider.method905(var2, var4, 0)) {
-			var5 = SpriteDataProvider.method260(var3.method1044(var4, 0));
+			var5 = SpriteDataProvider.method260(var3.getFile(var4, 0));
 		} else {
 			var5 = null;
 		}

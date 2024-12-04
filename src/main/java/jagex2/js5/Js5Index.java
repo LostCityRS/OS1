@@ -49,7 +49,7 @@ public abstract class Js5Index {
 	public Object[][] unpacked;
 
 	@ObfuscatedName("ch.u")
-	public static GZip field1177 = new GZip();
+	public static GZip gzip = new GZip();
 
 	@ObfuscatedName("ch.v")
 	public int crc;
@@ -61,7 +61,7 @@ public abstract class Js5Index {
 	public boolean discardUnpacked;
 
 	@ObfuscatedName("ch.b")
-	public static int field1176 = 0;
+	public static int maxsize = 0;
 
 	public Js5Index(boolean discardPacked, boolean discardUnpacked) {
 		this.discardPacked = discardPacked;
@@ -200,143 +200,155 @@ public abstract class Js5Index {
 	}
 
 	@ObfuscatedName("ch.l(III)[B")
-	public byte[] method1044(int arg0, int arg1) {
-		return this.method1079(arg0, arg1, null);
+	public byte[] getFile(int group, int file) {
+		return this.getFile(group, file, null);
 	}
 
 	@ObfuscatedName("ch.m(II[IS)[B")
-	public byte[] method1079(int arg0, int arg1, int[] arg2) {
-		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
+	public byte[] getFile(int group, int file, int[] key) {
+		if (group < 0 || group >= this.unpacked.length || this.unpacked[group] == null || file < 0 || file >= this.unpacked[group].length) {
 			return null;
 		}
-		if (this.unpacked[arg0][arg1] == null) {
-			boolean var4 = this.unpackGroup(arg0, arg2);
-			if (!var4) {
-				this.method1052(arg0);
-				boolean var5 = this.unpackGroup(arg0, arg2);
-				if (!var5) {
+
+		if (this.unpacked[group][file] == null) {
+			boolean success = this.unpackGroup(group, key);
+			if (!success) {
+				this.fetchGroup(group);
+
+				success = this.unpackGroup(group, key);
+				if (!success) {
 					return null;
 				}
 			}
 		}
-		byte[] var6 = ByteArrayCopier.method108(this.unpacked[arg0][arg1], false);
+
+		byte[] bytes = ByteArrayCopier.method108(this.unpacked[group][file], false);
+
 		if (this.discardUnpacked) {
-			this.unpacked[arg0][arg1] = null;
+			this.unpacked[group][file] = null;
 		}
-		return var6;
+
+		return bytes;
 	}
 
 	@ObfuscatedName("ch.c(III)Z")
-	public boolean method1046(int arg0, int arg1) {
-		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
+	public boolean requestDownload(int group, int file) {
+		if (group < 0 || group >= this.unpacked.length || this.unpacked[group] == null || file < 0 || file >= this.unpacked[group].length) {
 			return false;
-		} else if (this.unpacked[arg0][arg1] != null) {
+		} else if (this.unpacked[group][file] != null) {
 			return true;
-		} else if (this.packed[arg0] == null) {
-			this.method1052(arg0);
-			return this.packed[arg0] != null;
+		} else if (this.packed[group] == null) {
+			this.fetchGroup(group);
+			return this.packed[group] != null;
 		} else {
 			return true;
 		}
 	}
 
 	@ObfuscatedName("ch.n(II)Z")
-	public boolean method1093(int arg0) {
-		if (this.packed[arg0] == null) {
-			this.method1052(arg0);
-			return this.packed[arg0] != null;
+	public boolean isGroupReady(int group) {
+		if (this.packed[group] == null) {
+			this.fetchGroup(group);
+			return this.packed[group] != null;
 		} else {
 			return true;
 		}
 	}
 
 	@ObfuscatedName("ch.j(B)Z")
-	public boolean method1048() {
-		boolean var1 = true;
-		for (int var2 = 0; var2 < this.groupIds.length; var2++) {
-			int var3 = this.groupIds[var2];
-			if (this.packed[var3] == null) {
-				this.method1052(var3);
-				if (this.packed[var3] == null) {
-					var1 = false;
+	public boolean fetchAll() {
+		boolean success = true;
+
+		for (int i = 0; i < this.groupIds.length; i++) {
+			int id = this.groupIds[i];
+
+			if (this.packed[id] == null) {
+				this.fetchGroup(id);
+
+				if (this.packed[id] == null) {
+					success = false;
 				}
 			}
 		}
-		return var1;
+
+		return success;
 	}
 
 	@ObfuscatedName("ch.z(II)[B")
-	public byte[] method1092(int arg0) {
+	public byte[] fetchFile(int id) {
 		if (this.unpacked.length == 1) {
-			return this.method1044(0, arg0);
-		} else if (this.unpacked[arg0].length == 1) {
-			return this.method1044(arg0, 0);
+			return this.getFile(0, id);
+		} else if (this.unpacked[id].length == 1) {
+			return this.getFile(id, 0);
 		} else {
-			throw new RuntimeException();
+			throw new RuntimeException("Unable to determine if id is groupid or fileid");
 		}
 	}
 
 	@ObfuscatedName("ch.g(III)[B")
-	public byte[] method1050(int arg0, int arg1) {
-		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
+	public byte[] getFileNoDiscard(int group, int file) {
+		if (group < 0 || group >= this.unpacked.length || this.unpacked[group] == null || file < 0 || file >= this.unpacked[group].length) {
 			return null;
 		}
-		if (this.unpacked[arg0][arg1] == null) {
-			boolean var3 = this.unpackGroup(arg0, null);
-			if (!var3) {
-				this.method1052(arg0);
-				boolean var4 = this.unpackGroup(arg0, null);
-				if (!var4) {
+
+		if (this.unpacked[group][file] == null) {
+			boolean success = this.unpackGroup(group, null);
+			if (!success) {
+				this.fetchGroup(group);
+
+				success = this.unpackGroup(group, null);
+				if (!success) {
 					return null;
 				}
 			}
 		}
-		return ByteArrayCopier.method108(this.unpacked[arg0][arg1], false);
+
+		return ByteArrayCopier.method108(this.unpacked[group][file], false);
 	}
 
 	@ObfuscatedName("ch.q(II)[B")
-	public byte[] method1051(int arg0) {
+	public byte[] fetchFileNoDiscard(int id) {
 		if (this.unpacked.length == 1) {
-			return this.method1050(0, arg0);
-		} else if (this.unpacked[arg0].length == 1) {
-			return this.method1050(arg0, 0);
+			return this.getFileNoDiscard(0, id);
+		} else if (this.unpacked[id].length == 1) {
+			return this.getFileNoDiscard(id, 0);
 		} else {
-			throw new RuntimeException();
+			throw new RuntimeException("Unable to determine if id is groupid or fileid");
 		}
 	}
 
 	@ObfuscatedName("ch.i(IB)V")
-	public void method1052(int arg0) {
+	public void fetchGroup(int arg0) {
 	}
 
 	@ObfuscatedName("ch.s(II)[I")
-	public int[] method1053(int arg0) {
-		return this.fileIds[arg0];
+	public int[] getFileIds(int group) {
+		return this.fileIds[group];
 	}
 
 	@ObfuscatedName("ch.u(IS)I")
-	public int method1054(int arg0) {
-		return this.unpacked[arg0].length;
+	public int getFileCount(int group) {
+		return this.unpacked[group].length;
 	}
 
 	@ObfuscatedName("ch.v(I)I")
-	public int method1055() {
+	public int getGroupCount() {
 		return this.unpacked.length;
 	}
 
 	@ObfuscatedName("ch.w(II)V")
-	public void method1086(int arg0) {
-		for (int var2 = 0; var2 < this.unpacked[arg0].length; var2++) {
-			this.unpacked[arg0][var2] = null;
+	public void discardFiles(int group) {
+		for (int i = 0; i < this.unpacked[group].length; i++) {
+			this.unpacked[group][i] = null;
 		}
 	}
 
 	@ObfuscatedName("ch.e(I)V")
-	public void method1057() {
-		for (int var1 = 0; var1 < this.unpacked.length; var1++) {
-			if (this.unpacked[var1] != null) {
-				for (int var2 = 0; var2 < this.unpacked[var1].length; var2++) {
-					this.unpacked[var1][var2] = null;
+	public void discardAll() {
+		for (int i = 0; i < this.unpacked.length; i++) {
+			if (this.unpacked[i] != null) {
+				for (int j = 0; j < this.unpacked[i].length; j++) {
+					this.unpacked[i][j] = null;
 				}
 			}
 		}
@@ -352,15 +364,15 @@ public abstract class Js5Index {
 		int[] fileIds = this.fileIds[group];
 		Object[] unpacked = this.unpacked[group];
 
-		boolean var6 = true;
+		boolean alreadyUnpacked = true;
 		for (int var7 = 0; var7 < groupSize; var7++) {
 			if (unpacked[fileIds[var7]] == null) {
-				var6 = false;
+				alreadyUnpacked = false;
 				break;
 			}
 		}
 
-		if (var6) {
+		if (alreadyUnpacked) {
 			return true;
 		}
 
@@ -444,67 +456,72 @@ public abstract class Js5Index {
 	}
 
 	@ObfuscatedName("ch.y(Ljava/lang/String;I)I")
-	public int method1059(String arg0) {
-		String var2 = arg0.toLowerCase();
-		return this.groupNameHashTable.method1241(JStringUtil.method1234(var2));
+	public int getGroupId(String group) {
+		String lower = group.toLowerCase();
+		return this.groupNameHashTable.get(JStringUtil.hashCode(lower));
 	}
 
 	@ObfuscatedName("ch.t(ILjava/lang/String;B)I")
-	public int method1064(int arg0, String arg1) {
-		String var3 = arg1.toLowerCase();
-		return this.fileNameHashTables[arg0].method1241(JStringUtil.method1234(var3));
+	public int getFileId(int group, String file) {
+		String lower = file.toLowerCase();
+		return this.fileNameHashTables[group].get(JStringUtil.hashCode(lower));
 	}
 
 	@ObfuscatedName("ch.f(Ljava/lang/String;Ljava/lang/String;I)[B")
-	public byte[] method1061(String arg0, String arg1) {
-		String var3 = arg0.toLowerCase();
-		String var4 = arg1.toLowerCase();
-		int var5 = this.groupNameHashTable.method1241(JStringUtil.method1234(var3));
-		int var6 = this.fileNameHashTables[var5].method1241(JStringUtil.method1234(var4));
-		return this.method1044(var5, var6);
+	public byte[] getFile(String group, String file) {
+		String groupLower = group.toLowerCase();
+		String fileLower = file.toLowerCase();
+		int groupId = this.groupNameHashTable.get(JStringUtil.hashCode(groupLower));
+		int fileId = this.fileNameHashTables[groupId].get(JStringUtil.hashCode(fileLower));
+		return this.getFile(groupId, fileId);
 	}
 
 	@ObfuscatedName("ch.k(Ljava/lang/String;Ljava/lang/String;B)Z")
-	public boolean method1076(String arg0, String arg1) {
-		String var3 = arg0.toLowerCase();
-		String var4 = arg1.toLowerCase();
-		int var5 = this.groupNameHashTable.method1241(JStringUtil.method1234(var3));
-		int var6 = this.fileNameHashTables[var5].method1241(JStringUtil.method1234(var4));
-		return this.method1046(var5, var6);
+	public boolean requestDownload(String group, String file) {
+		String groupLower = group.toLowerCase();
+		String fileLower = file.toLowerCase();
+		int groupId = this.groupNameHashTable.get(JStringUtil.hashCode(groupLower));
+		int fileId = this.fileNameHashTables[groupId].get(JStringUtil.hashCode(fileLower));
+		return this.requestDownload(groupId, fileId);
 	}
 
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
-	public void method1056(String arg0) {
-		String var2 = arg0.toLowerCase();
-		int var3 = this.groupNameHashTable.method1241(JStringUtil.method1234(var2));
-		if (var3 >= 0) {
-			this.method1043(var3);
+	public void method1056(String name) {
+		String lower = name.toLowerCase();
+		int groupId = this.groupNameHashTable.get(JStringUtil.hashCode(lower));
+		if (groupId >= 0) {
+			this.method1043(groupId);
 		}
 	}
 
 	@ObfuscatedName("c.a([BI)[B")
-	public static final byte[] decompress(byte[] arg0) {
-		Packet var1 = new Packet(arg0);
-		int var2 = var1.g1();
-		int var3 = var1.g4();
-		if (var3 < 0 || field1176 != 0 && var3 > field1176) {
-			throw new RuntimeException();
-		} else if (var2 == 0) {
-			byte[] var4 = new byte[var3];
-			var1.gdata(var4, 0, var3);
-			return var4;
+	public static final byte[] decompress(byte[] data) {
+		Packet buf = new Packet(data);
+		int ctype = buf.g1();
+		int clen = buf.g4();
+
+		if (clen < 0 || maxsize != 0 && clen > maxsize) {
+			throw new RuntimeException("ctype=" + ctype + " clen=" + clen + " maxsize=" + maxsize);
+		}
+
+		if (ctype == 0) {
+			byte[] dest = new byte[clen];
+			buf.gdata(dest, 0, clen);
+			return dest;
 		} else {
-			int var5 = var1.g4();
-			if (var5 < 0 || field1176 != 0 && var5 > field1176) {
-				throw new RuntimeException();
+			int ulen = buf.g4();
+			if (ulen < 0 || maxsize != 0 && ulen > maxsize) {
+				throw new RuntimeException("ctype=" + ctype + " clen=" + clen + " ulen=" + ulen + " maxsize=" + maxsize);
 			}
-			byte[] var6 = new byte[var5];
-			if (var2 == 1) {
-				BZip2.method842(var6, var5, arg0, var3, 9);
+
+			byte[] dest = new byte[ulen];
+			if (ctype == 1) {
+				BZip2.decompress(dest, ulen, data, clen, 9);
 			} else {
-				field1177.method834(var1, var6);
+				gzip.decompress(buf, dest);
 			}
-			return var6;
+
+			return dest;
 		}
 	}
 }

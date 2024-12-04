@@ -30,7 +30,7 @@ public class VarBitType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = configJs5.method1044(14, arg0);
+		byte[] var2 = configJs5.getFile(14, arg0);
 		VarBitType var3 = new VarBitType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2));

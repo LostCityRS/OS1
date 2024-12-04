@@ -41,7 +41,7 @@ public class FluType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field2358.method1044(1, arg0);
+		byte[] var2 = field2358.getFile(1, arg0);
 		FluType var3 = new FluType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2), arg0);

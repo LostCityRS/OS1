@@ -155,7 +155,7 @@ public class Model extends Entity {
 
 	@ObfuscatedName("fw.b(Lch;II)Lfw;")
 	public static Model tryGet(Js5Index arg0, int arg1, int arg2) {
-		byte[] var3 = arg0.method1044(arg1, arg2);
+		byte[] var3 = arg0.getFile(arg1, arg2);
 		return var3 == null ? null : new Model(var3);
 	}
 

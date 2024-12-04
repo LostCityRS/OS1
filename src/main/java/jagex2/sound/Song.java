@@ -18,7 +18,7 @@ public class Song extends Linkable {
 
 	@ObfuscatedName("ei.c(Lch;II)Lei;")
 	public static Song method1775(Js5Index arg0, int arg1, int arg2) {
-		byte[] var3 = arg0.method1044(arg1, arg2);
+		byte[] var3 = arg0.getFile(arg1, arg2);
 		return var3 == null ? null : new Song(new Packet(var3));
 	}
 

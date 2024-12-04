@@ -130,7 +130,7 @@ public class NpcType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field2281.method1044(9, arg0);
+		byte[] var2 = field2281.getFile(9, arg0);
 		NpcType var3 = new NpcType();
 		var3.field2271 = arg0;
 		if (var2 != null) {
@@ -260,7 +260,7 @@ public class NpcType extends DoublyLinkable {
 		if (var6 == null) {
 			boolean var7 = false;
 			for (int var8 = 0; var8 < this.models.length; var8++) {
-				if (!field1600.method1046(this.models[var8], 0)) {
+				if (!field1600.requestDownload(this.models[var8], 0)) {
 					var7 = true;
 				}
 			}
@@ -316,7 +316,7 @@ public class NpcType extends DoublyLinkable {
 		} else {
 			boolean var2 = false;
 			for (int var3 = 0; var3 < this.heads.length; var3++) {
-				if (!field1600.method1046(this.heads[var3], 0)) {
+				if (!field1600.requestDownload(this.heads[var3], 0)) {
 					var2 = true;
 				}
 			}

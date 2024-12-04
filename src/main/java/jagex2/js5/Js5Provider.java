@@ -81,7 +81,7 @@ public class Js5Provider extends Js5Index {
 	}
 
 	@ObfuscatedName("dq.i(IB)V")
-	public void method1052(int arg0) {
+	public void fetchGroup(int arg0) {
 		if (this.field1578 == null || this.field1572 == null || !this.field1572[arg0]) {
 			Js5TcpClient.method827(this, this.field1574, arg0, this.groupChecksums[arg0], (byte) 2, true);
 		} else {

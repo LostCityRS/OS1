@@ -191,7 +191,7 @@ public class JStringUtil {
 	}
 
 	@ObfuscatedName("ck.j(Ljava/lang/CharSequence;I)I")
-	public static int method1234(CharSequence arg0) {
+	public static int hashCode(CharSequence arg0) {
 		int var1 = arg0.length();
 		int var2 = 0;
 		for (int var3 = 0; var3 < var1; var3++) {

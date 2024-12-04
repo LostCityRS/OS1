@@ -50,7 +50,7 @@ public class IdkType extends DoublyLinkable {
 	public static void init(Js5Index arg0, Js5Index arg1) {
 		field2394 = arg0;
 		field2397 = arg1;
-		field1628 = field2394.method1054(3);
+		field1628 = field2394.getFileCount(3);
 	}
 
 	@ObfuscatedName("p.g(II)Lfd;")
@@ -59,7 +59,7 @@ public class IdkType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field2394.method1044(3, arg0);
+		byte[] var2 = field2394.getFile(3, arg0);
 		IdkType var3 = new IdkType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2));
@@ -119,7 +119,7 @@ public class IdkType extends DoublyLinkable {
 		}
 		boolean var1 = true;
 		for (int var2 = 0; var2 < this.models.length; var2++) {
-			if (!field2397.method1046(this.models[var2], 0)) {
+			if (!field2397.requestDownload(this.models[var2], 0)) {
 				var1 = false;
 			}
 		}
@@ -158,7 +158,7 @@ public class IdkType extends DoublyLinkable {
 	public boolean method2463() {
 		boolean var1 = true;
 		for (int var2 = 0; var2 < 5; var2++) {
-			if (this.heads[var2] != -1 && !field2397.method1046(this.heads[var2], 0)) {
+			if (this.heads[var2] != -1 && !field2397.requestDownload(this.heads[var2], 0)) {
 				var1 = false;
 			}
 		}

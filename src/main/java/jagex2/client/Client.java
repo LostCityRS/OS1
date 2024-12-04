@@ -1480,14 +1480,14 @@ public class Client extends GameShell {
 					boolean var11 = true;
 					for (int var12 = 0; var12 < field1768.length; var12++) {
 						if (field826[var12] != -1 && field1768[var12] == null) {
-							field1768[var12] = field1270.method1044(field826[var12], 0);
+							field1768[var12] = field1270.getFile(field826[var12], 0);
 							if (field1768[var12] == null) {
 								var11 = false;
 								field1972++;
 							}
 						}
 						if (field1163[var12] != -1 && field186[var12] == null) {
-							field186[var12] = field1270.method1079(field1163[var12], 0, field362[var12]);
+							field186[var12] = field1270.getFile(field1163[var12], 0, field362[var12]);
 							if (field186[var12] == null) {
 								var11 = false;
 								field1972++;
@@ -1506,7 +1506,7 @@ public class Client extends GameShell {
 									var16 = 10;
 									var17 = 10;
 								}
-								var13 &= World.prefetchLocations(var15, var16, var17);
+								var13 &= World.downloadLocations(var15, var16, var17);
 							}
 						}
 						if (var13) {
@@ -3453,7 +3453,7 @@ public class Client extends GameShell {
 										if (var423.field1639 > 0) {
 											var423.field1639--;
 										}
-										if (var423.field1639 == 0 && var423.field1633 >= 1 && var423.field1632 >= 1 && var423.field1633 <= 102 && var423.field1632 <= 102 && (var423.field1636 < 0 || World.isLocPrefetched(var423.field1636, var423.field1631))) {
+										if (var423.field1639 == 0 && var423.field1633 >= 1 && var423.field1632 >= 1 && var423.field1633 <= 102 && var423.field1632 <= 102 && (var423.field1636 < 0 || World.isLocDownloaded(var423.field1636, var423.field1631))) {
 											method274(var423.field1638, var423.field1630, var423.field1633, var423.field1632, var423.field1636, var423.field1637, var423.field1631);
 											var423.field1639 = -1;
 											if (var423.field1636 == var423.field1629 && var423.field1629 == -1) {
@@ -3462,7 +3462,7 @@ public class Client extends GameShell {
 												var423.unlink();
 											}
 										}
-									} else if (var423.field1629 < 0 || World.isLocPrefetched(var423.field1629, var423.field1635)) {
+									} else if (var423.field1629 < 0 || World.isLocDownloaded(var423.field1629, var423.field1635)) {
 										method274(var423.field1638, var423.field1630, var423.field1633, var423.field1632, var423.field1629, var423.field1634, var423.field1635);
 										var423.unlink();
 									}
@@ -4356,7 +4356,7 @@ public class Client extends GameShell {
 			Js5Provider var3 = field1944;
 			if (!Js5TcpClient.field1507) {
 				Pix2D.method2589();
-				byte[] var4 = var2.method1061("title.jpg", "");
+				byte[] var4 = var2.getFile("title.jpg", "");
 				LoginScreen.field146 = new Pix32(var4, var1);
 				LoginScreen.field348 = LoginScreen.field146.method2719();
 				LoginScreen.field131 = SpriteDataProvider.method457(var3, "logo", "");
@@ -4428,8 +4428,8 @@ public class Client extends GameShell {
 					MidiPlayer.field1152 = 2;
 				} else {
 					Js5Provider var17 = field1110;
-					int var18 = var17.method1059("scape main");
-					int var19 = var17.method1064(var18, "");
+					int var18 = var17.getGroupId("scape main");
+					int var19 = var17.getFileId(var18, "");
 					MidiPlayer.method95(2, var17, var18, var19, 255, false);
 				}
 				Js5TcpClient.method343(false);
@@ -4666,29 +4666,29 @@ public class Client extends GameShell {
 			Js5Provider var25 = field544;
 			Js5Provider var26 = field1944;
 			int var27 = 0;
-			if (var25.method1076("title.jpg", "")) {
+			if (var25.requestDownload("title.jpg", "")) {
 				var27++;
 			}
-			if (var26.method1076("logo", "")) {
+			if (var26.requestDownload("logo", "")) {
 				var27++;
 			}
-			if (var26.method1076("titlebox", "")) {
+			if (var26.requestDownload("titlebox", "")) {
 				var27++;
 			}
-			if (var26.method1076("titlebutton", "")) {
+			if (var26.requestDownload("titlebutton", "")) {
 				var27++;
 			}
-			if (var26.method1076("runes", "")) {
+			if (var26.requestDownload("runes", "")) {
 				var27++;
 			}
-			if (var26.method1076("title_mute", "")) {
+			if (var26.requestDownload("title_mute", "")) {
 				var27++;
 			}
-			var26.method1076("sl_back", "");
-			var26.method1076("sl_flags", "");
-			var26.method1076("sl_arrows", "");
-			var26.method1076("sl_stars", "");
-			var26.method1076("sl_button", "");
+			var26.requestDownload("sl_back", "");
+			var26.requestDownload("sl_flags", "");
+			var26.requestDownload("sl_arrows", "");
+			var26.requestDownload("sl_stars", "");
+			var26.requestDownload("sl_button", "");
 			int var30 = LoginScreen.method162();
 			if (var27 < var30) {
 				LoginScreen.message = EnglishLocale.field884 + var27 * 100 / var30 + "%";
@@ -4700,7 +4700,7 @@ public class Client extends GameShell {
 				field1940 = 70;
 			}
 		} else if (field1940 == 70) {
-			if (configJs5.method1048()) {
+			if (configJs5.fetchAll()) {
 				FloType.configJs5 = configJs5;
 
 				FluType.init(configJs5);
@@ -4714,7 +4714,7 @@ public class Client extends GameShell {
 				ObjType.configJs5 = configJs5;
 				ObjType.modelJs5 = modelJs5;
 				ObjType.field1462 = field1983;
-				ObjType.configJs5.method1054(10);
+				ObjType.configJs5.getFileCount(10);
 				ObjType.field815 = field1621;
 
 				SeqType.init(configJs5, field1109, field1720);
@@ -4866,7 +4866,7 @@ public class Client extends GameShell {
 				field1940 = 90;
 			}
 		} else if (field1940 == 90) {
-			if (field1966.method1048()) {
+			if (field1966.fetchAll()) {
 				SceneBuilderProvider var55 = new SceneBuilderProvider(field1966, field1944, 20, 0.8D, lowMemory ? 64 : 128);
 				Pix3D.method2760(var55);
 				Pix3D.method2761(0.8D);
@@ -4884,8 +4884,8 @@ public class Client extends GameShell {
 			LoginScreen.progress = 94;
 			field1940 = 120;
 		} else if (field1940 == 120) {
-			if (field544.method1076("huffman", "")) {
-				Huffman var56 = new Huffman(field544.method1061("huffman", ""));
+			if (field544.requestDownload("huffman", "")) {
+				Huffman var56 = new Huffman(field544.getFile("huffman", ""));
 				WordPack.method816(var56);
 				LoginScreen.message = EnglishLocale.field1051;
 				LoginScreen.progress = 96;
@@ -4895,13 +4895,13 @@ public class Client extends GameShell {
 				LoginScreen.progress = 96;
 			}
 		} else if (field1940 == 130) {
-			if (!field1123.method1048()) {
+			if (!field1123.fetchAll()) {
 				LoginScreen.message = EnglishLocale.field1017 + field1123.method1470() * 4 / 5 + "%";
 				LoginScreen.progress = 100;
-			} else if (!field1232.method1048()) {
+			} else if (!field1232.fetchAll()) {
 				LoginScreen.message = EnglishLocale.field1017 + (field1232.method1470() / 6 + 80) + "%";
 				LoginScreen.progress = 100;
-			} else if (field1150.method1048()) {
+			} else if (field1150.fetchAll()) {
 				LoginScreen.message = EnglishLocale.field1045;
 				LoginScreen.progress = 100;
 				field1940 = 140;
@@ -5210,7 +5210,7 @@ public class Client extends GameShell {
 		if (field2083 != -1) {
 			int var9 = field2083;
 			if (var9 != -1 && IfType.field1508[var9]) {
-				IfType.field1806.method1086(var9);
+				IfType.field1806.discardFiles(var9);
 				if (IfType.field373[var9] != null) {
 					boolean var10 = true;
 					for (int var11 = 0; var11 < IfType.field373[var9].length; var11++) {
@@ -5376,18 +5376,18 @@ public class Client extends GameShell {
 		IfType.method1104();
 		((SceneBuilderProvider) Pix3D.sceneProvider).method749();
 		ClientScript.field2262.clear();
-		field1109.method1057();
-		field1720.method1057();
-		field1123.method1057();
-		field1509.method1057();
-		field1270.method1057();
-		field1110.method1057();
-		modelJs5.method1057();
-		field1944.method1057();
-		field1966.method1057();
-		field544.method1057();
-		field1515.method1057();
-		field1232.method1057();
+		field1109.discardAll();
+		field1720.discardAll();
+		field1123.discardAll();
+		field1509.discardAll();
+		field1270.discardAll();
+		field1110.discardAll();
+		modelJs5.discardAll();
+		field1944.discardAll();
+		field1966.discardAll();
+		field544.discardAll();
+		field1515.discardAll();
+		field1232.discardAll();
 	}
 
 	@ObfuscatedName("da.dj(I)V")
@@ -6330,8 +6330,8 @@ public class Client extends GameShell {
 					int var13 = (var11 << 8) + var12;
 					if (!var9 || var12 != 49 && var12 != 149 && var12 != 147 && var11 != 50 && (var11 != 49 || var12 != 47)) {
 						field801[var10] = var13;
-						field826[var10] = field1270.method1059("m" + var11 + "_" + var12);
-						field1163[var10] = field1270.method1059("l" + var11 + "_" + var12);
+						field826[var10] = field1270.getGroupId("m" + var11 + "_" + var12);
+						field1163[var10] = field1270.getGroupId("l" + var11 + "_" + var12);
 						var10++;
 					}
 				}
@@ -6389,8 +6389,8 @@ public class Client extends GameShell {
 							field801[var26] = var33;
 							int var35 = var33 >> 8 & 0xFF;
 							int var36 = var33 & 0xFF;
-							field826[var26] = field1270.method1059("m" + var35 + "_" + var36);
-							field1163[var26] = field1270.method1059("l" + var35 + "_" + var36);
+							field826[var26] = field1270.getGroupId("m" + var35 + "_" + var36);
+							field1163[var26] = field1270.getGroupId("l" + var35 + "_" + var36);
 							var26++;
 						}
 					}
@@ -10989,7 +10989,7 @@ public class Client extends GameShell {
 		int var3 = (int) arg0.key;
 		arg0.unlink();
 		if (arg1 && var2 != -1 && IfType.field1508[var2]) {
-			IfType.field1806.method1086(var2);
+			IfType.field1806.discardFiles(var2);
 			if (IfType.field373[var2] != null) {
 				boolean var4 = true;
 				for (int var5 = 0; var5 < IfType.field373[var2].length; var5++) {

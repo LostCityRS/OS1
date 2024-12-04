@@ -51,7 +51,7 @@ public class FloType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = configJs5.method1044(4, arg0);
+		byte[] var2 = configJs5.getFile(4, arg0);
 		FloType var3 = new FloType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2), arg0);

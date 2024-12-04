@@ -8,7 +8,7 @@ import java.util.zip.Inflater;
 public class GZip {
 
 	@ObfuscatedName("bf.r")
-	public Inflater field814;
+	public Inflater inflater;
 
 	public GZip() {
 		this(-1, 1000000, 1000000);
@@ -18,20 +18,23 @@ public class GZip {
 	}
 
 	@ObfuscatedName("bf.r(Lev;[BB)V")
-	public void method834(Packet arg0, byte[] arg1) {
-		if (arg0.data[arg0.pos] != 31 || arg0.data[arg0.pos + 1] != -117) {
+	public void decompress(Packet buf, byte[] out) {
+		if (buf.data[buf.pos] != 31 || buf.data[buf.pos + 1] != -117) {
 			throw new RuntimeException("");
 		}
-		if (this.field814 == null) {
-			this.field814 = new Inflater(true);
+
+		if (this.inflater == null) {
+			this.inflater = new Inflater(true);
 		}
+
 		try {
-			this.field814.setInput(arg0.data, arg0.pos + 10, arg0.data.length - (arg0.pos + 10 + 8));
-			this.field814.inflate(arg1);
-		} catch (Exception var4) {
-			this.field814.reset();
+			this.inflater.setInput(buf.data, buf.pos + 10, buf.data.length - (buf.pos + 10 + 8));
+			this.inflater.inflate(out);
+		} catch (Exception ignore) {
+			this.inflater.reset();
 			throw new RuntimeException("");
 		}
-		this.field814.reset();
+
+		this.inflater.reset();
 	}
 }

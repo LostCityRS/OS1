@@ -181,7 +181,7 @@ public class LocType extends DoublyLinkable {
 			return cached;
 		}
 
-		byte[] data = configJs5.method1044(6, id);
+		byte[] data = configJs5.getFile(6, id);
 		LocType type = new LocType();
 		type.id = id;
 
@@ -435,11 +435,11 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.u(II)Z")
-	public final boolean isPrefetched(int shape) {
+	public final boolean isDownloaded(int shape) {
 		if (this.shapes != null) {
 			for (int i = 0; i < this.shapes.length; i++) {
 				if (this.shapes[i] == shape) {
-					return modelJs5.method1046(this.models[i] & 0xFFFF, 0);
+					return modelJs5.requestDownload(this.models[i] & 0xFFFF, 0);
 				}
 			}
 
@@ -453,7 +453,7 @@ public class LocType extends DoublyLinkable {
 		if (shape == 10) {
 			boolean ready = true;
 			for (int i = 0; i < this.models.length; i++) {
-				ready &= modelJs5.method1046(this.models[i] & 0xFFFF, 0);
+				ready &= modelJs5.requestDownload(this.models[i] & 0xFFFF, 0);
 			}
 			return ready;
 		}
@@ -462,14 +462,14 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.v(I)Z")
-	public final boolean isPrefetched() {
+	public final boolean isDownloaded() {
 		if (this.models == null) {
 			return true;
 		}
 
 		boolean ready = true;
 		for (int i = 0; i < this.models.length; i++) {
-			ready &= modelJs5.method1046(this.models[i] & 0xFFFF, 0);
+			ready &= modelJs5.requestDownload(this.models[i] & 0xFFFF, 0);
 		}
 		return ready;
 	}

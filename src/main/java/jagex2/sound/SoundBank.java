@@ -80,9 +80,9 @@ public class SoundBank {
 
 	@ObfuscatedName("a.l(I[II)Leq;")
 	public PcmSound method305(int arg0, int[] arg1) {
-		if (this.field313.method1055() == 1) {
+		if (this.field313.getGroupCount() == 1) {
 			return this.method303(0, arg0, arg1);
-		} else if (this.field313.method1054(arg0) == 1) {
+		} else if (this.field313.getFileCount(arg0) == 1) {
 			return this.method303(arg0, 0, arg1);
 		} else {
 			throw new RuntimeException();
@@ -91,9 +91,9 @@ public class SoundBank {
 
 	@ObfuscatedName("a.m(I[II)Leq;")
 	public PcmSound method309(int arg0, int[] arg1) {
-		if (this.field311.method1055() == 1) {
+		if (this.field311.getGroupCount() == 1) {
 			return this.method304(0, arg0, arg1);
-		} else if (this.field311.method1054(arg0) == 1) {
+		} else if (this.field311.getFileCount(arg0) == 1) {
 			return this.method304(arg0, 0, arg1);
 		} else {
 			throw new RuntimeException();

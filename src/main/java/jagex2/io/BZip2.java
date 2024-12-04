@@ -16,7 +16,7 @@ public class BZip2 {
 	}
 
 	@ObfuscatedName("bu.r([BI[BII)I")
-	public static int method842(byte[] arg0, int arg1, byte[] arg2, int arg3, int arg4) {
+	public static int decompress(byte[] arg0, int arg1, byte[] arg2, int arg3, int arg4) {
 		BZip2State var5 = field822;
 		synchronized (field822) {
 			field822.field753 = arg2;

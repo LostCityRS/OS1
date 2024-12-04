@@ -35,11 +35,11 @@ public class SceneBuilderProvider implements SceneProvider {
 		this.field718 = this.field717;
 		this.field720 = arg3;
 		this.field721 = arg4;
-		int[] var7 = arg0.method1053(0);
+		int[] var7 = arg0.getFileIds(0);
 		int var8 = var7.length;
-		this.field719 = new SceneTextureProvider[arg0.method1054(0)];
+		this.field719 = new SceneTextureProvider[arg0.getFileCount(0)];
 		for (int var9 = 0; var9 < var8; var9++) {
-			Packet var10 = new Packet(arg0.method1044(0, var7[var9]));
+			Packet var10 = new Packet(arg0.getFile(0, var7[var9]));
 			this.field719[var7[var9]] = new SceneTextureProvider(var10);
 		}
 	}

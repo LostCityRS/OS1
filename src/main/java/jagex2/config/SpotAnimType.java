@@ -65,7 +65,7 @@ public class SpotAnimType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = configJs5.method1044(13, arg0);
+		byte[] var2 = configJs5.getFile(13, arg0);
 		SpotAnimType var3 = new SpotAnimType();
 		var3.field2382 = arg0;
 		if (var2 != null) {

@@ -158,7 +158,7 @@ public class ObjType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = configJs5.method1044(10, arg0);
+		byte[] var2 = configJs5.getFile(10, arg0);
 		ObjType var3 = new ObjType();
 		var3.field2435 = arg0;
 		if (var2 != null) {
@@ -506,13 +506,13 @@ public class ObjType extends DoublyLinkable {
 			return true;
 		}
 		boolean var5 = true;
-		if (!modelJs5.method1046(var2, 0)) {
+		if (!modelJs5.requestDownload(var2, 0)) {
 			var5 = false;
 		}
-		if (var3 != -1 && !modelJs5.method1046(var3, 0)) {
+		if (var3 != -1 && !modelJs5.requestDownload(var3, 0)) {
 			var5 = false;
 		}
-		if (var4 != -1 && !modelJs5.method1046(var4, 0)) {
+		if (var4 != -1 && !modelJs5.requestDownload(var4, 0)) {
 			var5 = false;
 		}
 		return var5;
@@ -574,10 +574,10 @@ public class ObjType extends DoublyLinkable {
 			return true;
 		}
 		boolean var4 = true;
-		if (!modelJs5.method1046(var2, 0)) {
+		if (!modelJs5.requestDownload(var2, 0)) {
 			var4 = false;
 		}
-		if (var3 != -1 && !modelJs5.method1046(var3, 0)) {
+		if (var3 != -1 && !modelJs5.requestDownload(var3, 0)) {
 			var4 = false;
 		}
 		return var4;

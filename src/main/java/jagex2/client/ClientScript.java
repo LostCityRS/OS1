@@ -38,7 +38,7 @@ public class ClientScript extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = Client.field1232.method1044(arg0, 0);
+		byte[] var2 = Client.field1232.getFile(arg0, 0);
 		if (var2 == null) {
 			return null;
 		}

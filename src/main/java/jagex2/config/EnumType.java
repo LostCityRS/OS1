@@ -45,7 +45,7 @@ public class EnumType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = configJs5.method1044(8, arg0);
+		byte[] var2 = configJs5.getFile(8, arg0);
 		EnumType var3 = new EnumType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2));

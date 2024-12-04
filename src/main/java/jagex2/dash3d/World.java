@@ -250,7 +250,7 @@ public class World {
 	}
 
 	@ObfuscatedName("as.n([BIII)Z")
-	public static final boolean prefetchLocations(byte[] arg0, int arg1, int arg2) {
+	public static final boolean downloadLocations(byte[] arg0, int arg1, int arg2) {
 		boolean var3 = true;
 		Packet var4 = new Packet(arg0);
 		int var5 = -1;
@@ -277,7 +277,7 @@ public class World {
 					if (var14 > 0 && var15 > 0 && var14 < 103 && var15 < 103) {
 						LocType var16 = LocType.get(var5);
 						if (var13 != 22 || !Client.lowMemory || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
-							if (!var16.isPrefetched()) {
+							if (!var16.isDownloaded()) {
 								Client.field1974++;
 								var3 = false;
 							}
@@ -1175,15 +1175,15 @@ public class World {
 	}
 
 	@ObfuscatedName("bk.y(III)Z")
-	public static final boolean isLocPrefetched(int arg0, int arg1) {
-		LocType var2 = LocType.get(arg0);
-		if (arg1 == 11) {
-			arg1 = 10;
+	public static final boolean isLocDownloaded(int id, int shape) {
+		LocType loc = LocType.get(id);
+		if (shape == 11) {
+			shape = 10;
 		}
-		if (arg1 >= 5 && arg1 <= 8) {
-			arg1 = 4;
+		if (shape >= 5 && shape <= 8) {
+			shape = 4;
 		}
-		return var2.isPrefetched(arg1);
+		return loc.isDownloaded(shape);
 	}
 
 	@ObfuscatedName("bc.t(IIIIIIILaq;Lck;I)V")

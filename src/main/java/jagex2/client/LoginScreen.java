@@ -215,8 +215,8 @@ public class LoginScreen {
 				MidiPlayer.method917();
 			} else {
 				Js5Provider var1 = Client.field1110;
-				int var2 = var1.method1059("scape main");
-				int var3 = var1.method1064(var2, "");
+				int var2 = var1.getGroupId("scape main");
+				int var3 = var1.getFileId(var2, "");
 				MidiPlayer.method1125(var1, var2, var3, 255, false);
 			}
 		}

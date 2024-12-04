@@ -40,8 +40,8 @@ public class SpriteDataProvider {
 
 	@ObfuscatedName("al.r(Lch;Ljava/lang/String;Ljava/lang/String;B)[Lft;")
 	public static Pix8[] method541(Js5Index arg0, String arg1, String arg2) {
-		int var3 = arg0.method1059(arg1);
-		int var4 = arg0.method1064(var3, arg2);
+		int var3 = arg0.getGroupId(arg1);
+		int var4 = arg0.getFileId(var3, arg2);
 		Pix8[] var5;
 		if (method905(arg0, var3, var4)) {
 			Pix8[] var6 = new Pix8[field528];
@@ -71,8 +71,8 @@ public class SpriteDataProvider {
 
 	@ObfuscatedName("ak.d(Lch;Ljava/lang/String;Ljava/lang/String;I)Lft;")
 	public static Pix8 method457(Js5Index arg0, String arg1, String arg2) {
-		int var3 = arg0.method1059(arg1);
-		int var4 = arg0.method1064(var3, arg2);
+		int var3 = arg0.getGroupId(arg1);
+		int var4 = arg0.getFileId(var3, arg2);
 		Pix8 var5;
 		if (method905(arg0, var3, var4)) {
 			var5 = method556();
@@ -84,8 +84,8 @@ public class SpriteDataProvider {
 
 	@ObfuscatedName("bx.l(Lch;Ljava/lang/String;Ljava/lang/String;I)[Lfq;")
 	public static Pix32[] method830(Js5Index arg0, String arg1, String arg2) {
-		int var3 = arg0.method1059(arg1);
-		int var4 = arg0.method1064(var3, arg2);
+		int var3 = arg0.getGroupId(arg1);
+		int var4 = arg0.getFileId(var3, arg2);
 		Pix32[] var5;
 		if (method905(arg0, var3, var4)) {
 			Pix32[] var6 = new Pix32[field528];
@@ -119,8 +119,8 @@ public class SpriteDataProvider {
 
 	@ObfuscatedName("r.m(Lch;Ljava/lang/String;Ljava/lang/String;I)Lfq;")
 	public static Pix32 method4(Js5Index arg0, String arg1, String arg2) {
-		int var3 = arg0.method1059(arg1);
-		int var4 = arg0.method1064(var3, arg2);
+		int var3 = arg0.getGroupId(arg1);
+		int var4 = arg0.getFileId(var3, arg2);
 		Pix32 var5;
 		if (method905(arg0, var3, var4)) {
 			var5 = method759();
@@ -132,11 +132,11 @@ public class SpriteDataProvider {
 
 	@ObfuscatedName("bw.c(Lch;Lch;Ljava/lang/String;Ljava/lang/String;I)Lfm;")
 	public static SoftwareFont method817(Js5Index arg0, Js5Index arg1, String arg2, String arg3) {
-		int var4 = arg0.method1059(arg2);
-		int var5 = arg0.method1064(var4, arg3);
+		int var4 = arg0.getGroupId(arg2);
+		int var5 = arg0.getFileId(var4, arg3);
 		SoftwareFont var6;
 		if (method905(arg0, var4, var5)) {
-			var6 = method260(arg1.method1044(var4, var5));
+			var6 = method260(arg1.getFile(var4, var5));
 		} else {
 			var6 = null;
 		}
@@ -209,7 +209,7 @@ public class SpriteDataProvider {
 
 	@ObfuscatedName("bn.q(Lch;III)Z")
 	public static boolean method905(Js5Index arg0, int arg1, int arg2) {
-		byte[] var3 = arg0.method1044(arg1, arg2);
+		byte[] var3 = arg0.getFile(arg1, arg2);
 		if (var3 == null) {
 			return false;
 		} else {
@@ -220,7 +220,7 @@ public class SpriteDataProvider {
 
 	@ObfuscatedName("ai.i(Lch;II)Z")
 	public static boolean method728(Js5Index arg0, int arg1) {
-		byte[] var2 = arg0.method1092(arg1);
+		byte[] var2 = arg0.fetchFile(arg1);
 		if (var2 == null) {
 			return false;
 		} else {

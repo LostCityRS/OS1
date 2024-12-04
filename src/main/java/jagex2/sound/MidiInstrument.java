@@ -34,7 +34,7 @@ public class MidiInstrument extends Linkable {
 
 	@ObfuscatedName("l.c(Lch;II)Lef;")
 	public static MidiInstrument method49(Js5Index arg0, int arg1) {
-		byte[] var2 = arg0.method1092(arg1);
+		byte[] var2 = arg0.fetchFile(arg1);
 		return var2 == null ? null : new MidiInstrument(var2);
 	}
 

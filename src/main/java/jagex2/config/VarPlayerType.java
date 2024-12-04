@@ -24,7 +24,7 @@ public class VarPlayerType extends DoublyLinkable {
 	@ObfuscatedName("cy.z(Lch;I)V")
 	public static void init(Js5Index arg0) {
 		field537 = arg0;
-		field2352 = field537.method1054(16);
+		field2352 = field537.getFileCount(16);
 	}
 
 	@ObfuscatedName("ez.g(II)Lfg;")
@@ -33,7 +33,7 @@ public class VarPlayerType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field537.method1044(16, arg0);
+		byte[] var2 = field537.getFile(16, arg0);
 		VarPlayerType var3 = new VarPlayerType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2));
