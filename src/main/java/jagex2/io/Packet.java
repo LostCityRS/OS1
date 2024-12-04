@@ -1,6 +1,7 @@
 package jagex2.io;
 
 import deob.ObfuscatedName;
+import deob.Settings;
 import jagex2.datastruct.ByteArrayPool;
 import jagex2.datastruct.Linkable;
 import jagex2.jstring.Cp1252;
@@ -401,12 +402,18 @@ public class Packet extends Linkable {
 		this.pos = 0;
 		byte[] var4 = new byte[var3];
 		this.gdata(var4, 0, var3);
-		BigInteger var5 = new BigInteger(var4);
-		BigInteger var6 = var5.modPow(arg0, arg1);
-		byte[] var7 = var6.toByteArray();
-		this.pos = 0;
-		this.p2(var7.length);
-		this.pdata(var7, 0, var7.length);
+
+		if (Settings.SKIP_RSA) {
+			this.p2(var4.length);
+			this.pdata(var4, 0, var4.length);
+		} else {
+			BigInteger var5 = new BigInteger(var4);
+			BigInteger var6 = var5.modPow(arg0, arg1);
+			byte[] var7 = var6.toByteArray();
+			this.pos = 0;
+			this.p2(var7.length);
+			this.pdata(var7, 0, var7.length);
+		}
 	}
 
 	@ObfuscatedName("ev.ay(II)I")

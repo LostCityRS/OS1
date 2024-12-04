@@ -1,6 +1,7 @@
 package jagex2.io;
 
 import deob.ObfuscatedName;
+import deob.Settings;
 
 @ObfuscatedName("ea")
 public class PacketBit extends Packet {
@@ -25,12 +26,20 @@ public class PacketBit extends Packet {
 
 	@ObfuscatedName("ea.gt(II)V")
 	public void pisaac1(int arg0) {
-		this.data[++this.pos - 1] = (byte) (arg0 + this.random.takeNextValue());
+		if (Settings.SKIP_ISAAC) {
+			this.data[++this.pos - 1] = (byte) arg0;
+		} else {
+			this.data[++this.pos - 1] = (byte) (arg0 + this.random.takeNextValue());
+		}
 	}
 
 	@ObfuscatedName("ea.gg(B)I")
 	public int gisaac1() {
-		return this.data[++this.pos - 1] - this.random.takeNextValue() & 0xFF;
+		if (Settings.SKIP_ISAAC) {
+			return this.data[++this.pos - 1] & 0xFF;
+		} else {
+			return (this.data[++this.pos - 1] - this.random.takeNextValue()) & 0xFF;
+		}
 	}
 
 	@ObfuscatedName("ea.gy(S)V")

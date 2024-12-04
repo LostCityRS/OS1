@@ -196,7 +196,7 @@ public class Client extends GameShell {
 	public static int field1986 = 0;
 
 	@ObfuscatedName("client.cw")
-	public static int field1947 = 0;
+	public static int loginState = 0;
 
 	@ObfuscatedName("client.cz")
 	public static int field1948 = 0;
@@ -241,7 +241,7 @@ public class Client extends GameShell {
 	public static PacketBit out = new PacketBit(5000);
 
 	@ObfuscatedName("client.dk")
-	public static PacketBit field2143 = new PacketBit(5000);
+	public static PacketBit login = new PacketBit(5000);
 
 	@ObfuscatedName("client.dz")
 	public static PacketBit in = new PacketBit(5000);
@@ -322,7 +322,7 @@ public class Client extends GameShell {
 	public static int[] field1163;
 
 	@ObfuscatedName("am.ef")
-	public static int[][] field362;
+	public static int[][] mapKeys;
 
 	@ObfuscatedName("ej.ej")
 	public static byte[][] field1768;
@@ -1484,7 +1484,7 @@ public class Client extends GameShell {
 					}
 				}
 				if (field1163[var12] != -1 && field186[var12] == null) {
-					field186[var12] = field1270.getFile(field1163[var12], 0, field362[var12]);
+					field186[var12] = field1270.getFile(field1163[var12], 0, mapKeys[var12]);
 					if (field186[var12] == null) {
 						var11 = false;
 						field1972++;
@@ -2103,6 +2103,10 @@ public class Client extends GameShell {
 
 							do {
 								request = (HookRequest) hookRequestsTimer.pop();
+								if (request == null) {
+									break;
+								}
+
 								source = request.component;
 								if (source.subid < 0) {
 									break;
@@ -2110,10 +2114,16 @@ public class Client extends GameShell {
 
 								component = IfType.get(source.layerid);
 							} while (component == null || component.subcomponents == null || source.subid >= component.subcomponents.length || component.subcomponents[source.subid] != source);
-							ScriptRunner.runHook(request);
+							if (request != null) {
+								ScriptRunner.runHook(request);
+							}
 
 							do {
 								request = (HookRequest) hookRequestsMouseStop.pop();
+								if (request == null) {
+									break;
+								}
+
 								source = request.component;
 								if (source.subid < 0) {
 									break;
@@ -2121,10 +2131,16 @@ public class Client extends GameShell {
 
 								component = IfType.get(source.layerid);
 							} while (component == null || component.subcomponents == null || source.subid >= component.subcomponents.length || component.subcomponents[source.subid] != source);
-							ScriptRunner.runHook(request);
+							if (request != null) {
+								ScriptRunner.runHook(request);
+							}
 
 							do {
 								request = (HookRequest) hookRequests.pop();
+								if (request == null) {
+									break;
+								}
+
 								source = request.component;
 								if (source.subid < 0) {
 									break;
@@ -2132,7 +2148,9 @@ public class Client extends GameShell {
 
 								component = IfType.get(source.layerid);
 							} while (component == null || component.subcomponents == null || source.subid >= component.subcomponents.length || component.subcomponents[source.subid] != source);
-							ScriptRunner.runHook(request);
+							if (request != null) {
+								ScriptRunner.runHook(request);
+							}
 
 							IfType var444 = field37;
 							IfType var445 = field654;
@@ -4302,7 +4320,7 @@ public class Client extends GameShell {
 			GameShell.field2489 = null;
 		}
 		if (arg0 == 20 || arg0 == 40) {
-			field1947 = 0;
+			loginState = 0;
 			field1948 = 0;
 			field2105 = 0;
 		}
@@ -4893,7 +4911,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("ex.dg(I)V")
 	public static final void updateTitle() {
 		try {
-			if (field1947 == 0) {
+			if (loginState == 0) {
 				if (stream != null) {
 					stream.close();
 					stream = null;
@@ -4901,9 +4919,9 @@ public class Client extends GameShell {
 				field806 = null;
 				field1968 = false;
 				field1948 = 0;
-				field1947 = 1;
+				loginState = 1;
 			}
-			if (field1947 == 1) {
+			if (loginState == 1) {
 				if (field806 == null) {
 					field806 = GameShell.signlink.method451(field52, field1204);
 				}
@@ -4913,17 +4931,17 @@ public class Client extends GameShell {
 				if (field806.field507 == 1) {
 					stream = new ClientStream((Socket) field806.field511, GameShell.signlink);
 					field806 = null;
-					field1947 = 2;
+					loginState = 2;
 				}
 			}
-			if (field1947 == 2) {
+			if (loginState == 2) {
 				out.pos = 0;
 				out.p1(14);
 				stream.write(out.data, 0, 1);
 				in.pos = 0;
-				field1947 = 3;
+				loginState = 3;
 			}
-			if (field1947 == 3) {
+			if (loginState == 3) {
 				if (field38 != null) {
 					field38.method207();
 				}
@@ -4942,9 +4960,9 @@ public class Client extends GameShell {
 					return;
 				}
 				in.pos = 0;
-				field1947 = 5;
+				loginState = 5;
 			}
-			if (field1947 == 5) {
+			if (loginState == 5) {
 				int[] var1 = new int[] { (int) (Math.random() * 9.9999999E7D), (int) (Math.random() * 9.9999999E7D), (int) (Math.random() * 9.9999999E7D), (int) (Math.random() * 9.9999999E7D) };
 				out.pos = 0;
 				out.p1(10);
@@ -4955,52 +4973,52 @@ public class Client extends GameShell {
 				out.p8(0L);
 				out.pjstr(LoginScreen.field133);
 				out.rsaenc(PublicKeys.LOGIN_RSAN, PublicKeys.LOGIN_RSAE);
-				field2143.pos = 0;
+				login.pos = 0;
 				if (gameState == 40) {
-					field2143.p1(18);
+					login.p1(18);
 				} else {
-					field2143.p1(16);
+					login.p1(16);
 				}
-				field2143.p2(0);
-				int var2 = field2143.pos;
-				field2143.p4(1);
-				field2143.pdata(out.data, 0, out.pos);
-				int var3 = field2143.pos;
-				field2143.pjstr(LoginScreen.field164);
-				field2143.p1(lowMemory ? 1 : 0);
-				SignLinkCacheFolder.method47(field2143);
-				field2143.p4(field1109.crc);
-				field2143.p4(field1720.crc);
-				field2143.p4(configJs5.crc);
-				field2143.p4(field1123.crc);
-				field2143.p4(field1509.crc);
-				field2143.p4(field1270.crc);
-				field2143.p4(field1110.crc);
-				field2143.p4(modelJs5.crc);
-				field2143.p4(field1944.crc);
-				field2143.p4(field1966.crc);
-				field2143.p4(field544.crc);
-				field2143.p4(field1515.crc);
-				field2143.p4(field1232.crc);
-				field2143.p4(field1150.crc);
-				field2143.p4(field2353.crc);
-				field2143.p4(field126.crc);
-				field2143.tinyenc(var1, var3, field2143.pos);
-				field2143.psize2(field2143.pos - var2);
-				stream.write(field2143.data, 0, field2143.pos);
+				login.p2(0);
+				int var2 = login.pos;
+				login.p4(1);
+				login.pdata(out.data, 0, out.pos);
+				int var3 = login.pos;
+				login.pjstr(LoginScreen.field164);
+				login.p1(lowMemory ? 1 : 0);
+				SignLinkCacheFolder.method47(login);
+				login.p4(field1109.crc);
+				login.p4(field1720.crc);
+				login.p4(configJs5.crc);
+				login.p4(field1123.crc);
+				login.p4(field1509.crc);
+				login.p4(field1270.crc);
+				login.p4(field1110.crc);
+				login.p4(modelJs5.crc);
+				login.p4(field1944.crc);
+				login.p4(field1966.crc);
+				login.p4(field544.crc);
+				login.p4(field1515.crc);
+				login.p4(field1232.crc);
+				login.p4(field1150.crc);
+				login.p4(field2353.crc);
+				login.p4(field126.crc);
+				login.tinyenc(var1, var3, login.pos);
+				login.psize2(login.pos - var2);
+				stream.write(login.data, 0, login.pos);
 				out.seed(var1);
 				for (int var4 = 0; var4 < 4; var4++) {
 					var1[var4] += 50;
 				}
 				in.seed(var1);
-				field1947 = 6;
+				loginState = 6;
 			}
-			if (field1947 == 6 && stream.available() > 0) {
+			if (loginState == 6 && stream.available() > 0) {
 				int var5 = stream.read();
 				if (var5 == 21 && gameState == 20) {
-					field1947 = 7;
+					loginState = 7;
 				} else if (var5 == 2) {
-					field1947 = 9;
+					loginState = 9;
 				} else if (var5 == 15 && gameState == 40) {
 					out.pos = 0;
 					in.pos = 0;
@@ -5033,24 +5051,24 @@ public class Client extends GameShell {
 					return;
 				} else if (var5 == 23 && field2105 < 1) {
 					field2105++;
-					field1947 = 0;
+					loginState = 0;
 				} else {
 					method838(var5);
 					return;
 				}
 			}
-			if (field1947 == 7 && stream.available() > 0) {
+			if (loginState == 7 && stream.available() > 0) {
 				field1950 = (stream.read() + 3) * 60;
-				field1947 = 8;
+				loginState = 8;
 			}
-			if (field1947 == 8) {
+			if (loginState == 8) {
 				field1948 = 0;
 				LoginScreen.method2357(EnglishLocale.field964, EnglishLocale.field898, field1950 / 60 + EnglishLocale.field899);
 				if (--field1950 <= 0) {
-					field1947 = 0;
+					loginState = 0;
 				}
 			} else {
-				if (field1947 == 9 && stream.available() >= 8) {
+				if (loginState == 9 && stream.available() >= 8) {
 					field2049 = stream.read();
 					field2091 = stream.read() == 1;
 					field2005 = stream.read();
@@ -5063,9 +5081,9 @@ public class Client extends GameShell {
 					stream.read(in.data, 0, 2);
 					in.pos = 0;
 					packetSize = in.g2();
-					field1947 = 10;
+					loginState = 10;
 				}
-				if (field1947 != 10) {
+				if (loginState != 10) {
 					field1948++;
 					if (field1948 > 2000) {
 						if (field2105 < 1) {
@@ -5075,7 +5093,7 @@ public class Client extends GameShell {
 								field1204 = field1641;
 							}
 							field2105++;
-							field1947 = 0;
+							loginState = 0;
 						} else {
 							method838(-3);
 						}
@@ -5089,7 +5107,7 @@ public class Client extends GameShell {
 					packetType = -1;
 				}
 			}
-		} catch (IOException var10) {
+		} catch (IOException ex) {
 			if (field2105 < 1) {
 				if (field1641 == field1204) {
 					field1204 = field13;
@@ -5097,7 +5115,7 @@ public class Client extends GameShell {
 					field1204 = field1641;
 				}
 				field2105++;
-				field1947 = 0;
+				loginState = 0;
 			} else {
 				method838(-2);
 			}
@@ -6258,108 +6276,108 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cy.ei(ZI)V")
-	public static final void method1235(boolean arg0) {
-		field1978 = arg0;
-		if (!field1978) {
-			int var1 = in.g2();
-			int var2 = in.g2_alt1();
-			int var3 = (packetSize - in.pos) / 16;
-			field362 = new int[var3][4];
-			for (int var4 = 0; var4 < var3; var4++) {
-				for (int var5 = 0; var5 < 4; var5++) {
-					field362[var4][var5] = in.g4_alt2();
-				}
-			}
-			int var6 = in.g1_alt2();
-			int var7 = in.g2();
-			int var8 = in.g2_alt3();
-			field801 = new int[var3];
-			field826 = new int[var3];
-			field1163 = new int[var3];
-			field1768 = new byte[var3][];
-			field186 = new byte[var3][];
-			boolean var9 = false;
-			if ((var7 / 8 == 48 || var7 / 8 == 49) && var8 / 8 == 48) {
-				var9 = true;
-			}
-			if (var7 / 8 == 48 && var8 / 8 == 148) {
-				var9 = true;
-			}
-			int var10 = 0;
-			for (int var11 = (var7 - 6) / 8; var11 <= (var7 + 6) / 8; var11++) {
-				for (int var12 = (var8 - 6) / 8; var12 <= (var8 + 6) / 8; var12++) {
-					int var13 = (var11 << 8) + var12;
-					if (!var9 || var12 != 49 && var12 != 149 && var12 != 147 && var11 != 50 && (var11 != 49 || var12 != 47)) {
-						field801[var10] = var13;
-						field826[var10] = field1270.getGroupId("m" + var11 + "_" + var12);
-						field1163[var10] = field1270.getGroupId("l" + var11 + "_" + var12);
-						var10++;
-					}
-				}
-			}
-			method390(var7, var8, var6, var2, var1);
-			return;
-		}
-		int var14 = in.g2_alt3();
-		in.accessBits();
-		for (int var15 = 0; var15 < 4; var15++) {
-			for (int var16 = 0; var16 < 13; var16++) {
-				for (int var17 = 0; var17 < 13; var17++) {
-					int var18 = in.gBit(1);
-					if (var18 == 1) {
-						field1979[var15][var16][var17] = in.gBit(26);
-					} else {
-						field1979[var15][var16][var17] = -1;
-					}
-				}
-			}
-		}
-		in.accessBytes();
-		int var19 = (packetSize - in.pos) / 16;
-		field362 = new int[var19][4];
-		for (int var20 = 0; var20 < var19; var20++) {
-			for (int var21 = 0; var21 < 4; var21++) {
-				field362[var20][var21] = in.g4_alt2();
-			}
-		}
-		int var22 = in.g2_alt3();
-		int var23 = in.g1_alt2();
-		int var24 = in.g2_alt1();
-		int var25 = in.g2_alt3();
-		field801 = new int[var19];
-		field826 = new int[var19];
-		field1163 = new int[var19];
-		field1768 = new byte[var19][];
-		field186 = new byte[var19][];
-		int var26 = 0;
-		for (int var27 = 0; var27 < 4; var27++) {
-			for (int var28 = 0; var28 < 13; var28++) {
-				for (int var29 = 0; var29 < 13; var29++) {
-					int var30 = field1979[var27][var28][var29];
-					if (var30 != -1) {
-						int var31 = var30 >> 14 & 0x3FF;
-						int var32 = var30 >> 3 & 0x7FF;
-						int var33 = (var31 / 8 << 8) + var32 / 8;
-						for (int var34 = 0; var34 < var26; var34++) {
-							if (field801[var34] == var33) {
-								var33 = -1;
-								break;
-							}
-						}
-						if (var33 != -1) {
-							field801[var26] = var33;
-							int var35 = var33 >> 8 & 0xFF;
-							int var36 = var33 & 0xFF;
-							field826[var26] = field1270.getGroupId("m" + var35 + "_" + var36);
-							field1163[var26] = field1270.getGroupId("l" + var35 + "_" + var36);
-							var26++;
-						}
-					}
-				}
-			}
-		}
-		method390(var14, var25, var23, var24, var22);
-	}
+	public static final void method1235(boolean instanced) {
+		field1978 = instanced;
+        if (field1978) {
+            int var14 = in.g2_alt3();
+            in.accessBits();
+            for (int var15 = 0; var15 < 4; var15++) {
+                for (int var16 = 0; var16 < 13; var16++) {
+                    for (int var17 = 0; var17 < 13; var17++) {
+                        int var18 = in.gBit(1);
+                        if (var18 == 1) {
+                            field1979[var15][var16][var17] = in.gBit(26);
+                        } else {
+                            field1979[var15][var16][var17] = -1;
+                        }
+                    }
+                }
+            }
+            in.accessBytes();
+            int var19 = (packetSize - in.pos) / 16;
+            mapKeys = new int[var19][4];
+            for (int var20 = 0; var20 < var19; var20++) {
+                for (int var21 = 0; var21 < 4; var21++) {
+                    mapKeys[var20][var21] = in.g4_alt2();
+                }
+            }
+            int var22 = in.g2_alt3();
+            int var23 = in.g1_alt2();
+            int var24 = in.g2_alt1();
+            int var25 = in.g2_alt3();
+            field801 = new int[var19];
+            field826 = new int[var19];
+            field1163 = new int[var19];
+            field1768 = new byte[var19][];
+            field186 = new byte[var19][];
+            int var26 = 0;
+            for (int var27 = 0; var27 < 4; var27++) {
+                for (int var28 = 0; var28 < 13; var28++) {
+                    for (int var29 = 0; var29 < 13; var29++) {
+                        int var30 = field1979[var27][var28][var29];
+                        if (var30 != -1) {
+                            int var31 = var30 >> 14 & 0x3FF;
+                            int var32 = var30 >> 3 & 0x7FF;
+                            int var33 = (var31 / 8 << 8) + var32 / 8;
+                            for (int var34 = 0; var34 < var26; var34++) {
+                                if (field801[var34] == var33) {
+                                    var33 = -1;
+                                    break;
+                                }
+                            }
+                            if (var33 != -1) {
+                                field801[var26] = var33;
+                                int var35 = var33 >> 8 & 0xFF;
+                                int var36 = var33 & 0xFF;
+                                field826[var26] = field1270.getGroupId("m" + var35 + "_" + var36);
+                                field1163[var26] = field1270.getGroupId("l" + var35 + "_" + var36);
+                                var26++;
+                            }
+                        }
+                    }
+                }
+            }
+            method390(var14, var25, var23, var24, var22);
+        } else {
+            int var1 = in.g2();
+            int var2 = in.g2_alt1();
+            int var3 = (packetSize - in.pos) / 16;
+            mapKeys = new int[var3][4];
+            for (int var4 = 0; var4 < var3; var4++) {
+                for (int var5 = 0; var5 < 4; var5++) {
+                    mapKeys[var4][var5] = in.g4_alt2();
+                }
+            }
+            int var6 = in.g1_alt2();
+            int var7 = in.g2();
+            int var8 = in.g2_alt3();
+            field801 = new int[var3];
+            field826 = new int[var3];
+            field1163 = new int[var3];
+            field1768 = new byte[var3][];
+            field186 = new byte[var3][];
+            boolean var9 = false;
+            if ((var7 / 8 == 48 || var7 / 8 == 49) && var8 / 8 == 48) {
+                var9 = true;
+            }
+            if (var7 / 8 == 48 && var8 / 8 == 148) {
+                var9 = true;
+            }
+            int var10 = 0;
+            for (int var11 = (var7 - 6) / 8; var11 <= (var7 + 6) / 8; var11++) {
+                for (int var12 = (var8 - 6) / 8; var12 <= (var8 + 6) / 8; var12++) {
+                    int var13 = (var11 << 8) + var12;
+                    if (!var9 || var12 != 49 && var12 != 149 && var12 != 147 && var11 != 50 && (var11 != 49 || var12 != 47)) {
+                        field801[var10] = var13;
+                        field826[var10] = field1270.getGroupId("m" + var11 + "_" + var12);
+                        field1163[var10] = field1270.getGroupId("l" + var11 + "_" + var12);
+                        var10++;
+                    }
+                }
+            }
+            method390(var7, var8, var6, var2, var1);
+        }
+    }
 
 	@ObfuscatedName("as.ef(IIIIII)V")
 	public static final void method390(int arg0, int arg1, int arg2, int arg3, int arg4) {
