@@ -56,7 +56,7 @@ public class BufferedFile {
 	}
 
 	@ObfuscatedName("v.d(J)V")
-	public void method132(long arg0) throws IOException {
+	public void seek(long arg0) throws IOException {
 		if (arg0 < 0L) {
 			throw new IOException("");
 		}
@@ -64,17 +64,17 @@ public class BufferedFile {
 	}
 
 	@ObfuscatedName("v.l(I)J")
-	public long method133() {
+	public long length() {
 		return this.field213;
 	}
 
 	@ObfuscatedName("v.m([BI)V")
 	public void method134(byte[] arg0) throws IOException {
-		this.method135(arg0, 0, arg0.length);
+		this.read(arg0, 0, arg0.length);
 	}
 
 	@ObfuscatedName("v.c([BIII)V")
-	public void method135(byte[] arg0, int arg1, int arg2) throws IOException {
+	public void read(byte[] arg0, int arg1, int arg2) throws IOException {
 		try {
 			if (arg1 + arg2 > arg0.length) {
 				throw new ArrayIndexOutOfBoundsException(arg1 + arg2 - arg0.length);
@@ -182,7 +182,7 @@ public class BufferedFile {
 	}
 
 	@ObfuscatedName("v.j([BIIB)V")
-	public void method153(byte[] arg0, int arg1, int arg2) throws IOException {
+	public void write(byte[] arg0, int arg1, int arg2) throws IOException {
 		try {
 			if (this.field210 + (long) arg2 > this.field213) {
 				this.field213 = this.field210 + (long) arg2;

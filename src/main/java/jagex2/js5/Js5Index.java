@@ -196,7 +196,7 @@ public abstract class Js5Index {
     }
 
 	@ObfuscatedName("ch.d(IB)V")
-	public void method1043(int arg0) {
+	public void requestDownload(int group) {
 	}
 
 	@ObfuscatedName("ch.l(III)[B")
@@ -318,7 +318,7 @@ public abstract class Js5Index {
 	}
 
 	@ObfuscatedName("ch.i(IB)V")
-	public void fetchGroup(int arg0) {
+	public void fetchGroup(int group) {
 	}
 
 	@ObfuscatedName("ch.s(II)[I")
@@ -486,11 +486,11 @@ public abstract class Js5Index {
 	}
 
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
-	public void method1056(String name) {
+	public void requestDownload(String name) {
 		String lower = name.toLowerCase();
 		int groupId = this.groupNameHashTable.get(JStringUtil.hashCode(lower));
 		if (groupId >= 0) {
-			this.method1043(groupId);
+			this.requestDownload(groupId);
 		}
 	}
 

@@ -229,7 +229,7 @@ public class SignLinkCacheFolder {
 	public static void method47(Packet arg0) {
 		byte[] var1 = new byte[24];
 		try {
-			uidDat.method132(0L);
+			uidDat.seek(0L);
 			uidDat.method134(var1);
 			int var2;
 			for (var2 = 0; var2 < 24 && var1[var2] == 0; var2++) {
@@ -251,8 +251,8 @@ public class SignLinkCacheFolder {
 			return;
 		}
 		try {
-			uidDat.method132(0L);
-			uidDat.method153(arg0.data, arg1, 24);
+			uidDat.seek(0L);
+			uidDat.write(arg0.data, arg1, 24);
 		} catch (Exception var3) {
 		}
 	}

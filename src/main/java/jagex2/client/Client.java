@@ -1721,8 +1721,8 @@ public class Client extends GameShell {
 								for (int var76 = var72 - 1; var76 <= var73 + 1; var76++) {
 									for (int var77 = var74 - 1; var77 <= var75 + 1; var77++) {
 										if (var76 < var72 || var76 > var73 || var77 < var74 || var77 > var75) {
-											field1270.method1056("m" + var76 + "_" + var77);
-											field1270.method1056("l" + var76 + "_" + var77);
+											field1270.requestDownload("m" + var76 + "_" + var77);
+											field1270.requestDownload("l" + var76 + "_" + var77);
 										}
 									}
 								}

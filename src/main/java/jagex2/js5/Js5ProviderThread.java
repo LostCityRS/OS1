@@ -34,7 +34,7 @@ public class Js5ProviderThread implements Runnable {
 			}
 		}
 		if (var3 == null) {
-			byte[] var7 = arg1.method418(arg0);
+			byte[] var7 = arg1.read(arg0);
 			arg2.method1468(arg1, arg0, var7, true);
 		} else {
 			arg2.method1468(arg1, arg0, var3, true);
@@ -62,13 +62,13 @@ public class Js5ProviderThread implements Runnable {
 					}
 				} else {
 					if (var2.field1772 == 0) {
-						var2.field1770.method410((int) var2.key, var2.field1771, var2.field1771.length);
+						var2.field1770.write((int) var2.key, var2.field1771, var2.field1771.length);
 						LinkList var4 = field1208;
 						synchronized (field1208) {
 							var2.unlink();
 						}
 					} else if (var2.field1772 == 1) {
-						var2.field1771 = var2.field1770.method418((int) var2.key);
+						var2.field1771 = var2.field1770.read((int) var2.key);
 						LinkList var6 = field1208;
 						synchronized (field1208) {
 							field1206.push(var2);
