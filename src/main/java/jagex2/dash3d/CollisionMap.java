@@ -24,17 +24,17 @@ public class CollisionMap {
 		this.field1264 = arg0;
 		this.field1268 = arg1;
 		this.field1266 = new int[this.field1264][this.field1268];
-		this.method1196();
+		this.reset();
 	}
 
 	@ObfuscatedName("ck.r(I)V")
-	public void method1196() {
+	public void reset() {
 		for (int var1 = 0; var1 < this.field1264; var1++) {
 			for (int var2 = 0; var2 < this.field1268; var2++) {
 				if (var1 == 0 || var2 == 0 || var1 >= this.field1264 - 5 || var2 >= this.field1268 - 5) {
-					this.field1266[var1][var2] = 16777215;
+					this.field1266[var1][var2] = 0xffffff;
 				} else {
-					this.field1266[var1][var2] = 16777216;
+					this.field1266[var1][var2] = 0x1000000;
 				}
 			}
 		}

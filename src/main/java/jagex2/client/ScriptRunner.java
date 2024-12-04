@@ -663,7 +663,7 @@ public class ScriptRunner {
 					}
 					if (var367 == 1202) {
 						var66.field1815 = 3;
-						var66.field1816 = Client.field1134.field2786.method1176();
+						var66.field1816 = Client.localPlayer.field2786.method1176();
 						continue;
 					}
 				} else if (var367 >= 1300 && var367 < 1400 || var367 >= 2300 && var367 < 2400) {
@@ -1078,7 +1078,7 @@ public class ScriptRunner {
 						}
 						if (var367 == 3101) {
 							var4 -= 2;
-							Client.method1040(Client.field1134, field188[var4], field188[var4 + 1]);
+							Client.method1040(Client.localPlayer, field188[var4], field188[var4 + 1]);
 							continue;
 						}
 						if (var367 == 3103) {
@@ -1256,8 +1256,8 @@ public class ScriptRunner {
 						}
 						if (var367 == 3308) {
 							int var135 = Client.field534;
-							int var136 = (Client.field1134.field2615 >> 7) + Client.field315;
-							int var137 = (Client.field1134.field2614 >> 7) + Client.field653;
+							int var136 = (Client.localPlayer.field2615 >> 7) + Client.sceneBaseTileX;
+							int var137 = (Client.localPlayer.field2614 >> 7) + Client.sceneBaseTileZ;
 							field188[var4++] = (var135 << 28) + (var136 << 14) + var137;
 							continue;
 						}
@@ -1515,7 +1515,7 @@ public class ScriptRunner {
 						if (var367 == 3609) {
 							var5--;
 							String var177 = field194[var5];
-							if (var177.startsWith(TextUtil.method63(0)) || var177.startsWith(TextUtil.method63(1))) {
+							if (var177.startsWith(TextUtil.imgTag(0)) || var177.startsWith(TextUtil.imgTag(1))) {
 								var177 = var177.substring(7);
 							}
 							field188[var4++] = Client.method785(var177) ? 1 : 0;
@@ -1623,7 +1623,7 @@ public class ScriptRunner {
 						if (var367 == 3623) {
 							var5--;
 							String var189 = field194[var5];
-							if (var189.startsWith(TextUtil.method63(0)) || var189.startsWith(TextUtil.method63(1))) {
+							if (var189.startsWith(TextUtil.imgTag(0)) || var189.startsWith(TextUtil.imgTag(1))) {
 								var189 = var189.substring(7);
 							}
 							field188[var4++] = Client.method761(var189) ? 1 : 0;
@@ -1632,7 +1632,7 @@ public class ScriptRunner {
 						if (var367 == 3624) {
 							var4--;
 							int var190 = field188[var4];
-							if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].field1617.equalsIgnoreCase(Client.field1134.field2796)) {
+							if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].field1617.equalsIgnoreCase(Client.localPlayer.field2796)) {
 								field188[var4++] = 1;
 								continue;
 							}
@@ -1823,7 +1823,7 @@ public class ScriptRunner {
 							var5 -= 2;
 							String var242 = field194[var5];
 							String var243 = field194[var5 + 1];
-							if (Client.field1134.field2786 != null && Client.field1134.field2786.field1222) {
+							if (Client.localPlayer.field2786 != null && Client.localPlayer.field2786.field1222) {
 								field194[var5++] = var243;
 								continue;
 							}
@@ -2411,10 +2411,10 @@ public class ScriptRunner {
 						}
 						if (var367 == 5015) {
 							String var362;
-							if (Client.field1134 == null || Client.field1134.field2796 == null) {
+							if (Client.localPlayer == null || Client.localPlayer.field2796 == null) {
 								var362 = "";
 							} else {
-								var362 = Client.field1134.field2796;
+								var362 = Client.localPlayer.field2796;
 							}
 							field194[var5++] = var362;
 							continue;

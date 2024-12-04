@@ -163,10 +163,10 @@ public abstract class PathingEntity extends Entity {
 	public int field2665 = 0;
 
 	@ObfuscatedName("fz.bt")
-	public int[] field2666 = new int[10];
+	public int[] pathTileX = new int[10];
 
 	@ObfuscatedName("fz.bw")
-	public int[] field2667 = new int[10];
+	public int[] pathTileZ = new int[10];
 
 	@ObfuscatedName("fz.by")
 	public boolean[] field2668 = new boolean[10];
@@ -183,19 +183,19 @@ public abstract class PathingEntity extends Entity {
 			this.field2643 = -1;
 		}
 		if (!arg2) {
-			int var4 = arg0 - this.field2666[0];
-			int var5 = arg1 - this.field2667[0];
+			int var4 = arg0 - this.pathTileX[0];
+			int var5 = arg1 - this.pathTileZ[0];
 			if (var4 >= -8 && var4 <= 8 && var5 >= -8 && var5 <= 8) {
 				if (this.field2665 < 9) {
 					this.field2665++;
 				}
 				for (int var6 = this.field2665; var6 > 0; var6--) {
-					this.field2666[var6] = this.field2666[var6 - 1];
-					this.field2667[var6] = this.field2667[var6 - 1];
+					this.pathTileX[var6] = this.pathTileX[var6 - 1];
+					this.pathTileZ[var6] = this.pathTileZ[var6 - 1];
 					this.field2668[var6] = this.field2668[var6 - 1];
 				}
-				this.field2666[0] = arg0;
-				this.field2667[0] = arg1;
+				this.pathTileX[0] = arg0;
+				this.pathTileZ[0] = arg1;
 				this.field2668[0] = false;
 				return;
 			}
@@ -203,16 +203,16 @@ public abstract class PathingEntity extends Entity {
 		this.field2665 = 0;
 		this.field2656 = 0;
 		this.field2669 = 0;
-		this.field2666[0] = arg0;
-		this.field2667[0] = arg1;
-		this.field2615 = this.field2666[0] * 128 + this.field2657 * 64;
-		this.field2614 = this.field2667[0] * 128 + this.field2657 * 64;
+		this.pathTileX[0] = arg0;
+		this.pathTileZ[0] = arg1;
+		this.field2615 = this.pathTileX[0] * 128 + this.field2657 * 64;
+		this.field2614 = this.pathTileZ[0] * 128 + this.field2657 * 64;
 	}
 
 	@ObfuscatedName("fz.y(IZI)V")
 	public final void method2908(int arg0, boolean arg1) {
-		int var3 = this.field2666[0];
-		int var4 = this.field2667[0];
+		int var3 = this.pathTileX[0];
+		int var4 = this.pathTileZ[0];
 		if (arg0 == 0) {
 			var3--;
 			var4++;
@@ -248,12 +248,12 @@ public abstract class PathingEntity extends Entity {
 			this.field2665++;
 		}
 		for (int var5 = this.field2665; var5 > 0; var5--) {
-			this.field2666[var5] = this.field2666[var5 - 1];
-			this.field2667[var5] = this.field2667[var5 - 1];
+			this.pathTileX[var5] = this.pathTileX[var5 - 1];
+			this.pathTileZ[var5] = this.pathTileZ[var5 - 1];
 			this.field2668[var5] = this.field2668[var5 - 1];
 		}
-		this.field2666[0] = var3;
-		this.field2667[0] = var4;
+		this.pathTileX[0] = var3;
+		this.pathTileZ[0] = var4;
 		this.field2668[0] = arg1;
 	}
 

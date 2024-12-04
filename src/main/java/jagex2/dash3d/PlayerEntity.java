@@ -135,7 +135,7 @@ public class PlayerEntity extends PathingEntity {
 			this.field2625 = -1;
 		}
 		this.field2796 = arg0.gjstr();
-		if (Client.field1134 == this) {
+		if (Client.localPlayer == this) {
 			JagException.username = this.field2796;
 		}
 		this.field2789 = arg0.g1();

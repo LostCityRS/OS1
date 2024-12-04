@@ -429,12 +429,12 @@ public class LoginScreen {
 				String var17;
 				for (var17 = field164; arg0.method2882(var17) > var16; var17 = var17.substring(1)) {
 				}
-				arg0.method2821(PixFont.method2844(var17) + (field150 == 0 & Client.field1922 % 40 < 20 ? TextUtil.method103(16776960) + TextUtil.field3 : ""), 312, var97, 16777215, 0);
+				arg0.method2821(PixFont.method2844(var17) + (field150 == 0 & Client.field1922 % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 312, var97, 16777215, 0);
 				var94 = var97 + 15;
 				String var19 = EnglishLocale.field1073;
 				String var20 = field133;
 				String var21 = JStringUtil.method946('*', var20.length());
-				arg0.method2821(var19 + var21 + (field150 == 1 & Client.field1922 % 40 < 20 ? TextUtil.method103(16776960) + TextUtil.field3 : ""), 274, var94, 16777215, 0);
+				arg0.method2821(var19 + var21 + (field150 == 1 & Client.field1922 % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 274, var94, 16777215, 0);
 				var94 += 15;
 				short var22 = 302;
 				short var23 = 321;

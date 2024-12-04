@@ -6,40 +6,40 @@ import deob.ObfuscatedName;
 public class TextUtil {
 
 	@ObfuscatedName("r.r")
-	public static String field8 = "true";
+	public static String truthy = "true";
 
 	@ObfuscatedName("r.d")
-	public static String field4 = ",";
+	public static String comma = ",";
 
 	@ObfuscatedName("r.l")
-	public static String field3 = "|";
+	public static String pipe = "|";
 
 	@ObfuscatedName("r.m")
-	public static String field2 = " (";
+	public static String parenOpen = " (";
 
 	@ObfuscatedName("r.c")
-	public static String field5 = ")";
+	public static String parenEnd = ")";
 
 	@ObfuscatedName("r.n")
-	public static String field6 = "->";
+	public static String arrow = "->";
 
 	@ObfuscatedName("r.j")
-	public static String field7 = "<br>";
+	public static String br = "<br>";
 
 	@ObfuscatedName("r.z")
-	public static String field1 = "</col>";
+	public static String colEnd = "</col>";
 
 	public TextUtil() throws Throwable {
 		throw new Error();
 	}
 
 	@ObfuscatedName("j.r(IS)Ljava/lang/String;")
-	public static String method63(int arg0) {
-		return "<img=" + arg0 + ">";
+	public static String imgTag(int id) {
+		return "<img=" + id + ">";
 	}
 
 	@ObfuscatedName("i.d(II)Ljava/lang/String;")
-	public static String method103(int arg0) {
-		return "<col=" + Integer.toHexString(arg0) + ">";
+	public static String colTag(int rgb) {
+		return "<col=" + Integer.toHexString(rgb) + ">";
 	}
 }
