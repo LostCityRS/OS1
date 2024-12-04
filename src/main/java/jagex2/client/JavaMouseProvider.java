@@ -13,7 +13,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 	public static JavaMouseProvider field491 = new JavaMouseProvider();
 
 	@ObfuscatedName("an.d")
-	public static volatile int field486 = 0;
+	public static volatile int idleCycles = 0;
 
 	@ObfuscatedName("an.l")
 	public static volatile int field487 = 0;
@@ -25,13 +25,13 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 	public static volatile int field493 = -1;
 
 	@ObfuscatedName("an.n")
-	public static int field490 = 0;
+	public static int mouseButton = 0;
 
 	@ObfuscatedName("an.j")
-	public static int field488 = 0;
+	public static int mouseX = 0;
 
 	@ObfuscatedName("an.z")
-	public static int field492 = 0;
+	public static int mouseY = 0;
 
 	@ObfuscatedName("an.g")
 	public static volatile int field485 = 0;
@@ -46,16 +46,16 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 	public static volatile long field496 = 0L;
 
 	@ObfuscatedName("an.u")
-	public static int field497 = 0;
+	public static int mouseClickButton = 0;
 
 	@ObfuscatedName("an.v")
-	public static int field498 = 0;
+	public static int mouseClickX = 0;
 
 	@ObfuscatedName("an.w")
-	public static int field499 = 0;
+	public static int mouseClickY = 0;
 
 	@ObfuscatedName("an.e")
-	public static long field500 = 0L;
+	public static long mouseClickTime = 0L;
 
 	@ObfuscatedName("v.r(Ljava/awt/Component;I)V")
 	public static void method163(Component arg0) {
@@ -66,12 +66,12 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 
 	@ObfuscatedName("ek.d(II)V")
 	public static void method1845(int arg0) {
-		field486 = arg0;
+		idleCycles = arg0;
 	}
 
 	public final synchronized void mousePressed(MouseEvent arg0) {
 		if (field491 != null) {
-			field486 = 0;
+			idleCycles = 0;
 			field494 = arg0.getX();
 			field495 = arg0.getY();
 			field496 = MonotonicTime.method1135();
@@ -90,7 +90,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 
 	public final synchronized void mouseReleased(MouseEvent arg0) {
 		if (field491 != null) {
-			field486 = 0;
+			idleCycles = 0;
 			field487 = 0;
 		}
 		if (arg0.isPopupTrigger()) {
@@ -106,7 +106,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 
 	public final synchronized void mouseEntered(MouseEvent arg0) {
 		if (field491 != null) {
-			field486 = 0;
+			idleCycles = 0;
 			field501 = arg0.getX();
 			field493 = arg0.getY();
 		}
@@ -114,7 +114,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 
 	public final synchronized void mouseExited(MouseEvent arg0) {
 		if (field491 != null) {
-			field486 = 0;
+			idleCycles = 0;
 			field501 = -1;
 			field493 = -1;
 		}
@@ -122,7 +122,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 
 	public final synchronized void mouseDragged(MouseEvent arg0) {
 		if (field491 != null) {
-			field486 = 0;
+			idleCycles = 0;
 			field501 = arg0.getX();
 			field493 = arg0.getY();
 		}
@@ -130,7 +130,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 
 	public final synchronized void mouseMoved(MouseEvent arg0) {
 		if (field491 != null) {
-			field486 = 0;
+			idleCycles = 0;
 			field501 = arg0.getX();
 			field493 = arg0.getY();
 		}

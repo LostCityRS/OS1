@@ -7,10 +7,10 @@ import jagex2.config.SeqType;
 public abstract class PathingEntity extends Entity {
 
 	@ObfuscatedName("fz.j")
-	public int field2615;
+	public int x;
 
 	@ObfuscatedName("fz.z")
-	public int field2614;
+	public int z;
 
 	@ObfuscatedName("fz.g")
 	public int field2646;
@@ -205,8 +205,8 @@ public abstract class PathingEntity extends Entity {
 		this.field2669 = 0;
 		this.pathTileX[0] = arg0;
 		this.pathTileZ[0] = arg1;
-		this.field2615 = this.pathTileX[0] * 128 + this.field2657 * 64;
-		this.field2614 = this.pathTileZ[0] * 128 + this.field2657 * 64;
+		this.x = this.pathTileX[0] * 128 + this.field2657 * 64;
+		this.z = this.pathTileZ[0] * 128 + this.field2657 * 64;
 	}
 
 	@ObfuscatedName("fz.y(IZI)V")

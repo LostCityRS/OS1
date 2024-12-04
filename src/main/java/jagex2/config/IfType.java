@@ -49,7 +49,7 @@ public class IfType extends Linkable {
 	public int field1783 = -1;
 
 	@ObfuscatedName("eg.e")
-	public int field1823 = -1;
+	public int subid = -1;
 
 	@ObfuscatedName("eg.b")
 	public int field1785;
@@ -61,7 +61,7 @@ public class IfType extends Linkable {
 	public int field1786 = 0;
 
 	@ObfuscatedName("eg.f")
-	public int field1787 = 0;
+	public int clientCode = 0;
 
 	@ObfuscatedName("eg.k")
 	public int field1788 = 0;
@@ -79,7 +79,7 @@ public class IfType extends Linkable {
 	public int field1793 = 0;
 
 	@ObfuscatedName("eg.p")
-	public int field1896 = -1;
+	public int layerid = -1;
 
 	@ObfuscatedName("eg.ad")
 	public boolean field1880 = false;
@@ -352,10 +352,10 @@ public class IfType extends Linkable {
 	public String field1859 = EnglishLocale.field966;
 
 	@ObfuscatedName("eg.dm")
-	public int[] field1885;
+	public int[] invSlotObjId;
 
 	@ObfuscatedName("eg.di")
-	public int[] field1886;
+	public int[] invSlotObjCount;
 
 	@ObfuscatedName("eg.db")
 	public int field1791 = -1;
@@ -370,7 +370,7 @@ public class IfType extends Linkable {
 	public int field1890 = 0;
 
 	@ObfuscatedName("eg.dy")
-	public IfType[] field1825;
+	public IfType[] subcomponents;
 
 	@ObfuscatedName("eg.de")
 	public boolean field1892 = false;
@@ -407,7 +407,7 @@ public class IfType extends Linkable {
 	}
 
 	@ObfuscatedName("bw.n(IB)Leg;")
-	public static IfType method813(int arg0) {
+	public static IfType get(int arg0) {
 		int var1 = arg0 >> 16;
 		int var2 = arg0 & 0xFFFF;
 		if (field373[var1] == null || field373[var1][var2] == null) {
@@ -421,13 +421,13 @@ public class IfType extends Linkable {
 
 	@ObfuscatedName("bd.j(IIB)Leg;")
 	public static IfType method947(int arg0, int arg1) {
-		IfType var2 = method813(arg0);
+		IfType var2 = get(arg0);
 		if (arg1 == -1) {
 			return var2;
-		} else if (var2 == null || var2.field1825 == null || arg1 >= var2.field1825.length) {
+		} else if (var2 == null || var2.subcomponents == null || arg1 >= var2.subcomponents.length) {
 			return null;
 		} else {
-			return var2.field1825[arg1];
+			return var2.subcomponents[arg1];
 		}
 	}
 
@@ -470,17 +470,17 @@ public class IfType extends Linkable {
 		this.field1782 = false;
 		this.field1785 = arg0.g1();
 		this.field1786 = arg0.g1();
-		this.field1787 = arg0.g2();
+		this.clientCode = arg0.g2();
 		this.field1790 = this.field1788 = arg0.g2b();
 		this.field1780 = this.field1810 = arg0.g2b();
 		this.field1792 = arg0.g2();
 		this.field1793 = arg0.g2();
 		this.field1805 = arg0.g1();
-		this.field1896 = arg0.g2();
-		if (this.field1896 == 65535) {
-			this.field1896 = -1;
+		this.layerid = arg0.g2();
+		if (this.layerid == 65535) {
+			this.layerid = -1;
 		} else {
-			this.field1896 += this.field1783 & 0xFFFF0000;
+			this.layerid += this.field1783 & 0xFFFF0000;
 		}
 		this.field1882 = arg0.g2();
 		if (this.field1882 == 65535) {
@@ -518,8 +518,8 @@ public class IfType extends Linkable {
 			arg0.g1();
 		}
 		if (this.field1785 == 2) {
-			this.field1885 = new int[this.field1793 * this.field1792];
-			this.field1886 = new int[this.field1793 * this.field1792];
+			this.invSlotObjId = new int[this.field1793 * this.field1792];
+			this.invSlotObjCount = new int[this.field1793 * this.field1792];
 			int var8 = arg0.g1();
 			if (var8 == 1) {
 				this.field1842 |= 0x10000000;
@@ -613,8 +613,8 @@ public class IfType extends Linkable {
 			this.field1824 = arg0.g2();
 		}
 		if (this.field1785 == 7) {
-			this.field1885 = new int[this.field1793 * this.field1792];
-			this.field1886 = new int[this.field1793 * this.field1792];
+			this.invSlotObjId = new int[this.field1793 * this.field1792];
+			this.invSlotObjCount = new int[this.field1793 * this.field1792];
 			this.field1864 = arg0.g1();
 			this.field1829 = arg0.g2();
 			if (this.field1829 == 65535) {
@@ -676,7 +676,7 @@ public class IfType extends Linkable {
 		arg0.g1();
 		this.field1782 = true;
 		this.field1785 = arg0.g1();
-		this.field1787 = arg0.g2();
+		this.clientCode = arg0.g2();
 		this.field1790 = this.field1788 = arg0.g2b();
 		this.field1780 = this.field1810 = arg0.g2b();
 		this.field1792 = arg0.g2();
@@ -685,11 +685,11 @@ public class IfType extends Linkable {
 		} else {
 			this.field1793 = arg0.g2();
 		}
-		this.field1896 = arg0.g2();
-		if (this.field1896 == 65535) {
-			this.field1896 = -1;
+		this.layerid = arg0.g2();
+		if (this.layerid == 65535) {
+			this.layerid = -1;
 		} else {
-			this.field1896 += this.field1783 & 0xFFFF0000;
+			this.layerid += this.field1783 & 0xFFFF0000;
 		}
 		this.field1880 = arg0.g1() == 1;
 		if (this.field1785 == 0) {
@@ -815,12 +815,12 @@ public class IfType extends Linkable {
 
 	@ObfuscatedName("eg.u(IIB)V")
 	public void method1799(int arg0, int arg1) {
-		int var3 = this.field1885[arg1];
-		this.field1885[arg1] = this.field1885[arg0];
-		this.field1885[arg0] = var3;
-		int var4 = this.field1886[arg1];
-		this.field1886[arg1] = this.field1886[arg0];
-		this.field1886[arg0] = var4;
+		int var3 = this.invSlotObjId[arg1];
+		this.invSlotObjId[arg1] = this.invSlotObjId[arg0];
+		this.invSlotObjId[arg0] = var3;
+		int var4 = this.invSlotObjCount[arg1];
+		this.invSlotObjCount[arg1] = this.invSlotObjCount[arg0];
+		this.invSlotObjCount[arg0] = var4;
 	}
 
 	@ObfuscatedName("eg.v(ZB)Lfq;")

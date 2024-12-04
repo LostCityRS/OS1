@@ -11,7 +11,7 @@ public class HookRequest extends Linkable {
 	public Object[] field1588;
 
 	@ObfuscatedName("du.c")
-	public IfType field1590;
+	public IfType component;
 
 	@ObfuscatedName("du.n")
 	public int field1589;

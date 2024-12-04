@@ -25,8 +25,8 @@ public class MouseTracking implements Runnable {
 		while (this.active) {
 			synchronized (this.lock) {
 				if (this.length < 500) {
-					this.x[this.length] = JavaMouseProvider.field488;
-					this.y[this.length] = JavaMouseProvider.field492;
+					this.x[this.length] = JavaMouseProvider.mouseX;
+					this.y[this.length] = JavaMouseProvider.mouseY;
 					this.length++;
 				}
 			}

@@ -168,12 +168,12 @@ public class PlayerEntity extends PathingEntity {
 			}
 		}
 		if (!this.field2795 && this.field2801 != null) {
-			if (Client.field1922 >= this.field2793) {
+			if (Client.loopCycle >= this.field2793) {
 				this.field2801 = null;
 			}
-			if (Client.field1922 >= this.field2792 && Client.field1922 < this.field2793) {
+			if (Client.loopCycle >= this.field2792 && Client.loopCycle < this.field2793) {
 				SoftwareModel var6 = this.field2801;
-				var6.method3012(this.field2794 - this.field2615, this.field2797 - this.field2791, this.field2799 - this.field2614);
+				var6.method3012(this.field2794 - this.x, this.field2797 - this.field2791, this.field2799 - this.z);
 				if (this.field2618 == 512) {
 					var6.method3008();
 					var6.method3008();
@@ -196,7 +196,7 @@ public class PlayerEntity extends PathingEntity {
 					var6.method3008();
 					var6.method3008();
 				}
-				var6.method3012(this.field2615 - this.field2794, this.field2791 - this.field2797, this.field2614 - this.field2799);
+				var6.method3012(this.x - this.field2794, this.field2791 - this.field2797, this.z - this.field2799);
 			}
 		}
 		var3.field2744 = true;

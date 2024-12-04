@@ -46,7 +46,7 @@ public class LocEntity extends Entity {
 		if (arg6 != -1) {
 			this.anim = SeqType.get(arg6);
 			this.animFrame = 0;
-			this.animCycle = Client.field1922 - 1;
+			this.animCycle = Client.loopCycle - 1;
 			if (this.anim.replacemode == 0 && arg8 != null && arg8 instanceof LocEntity) {
 				LocEntity var10 = (LocEntity) arg8;
 				if (this.anim == var10.anim) {
@@ -65,7 +65,7 @@ public class LocEntity extends Entity {
 	@ObfuscatedName("ff.g(I)Lfo;")
 	public final SoftwareModel method2643() {
 		if (this.anim != null) {
-			int var1 = Client.field1922 - this.animCycle;
+			int var1 = Client.loopCycle - this.animCycle;
 			if (var1 > 100 && this.anim.replayoff > 0) {
 				var1 = 100;
 			}
@@ -82,7 +82,7 @@ public class LocEntity extends Entity {
 				} while (this.animFrame >= 0 && this.animFrame < this.anim.frames.length);
 				this.anim = null;
 			}
-			this.animCycle = Client.field1922 - var1;
+			this.animCycle = Client.loopCycle - var1;
 		}
 		LocType var2 = LocType.get(this.field2599);
 		if (var2.multiloc != null) {

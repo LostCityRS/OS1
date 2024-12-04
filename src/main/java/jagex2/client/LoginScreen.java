@@ -209,7 +209,7 @@ public class LoginScreen {
 			method1134(arg0);
 			return;
 		}
-		if (JavaMouseProvider.field497 == 1 && JavaMouseProvider.field498 >= 715 && JavaMouseProvider.field499 >= 453) {
+		if (JavaMouseProvider.mouseClickButton == 1 && JavaMouseProvider.mouseClickX >= 715 && JavaMouseProvider.mouseClickY >= 453) {
 			field142 = !field142;
 			if (field142) {
 				MidiPlayer.method917();
@@ -220,20 +220,20 @@ public class LoginScreen {
 				MidiPlayer.method1125(var1, var2, var3, 255, false);
 			}
 		}
-		if (Client.field1929 == 5) {
+		if (Client.gameState == 5) {
 			return;
 		}
 		field147++;
-		if (Client.field1929 != 10) {
+		if (Client.gameState != 10) {
 			return;
 		}
 		if (Client.field2047 == 0) {
-			if (JavaMouseProvider.field497 == 1) {
+			if (JavaMouseProvider.mouseClickButton == 1) {
 				byte var4 = 5;
 				short var5 = 463;
 				byte var6 = 100;
 				byte var7 = 35;
-				if (JavaMouseProvider.field498 >= var4 && JavaMouseProvider.field498 <= var4 + var6 && JavaMouseProvider.field499 >= var5 && JavaMouseProvider.field499 <= var5 + var7) {
+				if (JavaMouseProvider.mouseClickX >= var4 && JavaMouseProvider.mouseClickX <= var4 + var6 && JavaMouseProvider.mouseClickY >= var5 && JavaMouseProvider.mouseClickY <= var5 + var7) {
 					method377();
 					return;
 				}
@@ -242,9 +242,9 @@ public class LoginScreen {
 				method377();
 			}
 		}
-		int var8 = JavaMouseProvider.field497;
-		int var9 = JavaMouseProvider.field498;
-		int var10 = JavaMouseProvider.field499;
+		int var8 = JavaMouseProvider.mouseClickButton;
+		int var9 = JavaMouseProvider.mouseClickX;
+		int var10 = JavaMouseProvider.mouseClickY;
 		if (field151 == 0) {
 			short var11 = 302;
 			short var12 = 291;
@@ -369,7 +369,7 @@ public class LoginScreen {
 			method1500(arg0, arg1);
 			return;
 		}
-		if (Client.field1929 == 0 || Client.field1929 == 5) {
+		if (Client.gameState == 0 || Client.gameState == 5) {
 			byte var2 = 20;
 			arg0.method2880(EnglishLocale.field1065, 382, 245 - var2, 16777215, -1);
 			int var3 = 253 - var2;
@@ -379,7 +379,7 @@ public class LoginScreen {
 			Pix2D.method2637(progress * 3 + 232, var3 + 2, 300 - progress * 3, 30, 0);
 			arg0.method2880(message, 382, 276 - var2, 16777215, -1);
 		}
-		if (Client.field1929 == 20) {
+		if (Client.gameState == 20) {
 			field137.method2747(382 - field137.field2513 / 2, 271 - field137.field2514 / 2);
 			short var4 = 211;
 			arg0.method2880(field152, 382, var4, 16776960, 0);
@@ -402,7 +402,7 @@ public class LoginScreen {
 			arg0.method2821(var8 + var10, 274, var89, 16777215, 0);
 			var89 += 15;
 		}
-		if (Client.field1929 == 10) {
+		if (Client.gameState == 10) {
 			field137.method2747(202, 171);
 			if (field151 == 0) {
 				short var11 = 251;
@@ -429,12 +429,12 @@ public class LoginScreen {
 				String var17;
 				for (var17 = field164; arg0.method2882(var17) > var16; var17 = var17.substring(1)) {
 				}
-				arg0.method2821(PixFont.method2844(var17) + (field150 == 0 & Client.field1922 % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 312, var97, 16777215, 0);
+				arg0.method2821(PixFont.method2844(var17) + (field150 == 0 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 312, var97, 16777215, 0);
 				var94 = var97 + 15;
 				String var19 = EnglishLocale.field1073;
 				String var20 = field133;
 				String var21 = JStringUtil.method946('*', var20.length());
-				arg0.method2821(var19 + var21 + (field150 == 1 & Client.field1922 % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 274, var94, 16777215, 0);
+				arg0.method2821(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 274, var94, 16777215, 0);
 				var94 += 15;
 				short var22 = 302;
 				short var23 = 321;
@@ -513,7 +513,7 @@ public class LoginScreen {
 				field148++;
 			}
 			field128 += var28 * 381703395;
-			int var43 = ((Client.field1922 & 0x1) + var28) / 2;
+			int var43 = ((Client.loopCycle & 0x1) + var28) / 2;
 			if (var43 > 0) {
 				for (int var44 = 0; var44 < field128 * 1196724044; var44++) {
 					int var45 = (int) (Math.random() * 124.0D) + 2;
@@ -638,7 +638,7 @@ public class LoginScreen {
 			var71 = 765 - var74 - var73 + var75;
 		}
 		field132[field142 ? 1 : 0].method2747(725, 463);
-		if (Client.field1929 > 5 && Client.field2047 == 0) {
+		if (Client.gameState > 5 && Client.field2047 == 0) {
 			if (field215 == null) {
 				field215 = SpriteDataProvider.method457(Client.field1944, "sl_button", "");
 			} else {
@@ -834,7 +834,7 @@ public class LoginScreen {
 					var22 = EnglishLocale.field1092;
 					var21 = false;
 				}
-				if (JavaMouseProvider.field488 >= var17 && JavaMouseProvider.field492 >= var16 && JavaMouseProvider.field488 < var6 + var17 && JavaMouseProvider.field492 < var7 + var16 && var21) {
+				if (JavaMouseProvider.mouseX >= var17 && JavaMouseProvider.mouseY >= var16 && JavaMouseProvider.mouseX < var6 + var17 && JavaMouseProvider.mouseY < var7 + var16 && var21) {
 					field168 = var19;
 					field1530[var20.field50 ? 1 : 0].method2699(var17, var16, 128, 16777215);
 				} else {
@@ -864,46 +864,46 @@ public class LoginScreen {
 
 	@ObfuscatedName("cm.g(Ldj;I)V")
 	public static void method1134(GameShell arg0) {
-		if (JavaMouseProvider.field497 != 1) {
+		if (JavaMouseProvider.mouseClickButton != 1) {
 			return;
 		}
 		short var1 = 280;
-		if (JavaMouseProvider.field498 >= var1 && JavaMouseProvider.field498 <= var1 + 14 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field499 <= 18) {
+		if (JavaMouseProvider.mouseClickX >= var1 && JavaMouseProvider.mouseClickX <= var1 + 14 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
 			method2049(0, 0);
 			return;
 		}
-		if (JavaMouseProvider.field498 >= var1 + 15 && JavaMouseProvider.field498 <= var1 + 80 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field499 <= 18) {
+		if (JavaMouseProvider.mouseClickX >= var1 + 15 && JavaMouseProvider.mouseClickX <= var1 + 80 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
 			method2049(0, 1);
 			return;
 		}
 		short var2 = 390;
-		if (JavaMouseProvider.field498 >= var2 && JavaMouseProvider.field498 <= var2 + 14 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field499 <= 18) {
+		if (JavaMouseProvider.mouseClickX >= var2 && JavaMouseProvider.mouseClickX <= var2 + 14 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
 			method2049(1, 0);
 			return;
 		}
-		if (JavaMouseProvider.field498 >= var2 + 15 && JavaMouseProvider.field498 <= var2 + 80 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field499 <= 18) {
+		if (JavaMouseProvider.mouseClickX >= var2 + 15 && JavaMouseProvider.mouseClickX <= var2 + 80 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
 			method2049(1, 1);
 			return;
 		}
 		short var3 = 500;
-		if (JavaMouseProvider.field498 >= var3 && JavaMouseProvider.field498 <= var3 + 14 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field499 <= 18) {
+		if (JavaMouseProvider.mouseClickX >= var3 && JavaMouseProvider.mouseClickX <= var3 + 14 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
 			method2049(2, 0);
 			return;
 		}
-		if (JavaMouseProvider.field498 >= var3 + 15 && JavaMouseProvider.field498 <= var3 + 80 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field499 <= 18) {
+		if (JavaMouseProvider.mouseClickX >= var3 + 15 && JavaMouseProvider.mouseClickX <= var3 + 80 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
 			method2049(2, 1);
 			return;
 		}
 		short var4 = 610;
-		if (JavaMouseProvider.field498 >= var4 && JavaMouseProvider.field498 <= var4 + 14 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field499 <= 18) {
+		if (JavaMouseProvider.mouseClickX >= var4 && JavaMouseProvider.mouseClickX <= var4 + 14 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
 			method2049(3, 0);
 			return;
 		}
-		if (JavaMouseProvider.field498 >= var4 + 15 && JavaMouseProvider.field498 <= var4 + 80 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field499 <= 18) {
+		if (JavaMouseProvider.mouseClickX >= var4 + 15 && JavaMouseProvider.mouseClickX <= var4 + 80 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
 			method2049(3, 1);
 			return;
 		}
-		if (JavaMouseProvider.field498 >= 708 && JavaMouseProvider.field499 >= 4 && JavaMouseProvider.field498 <= 758 && JavaMouseProvider.field499 <= 20) {
+		if (JavaMouseProvider.mouseClickX >= 708 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickX <= 758 && JavaMouseProvider.mouseClickY <= 20) {
 			field160 = false;
 			field146.method2667(0, 0);
 			field348.method2667(382, 0);

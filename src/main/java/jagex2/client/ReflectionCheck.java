@@ -20,7 +20,7 @@ public class ReflectionCheck {
 	}
 
 	@ObfuscatedName("br.r(Lea;IB)V")
-	public static void method919(PacketBit arg0, int arg1) {
+	public static void performCheck(PacketBit arg0, int arg1) {
 		while (true) {
 			ReflectionCheckNode var2 = (ReflectionCheckNode) field1513.head();
 			if (var2 == null) {
