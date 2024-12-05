@@ -35,7 +35,7 @@ public class JavConfigParameter {
 	@ObfuscatedName("cd.q")
 	public final String id;
 
-	public JavConfigParameter(String arg0, String arg1) {
-		this.id = arg1;
+	public JavConfigParameter(String name, String id) {
+		this.id = id;
 	}
 }
