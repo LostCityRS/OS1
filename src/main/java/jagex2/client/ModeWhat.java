@@ -18,13 +18,13 @@ public class ModeWhat {
 	public static final ModeWhat WIP = new ModeWhat("WIP", 2);
 
 	@ObfuscatedName("be.c")
-	public final String field850;
+	public final String name;
 
 	@ObfuscatedName("be.n")
-	public final int field851;
+	public final int id;
 
 	public ModeWhat(String arg0, int arg1) {
-		this.field850 = arg0;
-		this.field851 = arg1;
+		this.name = arg0;
+		this.id = arg1;
 	}
 }

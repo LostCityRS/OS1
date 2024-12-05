@@ -1280,7 +1280,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (var367 == 3312) {
-							field188[var4++] = Client.field1983 ? 1 : 0;
+							field188[var4++] = Client.members ? 1 : 0;
 							continue;
 						}
 						if (var367 == 3313) {
@@ -1328,7 +1328,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (var367 == 3318) {
-							field188[var4++] = Client.field2075;
+							field188[var4++] = Client.worldid;
 							continue;
 						}
 						if (var367 == 3321) {
@@ -1842,7 +1842,7 @@ public class ScriptRunner {
 							int var246 = var4++;
 							String var247 = field194[var5];
 							String var248 = field194[var5 + 1];
-							int var249 = Client.field2047;
+							int var249 = Client.lang;
 							int var250 = var247.length();
 							int var251 = var248.length();
 							int var252 = 0;
@@ -2287,7 +2287,7 @@ public class ScriptRunner {
 								} else if (var350.startsWith(EnglishLocale.field1053)) {
 									var351 = 11;
 									var349 = var349.substring(EnglishLocale.field1053.length());
-								} else if (Client.field2047 != 0) {
+								} else if (Client.lang != 0) {
 									if (var350.startsWith(EnglishLocale.field1032)) {
 										var351 = 0;
 										var349 = var349.substring(EnglishLocale.field1032.length());
@@ -2343,7 +2343,7 @@ public class ScriptRunner {
 								} else if (var352.startsWith(EnglishLocale.field1063)) {
 									var353 = 5;
 									var349 = var349.substring(EnglishLocale.field1063.length());
-								} else if (Client.field2047 != 0) {
+								} else if (Client.lang != 0) {
 									if (var352.startsWith(EnglishLocale.field959)) {
 										var353 = 1;
 										var349 = var349.substring(EnglishLocale.field959.length());

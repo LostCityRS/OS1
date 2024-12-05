@@ -37,13 +37,13 @@ public class Client extends GameShell {
 	public static boolean flagged = true;
 
 	@ObfuscatedName("client.az")
-	public static int field2075 = 1;
+	public static int worldid = 1;
 
 	@ObfuscatedName("v.an")
 	public static ModeWhat modewhat;
 
 	@ObfuscatedName("client.ah")
-	public static int field1915 = 0;
+	public static int modewhere = 0;
 
 	@ObfuscatedName("da.ay")
 	public static ModeGame modegame;
@@ -52,16 +52,16 @@ public class Client extends GameShell {
 	public static Namespace namespace;
 
 	@ObfuscatedName("client.ab")
-	public static boolean field1983 = false;
+	public static boolean members = false;
 
 	@ObfuscatedName("client.ao")
 	public static boolean lowMemory = false;
 
 	@ObfuscatedName("client.ag")
-	public static int field2047 = 0;
+	public static int lang = 0;
 
 	@ObfuscatedName("client.ar")
-	public static int field2074 = 1;
+	public static int js = 1;
 
 	@ObfuscatedName("client.at")
 	public static int gameState = 0;
@@ -1181,8 +1181,7 @@ public class Client extends GameShell {
 	@Override
 	public String getParameter(String name) {
 		if (name.equals("5")) {
-			// MODEWHAT
-			return String.valueOf(ModeWhat.WIP.field851);
+			return String.valueOf(ModeWhat.WIP.id);
 		} else if (name.equals("7")) {
 			// Use ports 40000 & 50000
 			return "2";
@@ -1195,92 +1194,89 @@ public class Client extends GameShell {
 		if (!this.checkhost()) {
 			return;
 		}
-		JavConfigParameter[] var1 = new JavConfigParameter[] { JavConfigParameter.field1464, JavConfigParameter.field1470, JavConfigParameter.field1472, JavConfigParameter.field1467, JavConfigParameter.field1468, JavConfigParameter.field1469, JavConfigParameter.field1471, JavConfigParameter.field1466, JavConfigParameter.field1465 };
-		JavConfigParameter[] var2 = var1;
-		for (int var3 = 0; var3 < var2.length; var3++) {
-			JavConfigParameter var4 = var2[var3];
-			String var5 = this.getParameter(var4.field1463);
-			if (var5 != null) {
-				switch(Integer.parseInt(var4.field1463)) {
-					case 1:
-						if (var5.equalsIgnoreCase(TextUtil.truthy)) {
-							field2074 = 1;
-						} else {
-							field2074 = 0;
+
+		JavConfigParameter[] params = new JavConfigParameter[] { JavConfigParameter.MEMBERS, JavConfigParameter.LANG, JavConfigParameter.WORLDLIST_URL, JavConfigParameter.PLUG, JavConfigParameter.WORLDID, JavConfigParameter.MODEWHERE, JavConfigParameter.JS, JavConfigParameter.GAME, JavConfigParameter.MODEWHAT};
+		for (int i = 0; i < params.length; i++) {
+			JavConfigParameter param = params[i];
+			String value = this.getParameter(param.id);
+            if (value == null) {
+                continue;
+            }
+
+            switch (Integer.parseInt(param.id)) {
+                case 1:
+                    if (value.equalsIgnoreCase(TextUtil.truthy)) {
+                        js = 1;
+                    } else {
+                        js = 0;
+                    }
+                    break;
+                case 2:
+                    worldid = Integer.parseInt(value);
+					break;
+                case 3:
+					break;
+                case 4:
+                    lang = Integer.parseInt(value);
+                    break;
+                case 5: {
+					int modeId = Integer.parseInt(value);
+
+					ModeWhat[] modes = new ModeWhat[] { ModeWhat.RC, ModeWhat.WIP, ModeWhat.BUILDLIVE, ModeWhat.LIVE };
+					ModeWhat found = null;
+					for (int j = 0; j < modes.length; j++) {
+						ModeWhat mode = modes[j];
+						if (mode.id == modeId) {
+							found = mode;
+							break;
 						}
-						break;
-					case 2:
-						field2075 = Integer.parseInt(var5);
-					case 3:
-					default:
-						break;
-					case 4:
-						field2047 = Integer.parseInt(var5);
-						break;
-					case 5:
-						int var6 = Integer.parseInt(var5);
-						ModeWhat[] var7 = new ModeWhat[] { ModeWhat.RC, ModeWhat.WIP, ModeWhat.BUILDLIVE, ModeWhat.LIVE };
-						ModeWhat[] var8 = var7;
-						int var9 = 0;
-						ModeWhat var11;
-						while (true) {
-							if (var9 >= var8.length) {
-								var11 = null;
-								break;
-							}
-							ModeWhat var10 = var8[var9];
-							if (var10.field851 == var6) {
-								var11 = var10;
-								break;
-							}
-							var9++;
-						}
-						modewhat = var11;
-						break;
-					case 6:
-						if (var5.equalsIgnoreCase(TextUtil.truthy)) {
-							field1983 = true;
-						} else {
-							field1983 = false;
-						}
-						break;
-					case 7:
-						field1915 = Integer.parseInt(var5);
-						break;
-					case 8:
-						ModeGame[] var12 = ModeGame.values();
-						int var13 = Integer.parseInt(var5);
-						ModeGame[] var14 = var12;
-						int var15 = 0;
-						ModeGame var17;
-						while (true) {
-							if (var15 >= var14.length) {
-								var17 = null;
-								break;
-							}
-							ModeGame var16 = var14[var15];
-							if (var13 == var16.getGame()) {
-								var17 = var16;
-								break;
-							}
-							var15++;
-						}
-						modegame = (ModeGame) var17;
-						if (ModeGame.OLDSCAPE == modegame) {
-							namespace = Namespace.OLDSCAPE;
-						} else {
-							namespace = Namespace.LEGACY;
-						}
-						break;
-					case 9:
-						LoginScreen.field852 = var5;
+					}
+
+					modewhat = found;
+					break;
 				}
-			}
-		}
+                case 6:
+                    if (value.equalsIgnoreCase(TextUtil.truthy)) {
+                        members = true;
+                    } else {
+                        members = false;
+                    }
+                    break;
+                case 7:
+                    modewhere = Integer.parseInt(value);
+                    break;
+                case 8: {
+					int modeId = Integer.parseInt(value);
+
+					ModeGame[] modes = ModeGame.values();
+					ModeGame found = null;
+					for (int j = 0; j < modes.length; j++) {
+						ModeGame mode = modes[j];
+						if (modeId == mode.getGame()) {
+							found = mode;
+							break;
+						}
+					}
+
+					modegame = found;
+					if (ModeGame.OLDSCAPE == modegame) {
+						namespace = Namespace.OLDSCAPE;
+					} else {
+						namespace = Namespace.LEGACY;
+					}
+					break;
+				}
+                case 9:
+                    LoginScreen.worldlistUrl = value;
+					break;
+            }
+        }
+
 		World3D.field593 = false;
 		lowMemory = false;
+
 		field52 = this.getCodeBase().getHost();
-		String var18 = modewhat.field850;
+		String var18 = modewhat.name;
 		byte var19 = 0;
 		try {
 			SignLinkCacheFolder.archiveCount = 16;
@@ -1366,8 +1362,8 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.w(I)V")
 	public final void maininit() {
-		field1641 = field1915 == 0 ? 43594 : field2075 + 40000;
-		field13 = field1915 == 0 ? 443 : field2075 + 50000;
+		field1641 = modewhere == 0 ? 43594 : worldid + 40000;
+		field13 = modewhere == 0 ? 443 : worldid + 50000;
 		field1204 = field1641;
 		PlayerModel.field51 = PlayerCustomisation.field1215;
 		PlayerModel.field800 = PlayerCustomisation.field1214;
@@ -1407,7 +1403,7 @@ public class Client extends GameShell {
 			field484.method360(GameShell.canvas);
 		}
 		field10 = new FileStream(255, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.masterIndex, 500000);
-		if (field1915 != 0) {
+		if (modewhere != 0) {
 			field1991 = true;
 		}
 	}
@@ -3609,7 +3605,7 @@ public class Client extends GameShell {
 						boolean var305 = false;
 						FriendListEntry var306 = field2111[var304];
 						FriendListEntry var307 = field2111[var304 + 1];
-						if (field2075 != var306.field174 && field2075 == var307.field174) {
+						if (worldid != var306.field174 && worldid == var307.field174) {
 							var305 = true;
 						}
 						if (!var305 && var306.field174 == 0 && var307.field174 != 0) {
@@ -4698,7 +4694,7 @@ public class Client extends GameShell {
 
 				ObjType.configJs5 = configJs5;
 				ObjType.modelJs5 = modelJs5;
-				ObjType.field1462 = field1983;
+				ObjType.field1462 = members;
 				ObjType.configJs5.getFileCount(10);
 				ObjType.field815 = field1621;
 
@@ -5508,7 +5504,7 @@ public class Client extends GameShell {
 					}
 				}
 			}
-			if (arg0.equalsIgnoreCase("::errortest") && field1915 == 2) {
+			if (arg0.equalsIgnoreCase("::errortest") && modewhere == 2) {
 				throw new RuntimeException();
 			}
 		}
@@ -10179,7 +10175,7 @@ public class Client extends GameShell {
 					int var10 = var9 + var2[var4++];
 					IfType var11 = IfType.get(var10);
 					int var12 = var2[var4++];
-					if (var12 != -1 && (!ObjType.get(var12).members || field1983)) {
+					if (var12 != -1 && (!ObjType.get(var12).members || members)) {
 						for (int var13 = 0; var13 < var11.invSlotObjId.length; var13++) {
 							if (var12 + 1 == var11.invSlotObjId[var13]) {
 								var7 += var11.invSlotObjCount[var13];
@@ -10211,7 +10207,7 @@ public class Client extends GameShell {
 					int var16 = var15 + var2[var4++];
 					IfType var17 = IfType.get(var16);
 					int var18 = var2[var4++];
-					if (var18 != -1 && (!ObjType.get(var18).members || field1983)) {
+					if (var18 != -1 && (!ObjType.get(var18).members || members)) {
 						for (int var19 = 0; var19 < var17.invSlotObjId.length; var19++) {
 							if (var18 + 1 == var17.invSlotObjId[var19]) {
 								var7 = 999999999;

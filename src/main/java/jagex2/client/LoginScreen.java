@@ -129,7 +129,7 @@ public class LoginScreen {
 	public static Pix32[] field1530;
 
 	@ObfuscatedName("be.aq")
-	public static String field852;
+	public static String worldlistUrl;
 
 	@ObfuscatedName("fn.aq")
 	public static Pix8[] field2612;
@@ -227,7 +227,7 @@ public class LoginScreen {
 		if (Client.gameState != 10) {
 			return;
 		}
-		if (Client.field2047 == 0) {
+		if (Client.lang == 0) {
 			if (JavaMouseProvider.mouseClickButton == 1) {
 				byte var4 = 5;
 				short var5 = 463;
@@ -334,7 +334,7 @@ public class LoginScreen {
 						if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
 							field150 = 0;
 						}
-						if (Client.field1915 == 2 && JavaKeyboardProvider.field114 == 84) {
+						if (Client.modewhere == 2 && JavaKeyboardProvider.field114 == 84) {
 							field164 = field164.trim();
 							if (field164.length() == 0) {
 								method2357(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
@@ -638,7 +638,7 @@ public class LoginScreen {
 			var71 = 765 - var74 - var73 + var75;
 		}
 		field132[field142 ? 1 : 0].method2747(725, 463);
-		if (Client.gameState > 5 && Client.field2047 == 0) {
+		if (Client.gameState > 5 && Client.lang == 0) {
 			if (field215 == null) {
 				field215 = SpriteDataProvider.method457(Client.field1944, "sl_button", "");
 			} else {
@@ -647,7 +647,7 @@ public class LoginScreen {
 				byte var84 = 100;
 				byte var85 = 35;
 				field215.method2747(var82, var83);
-				arg0.method2880(EnglishLocale.field1043 + " " + Client.field2075, var84 / 2 + var82, var85 / 2 + var83 - 2, 16777215, 0);
+				arg0.method2880(EnglishLocale.field1043 + " " + Client.worldid, var84 / 2 + var82, var85 / 2 + var83 - 2, 16777215, 0);
 				if (field35 == null) {
 					arg1.method2880(EnglishLocale.field1072, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
 				} else {
@@ -914,11 +914,11 @@ public class LoginScreen {
 			return;
 		}
 		WorldEntry var5 = field214[field168];
-		if (Client.field1983 == var5.field50) {
+		if (Client.members == var5.field50) {
 			Client.field52 = var5.field45;
-			Client.field2075 = var5.field49;
-			Client.field1641 = Client.field1915 == 0 ? 43594 : var5.field49 + 40000;
-			Client.field13 = Client.field1915 == 0 ? 443 : var5.field49 + 50000;
+			Client.worldid = var5.field49;
+			Client.field1641 = Client.modewhere == 0 ? 43594 : var5.field49 + 40000;
+			Client.field13 = Client.modewhere == 0 ? 443 : var5.field49 + 50000;
 			Client.field1204 = Client.field1641;
 			field160 = false;
 			field146.method2667(0, 0);
@@ -927,10 +927,10 @@ public class LoginScreen {
 			return;
 		}
 		String var6 = "";
-		if (Client.field1915 != 0) {
+		if (Client.modewhere != 0) {
 			var6 = ":" + (var5.field49 + 7000);
 		}
-		String var7 = "http://" + var5.field45 + var6 + "/j" + Client.field2074;
+		String var7 = "http://" + var5.field45 + var6 + "/j" + Client.js;
 		try {
 			arg0.getAppletContext().showDocument(new URL(var7), "_self");
 		} catch (Exception var9) {
@@ -941,7 +941,7 @@ public class LoginScreen {
 	public static void method377() {
 		try {
 			if (field35 == null) {
-				field35 = new WorldList(GameShell.signlink, new URL(field852));
+				field35 = new WorldList(GameShell.signlink, new URL(worldlistUrl));
 			} else {
 				byte[] var0 = field35.method99();
 				if (var0 != null) {
