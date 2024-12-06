@@ -92,70 +92,70 @@ public class SeqType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eo.q(Lev;S)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("eo.i(Lev;IB)V")
-	public void decodeInner(Packet buf, int code) {
-		if (code == 1) {
-			int var3 = buf.g2();
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 1) {
+			int var3 = arg0.g2();
 			this.delay = new int[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.delay[var4] = buf.g2();
+				this.delay[var4] = arg0.g2();
 			}
 			this.frames = new int[var3];
 			for (int var5 = 0; var5 < var3; var5++) {
-				this.frames[var5] = buf.g2();
+				this.frames[var5] = arg0.g2();
 			}
 			for (int var6 = 0; var6 < var3; var6++) {
-				this.frames[var6] += buf.g2() << 16;
+				this.frames[var6] += arg0.g2() << 16;
 			}
-		} else if (code == 2) {
-			this.replayoff = buf.g2();
-		} else if (code == 3) {
-			int var7 = buf.g1();
+		} else if (arg1 == 2) {
+			this.replayoff = arg0.g2();
+		} else if (arg1 == 3) {
+			int var7 = arg0.g1();
 			this.walkmerge = new int[var7 + 1];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.walkmerge[var8] = buf.g1();
+				this.walkmerge[var8] = arg0.g1();
 			}
 			this.walkmerge[var7] = 9999999;
-		} else if (code == 4) {
+		} else if (arg1 == 4) {
 			this.stretches = true;
-		} else if (code == 5) {
-			this.priority = buf.g1();
-		} else if (code == 6) {
-			this.righthand = buf.g2();
-		} else if (code == 7) {
-			this.lefthand = buf.g2();
-		} else if (code == 8) {
-			this.replaycount = buf.g1();
-		} else if (code == 9) {
-			this.preanim_move = buf.g1();
-		} else if (code == 10) {
-			this.postanim_move = buf.g1();
-		} else if (code == 11) {
-			this.replacemode = buf.g1();
-		} else if (code == 12) {
-			int var9 = buf.g1();
+		} else if (arg1 == 5) {
+			this.priority = arg0.g1();
+		} else if (arg1 == 6) {
+			this.righthand = arg0.g2();
+		} else if (arg1 == 7) {
+			this.lefthand = arg0.g2();
+		} else if (arg1 == 8) {
+			this.replaycount = arg0.g1();
+		} else if (arg1 == 9) {
+			this.preanim_move = arg0.g1();
+		} else if (arg1 == 10) {
+			this.postanim_move = arg0.g1();
+		} else if (arg1 == 11) {
+			this.replacemode = arg0.g1();
+		} else if (arg1 == 12) {
+			int var9 = arg0.g1();
 			this.field2365 = new int[var9];
 			for (int var10 = 0; var10 < var9; var10++) {
-				this.field2365[var10] = buf.g2();
+				this.field2365[var10] = arg0.g2();
 			}
 			for (int var11 = 0; var11 < var9; var11++) {
-				this.field2365[var11] += buf.g2() << 16;
+				this.field2365[var11] += arg0.g2() << 16;
 			}
-		} else if (code == 13) {
-			int var12 = buf.g1();
+		} else if (arg1 == 13) {
+			int var12 = arg0.g1();
 			this.sound = new int[var12];
 			for (int var13 = 0; var13 < var12; var13++) {
-				this.sound[var13] = buf.g3();
+				this.sound[var13] = arg0.g3();
 			}
 		}
 	}
@@ -169,14 +169,15 @@ public class SeqType extends DoublyLinkable {
 				this.preanim_move = 2;
 			}
 		}
-        if (this.postanim_move == -1) {
-            if (this.walkmerge == null) {
-                this.postanim_move = 0;
-            } else {
-                this.postanim_move = 2;
-            }
-        }
-    }
+		if (this.postanim_move != -1) {
+			return;
+		}
+		if (this.walkmerge == null) {
+			this.postanim_move = 0;
+		} else {
+			this.postanim_move = 2;
+		}
+	}
 
 	@ObfuscatedName("eo.u(Lfo;II)Lfo;")
 	public SoftwareModel method2436(SoftwareModel arg0, int arg1) {

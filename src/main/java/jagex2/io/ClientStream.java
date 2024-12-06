@@ -25,7 +25,7 @@ public class ClientStream implements Runnable {
 	public Socket socket;
 
 	@ObfuscatedName("am.m")
-	public boolean dummy = false; // name comes from a debug method in 317
+	public boolean dummy = false;
 
 	@ObfuscatedName("am.c")
 	public SignLink signlink;
@@ -37,17 +37,17 @@ public class ClientStream implements Runnable {
 	public byte[] buf;
 
 	@ObfuscatedName("am.z")
-	public int tcyl = 0; // name comes from a debug method in 317
+	public int tcyl = 0;
 
 	@ObfuscatedName("am.g")
-	public int tnum = 0; // name comes from a debug method in 317
+	public int tnum = 0;
 
 	@ObfuscatedName("am.q")
-	public boolean ioerror = false; // name comes from a debug method in 317
+	public boolean ioerror = false;
 
-	public ClientStream(Socket socket, SignLink signlink) throws IOException {
-		this.signlink = signlink;
-		this.socket = socket;
+	public ClientStream(Socket arg0, SignLink arg1) throws IOException {
+		this.signlink = arg1;
+		this.socket = arg0;
 		this.socket.setSoTimeout(30000);
 		this.socket.setTcpNoDelay(true);
 		this.in = this.socket.getInputStream();
@@ -59,29 +59,25 @@ public class ClientStream implements Runnable {
 		if (this.dummy) {
 			return;
 		}
-
 		synchronized (this) {
 			this.dummy = true;
 			this.notifyAll();
 		}
-
 		if (this.writer != null) {
 			while (this.writer.field507 == 0) {
 				PreciseSleep.sleep(1L);
 			}
-
 			if (this.writer.field507 == 1) {
 				try {
 					((Thread) this.writer.field511).join();
-				} catch (InterruptedException ignore) {
+				} catch (InterruptedException var4) {
 				}
 			}
 		}
-
 		this.writer = null;
 	}
 
-	protected void finalize() {
+	public void finalize() {
 		this.close();
 	}
 
@@ -96,51 +92,43 @@ public class ClientStream implements Runnable {
 	}
 
 	@ObfuscatedName("am.j([BIII)V")
-	public void read(byte[] dest, int off, int len) throws IOException {
+	public void read(byte[] arg0, int arg1, int arg2) throws IOException {
 		if (this.dummy) {
 			return;
 		}
-
-		while (len > 0) {
-			int read = this.in.read(dest, off, len);
-			if (read <= 0) {
+		while (arg2 > 0) {
+			int var4 = this.in.read(arg0, arg1, arg2);
+			if (var4 <= 0) {
 				throw new EOFException();
 			}
-
-			off += read;
-			len -= read;
+			arg1 += var4;
+			arg2 -= var4;
 		}
 	}
 
 	@ObfuscatedName("am.z([BIII)V")
-	public void write(byte[] src, int off, int len) throws IOException {
+	public void write(byte[] arg0, int arg1, int arg2) throws IOException {
 		if (this.dummy) {
 			return;
 		}
-
 		if (this.ioerror) {
 			this.ioerror = false;
-			throw new IOException("Error in writer thread");
+			throw new IOException();
 		}
-
 		if (this.buf == null) {
 			this.buf = new byte[5000];
 		}
-
 		synchronized (this) {
-			for (int i = 0; i < len; i++) {
-				this.buf[this.tnum] = src[off + i];
+			for (int var5 = 0; var5 < arg2; var5++) {
+				this.buf[this.tnum] = arg0[arg1 + var5];
 				this.tnum = (this.tnum + 1) % 5000;
-
-				if (this.tnum == (this.tcyl + 4900) % 5000) {
-					throw new IOException("buffer overflow");
+				if ((this.tcyl + 4900) % 5000 == this.tnum) {
+					throw new IOException();
 				}
 			}
-
 			if (this.writer == null) {
 				this.writer = this.signlink.startThread(this, 3);
 			}
-
 			this.notifyAll();
 		}
 	}
@@ -148,70 +136,61 @@ public class ClientStream implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				loop: {
-					int off;
-					int available;
+				label84: {
+					int var3;
+					int var4;
 					synchronized (this) {
 						if (this.tnum == this.tcyl) {
 							if (this.dummy) {
-								break loop;
+								break label84;
 							}
-
 							try {
 								this.wait();
-							} catch (InterruptedException ignore) {
+							} catch (InterruptedException var13) {
 							}
 						}
-
-						off = this.tcyl;
+						var3 = this.tcyl;
 						if (this.tnum >= this.tcyl) {
-							available = this.tnum - this.tcyl;
+							var4 = this.tnum - this.tcyl;
 						} else {
-							available = 5000 - this.tcyl;
+							var4 = 5000 - this.tcyl;
 						}
 					}
-
-                    if (available > 0) {
-                        try {
-                            this.out.write(this.buf, off, available);
-                        } catch (IOException ignore) {
-                            this.ioerror = true;
-                        }
-
-                        this.tcyl = (this.tcyl + available) % 5000;
-
-                        try {
-                            if (this.tnum == this.tcyl) {
-                                this.out.flush();
-                            }
-                        } catch (IOException ignore) {
-                            this.ioerror = true;
-                        }
-                    }
-
+					if (var4 <= 0) {
+						continue;
+					}
+					try {
+						this.out.write(this.buf, var3, var4);
+					} catch (IOException var12) {
+						this.ioerror = true;
+					}
+					this.tcyl = (this.tcyl + var4) % 5000;
+					try {
+						if (this.tnum == this.tcyl) {
+							this.out.flush();
+						}
+					} catch (IOException var11) {
+						this.ioerror = true;
+					}
 					continue;
-                }
-
+				}
 				try {
 					if (this.in != null) {
 						this.in.close();
 					}
-
 					if (this.out != null) {
 						this.out.close();
 					}
-
 					if (this.socket != null) {
 						this.socket.close();
 					}
-				} catch (IOException ignore) {
+				} catch (IOException var10) {
 				}
-
 				this.buf = null;
 				break;
 			}
-		} catch (Exception ex) {
-			JagException.report(null, ex);
+		} catch (Exception var15) {
+			JagException.report(null, (Throwable) var15);
 		}
 	}
 }

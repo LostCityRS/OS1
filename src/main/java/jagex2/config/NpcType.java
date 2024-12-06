@@ -116,7 +116,7 @@ public class NpcType extends DoublyLinkable {
 	public boolean active = true;
 
 	@ObfuscatedName("em.ab")
-	public boolean walksmoothing = true; // todo: real name
+	public boolean walksmoothing = true;
 
 	@ObfuscatedName("by.z(Lch;Lch;B)V")
 	public static void init(Js5Index arg0, Js5Index arg1) {
@@ -146,106 +146,106 @@ public class NpcType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("em.i(Lev;I)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("em.s(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
-		if (code == 1) {
-			int var3 = buf.g1();
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 1) {
+			int var3 = arg0.g1();
 			this.models = new int[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.models[var4] = buf.g2();
+				this.models[var4] = arg0.g2();
 			}
-		} else if (code == 2) {
-			this.name = buf.gjstr();
-		} else if (code == 12) {
-			this.size = buf.g1();
-		} else if (code == 13) {
-			this.readyanim = buf.g2();
-		} else if (code == 14) {
-			this.walkanim = buf.g2();
-		} else if (code == 15) {
-			this.field2287 = buf.g2();
-		} else if (code == 16) {
-			this.field2278 = buf.g2();
-		} else if (code == 17) {
-			this.walkanim = buf.g2();
-			this.walkanim_b = buf.g2();
-			this.walkanim_r = buf.g2();
-			this.walkanim_l = buf.g2();
-		} else if (code >= 30 && code < 35) {
-			this.op[code - 30] = buf.gjstr();
-			if (this.op[code - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
-				this.op[code - 30] = null;
+		} else if (arg1 == 2) {
+			this.name = arg0.gjstr();
+		} else if (arg1 == 12) {
+			this.size = arg0.g1();
+		} else if (arg1 == 13) {
+			this.readyanim = arg0.g2();
+		} else if (arg1 == 14) {
+			this.walkanim = arg0.g2();
+		} else if (arg1 == 15) {
+			this.field2287 = arg0.g2();
+		} else if (arg1 == 16) {
+			this.field2278 = arg0.g2();
+		} else if (arg1 == 17) {
+			this.walkanim = arg0.g2();
+			this.walkanim_b = arg0.g2();
+			this.walkanim_r = arg0.g2();
+			this.walkanim_l = arg0.g2();
+		} else if (arg1 >= 30 && arg1 < 35) {
+			this.op[arg1 - 30] = arg0.gjstr();
+			if (this.op[arg1 - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
+				this.op[arg1 - 30] = null;
 			}
-		} else if (code == 40) {
-			int var5 = buf.g1();
+		} else if (arg1 == 40) {
+			int var5 = arg0.g1();
 			this.recol_s = new short[var5];
 			this.recol_d = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.recol_s[var6] = (short) buf.g2();
-				this.recol_d[var6] = (short) buf.g2();
+				this.recol_s[var6] = (short) arg0.g2();
+				this.recol_d[var6] = (short) arg0.g2();
 			}
-		} else if (code == 41) {
-			int var7 = buf.g1();
+		} else if (arg1 == 41) {
+			int var7 = arg0.g1();
 			this.retex_s = new short[var7];
 			this.retex_d = new short[var7];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.retex_s[var8] = (short) buf.g2();
-				this.retex_d[var8] = (short) buf.g2();
+				this.retex_s[var8] = (short) arg0.g2();
+				this.retex_d[var8] = (short) arg0.g2();
 			}
-		} else if (code == 60) {
-			int var9 = buf.g1();
+		} else if (arg1 == 60) {
+			int var9 = arg0.g1();
 			this.heads = new int[var9];
 			for (int var10 = 0; var10 < var9; var10++) {
-				this.heads[var10] = buf.g2();
+				this.heads[var10] = arg0.g2();
 			}
-		} else if (code == 93) {
+		} else if (arg1 == 93) {
 			this.minimap = false;
-		} else if (code == 95) {
-			this.vislevel = buf.g2();
-		} else if (code == 97) {
-			this.resizeh = buf.g2();
-		} else if (code == 98) {
-			this.resizev = buf.g2();
-		} else if (code == 99) {
+		} else if (arg1 == 95) {
+			this.vislevel = arg0.g2();
+		} else if (arg1 == 97) {
+			this.resizeh = arg0.g2();
+		} else if (arg1 == 98) {
+			this.resizev = arg0.g2();
+		} else if (arg1 == 99) {
 			this.alwaysontop = true;
-		} else if (code == 100) {
-			this.ambient = buf.g1b();
-		} else if (code == 101) {
-			this.contrast = buf.g1b() * 5;
-		} else if (code == 102) {
-			this.headicon = buf.g2();
-		} else if (code == 103) {
-			this.turnspeed = buf.g2();
-		} else if (code == 106) {
-			this.multivarbit = buf.g2();
+		} else if (arg1 == 100) {
+			this.ambient = arg0.g1b();
+		} else if (arg1 == 101) {
+			this.contrast = arg0.g1b();
+		} else if (arg1 == 102) {
+			this.headicon = arg0.g2();
+		} else if (arg1 == 103) {
+			this.turnspeed = arg0.g2();
+		} else if (arg1 == 106) {
+			this.multivarbit = arg0.g2();
 			if (this.multivarbit == 65535) {
 				this.multivarbit = -1;
 			}
-			this.multivarp = buf.g2();
+			this.multivarp = arg0.g2();
 			if (this.multivarp == 65535) {
 				this.multivarp = -1;
 			}
-			int var11 = buf.g1();
+			int var11 = arg0.g1();
 			this.multinpc = new int[var11 + 1];
 			for (int var12 = 0; var12 <= var11; var12++) {
-				this.multinpc[var12] = buf.g2();
+				this.multinpc[var12] = arg0.g2();
 				if (this.multinpc[var12] == 65535) {
 					this.multinpc[var12] = -1;
 				}
 			}
-		} else if (code == 107) {
+		} else if (arg1 == 107) {
 			this.active = false;
-		} else if (code == 109) {
+		} else if (arg1 == 109) {
 			this.walksmoothing = false;
 		}
 	}
@@ -287,7 +287,7 @@ public class NpcType extends DoublyLinkable {
 					var11.retexture(this.retex_s[var13], this.retex_d[var13]);
 				}
 			}
-			var6 = var11.method2942(this.ambient + 64, this.contrast + 850, -30, -50, -30);
+			var6 = var11.method2942(this.ambient + 64, this.contrast * 5 + 850, -30, -50, -30);
 			field2288.put(var6, (long) this.field2271);
 		}
 		SoftwareModel var14;

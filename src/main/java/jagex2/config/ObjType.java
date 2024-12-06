@@ -18,7 +18,7 @@ public class ObjType extends DoublyLinkable {
 	public static Js5Index modelJs5;
 
 	@ObfuscatedName("cq.z")
-	public static boolean field1462;
+	public static boolean membersWorld;
 
 	@ObfuscatedName("fj.g")
 	public static LruCache field2432 = new LruCache(64);
@@ -168,7 +168,7 @@ public class ObjType extends DoublyLinkable {
 		if (var3.certtemplate != -1) {
 			var3.method2520(get(var3.certtemplate), get(var3.certlink));
 		}
-		if (!field1462 && var3.members) {
+		if (!membersWorld && var3.membersWorld) {
 			var3.name = EnglishLocale.field1077;
 			var3.op = null;
 			var3.iop = null;
@@ -183,114 +183,114 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.q(Lev;B)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fj.i(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
-		if (code == 1) {
-			this.model = buf.g2();
-		} else if (code == 2) {
-			this.name = buf.gjstr();
-		} else if (code == 4) {
-			this.zoom2d = buf.g2();
-		} else if (code == 5) {
-			this.xan2d = buf.g2();
-		} else if (code == 6) {
-			this.yan2d = buf.g2();
-		} else if (code == 7) {
-			this.xof2d = buf.g2();
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 1) {
+			this.model = arg0.g2();
+		} else if (arg1 == 2) {
+			this.name = arg0.gjstr();
+		} else if (arg1 == 4) {
+			this.zoom2d = arg0.g2();
+		} else if (arg1 == 5) {
+			this.xan2d = arg0.g2();
+		} else if (arg1 == 6) {
+			this.yan2d = arg0.g2();
+		} else if (arg1 == 7) {
+			this.xof2d = arg0.g2();
 			if (this.xof2d > 32767) {
 				this.xof2d -= 65536;
 			}
-		} else if (code == 8) {
-			this.yof2d = buf.g2();
+		} else if (arg1 == 8) {
+			this.yof2d = arg0.g2();
 			if (this.yof2d > 32767) {
 				this.yof2d -= 65536;
 			}
-		} else if (code == 11) {
+		} else if (arg1 == 11) {
 			this.stackable = 1;
-		} else if (code == 12) {
-			this.cost = buf.g4();
-		} else if (code == 16) {
-			this.members = true;
-		} else if (code == 23) {
-			this.manwear = buf.g2();
-			this.manwearOffsetY = buf.g1();
-		} else if (code == 24) {
-			this.manwear2 = buf.g2();
-		} else if (code == 25) {
-			this.womanwear = buf.g2();
-			this.womanwearOffsetY = buf.g1();
-		} else if (code == 26) {
-			this.womanwear2 = buf.g2();
-		} else if (code >= 30 && code < 35) {
-			this.op[code - 30] = buf.gjstr();
-			if (this.op[code - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
-				this.op[code - 30] = null;
+		} else if (arg1 == 12) {
+			this.cost = arg0.g4();
+		} else if (arg1 == 16) {
+			this.membersWorld = true;
+		} else if (arg1 == 23) {
+			this.manwear = arg0.g2();
+			this.manwearOffsetY = arg0.g1();
+		} else if (arg1 == 24) {
+			this.manwear2 = arg0.g2();
+		} else if (arg1 == 25) {
+			this.womanwear = arg0.g2();
+			this.womanwearOffsetY = arg0.g1();
+		} else if (arg1 == 26) {
+			this.womanwear2 = arg0.g2();
+		} else if (arg1 >= 30 && arg1 < 35) {
+			this.op[arg1 - 30] = arg0.gjstr();
+			if (this.op[arg1 - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
+				this.op[arg1 - 30] = null;
 			}
-		} else if (code >= 35 && code < 40) {
-			this.iop[code - 35] = buf.gjstr();
-		} else if (code == 40) {
-			int var3 = buf.g1();
+		} else if (arg1 >= 35 && arg1 < 40) {
+			this.iop[arg1 - 35] = arg0.gjstr();
+		} else if (arg1 == 40) {
+			int var3 = arg0.g1();
 			this.recol_s = new short[var3];
 			this.recol_d = new short[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.recol_s[var4] = (short) buf.g2();
-				this.recol_d[var4] = (short) buf.g2();
+				this.recol_s[var4] = (short) arg0.g2();
+				this.recol_d[var4] = (short) arg0.g2();
 			}
-		} else if (code == 41) {
-			int var5 = buf.g1();
+		} else if (arg1 == 41) {
+			int var5 = arg0.g1();
 			this.retex_s = new short[var5];
 			this.retex_d = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.retex_s[var6] = (short) buf.g2();
-				this.retex_d[var6] = (short) buf.g2();
+				this.retex_s[var6] = (short) arg0.g2();
+				this.retex_d[var6] = (short) arg0.g2();
 			}
-		} else if (code == 78) {
-			this.manwear3 = buf.g2();
-		} else if (code == 79) {
-			this.womanwear3 = buf.g2();
-		} else if (code == 90) {
-			this.manhead = buf.g2();
-		} else if (code == 91) {
-			this.womanhead = buf.g2();
-		} else if (code == 92) {
-			this.manhead2 = buf.g2();
-		} else if (code == 93) {
-			this.womanhead2 = buf.g2();
-		} else if (code == 95) {
-			this.zan2d = buf.g2();
-		} else if (code == 97) {
-			this.certlink = buf.g2();
-		} else if (code == 98) {
-			this.certtemplate = buf.g2();
-		} else if (code >= 100 && code < 110) {
+		} else if (arg1 == 78) {
+			this.manwear3 = arg0.g2();
+		} else if (arg1 == 79) {
+			this.womanwear3 = arg0.g2();
+		} else if (arg1 == 90) {
+			this.manhead = arg0.g2();
+		} else if (arg1 == 91) {
+			this.womanhead = arg0.g2();
+		} else if (arg1 == 92) {
+			this.manhead2 = arg0.g2();
+		} else if (arg1 == 93) {
+			this.womanhead2 = arg0.g2();
+		} else if (arg1 == 95) {
+			this.zan2d = arg0.g2();
+		} else if (arg1 == 97) {
+			this.certlink = arg0.g2();
+		} else if (arg1 == 98) {
+			this.certtemplate = arg0.g2();
+		} else if (arg1 >= 100 && arg1 < 110) {
 			if (this.countobj == null) {
 				this.countobj = new int[10];
 				this.countco = new int[10];
 			}
-			this.countobj[code - 100] = buf.g2();
-			this.countco[code - 100] = buf.g2();
-		} else if (code == 110) {
-			this.resizex = buf.g2();
-		} else if (code == 111) {
-			this.resizey = buf.g2();
-		} else if (code == 112) {
-			this.resizez = buf.g2();
-		} else if (code == 113) {
-			this.ambient = buf.g1b();
-		} else if (code == 114) {
-			this.contrast = buf.g1b() * 5;
-		} else if (code == 115) {
-			this.team = buf.g1();
+			this.countobj[arg1 - 100] = arg0.g2();
+			this.countco[arg1 - 100] = arg0.g2();
+		} else if (arg1 == 110) {
+			this.resizex = arg0.g2();
+		} else if (arg1 == 111) {
+			this.resizey = arg0.g2();
+		} else if (arg1 == 112) {
+			this.resizez = arg0.g2();
+		} else if (arg1 == 113) {
+			this.ambient = arg0.g1b();
+		} else if (arg1 == 114) {
+			this.contrast = arg0.g1b() * 5;
+		} else if (arg1 == 115) {
+			this.team = arg0.g1();
 		}
 	}
 
@@ -308,7 +308,7 @@ public class ObjType extends DoublyLinkable {
 		this.retex_s = arg0.retex_s;
 		this.retex_d = arg0.retex_d;
 		this.name = arg1.name;
-		this.members = arg1.members;
+		this.membersWorld = arg1.membersWorld;
 		this.cost = arg1.cost;
 		this.stackable = 1;
 	}

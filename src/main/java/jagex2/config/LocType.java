@@ -168,297 +168,226 @@ public class LocType extends DoublyLinkable {
 	public int[] bgsound_random;
 
 	@ObfuscatedName("av.z(Lch;Lch;ZI)V")
-	public static void init(Js5Index config, Js5Index model, boolean lowMem) {
-		configJs5 = config;
-		modelJs5 = model;
-		lowMemory = lowMem;
+	public static void init(Js5Index arg0, Js5Index arg1, boolean arg2) {
+		configJs5 = arg0;
+		modelJs5 = arg1;
+		lowMemory = arg2;
 	}
 
 	@ObfuscatedName("fj.g(IB)Ley;")
-	public static LocType get(int id) {
-		LocType cached = (LocType) cache.get(id);
-		if (cached != null) {
-			return cached;
+	public static LocType get(int arg0) {
+		LocType var1 = (LocType) cache.get((long) arg0);
+		if (var1 != null) {
+			return var1;
 		}
-
-		byte[] data = configJs5.getFile(6, id);
-		LocType type = new LocType();
-		type.id = id;
-
-		if (data != null) {
-			type.decode(new Packet(data));
+		byte[] var2 = configJs5.getFile(6, arg0);
+		LocType var3 = new LocType();
+		var3.id = arg0;
+		if (var2 != null) {
+			var3.decode(new Packet(var2));
 		}
-
-		type.postDecode();
-
-		if (type.breakroutefinding) {
-			type.blockwalk = 0;
-			type.blockrange = false;
+		var3.postDecode();
+		if (var3.breakroutefinding) {
+			var3.blockwalk = 0;
+			var3.blockrange = false;
 		}
-
-		cache.put(type, id);
-		return type;
+		cache.put(var3, (long) arg0);
+		return var3;
 	}
 
 	@ObfuscatedName("ey.q(B)V")
 	public void postDecode() {
 		if (this.active == -1) {
 			this.active = 0;
-
 			if (this.models != null && (this.shapes == null || this.shapes[0] == 10)) {
 				this.active = 1;
 			}
-
-			for (int i = 0; i < 5; i++) {
-				if (this.op[i] != null) {
+			for (int var1 = 0; var1 < 5; var1++) {
+				if (this.op[var1] != null) {
 					this.active = 1;
 				}
 			}
 		}
-
 		if (this.raiseobject == -1) {
 			this.raiseobject = this.blockwalk == 0 ? 0 : 1;
 		}
 	}
 
 	@ObfuscatedName("ey.i(Lev;I)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("ey.s(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
-		if (code == 1) {
-			// model=name, with arbitrary shapes
-			int count = buf.g1();
-			if (count > 0) {
-				// models can be encoded twice - the first is the standard/"high detail" models
-				// the second is the low detail models
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 1) {
+			int var3 = arg0.g1();
+			if (var3 > 0) {
 				if (this.models == null || lowMemory) {
-					this.shapes = new int[count];
-					this.models = new int[count];
-
-					for (int i = 0; i < count; i++) {
-						this.models[i] = buf.g2();
-						this.shapes[i] = buf.g1();
+					this.shapes = new int[var3];
+					this.models = new int[var3];
+					for (int var4 = 0; var4 < var3; var4++) {
+						this.models[var4] = arg0.g2();
+						this.shapes[var4] = arg0.g1();
 					}
 				} else {
-					buf.pos += count * 3;
+					arg0.pos += var3 * 3;
 				}
 			}
-		} else if (code == 2) {
-			// name=string
-			this.name = buf.gjstr();
-		} else if (code == 5) {
-			// model=name, only shape 10 (centrepiece_straight)
-			int count = buf.g1();
-			if (count > 0) {
-				// models can be encoded twice - the first is the standard/"high detail" models
-				// the second is the low detail models
+		} else if (arg1 == 2) {
+			this.name = arg0.gjstr();
+		} else if (arg1 == 5) {
+			int var5 = arg0.g1();
+			if (var5 > 0) {
 				if (this.models == null || lowMemory) {
 					this.shapes = null;
-					this.models = new int[count];
-
-					for (int i = 0; i < count; i++) {
-						this.models[i] = buf.g2();
+					this.models = new int[var5];
+					for (int var6 = 0; var6 < var5; var6++) {
+						this.models[var6] = arg0.g2();
 					}
 				} else {
-					buf.pos += count * 2;
+					arg0.pos += var5 * 2;
 				}
 			}
-		} else if (code == 14) {
-			// width=x
-			this.width = buf.g1();
-		} else if (code == 15) {
-			// length=z
-			this.length = buf.g1();
-		} else if (code == 17) {
-			// blockwalk=no
+		} else if (arg1 == 14) {
+			this.width = arg0.g1();
+		} else if (arg1 == 15) {
+			this.length = arg0.g1();
+		} else if (arg1 == 17) {
 			this.blockwalk = 0;
 			this.blockrange = false;
-		} else if (code == 18) {
-			// blockrange=no
+		} else if (arg1 == 18) {
 			this.blockrange = false;
-		} else if (code == 19) {
-			// active=yes/no
-			this.active = buf.g1();
-		} else if (code == 21) {
-			// hillskew=yes
+		} else if (arg1 == 19) {
+			this.active = arg0.g1();
+		} else if (arg1 == 21) {
 			this.skewType = 0;
-		} else if (code == 22) {
-			// sharelight=yes
+		} else if (arg1 == 22) {
 			this.sharelight = true;
-		} else if (code == 23) {
-			// occlude=yes
+		} else if (arg1 == 23) {
 			this.occlude = true;
-		} else if (code == 24) {
-			// anim=seq
-			this.anim = buf.g2();
+		} else if (arg1 == 24) {
+			this.anim = arg0.g2();
 			if (this.anim == 65535) {
 				this.anim = -1;
 			}
-		} else if (code == 27) {
-			// blockwalk=?
+		} else if (arg1 == 27) {
 			this.blockwalk = 1;
-		} else if (code == 28) {
-			// wallwidth=number
-			this.wallwidth = buf.g1();
-		} else if (code == 29) {
-			// ambient=number
-			this.ambient = buf.g1b();
-		} else if (code == 39) {
-			// contrast=number
-			this.contrast = buf.g1b() * 25;
-		} else if (code >= 30 && code < 35) {
-			// opX=string, up to 5 ops
-			this.op[code - 30] = buf.gjstr();
-			if (this.op[code - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
-				this.op[code - 30] = null;
+		} else if (arg1 == 28) {
+			this.wallwidth = arg0.g1();
+		} else if (arg1 == 29) {
+			this.ambient = arg0.g1b();
+		} else if (arg1 == 39) {
+			this.contrast = arg0.g1b() * 25;
+		} else if (arg1 >= 30 && arg1 < 35) {
+			this.op[arg1 - 30] = arg0.gjstr();
+			if (this.op[arg1 - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
+				this.op[arg1 - 30] = null;
 			}
-		} else if (code == 40) {
-			// recolXs=number, recolXd=number
-			// e.g. recol1s=0 recol1d=1234
-			// replace source with dest color
-			int count = buf.g1();
-			this.recol_s = new short[count];
-			this.recol_d = new short[count];
-			for (int i = 0; i < count; i++) {
-				this.recol_s[i] = (short) buf.g2();
-				this.recol_d[i] = (short) buf.g2();
+		} else if (arg1 == 40) {
+			int var7 = arg0.g1();
+			this.recol_s = new short[var7];
+			this.recol_d = new short[var7];
+			for (int var8 = 0; var8 < var7; var8++) {
+				this.recol_s[var8] = (short) arg0.g2();
+				this.recol_d[var8] = (short) arg0.g2();
 			}
-		} else if (code == 41) {
-			// retexX=number, retexX=number
-			// (number taken from texture in model editor? don't think they use the file name)
-			// replace source with dest texture
-			int count = buf.g1();
-			this.retex_s = new short[count];
-			this.retex_d = new short[count];
-			for (int i = 0; i < count; i++) {
-				this.retex_s[i] = (short) buf.g2();
-				this.retex_d[i] = (short) buf.g2();
+		} else if (arg1 == 41) {
+			int var9 = arg0.g1();
+			this.retex_s = new short[var9];
+			this.retex_d = new short[var9];
+			for (int var10 = 0; var10 < var9; var10++) {
+				this.retex_s[var10] = (short) arg0.g2();
+				this.retex_d[var10] = (short) arg0.g2();
 			}
-		} else if (code == 60) {
-			// mapfunction=number
-			// (number is the cell # in the mapfunction spritesheet)
-			this.mapfunction = buf.g2();
-		} else if (code == 62) {
-			// mirror=yes
+		} else if (arg1 == 60) {
+			this.mapfunction = arg0.g2();
+		} else if (arg1 == 62) {
 			this.mirror = true;
-		} else if (code == 64) {
-			// shadow=no
+		} else if (arg1 == 64) {
 			this.shadow = false;
-		} else if (code == 65) {
-			// resizex=number, in client units, where 128=1 tile
-			this.resizex = buf.g2();
-		} else if (code == 66) {
-			// resizey=number, in client units (what does this mean vertically?)
-			this.resizey = buf.g2();
-		} else if (code == 67) {
-			// resizez=number, in client units, where 128=1 tile
-			this.resizez = buf.g2();
-		} else if (code == 68) {
-			// mapscene=number
-			// (number is the cell # in the mapscene spritesheet)
-			this.mapscene = buf.g2();
-		} else if (code == 69) {
-			// forceapproach=north, south, east, west
-			// this is a bitmask (4 bits), 0 in a position means that direction is allowed
-			// when the packer sees a forceapproach line it uses 0b1111 and that direction bit is set to 0
-			// north = ~0b0001
-			// east = ~0b0010
-			// south = ~0b0100
-			// west = ~0b1000
-			this.forceapproach = buf.g1();
-		} else if (code == 70) {
-			// offsetx=number
-			this.offsetx = buf.g2b();
-		} else if (code == 71) {
-			// offsety=number
-			this.offsety = buf.g2b();
-		} else if (code == 72) {
-			// offsetz=number
-			this.offsetz = buf.g2b();
-		} else if (code == 73) {
-			// forcedecor=yes
+		} else if (arg1 == 65) {
+			this.resizex = arg0.g2();
+		} else if (arg1 == 66) {
+			this.resizey = arg0.g2();
+		} else if (arg1 == 67) {
+			this.resizez = arg0.g2();
+		} else if (arg1 == 68) {
+			this.mapscene = arg0.g2();
+		} else if (arg1 == 69) {
+			this.forceapproach = arg0.g1();
+		} else if (arg1 == 70) {
+			this.offsetx = arg0.g2b();
+		} else if (arg1 == 71) {
+			this.offsety = arg0.g2b();
+		} else if (arg1 == 72) {
+			this.offsetz = arg0.g2b();
+		} else if (arg1 == 73) {
 			this.forcedecor = true;
-		} else if (code == 74) {
-			// breakroutefinding=yes
+		} else if (arg1 == 74) {
 			this.breakroutefinding = true;
-		} else if (code == 75) {
-			// raiseobject=yes/no
-			this.raiseobject = buf.g1();
-		} else if (code == 77) {
-			// multi
-			this.multivarbit = buf.g2();
+		} else if (arg1 == 75) {
+			this.raiseobject = arg0.g1();
+		} else if (arg1 == 77) {
+			this.multivarbit = arg0.g2();
 			if (this.multivarbit == 65535) {
 				this.multivarbit = -1;
 			}
-
-			this.multivarp = buf.g2();
+			this.multivarp = arg0.g2();
 			if (this.multivarp == 65535) {
 				this.multivarp = -1;
 			}
-
-			int count = buf.g1();
-			this.multiloc = new int[count + 1];
-			for (int i = 0; i <= count; i++) {
-				this.multiloc[i] = buf.g2();
-				if (this.multiloc[i] == 65535) {
-					this.multiloc[i] = -1;
+			int var11 = arg0.g1();
+			this.multiloc = new int[var11 + 1];
+			for (int var12 = 0; var12 <= var11; var12++) {
+				this.multiloc[var12] = arg0.g2();
+				if (this.multiloc[var12] == 65535) {
+					this.multiloc[var12] = -1;
 				}
 			}
-		} else if (code == 78) {
-			// bgsound
-			this.bgsound_sound = buf.g2();
-			this.bgsound_range = buf.g1();
-		} else if (code == 79) {
-			// randomsound
-			this.bgsound_mindelay = buf.g2();
-			this.bgsound_maxdelay = buf.g2();
-			this.bgsound_range = buf.g1();
-			int var13 = buf.g1();
+		} else if (arg1 == 78) {
+			this.bgsound_sound = arg0.g2();
+			this.bgsound_range = arg0.g1();
+		} else if (arg1 == 79) {
+			this.bgsound_mindelay = arg0.g2();
+			this.bgsound_maxdelay = arg0.g2();
+			this.bgsound_range = arg0.g1();
+			int var13 = arg0.g1();
 			this.bgsound_random = new int[var13];
 			for (int var14 = 0; var14 < var13; var14++) {
-				this.bgsound_random[var14] = buf.g2();
+				this.bgsound_random[var14] = arg0.g2();
 			}
-		} else if (code == 81) {
-			// treeskew=number
-			this.skewType = buf.g1() * 256;
+		} else if (arg1 == 81) {
+			this.skewType = arg0.g1() * 256;
 		}
 	}
 
 	@ObfuscatedName("ey.u(II)Z")
-	public final boolean isDownloaded(int shape) {
+	public final boolean isDownloaded(int arg0) {
 		if (this.shapes != null) {
-			for (int i = 0; i < this.shapes.length; i++) {
-				if (this.shapes[i] == shape) {
-					return modelJs5.requestDownload(this.models[i] & 0xFFFF, 0);
+			for (int var4 = 0; var4 < this.shapes.length; var4++) {
+				if (this.shapes[var4] == arg0) {
+					return modelJs5.requestDownload(this.models[var4] & 0xFFFF, 0);
 				}
 			}
-
 			return true;
-		}
-
-		if (this.models == null) {
+		} else if (this.models == null) {
 			return true;
-		}
-
-		if (shape == 10) {
-			boolean ready = true;
-			for (int i = 0; i < this.models.length; i++) {
-				ready &= modelJs5.requestDownload(this.models[i] & 0xFFFF, 0);
+		} else if (arg0 == 10) {
+			boolean var2 = true;
+			for (int var3 = 0; var3 < this.models.length; var3++) {
+				var2 &= modelJs5.requestDownload(this.models[var3] & 0xFFFF, 0);
 			}
-			return ready;
+			return var2;
+		} else {
+			return true;
 		}
-
-		return true;
 	}
 
 	@ObfuscatedName("ey.v(I)Z")
@@ -466,12 +395,11 @@ public class LocType extends DoublyLinkable {
 		if (this.models == null) {
 			return true;
 		}
-
-		boolean ready = true;
-		for (int i = 0; i < this.models.length; i++) {
-			ready &= modelJs5.requestDownload(this.models[i] & 0xFFFF, 0);
+		boolean var1 = true;
+		for (int var2 = 0; var2 < this.models.length; var2++) {
+			var1 &= modelJs5.requestDownload(this.models[var2] & 0xFFFF, 0);
 		}
-		return ready;
+		return var1;
 	}
 
 	@ObfuscatedName("ey.w(II[[IIIII)Lfu;")
@@ -567,148 +495,124 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.y(IIB)Lfw;")
-	public final Model getModel(int shape, int rotation) {
-		Model built = null;
-
+	public final Model getModel(int arg0, int arg1) {
+		Model var3 = null;
 		if (this.shapes == null) {
-			if (shape != 10) {
+			if (arg0 != 10) {
 				return null;
 			}
-
 			if (this.models == null) {
 				return null;
 			}
-
-			boolean mirrored = this.mirror;
-			if (shape == 2 && rotation > 3) {
-				mirrored = !mirrored;
+			boolean var4 = this.mirror;
+			if (arg0 == 2 && arg1 > 3) {
+				var4 = !var4;
 			}
-
-			int modelCount = this.models.length;
-			for (int i = 0; i < modelCount; i++) {
-				int modelId = this.models[i];
-				if (mirrored) {
-					modelId += 65536;
+			int var5 = this.models.length;
+			for (int var6 = 0; var6 < var5; var6++) {
+				int var7 = this.models[var6];
+				if (var4) {
+					var7 += 65536;
 				}
-
-				built = (Model) modelCacheStatic.get(modelId);
-				if (built == null) {
-					built = Model.tryGet(modelJs5, modelId & 0xFFFF, 0);
-					if (built == null) {
+				var3 = (Model) modelCacheStatic.get((long) var7);
+				if (var3 == null) {
+					var3 = Model.tryGet(modelJs5, var7 & 0xFFFF, 0);
+					if (var3 == null) {
 						return null;
 					}
-
-					if (mirrored) {
-						built.rotateY180();
+					if (var4) {
+						var3.rotateY180();
 					}
-
-					modelCacheStatic.put(built, modelId);
+					modelCacheStatic.put(var3, (long) var7);
 				}
-
-				if (modelCount > 1) {
-					temp[i] = built;
+				if (var5 > 1) {
+					temp[var6] = var3;
 				}
 			}
-
-			if (modelCount > 1) {
-				built = new Model(temp, modelCount);
+			if (var5 > 1) {
+				var3 = new Model(temp, var5);
 			}
 		} else {
-			int shapeIndex = -1;
-			for (int i = 0; i < this.shapes.length; i++) {
-				if (this.shapes[i] == shape) {
-					shapeIndex = i;
+			int var8 = -1;
+			for (int var9 = 0; var9 < this.shapes.length; var9++) {
+				if (this.shapes[var9] == arg0) {
+					var8 = var9;
 					break;
 				}
 			}
-
-			if (shapeIndex == -1) {
+			if (var8 == -1) {
 				return null;
 			}
-
-			int modelId = this.models[shapeIndex];
-			boolean mirrored = this.mirror ^ rotation > 3;
-			if (mirrored) {
-				modelId += 65536;
+			int var10 = this.models[var8];
+			boolean var11 = this.mirror ^ arg1 > 3;
+			if (var11) {
+				var10 += 65536;
 			}
-
-			built = (Model) modelCacheStatic.get(modelId);
-			if (built == null) {
-				built = Model.tryGet(modelJs5, modelId & 0xFFFF, 0);
-				if (built == null) {
+			var3 = (Model) modelCacheStatic.get((long) var10);
+			if (var3 == null) {
+				var3 = Model.tryGet(modelJs5, var10 & 0xFFFF, 0);
+				if (var3 == null) {
 					return null;
 				}
-
-				if (mirrored) {
-					built.rotateY180();
+				if (var11) {
+					var3.rotateY180();
 				}
-
-				modelCacheStatic.put(built, modelId);
+				modelCacheStatic.put(var3, (long) var10);
 			}
 		}
-
-		boolean scale;
+		boolean var12;
 		if (this.resizex == 128 && this.resizey == 128 && this.resizez == 128) {
-			scale = false;
+			var12 = false;
 		} else {
-			scale = true;
+			var12 = true;
 		}
-
-		boolean translate;
+		boolean var13;
 		if (this.offsetx == 0 && this.offsety == 0 && this.offsetz == 0) {
-			translate = false;
+			var13 = false;
 		} else {
-			translate = true;
+			var13 = true;
 		}
-
-		Model model = new Model(built, rotation == 0 && !scale && !translate, this.recol_s == null, this.retex_s == null, true);
-		if (shape == 4 && rotation > 3) {
-			model.method2933(256);
-			model.translate(45, 0, -45);
+		Model var14 = new Model(var3, arg1 == 0 && !var12 && !var13, this.recol_s == null, this.retex_s == null, true);
+		if (arg0 == 4 && arg1 > 3) {
+			var14.method2933(256);
+			var14.translate(45, 0, -45);
 		}
-
-		int var15 = rotation & 0x3;
+		int var15 = arg1 & 0x3;
 		if (var15 == 1) {
-			model.method2930();
+			var14.method2930();
 		} else if (var15 == 2) {
-			model.method2931();
+			var14.method2931();
 		} else if (var15 == 3) {
-			model.method2923();
+			var14.method2923();
 		}
-
 		if (this.recol_s != null) {
-			for (int i = 0; i < this.recol_s.length; i++) {
-				model.recolour(this.recol_s[i], this.recol_d[i]);
+			for (int var16 = 0; var16 < this.recol_s.length; var16++) {
+				var14.recolour(this.recol_s[var16], this.recol_d[var16]);
 			}
 		}
-
 		if (this.retex_s != null) {
-			for (int i = 0; i < this.retex_s.length; i++) {
-				model.retexture(this.retex_s[i], this.retex_d[i]);
+			for (int var17 = 0; var17 < this.retex_s.length; var17++) {
+				var14.retexture(this.retex_s[var17], this.retex_d[var17]);
 			}
 		}
-
-		if (scale) {
-			model.scale(this.resizex, this.resizey, this.resizez);
+		if (var12) {
+			var14.scale(this.resizex, this.resizey, this.resizez);
 		}
-
-		if (translate) {
-			model.translate(this.offsetx, this.offsety, this.offsetz);
+		if (var13) {
+			var14.translate(this.offsetx, this.offsety, this.offsetz);
 		}
-
-		return model;
+		return var14;
 	}
 
 	@ObfuscatedName("ey.t(B)Ley;")
 	public final LocType getMultiLoc() {
-		int state = -1;
+		int var1 = -1;
 		if (this.multivarbit != -1) {
-			state = VarProvider.method1130(this.multivarbit);
+			var1 = VarProvider.method1130(this.multivarbit);
 		} else if (this.multivarp != -1) {
-			state = VarProvider.field1210[this.multivarp];
+			var1 = VarProvider.field1210[this.multivarp];
 		}
-
-		return state < 0 || state >= this.multiloc.length || this.multiloc[state] == -1 ? null : get(this.multiloc[state]);
+		return var1 < 0 || var1 >= this.multiloc.length || this.multiloc[var1] == -1 ? null : get(this.multiloc[var1]);
 	}
 
 	@ObfuscatedName("ba.f(I)V")
@@ -724,16 +628,14 @@ public class LocType extends DoublyLinkable {
 		if (this.multiloc == null) {
 			return this.bgsound_sound != -1 || this.bgsound_random != null;
 		}
-
-		for (int i = 0; i < this.multiloc.length; i++) {
-			if (this.multiloc[i] != -1) {
-				LocType type = get(this.multiloc[i]);
-				if (type.bgsound_sound != -1 || type.bgsound_random != null) {
+		for (int var1 = 0; var1 < this.multiloc.length; var1++) {
+			if (this.multiloc[var1] != -1) {
+				LocType var2 = get(this.multiloc[var1]);
+				if (var2.bgsound_sound != -1 || var2.bgsound_random != null) {
 					return true;
 				}
 			}
 		}
-
 		return false;
 	}
 }

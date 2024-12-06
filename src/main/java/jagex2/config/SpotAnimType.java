@@ -76,47 +76,47 @@ public class SpotAnimType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eu.g(Lev;I)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("eu.q(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
-		if (code == 1) {
-			this.model = buf.g2();
-		} else if (code == 2) {
-			this.anim = buf.g2();
-		} else if (code == 4) {
-			this.resizeh = buf.g2();
-		} else if (code == 5) {
-			this.resizev = buf.g2();
-		} else if (code == 6) {
-			this.angle = buf.g2();
-		} else if (code == 7) {
-			this.ambient = buf.g1();
-		} else if (code == 8) {
-			this.contrast = buf.g1();
-		} else if (code == 40) {
-			int var3 = buf.g1();
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 1) {
+			this.model = arg0.g2();
+		} else if (arg1 == 2) {
+			this.anim = arg0.g2();
+		} else if (arg1 == 4) {
+			this.resizeh = arg0.g2();
+		} else if (arg1 == 5) {
+			this.resizev = arg0.g2();
+		} else if (arg1 == 6) {
+			this.angle = arg0.g2();
+		} else if (arg1 == 7) {
+			this.ambient = arg0.g1();
+		} else if (arg1 == 8) {
+			this.contrast = arg0.g1();
+		} else if (arg1 == 40) {
+			int var3 = arg0.g1();
 			this.recol_s = new short[var3];
 			this.recol_d = new short[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.recol_s[var4] = (short) buf.g2();
-				this.recol_d[var4] = (short) buf.g2();
+				this.recol_s[var4] = (short) arg0.g2();
+				this.recol_d[var4] = (short) arg0.g2();
 			}
-		} else if (code == 41) {
-			int var5 = buf.g1();
+		} else if (arg1 == 41) {
+			int var5 = arg0.g1();
 			this.retex_s = new short[var5];
 			this.retex_d = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.retex_s[var6] = (short) buf.g2();
-				this.retex_d[var6] = (short) buf.g2();
+				this.retex_s[var6] = (short) arg0.g2();
+				this.retex_d[var6] = (short) arg0.g2();
 			}
 		}
 	}

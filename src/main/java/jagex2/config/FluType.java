@@ -57,20 +57,20 @@ public class FluType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ec.i(Lev;II)V")
-	public void decode(Packet buf, int arg1) {
+	public void decode(Packet arg0, int arg1) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var3 = arg0.g1();
+			if (var3 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code, arg1);
+			this.decodeInner(arg0, var3, arg1);
 		}
 	}
 
 	@ObfuscatedName("ec.s(Lev;III)V")
-	public void decodeInner(Packet buf, int code, int arg2) {
-		if (code == 1) {
-			this.rgb = buf.g3();
+	public void decodeInner(Packet arg0, int arg1, int arg2) {
+		if (arg1 == 1) {
+			this.rgb = arg0.g3();
 		}
 	}
 

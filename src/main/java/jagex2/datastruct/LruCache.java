@@ -15,7 +15,7 @@ public class LruCache {
 	public int available;
 
 	@ObfuscatedName("ce.m")
-	public HashTable hashtable;
+	public HashTable hashTable;
 
 	@ObfuscatedName("ce.c")
 	public DoublyLinkList history = new DoublyLinkList();
@@ -26,12 +26,12 @@ public class LruCache {
 		int var2;
 		for (var2 = 1; var2 + var2 < arg0; var2 += var2) {
 		}
-		this.hashtable = new HashTable(var2);
+		this.hashTable = new HashTable(var2);
 	}
 
 	@ObfuscatedName("ce.r(J)Len;")
 	public DoublyLinkable get(long arg0) {
-		DoublyLinkable var3 = (DoublyLinkable) this.hashtable.get(arg0);
+		DoublyLinkable var3 = (DoublyLinkable) this.hashTable.get(arg0);
 		if (var3 != null) {
 			this.history.push(var3);
 		}
@@ -40,7 +40,7 @@ public class LruCache {
 
 	@ObfuscatedName("ce.d(J)V")
 	public void remove(long arg0) {
-		DoublyLinkable var3 = (DoublyLinkable) this.hashtable.get(arg0);
+		DoublyLinkable var3 = (DoublyLinkable) this.hashTable.get(arg0);
 		if (var3 != null) {
 			var3.unlink();
 			var3.unlink2();
@@ -62,14 +62,14 @@ public class LruCache {
 		} else {
 			this.available--;
 		}
-		this.hashtable.put(arg0, arg1);
+		this.hashTable.put(arg0, arg1);
 		this.history.push(arg0);
 	}
 
 	@ObfuscatedName("ce.m()V")
 	public void clear() {
 		this.history.clear();
-		this.hashtable.clear();
+		this.hashTable.clear();
 		this.field1487 = new DoublyLinkable();
 		this.available = this.capacity;
 	}

@@ -32,9 +32,9 @@ public class CollisionMap {
 		for (int var1 = 0; var1 < this.field1264; var1++) {
 			for (int var2 = 0; var2 < this.field1268; var2++) {
 				if (var1 == 0 || var2 == 0 || var1 >= this.field1264 - 5 || var2 >= this.field1268 - 5) {
-					this.field1266[var1][var2] = 0xffffff;
+					this.field1266[var1][var2] = 16777215;
 				} else {
-					this.field1266[var1][var2] = 0x1000000;
+					this.field1266[var1][var2] = 16777216;
 				}
 			}
 		}

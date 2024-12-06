@@ -19,43 +19,39 @@ public class FileOnDisk {
 	@ObfuscatedName("u.l")
 	public long pos;
 
-	public FileOnDisk(File file, String arg1, long maxLength) throws IOException {
-		if (maxLength == -1L) {
-			maxLength = Long.MAX_VALUE;
+	public FileOnDisk(File arg0, String arg1, long arg2) throws IOException {
+		if (arg2 == -1L) {
+			arg2 = Long.MAX_VALUE;
 		}
-
-		if (file.length() >= maxLength) {
-			file.delete();
+		if (arg0.length() >= arg2) {
+			arg0.delete();
 		}
-
-		this.file = new RandomAccessFile(file, arg1);
-		this.maxLength = maxLength;
+		this.file = new RandomAccessFile(arg0, arg1);
+		this.maxLength = arg2;
 		this.pos = 0L;
-
-		int test = this.file.read();
-		if (test != -1 && !arg1.equals("r")) {
+		int var5 = this.file.read();
+		if (var5 != -1 && !arg1.equals("r")) {
 			this.file.seek(0L);
-			this.file.write(test);
+			this.file.write(var5);
 		}
-
 		this.file.seek(0L);
 	}
 
 	@ObfuscatedName("u.r(J)V")
-	public final void seek(long off) throws IOException {
-		this.file.seek(off);
-		this.pos = off;
+	public final void seek(long arg0) throws IOException {
+		this.file.seek(arg0);
+		this.pos = arg0;
 	}
 
 	@ObfuscatedName("u.d([BIII)V")
-	public final void write(byte[] data, int off, int len) throws IOException {
-		if (this.pos + (long) len > this.maxLength) {
+	public final void write(byte[] arg0, int arg1, int arg2) throws IOException {
+		if (this.pos + (long) arg2 > this.maxLength) {
 			this.file.seek(this.maxLength + 1L);
 			this.file.write(1);
 			throw new EOFException();
 		} else {
-			this.file.write(data, off, len);
-			this.pos += len;
+			this.file.write(arg0, arg1, arg2);
+			this.pos += arg2;
 		}
 	}
 
@@ -73,12 +69,12 @@ public class FileOnDisk {
 	}
 
 	@ObfuscatedName("u.c([BIII)I")
-	public final int read(byte[] data, int off, int len) throws IOException {
-		int bytes = this.file.read(data, off, len);
-		if (bytes > 0) {
-			this.pos += bytes;
+	public final int read(byte[] arg0, int arg1, int arg2) throws IOException {
+		int var4 = this.file.read(arg0, arg1, arg2);
+		if (var4 > 0) {
+			this.pos += var4;
 		}
-		return bytes;
+		return var4;
 	}
 
 	protected void finalize() throws Throwable {

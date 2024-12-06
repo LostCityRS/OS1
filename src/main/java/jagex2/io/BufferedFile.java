@@ -69,7 +69,7 @@ public class BufferedFile {
 	}
 
 	@ObfuscatedName("v.m([BI)V")
-	public void method134(byte[] arg0) throws IOException {
+	public void read(byte[] arg0) throws IOException {
 		this.read(arg0, 0, arg0.length);
 	}
 

@@ -230,7 +230,7 @@ public class SignLinkCacheFolder {
 		byte[] var1 = new byte[24];
 		try {
 			uidDat.seek(0L);
-			uidDat.method134(var1);
+			uidDat.read(var1);
 			int var2;
 			for (var2 = 0; var2 < 24 && var1[var2] == 0; var2++) {
 			}

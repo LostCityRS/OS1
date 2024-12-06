@@ -176,12 +176,10 @@ public class Model extends Entity {
 		Packet var6 = new Packet(arg0);
 		Packet var7 = new Packet(arg0);
 		Packet var8 = new Packet(arg0);
-
 		var2.pos = arg0.length - 23;
-		int vertexCount = var2.g2();
-		int faceCount = var2.g2();
-		int texturedFaceCount = var2.g1();
-
+		int var9 = var2.g2();
+		int var10 = var2.g2();
+		int var11 = var2.g1();
 		int var12 = var2.g1();
 		int var13 = var2.g1();
 		int var14 = var2.g1();
@@ -196,10 +194,10 @@ public class Model extends Entity {
 		int var23 = 0;
 		int var24 = 0;
 		int var25 = 0;
-		if (texturedFaceCount > 0) {
-			this.field2687 = new byte[texturedFaceCount];
+		if (var11 > 0) {
+			this.field2687 = new byte[var11];
 			var2.pos = 0;
-			for (int var26 = 0; var26 < texturedFaceCount; var26++) {
+			for (int var26 = 0; var26 < var11; var26++) {
 				byte var27 = this.field2687[var26] = var2.g1b();
 				if (var27 == 0) {
 					var23++;
@@ -212,35 +210,35 @@ public class Model extends Entity {
 				}
 			}
 		}
-		int var30 = vertexCount + texturedFaceCount;
+		int var30 = var9 + var11;
 		int var31 = var30;
 		if (var12 == 1) {
-			var30 += faceCount;
+			var30 += var10;
 		}
-		int var33 = faceCount + var30;
+		int var33 = var10 + var30;
 		int var34 = var33;
 		if (var13 == 255) {
-			var33 += faceCount;
+			var33 += var10;
 		}
 		int var35 = var33;
 		if (var15 == 1) {
-			var33 += faceCount;
+			var33 += var10;
 		}
 		int var36 = var33;
 		if (var17 == 1) {
-			var33 += vertexCount;
+			var33 += var9;
 		}
 		int var37 = var33;
 		if (var14 == 1) {
-			var33 += faceCount;
+			var33 += var10;
 		}
 		int var39 = var21 + var33;
 		int var40 = var39;
 		if (var16 == 1) {
-			var39 += faceCount * 2;
+			var39 += var10 * 2;
 		}
 		int var42 = var22 + var39;
-		int var44 = faceCount * 2 + var42;
+		int var44 = var10 * 2 + var42;
 		int var46 = var18 + var44;
 		int var48 = var19 + var46;
 		int var50 = var20 + var48;
@@ -250,55 +248,43 @@ public class Model extends Entity {
 		int var58 = var24 * 2 + var56;
 		int var60 = var24 + var58;
 		int var62 = var24 * 2 + var25 * 2 + var60;
-
-		this.vertexCount = vertexCount;
-		this.faceCount = faceCount;
-		this.texturedFaceCount = texturedFaceCount;
-
-		this.vertexX = new int[vertexCount];
-		this.vertexY = new int[vertexCount];
-		this.vertexZ = new int[vertexCount];
-
-		this.faceVertexA = new int[faceCount];
-		this.faceVertexB = new int[faceCount];
-		this.faceVertexC = new int[faceCount];
-
+		this.vertexCount = var9;
+		this.faceCount = var10;
+		this.texturedFaceCount = var11;
+		this.vertexX = new int[var9];
+		this.vertexY = new int[var9];
+		this.vertexZ = new int[var9];
+		this.faceVertexA = new int[var10];
+		this.faceVertexB = new int[var10];
+		this.faceVertexC = new int[var10];
 		if (var17 == 1) {
-			this.field2713 = new int[vertexCount];
+			this.field2713 = new int[var9];
 		}
-
 		if (var12 == 1) {
-			this.field2679 = new byte[faceCount];
+			this.field2679 = new byte[var10];
 		}
-
 		if (var13 == 255) {
-			this.field2680 = new byte[faceCount];
+			this.field2680 = new byte[var10];
 		} else {
 			this.field2684 = (byte) var13;
 		}
-
 		if (var14 == 1) {
-			this.field2709 = new byte[faceCount];
+			this.field2709 = new byte[var10];
 		}
-
 		if (var15 == 1) {
-			this.field2699 = new int[faceCount];
+			this.field2699 = new int[var10];
 		}
-
 		if (var16 == 1) {
-			this.field2705 = new short[faceCount];
+			this.field2705 = new short[var10];
 		}
-
-		if (var16 == 1 && texturedFaceCount > 0) {
-			this.field2682 = new byte[faceCount];
+		if (var16 == 1 && var11 > 0) {
+			this.field2682 = new byte[var10];
 		}
-
-		this.field2704 = new short[faceCount];
-		if (texturedFaceCount > 0) {
-			this.field2688 = new short[texturedFaceCount];
-			this.field2681 = new short[texturedFaceCount];
-			this.field2690 = new short[texturedFaceCount];
-
+		this.field2704 = new short[var10];
+		if (var11 > 0) {
+			this.field2688 = new short[var11];
+			this.field2681 = new short[var11];
+			this.field2690 = new short[var11];
 			if (var24 > 0) {
 				this.field2691 = new short[var24];
 				this.field2692 = new short[var24];
@@ -307,13 +293,11 @@ public class Model extends Entity {
 				this.field2697 = new byte[var24];
 				this.field2695 = new short[var24];
 			}
-
 			if (var25 > 0) {
 				this.field2696 = new short[var25];
 			}
 		}
-
-		var2.pos = texturedFaceCount;
+		var2.pos = var11;
 		var3.pos = var44;
 		var4.pos = var46;
 		var5.pos = var48;
@@ -321,7 +305,7 @@ public class Model extends Entity {
 		int var64 = 0;
 		int var65 = 0;
 		int var66 = 0;
-		for (int var67 = 0; var67 < vertexCount; var67++) {
+		for (int var67 = 0; var67 < var9; var67++) {
 			int var68 = var2.g1();
 			int var69 = 0;
 			if ((var68 & 0x1) != 0) {
@@ -352,7 +336,7 @@ public class Model extends Entity {
 		var6.pos = var35;
 		var7.pos = var40;
 		var8.pos = var39;
-		for (int var72 = 0; var72 < faceCount; var72++) {
+		for (int var72 = 0; var72 < var10; var72++) {
 			this.field2704[var72] = (short) var2.g2();
 			if (var12 == 1) {
 				this.field2679[var72] = var3.g1b();
@@ -379,7 +363,7 @@ public class Model extends Entity {
 		int var74 = 0;
 		int var75 = 0;
 		int var76 = 0;
-		for (int var77 = 0; var77 < faceCount; var77++) {
+		for (int var77 = 0; var77 < var10; var77++) {
 			int var78 = var3.g1();
 			if (var78 == 1) {
 				var73 = var2.gsmarts() + var76;
@@ -423,7 +407,7 @@ public class Model extends Entity {
 		var5.pos = var56;
 		var6.pos = var58;
 		var7.pos = var60;
-		for (int var82 = 0; var82 < texturedFaceCount; var82++) {
+		for (int var82 = 0; var82 < var11; var82++) {
 			int var83 = this.field2687[var82] & 0xFF;
 			if (var83 == 0) {
 				this.field2688[var82] = (short) var2.g2();
@@ -1167,27 +1151,24 @@ public class Model extends Entity {
 	}
 
 	@ObfuscatedName("fw.ad(I)V")
-	public void method2933(int angle) {
-		int var2 = sinTable[angle];
-		int var3 = cosTable[angle];
-
-		for (int v = 0; v < this.vertexCount; v++) {
-			int var5 = this.vertexZ[v] * var2 + this.vertexX[v] * var3 >> 16;
-			this.vertexZ[v] = this.vertexZ[v] * var3 - this.vertexX[v] * var2 >> 16;
-			this.vertexX[v] = var5;
+	public void method2933(int arg0) {
+		int var2 = sinTable[arg0];
+		int var3 = cosTable[arg0];
+		for (int var4 = 0; var4 < this.vertexCount; var4++) {
+			int var5 = this.vertexZ[var4] * var2 + this.vertexX[var4] * var3 >> 16;
+			this.vertexZ[var4] = this.vertexZ[var4] * var3 - this.vertexX[var4] * var2 >> 16;
+			this.vertexX[var4] = var5;
 		}
-
 		this.method2986();
 	}
 
 	@ObfuscatedName("fw.ac(III)V")
-	public void translate(int x, int y, int z) {
-		for (int v = 0; v < this.vertexCount; v++) {
-			this.vertexX[v] += x;
-			this.vertexY[v] += y;
-			this.vertexZ[v] += z;
+	public void translate(int arg0, int arg1, int arg2) {
+		for (int var4 = 0; var4 < this.vertexCount; var4++) {
+			this.vertexX[var4] += arg0;
+			this.vertexY[var4] += arg1;
+			this.vertexZ[var4] += arg2;
 		}
-
 		this.method2986();
 	}
 
@@ -1201,41 +1182,37 @@ public class Model extends Entity {
 	}
 
 	@ObfuscatedName("fw.as(SS)V")
-	public void retexture(short source, short dest) {
+	public void retexture(short arg0, short arg1) {
 		if (this.field2705 == null) {
 			return;
 		}
-
-		for (int i = 0; i < this.faceCount; i++) {
-			if (this.field2705[i] == source) {
-				this.field2705[i] = dest;
+		for (int var3 = 0; var3 < this.faceCount; var3++) {
+			if (this.field2705[var3] == arg0) {
+				this.field2705[var3] = arg1;
 			}
 		}
 	}
 
 	@ObfuscatedName("fw.am()V")
 	public void rotateY180() {
-		for (int v = 0; v < this.vertexCount; v++) {
-			this.vertexZ[v] = -this.vertexZ[v];
+		for (int var1 = 0; var1 < this.vertexCount; var1++) {
+			this.vertexZ[var1] = -this.vertexZ[var1];
 		}
-
-		for (int f = 0; f < this.faceCount; f++) {
-			int temp = this.faceVertexA[f];
-			this.faceVertexA[f] = this.faceVertexC[f];
-			this.faceVertexC[f] = temp;
+		for (int var2 = 0; var2 < this.faceCount; var2++) {
+			int var3 = this.faceVertexA[var2];
+			this.faceVertexA[var2] = this.faceVertexC[var2];
+			this.faceVertexC[var2] = var3;
 		}
-
 		this.method2986();
 	}
 
 	@ObfuscatedName("fw.ap(III)V")
-	public void scale(int x, int y, int z) {
-		for (int v = 0; v < this.vertexCount; v++) {
-			this.vertexX[v] = this.vertexX[v] * x / 128;
-			this.vertexY[v] = this.vertexY[v] * y / 128;
-			this.vertexZ[v] = this.vertexZ[v] * z / 128;
+	public void scale(int arg0, int arg1, int arg2) {
+		for (int var4 = 0; var4 < this.vertexCount; var4++) {
+			this.vertexX[var4] = this.vertexX[var4] * arg0 / 128;
+			this.vertexY[var4] = this.vertexY[var4] * arg1 / 128;
+			this.vertexZ[var4] = this.vertexZ[var4] * arg2 / 128;
 		}
-
 		this.method2986();
 	}
 

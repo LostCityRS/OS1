@@ -55,41 +55,41 @@ public class EnumType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fe.g(Lev;I)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fe.q(Lev;IB)V")
-	public void decodeInner(Packet buf, int code) {
-		if (code == 1) {
-			this.inputtype = buf.g1();
-		} else if (code == 2) {
-			this.outputtype = (char) buf.g1();
-		} else if (code == 3) {
-			this.defaultString = buf.gjstr();
-		} else if (code == 4) {
-			this.defaultInt = buf.g4();
-		} else if (code == 5) {
-			this.count = buf.g2();
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 1) {
+			this.inputtype = arg0.g1();
+		} else if (arg1 == 2) {
+			this.outputtype = (char) arg0.g1();
+		} else if (arg1 == 3) {
+			this.defaultString = arg0.gjstr();
+		} else if (arg1 == 4) {
+			this.defaultInt = arg0.g4();
+		} else if (arg1 == 5) {
+			this.count = arg0.g2();
 			this.keys = new int[this.count];
 			this.stringValues = new String[this.count];
 			for (int var3 = 0; var3 < this.count; var3++) {
-				this.keys[var3] = buf.g4();
-				this.stringValues[var3] = buf.gjstr();
+				this.keys[var3] = arg0.g4();
+				this.stringValues[var3] = arg0.gjstr();
 			}
-		} else if (code == 6) {
-			this.count = buf.g2();
+		} else if (arg1 == 6) {
+			this.count = arg0.g2();
 			this.keys = new int[this.count];
 			this.intValues = new int[this.count];
 			for (int var4 = 0; var4 < this.count; var4++) {
-				this.keys[var4] = buf.g4();
-				this.intValues[var4] = buf.g4();
+				this.keys[var4] = arg0.g4();
+				this.intValues[var4] = arg0.g4();
 			}
 		}
 	}

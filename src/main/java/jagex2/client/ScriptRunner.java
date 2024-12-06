@@ -119,7 +119,7 @@ public class ScriptRunner {
 				}
 			}
 			int var15 = 0;
-			label2279: while (true) {
+			label2277: while (true) {
 				var15++;
 				if (var15 > 200000) {
 					throw new RuntimeException();
@@ -313,7 +313,7 @@ public class ScriptRunner {
 							int var41 = 0;
 							while (true) {
 								if (var41 >= var39) {
-									continue label2279;
+									continue label2277;
 								}
 								field192[var37][var41] = var40;
 								var41++;
@@ -666,7 +666,7 @@ public class ScriptRunner {
 						var66.field1816 = Client.localPlayer.field2786.method1176();
 						continue;
 					}
-				} else if (var367 >= 1300 && var367 < 1400 || var367 >= 2300 && var367 < 2400) {
+				} else if ((var367 >= 1300 && var367 < 1400) || (var367 >= 2300 && var367 < 2400)) {
 					IfType var70;
 					if (var367 >= 2000) {
 						var367 -= 1000;
@@ -1485,7 +1485,7 @@ public class ScriptRunner {
 							int var171 = 0;
 							while (true) {
 								if (var171 >= Client.field2194) {
-									continue label2279;
+									continue label2277;
 								}
 								IgnoreListEntry var172 = Client.field2196[var171];
 								String var173 = var172.field40;
@@ -1507,7 +1507,7 @@ public class ScriptRunner {
 									Client.out.pisaac1(248);
 									Client.out.p1(Packet.pjstrlen(var169));
 									Client.out.pjstr(var169);
-									continue label2279;
+									continue label2277;
 								}
 								var171++;
 							}
@@ -2161,7 +2161,7 @@ public class ScriptRunner {
 						if (var367 == 4207) {
 							var4--;
 							int var336 = field188[var4];
-							field188[var4++] = ObjType.get(var336).members ? 1 : 0;
+							field188[var4++] = ObjType.get(var336).membersWorld ? 1 : 0;
 							continue;
 						}
 					} else if (var367 < 5100) {

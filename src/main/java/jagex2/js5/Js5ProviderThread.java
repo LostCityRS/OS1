@@ -10,10 +10,10 @@ import jagex2.io.FileStream;
 public class Js5ProviderThread implements Runnable {
 
 	@ObfuscatedName("cc.r")
-	public static final LinkList field1208 = new LinkList();
+	public static LinkList field1208 = new LinkList();
 
 	@ObfuscatedName("cc.d")
-	public static final LinkList field1206 = new LinkList();
+	public static LinkList field1206 = new LinkList();
 
 	@ObfuscatedName("cc.l")
 	public static int field1205 = 0;

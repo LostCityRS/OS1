@@ -1175,15 +1175,15 @@ public class World {
 	}
 
 	@ObfuscatedName("bk.y(III)Z")
-	public static final boolean isLocDownloaded(int id, int shape) {
-		LocType loc = LocType.get(id);
-		if (shape == 11) {
-			shape = 10;
+	public static final boolean isLocDownloaded(int arg0, int arg1) {
+		LocType var2 = LocType.get(arg0);
+		if (arg1 == 11) {
+			arg1 = 10;
 		}
-		if (shape >= 5 && shape <= 8) {
-			shape = 4;
+		if (arg1 >= 5 && arg1 <= 8) {
+			arg1 = 4;
 		}
-		return loc.isDownloaded(shape);
+		return var2.isDownloaded(arg1);
 	}
 
 	@ObfuscatedName("bc.t(IIIIIIILaq;Lck;I)V")

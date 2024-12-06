@@ -69,46 +69,46 @@ public class IdkType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fd.q(Lev;I)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fd.i(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
-		if (code == 1) {
-			this.type = buf.g1();
-		} else if (code == 2) {
-			int var3 = buf.g1();
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 1) {
+			this.type = arg0.g1();
+		} else if (arg1 == 2) {
+			int var3 = arg0.g1();
 			this.models = new int[var3];
 			for (int var4 = 0; var4 < var3; var4++) {
-				this.models[var4] = buf.g2();
+				this.models[var4] = arg0.g2();
 			}
-		} else if (code == 3) {
+		} else if (arg1 == 3) {
 			this.disable = true;
-		} else if (code == 40) {
-			int var5 = buf.g1();
+		} else if (arg1 == 40) {
+			int var5 = arg0.g1();
 			this.recol_s = new short[var5];
 			this.recol_d = new short[var5];
 			for (int var6 = 0; var6 < var5; var6++) {
-				this.recol_s[var6] = (short) buf.g2();
-				this.recol_d[var6] = (short) buf.g2();
+				this.recol_s[var6] = (short) arg0.g2();
+				this.recol_d[var6] = (short) arg0.g2();
 			}
-		} else if (code == 41) {
-			int var7 = buf.g1();
+		} else if (arg1 == 41) {
+			int var7 = arg0.g1();
 			this.retex_s = new short[var7];
 			this.retex_d = new short[var7];
 			for (int var8 = 0; var8 < var7; var8++) {
-				this.retex_s[var8] = (short) buf.g2();
-				this.retex_d[var8] = (short) buf.g2();
+				this.retex_s[var8] = (short) arg0.g2();
+				this.retex_d[var8] = (short) arg0.g2();
 			}
-		} else if (code >= 60 && code < 70) {
-			this.heads[code - 60] = buf.g2();
+		} else if (arg1 >= 60 && arg1 < 70) {
+			this.heads[arg1 - 60] = arg0.g2();
 		}
 	}
 

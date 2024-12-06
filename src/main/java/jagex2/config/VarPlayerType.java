@@ -43,20 +43,20 @@ public class VarPlayerType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fg.q(Lev;I)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fg.i(Lev;II)V")
-	public void decodeInner(Packet code, int buf) {
-		if (buf == 5) {
-			this.clientcode = code.g2();
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 5) {
+			this.clientcode = arg0.g2();
 		}
 	}
 

@@ -73,27 +73,27 @@ public class FloType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fb.q(Lev;IB)V")
-	public void decode(Packet buf, int arg1) {
+	public void decode(Packet arg0, int arg1) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var3 = arg0.g1();
+			if (var3 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code, arg1);
+			this.decodeInner(arg0, var3, arg1);
 		}
 	}
 
 	@ObfuscatedName("fb.i(Lev;III)V")
-	public void decodeInner(Packet buf, int code, int arg2) {
-		if (code == 1) {
-			this.rgb = buf.g3();
-		} else if (code == 2) {
-			this.texture = buf.g1();
-		} else if (code == 5) {
+	public void decodeInner(Packet arg0, int arg1, int arg2) {
+		if (arg1 == 1) {
+			this.rgb = arg0.g3();
+		} else if (arg1 == 2) {
+			this.texture = arg0.g1();
+		} else if (arg1 == 5) {
 			this.occlude = false;
-		} else if (code == 7) {
-			this.averageRgb = buf.g3();
-		} else if (code == 8) {
+		} else if (arg1 == 7) {
+			this.averageRgb = arg0.g3();
+		} else if (arg1 == 8) {
 		}
 	}
 

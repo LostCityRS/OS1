@@ -40,22 +40,22 @@ public class VarBitType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fc.g(Lev;B)V")
-	public void decode(Packet buf) {
+	public void decode(Packet arg0) {
 		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
+			int var2 = arg0.g1();
+			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(buf, code);
+			this.decodeInner(arg0, var2);
 		}
 	}
 
 	@ObfuscatedName("fc.q(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
-		if (code == 1) {
-			this.basevar = buf.g2();
-			this.startbit = buf.g1();
-			this.endbit = buf.g1();
+	public void decodeInner(Packet arg0, int arg1) {
+		if (arg1 == 1) {
+			this.basevar = arg0.g2();
+			this.startbit = arg0.g1();
+			this.endbit = arg0.g1();
 		}
 	}
 }
