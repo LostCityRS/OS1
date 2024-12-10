@@ -293,49 +293,47 @@ public class LoginScreen {
 				field164 = "";
 				field133 = "";
 			}
-			while (true) {
-				while (JavaKeyboardProvider.imethod2()) {
-					boolean var21 = false;
-					for (int var22 = 0; var22 < field158.length(); var22++) {
-						if (JavaKeyboardProvider.field1162 == field158.charAt(var22)) {
-							var21 = true;
+			while (JavaKeyboardProvider.imethod2()) {
+				boolean var21 = false;
+				for (int var22 = 0; var22 < field158.length(); var22++) {
+					if (JavaKeyboardProvider.field1162 == field158.charAt(var22)) {
+						var21 = true;
+						break;
+					}
+				}
+				if (field150 == 0) {
+					if (JavaKeyboardProvider.field114 == 85 && field164.length() > 0) {
+						field164 = field164.substring(0, field164.length() - 1);
+					}
+					if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
+						field150 = 1;
+					}
+					if (var21 && field164.length() < 320) {
+						field164 = field164 + JavaKeyboardProvider.field1162;
+					}
+				} else if (field150 == 1) {
+					if (JavaKeyboardProvider.field114 == 85 && field133.length() > 0) {
+						field133 = field133.substring(0, field133.length() - 1);
+					}
+					if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
+						field150 = 0;
+					}
+					if (Client.modewhere == 2 && JavaKeyboardProvider.field114 == 84) {
+						field164 = field164.trim();
+						if (field164.length() == 0) {
+							method2357(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
 							break;
 						}
+						if (field133.length() == 0) {
+							method2357(EnglishLocale.field981, EnglishLocale.field982, EnglishLocale.field983);
+							break;
+						}
+						method2357(EnglishLocale.field905, EnglishLocale.field1070, EnglishLocale.field998);
+						Client.method729(20);
+						break;
 					}
-					if (field150 == 0) {
-						if (JavaKeyboardProvider.field114 == 85 && field164.length() > 0) {
-							field164 = field164.substring(0, field164.length() - 1);
-						}
-						if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
-							field150 = 1;
-						}
-						if (var21 && field164.length() < 320) {
-							field164 = field164 + JavaKeyboardProvider.field1162;
-						}
-					} else if (field150 == 1) {
-						if (JavaKeyboardProvider.field114 == 85 && field133.length() > 0) {
-							field133 = field133.substring(0, field133.length() - 1);
-						}
-						if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
-							field150 = 0;
-						}
-						if (Client.modewhere == 2 && JavaKeyboardProvider.field114 == 84) {
-							field164 = field164.trim();
-							if (field164.length() == 0) {
-								method2357(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
-								return;
-							}
-							if (field133.length() == 0) {
-								method2357(EnglishLocale.field981, EnglishLocale.field982, EnglishLocale.field983);
-								return;
-							}
-							method2357(EnglishLocale.field905, EnglishLocale.field1070, EnglishLocale.field998);
-							Client.method729(20);
-							return;
-						}
-						if (var21 && field133.length() < 20) {
-							field133 = field133 + JavaKeyboardProvider.field1162;
-						}
+					if (var21 && field133.length() < 20) {
+						field133 = field133 + JavaKeyboardProvider.field1162;
 					}
 				}
 			}
