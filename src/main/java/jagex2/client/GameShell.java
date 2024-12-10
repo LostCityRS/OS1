@@ -444,4 +444,52 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	@ObfuscatedName("dj.b(I)V")
 	public abstract void mainredraw();
+
+	public static void imethod1(int var3, String var4, Color var5) {
+		try {
+			Graphics var6 = GameShell.canvas.getGraphics();
+			if (GameShell.field1159 == null) {
+				GameShell.field1159 = new Font("Helvetica", Font.BOLD, 13);
+				GameShell.field2489 = GameShell.canvas.getFontMetrics(GameShell.field1159);
+			}
+			if (fullredraw) {
+				fullredraw = false;
+				var6.setColor(Color.black);
+				var6.fillRect(0, 0, GameShell.canvasWid, GameShell.canvasHei);
+			}
+			if (var5 == null) {
+				var5 = new Color(140, 17, 17);
+			}
+			try {
+				if (Client.progressBar == null) {
+					Client.progressBar = GameShell.canvas.createImage(304, 34);
+				}
+				Graphics var7 = Client.progressBar.getGraphics();
+				var7.setColor(var5);
+				var7.drawRect(0, 0, 303, 33);
+				var7.fillRect(2, 2, var3 * 3, 30);
+				var7.setColor(Color.black);
+				var7.drawRect(1, 1, 301, 31);
+				var7.fillRect(var3 * 3 + 2, 2, 300 - var3 * 3, 30);
+				var7.setFont(GameShell.field1159);
+				var7.setColor(Color.white);
+				var7.drawString(var4, (304 - GameShell.field2489.stringWidth(var4)) / 2, 22);
+				var6.drawImage(Client.progressBar, GameShell.canvasWid / 2 - 152, GameShell.canvasHei / 2 - 18, null);
+			} catch (Exception var49) {
+				int var9 = GameShell.canvasWid / 2 - 152;
+				int var10 = GameShell.canvasHei / 2 - 18;
+				var6.setColor(var5);
+				var6.drawRect(var9, var10, 303, 33);
+				var6.fillRect(var9 + 2, var10 + 2, var3 * 3, 30);
+				var6.setColor(Color.black);
+				var6.drawRect(var9 + 1, var10 + 1, 301, 31);
+				var6.fillRect(var3 * 3 + var9 + 2, var10 + 2, 300 - var3 * 3, 30);
+				var6.setFont(GameShell.field1159);
+				var6.setColor(Color.white);
+				var6.drawString(var4, var9 + (304 - GameShell.field2489.stringWidth(var4)) / 2, var10 + 22);
+			}
+		} catch (Exception var50) {
+			GameShell.canvas.repaint();
+		}
+	}
 }

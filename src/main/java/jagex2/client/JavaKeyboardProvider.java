@@ -158,4 +158,34 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 			field419 = -1;
 		}
 	}
+
+	public static void imethod1() {
+		if (SignLink.javaVendor.toLowerCase().indexOf("microsoft") == -1) {
+			field476[44] = 71;
+			field476[45] = 26;
+			field476[46] = 72;
+			field476[47] = 73;
+			field476[59] = 57;
+			field476[61] = 27;
+			field476[91] = 42;
+			field476[92] = 74;
+			field476[93] = 43;
+			field476[192] = 28;
+			field476[222] = 58;
+			field476[520] = 59;
+		} else {
+			field476[186] = 57;
+			field476[187] = 27;
+			field476[188] = 71;
+			field476[189] = 26;
+			field476[190] = 72;
+			field476[191] = 73;
+			field476[192] = 58;
+			field476[219] = 42;
+			field476[220] = 74;
+			field476[221] = 43;
+			field476[222] = 59;
+			field476[223] = 28;
+		}
+	}
 }

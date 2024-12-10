@@ -1376,33 +1376,7 @@ public class Client extends GameShell {
 		PlayerModel.field800 = PlayerCustomisation.field1214;
 		PlayerModel.field1224 = PlayerCustomisation.field1213;
 		PlayerModel.field1229 = PlayerCustomisation.field1216;
-		if (SignLink.javaVendor.toLowerCase().indexOf("microsoft") == -1) {
-			JavaKeyboardProvider.field476[44] = 71;
-			JavaKeyboardProvider.field476[45] = 26;
-			JavaKeyboardProvider.field476[46] = 72;
-			JavaKeyboardProvider.field476[47] = 73;
-			JavaKeyboardProvider.field476[59] = 57;
-			JavaKeyboardProvider.field476[61] = 27;
-			JavaKeyboardProvider.field476[91] = 42;
-			JavaKeyboardProvider.field476[92] = 74;
-			JavaKeyboardProvider.field476[93] = 43;
-			JavaKeyboardProvider.field476[192] = 28;
-			JavaKeyboardProvider.field476[222] = 58;
-			JavaKeyboardProvider.field476[520] = 59;
-		} else {
-			JavaKeyboardProvider.field476[186] = 57;
-			JavaKeyboardProvider.field476[187] = 27;
-			JavaKeyboardProvider.field476[188] = 71;
-			JavaKeyboardProvider.field476[189] = 26;
-			JavaKeyboardProvider.field476[190] = 72;
-			JavaKeyboardProvider.field476[191] = 73;
-			JavaKeyboardProvider.field476[192] = 58;
-			JavaKeyboardProvider.field476[219] = 42;
-			JavaKeyboardProvider.field476[220] = 74;
-			JavaKeyboardProvider.field476[221] = 43;
-			JavaKeyboardProvider.field476[222] = 59;
-			JavaKeyboardProvider.field476[223] = 28;
-		}
+		JavaKeyboardProvider.imethod1();
 		JavaKeyboardProvider.method53(GameShell.canvas);
 		JavaMouseProvider.method163(GameShell.canvas);
 		field484 = MouseWheelProvider.method779();
@@ -1457,11 +1431,7 @@ public class Client extends GameShell {
 		}
 		if (canvasReplaceRecommended) {
 			JavaKeyboardProvider.method1143(GameShell.canvas);
-			Canvas var2 = GameShell.canvas;
-			var2.removeMouseListener(JavaMouseProvider.field491);
-			var2.removeMouseMotionListener(JavaMouseProvider.field491);
-			var2.removeFocusListener(JavaMouseProvider.field491);
-			JavaMouseProvider.field487 = 0;
+			JavaMouseProvider.imethod1(GameShell.canvas);
 			if (field484 != null) {
 				field484.method361(GameShell.canvas);
 			}
@@ -1473,54 +1443,7 @@ public class Client extends GameShell {
 			}
 		}
 		if (gameState == 0) {
-			int var3 = LoginScreen.progress;
-			String var4 = LoginScreen.message;
-			Color var5 = null;
-			try {
-				Graphics var6 = GameShell.canvas.getGraphics();
-				if (GameShell.field1159 == null) {
-					GameShell.field1159 = new Font("Helvetica", 1, 13);
-					GameShell.field2489 = GameShell.canvas.getFontMetrics(GameShell.field1159);
-				}
-				if (fullredraw) {
-					fullredraw = false;
-					var6.setColor(Color.black);
-					var6.fillRect(0, 0, GameShell.canvasWid, GameShell.canvasHei);
-				}
-				if (var5 == null) {
-					var5 = new Color(140, 17, 17);
-				}
-				try {
-					if (progressBar == null) {
-						progressBar = GameShell.canvas.createImage(304, 34);
-					}
-					Graphics var7 = progressBar.getGraphics();
-					var7.setColor(var5);
-					var7.drawRect(0, 0, 303, 33);
-					var7.fillRect(2, 2, var3 * 3, 30);
-					var7.setColor(Color.black);
-					var7.drawRect(1, 1, 301, 31);
-					var7.fillRect(var3 * 3 + 2, 2, 300 - var3 * 3, 30);
-					var7.setFont(GameShell.field1159);
-					var7.setColor(Color.white);
-					var7.drawString(var4, (304 - GameShell.field2489.stringWidth(var4)) / 2, 22);
-					var6.drawImage(progressBar, GameShell.canvasWid / 2 - 152, GameShell.canvasHei / 2 - 18, null);
-				} catch (Exception var49) {
-					int var9 = GameShell.canvasWid / 2 - 152;
-					int var10 = GameShell.canvasHei / 2 - 18;
-					var6.setColor(var5);
-					var6.drawRect(var9, var10, 303, 33);
-					var6.fillRect(var9 + 2, var10 + 2, var3 * 3, 30);
-					var6.setColor(Color.black);
-					var6.drawRect(var9 + 1, var10 + 1, 301, 31);
-					var6.fillRect(var3 * 3 + var9 + 2, var10 + 2, 300 - var3 * 3, 30);
-					var6.setFont(GameShell.field1159);
-					var6.setColor(Color.white);
-					var6.drawString(var4, var9 + (304 - GameShell.field2489.stringWidth(var4)) / 2, var10 + 22);
-				}
-			} catch (Exception var50) {
-				GameShell.canvas.repaint();
-			}
+			GameShell.imethod1(LoginScreen.progress, LoginScreen.message, null);
 		} else if (gameState == 5) {
 			LoginScreen.method784(field704, field1621);
 		} else if (gameState == 10) {
@@ -1544,122 +1467,11 @@ public class Client extends GameShell {
 				method1789(EnglishLocale.field873, false);
 			}
 		} else if (gameState == 30) {
-			if (!field2066) {
-				field1994[0] = EnglishLocale.field1078;
-				field2072[0] = "";
-				field2069[0] = 1006;
-				menuSize = 1;
-			}
-			if (field2083 != -1) {
-				int var14 = field2083;
-				if (IfType.method1501(var14)) {
-					method1146(IfType.field373[var14], -1);
-				}
-			}
-			for (int var15 = 0; var15 < field2121; var15++) {
-				if (field2175[var15]) {
-					field2131[var15] = true;
-				}
-				field2132[var15] = field2175[var15];
-				field2175[var15] = false;
-			}
-			field2063 = loopCycle;
-			field1971 = -1;
-			field1976 = -1;
-			hoveredSlotParent = null;
-			if (field2083 != -1) {
-				field2121 = 0;
-				method2581(field2083, 0, 0, 765, 503, 0, 0, -1);
-			}
-			Pix2D.method2584();
-			boolean var16 = false;
-			while (!var16) {
-				var16 = true;
-				for (int var17 = 0; var17 < menuSize - 1; var17++) {
-					if (field2069[var17] < 1000 && field2069[var17 + 1] > 1000) {
-						String var18 = field2072[var17];
-						field2072[var17] = field2072[var17 + 1];
-						field2072[var17 + 1] = var18;
-						String var19 = field1994[var17];
-						field1994[var17] = field1994[var17 + 1];
-						field1994[var17 + 1] = var19;
-						int var20 = field2069[var17];
-						field2069[var17] = field2069[var17 + 1];
-						field2069[var17 + 1] = var20;
-						int var21 = field2067[var17];
-						field2067[var17] = field2067[var17 + 1];
-						field2067[var17 + 1] = var21;
-						int var22 = field2068[var17];
-						field2068[var17] = field2068[var17 + 1];
-						field2068[var17 + 1] = var22;
-						int var23 = field2070[var17];
-						field2070[var17] = field2070[var17 + 1];
-						field2070[var17 + 1] = var23;
-						var16 = false;
-					}
-				}
-			}
-			if (field2066) {
-				int var27 = field1161;
-				int var28 = field743;
-				int var29 = field535;
-				int var30 = field42;
-				int var31 = 6116423;
-				Pix2D.method2637(var27, var28, var29, var30, var31);
-				Pix2D.method2637(var27 + 1, var28 + 1, var29 - 2, 16, 0);
-				Pix2D.method2639(var27 + 1, var28 + 18, var29 - 2, var30 - 19, 0);
-				field704.method2821(EnglishLocale.field1028, var27 + 3, var28 + 14, var31, -1);
-				int var32 = JavaMouseProvider.mouseX;
-				int var33 = JavaMouseProvider.mouseY;
-				for (int var34 = 0; var34 < menuSize; var34++) {
-					int var35 = (menuSize - 1 - var34) * 15 + var28 + 31;
-					int var36 = 16777215;
-					if (var32 > var27 && var32 < var27 + var29 && var33 > var35 - 13 && var33 < var35 + 3) {
-						var36 = 16776960;
-					}
-					field704.method2821(method1239(var34), var27 + 3, var35, var36, 0);
-				}
-				int var37 = field1161;
-				int var38 = field743;
-				int var39 = field535;
-				int var40 = field42;
-				for (int var41 = 0; var41 < field2121; var41++) {
-					if (field2135[var41] + field2133[var41] > var37 && field2133[var41] < var37 + var39 && field2136[var41] + field2007[var41] > var38 && field2007[var41] < var38 + var40) {
-						field2131[var41] = true;
-					}
-				}
-			} else if (field1971 != -1) {
-				int var24 = field1971;
-				int var25 = field1976;
-				if (menuSize >= 2 || field2077 != 0 || field2079) {
-					String var26;
-					if (field2077 == 1 && menuSize < 2) {
-						var26 = EnglishLocale.field1005 + EnglishLocale.field1015 + field2078 + " " + TextUtil.arrow;
-					} else if (field2079 && menuSize < 2) {
-						var26 = field2048 + EnglishLocale.field1015 + field2082 + " " + TextUtil.arrow;
-					} else {
-						var26 = method1239(menuSize - 1);
-					}
-					if (menuSize > 2) {
-						var26 = var26 + TextUtil.colTag(16777215) + " " + '/' + " " + (menuSize - 2) + EnglishLocale.field1009;
-					}
-					field704.method2828(var26, var24 + 4, var25 + 15, 16777215, 0, loopCycle / 1000);
-				}
-			}
-			if (field2137 == 3) {
-				for (int var42 = 0; var42 < field2121; var42++) {
-					if (field2132[var42]) {
-						Pix2D.method2616(field2133[var42], field2007[var42], field2135[var42], field2136[var42], 16711935, 128);
-					} else if (field2131[var42]) {
-						Pix2D.method2616(field2133[var42], field2007[var42], field2135[var42], field2136[var42], 16711680, 128);
-					}
-				}
-			}
-			PositionedSound.method2297(currentLevel, localPlayer.x, localPlayer.z, sceneDelta);
-			sceneDelta = 0;
+			imethod22();
 		} else if (gameState == 40) {
 			method1789(EnglishLocale.field874 + TextUtil.br + EnglishLocale.field875, false);
 		}
+
 		if (gameState == 30 && field2137 == 0 && !fullredraw) {
 			try {
 				Graphics var43 = GameShell.canvas.getGraphics();
@@ -1697,12 +1509,7 @@ public class Client extends GameShell {
 			stream = null;
 		}
 		JavaKeyboardProvider.method1502();
-		if (JavaMouseProvider.field491 != null) {
-			JavaMouseProvider var1 = JavaMouseProvider.field491;
-			synchronized (JavaMouseProvider.field491) {
-				JavaMouseProvider.field491 = null;
-			}
-		}
+		JavaMouseProvider.imethod2();
 		field484 = null;
 		if (field38 != null) {
 			field38.method248();
@@ -7813,10 +7620,7 @@ public class Client extends GameShell {
 					}
 					ComponentPointer var4 = (ComponentPointer) field1918.get((long) var3.field1783);
 					if (var4 != null) {
-						int var5 = var4.field1598;
-						if (IfType.method1501(var5)) {
-							method1146(IfType.field373[var5], -1);
-						}
+						imethod23(var4.field1598);
 					}
 				}
 				if (var3.field1785 == 6) {
@@ -11406,6 +11210,135 @@ public class Client extends GameShell {
 			var26.field2635 = loopCycle + 300;
 			var26.field2613 = in.g1_alt1();
 			var26.field2636 = in.g1();
+		}
+	}
+
+	public static void imethod22() {
+		if (!field2066) {
+			field1994[0] = EnglishLocale.field1078;
+			field2072[0] = "";
+			field2069[0] = 1006;
+			menuSize = 1;
+		}
+		if (field2083 != -1) {
+			imethod23(field2083);
+		}
+		for (int var15 = 0; var15 < field2121; var15++) {
+			if (field2175[var15]) {
+				field2131[var15] = true;
+			}
+			field2132[var15] = field2175[var15];
+			field2175[var15] = false;
+		}
+		field2063 = loopCycle;
+		field1971 = -1;
+		field1976 = -1;
+		hoveredSlotParent = null;
+		if (field2083 != -1) {
+			field2121 = 0;
+			method2581(field2083, 0, 0, 765, 503, 0, 0, -1);
+		}
+		Pix2D.method2584();
+		imethod24();
+		if (field2066) {
+			imethod25();
+		} else if (field1971 != -1) {
+			imethod27(field1971, field1976);
+		}
+		if (field2137 == 3) {
+			for (int var42 = 0; var42 < field2121; var42++) {
+				if (field2132[var42]) {
+					Pix2D.method2616(field2133[var42], field2007[var42], field2135[var42], field2136[var42], 0xff00ff, 0x80);
+				} else if (field2131[var42]) {
+					Pix2D.method2616(field2133[var42], field2007[var42], field2135[var42], field2136[var42], 0xff0000, 0x80);
+				}
+			}
+		}
+		PositionedSound.method2297(currentLevel, localPlayer.x, localPlayer.z, sceneDelta);
+		sceneDelta = 0;
+	}
+
+	public static void imethod23(int var14) {
+		if (IfType.method1501(var14)) {
+			method1146(IfType.field373[var14], -1);
+		}
+	}
+
+	public static void imethod24() {
+		boolean var16 = false;
+		while (!var16) {
+			var16 = true;
+			for (int var17 = 0; var17 < menuSize - 1; var17++) {
+				if (field2069[var17] < 1000 && field2069[var17 + 1] > 1000) {
+					String var18 = field2072[var17];
+					field2072[var17] = field2072[var17 + 1];
+					field2072[var17 + 1] = var18;
+					String var19 = field1994[var17];
+					field1994[var17] = field1994[var17 + 1];
+					field1994[var17 + 1] = var19;
+					int var20 = field2069[var17];
+					field2069[var17] = field2069[var17 + 1];
+					field2069[var17 + 1] = var20;
+					int var21 = field2067[var17];
+					field2067[var17] = field2067[var17 + 1];
+					field2067[var17 + 1] = var21;
+					int var22 = field2068[var17];
+					field2068[var17] = field2068[var17 + 1];
+					field2068[var17 + 1] = var22;
+					int var23 = field2070[var17];
+					field2070[var17] = field2070[var17 + 1];
+					field2070[var17 + 1] = var23;
+					var16 = false;
+				}
+			}
+		}
+	}
+
+	public static void imethod25() {
+		int var27 = field1161;
+		int var28 = field743;
+		int var29 = field535;
+		int var30 = field42;
+		int var31 = 0x5d5447;
+		Pix2D.method2637(var27, var28, var29, var30, var31);
+		Pix2D.method2637(var27 + 1, var28 + 1, var29 - 2, 16, 0);
+		Pix2D.method2639(var27 + 1, var28 + 18, var29 - 2, var30 - 19, 0);
+		field704.method2821(EnglishLocale.field1028, var27 + 3, var28 + 14, var31, -1);
+		int var32 = JavaMouseProvider.mouseX;
+		int var33 = JavaMouseProvider.mouseY;
+		for (int var34 = 0; var34 < menuSize; var34++) {
+			int var35 = (menuSize - 1 - var34) * 15 + var28 + 31;
+			int var36 = 0xffffff;
+			if (var32 > var27 && var32 < var27 + var29 && var33 > var35 - 13 && var33 < var35 + 3) {
+				var36 = 0xffff00;
+			}
+			field704.method2821(method1239(var34), var27 + 3, var35, var36, 0);
+		}
+		imethod26(field1161, field743, field535, field42);
+	}
+
+	public static void imethod26(int var37, int var38, int var39, int var40) {
+		for (int var41 = 0; var41 < field2121; var41++) {
+			if (field2135[var41] + field2133[var41] > var37 && field2133[var41] < var37 + var39 && field2136[var41] + field2007[var41] > var38 && field2007[var41] < var38 + var40) {
+				field2131[var41] = true;
+			}
+		}
+	}
+
+	public static void imethod27(int var24, int var25) {
+		if (menuSize >= 2 || field2077 != 0 || field2079) {
+			String var26;
+			if (field2077 == 1 && menuSize < 2) {
+				var26 = EnglishLocale.field1005 + EnglishLocale.field1015 + field2078 + " " + TextUtil.arrow;
+			} else if (field2079 && menuSize < 2) {
+				var26 = field2048 + EnglishLocale.field1015 + field2082 + " " + TextUtil.arrow;
+			} else {
+				var26 = method1239(menuSize - 1);
+			}
+			if (menuSize > 2) {
+				var26 = var26 + TextUtil.colTag(0xffffff) + " " + '/' + " " + (menuSize - 2) + EnglishLocale.field1009;
+			}
+			field704.method2828(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
 		}
 	}
 }

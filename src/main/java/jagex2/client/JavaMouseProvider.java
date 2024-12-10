@@ -144,4 +144,20 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 			field487 = 0;
 		}
 	}
+
+	public static void imethod1(Canvas var2) {
+		var2.removeMouseListener(field491);
+		var2.removeMouseMotionListener(field491);
+		var2.removeFocusListener(field491);
+		field487 = 0;
+	}
+
+	public static void imethod2() {
+		if (field491 != null) {
+			JavaMouseProvider var1 = field491;
+			synchronized (var1) {
+				field491 = null;
+			}
+		}
+	}
 }

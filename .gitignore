@@ -3,5 +3,6 @@
 
 build/
 *.class
+*.java~
 
 hs_err_pid*.log
