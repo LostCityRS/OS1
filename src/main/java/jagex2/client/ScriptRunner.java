@@ -1173,7 +1173,7 @@ public class ScriptRunner {
 							int var113 = field188[var4];
 							int var10000 = field188[var4 + 1];
 							if (Client.field2169 != 0 && var113 != -1) {
-								MidiPlayer.method1125(Client.field1515, var113, 0, Client.field2169, false);
+								MidiPlayer.method1125(Client.midiJingleJs5, var113, 0, Client.field2169, false);
 								Client.field2189 = true;
 							}
 							continue;
@@ -1961,7 +1961,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var282 = field188[var4];
 							int var283 = field188[var4 + 1];
-							byte[] var284 = Client.field1150.getFile(var283, 0);
+							byte[] var284 = Client.fontMetricJs5.getFile(var283, 0);
 							SoftwareFont var285 = new SoftwareFont(var284);
 							field188[var4++] = var285.method2889(var281, var282);
 							continue;
@@ -1972,7 +1972,7 @@ public class ScriptRunner {
 							var4 -= 2;
 							int var287 = field188[var4];
 							int var288 = field188[var4 + 1];
-							byte[] var289 = Client.field1150.getFile(var288, 0);
+							byte[] var289 = Client.fontMetricJs5.getFile(var288, 0);
 							SoftwareFont var290 = new SoftwareFont(var289);
 							field188[var4++] = var290.method2818(var286, var287);
 							continue;

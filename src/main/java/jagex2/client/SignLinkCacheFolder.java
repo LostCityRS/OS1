@@ -226,23 +226,23 @@ public class SignLinkCacheFolder {
 	}
 
 	@ObfuscatedName("l.l(Lev;I)V")
-	public static void method47(Packet arg0) {
-		byte[] var1 = new byte[24];
+	public static void pUid(Packet buf) {
+		byte[] data = new byte[24];
 		try {
 			uidDat.seek(0L);
-			uidDat.read(var1);
-			int var2;
-			for (var2 = 0; var2 < 24 && var1[var2] == 0; var2++) {
+			uidDat.read(data);
+			int i;
+			for (i = 0; i < 24 && data[i] == 0; i++) {
 			}
-			if (var2 >= 24) {
+			if (i >= 24) {
 				throw new IOException();
 			}
-		} catch (Exception var5) {
-			for (int var4 = 0; var4 < 24; var4++) {
-				var1[var4] = -1;
+		} catch (Exception ignore) {
+			for (int i = 0; i < 24; i++) {
+				data[i] = -1;
 			}
 		}
-		arg0.pdata(var1, 0, 24);
+		buf.pdata(data, 0, 24);
 	}
 
 	@ObfuscatedName("ex.m(Lev;II)V")

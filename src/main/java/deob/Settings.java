@@ -8,4 +8,6 @@ public class Settings {
 
 	public static boolean SKIP_ISAAC = true;
 
+	public static boolean SKIP_TINYENC = true;
+
 }

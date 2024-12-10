@@ -6,3 +6,5 @@ build/
 *.java~
 
 hs_err_pid*.log
+
+.DS_Store

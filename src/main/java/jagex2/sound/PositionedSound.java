@@ -148,7 +148,7 @@ public class PositionedSound extends Linkable {
 					if (var4.field1603 != null) {
 						var4.field1603.method2090(var6);
 					} else if (var4.field1608 >= 0) {
-						Wave var7 = Wave.method294(Client.field1509, var4.field1608, 0);
+						Wave var7 = Wave.method294(Client.synthSoundJs5, var4.field1608, 0);
 						if (var7 != null) {
 							PcmSound var8 = var7.method291().method2050(Client.field1733);
 							SoundPcmStream var9 = SoundPcmStream.method2144(var8, 100, var6);
@@ -164,7 +164,7 @@ public class PositionedSound extends Linkable {
 						}
 					} else if (var4.field1604 != null && (var4.field1613 -= arg3) <= 0) {
 						int var10 = (int) (Math.random() * (double) var4.field1604.length);
-						Wave var11 = Wave.method294(Client.field1509, var4.field1604[var10], 0);
+						Wave var11 = Wave.method294(Client.synthSoundJs5, var4.field1604[var10], 0);
 						if (var11 != null) {
 							PcmSound var12 = var11.method291().method2050(Client.field1733);
 							SoundPcmStream var13 = SoundPcmStream.method2144(var12, 100, var6);

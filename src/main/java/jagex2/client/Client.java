@@ -144,52 +144,52 @@ public class Client extends GameShell {
 	public static long field1943;
 
 	@ObfuscatedName("bb.bp")
-	public static Js5Provider field1109;
+	public static Js5Provider animFrameJs5;
 
 	@ObfuscatedName("es.ba")
-	public static Js5Provider field1720;
+	public static Js5Provider animBaseJs5;
 
 	@ObfuscatedName("cc.bc")
 	public static Js5Provider configJs5;
 
 	@ObfuscatedName("bd.br")
-	public static Js5Provider field1123;
+	public static Js5Provider interfaceJs5;
 
 	@ObfuscatedName("df.bb")
-	public static Js5Provider field1509;
+	public static Js5Provider synthSoundJs5;
 
 	@ObfuscatedName("ck.bd")
-	public static Js5Provider field1270;
+	public static Js5Provider mapJs5;
 
 	@ObfuscatedName("bb.cr")
-	public static Js5Provider field1110;
+	public static Js5Provider midiSongJs5;
 
 	@ObfuscatedName("aa.cs")
 	public static Js5Provider modelJs5;
 
 	@ObfuscatedName("client.cj")
-	public static Js5Provider field1944;
+	public static Js5Provider spriteJs5;
 
 	@ObfuscatedName("client.cl")
-	public static Js5Provider field1966;
+	public static Js5Provider textureJs5;
 
 	@ObfuscatedName("ab.cp")
-	public static Js5Provider field544;
+	public static Js5Provider binaryJs5;
 
 	@ObfuscatedName("dz.ca")
-	public static Js5Provider field1515;
+	public static Js5Provider midiJingleJs5;
 
 	@ObfuscatedName("ct.co")
-	public static Js5Provider field1232;
+	public static Js5Provider clientScriptJs5;
 
 	@ObfuscatedName("cj.ch")
-	public static Js5Provider field1150;
+	public static Js5Provider fontMetricJs5;
 
 	@ObfuscatedName("ey.cu")
-	public static Js5Provider field2353;
+	public static Js5Provider vorbisJs5;
 
 	@ObfuscatedName("z.cc")
-	public static Js5Provider field126;
+	public static Js5Provider midiInstrumentJs5;
 
 	@ObfuscatedName("client.cm")
 	public static int field1986 = 0;
@@ -1134,7 +1134,7 @@ public class Client extends GameShell {
 	public static MouseWheelProvider field484;
 
 	@ObfuscatedName("r.pa")
-	public static FileStream field10;
+	public static FileStream masterIndex;
 
 	@ObfuscatedName("au.mg")
 	public static ChatFilterPrivacy field680;
@@ -1376,7 +1376,7 @@ public class Client extends GameShell {
 		if (field484 != null) {
 			field484.method360(GameShell.canvas);
 		}
-		field10 = new FileStream(255, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.masterIndex, 500000);
+		masterIndex = new FileStream(255, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.masterIndex, 500000);
 		if (modewhere != 0) {
 			field1991 = true;
 		}
@@ -1542,7 +1542,7 @@ public class Client extends GameShell {
 			field1975 = 1;
 		}
 		if (arg0 == 5 || arg0 == 10 || arg0 == 20) {
-			LoginScreen.imethod9(GameShell.canvas, field544, field1944);
+			LoginScreen.imethod9(GameShell.canvas, binaryJs5, spriteJs5);
 		} else {
 			LoginScreen.method831();
 		}
@@ -1681,43 +1681,43 @@ public class Client extends GameShell {
 			LoginScreen.progress = 10;
 			field1940 = 30;
 		} else if (field1940 == 30) {
-			field1109 = method129(0, false, true, true);
-			field1720 = method129(1, false, true, true);
-			configJs5 = method129(2, true, false, true);
-			field1123 = method129(3, false, true, true);
-			field1509 = method129(4, false, true, true);
-			field1270 = method129(5, true, true, true);
-			field1110 = method129(6, true, true, false);
-			modelJs5 = method129(7, false, true, true);
-			field1944 = method129(8, false, true, true);
-			field1966 = method129(9, false, true, true);
-			field544 = method129(10, false, true, true);
-			field1515 = method129(11, false, true, true);
-			field1232 = method129(12, false, true, true);
-			field1150 = method129(13, true, false, true);
-			field2353 = method129(14, false, true, false);
-			field126 = method129(15, false, true, true);
+			animFrameJs5 = createJs5(0, false, true, true);
+			animBaseJs5 = createJs5(1, false, true, true);
+			configJs5 = createJs5(2, true, false, true);
+			interfaceJs5 = createJs5(3, false, true, true);
+			synthSoundJs5 = createJs5(4, false, true, true);
+			mapJs5 = createJs5(5, true, true, true);
+			midiSongJs5 = createJs5(6, true, true, false);
+			modelJs5 = createJs5(7, false, true, true);
+			spriteJs5 = createJs5(8, false, true, true);
+			textureJs5 = createJs5(9, false, true, true);
+			binaryJs5 = createJs5(10, false, true, true);
+			midiJingleJs5 = createJs5(11, false, true, true);
+			clientScriptJs5 = createJs5(12, false, true, true);
+			fontMetricJs5 = createJs5(13, true, false, true);
+			vorbisJs5 = createJs5(14, false, true, false);
+			midiInstrumentJs5 = createJs5(15, false, true, true);
 			LoginScreen.message = EnglishLocale.field960;
 			LoginScreen.progress = 20;
 			field1940 = 40;
 		} else if (field1940 == 40) {
 			byte var6 = 0;
-			int var7 = var6 + field1109.method1483() * 4 / 100;
-			int var8 = var7 + field1720.method1483() * 4 / 100;
+			int var7 = var6 + animFrameJs5.method1483() * 4 / 100;
+			int var8 = var7 + animBaseJs5.method1483() * 4 / 100;
 			int var9 = var8 + configJs5.method1483() * 2 / 100;
-			int var10 = var9 + field1123.method1483() * 2 / 100;
-			int var11 = var10 + field1509.method1483() * 6 / 100;
-			int var12 = var11 + field1270.method1483() * 4 / 100;
-			int var13 = var12 + field1110.method1483() * 2 / 100;
+			int var10 = var9 + interfaceJs5.method1483() * 2 / 100;
+			int var11 = var10 + synthSoundJs5.method1483() * 6 / 100;
+			int var12 = var11 + mapJs5.method1483() * 4 / 100;
+			int var13 = var12 + midiSongJs5.method1483() * 2 / 100;
 			int var14 = var13 + modelJs5.method1483() * 60 / 100;
-			int var15 = var14 + field1944.method1483() * 2 / 100;
-			int var16 = var15 + field1966.method1483() * 2 / 100;
-			int var17 = var16 + field544.method1483() * 2 / 100;
-			int var18 = var17 + field1515.method1483() * 2 / 100;
-			int var19 = var18 + field1232.method1483() * 2 / 100;
-			int var20 = var19 + field1150.method1483() * 2 / 100;
-			int var21 = var20 + field2353.method1483() * 2 / 100;
-			int var22 = var21 + field126.method1483() * 2 / 100;
+			int var15 = var14 + spriteJs5.method1483() * 2 / 100;
+			int var16 = var15 + textureJs5.method1483() * 2 / 100;
+			int var17 = var16 + binaryJs5.method1483() * 2 / 100;
+			int var18 = var17 + midiJingleJs5.method1483() * 2 / 100;
+			int var19 = var18 + clientScriptJs5.method1483() * 2 / 100;
+			int var20 = var19 + fontMetricJs5.method1483() * 2 / 100;
+			int var21 = var20 + vorbisJs5.method1483() * 2 / 100;
+			int var22 = var21 + midiInstrumentJs5.method1483() * 2 / 100;
 			if (var22 == 100) {
 				LoginScreen.message = EnglishLocale.field880;
 				LoginScreen.progress = 30;
@@ -1734,7 +1734,7 @@ public class Client extends GameShell {
 			var23.method2201(9, 128);
 			field38 = AudioChannel.method1132(GameShell.signlink, GameShell.canvas, 0, 22050);
 			field38.method240(var23);
-			MidiPlayer.method1511(field126, field2353, field1509, var23);
+			MidiPlayer.method1511(midiInstrumentJs5, vorbisJs5, synthSoundJs5, var23);
 			field1585 = AudioChannel.method1132(GameShell.signlink, GameShell.canvas, 1, 2048);
 			field1460 = new MixerPcmStream();
 			field1585.method240(field1460);
@@ -1745,17 +1745,17 @@ public class Client extends GameShell {
 		} else if (field1940 == 50) {
 			int var24 = 0;
 			if (field1621 == null) {
-				field1621 = SpriteDataProvider.method817(field1944, field1150, "p11_full", "");
+				field1621 = SpriteDataProvider.method817(spriteJs5, fontMetricJs5, "p11_full", "");
 			} else {
 				var24++;
 			}
 			if (field1122 == null) {
-				field1122 = SpriteDataProvider.method817(field1944, field1150, "p12_full", "");
+				field1122 = SpriteDataProvider.method817(spriteJs5, fontMetricJs5, "p12_full", "");
 			} else {
 				var24++;
 			}
 			if (field704 == null) {
-				field704 = SpriteDataProvider.method817(field1944, field1150, "b12_full", "");
+				field704 = SpriteDataProvider.method817(spriteJs5, fontMetricJs5, "b12_full", "");
 			} else {
 				var24++;
 			}
@@ -1768,8 +1768,8 @@ public class Client extends GameShell {
 				field1940 = 60;
 			}
 		} else if (field1940 == 60) {
-			Js5Provider var25 = field544;
-			Js5Provider var26 = field1944;
+			Js5Provider var25 = binaryJs5;
+			Js5Provider var26 = spriteJs5;
 			int var27 = 0;
 			if (var25.requestDownload("title.jpg", "")) {
 				var27++;
@@ -1821,7 +1821,7 @@ public class Client extends GameShell {
 				ObjType.membersWorld = var34;
 				ObjType.configJs5.getFileCount(10);
 				ObjType.field815 = var35;
-				SeqType.init(configJs5, field1109, field1720);
+				SeqType.init(configJs5, animFrameJs5, animBaseJs5);
 				Js5Provider var36 = configJs5;
 				Js5Provider var37 = modelJs5;
 				SpotAnimType.configJs5 = var36;
@@ -1829,7 +1829,7 @@ public class Client extends GameShell {
 				Js5Provider var38 = configJs5;
 				VarBitType.configJs5 = var38;
 				VarPlayerType.init(configJs5);
-				IfType.init(field1123, modelJs5, field1944, field1150);
+				IfType.init(interfaceJs5, modelJs5, spriteJs5, fontMetricJs5);
 				Js5Provider var39 = configJs5;
 				InvType.configJs5 = var39;
 				Js5Provider var40 = configJs5;
@@ -1844,72 +1844,72 @@ public class Client extends GameShell {
 		} else if (field1940 == 80) {
 			int var41 = 0;
 			if (field536 == null) {
-				field536 = SpriteDataProvider.method4(field1944, "compass", "");
+				field536 = SpriteDataProvider.method4(spriteJs5, "compass", "");
 			} else {
 				var41++;
 			}
 			if (field1510 == null) {
-				field1510 = SpriteDataProvider.method4(field1944, "mapedge", "");
+				field1510 = SpriteDataProvider.method4(spriteJs5, "mapedge", "");
 			} else {
 				var41++;
 			}
 			if (field263 == null) {
-				field263 = SpriteDataProvider.method541(field1944, "mapscene", "");
+				field263 = SpriteDataProvider.method541(spriteJs5, "mapscene", "");
 			} else {
 				var41++;
 			}
 			if (field1727 == null) {
-				field1727 = SpriteDataProvider.method830(field1944, "mapfunction", "");
+				field1727 = SpriteDataProvider.method830(spriteJs5, "mapfunction", "");
 			} else {
 				var41++;
 			}
 			if (field1157 == null) {
-				field1157 = SpriteDataProvider.method830(field1944, "hitmarks", "");
+				field1157 = SpriteDataProvider.method830(spriteJs5, "hitmarks", "");
 			} else {
 				var41++;
 			}
 			if (field816 == null) {
-				field816 = SpriteDataProvider.method830(field1944, "headicons_pk", "");
+				field816 = SpriteDataProvider.method830(spriteJs5, "headicons_pk", "");
 			} else {
 				var41++;
 			}
 			if (field187 == null) {
-				field187 = SpriteDataProvider.method830(field1944, "headicons_prayer", "");
+				field187 = SpriteDataProvider.method830(spriteJs5, "headicons_prayer", "");
 			} else {
 				var41++;
 			}
 			if (field1744 == null) {
-				field1744 = SpriteDataProvider.method830(field1944, "headicons_hint", "");
+				field1744 = SpriteDataProvider.method830(spriteJs5, "headicons_hint", "");
 			} else {
 				var41++;
 			}
 			if (field828 == null) {
-				field828 = SpriteDataProvider.method830(field1944, "mapmarker", "");
+				field828 = SpriteDataProvider.method830(spriteJs5, "mapmarker", "");
 			} else {
 				var41++;
 			}
 			if (field1767 == null) {
-				field1767 = SpriteDataProvider.method830(field1944, "cross", "");
+				field1767 = SpriteDataProvider.method830(spriteJs5, "cross", "");
 			} else {
 				var41++;
 			}
 			if (field741 == null) {
-				field741 = SpriteDataProvider.method830(field1944, "mapdots", "");
+				field741 = SpriteDataProvider.method830(spriteJs5, "mapdots", "");
 			} else {
 				var41++;
 			}
 			if (field1726 == null) {
-				field1726 = SpriteDataProvider.method541(field1944, "scrollbar", "");
+				field1726 = SpriteDataProvider.method541(spriteJs5, "scrollbar", "");
 			} else {
 				var41++;
 			}
 			if (field1769 == null) {
-				field1769 = SpriteDataProvider.method541(field1944, "mod_icons", "");
+				field1769 = SpriteDataProvider.method541(spriteJs5, "mod_icons", "");
 			} else {
 				var41++;
 			}
 			if (field807 == null) {
-				field807 = SpriteDataProvider.method457(field1944, "mapback", "");
+				field807 = SpriteDataProvider.method457(spriteJs5, "mapback", "");
 			} else {
 				var41++;
 			}
@@ -1968,15 +1968,15 @@ public class Client extends GameShell {
 				field1940 = 90;
 			}
 		} else if (field1940 == 90) {
-			if (field1966.fetchAll()) {
-				SceneBuilderProvider var55 = new SceneBuilderProvider(field1966, field1944, 20, 0.8D, lowMemory ? 64 : 128);
+			if (textureJs5.fetchAll()) {
+				SceneBuilderProvider var55 = new SceneBuilderProvider(textureJs5, spriteJs5, 20, 0.8D, lowMemory ? 64 : 128);
 				Pix3D.method2760(var55);
 				Pix3D.method2761(0.8D);
 				LoginScreen.message = EnglishLocale.field891;
 				LoginScreen.progress = 90;
 				field1940 = 110;
 			} else {
-				LoginScreen.message = EnglishLocale.field890 + field1966.method1470() + "%";
+				LoginScreen.message = EnglishLocale.field890 + textureJs5.method1470() + "%";
 				LoginScreen.progress = 90;
 			}
 		} else if (field1940 == 110) {
@@ -1986,8 +1986,8 @@ public class Client extends GameShell {
 			LoginScreen.progress = 94;
 			field1940 = 120;
 		} else if (field1940 == 120) {
-			if (field544.requestDownload("huffman", "")) {
-				Huffman var56 = new Huffman(field544.getFile("huffman", ""));
+			if (binaryJs5.requestDownload("huffman", "")) {
+				Huffman var56 = new Huffman(binaryJs5.getFile("huffman", ""));
 				WordPack.method816(var56);
 				LoginScreen.message = EnglishLocale.field1051;
 				LoginScreen.progress = 96;
@@ -1997,18 +1997,18 @@ public class Client extends GameShell {
 				LoginScreen.progress = 96;
 			}
 		} else if (field1940 == 130) {
-			if (!field1123.fetchAll()) {
-				LoginScreen.message = EnglishLocale.field1017 + field1123.method1470() * 4 / 5 + "%";
+			if (!interfaceJs5.fetchAll()) {
+				LoginScreen.message = EnglishLocale.field1017 + interfaceJs5.method1470() * 4 / 5 + "%";
 				LoginScreen.progress = 100;
-			} else if (!field1232.fetchAll()) {
-				LoginScreen.message = EnglishLocale.field1017 + (field1232.method1470() / 6 + 80) + "%";
+			} else if (!clientScriptJs5.fetchAll()) {
+				LoginScreen.message = EnglishLocale.field1017 + (clientScriptJs5.method1470() / 6 + 80) + "%";
 				LoginScreen.progress = 100;
-			} else if (field1150.fetchAll()) {
+			} else if (fontMetricJs5.fetchAll()) {
 				LoginScreen.message = EnglishLocale.field1045;
 				LoginScreen.progress = 100;
 				field1940 = 140;
 			} else {
-				LoginScreen.message = EnglishLocale.field1017 + (field1150.method1470() / 20 + 96) + "%";
+				LoginScreen.message = EnglishLocale.field1017 + (fontMetricJs5.method1470() / 20 + 96) + "%";
 				LoginScreen.progress = 100;
 			}
 		} else if (field1940 == 140) {
@@ -2017,12 +2017,12 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("u.dd(IZZZB)Ldq;")
-	public static Js5Provider method129(int arg0, boolean arg1, boolean arg2, boolean arg3) {
-		FileStream var4 = null;
+	public static Js5Provider createJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
+		FileStream stream = null;
 		if (SignLinkCacheFolder.cacheDat != null) {
-			var4 = new FileStream(arg0, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.cacheIndex[arg0], 1000000);
+			stream = new FileStream(archive, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.cacheIndex[archive], 1000000);
 		}
-		return new Js5Provider(var4, field10, arg0, arg1, arg2, arg3);
+		return new Js5Provider(stream, masterIndex, archive, arg1, arg2, arg3);
 	}
 
 	@ObfuscatedName("ex.dg(I)V")
@@ -2080,16 +2080,23 @@ public class Client extends GameShell {
 				loginState = 5;
 			}
 			if (loginState == 5) {
-				int[] var1 = new int[] { (int) (Math.random() * 9.9999999E7D), (int) (Math.random() * 9.9999999E7D), (int) (Math.random() * 9.9999999E7D), (int) (Math.random() * 9.9999999E7D) };
+				int[] seed = new int[] {
+					(int) (Math.random() * 9.9999999E7D),
+					(int) (Math.random() * 9.9999999E7D),
+					(int) (Math.random() * 9.9999999E7D),
+					(int) (Math.random() * 9.9999999E7D)
+				};
+
 				out.pos = 0;
 				out.p1(10);
-				out.p4(var1[0]);
-				out.p4(var1[1]);
-				out.p4(var1[2]);
-				out.p4(var1[3]);
+				out.p4(seed[0]);
+				out.p4(seed[1]);
+				out.p4(seed[2]);
+				out.p4(seed[3]);
 				out.p8(0L);
-				out.pjstr(LoginScreen.field133);
+				out.pjstr(LoginScreen.password);
 				out.rsaenc(PublicKeys.LOGIN_RSAN, PublicKeys.LOGIN_RSAE);
+
 				login.pos = 0;
 				if (gameState == 40) {
 					login.p1(18);
@@ -2097,37 +2104,42 @@ public class Client extends GameShell {
 					login.p1(16);
 				}
 				login.p2(0);
-				int var2 = login.pos;
-				login.p4(1);
+				int start = login.pos;
+
+				login.p4(1); // revision
 				login.pdata(out.data, 0, out.pos);
-				int var3 = login.pos;
-				login.pjstr(LoginScreen.field164);
+
+				int xteaStart = login.pos;
+				login.pjstr(LoginScreen.username);
 				login.p1(lowMemory ? 1 : 0);
-				SignLinkCacheFolder.method47(login);
-				login.p4(field1109.crc);
-				login.p4(field1720.crc);
+				SignLinkCacheFolder.pUid(login); // 24 bytes
+				login.p4(animFrameJs5.crc);
+				login.p4(animBaseJs5.crc);
 				login.p4(configJs5.crc);
-				login.p4(field1123.crc);
-				login.p4(field1509.crc);
-				login.p4(field1270.crc);
-				login.p4(field1110.crc);
+				login.p4(interfaceJs5.crc);
+				login.p4(synthSoundJs5.crc);
+				login.p4(mapJs5.crc);
+				login.p4(midiSongJs5.crc);
 				login.p4(modelJs5.crc);
-				login.p4(field1944.crc);
-				login.p4(field1966.crc);
-				login.p4(field544.crc);
-				login.p4(field1515.crc);
-				login.p4(field1232.crc);
-				login.p4(field1150.crc);
-				login.p4(field2353.crc);
-				login.p4(field126.crc);
-				login.tinyenc(var1, var3, login.pos);
-				login.psize2(login.pos - var2);
+				login.p4(spriteJs5.crc);
+				login.p4(textureJs5.crc);
+				login.p4(binaryJs5.crc);
+				login.p4(midiJingleJs5.crc);
+				login.p4(clientScriptJs5.crc);
+				login.p4(fontMetricJs5.crc);
+				login.p4(vorbisJs5.crc);
+				login.p4(midiInstrumentJs5.crc);
+
+				login.tinyenc(seed, xteaStart, login.pos);
+				login.psize2(login.pos - start);
 				stream.write(login.data, 0, login.pos);
-				out.seed(var1);
-				for (int var4 = 0; var4 < 4; var4++) {
-					var1[var4] += 50;
+
+				out.seed(seed);
+				for (int i = 0; i < 4; i++) {
+					seed[i] += 50;
 				}
-				in.seed(var1);
+				in.seed(seed);
+
 				loginState = 6;
 			}
 			if (loginState == 6 && stream.available() > 0) {
@@ -2451,18 +2463,18 @@ public class Client extends GameShell {
 		IfType.method1104();
 		((SceneBuilderProvider) Pix3D.sceneProvider).method749();
 		ClientScript.field2262.clear();
-		field1109.discardAll();
-		field1720.discardAll();
-		field1123.discardAll();
-		field1509.discardAll();
-		field1270.discardAll();
-		field1110.discardAll();
+		animFrameJs5.discardAll();
+		animBaseJs5.discardAll();
+		interfaceJs5.discardAll();
+		synthSoundJs5.discardAll();
+		mapJs5.discardAll();
+		midiSongJs5.discardAll();
 		modelJs5.discardAll();
-		field1944.discardAll();
-		field1966.discardAll();
-		field544.discardAll();
-		field1515.discardAll();
-		field1232.discardAll();
+		spriteJs5.discardAll();
+		textureJs5.discardAll();
+		binaryJs5.discardAll();
+		midiJingleJs5.discardAll();
+		clientScriptJs5.discardAll();
 	}
 
 	@ObfuscatedName("da.dj(I)V")
@@ -2502,7 +2514,7 @@ public class Client extends GameShell {
 		if (arg0 == -1 && !field2189) {
 			MidiPlayer.method917();
 		} else if (arg0 != -1 && field2170 != arg0 && field2169 != 0 && !field2189) {
-			MidiPlayer.method95(2, field1110, arg0, 0, field2169, false);
+			MidiPlayer.method95(2, midiSongJs5, arg0, 0, field2169, false);
 		}
 		field2170 = arg0;
 	}
@@ -3399,8 +3411,8 @@ public class Client extends GameShell {
 					int var13 = (var11 << 8) + var12;
 					if (!var9 || var12 != 49 && var12 != 149 && var12 != 147 && var11 != 50 && (var11 != 49 || var12 != 47)) {
 						field801[var10] = var13;
-						field826[var10] = field1270.getGroupId("m" + var11 + "_" + var12);
-						field1163[var10] = field1270.getGroupId("l" + var11 + "_" + var12);
+						field826[var10] = mapJs5.getGroupId("m" + var11 + "_" + var12);
+						field1163[var10] = mapJs5.getGroupId("l" + var11 + "_" + var12);
 						var10++;
 					}
 				}
@@ -3457,8 +3469,8 @@ public class Client extends GameShell {
 								field801[var26] = var33;
 								int var35 = var33 >> 8 & 0xFF;
 								int var36 = var33 & 0xFF;
-								field826[var26] = field1270.getGroupId("m" + var35 + "_" + var36);
-								field1163[var26] = field1270.getGroupId("l" + var35 + "_" + var36);
+								field826[var26] = mapJs5.getGroupId("m" + var35 + "_" + var36);
+								field1163[var26] = mapJs5.getGroupId("l" + var35 + "_" + var36);
 								var26++;
 							}
 						}
@@ -6959,7 +6971,7 @@ public class Client extends GameShell {
 			}
 			if (field2169 != var3) {
 				if (field2169 == 0 && field2170 != -1) {
-					MidiPlayer.method1125(field1110, field2170, 0, var3, false);
+					MidiPlayer.method1125(midiSongJs5, field2170, 0, var3, false);
 					field2189 = false;
 				} else if (var3 == 0) {
 					MidiPlayer.method917();
@@ -7614,14 +7626,14 @@ public class Client extends GameShell {
 		boolean var11 = true;
 		for (int var12 = 0; var12 < field1768.length; var12++) {
 			if (field826[var12] != -1 && field1768[var12] == null) {
-				field1768[var12] = field1270.getFile(field826[var12], 0);
+				field1768[var12] = mapJs5.getFile(field826[var12], 0);
 				if (field1768[var12] == null) {
 					var11 = false;
 					field1972++;
 				}
 			}
 			if (field1163[var12] != -1 && field186[var12] == null) {
-				field186[var12] = field1270.getFile(field1163[var12], 0, mapKeys[var12]);
+				field186[var12] = mapJs5.getFile(field1163[var12], 0, mapKeys[var12]);
 				if (field186[var12] == null) {
 					var11 = false;
 					field1972++;
@@ -7799,8 +7811,8 @@ public class Client extends GameShell {
 			for (int var76 = var72 - 1; var76 <= var73 + 1; var76++) {
 				for (int var77 = var74 - 1; var77 <= var75 + 1; var77++) {
 					if (var76 < var72 || var76 > var73 || var77 < var74 || var77 > var75) {
-						field1270.requestDownload("m" + var76 + "_" + var77);
-						field1270.requestDownload("l" + var76 + "_" + var77);
+						mapJs5.requestDownload("m" + var76 + "_" + var77);
+						mapJs5.requestDownload("l" + var76 + "_" + var77);
 					}
 				}
 			}
@@ -9533,7 +9545,7 @@ public class Client extends GameShell {
 				}
 				int var360 = in.g3_alt2();
 				if (field2169 != 0 && var359 != -1) {
-					MidiPlayer.method1125(field1515, var359, 0, field2169, false);
+					MidiPlayer.method1125(midiJingleJs5, var359, 0, field2169, false);
 					field2189 = true;
 				}
 				packetType = -1;
@@ -10229,7 +10241,7 @@ public class Client extends GameShell {
 				Wave var426 = field2181[var424];
 				if (var426 == null) {
 					Wave var528 = null;
-					var426 = Wave.method294(field1509, field2177[var424], 0);
+					var426 = Wave.method294(synthSoundJs5, field2177[var424], 0);
 					if (var426 == null) {
 						continue;
 					}
@@ -10284,7 +10296,7 @@ public class Client extends GameShell {
 		}
 		if (field2189 && !MidiPlayer.method2456()) {
 			if (field2169 != 0 && field2170 != -1) {
-				MidiPlayer.method1125(field1110, field2170, 0, field2169, false);
+				MidiPlayer.method1125(midiSongJs5, field2170, 0, field2169, false);
 			}
 			field2189 = false;
 		}

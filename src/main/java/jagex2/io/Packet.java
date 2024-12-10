@@ -338,6 +338,10 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.az([IIII)V")
 	public void tinyenc(int[] arg0, int arg1, int arg2) {
+		if (Settings.SKIP_TINYENC) {
+			return;
+		}
+
 		int var4 = this.pos;
 		this.pos = arg1;
 		int var5 = (arg2 - arg1) / 8;
