@@ -13,37 +13,37 @@ public abstract class PathingEntity extends Entity {
 	public int z;
 
 	@ObfuscatedName("fz.g")
-	public int field2646;
+	public int yaw;
 
 	@ObfuscatedName("fz.q")
-	public boolean field2616 = false;
+	public boolean needsForwardDrawPadding = false;
 
 	@ObfuscatedName("fz.i")
-	public int field2657 = 1;
+	public int size = 1;
 
 	@ObfuscatedName("fz.s")
-	public int field2622 = -1;
+	public int readyanim = -1;
 
 	@ObfuscatedName("fz.u")
-	public int field2619 = -1;
+	public int seqTurnIdBase = -1; // todo
 
 	@ObfuscatedName("fz.v")
-	public int field2620 = -1;
+	public int seqTurnId = -1; // todo
 
 	@ObfuscatedName("fz.w")
-	public int field2621 = -1;
+	public int walkanim = -1;
 
 	@ObfuscatedName("fz.e")
-	public int field2664 = -1;
+	public int walkanim_b = -1;
 
 	@ObfuscatedName("fz.b")
-	public int field2623 = -1;
+	public int walkanim_l = -1;
 
 	@ObfuscatedName("fz.y")
-	public int field2624 = -1;
+	public int walkanim_r = -1;
 
 	@ObfuscatedName("fz.t")
-	public int field2625 = -1;
+	public int runanim = -1;
 
 	@ObfuscatedName("fz.f")
 	public String field2644 = null;
@@ -76,16 +76,16 @@ public abstract class PathingEntity extends Entity {
 	public int field2636;
 
 	@ObfuscatedName("fz.am")
-	public int field2637 = -1;
+	public int targetId = -1;
 
 	@ObfuscatedName("fz.ap")
-	public int field2638 = 0;
+	public int targetTileX = 0;
 
 	@ObfuscatedName("fz.av")
-	public int field2639 = 0;
+	public int targetTileZ = 0;
 
 	@ObfuscatedName("fz.ak")
-	public int field2640 = -1;
+	public int secondarySeqId = -1;
 
 	@ObfuscatedName("fz.az")
 	public int field2641 = 0;
@@ -94,55 +94,55 @@ public abstract class PathingEntity extends Entity {
 	public int field2662 = 0;
 
 	@ObfuscatedName("fz.ah")
-	public int field2643 = -1;
+	public int primarySeqId = -1;
 
 	@ObfuscatedName("fz.ay")
-	public int field2653 = 0;
+	public int primarySeqFrame = 0;
 
 	@ObfuscatedName("fz.al")
-	public int field2645 = 0;
+	public int primarySeqCycle = 0;
 
 	@ObfuscatedName("fz.ab")
-	public int field2627 = 0;
+	public int primarySeqDelay = 0;
 
 	@ObfuscatedName("fz.ao")
 	public int field2647 = 0;
 
 	@ObfuscatedName("fz.ag")
-	public int field2648 = -1;
+	public int spotanimId = -1;
 
 	@ObfuscatedName("fz.ar")
-	public int field2649 = 0;
+	public int spotanimFrame = 0;
 
 	@ObfuscatedName("fz.aq")
-	public int field2650 = 0;
+	public int spotanimCycle = 0;
 
 	@ObfuscatedName("fz.at")
-	public int field2651;
+	public int spotanimLastCycle;
 
 	@ObfuscatedName("fz.ae")
 	public int field2629;
 
 	@ObfuscatedName("fz.au")
-	public int field2617;
+	public int forceMoveStartSceneTileX;
 
 	@ObfuscatedName("fz.ax")
-	public int field2654;
+	public int forceMoveEndSceneTileX;
 
 	@ObfuscatedName("fz.ai")
-	public int field2655;
+	public int forceMoveStartSceneTileZ;
 
 	@ObfuscatedName("fz.aj")
-	public int field2642;
+	public int forceMoveEndSceneTileZ;
 
 	@ObfuscatedName("fz.aw")
-	public int field2628;
+	public int forceMoveEndCycle;
 
 	@ObfuscatedName("fz.af")
-	public int field2658;
+	public int forceMoveStartCycle;
 
 	@ObfuscatedName("fz.bh")
-	public int field2659;
+	public int forceMoveFaceDirection;
 
 	@ObfuscatedName("fz.bi")
 	public int field2660 = 0;
@@ -151,16 +151,16 @@ public abstract class PathingEntity extends Entity {
 	public int field2626 = 200;
 
 	@ObfuscatedName("fz.bk")
-	public int field2618;
+	public int dstYaw;
 
 	@ObfuscatedName("fz.bv")
 	public int field2663 = 0;
 
 	@ObfuscatedName("fz.bg")
-	public int field2661 = 32;
+	public int turnSpeed = 32;
 
 	@ObfuscatedName("fz.bl")
-	public int field2665 = 0;
+	public int pathLength = 0;
 
 	@ObfuscatedName("fz.bt")
 	public int[] pathTileX = new int[10];
@@ -169,44 +169,44 @@ public abstract class PathingEntity extends Entity {
 	public int[] pathTileZ = new int[10];
 
 	@ObfuscatedName("fz.by")
-	public boolean[] field2668 = new boolean[10];
+	public boolean[] pathRunning = new boolean[10];
 
 	@ObfuscatedName("fz.bx")
-	public int field2669 = 0;
+	public int seqTrigger = 0;
 
 	@ObfuscatedName("fz.bf")
-	public int field2656 = 0;
+	public int seqPathLength = 0;
 
 	@ObfuscatedName("fz.b(IIZB)V")
 	public final void method2907(int arg0, int arg1, boolean arg2) {
-		if (this.field2643 != -1 && SeqType.get(this.field2643).postanim_move == 1) {
-			this.field2643 = -1;
+		if (this.primarySeqId != -1 && SeqType.get(this.primarySeqId).postanim_move == 1) {
+			this.primarySeqId = -1;
 		}
 		if (!arg2) {
 			int var4 = arg0 - this.pathTileX[0];
 			int var5 = arg1 - this.pathTileZ[0];
 			if (var4 >= -8 && var4 <= 8 && var5 >= -8 && var5 <= 8) {
-				if (this.field2665 < 9) {
-					this.field2665++;
+				if (this.pathLength < 9) {
+					this.pathLength++;
 				}
-				for (int var6 = this.field2665; var6 > 0; var6--) {
+				for (int var6 = this.pathLength; var6 > 0; var6--) {
 					this.pathTileX[var6] = this.pathTileX[var6 - 1];
 					this.pathTileZ[var6] = this.pathTileZ[var6 - 1];
-					this.field2668[var6] = this.field2668[var6 - 1];
+					this.pathRunning[var6] = this.pathRunning[var6 - 1];
 				}
 				this.pathTileX[0] = arg0;
 				this.pathTileZ[0] = arg1;
-				this.field2668[0] = false;
+				this.pathRunning[0] = false;
 				return;
 			}
 		}
-		this.field2665 = 0;
-		this.field2656 = 0;
-		this.field2669 = 0;
+		this.pathLength = 0;
+		this.seqPathLength = 0;
+		this.seqTrigger = 0;
 		this.pathTileX[0] = arg0;
 		this.pathTileZ[0] = arg1;
-		this.x = this.pathTileX[0] * 128 + this.field2657 * 64;
-		this.z = this.pathTileZ[0] * 128 + this.field2657 * 64;
+		this.x = this.pathTileX[0] * 128 + this.size * 64;
+		this.z = this.pathTileZ[0] * 128 + this.size * 64;
 	}
 
 	@ObfuscatedName("fz.y(IZI)V")
@@ -241,30 +241,30 @@ public abstract class PathingEntity extends Entity {
 			var3++;
 			var4--;
 		}
-		if (this.field2643 != -1 && SeqType.get(this.field2643).postanim_move == 1) {
-			this.field2643 = -1;
+		if (this.primarySeqId != -1 && SeqType.get(this.primarySeqId).postanim_move == 1) {
+			this.primarySeqId = -1;
 		}
-		if (this.field2665 < 9) {
-			this.field2665++;
+		if (this.pathLength < 9) {
+			this.pathLength++;
 		}
-		for (int var5 = this.field2665; var5 > 0; var5--) {
+		for (int var5 = this.pathLength; var5 > 0; var5--) {
 			this.pathTileX[var5] = this.pathTileX[var5 - 1];
 			this.pathTileZ[var5] = this.pathTileZ[var5 - 1];
-			this.field2668[var5] = this.field2668[var5 - 1];
+			this.pathRunning[var5] = this.pathRunning[var5 - 1];
 		}
 		this.pathTileX[0] = var3;
 		this.pathTileZ[0] = var4;
-		this.field2668[0] = arg1;
+		this.pathRunning[0] = arg1;
 	}
 
 	@ObfuscatedName("fz.t(I)V")
-	public final void method2906() {
-		this.field2665 = 0;
-		this.field2656 = 0;
+	public final void resetPath() {
+		this.pathLength = 0;
+		this.seqPathLength = 0;
 	}
 
 	@ObfuscatedName("fz.f(I)Z")
-	public boolean method2915() {
+	public boolean isVisible() {
 		return false;
 	}
 

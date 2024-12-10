@@ -13,7 +13,7 @@ import jagex2.io.Packet;
 public class PlayerEntity extends PathingEntity {
 
 	@ObfuscatedName("fi.bu")
-	public String field2796;
+	public String name;
 
 	@ObfuscatedName("fi.bo")
 	public PlayerModel field2786;
@@ -31,40 +31,40 @@ public class PlayerEntity extends PathingEntity {
 	public int field2790 = 0;
 
 	@ObfuscatedName("fi.bn")
-	public int field2791;
+	public int y;
 
 	@ObfuscatedName("fi.be")
-	public int field2792 = 0;
+	public int locStartCycle = 0;
 
 	@ObfuscatedName("fi.bp")
-	public int field2793 = 0;
+	public int locEndCycle = 0;
 
 	@ObfuscatedName("fi.ba")
-	public int field2794;
+	public int locOffsetX;
 
 	@ObfuscatedName("fi.bc")
-	public int field2797;
+	public int locOffsetY;
 
 	@ObfuscatedName("fi.br")
-	public int field2799;
+	public int locOffsetZ;
 
 	@ObfuscatedName("fi.bb")
-	public SoftwareModel field2801;
+	public SoftwareModel locModel;
 
 	@ObfuscatedName("fi.bd")
-	public int field2798;
+	public int minTileX;
 
 	@ObfuscatedName("fi.cr")
-	public int field2802;
+	public int minTileZ;
 
 	@ObfuscatedName("fi.cs")
-	public int field2785;
+	public int maxTileX;
 
 	@ObfuscatedName("fi.cj")
-	public int field2788;
+	public int maxTileZ;
 
 	@ObfuscatedName("fi.cl")
-	public boolean field2795 = false;
+	public boolean lowMemory = false;
 
 	@ObfuscatedName("fi.cp")
 	public int field2803 = 0;
@@ -105,38 +105,38 @@ public class PlayerEntity extends PathingEntity {
 			}
 			var9[var10] = var11;
 		}
-		this.field2622 = arg0.g2();
-		if (this.field2622 == 65535) {
-			this.field2622 = -1;
+		this.readyanim = arg0.g2();
+		if (this.readyanim == 65535) {
+			this.readyanim = -1;
 		}
-		this.field2619 = arg0.g2();
-		if (this.field2619 == 65535) {
-			this.field2619 = -1;
+		this.seqTurnIdBase = arg0.g2();
+		if (this.seqTurnIdBase == 65535) {
+			this.seqTurnIdBase = -1;
 		}
-		this.field2620 = this.field2619;
-		this.field2621 = arg0.g2();
-		if (this.field2621 == 65535) {
-			this.field2621 = -1;
+		this.seqTurnId = this.seqTurnIdBase;
+		this.walkanim = arg0.g2();
+		if (this.walkanim == 65535) {
+			this.walkanim = -1;
 		}
-		this.field2664 = arg0.g2();
-		if (this.field2664 == 65535) {
-			this.field2664 = -1;
+		this.walkanim_b = arg0.g2();
+		if (this.walkanim_b == 65535) {
+			this.walkanim_b = -1;
 		}
-		this.field2623 = arg0.g2();
-		if (this.field2623 == 65535) {
-			this.field2623 = -1;
+		this.walkanim_l = arg0.g2();
+		if (this.walkanim_l == 65535) {
+			this.walkanim_l = -1;
 		}
-		this.field2624 = arg0.g2();
-		if (this.field2624 == 65535) {
-			this.field2624 = -1;
+		this.walkanim_r = arg0.g2();
+		if (this.walkanim_r == 65535) {
+			this.walkanim_r = -1;
 		}
-		this.field2625 = arg0.g2();
-		if (this.field2625 == 65535) {
-			this.field2625 = -1;
+		this.runanim = arg0.g2();
+		if (this.runanim == 65535) {
+			this.runanim = -1;
 		}
-		this.field2796 = arg0.gjstr();
+		this.name = arg0.gjstr();
 		if (Client.localPlayer == this) {
-			JagException.username = this.field2796;
+			JagException.username = this.name;
 		}
 		this.field2789 = arg0.g1();
 		this.field2790 = arg0.g2();
@@ -151,52 +151,52 @@ public class PlayerEntity extends PathingEntity {
 		if (this.field2786 == null) {
 			return null;
 		}
-		SeqType var1 = this.field2643 != -1 && this.field2627 == 0 ? SeqType.get(this.field2643) : null;
-		SeqType var2 = this.field2640 == -1 || this.field2795 || this.field2640 == this.field2622 && var1 != null ? null : SeqType.get(this.field2640);
-		SoftwareModel var3 = this.field2786.method1174(var1, this.field2653, var2, this.field2641);
+		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.get(this.primarySeqId) : null;
+		SeqType var2 = this.secondarySeqId == -1 || this.lowMemory || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.get(this.secondarySeqId);
+		SoftwareModel var3 = this.field2786.method1174(var1, this.primarySeqFrame, var2, this.field2641);
 		if (var3 == null) {
 			return null;
 		}
 		var3.method3002();
 		this.field2626 = var3.field2487;
-		if (!this.field2795 && this.field2648 != -1 && this.field2649 != -1) {
-			SoftwareModel var4 = SpotAnimType.get(this.field2648).method2455(this.field2649);
+		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
+			SoftwareModel var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
 			if (var4 != null) {
 				var4.method3012(0, -this.field2629, 0);
 				SoftwareModel[] var5 = new SoftwareModel[] { var3, var4 };
 				var3 = new SoftwareModel(var5, 2);
 			}
 		}
-		if (!this.field2795 && this.field2801 != null) {
-			if (Client.loopCycle >= this.field2793) {
-				this.field2801 = null;
+		if (!this.lowMemory && this.locModel != null) {
+			if (Client.loopCycle >= this.locEndCycle) {
+				this.locModel = null;
 			}
-			if (Client.loopCycle >= this.field2792 && Client.loopCycle < this.field2793) {
-				SoftwareModel var6 = this.field2801;
-				var6.method3012(this.field2794 - this.x, this.field2797 - this.field2791, this.field2799 - this.z);
-				if (this.field2618 == 512) {
+			if (Client.loopCycle >= this.locStartCycle && Client.loopCycle < this.locEndCycle) {
+				SoftwareModel var6 = this.locModel;
+				var6.method3012(this.locOffsetX - this.x, this.locOffsetY - this.y, this.locOffsetZ - this.z);
+				if (this.dstYaw == 512) {
 					var6.method3008();
 					var6.method3008();
 					var6.method3008();
-				} else if (this.field2618 == 1024) {
+				} else if (this.dstYaw == 1024) {
 					var6.method3008();
 					var6.method3008();
-				} else if (this.field2618 == 1536) {
+				} else if (this.dstYaw == 1536) {
 					var6.method3008();
 				}
 				SoftwareModel[] var7 = new SoftwareModel[] { var3, var6 };
 				var3 = new SoftwareModel(var7, 2);
-				if (this.field2618 == 512) {
+				if (this.dstYaw == 512) {
 					var6.method3008();
-				} else if (this.field2618 == 1024) {
+				} else if (this.dstYaw == 1024) {
 					var6.method3008();
 					var6.method3008();
-				} else if (this.field2618 == 1536) {
+				} else if (this.dstYaw == 1536) {
 					var6.method3008();
 					var6.method3008();
 					var6.method3008();
 				}
-				var6.method3012(this.x - this.field2794, this.field2791 - this.field2797, this.z - this.field2799);
+				var6.method3012(this.x - this.locOffsetX, this.y - this.locOffsetY, this.z - this.locOffsetZ);
 			}
 		}
 		var3.field2744 = true;
@@ -204,7 +204,7 @@ public class PlayerEntity extends PathingEntity {
 	}
 
 	@ObfuscatedName("fi.f(I)Z")
-	public final boolean method2915() {
+	public final boolean isVisible() {
 		return this.field2786 != null;
 	}
 }

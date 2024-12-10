@@ -43,7 +43,7 @@ public class IfType extends Linkable {
 	public static boolean field1870 = false;
 
 	@ObfuscatedName("eg.v")
-	public boolean field1782 = false;
+	public boolean if3 = false;
 
 	@ObfuscatedName("eg.w")
 	public int field1783 = -1;
@@ -52,7 +52,7 @@ public class IfType extends Linkable {
 	public int subid = -1;
 
 	@ObfuscatedName("eg.b")
-	public int field1785;
+	public int type;
 
 	@ObfuscatedName("eg.y")
 	public int field1790 = 0;
@@ -73,10 +73,10 @@ public class IfType extends Linkable {
 	public int field1780 = 0;
 
 	@ObfuscatedName("eg.h")
-	public int field1792 = 0;
+	public int width = 0;
 
 	@ObfuscatedName("eg.x")
-	public int field1793 = 0;
+	public int height = 0;
 
 	@ObfuscatedName("eg.p")
 	public int layerid = -1;
@@ -205,25 +205,25 @@ public class IfType extends Linkable {
 	public boolean field1835 = false;
 
 	@ObfuscatedName("eg.bj")
-	public int field1843 = 0;
+	public int marginX = 0;
 
 	@ObfuscatedName("eg.bz")
-	public int field1837 = 0;
+	public int marginY = 0;
 
 	@ObfuscatedName("eg.bm")
-	public int[] field1854;
+	public int[] invSlotOffsetX;
 
 	@ObfuscatedName("eg.bn")
-	public int[] field1862;
+	public int[] invSlotOffsetY;
 
 	@ObfuscatedName("eg.be")
-	public int[] field1840;
+	public int[] invSlotGraphic;
 
 	@ObfuscatedName("eg.bp")
-	public String[] field1833;
+	public String[] iop;
 
 	@ObfuscatedName("eg.ba")
-	public int field1842 = 0;
+	public int events = 0;
 
 	@ObfuscatedName("eg.bc")
 	public String field1795 = "";
@@ -451,9 +451,9 @@ public class IfType extends Linkable {
 						field373[arg0][var2] = new IfType();
 						field373[arg0][var2].field1783 = (arg0 << 16) + var2;
 						if (var3[0] == -1) {
-							field373[arg0][var2].method1796(new Packet(var3));
+							field373[arg0][var2].decodeIf3(new Packet(var3));
 						} else {
-							field373[arg0][var2].method1794(new Packet(var3));
+							field373[arg0][var2].decodeIf1(new Packet(var3));
 						}
 					}
 				}
@@ -466,188 +466,189 @@ public class IfType extends Linkable {
 	}
 
 	@ObfuscatedName("eg.g(Lev;I)V")
-	public void method1794(Packet arg0) {
-		this.field1782 = false;
-		this.field1785 = arg0.g1();
-		this.field1786 = arg0.g1();
-		this.clientCode = arg0.g2();
-		this.field1790 = this.field1788 = arg0.g2b();
-		this.field1780 = this.field1810 = arg0.g2b();
-		this.field1792 = arg0.g2();
-		this.field1793 = arg0.g2();
-		this.field1805 = arg0.g1();
-		this.layerid = arg0.g2();
+	public void decodeIf1(Packet buf) {
+		this.if3 = false;
+
+		this.type = buf.g1();
+		this.field1786 = buf.g1();
+		this.clientCode = buf.g2();
+		this.field1790 = this.field1788 = buf.g2b();
+		this.field1780 = this.field1810 = buf.g2b();
+		this.width = buf.g2();
+		this.height = buf.g2();
+		this.field1805 = buf.g1();
+		this.layerid = buf.g2();
 		if (this.layerid == 65535) {
 			this.layerid = -1;
 		} else {
 			this.layerid += this.field1783 & 0xFFFF0000;
 		}
-		this.field1882 = arg0.g2();
+		this.field1882 = buf.g2();
 		if (this.field1882 == 65535) {
 			this.field1882 = -1;
 		}
-		int var2 = arg0.g1();
+		int var2 = buf.g1();
 		if (var2 > 0) {
 			this.field1789 = new int[var2];
 			this.field1881 = new int[var2];
 			for (int var3 = 0; var3 < var2; var3++) {
-				this.field1789[var3] = arg0.g1();
-				this.field1881[var3] = arg0.g2();
+				this.field1789[var3] = buf.g1();
+				this.field1881[var3] = buf.g2();
 			}
 		}
-		int var4 = arg0.g1();
+		int var4 = buf.g1();
 		if (var4 > 0) {
 			this.field1874 = new int[var4][];
 			for (int var5 = 0; var5 < var4; var5++) {
-				int var6 = arg0.g2();
+				int var6 = buf.g2();
 				this.field1874[var5] = new int[var6];
 				for (int var7 = 0; var7 < var6; var7++) {
-					this.field1874[var5][var7] = arg0.g2();
+					this.field1874[var5][var7] = buf.g2();
 					if (this.field1874[var5][var7] == 65535) {
 						this.field1874[var5][var7] = -1;
 					}
 				}
 			}
 		}
-		if (this.field1785 == 0) {
-			this.field1799 = arg0.g2();
-			this.field1880 = arg0.g1() == 1;
+		if (this.type == 0) {
+			this.field1799 = buf.g2();
+			this.field1880 = buf.g1() == 1;
 		}
-		if (this.field1785 == 1) {
-			arg0.g2();
-			arg0.g1();
+		if (this.type == 1) {
+			buf.g2();
+			buf.g1();
 		}
-		if (this.field1785 == 2) {
-			this.invSlotObjId = new int[this.field1793 * this.field1792];
-			this.invSlotObjCount = new int[this.field1793 * this.field1792];
-			int var8 = arg0.g1();
-			if (var8 == 1) {
-				this.field1842 |= 0x10000000;
+		if (this.type == 2) {
+			this.invSlotObjId = new int[this.height * this.width];
+			this.invSlotObjCount = new int[this.height * this.width];
+			int draggable = buf.g1();
+			if (draggable == 1) {
+				this.events |= 0x10000000;
 			}
-			int var9 = arg0.g1();
-			if (var9 == 1) {
-				this.field1842 |= 0x40000000;
+			int interactable = buf.g1();
+			if (interactable == 1) {
+				this.events |= 0x40000000;
 			}
-			int var10 = arg0.g1();
-			if (var10 == 1) {
-				this.field1842 |= Integer.MIN_VALUE;
+			int usable = buf.g1();
+			if (usable == 1) {
+				this.events |= Integer.MIN_VALUE;
 			}
-			int var11 = arg0.g1();
-			if (var11 == 1) {
-				this.field1842 |= 0x20000000;
+			int swappable = buf.g1();
+			if (swappable == 1) {
+				this.events |= 0x20000000;
 			}
-			this.field1843 = arg0.g1();
-			this.field1837 = arg0.g1();
-			this.field1854 = new int[20];
-			this.field1862 = new int[20];
-			this.field1840 = new int[20];
+			this.marginX = buf.g1();
+			this.marginY = buf.g1();
+			this.invSlotOffsetX = new int[20];
+			this.invSlotOffsetY = new int[20];
+			this.invSlotGraphic = new int[20];
 			for (int var12 = 0; var12 < 20; var12++) {
-				int var13 = arg0.g1();
+				int var13 = buf.g1();
 				if (var13 == 1) {
-					this.field1854[var12] = arg0.g2b();
-					this.field1862[var12] = arg0.g2b();
-					this.field1840[var12] = arg0.g4();
+					this.invSlotOffsetX[var12] = buf.g2b();
+					this.invSlotOffsetY[var12] = buf.g2b();
+					this.invSlotGraphic[var12] = buf.g4();
 				} else {
-					this.field1840[var12] = -1;
+					this.invSlotGraphic[var12] = -1;
 				}
 			}
-			this.field1833 = new String[5];
+			this.iop = new String[5];
 			for (int var14 = 0; var14 < 5; var14++) {
-				String var15 = arg0.gjstr();
+				String var15 = buf.gjstr();
 				if (var15.length() > 0) {
-					this.field1833[var14] = var15;
-					this.field1842 |= 0x1 << var14 + 23;
+					this.iop[var14] = var15;
+					this.events |= 0x1 << var14 + 23;
 				}
 			}
 		}
-		if (this.field1785 == 3) {
-			this.field1893 = arg0.g1() == 1;
+		if (this.type == 3) {
+			this.field1893 = buf.g1() == 1;
 		}
-		if (this.field1785 == 4 || this.field1785 == 1) {
-			this.field1864 = arg0.g1();
-			this.field1834 = arg0.g1();
-			this.field1832 = arg0.g1();
-			this.field1829 = arg0.g2();
+		if (this.type == 4 || this.type == 1) {
+			this.field1864 = buf.g1();
+			this.field1834 = buf.g1();
+			this.field1832 = buf.g1();
+			this.field1829 = buf.g2();
 			if (this.field1829 == 65535) {
 				this.field1829 = -1;
 			}
-			this.field1835 = arg0.g1() == 1;
+			this.field1835 = buf.g1() == 1;
 		}
-		if (this.field1785 == 4) {
-			this.field1830 = arg0.gjstr();
-			this.field1809 = arg0.gjstr();
+		if (this.type == 4) {
+			this.field1830 = buf.gjstr();
+			this.field1809 = buf.gjstr();
 		}
-		if (this.field1785 == 1 || this.field1785 == 3 || this.field1785 == 4) {
-			this.field1822 = arg0.g4();
+		if (this.type == 1 || this.type == 3 || this.type == 4) {
+			this.field1822 = buf.g4();
 		}
-		if (this.field1785 == 3 || this.field1785 == 4) {
-			this.field1801 = arg0.g4();
-			this.field1802 = arg0.g4();
-			this.field1803 = arg0.g4();
+		if (this.type == 3 || this.type == 4) {
+			this.field1801 = buf.g4();
+			this.field1802 = buf.g4();
+			this.field1803 = buf.g4();
 		}
-		if (this.field1785 == 5) {
-			this.field1807 = arg0.g4();
-			this.field1808 = arg0.g4();
+		if (this.type == 5) {
+			this.field1807 = buf.g4();
+			this.field1808 = buf.g4();
 		}
-		if (this.field1785 == 6) {
+		if (this.type == 6) {
 			this.field1815 = 1;
-			this.field1816 = arg0.g2();
+			this.field1816 = buf.g2();
 			if (this.field1816 == 65535) {
 				this.field1816 = -1;
 			}
 			this.field1876 = 1;
-			this.field1818 = arg0.g2();
+			this.field1818 = buf.g2();
 			if (this.field1818 == 65535) {
 				this.field1818 = -1;
 			}
-			this.field1863 = arg0.g2();
+			this.field1863 = buf.g2();
 			if (this.field1863 == 65535) {
 				this.field1863 = -1;
 			}
-			this.field1820 = arg0.g2();
+			this.field1820 = buf.g2();
 			if (this.field1820 == 65535) {
 				this.field1820 = -1;
 			}
-			this.field1826 = arg0.g2();
-			this.field1848 = arg0.g2();
-			this.field1824 = arg0.g2();
+			this.field1826 = buf.g2();
+			this.field1848 = buf.g2();
+			this.field1824 = buf.g2();
 		}
-		if (this.field1785 == 7) {
-			this.invSlotObjId = new int[this.field1793 * this.field1792];
-			this.invSlotObjCount = new int[this.field1793 * this.field1792];
-			this.field1864 = arg0.g1();
-			this.field1829 = arg0.g2();
+		if (this.type == 7) {
+			this.invSlotObjId = new int[this.height * this.width];
+			this.invSlotObjCount = new int[this.height * this.width];
+			this.field1864 = buf.g1();
+			this.field1829 = buf.g2();
 			if (this.field1829 == 65535) {
 				this.field1829 = -1;
 			}
-			this.field1835 = arg0.g1() == 1;
-			this.field1822 = arg0.g4();
-			this.field1843 = arg0.g2b();
-			this.field1837 = arg0.g2b();
-			int var16 = arg0.g1();
+			this.field1835 = buf.g1() == 1;
+			this.field1822 = buf.g4();
+			this.marginX = buf.g2b();
+			this.marginY = buf.g2b();
+			int var16 = buf.g1();
 			if (var16 == 1) {
-				this.field1842 |= 0x40000000;
+				this.events |= 0x40000000;
 			}
-			this.field1833 = new String[5];
+			this.iop = new String[5];
 			for (int var17 = 0; var17 < 5; var17++) {
-				String var18 = arg0.gjstr();
+				String var18 = buf.gjstr();
 				if (var18.length() > 0) {
-					this.field1833[var17] = var18;
-					this.field1842 |= 0x1 << var17 + 23;
+					this.iop[var17] = var18;
+					this.events |= 0x1 << var17 + 23;
 				}
 			}
 		}
-		if (this.field1785 == 8) {
-			this.field1830 = arg0.gjstr();
+		if (this.type == 8) {
+			this.field1830 = buf.gjstr();
 		}
-		if (this.field1786 == 2 || this.field1785 == 2) {
-			this.field1841 = arg0.gjstr();
-			this.field1883 = arg0.gjstr();
-			int var19 = arg0.g2() & 0x3F;
-			this.field1842 |= var19 << 11;
+		if (this.field1786 == 2 || this.type == 2) {
+			this.field1841 = buf.gjstr();
+			this.field1883 = buf.gjstr();
+			int var19 = buf.g2() & 0x3F;
+			this.events |= var19 << 11;
 		}
 		if (this.field1786 == 1 || this.field1786 == 4 || this.field1786 == 5 || this.field1786 == 6) {
-			this.field1859 = arg0.gjstr();
+			this.field1859 = buf.gjstr();
 			if (this.field1859.length() == 0) {
 				if (this.field1786 == 1) {
 					this.field1859 = EnglishLocale.field966;
@@ -664,26 +665,26 @@ public class IfType extends Linkable {
 			}
 		}
 		if (this.field1786 == 1 || this.field1786 == 4 || this.field1786 == 5) {
-			this.field1842 |= 0x400000;
+			this.events |= 0x400000;
 		}
 		if (this.field1786 == 6) {
-			this.field1842 |= 0x1;
+			this.events |= 0x1;
 		}
 	}
 
 	@ObfuscatedName("eg.q(Lev;I)V")
-	public void method1796(Packet arg0) {
+	public void decodeIf3(Packet arg0) {
 		arg0.g1();
-		this.field1782 = true;
-		this.field1785 = arg0.g1();
+		this.if3 = true;
+		this.type = arg0.g1();
 		this.clientCode = arg0.g2();
 		this.field1790 = this.field1788 = arg0.g2b();
 		this.field1780 = this.field1810 = arg0.g2b();
-		this.field1792 = arg0.g2();
-		if (this.field1785 == 9) {
-			this.field1793 = arg0.g2b();
+		this.width = arg0.g2();
+		if (this.type == 9) {
+			this.height = arg0.g2b();
 		} else {
-			this.field1793 = arg0.g2();
+			this.height = arg0.g2();
 		}
 		this.layerid = arg0.g2();
 		if (this.layerid == 65535) {
@@ -692,11 +693,11 @@ public class IfType extends Linkable {
 			this.layerid += this.field1783 & 0xFFFF0000;
 		}
 		this.field1880 = arg0.g1() == 1;
-		if (this.field1785 == 0) {
+		if (this.type == 0) {
 			this.field1884 = arg0.g2();
 			this.field1799 = arg0.g2();
 		}
-		if (this.field1785 == 5) {
+		if (this.type == 5) {
 			this.field1807 = arg0.g4();
 			this.field1784 = arg0.g2();
 			this.field1794 = arg0.g1() == 1;
@@ -706,7 +707,7 @@ public class IfType extends Linkable {
 			this.field1849 = arg0.g1() == 1;
 			this.field1814 = arg0.g1() == 1;
 		}
-		if (this.field1785 == 6) {
+		if (this.type == 6) {
 			this.field1815 = 1;
 			this.field1816 = arg0.g2();
 			if (this.field1816 == 65535) {
@@ -724,7 +725,7 @@ public class IfType extends Linkable {
 			}
 			this.field1828 = arg0.g1() == 1;
 		}
-		if (this.field1785 == 4) {
+		if (this.type == 4) {
 			this.field1829 = arg0.g2();
 			if (this.field1829 == 65535) {
 				this.field1829 = -1;
@@ -736,16 +737,16 @@ public class IfType extends Linkable {
 			this.field1835 = arg0.g1() == 1;
 			this.field1822 = arg0.g4();
 		}
-		if (this.field1785 == 3) {
+		if (this.type == 3) {
 			this.field1822 = arg0.g4();
 			this.field1893 = arg0.g1() == 1;
 			this.field1805 = arg0.g1();
 		}
-		if (this.field1785 == 9) {
+		if (this.type == 9) {
 			this.field1804 = arg0.g1();
 			this.field1822 = arg0.g4();
 		}
-		this.field1842 = arg0.g3();
+		this.events = arg0.g3();
 		this.field1795 = arg0.gjstr();
 		int var2 = arg0.g1();
 		if (var2 > 0) {
@@ -903,10 +904,10 @@ public class IfType extends Linkable {
 	@ObfuscatedName("eg.e(II)Lfq;")
 	public Pix32 method1803(int arg0) {
 		field1870 = false;
-		if (arg0 < 0 || arg0 >= this.field1840.length) {
+		if (arg0 < 0 || arg0 >= this.invSlotGraphic.length) {
 			return null;
 		}
-		int var2 = this.field1840[arg0];
+		int var2 = this.invSlotGraphic[arg0];
 		if (var2 == -1) {
 			return null;
 		}

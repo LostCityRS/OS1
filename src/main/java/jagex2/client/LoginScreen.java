@@ -99,13 +99,13 @@ public class LoginScreen {
 	public static int field151 = 0;
 
 	@ObfuscatedName("g.av")
-	public static String field152 = "";
+	public static String line1Message = "";
 
 	@ObfuscatedName("g.ak")
-	public static String field127 = "";
+	public static String line2Message = "";
 
 	@ObfuscatedName("g.az")
-	public static String field154 = "";
+	public static String line3Message = "";
 
 	@ObfuscatedName("g.an")
 	public static String username = "";
@@ -254,9 +254,9 @@ public class LoginScreen {
 			}
 			short var13 = 462;
 			if (var8 == 1 && var9 >= var13 - 75 && var9 <= var13 + 75 && var10 >= var12 - 20 && var10 <= var12 + 20) {
-				field152 = EnglishLocale.field924;
-				field127 = EnglishLocale.field1007;
-				field154 = EnglishLocale.field1068;
+				line1Message = EnglishLocale.field924;
+				line2Message = EnglishLocale.field1007;
+				line3Message = EnglishLocale.field1068;
 				field151 = 2;
 				field150 = 0;
 			}
@@ -276,14 +276,14 @@ public class LoginScreen {
 			if (var8 == 1 && var9 >= var15 - 75 && var9 <= var15 + 75 && var10 >= var16 - 20 && var10 <= var16 + 20) {
 				username = username.trim();
 				if (username.length() == 0) {
-					method2357(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
+					showMessage(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
 					return;
 				}
 				if (password.length() == 0) {
-					method2357(EnglishLocale.field981, EnglishLocale.field982, EnglishLocale.field983);
+					showMessage(EnglishLocale.field981, EnglishLocale.field982, EnglishLocale.field983);
 					return;
 				}
-				method2357(EnglishLocale.field905, EnglishLocale.field1070, EnglishLocale.field998);
+				showMessage(EnglishLocale.field905, EnglishLocale.field1070, EnglishLocale.field998);
 				Client.method729(20);
 				return;
 			}
@@ -321,14 +321,14 @@ public class LoginScreen {
 					if (Client.modewhere == 2 && JavaKeyboardProvider.field114 == 84) {
 						username = username.trim();
 						if (username.length() == 0) {
-							method2357(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
+							showMessage(EnglishLocale.field978, EnglishLocale.field979, EnglishLocale.field980);
 							break;
 						}
 						if (password.length() == 0) {
-							method2357(EnglishLocale.field981, EnglishLocale.field982, EnglishLocale.field983);
+							showMessage(EnglishLocale.field981, EnglishLocale.field982, EnglishLocale.field983);
 							break;
 						}
-						method2357(EnglishLocale.field905, EnglishLocale.field1070, EnglishLocale.field998);
+						showMessage(EnglishLocale.field905, EnglishLocale.field1070, EnglishLocale.field998);
 						Client.method729(20);
 						break;
 					}
@@ -365,11 +365,11 @@ public class LoginScreen {
 		if (Client.gameState == 20) {
 			field137.method2747(382 - field137.field2513 / 2, 271 - field137.field2514 / 2);
 			short var4 = 211;
-			arg0.method2880(field152, 382, var4, 16776960, 0);
+			arg0.method2880(line1Message, 382, var4, 16776960, 0);
 			int var89 = var4 + 15;
-			arg0.method2880(field127, 382, var89, 16776960, 0);
+			arg0.method2880(line2Message, 382, var89, 16776960, 0);
 			int var90 = var89 + 15;
-			arg0.method2880(field154, 382, var90, 16776960, 0);
+			arg0.method2880(line3Message, 382, var90, 16776960, 0);
 			int var91 = var90 + 15;
 			int var92 = var91 + 10;
 			arg0.method2821(EnglishLocale.field903, 272, var92, 16777215, 0);
@@ -400,11 +400,11 @@ public class LoginScreen {
 				arg0.method2824(EnglishLocale.field1076, var14 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 			} else if (field151 == 2) {
 				short var15 = 211;
-				arg0.method2880(field152, 382, var15, 16776960, 0);
+				arg0.method2880(line1Message, 382, var15, 16776960, 0);
 				int var94 = var15 + 15;
-				arg0.method2880(field127, 382, var94, 16776960, 0);
+				arg0.method2880(line2Message, 382, var94, 16776960, 0);
 				int var95 = var94 + 15;
-				arg0.method2880(field154, 382, var95, 16776960, 0);
+				arg0.method2880(line3Message, 382, var95, 16776960, 0);
 				int var96 = var95 + 15;
 				int var97 = var96 + 10;
 				arg0.method2821(EnglishLocale.field903, 272, var97, 16777215, 0);
@@ -647,10 +647,10 @@ public class LoginScreen {
 	}
 
 	@ObfuscatedName("em.c(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V")
-	public static void method2357(String arg0, String arg1, String arg2) {
-		field152 = arg0;
-		field127 = arg1;
-		field154 = arg2;
+	public static void showMessage(String line1, String line2, String line3) {
+		line1Message = line1;
+		line2Message = line2;
+		line3Message = line3;
 	}
 
 	@ObfuscatedName("br.n(Lft;B)V")

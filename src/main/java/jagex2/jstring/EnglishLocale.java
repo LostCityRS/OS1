@@ -2,6 +2,7 @@ package jagex2.jstring;
 
 import deob.ObfuscatedName;
 
+// todo: english-specific in practice but should just be locale
 @ObfuscatedName("ba")
 public class EnglishLocale {
 
@@ -108,238 +109,238 @@ public class EnglishLocale {
 	public static String field899 = " seconds.";
 
 	@ObfuscatedName("ba.az")
-	public static String field900 = "Connection timed out.";
+	public static String LOGIN_RESPONSE_3M_LINE1 = "Connection timed out.";
 
 	@ObfuscatedName("ba.an")
-	public static String field901 = "Please try using a different world.";
+	public static String LOGIN_RESPONSE_3M_LINE2 = "Please try using a different world.";
 
 	@ObfuscatedName("ba.ah")
-	public static String field881 = "";
+	public static String LOGIN_RESPONSE_3M_LINE3 = "";
 
 	@ObfuscatedName("ba.ay")
-	public static String field1061 = "";
+	public static String LOGIN_RESPONSE_2M_LINE1 = "";
 
 	@ObfuscatedName("ba.al")
-	public static String field904 = "Error connecting to server.";
+	public static String LOGIN_RESPONSE_2M_LINE2 = "Error connecting to server.";
 
 	@ObfuscatedName("ba.ab")
-	public static String field1044 = "";
+	public static String LOGIN_RESPONSE_2M_LINE3 = "";
 
 	@ObfuscatedName("ba.ao")
-	public static String field906 = "No response from server.";
+	public static String LOGIN_RESPONSE_1M_LINE1 = "No response from server.";
 
 	@ObfuscatedName("ba.ag")
-	public static String field940 = "Please try using a different world.";
+	public static String LOGIN_RESPONSE_1M_LINE2 = "Please try using a different world.";
 
 	@ObfuscatedName("ba.ar")
-	public static String field908 = "";
+	public static String LOGIN_RESPONSE_1M_LINE3 = "";
 
 	@ObfuscatedName("ba.aq")
-	public static String field909 = "";
+	public static String LOGIN_RESPONSE_3_LINE1 = "";
 
 	@ObfuscatedName("ba.at")
-	public static String field910 = "Invalid username/email or password.";
+	public static String LOGIN_RESPONSE_3_LINE2 = "Invalid username/email or password.";
 
 	@ObfuscatedName("ba.ae")
-	public static String field897 = "";
+	public static String LOGIN_RESPONSE_3_LINE3 = "";
 
 	@ObfuscatedName("ba.au")
-	public static String field912 = "Your account has been disabled.";
+	public static String LOGIN_RESPONSE_4_LINE1 = "Your account has been disabled.";
 
 	@ObfuscatedName("ba.ax")
-	public static String field1089 = "Please check your message-centre for details.";
+	public static String LOGIN_RESPONSE_4_LINE2 = "Please check your message-centre for details.";
 
 	@ObfuscatedName("ba.ai")
-	public static String field914 = "";
+	public static String LOGIN_RESPONSE_4_LINE3 = "";
 
 	@ObfuscatedName("ba.aj")
-	public static String field915 = "Your account is already logged in.";
+	public static String LOGIN_RESPONSE_5_LINE1 = "Your account is already logged in.";
 
 	@ObfuscatedName("ba.aw")
-	public static String field1088 = "Try again in 60 secs...";
+	public static String LOGIN_RESPONSE_5_LINE2 = "Try again in 60 secs...";
 
 	@ObfuscatedName("ba.af")
-	public static String field917 = "";
+	public static String LOGIN_RESPONSE_5_LINE3 = "";
 
 	@ObfuscatedName("ba.bh")
-	public static String field918 = "RuneScape has been updated!";
+	public static String LOGIN_RESPONSE_6_LINE1 = "RuneScape has been updated!";
 
 	@ObfuscatedName("ba.bi")
-	public static String field1080 = "Please reload this page.";
+	public static String LOGIN_RESPONSE_6_LINE2 = "Please reload this page.";
 
 	@ObfuscatedName("ba.bs")
-	public static String field920 = "";
+	public static String LOGIN_RESPONSE_6_LINE3 = "";
 
 	@ObfuscatedName("ba.bk")
-	public static String field1067 = "This world is full.";
+	public static String LOGIN_RESPONSE_7_LINE1 = "This world is full.";
 
 	@ObfuscatedName("ba.bv")
-	public static String field922 = "Please use a different world.";
+	public static String LOGIN_RESPONSE_7_LINE2 = "Please use a different world.";
 
 	@ObfuscatedName("ba.bg")
-	public static String field923 = "";
+	public static String LOGIN_RESPONSE_7_LINE3 = "";
 
 	@ObfuscatedName("ba.bl")
-	public static String field986 = "Unable to connect.";
+	public static String LOGIN_RESPONSE_8_LINE1 = "Unable to connect.";
 
 	@ObfuscatedName("ba.bt")
-	public static String field925 = "Login server offline.";
+	public static String LOGIN_RESPONSE_8_LINE2 = "Login server offline.";
 
 	@ObfuscatedName("ba.bw")
-	public static String field943 = "";
+	public static String LOGIN_RESPONSE_8_LINE3 = "";
 
 	@ObfuscatedName("ba.by")
-	public static String field927 = "Login limit exceeded.";
+	public static String LOGIN_RESPONSE_9_LINE1 = "Login limit exceeded.";
 
 	@ObfuscatedName("ba.bx")
-	public static String field928 = "Too many connections from your address.";
+	public static String LOGIN_RESPONSE_9_LINE2 = "Too many connections from your address.";
 
 	@ObfuscatedName("ba.bf")
-	public static String field929 = "";
+	public static String LOGIN_RESPONSE_9_LINE3 = "";
 
 	@ObfuscatedName("ba.bu")
-	public static String field930 = "Unable to connect.";
+	public static String LOGIN_RESPONSE_10_LINE1 = "Unable to connect.";
 
 	@ObfuscatedName("ba.bo")
-	public static String field886 = "Bad session id.";
+	public static String LOGIN_RESPONSE_10_LINE2 = "Bad session id.";
 
 	@ObfuscatedName("ba.bq")
-	public static String field932 = "";
+	public static String LOGIN_RESPONSE_10_LINE3 = "";
 
 	@ObfuscatedName("ba.bj")
-	public static String field933 = "We suspect someone knows your password.";
+	public static String LOGIN_RESPONSE_11_LINE1 = "We suspect someone knows your password.";
 
 	@ObfuscatedName("ba.bz")
-	public static String field934 = "Press 'change your password' on front page.";
+	public static String LOGIN_RESPONSE_11_LINE2 = "Press 'change your password' on front page.";
 
 	@ObfuscatedName("ba.bm")
-	public static String field967 = "";
+	public static String LOGIN_RESPONSE_11_LINE3 = "";
 
 	@ObfuscatedName("ba.bn")
-	public static String field936 = "You need a members account to login to this world.";
+	public static String LOGIN_RESPONSE_12_LINE1 = "You need a members account to login to this world.";
 
 	@ObfuscatedName("ba.be")
-	public static String field994 = "Please subscribe, or use a different world.";
+	public static String LOGIN_RESPONSE_12_LINE2 = "Please subscribe, or use a different world.";
 
 	@ObfuscatedName("ba.bp")
-	public static String field974 = "";
+	public static String LOGIN_RESPONSE_12_LINE3 = "";
 
 	@ObfuscatedName("ba.ba")
-	public static String field939 = "Could not complete login.";
+	public static String LOGIN_RESPONSE_13_LINE1 = "Could not complete login.";
 
 	@ObfuscatedName("ba.bc")
-	public static String field937 = "Please try using a different world.";
+	public static String LOGIN_RESPONSE_13_LINE2 = "Please try using a different world.";
 
 	@ObfuscatedName("ba.br")
-	public static String field941 = "";
+	public static String LOGIN_RESPONSE_13_LINE3 = "";
 
 	@ObfuscatedName("ba.bb")
-	public static String field1006 = "The server is being updated.";
+	public static String LOGIN_RESPONSE_14_LINE1 = "The server is being updated.";
 
 	@ObfuscatedName("ba.bd")
-	public static String field877 = "Please wait 1 minute and try again.";
+	public static String LOGIN_RESPONSE_14_LINE2 = "Please wait 1 minute and try again.";
 
 	@ObfuscatedName("ba.cr")
-	public static String field1025 = "";
+	public static String LOGIN_RESPONSE_14_LINE3 = "";
 
 	@ObfuscatedName("ba.cs")
-	public static String field945 = "Too many incorrect logins from your address.";
+	public static String LOGIN_RESPONSE_16_LINE1 = "Too many incorrect logins from your address.";
 
 	@ObfuscatedName("ba.cj")
-	public static String field946 = "Please wait 5 minutes before trying again.";
+	public static String LOGIN_RESPONSE_16_LINE2 = "Please wait 5 minutes before trying again.";
 
 	@ObfuscatedName("ba.cl")
-	public static String field947 = "";
+	public static String LOGIN_RESPONSE_16_LINE3 = "";
 
 	@ObfuscatedName("ba.cp")
-	public static String field948 = "You are standing in a members-only area.";
+	public static String LOGIN_RESPONSE_17_LINE1 = "You are standing in a members-only area.";
 
 	@ObfuscatedName("ba.ca")
-	public static String field931 = "To play on this world move to a free area first";
+	public static String LOGIN_RESPONSE_17_LINE2 = "To play on this world move to a free area first";
 
 	@ObfuscatedName("ba.co")
-	public static String field950 = "";
+	public static String LOGIN_RESPONSE_17_LINE3 = "";
 
 	@ObfuscatedName("ba.ch")
-	public static String field951 = "Account locked as we suspect it has been stolen.";
+	public static String LOGIN_RESPONSE_18_LINE1 = "Account locked as we suspect it has been stolen.";
 
 	@ObfuscatedName("ba.cu")
-	public static String field952 = "Press 'recover a locked account' on front page.";
+	public static String LOGIN_RESPONSE_18_LINE2 = "Press 'recover a locked account' on front page.";
 
 	@ObfuscatedName("ba.cc")
-	public static String field996 = "";
+	public static String LOGIN_RESPONSE_18_LINE3 = "";
 
 	@ObfuscatedName("ba.cm")
-	public static String field1056 = "This world is running a closed Beta.";
+	public static String LOGIN_RESPONSE_19_LINE1 = "This world is running a closed Beta.";
 
 	@ObfuscatedName("ba.cw")
-	public static String field955 = "Sorry invited players only.";
+	public static String LOGIN_RESPONSE_19_LINE2 = "Sorry invited players only.";
 
 	@ObfuscatedName("ba.cz")
-	public static String field956 = "Please use a different world.";
+	public static String LOGIN_RESPONSE_19_LINE3 = "Please use a different world.";
 
 	@ObfuscatedName("ba.cv")
-	public static String field957 = "Invalid loginserver requested.";
+	public static String LOGIN_RESPONSE_20_LINE1 = "Invalid loginserver requested.";
 
 	@ObfuscatedName("ba.ct")
-	public static String field958 = "Please try using a different world.";
+	public static String LOGIN_RESPONSE_20_LINE2 = "Please try using a different world.";
 
 	@ObfuscatedName("ba.ck")
-	public static String field1071 = "";
+	public static String LOGIN_RESPONSE_20_LINE3 = "";
 
 	@ObfuscatedName("ba.cy")
-	public static String field969 = "Malformed login packet.";
+	public static String LOGIN_RESPONSE_22_LINE1 = "Malformed login packet.";
 
 	@ObfuscatedName("ba.cq")
-	public static String field961 = "Please try again.";
+	public static String LOGIN_RESPONSE_22_LINE2 = "Please try again.";
 
 	@ObfuscatedName("ba.cd")
-	public static String field938 = "";
+	public static String LOGIN_RESPONSE_22_LINE3 = "";
 
 	@ObfuscatedName("ba.cx")
-	public static String field893 = "No reply from loginserver.";
+	public static String LOGIN_RESPONSE_23_LINE1 = "No reply from loginserver.";
 
 	@ObfuscatedName("ba.cn")
-	public static String field949 = "Please wait 1 minute and try again.";
+	public static String LOGIN_RESPONSE_23_LINE2 = "Please wait 1 minute and try again.";
 
 	@ObfuscatedName("ba.ce")
-	public static String field965 = "";
+	public static String LOGIN_RESPONSE_23_LINE3 = "";
 
 	@ObfuscatedName("ba.ci")
-	public static String field1064 = "Error loading your profile.";
+	public static String LOGIN_RESPONSE_24_LINE1 = "Error loading your profile.";
 
 	@ObfuscatedName("ba.cb")
-	public static String field1022 = "Please contact customer support.";
+	public static String LOGIN_RESPONSE_24_LINE2 = "Please contact customer support.";
 
 	@ObfuscatedName("ba.cf")
-	public static String field968 = "";
+	public static String LOGIN_RESPONSE_24_LINE3 = "";
 
 	@ObfuscatedName("ba.cg")
-	public static String field921 = "Unexpected loginserver response.";
+	public static String LOGIN_RESPONSE_25_LINE1 = "Unexpected loginserver response.";
 
 	@ObfuscatedName("ba.dd")
-	public static String field970 = "Please try using a different world.";
+	public static String LOGIN_RESPONSE_25_LINE2 = "Please try using a different world.";
 
 	@ObfuscatedName("ba.dg")
-	public static String field971 = "";
+	public static String LOGIN_RESPONSE_25_LINE3 = "";
 
 	@ObfuscatedName("ba.df")
-	public static String field972 = "This computers address has been blocked";
+	public static String LOGIN_RESPONSE_26_LINE1 = "This computers address has been blocked";
 
 	@ObfuscatedName("ba.dk")
-	public static String field973 = "as it was used to break our rules.";
+	public static String LOGIN_RESPONSE_26_LINE2 = "as it was used to break our rules.";
 
 	@ObfuscatedName("ba.dz")
-	public static String field963 = "";
+	public static String LOGIN_RESPONSE_26_LINE3 = "";
 
 	@ObfuscatedName("ba.da")
-	public static String field1094 = "";
+	public static String LOGIN_RESPONSE_27_LINE1 = "";
 
 	@ObfuscatedName("ba.dj")
-	public static String field976 = "Service unavailable.";
+	public static String LOGIN_RESPONSE_27_LINE2 = "Service unavailable.";
 
 	@ObfuscatedName("ba.dv")
-	public static String field935 = "";
+	public static String LOGIN_RESPONSE_27_LINE3 = "";
 
 	@ObfuscatedName("ba.ds")
 	public static String field978 = "";
@@ -360,76 +361,76 @@ public class EnglishLocale {
 	public static String field983 = "";
 
 	@ObfuscatedName("ba.db")
-	public static String field984 = "Your account must have a displayname set";
+	public static String LOGIN_RESPONSE_31_LINE1 = "Your account must have a displayname set";
 
 	@ObfuscatedName("ba.dq")
-	public static String field985 = "in order to play the game.  Please set it";
+	public static String LOGIN_RESPONSE_31_LINE2 = "in order to play the game.  Please set it";
 
 	@ObfuscatedName("ba.dr")
-	public static String field926 = "via the website, or the main game.";
+	public static String LOGIN_RESPONSE_31_LINE3 = "via the website, or the main game.";
 
 	@ObfuscatedName("ba.du")
-	public static String field987 = "Your attempt to log into your account was";
+	public static String LOGIN_RESPONSE_32_LINE1 = "Your attempt to log into your account was";
 
 	@ObfuscatedName("ba.dy")
-	public static String field988 = "unsuccessful.  Don't worry, you can sort";
+	public static String LOGIN_RESPONSE_32_LINE2 = "unsuccessful.  Don't worry, you can sort";
 
 	@ObfuscatedName("ba.de")
-	public static String field1037 = "this out by visiting the billing system.";
+	public static String LOGIN_RESPONSE_32_LINE3 = "this out by visiting the billing system.";
 
 	@ObfuscatedName("ba.dw")
-	public static String field990 = "Your account is currently inaccessible.";
+	public static String LOGIN_RESPONSE_37_LINE1 = "Your account is currently inaccessible.";
 
 	@ObfuscatedName("ba.dl")
-	public static String field991 = "Please try again in a few minutes.";
+	public static String LOGIN_RESPONSE_37_LINE2 = "Please try again in a few minutes.";
 
 	@ObfuscatedName("ba.dn")
-	public static String field997 = "";
+	public static String LOGIN_RESPONSE_37_LINE3 = "";
 
 	@ObfuscatedName("ba.do")
-	public static String field993 = "You need to vote to play!";
+	public static String LOGIN_RESPONSE_38_LINE1 = "You need to vote to play!";
 
 	@ObfuscatedName("ba.dx")
-	public static String field944 = "Visit runescape.com and vote,";
+	public static String LOGIN_RESPONSE_38_LINE2 = "Visit runescape.com and vote,";
 
 	@ObfuscatedName("ba.dt")
-	public static String field953 = "and then come back here!";
+	public static String LOGIN_RESPONSE_38_LINE3 = "and then come back here!";
 
 	@ObfuscatedName("ba.eb")
-	public static String field870 = "Sorry, but your account is not eligible to";
+	public static String LOGIN_RESPONSE_55_LINE1 = "Sorry, but your account is not eligible to";
 
 	@ObfuscatedName("ba.er")
-	public static String field871 = "play this version of the game.  Please try";
+	public static String LOGIN_RESPONSE_55_LINE2 = "play this version of the game.  Please try";
 
 	@ObfuscatedName("ba.es")
-	public static String field975 = "playing the main game instead!";
+	public static String LOGIN_RESPONSE_55_LINE3 = "playing the main game instead!";
 
 	@ObfuscatedName("ba.ez")
-	public static String field999 = "Unexpected server response";
+	public static String LOGIN_RESPONSE_LINE1 = "Unexpected server response";
 
 	@ObfuscatedName("ba.ev")
-	public static String field866 = "Please try using a different world.";
+	public static String LOGIN_RESPONSE_LINE2 = "Please try using a different world.";
 
 	@ObfuscatedName("ba.ei")
-	public static String field1001 = "";
+	public static String LOGIN_RESPONSE_LINE3 = "";
 
 	@ObfuscatedName("ba.ef")
-	public static String field1002 = "wishes to trade with you.";
+	public static String NOTIFY_TRADE = "wishes to trade with you.";
 
 	@ObfuscatedName("ba.ej")
-	public static String field1003 = "wishes to duel with you.";
+	public static String NOTIFY_DUEL = "wishes to duel with you.";
 
 	@ObfuscatedName("ba.eh")
-	public static String field1004 = "Unable to find ";
+	public static String UNABLE_TO_FIND = "Unable to find ";
 
 	@ObfuscatedName("ba.eg")
-	public static String field1005 = "Use";
+	public static String OP_USE = "Use";
 
 	@ObfuscatedName("ba.el")
-	public static String field1075 = "Examine";
+	public static String OP_EXAMINE = "Examine";
 
 	@ObfuscatedName("ba.en")
-	public static String field902 = "Attack";
+	public static String OP_ATTACK = "Attack";
 
 	@ObfuscatedName("ba.ew")
 	public static String field1028 = "Choose Option";
@@ -438,34 +439,34 @@ public class EnglishLocale {
 	public static String field1009 = " more options";
 
 	@ObfuscatedName("ba.eq")
-	public static String field1010 = "Walk here";
+	public static String WALK_HERE = "Walk here";
 
 	@ObfuscatedName("ba.et")
-	public static String field1011 = "level-";
+	public static String LEVEL_PREFIX = "level-";
 
 	@ObfuscatedName("ba.ee")
-	public static String field879 = "skill-";
+	public static String SKILL_PREFIX = "skill-";
 
 	@ObfuscatedName("ba.ed")
-	public static String field1086 = "Please wait...";
+	public static String PLEASE_WAIT = "Please wait...";
 
 	@ObfuscatedName("ba.ex")
-	public static String field1014 = "Close";
+	public static String CLOSE = "Close";
 
 	@ObfuscatedName("ba.ea")
-	public static String field1015 = " ";
+	public static String SPACE = " ";
 
 	@ObfuscatedName("ba.ep")
-	public static String field1016 = "M";
+	public static String M_SUFFIX = "M";
 
 	@ObfuscatedName("ba.em")
-	public static String field942 = "M";
+	public static String M_SUFFIX2 = "M";
 
 	@ObfuscatedName("ba.ey")
-	public static String field1018 = "K";
+	public static String K_SUFFIX = "K";
 
 	@ObfuscatedName("ba.ec")
-	public static String field1019 = "K";
+	public static String K_SUFFIX2 = "K";
 
 	@ObfuscatedName("ba.eo")
 	public static String field1043 = "World";
@@ -501,106 +502,106 @@ public class EnglishLocale {
 	public static String field1030 = " from your friend list first";
 
 	@ObfuscatedName("ba.fr")
-	public static String field1031 = "yellow:";
+	public static String COLOR_YELLOW = "yellow:";
 
 	@ObfuscatedName("ba.fl")
-	public static String field1032 = "yellow:";
+	public static String GER_COLOR_YELLOW = "yellow:";
 
 	@ObfuscatedName("ba.fk")
-	public static String field1033 = "red:";
+	public static String COLOR_RED = "red:";
 
 	@ObfuscatedName("ba.fa")
-	public static String field1034 = "red:";
+	public static String GER_COLOR_RED = "red:";
 
 	@ObfuscatedName("ba.fq")
-	public static String field1035 = "green:";
+	public static String COLOR_GREEN = "green:";
 
 	@ObfuscatedName("ba.ft")
-	public static String field1036 = "green:";
+	public static String GER_COLOR_GREEN = "green:";
 
 	@ObfuscatedName("ba.fx")
-	public static String field1083 = "cyan:";
+	public static String COLOR_CYAN = "cyan:";
 
 	@ObfuscatedName("ba.fs")
-	public static String field1038 = "cyan:";
+	public static String GER_COLOR_CYAN = "cyan:";
 
 	@ObfuscatedName("ba.fh")
-	public static String field1039 = "purple:";
+	public static String COLOR_PURPLE = "purple:";
 
 	@ObfuscatedName("ba.ff")
-	public static String field1040 = "purple:";
+	public static String GER_COLOR_PURPLE = "purple:";
 
 	@ObfuscatedName("ba.fy")
-	public static String field1041 = "white:";
+	public static String COLOR_WHITE = "white:";
 
 	@ObfuscatedName("ba.fn")
-	public static String field1042 = "white:";
+	public static String GER_COLOR_WHITE = "white:";
 
 	@ObfuscatedName("ba.fz")
-	public static String field954 = "flash1:";
+	public static String COLOR_FLASH1 = "flash1:";
 
 	@ObfuscatedName("ba.fw")
-	public static String field919 = "flash1:";
+	public static String GER_COLOR_FLASH1 = "flash1:";
 
 	@ObfuscatedName("ba.fo")
-	public static String field977 = "flash2:";
+	public static String COLOR_FLASH2 = "flash2:";
 
 	@ObfuscatedName("ba.fm")
-	public static String field1046 = "flash2:";
+	public static String GER_COLOR_FLASH2 = "flash2:";
 
 	@ObfuscatedName("ba.fi")
-	public static String field1047 = "flash3:";
+	public static String COLOR_FLASH3 = "flash3:";
 
 	@ObfuscatedName("ba.ge")
-	public static String field1048 = "flash3:";
+	public static String GER_COLOR_FLASH3 = "flash3:";
 
 	@ObfuscatedName("ba.gq")
-	public static String field1023 = "glow1:";
+	public static String COLOR_GLOW1 = "glow1:";
 
 	@ObfuscatedName("ba.gr")
-	public static String field1050 = "glow1:";
+	public static String GER_COLOR_GLOW1 = "glow1:";
 
 	@ObfuscatedName("ba.gd")
-	public static String field1008 = "glow2:";
+	public static String COLOR_GLOW2 = "glow2:";
 
 	@ObfuscatedName("ba.gh")
-	public static String field896 = "glow2:";
+	public static String GER_COLOR_GLOW2 = "glow2:";
 
 	@ObfuscatedName("ba.gm")
-	public static String field1053 = "glow3:";
+	public static String COLOR_GLOW3 = "glow3:";
 
 	@ObfuscatedName("ba.gw")
-	public static String field1054 = "glow3:";
+	public static String GER_COLOR_GLOW3 = "glow3:";
 
 	@ObfuscatedName("ba.gn")
-	public static String field1055 = "wave:";
+	public static String EFFECT_WAVE = "wave:";
 
 	@ObfuscatedName("ba.gj")
-	public static String field959 = "wave:";
+	public static String GER_EFFECT_WAVE = "wave:";
 
 	@ObfuscatedName("ba.gk")
-	public static String field1057 = "wave2:";
+	public static String EFFECT_WAVE2 = "wave2:";
 
 	@ObfuscatedName("ba.gx")
-	public static String field1058 = "wave2:";
+	public static String GER_EFFECT_WAVE2 = "wave2:";
 
 	@ObfuscatedName("ba.gl")
-	public static String field1059 = "shake:";
+	public static String EFFECT_SHAKE = "shake:";
 
 	@ObfuscatedName("ba.gz")
-	public static String field1060 = "shake:";
+	public static String GER_EFFECT_SHAKE = "shake:";
 
 	@ObfuscatedName("ba.gp")
-	public static String field895 = "scroll:";
+	public static String EFFECT_SCROLL = "scroll:";
 
 	@ObfuscatedName("ba.gf")
-	public static String field907 = "scroll:";
+	public static String GER_EFFECT_SCROLL = "scroll:";
 
 	@ObfuscatedName("ba.gv")
-	public static String field1063 = "slide:";
+	public static String EFFECT_SLIDE = "slide:";
 
 	@ObfuscatedName("ba.gt")
-	public static String field878 = "slide:";
+	public static String GER_EFFECT_SLIDE = "slide:";
 
 	@ObfuscatedName("ba.gg")
 	public static String field1065 = "RuneScape is loading - please wait...";

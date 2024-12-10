@@ -486,9 +486,9 @@ public class ObjType extends DoublyLinkable {
 		if (arg0 < 100000) {
 			return "<col=ffff00>" + arg0 + "</col>";
 		} else if (arg0 < 10000000) {
-			return "<col=ffffff>" + arg0 / 1000 + EnglishLocale.field1019 + "</col>";
+			return "<col=ffffff>" + arg0 / 1000 + EnglishLocale.K_SUFFIX2 + "</col>";
 		} else {
-			return "<col=00ff80>" + arg0 / 1000000 + EnglishLocale.field942 + "</col>";
+			return "<col=00ff80>" + arg0 / 1000000 + EnglishLocale.M_SUFFIX2 + "</col>";
 		}
 	}
 

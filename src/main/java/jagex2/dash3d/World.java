@@ -131,7 +131,7 @@ public class World {
 			for (int var7 = 0; var7 < 64; var7++) {
 				for (int var8 = 0; var8 < 64; var8++) {
 					if (arg1 + var7 > 0 && arg1 + var7 < 103 && arg2 + var8 > 0 && arg2 + var8 < 103) {
-						arg5[var6].field1266[arg1 + var7][arg2 + var8] &= 0xFEFFFFFF;
+						arg5[var6].flags[arg1 + var7][arg2 + var8] &= 0xFEFFFFFF;
 					}
 				}
 			}
@@ -151,7 +151,7 @@ public class World {
 		for (int var9 = 0; var9 < 8; var9++) {
 			for (int var10 = 0; var10 < 8; var10++) {
 				if (arg2 + var9 > 0 && arg2 + var9 < 103 && arg3 + var10 > 0 && arg3 + var10 < 103) {
-					arg8[arg1].field1266[arg2 + var9][arg3 + var10] &= 0xFEFFFFFF;
+					arg8[arg1].flags[arg2 + var9][arg3 + var10] &= 0xFEFFFFFF;
 				}
 			}
 		}

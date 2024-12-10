@@ -35,7 +35,7 @@ public class ScriptRunner {
 	public static int[] field188 = new int[1000];
 
 	@ObfuscatedName("s.j")
-	public static String[] field194 = new String[1000];
+	public static String[] chatTyped = new String[1000];
 
 	@ObfuscatedName("s.z")
 	public static int field195 = 0;
@@ -60,8 +60,8 @@ public class ScriptRunner {
 	}
 
 	@ObfuscatedName("bv.r(Ldu;B)V")
-	public static void runHook(HookRequest arg0) {
-		Object[] var1 = arg0.field1588;
+	public static void runHook(HookRequest req) {
+		Object[] var1 = req.field1588;
 		int var2 = (Integer) var1[0];
 		ClientScript var3 = ClientScript.method872(var2);
 		if (var3 == null) {
@@ -82,38 +82,38 @@ public class ScriptRunner {
 			for (int var12 = 1; var12 < var1.length; var12++) {
 				if (var1[var12] instanceof Integer) {
 					int var13 = (Integer) var1[var12];
-					if (var13 == -2147483647) {
-						var13 = arg0.field1589;
+					if (var13 == 0x80000001) {
+						var13 = req.field1589;
 					}
-					if (var13 == -2147483646) {
-						var13 = arg0.field1587;
+					if (var13 == 0x80000002) {
+						var13 = req.field1587;
 					}
-					if (var13 == -2147483645) {
-						var13 = arg0.component == null ? -1 : arg0.component.field1783;
+					if (var13 == 0x80000003) {
+						var13 = req.component == null ? -1 : req.component.field1783;
 					}
-					if (var13 == -2147483644) {
-						var13 = arg0.field1591;
+					if (var13 == 0x80000004) {
+						var13 = req.field1591;
 					}
-					if (var13 == -2147483643) {
-						var13 = arg0.component == null ? -1 : arg0.component.subid;
+					if (var13 == 0x80000005) {
+						var13 = req.component == null ? -1 : req.component.subid;
 					}
-					if (var13 == -2147483642) {
-						var13 = arg0.field1592 == null ? -1 : arg0.field1592.field1783;
+					if (var13 == 0x80000006) {
+						var13 = req.field1592 == null ? -1 : req.field1592.field1783;
 					}
-					if (var13 == -2147483641) {
-						var13 = arg0.field1592 == null ? -1 : arg0.field1592.subid;
+					if (var13 == 0x80000007) {
+						var13 = req.field1592 == null ? -1 : req.field1592.subid;
 					}
-					if (var13 == -2147483640) {
-						var13 = arg0.field1593;
+					if (var13 == 0x80000008) {
+						var13 = req.field1593;
 					}
-					if (var13 == -2147483639) {
-						var13 = arg0.field1594;
+					if (var13 == 0x80000009) {
+						var13 = req.field1594;
 					}
 					intLocals[var10++] = var13;
 				} else if (var1[var12] instanceof String) {
 					String var14 = (String) var1[var12];
 					if (var14.equals("event_opbase")) {
-						var14 = arg0.field1595;
+						var14 = req.field1595;
 					}
 					stringLocals[var11++] = var14;
 				}
@@ -125,60 +125,60 @@ public class ScriptRunner {
 					throw new RuntimeException();
 				}
 				var6++;
-				int var367 = var7[var6];
-				if (var367 < 100) {
-					if (var367 == 0) {
+				int opcode = var7[var6];
+				if (opcode < 100) {
+					if (opcode == 0) {
 						field188[var4++] = var8[var6];
 						continue;
 					}
-					if (var367 == 1) {
+					if (opcode == 1) {
 						int var16 = var8[var6];
 						field188[var4++] = VarProvider.field1210[var16];
 						continue;
 					}
-					if (var367 == 2) {
+					if (opcode == 2) {
 						int var17 = var8[var6];
 						var4--;
 						VarProvider.field1210[var17] = field188[var4];
 						continue;
 					}
-					if (var367 == 3) {
-						field194[var5++] = var3.field2264[var6];
+					if (opcode == 3) {
+						chatTyped[var5++] = var3.field2264[var6];
 						continue;
 					}
-					if (var367 == 6) {
+					if (opcode == 6) {
 						var6 += var8[var6];
 						continue;
 					}
-					if (var367 == 7) {
+					if (opcode == 7) {
 						var4 -= 2;
 						if (field188[var4 + 1] != field188[var4]) {
 							var6 += var8[var6];
 						}
 						continue;
 					}
-					if (var367 == 8) {
+					if (opcode == 8) {
 						var4 -= 2;
 						if (field188[var4 + 1] == field188[var4]) {
 							var6 += var8[var6];
 						}
 						continue;
 					}
-					if (var367 == 9) {
+					if (opcode == 9) {
 						var4 -= 2;
 						if (field188[var4] < field188[var4 + 1]) {
 							var6 += var8[var6];
 						}
 						continue;
 					}
-					if (var367 == 10) {
+					if (opcode == 10) {
 						var4 -= 2;
 						if (field188[var4] > field188[var4 + 1]) {
 							var6 += var8[var6];
 						}
 						continue;
 					}
-					if (var367 == 21) {
+					if (opcode == 21) {
 						if (field195 == 0) {
 							return;
 						}
@@ -191,12 +191,12 @@ public class ScriptRunner {
 						stringLocals = var18.stringLocals;
 						continue;
 					}
-					if (var367 == 25) {
+					if (opcode == 25) {
 						int var19 = var8[var6];
 						field188[var4++] = VarProvider.method1130(var19);
 						continue;
 					}
-					if (var367 == 27) {
+					if (opcode == 27) {
 						int var20 = var8[var6];
 						var4--;
 						int var21 = field188[var4];
@@ -212,57 +212,57 @@ public class ScriptRunner {
 						VarProvider.field1210[var23] = VarProvider.field1210[var23] & ~var27 | var21 << var24 & var27;
 						continue;
 					}
-					if (var367 == 31) {
+					if (opcode == 31) {
 						var4 -= 2;
 						if (field188[var4] <= field188[var4 + 1]) {
 							var6 += var8[var6];
 						}
 						continue;
 					}
-					if (var367 == 32) {
+					if (opcode == 32) {
 						var4 -= 2;
 						if (field188[var4] >= field188[var4 + 1]) {
 							var6 += var8[var6];
 						}
 						continue;
 					}
-					if (var367 == 33) {
+					if (opcode == 33) {
 						field188[var4++] = intLocals[var8[var6]];
 						continue;
 					}
 					int var10001;
-					if (var367 == 34) {
+					if (opcode == 34) {
 						var10001 = var8[var6];
 						var4--;
 						intLocals[var10001] = field188[var4];
 						continue;
 					}
-					if (var367 == 35) {
-						field194[var5++] = stringLocals[var8[var6]];
+					if (opcode == 35) {
+						chatTyped[var5++] = stringLocals[var8[var6]];
 						continue;
 					}
-					if (var367 == 36) {
+					if (opcode == 36) {
 						var10001 = var8[var6];
 						var5--;
-						stringLocals[var10001] = field194[var5];
+						stringLocals[var10001] = chatTyped[var5];
 						continue;
 					}
-					if (var367 == 37) {
+					if (opcode == 37) {
 						int var28 = var8[var6];
 						var5 -= var28;
-						String var29 = JStringUtil.method1785(field194, var5, var28);
-						field194[var5++] = var29;
+						String var29 = JStringUtil.method1785(chatTyped, var5, var28);
+						chatTyped[var5++] = var29;
 						continue;
 					}
-					if (var367 == 38) {
+					if (opcode == 38) {
 						var4--;
 						continue;
 					}
-					if (var367 == 39) {
+					if (opcode == 39) {
 						var5--;
 						continue;
 					}
-					if (var367 == 40) {
+					if (opcode == 40) {
 						int var30 = var8[var6];
 						ClientScript var31 = ClientScript.method872(var30);
 						int[] var32 = new int[var31.field2263];
@@ -271,7 +271,7 @@ public class ScriptRunner {
 							var32[var34] = field188[var4 - var31.field2266 + var34];
 						}
 						for (int var35 = 0; var35 < var31.field2267; var35++) {
-							var33[var35] = field194[var5 - var31.field2267 + var35];
+							var33[var35] = chatTyped[var5 - var31.field2267 + var35];
 						}
 						var4 -= var31.field2266;
 						var5 -= var31.field2267;
@@ -289,17 +289,17 @@ public class ScriptRunner {
 						stringLocals = var33;
 						continue;
 					}
-					if (var367 == 42) {
+					if (opcode == 42) {
 						field188[var4++] = Client.field2120[var8[var6]];
 						continue;
 					}
-					if (var367 == 43) {
+					if (opcode == 43) {
 						var10001 = var8[var6];
 						var4--;
 						Client.field2120[var10001] = field188[var4];
 						continue;
 					}
-					if (var367 == 44) {
+					if (opcode == 44) {
 						int var37 = var8[var6] >> 16;
 						int var38 = var8[var6] & 0xFFFF;
 						var4--;
@@ -321,7 +321,7 @@ public class ScriptRunner {
 						}
 						throw new RuntimeException();
 					}
-					if (var367 == 45) {
+					if (opcode == 45) {
 						int var42 = var8[var6];
 						var4--;
 						int var43 = field188[var4];
@@ -331,7 +331,7 @@ public class ScriptRunner {
 						}
 						throw new RuntimeException();
 					}
-					if (var367 == 46) {
+					if (opcode == 46) {
 						int var44 = var8[var6];
 						var4 -= 2;
 						int var45 = field188[var4];
@@ -341,18 +341,18 @@ public class ScriptRunner {
 						}
 						throw new RuntimeException();
 					}
-					if (var367 == 47) {
+					if (opcode == 47) {
 						String var46 = Client.field1996[var8[var6]];
 						if (var46 == null) {
 							var46 = "null";
 						}
-						field194[var5++] = var46;
+						chatTyped[var5++] = var46;
 						continue;
 					}
-					if (var367 == 48) {
+					if (opcode == 48) {
 						var10001 = var8[var6];
 						var5--;
-						Client.field1996[var10001] = field194[var5];
+						Client.field1996[var10001] = chatTyped[var5];
 						continue;
 					}
 				}
@@ -362,8 +362,8 @@ public class ScriptRunner {
 				} else {
 					var47 = false;
 				}
-				if (var367 < 1000) {
-					if (var367 == 100) {
+				if (opcode < 1000) {
+					if (opcode == 100) {
 						var4 -= 3;
 						int var48 = field188[var4];
 						int var49 = field188[var4 + 1];
@@ -386,10 +386,10 @@ public class ScriptRunner {
 							throw new RuntimeException("" + (var50 - 1));
 						}
 						IfType var54 = new IfType();
-						var54.field1785 = var49;
+						var54.type = var49;
 						var54.layerid = var54.field1783 = var51.field1783;
 						var54.subid = var50;
-						var54.field1782 = true;
+						var54.if3 = true;
 						var51.subcomponents[var50] = var54;
 						if (var47) {
 							activeComponent2 = var54;
@@ -399,21 +399,21 @@ public class ScriptRunner {
 						Client.method1238(var51);
 						continue;
 					}
-					if (var367 == 101) {
+					if (opcode == 101) {
 						IfType var55 = var47 ? activeComponent2 : activeComponent;
 						IfType var56 = IfType.get(var55.field1783);
 						var56.subcomponents[var55.subid] = null;
 						Client.method1238(var56);
 						continue;
 					}
-					if (var367 == 102) {
+					if (opcode == 102) {
 						var4--;
 						IfType var57 = IfType.get(field188[var4]);
 						var57.subcomponents = null;
 						Client.method1238(var57);
 						continue;
 					}
-					if (var367 == 200) {
+					if (opcode == 200) {
 						var4 -= 2;
 						int var58 = field188[var4];
 						int var59 = field188[var4 + 1];
@@ -430,30 +430,30 @@ public class ScriptRunner {
 						field188[var4++] = 0;
 						continue;
 					}
-				} else if (var367 >= 1000 && var367 < 1100 || !(var367 < 2000 || var367 >= 2100)) {
+				} else if (opcode >= 1000 && opcode < 1100 || !(opcode < 2000 || opcode >= 2100)) {
 					IfType var61;
-					if (var367 >= 2000) {
-						var367 -= 1000;
+					if (opcode >= 2000) {
+						opcode -= 1000;
 						var4--;
 						var61 = IfType.get(field188[var4]);
 					} else {
 						var61 = var47 ? activeComponent2 : activeComponent;
 					}
-					if (var367 == 1000) {
+					if (opcode == 1000) {
 						var4 -= 2;
 						var61.field1788 = field188[var4];
 						var61.field1810 = field188[var4 + 1];
 						Client.method1238(var61);
 						continue;
 					}
-					if (var367 == 1001) {
+					if (opcode == 1001) {
 						var4 -= 2;
-						var61.field1792 = field188[var4];
-						var61.field1793 = field188[var4 + 1];
+						var61.width = field188[var4];
+						var61.height = field188[var4 + 1];
 						Client.method1238(var61);
 						continue;
 					}
-					if (var367 == 1003) {
+					if (opcode == 1003) {
 						var4--;
 						boolean var62 = field188[var4] == 1;
 						if (var61.field1880 != var62) {
@@ -462,27 +462,27 @@ public class ScriptRunner {
 						}
 						continue;
 					}
-				} else if (var367 >= 1100 && var367 < 1200 || !(var367 < 2100 || var367 >= 2200)) {
+				} else if (opcode >= 1100 && opcode < 1200 || !(opcode < 2100 || opcode >= 2200)) {
 					IfType var63;
-					if (var367 >= 2000) {
-						var367 -= 1000;
+					if (opcode >= 2000) {
+						opcode -= 1000;
 						var4--;
 						var63 = IfType.get(field188[var4]);
 					} else {
 						var63 = var47 ? activeComponent2 : activeComponent;
 					}
-					if (var367 == 1100) {
+					if (opcode == 1100) {
 						var4 -= 2;
 						var63.field1796 = field188[var4];
-						if (var63.field1796 > var63.field1884 - var63.field1792) {
-							var63.field1796 = var63.field1884 - var63.field1792;
+						if (var63.field1796 > var63.field1884 - var63.width) {
+							var63.field1796 = var63.field1884 - var63.width;
 						}
 						if (var63.field1796 < 0) {
 							var63.field1796 = 0;
 						}
 						var63.field1797 = field188[var4 + 1];
-						if (var63.field1797 > var63.field1799 - var63.field1793) {
-							var63.field1797 = var63.field1799 - var63.field1793;
+						if (var63.field1797 > var63.field1799 - var63.height) {
+							var63.field1797 = var63.field1799 - var63.height;
 						}
 						if (var63.field1797 < 0) {
 							var63.field1797 = 0;
@@ -490,56 +490,56 @@ public class ScriptRunner {
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1101) {
+					if (opcode == 1101) {
 						var4--;
 						var63.field1822 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1102) {
+					if (opcode == 1102) {
 						var4--;
 						var63.field1893 = field188[var4] == 1;
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1103) {
+					if (opcode == 1103) {
 						var4--;
 						var63.field1805 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1104) {
+					if (opcode == 1104) {
 						var4--;
 						var63.field1804 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1105) {
+					if (opcode == 1105) {
 						var4--;
 						var63.field1807 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1106) {
+					if (opcode == 1106) {
 						var4--;
 						var63.field1784 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1107) {
+					if (opcode == 1107) {
 						var4--;
 						var63.field1794 = field188[var4] == 1;
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1108) {
+					if (opcode == 1108) {
 						var63.field1815 = 1;
 						var4--;
 						var63.field1816 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1109) {
+					if (opcode == 1109) {
 						var4 -= 6;
 						var63.field1821 = field188[var4];
 						var63.field1798 = field188[var4 + 1];
@@ -550,7 +550,7 @@ public class ScriptRunner {
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1110) {
+					if (opcode == 1110) {
 						var4--;
 						int var64 = field188[var4];
 						if (var63.field1863 != var64) {
@@ -561,28 +561,28 @@ public class ScriptRunner {
 						}
 						continue;
 					}
-					if (var367 == 1111) {
+					if (opcode == 1111) {
 						var4--;
 						var63.field1828 = field188[var4] == 1;
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1112) {
+					if (opcode == 1112) {
 						var5--;
-						String var65 = field194[var5];
+						String var65 = chatTyped[var5];
 						if (!var65.equals(var63.field1830)) {
 							var63.field1830 = var65;
 							Client.method1238(var63);
 						}
 						continue;
 					}
-					if (var367 == 1113) {
+					if (opcode == 1113) {
 						var4--;
 						var63.field1829 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1114) {
+					if (opcode == 1114) {
 						var4 -= 3;
 						var63.field1864 = field188[var4];
 						var63.field1834 = field188[var4 + 1];
@@ -590,54 +590,54 @@ public class ScriptRunner {
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1115) {
+					if (opcode == 1115) {
 						var4--;
 						var63.field1835 = field188[var4] == 1;
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1116) {
+					if (opcode == 1116) {
 						var4--;
 						var63.field1811 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1117) {
+					if (opcode == 1117) {
 						var4--;
 						var63.field1812 = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1118) {
+					if (opcode == 1118) {
 						var4--;
 						var63.field1849 = field188[var4] == 1;
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1119) {
+					if (opcode == 1119) {
 						var4--;
 						var63.field1814 = field188[var4] == 1;
 						Client.method1238(var63);
 						continue;
 					}
-					if (var367 == 1120) {
+					if (opcode == 1120) {
 						var4 -= 2;
 						var63.field1884 = field188[var4];
 						var63.field1799 = field188[var4 + 1];
 						Client.method1238(var63);
 						continue;
 					}
-				} else if (var367 >= 1200 && var367 < 1300 || !(var367 < 2200 || var367 >= 2300)) {
+				} else if (opcode >= 1200 && opcode < 1300 || !(opcode < 2200 || opcode >= 2300)) {
 					IfType var66;
-					if (var367 >= 2000) {
-						var367 -= 1000;
+					if (opcode >= 2000) {
+						opcode -= 1000;
 						var4--;
 						var66 = IfType.get(field188[var4]);
 					} else {
 						var66 = var47 ? activeComponent2 : activeComponent;
 					}
 					Client.method1238(var66);
-					if (var367 == 1200) {
+					if (opcode == 1200) {
 						var4 -= 2;
 						int var67 = field188[var4];
 						int var68 = field188[var4 + 1];
@@ -650,90 +650,90 @@ public class ScriptRunner {
 						var66.field1821 = var69.xof2d;
 						var66.field1798 = var69.yof2d;
 						var66.field1826 = var69.zoom2d;
-						if (var66.field1792 > 0) {
-							var66.field1826 = var66.field1826 * 32 / var66.field1792;
+						if (var66.width > 0) {
+							var66.field1826 = var66.field1826 * 32 / var66.width;
 						}
 						continue;
 					}
-					if (var367 == 1201) {
+					if (opcode == 1201) {
 						var66.field1815 = 2;
 						var4--;
 						var66.field1816 = field188[var4];
 						continue;
 					}
-					if (var367 == 1202) {
+					if (opcode == 1202) {
 						var66.field1815 = 3;
 						var66.field1816 = Client.localPlayer.field2786.method1176();
 						continue;
 					}
-				} else if ((var367 >= 1300 && var367 < 1400) || (var367 >= 2300 && var367 < 2400)) {
+				} else if ((opcode >= 1300 && opcode < 1400) || (opcode >= 2300 && opcode < 2400)) {
 					IfType var70;
-					if (var367 >= 2000) {
-						var367 -= 1000;
+					if (opcode >= 2000) {
+						opcode -= 1000;
 						var4--;
 						var70 = IfType.get(field188[var4]);
 					} else {
 						var70 = var47 ? activeComponent2 : activeComponent;
 					}
-					if (var367 == 1300) {
+					if (opcode == 1300) {
 						var4--;
 						int var71 = field188[var4] - 1;
 						if (var71 >= 0 && var71 <= 9) {
 							var5--;
-							var70.method1829(var71, field194[var5]);
+							var70.method1829(var71, chatTyped[var5]);
 							continue;
 						}
 						var5--;
 						continue;
 					}
-					if (var367 == 1301) {
+					if (opcode == 1301) {
 						var4 -= 2;
 						int var72 = field188[var4];
 						int var73 = field188[var4 + 1];
 						var70.field1845 = IfType.method947(var72, var73);
 						continue;
 					}
-					if (var367 == 1302) {
+					if (opcode == 1302) {
 						var4--;
 						var70.field1858 = field188[var4] == 1;
 						continue;
 					}
-					if (var367 == 1303) {
+					if (opcode == 1303) {
 						var4--;
 						var70.field1846 = field188[var4];
 						continue;
 					}
-					if (var367 == 1304) {
+					if (opcode == 1304) {
 						var4--;
 						var70.field1887 = field188[var4];
 						continue;
 					}
-					if (var367 == 1305) {
+					if (opcode == 1305) {
 						var5--;
-						var70.field1795 = field194[var5];
+						var70.field1795 = chatTyped[var5];
 						continue;
 					}
-					if (var367 == 1306) {
+					if (opcode == 1306) {
 						var5--;
-						var70.field1841 = field194[var5];
+						var70.field1841 = chatTyped[var5];
 						continue;
 					}
-					if (var367 == 1307) {
+					if (opcode == 1307) {
 						var70.field1844 = null;
 						continue;
 					}
 				} else {
-					if (var367 >= 1400 && var367 < 1500 || var367 >= 2400 && var367 < 2500) {
+					if (opcode >= 1400 && opcode < 1500 || opcode >= 2400 && opcode < 2500) {
 						IfType var74;
-						if (var367 >= 2000) {
-							var367 -= 1000;
+						if (opcode >= 2000) {
+							opcode -= 1000;
 							var4--;
 							var74 = IfType.get(field188[var4]);
 						} else {
 							var74 = var47 ? activeComponent2 : activeComponent;
 						}
 						var5--;
-						String var75 = field194[var5];
+						String var75 = chatTyped[var5];
 						int[] var76 = null;
 						if (var75.length() > 0 && var75.charAt(var75.length() - 1) == 'Y') {
 							var4--;
@@ -751,7 +751,7 @@ public class ScriptRunner {
 						for (int var79 = var78.length - 1; var79 >= 1; var79--) {
 							if (var75.charAt(var79 - 1) == 's') {
 								var5--;
-								var78[var79] = field194[var5];
+								var78[var79] = chatTyped[var5];
 							} else {
 								var4--;
 								var78[var79] = Integer.valueOf(field188[var4]);
@@ -764,155 +764,155 @@ public class ScriptRunner {
 						} else {
 							var78[0] = Integer.valueOf(var80);
 						}
-						if (var367 == 1400) {
+						if (opcode == 1400) {
 							var74.field1852 = var78;
 						}
-						if (var367 == 1401) {
+						if (opcode == 1401) {
 							var74.field1855 = var78;
 						}
-						if (var367 == 1402) {
+						if (opcode == 1402) {
 							var74.field1851 = var78;
 						}
-						if (var367 == 1403) {
+						if (opcode == 1403) {
 							var74.field1856 = var78;
 						}
-						if (var367 == 1404) {
+						if (opcode == 1404) {
 							var74.field1838 = var78;
 						}
-						if (var367 == 1405) {
+						if (opcode == 1405) {
 							var74.field1781 = var78;
 						}
-						if (var367 == 1406) {
+						if (opcode == 1406) {
 							var74.field1836 = var78;
 						}
-						if (var367 == 1407) {
+						if (opcode == 1407) {
 							var74.field1839 = var78;
 							var74.field1889 = var76;
 						}
-						if (var367 == 1408) {
+						if (opcode == 1408) {
 							var74.field1869 = var78;
 						}
-						if (var367 == 1409) {
+						if (opcode == 1409) {
 							var74.field1847 = var78;
 						}
-						if (var367 == 1410) {
+						if (opcode == 1410) {
 							var74.field1860 = var78;
 						}
-						if (var367 == 1411) {
+						if (opcode == 1411) {
 							var74.field1853 = var78;
 						}
-						if (var367 == 1412) {
+						if (opcode == 1412) {
 							var74.field1857 = var78;
 						}
-						if (var367 == 1414) {
+						if (opcode == 1414) {
 							var74.field1865 = var78;
 							var74.field1866 = var76;
 						}
-						if (var367 == 1415) {
+						if (opcode == 1415) {
 							var74.field1867 = var78;
 							var74.field1868 = var76;
 						}
-						if (var367 == 1416) {
+						if (opcode == 1416) {
 							var74.field1861 = var78;
 						}
-						if (var367 == 1417) {
+						if (opcode == 1417) {
 							var74.field1831 = var78;
 						}
-						if (var367 == 1418) {
+						if (opcode == 1418) {
 							var74.field1872 = var78;
 						}
-						if (var367 == 1419) {
+						if (opcode == 1419) {
 							var74.field1873 = var78;
 						}
-						if (var367 == 1420) {
+						if (opcode == 1420) {
 							var74.field1877 = var78;
 						}
-						if (var367 == 1421) {
+						if (opcode == 1421) {
 							var74.field1875 = var78;
 						}
-						if (var367 == 1422) {
+						if (opcode == 1422) {
 							var74.field1777 = var78;
 						}
-						if (var367 == 1423) {
+						if (opcode == 1423) {
 							var74.field1819 = var78;
 						}
-						if (var367 == 1424) {
+						if (opcode == 1424) {
 							var74.field1878 = var78;
 						}
 						var74.field1813 = true;
 						continue;
 					}
-					if (var367 < 1600) {
+					if (opcode < 1600) {
 						IfType var81 = var47 ? activeComponent2 : activeComponent;
-						if (var367 == 1500) {
+						if (opcode == 1500) {
 							field188[var4++] = var81.field1788;
 							continue;
 						}
-						if (var367 == 1501) {
+						if (opcode == 1501) {
 							field188[var4++] = var81.field1810;
 							continue;
 						}
-						if (var367 == 1502) {
-							field188[var4++] = var81.field1792;
+						if (opcode == 1502) {
+							field188[var4++] = var81.width;
 							continue;
 						}
-						if (var367 == 1503) {
-							field188[var4++] = var81.field1793;
+						if (opcode == 1503) {
+							field188[var4++] = var81.height;
 							continue;
 						}
-						if (var367 == 1504) {
+						if (opcode == 1504) {
 							field188[var4++] = var81.field1880 ? 1 : 0;
 							continue;
 						}
-						if (var367 == 1505) {
+						if (opcode == 1505) {
 							field188[var4++] = var81.layerid;
 							continue;
 						}
-					} else if (var367 < 1700) {
+					} else if (opcode < 1700) {
 						IfType var82 = var47 ? activeComponent2 : activeComponent;
-						if (var367 == 1600) {
+						if (opcode == 1600) {
 							field188[var4++] = var82.field1796;
 							continue;
 						}
-						if (var367 == 1601) {
+						if (opcode == 1601) {
 							field188[var4++] = var82.field1797;
 							continue;
 						}
-						if (var367 == 1602) {
-							field194[var5++] = var82.field1830;
+						if (opcode == 1602) {
+							chatTyped[var5++] = var82.field1830;
 							continue;
 						}
-						if (var367 == 1603) {
+						if (opcode == 1603) {
 							field188[var4++] = var82.field1884;
 							continue;
 						}
-						if (var367 == 1604) {
+						if (opcode == 1604) {
 							field188[var4++] = var82.field1799;
 							continue;
 						}
-						if (var367 == 1605) {
+						if (opcode == 1605) {
 							field188[var4++] = var82.field1826;
 							continue;
 						}
-						if (var367 == 1606) {
+						if (opcode == 1606) {
 							field188[var4++] = var82.field1848;
 							continue;
 						}
-						if (var367 == 1607) {
+						if (opcode == 1607) {
 							field188[var4++] = var82.field1817;
 							continue;
 						}
-						if (var367 == 1608) {
+						if (opcode == 1608) {
 							field188[var4++] = var82.field1824;
 							continue;
 						}
-					} else if (var367 < 1800) {
+					} else if (opcode < 1800) {
 						IfType var83 = var47 ? activeComponent2 : activeComponent;
-						if (var367 == 1700) {
+						if (opcode == 1700) {
 							field188[var4++] = var83.field1791;
 							continue;
 						}
-						if (var367 == 1701) {
+						if (opcode == 1701) {
 							if (var83.field1791 == -1) {
 								field188[var4++] = 0;
 							} else {
@@ -920,109 +920,109 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 1702) {
+						if (opcode == 1702) {
 							field188[var4++] = var83.subid;
 							continue;
 						}
-					} else if (var367 < 1900) {
+					} else if (opcode < 1900) {
 						IfType var84 = var47 ? activeComponent2 : activeComponent;
-						if (var367 == 1800) {
+						if (opcode == 1800) {
 							field188[var4++] = WorldEntrySettings.method1350(Client.method1512(var84));
 							continue;
 						}
-						if (var367 == 1801) {
+						if (opcode == 1801) {
 							var4--;
 							int var85 = field188[var4];
 							int var368 = var85 - 1;
 							if (var84.field1844 != null && var368 < var84.field1844.length && var84.field1844[var368] != null) {
-								field194[var5++] = var84.field1844[var368];
+								chatTyped[var5++] = var84.field1844[var368];
 								continue;
 							}
-							field194[var5++] = "";
+							chatTyped[var5++] = "";
 							continue;
 						}
-						if (var367 == 1802) {
+						if (opcode == 1802) {
 							if (var84.field1795 == null) {
-								field194[var5++] = "";
+								chatTyped[var5++] = "";
 							} else {
-								field194[var5++] = var84.field1795;
+								chatTyped[var5++] = var84.field1795;
 							}
 							continue;
 						}
-					} else if (var367 < 2600) {
+					} else if (opcode < 2600) {
 						var4--;
 						IfType var86 = IfType.get(field188[var4]);
-						if (var367 == 2500) {
+						if (opcode == 2500) {
 							field188[var4++] = var86.field1788;
 							continue;
 						}
-						if (var367 == 2501) {
+						if (opcode == 2501) {
 							field188[var4++] = var86.field1810;
 							continue;
 						}
-						if (var367 == 2502) {
-							field188[var4++] = var86.field1792;
+						if (opcode == 2502) {
+							field188[var4++] = var86.width;
 							continue;
 						}
-						if (var367 == 2503) {
-							field188[var4++] = var86.field1793;
+						if (opcode == 2503) {
+							field188[var4++] = var86.height;
 							continue;
 						}
-						if (var367 == 2504) {
+						if (opcode == 2504) {
 							field188[var4++] = var86.field1880 ? 1 : 0;
 							continue;
 						}
-						if (var367 == 2505) {
+						if (opcode == 2505) {
 							field188[var4++] = var86.layerid;
 							continue;
 						}
-					} else if (var367 < 2700) {
+					} else if (opcode < 2700) {
 						var4--;
 						IfType var87 = IfType.get(field188[var4]);
-						if (var367 == 2600) {
+						if (opcode == 2600) {
 							field188[var4++] = var87.field1796;
 							continue;
 						}
-						if (var367 == 2601) {
+						if (opcode == 2601) {
 							field188[var4++] = var87.field1797;
 							continue;
 						}
-						if (var367 == 2602) {
-							field194[var5++] = var87.field1830;
+						if (opcode == 2602) {
+							chatTyped[var5++] = var87.field1830;
 							continue;
 						}
-						if (var367 == 2603) {
+						if (opcode == 2603) {
 							field188[var4++] = var87.field1884;
 							continue;
 						}
-						if (var367 == 2604) {
+						if (opcode == 2604) {
 							field188[var4++] = var87.field1799;
 							continue;
 						}
-						if (var367 == 2605) {
+						if (opcode == 2605) {
 							field188[var4++] = var87.field1826;
 							continue;
 						}
-						if (var367 == 2606) {
+						if (opcode == 2606) {
 							field188[var4++] = var87.field1848;
 							continue;
 						}
-						if (var367 == 2607) {
+						if (opcode == 2607) {
 							field188[var4++] = var87.field1817;
 							continue;
 						}
-						if (var367 == 2608) {
+						if (opcode == 2608) {
 							field188[var4++] = var87.field1824;
 							continue;
 						}
-					} else if (var367 < 2800) {
-						if (var367 == 2700) {
+					} else if (opcode < 2800) {
+						if (opcode == 2700) {
 							var4--;
 							IfType var88 = IfType.get(field188[var4]);
 							field188[var4++] = var88.field1791;
 							continue;
 						}
-						if (var367 == 2701) {
+						if (opcode == 2701) {
 							var4--;
 							IfType var89 = IfType.get(field188[var4]);
 							if (var89.field1791 == -1) {
@@ -1032,7 +1032,7 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 2702) {
+						if (opcode == 2702) {
 							var4--;
 							int var90 = field188[var4];
 							ComponentPointer var91 = (ComponentPointer) Client.field1918.get((long) var90);
@@ -1043,45 +1043,45 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-					} else if (var367 < 2900) {
+					} else if (opcode < 2900) {
 						var4--;
 						IfType var92 = IfType.get(field188[var4]);
-						if (var367 == 2800) {
+						if (opcode == 2800) {
 							field188[var4++] = WorldEntrySettings.method1350(Client.method1512(var92));
 							continue;
 						}
-						if (var367 == 2801) {
+						if (opcode == 2801) {
 							var4--;
 							int var93 = field188[var4];
 							int var369 = var93 - 1;
 							if (var92.field1844 != null && var369 < var92.field1844.length && var92.field1844[var369] != null) {
-								field194[var5++] = var92.field1844[var369];
+								chatTyped[var5++] = var92.field1844[var369];
 								continue;
 							}
-							field194[var5++] = "";
+							chatTyped[var5++] = "";
 							continue;
 						}
-						if (var367 == 2802) {
+						if (opcode == 2802) {
 							if (var92.field1795 == null) {
-								field194[var5++] = "";
+								chatTyped[var5++] = "";
 							} else {
-								field194[var5++] = var92.field1795;
+								chatTyped[var5++] = var92.field1795;
 							}
 							continue;
 						}
-					} else if (var367 < 3200) {
-						if (var367 == 3100) {
+					} else if (opcode < 3200) {
+						if (opcode == 3100) {
 							var5--;
-							String var94 = field194[var5];
-							Client.method559(0, "", var94);
+							String var94 = chatTyped[var5];
+							Client.addMessage(0, "", var94);
 							continue;
 						}
-						if (var367 == 3101) {
+						if (opcode == 3101) {
 							var4 -= 2;
 							Client.method1040(Client.localPlayer, field188[var4], field188[var4 + 1]);
 							continue;
 						}
-						if (var367 == 3103) {
+						if (opcode == 3103) {
 							Client.out.pisaac1(129);
 							for (ComponentPointer var95 = (ComponentPointer) Client.field1918.method1284(); var95 != null; var95 = (ComponentPointer) Client.field1918.method1280()) {
 								if (var95.field1597 == 0 || var95.field1597 == 3) {
@@ -1094,9 +1094,9 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 3104) {
+						if (opcode == 3104) {
 							var5--;
-							String var96 = field194[var5];
+							String var96 = chatTyped[var5];
 							int var97 = 0;
 							if (JStringUtil.method62(var96)) {
 								int var98 = JStringUtil.method91(var96, 10, true);
@@ -1106,31 +1106,31 @@ public class ScriptRunner {
 							Client.out.p4(var97);
 							continue;
 						}
-						if (var367 == 3105) {
+						if (opcode == 3105) {
 							var5--;
-							String var99 = field194[var5];
+							String var99 = chatTyped[var5];
 							Client.out.pisaac1(223);
 							Client.out.p1(var99.length() + 1);
 							Client.out.pjstr(var99);
 							continue;
 						}
-						if (var367 == 3106) {
+						if (opcode == 3106) {
 							var5--;
-							String var100 = field194[var5];
+							String var100 = chatTyped[var5];
 							Client.out.pisaac1(127);
 							Client.out.p1(var100.length() + 1);
 							Client.out.pjstr(var100);
 							continue;
 						}
-						if (var367 == 3107) {
+						if (opcode == 3107) {
 							var4--;
 							int var101 = field188[var4];
 							var5--;
-							String var102 = field194[var5];
+							String var102 = chatTyped[var5];
 							Client.method558(var101, var102);
 							continue;
 						}
-						if (var367 == 3108) {
+						if (opcode == 3108) {
 							var4 -= 3;
 							int var103 = field188[var4];
 							int var104 = field188[var4 + 1];
@@ -1139,7 +1139,7 @@ public class ScriptRunner {
 							Client.method1102(var106, var103, var104);
 							continue;
 						}
-						if (var367 == 3109) {
+						if (opcode == 3109) {
 							var4 -= 2;
 							int var107 = field188[var4];
 							int var108 = field188[var4 + 1];
@@ -1147,8 +1147,8 @@ public class ScriptRunner {
 							Client.method1102(var109, var107, var108);
 							continue;
 						}
-					} else if (var367 < 3300) {
-						if (var367 == 3200) {
+					} else if (opcode < 3300) {
+						if (opcode == 3200) {
 							var4 -= 3;
 							int var110 = field188[var4];
 							int var111 = field188[var4 + 1];
@@ -1163,12 +1163,12 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 3201) {
+						if (opcode == 3201) {
 							var4--;
 							Client.method1232(field188[var4]);
 							continue;
 						}
-						if (var367 == 3202) {
+						if (opcode == 3202) {
 							var4 -= 2;
 							int var113 = field188[var4];
 							int var10000 = field188[var4 + 1];
@@ -1178,12 +1178,12 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-					} else if (var367 < 3400) {
-						if (var367 == 3300) {
+					} else if (opcode < 3400) {
+						if (opcode == 3300) {
 							field188[var4++] = Client.loopCycle;
 							continue;
 						}
-						if (var367 == 3301) {
+						if (opcode == 3301) {
 							var4 -= 2;
 							int var115 = field188[var4];
 							int var116 = field188[var4 + 1];
@@ -1201,21 +1201,21 @@ public class ScriptRunner {
 							var117[var118] = var120;
 							continue;
 						}
-						if (var367 == 3302) {
+						if (opcode == 3302) {
 							var4 -= 2;
 							int var121 = field188[var4];
 							int var122 = field188[var4 + 1];
 							field188[var4++] = ClientInvCache.method5(var121, var122);
 							continue;
 						}
-						if (var367 == 3303) {
+						if (opcode == 3303) {
 							var4 -= 2;
 							int var123 = field188[var4];
 							int var124 = field188[var4 + 1];
 							field188[var4++] = ClientInvCache.method1446(var123, var124);
 							continue;
 						}
-						if (var367 == 3304) {
+						if (opcode == 3304) {
 							var4--;
 							int var125 = field188[var4];
 							int[] var126 = field188;
@@ -1236,54 +1236,54 @@ public class ScriptRunner {
 							var126[var127] = var129.size;
 							continue;
 						}
-						if (var367 == 3305) {
+						if (opcode == 3305) {
 							var4--;
 							int var132 = field188[var4];
 							field188[var4++] = Client.field2060[var132];
 							continue;
 						}
-						if (var367 == 3306) {
+						if (opcode == 3306) {
 							var4--;
 							int var133 = field188[var4];
 							field188[var4++] = Client.field1960[var133];
 							continue;
 						}
-						if (var367 == 3307) {
+						if (opcode == 3307) {
 							var4--;
 							int var134 = field188[var4];
 							field188[var4++] = Client.field2062[var134];
 							continue;
 						}
-						if (var367 == 3308) {
+						if (opcode == 3308) {
 							int var135 = Client.currentLevel;
 							int var136 = (Client.localPlayer.x >> 7) + Client.sceneBaseTileX;
 							int var137 = (Client.localPlayer.z >> 7) + Client.sceneBaseTileZ;
 							field188[var4++] = (var135 << 28) + (var136 << 14) + var137;
 							continue;
 						}
-						if (var367 == 3309) {
+						if (opcode == 3309) {
 							var4--;
 							int var138 = field188[var4];
 							field188[var4++] = var138 >> 14 & 0x3FFF;
 							continue;
 						}
-						if (var367 == 3310) {
+						if (opcode == 3310) {
 							var4--;
 							int var139 = field188[var4];
 							field188[var4++] = var139 >> 28;
 							continue;
 						}
-						if (var367 == 3311) {
+						if (opcode == 3311) {
 							var4--;
 							int var140 = field188[var4];
 							field188[var4++] = var140 & 0x3FFF;
 							continue;
 						}
-						if (var367 == 3312) {
+						if (opcode == 3312) {
 							field188[var4++] = Client.members ? 1 : 0;
 							continue;
 						}
-						if (var367 == 3313) {
+						if (opcode == 3313) {
 							var4 -= 2;
 							int var141 = field188[var4] + 32768;
 							int var142 = field188[var4 + 1];
@@ -1301,45 +1301,45 @@ public class ScriptRunner {
 							var143[var144] = var146;
 							continue;
 						}
-						if (var367 == 3314) {
+						if (opcode == 3314) {
 							var4 -= 2;
 							int var147 = field188[var4] + 32768;
 							int var148 = field188[var4 + 1];
 							field188[var4++] = ClientInvCache.method5(var147, var148);
 							continue;
 						}
-						if (var367 == 3315) {
+						if (opcode == 3315) {
 							var4 -= 2;
 							int var149 = field188[var4] + 32768;
 							int var150 = field188[var4 + 1];
 							field188[var4++] = ClientInvCache.method1446(var149, var150);
 							continue;
 						}
-						if (var367 == 3316) {
-							if (Client.field2049 >= 2) {
-								field188[var4++] = Client.field2049;
+						if (opcode == 3316) {
+							if (Client.staffmodlevel >= 2) {
+								field188[var4++] = Client.staffmodlevel;
 							} else {
 								field188[var4++] = 0;
 							}
 							continue;
 						}
-						if (var367 == 3317) {
+						if (opcode == 3317) {
 							field188[var4++] = Client.systemUpdateTimer;
 							continue;
 						}
-						if (var367 == 3318) {
+						if (opcode == 3318) {
 							field188[var4++] = Client.worldid;
 							continue;
 						}
-						if (var367 == 3321) {
+						if (opcode == 3321) {
 							field188[var4++] = Client.field2080;
 							continue;
 						}
-						if (var367 == 3322) {
+						if (opcode == 3322) {
 							field188[var4++] = Client.field2089;
 							continue;
 						}
-						if (var367 == 3323) {
+						if (opcode == 3323) {
 							if (Client.field2091) {
 								field188[var4++] = 1;
 							} else {
@@ -1347,8 +1347,8 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-					} else if (var367 < 3500) {
-						if (var367 == 3400) {
+					} else if (opcode < 3500) {
+						if (opcode == 3400) {
 							var4 -= 2;
 							int var151 = field188[var4];
 							int var152 = field188[var4 + 1];
@@ -1357,17 +1357,17 @@ public class ScriptRunner {
 							}
 							for (int var154 = 0; var154 < var153.count; var154++) {
 								if (var153.keys[var154] == var152) {
-									field194[var5++] = var153.stringValues[var154];
+									chatTyped[var5++] = var153.stringValues[var154];
 									var153 = null;
 									break;
 								}
 							}
 							if (var153 != null) {
-								field194[var5++] = var153.defaultString;
+								chatTyped[var5++] = var153.defaultString;
 							}
 							continue;
 						}
-						if (var367 == 3408) {
+						if (opcode == 3408) {
 							var4 -= 4;
 							int var155 = field188[var4];
 							int var156 = field188[var4 + 1];
@@ -1378,7 +1378,7 @@ public class ScriptRunner {
 								for (int var160 = 0; var160 < var159.count; var160++) {
 									if (var159.keys[var160] == var158) {
 										if (var156 == 115) {
-											field194[var5++] = var159.stringValues[var160];
+											chatTyped[var5++] = var159.stringValues[var160];
 										} else {
 											field188[var4++] = var159.intValues[var160];
 										}
@@ -1388,7 +1388,7 @@ public class ScriptRunner {
 								}
 								if (var159 != null) {
 									if (var156 == 115) {
-										field194[var5++] = var159.defaultString;
+										chatTyped[var5++] = var159.defaultString;
 									} else {
 										field188[var4++] = var159.defaultInt;
 									}
@@ -1396,14 +1396,14 @@ public class ScriptRunner {
 								continue;
 							}
 							if (var156 == 115) {
-								field194[var5++] = "null";
+								chatTyped[var5++] = "null";
 							} else {
 								field188[var4++] = 0;
 							}
 							continue;
 						}
-					} else if (var367 < 3700) {
-						if (var367 == 3600) {
+					} else if (opcode < 3700) {
+						if (opcode == 3600) {
 							if (Client.field2171 == 0) {
 								field188[var4++] = -2;
 							} else if (Client.field2171 == 1) {
@@ -1413,17 +1413,17 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 3601) {
+						if (opcode == 3601) {
 							var4--;
 							int var161 = field188[var4];
 							if (Client.field2171 == 2 && var161 < Client.field2071) {
-								field194[var5++] = Client.field2111[var161].field173;
+								chatTyped[var5++] = Client.field2111[var161].field173;
 								continue;
 							}
-							field194[var5++] = "";
+							chatTyped[var5++] = "";
 							continue;
 						}
-						if (var367 == 3602) {
+						if (opcode == 3602) {
 							var4--;
 							int var162 = field188[var4];
 							if (Client.field2171 == 2 && var162 < Client.field2071) {
@@ -1433,7 +1433,7 @@ public class ScriptRunner {
 							field188[var4++] = 0;
 							continue;
 						}
-						if (var367 == 3603) {
+						if (opcode == 3603) {
 							var4--;
 							int var163 = field188[var4];
 							if (Client.field2171 == 2 && var163 < Client.field2071) {
@@ -1443,9 +1443,9 @@ public class ScriptRunner {
 							field188[var4++] = 0;
 							continue;
 						}
-						if (var367 == 3604) {
+						if (opcode == 3604) {
 							var5--;
-							String var164 = field194[var5];
+							String var164 = chatTyped[var5];
 							var4--;
 							int var165 = field188[var4];
 							Client.out.pisaac1(252);
@@ -1454,27 +1454,27 @@ public class ScriptRunner {
 							Client.out.p1_alt1(var165);
 							continue;
 						}
-						if (var367 == 3605) {
+						if (opcode == 3605) {
 							var5--;
-							String var166 = field194[var5];
+							String var166 = chatTyped[var5];
 							Client.method1103(var166);
 							continue;
 						}
-						if (var367 == 3606) {
+						if (opcode == 3606) {
 							var5--;
-							String var167 = field194[var5];
+							String var167 = chatTyped[var5];
 							Client.method560(var167);
 							continue;
 						}
-						if (var367 == 3607) {
+						if (opcode == 3607) {
 							var5--;
-							String var168 = field194[var5];
+							String var168 = chatTyped[var5];
 							Client.method315(var168, false);
 							continue;
 						}
-						if (var367 == 3608) {
+						if (opcode == 3608) {
 							var5--;
-							String var169 = field194[var5];
+							String var169 = chatTyped[var5];
 							if (var169 == null) {
 								continue;
 							}
@@ -1512,20 +1512,20 @@ public class ScriptRunner {
 								var171++;
 							}
 						}
-						if (var367 == 3609) {
+						if (opcode == 3609) {
 							var5--;
-							String var177 = field194[var5];
+							String var177 = chatTyped[var5];
 							if (var177.startsWith(TextUtil.imgTag(0)) || var177.startsWith(TextUtil.imgTag(1))) {
 								var177 = var177.substring(7);
 							}
 							field188[var4++] = Client.method785(var177) ? 1 : 0;
 							continue;
 						}
-						if (var367 == 3611) {
+						if (opcode == 3611) {
 							if (Client.field1955 == null) {
-								field194[var5++] = "";
+								chatTyped[var5++] = "";
 							} else {
-								String[] var178 = field194;
+								String[] var178 = chatTyped;
 								int var179 = var5++;
 								String var180 = Client.field1955;
 								String var181 = JString.method782(JString.method1001(var180));
@@ -1536,7 +1536,7 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 3612) {
+						if (opcode == 3612) {
 							if (Client.field1955 == null) {
 								field188[var4++] = 0;
 							} else {
@@ -1544,17 +1544,17 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 3613) {
+						if (opcode == 3613) {
 							var4--;
 							int var183 = field188[var4];
 							if (Client.field1955 != null && var183 < Client.field1220) {
-								field194[var5++] = Client.field1774[var183].field1617;
+								chatTyped[var5++] = Client.field1774[var183].field1617;
 								continue;
 							}
-							field194[var5++] = "";
+							chatTyped[var5++] = "";
 							continue;
 						}
-						if (var367 == 3614) {
+						if (opcode == 3614) {
 							var4--;
 							int var184 = field188[var4];
 							if (Client.field1955 != null && var184 < Client.field1220) {
@@ -1564,7 +1564,7 @@ public class ScriptRunner {
 							field188[var4++] = 0;
 							continue;
 						}
-						if (var367 == 3615) {
+						if (opcode == 3615) {
 							var4--;
 							int var185 = field188[var4];
 							if (Client.field1955 != null && var185 < Client.field1220) {
@@ -1574,13 +1574,13 @@ public class ScriptRunner {
 							field188[var4++] = 0;
 							continue;
 						}
-						if (var367 == 3616) {
+						if (opcode == 3616) {
 							field188[var4++] = Client.field1511;
 							continue;
 						}
-						if (var367 == 3617) {
+						if (opcode == 3617) {
 							var5--;
-							String var186 = field194[var5];
+							String var186 = chatTyped[var5];
 							if (Client.field1774 != null) {
 								Client.out.pisaac1(245);
 								Client.out.p1(Packet.pjstrlen(var186));
@@ -1588,21 +1588,21 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 3618) {
+						if (opcode == 3618) {
 							field188[var4++] = Client.field1217;
 							continue;
 						}
-						if (var367 == 3619) {
+						if (opcode == 3619) {
 							var5--;
-							String var187 = field194[var5];
+							String var187 = chatTyped[var5];
 							Client.method742(var187);
 							continue;
 						}
-						if (var367 == 3620) {
+						if (opcode == 3620) {
 							Client.method388();
 							continue;
 						}
-						if (var367 == 3621) {
+						if (opcode == 3621) {
 							if (Client.field2171 == 0) {
 								field188[var4++] = -1;
 							} else {
@@ -1610,40 +1610,40 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 3622) {
+						if (opcode == 3622) {
 							var4--;
 							int var188 = field188[var4];
 							if (Client.field2171 != 0 && var188 < Client.field2194) {
-								field194[var5++] = Client.field2196[var188].field40;
+								chatTyped[var5++] = Client.field2196[var188].field40;
 								continue;
 							}
-							field194[var5++] = "";
+							chatTyped[var5++] = "";
 							continue;
 						}
-						if (var367 == 3623) {
+						if (opcode == 3623) {
 							var5--;
-							String var189 = field194[var5];
+							String var189 = chatTyped[var5];
 							if (var189.startsWith(TextUtil.imgTag(0)) || var189.startsWith(TextUtil.imgTag(1))) {
 								var189 = var189.substring(7);
 							}
 							field188[var4++] = Client.method761(var189) ? 1 : 0;
 							continue;
 						}
-						if (var367 == 3624) {
+						if (opcode == 3624) {
 							var4--;
 							int var190 = field188[var4];
-							if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].field1617.equalsIgnoreCase(Client.localPlayer.field2796)) {
+							if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].field1617.equalsIgnoreCase(Client.localPlayer.name)) {
 								field188[var4++] = 1;
 								continue;
 							}
 							field188[var4++] = 0;
 							continue;
 						}
-						if (var367 == 3625) {
+						if (opcode == 3625) {
 							if (Client.field2155 == null) {
-								field194[var5++] = "";
+								chatTyped[var5++] = "";
 							} else {
-								String[] var191 = field194;
+								String[] var191 = chatTyped;
 								int var192 = var5++;
 								String var193 = Client.field2155;
 								String var194 = JString.method782(JString.method1001(var193));
@@ -1654,48 +1654,48 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-					} else if (var367 < 4100) {
-						if (var367 == 4000) {
+					} else if (opcode < 4100) {
+						if (opcode == 4000) {
 							var4 -= 2;
 							int var196 = field188[var4];
 							int var197 = field188[var4 + 1];
 							field188[var4++] = var196 + var197;
 							continue;
 						}
-						if (var367 == 4001) {
+						if (opcode == 4001) {
 							var4 -= 2;
 							int var198 = field188[var4];
 							int var199 = field188[var4 + 1];
 							field188[var4++] = var198 - var199;
 							continue;
 						}
-						if (var367 == 4002) {
+						if (opcode == 4002) {
 							var4 -= 2;
 							int var200 = field188[var4];
 							int var201 = field188[var4 + 1];
 							field188[var4++] = var200 * var201;
 							continue;
 						}
-						if (var367 == 4003) {
+						if (opcode == 4003) {
 							var4 -= 2;
 							int var202 = field188[var4];
 							int var203 = field188[var4 + 1];
 							field188[var4++] = var202 / var203;
 							continue;
 						}
-						if (var367 == 4004) {
+						if (opcode == 4004) {
 							var4--;
 							int var204 = field188[var4];
 							field188[var4++] = (int) (Math.random() * (double) var204);
 							continue;
 						}
-						if (var367 == 4005) {
+						if (opcode == 4005) {
 							var4--;
 							int var205 = field188[var4];
 							field188[var4++] = (int) (Math.random() * (double) (var205 + 1));
 							continue;
 						}
-						if (var367 == 4006) {
+						if (opcode == 4006) {
 							var4 -= 5;
 							int var206 = field188[var4];
 							int var207 = field188[var4 + 1];
@@ -1705,42 +1705,42 @@ public class ScriptRunner {
 							field188[var4++] = (var207 - var206) * (var210 - var208) / (var209 - var208) + var206;
 							continue;
 						}
-						if (var367 == 4007) {
+						if (opcode == 4007) {
 							var4 -= 2;
 							int var211 = field188[var4];
 							int var212 = field188[var4 + 1];
 							field188[var4++] = var211 * var212 / 100 + var211;
 							continue;
 						}
-						if (var367 == 4008) {
+						if (opcode == 4008) {
 							var4 -= 2;
 							int var213 = field188[var4];
 							int var214 = field188[var4 + 1];
 							field188[var4++] = var213 | 0x1 << var214;
 							continue;
 						}
-						if (var367 == 4009) {
+						if (opcode == 4009) {
 							var4 -= 2;
 							int var215 = field188[var4];
 							int var216 = field188[var4 + 1];
 							field188[var4++] = var215 & -1 - (0x1 << var216);
 							continue;
 						}
-						if (var367 == 4010) {
+						if (opcode == 4010) {
 							var4 -= 2;
 							int var217 = field188[var4];
 							int var218 = field188[var4 + 1];
 							field188[var4++] = (var217 & 0x1 << var218) == 0 ? 0 : 1;
 							continue;
 						}
-						if (var367 == 4011) {
+						if (opcode == 4011) {
 							var4 -= 2;
 							int var219 = field188[var4];
 							int var220 = field188[var4 + 1];
 							field188[var4++] = var219 % var220;
 							continue;
 						}
-						if (var367 == 4012) {
+						if (opcode == 4012) {
 							var4 -= 2;
 							int var221 = field188[var4];
 							int var222 = field188[var4 + 1];
@@ -1751,7 +1751,7 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 4013) {
+						if (opcode == 4013) {
 							var4 -= 2;
 							int var223 = field188[var4];
 							int var224 = field188[var4 + 1];
@@ -1764,51 +1764,51 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 4014) {
+						if (opcode == 4014) {
 							var4 -= 2;
 							int var225 = field188[var4];
 							int var226 = field188[var4 + 1];
 							field188[var4++] = var225 & var226;
 							continue;
 						}
-						if (var367 == 4015) {
+						if (opcode == 4015) {
 							var4 -= 2;
 							int var227 = field188[var4];
 							int var228 = field188[var4 + 1];
 							field188[var4++] = var227 | var228;
 							continue;
 						}
-					} else if (var367 < 4200) {
-						if (var367 == 4100) {
+					} else if (opcode < 4200) {
+						if (opcode == 4100) {
 							var5--;
-							String var229 = field194[var5];
+							String var229 = chatTyped[var5];
 							var4--;
 							int var230 = field188[var4];
-							field194[var5++] = var229 + var230;
+							chatTyped[var5++] = var229 + var230;
 							continue;
 						}
-						if (var367 == 4101) {
+						if (opcode == 4101) {
 							var5 -= 2;
-							String var231 = field194[var5];
-							String var232 = field194[var5 + 1];
-							field194[var5++] = var231 + var232;
+							String var231 = chatTyped[var5];
+							String var232 = chatTyped[var5 + 1];
+							chatTyped[var5++] = var231 + var232;
 							continue;
 						}
-						if (var367 == 4102) {
+						if (opcode == 4102) {
 							var5--;
-							String var233 = field194[var5];
+							String var233 = chatTyped[var5];
 							var4--;
 							int var234 = field188[var4];
-							field194[var5++] = var233 + JStringUtil.method903(var234, true);
+							chatTyped[var5++] = var233 + JStringUtil.method903(var234, true);
 							continue;
 						}
-						if (var367 == 4103) {
+						if (opcode == 4103) {
 							var5--;
-							String var235 = field194[var5];
-							field194[var5++] = var235.toLowerCase();
+							String var235 = chatTyped[var5];
+							chatTyped[var5++] = var235.toLowerCase();
 							continue;
 						}
-						if (var367 == 4104) {
+						if (opcode == 4104) {
 							var4--;
 							int var236 = field188[var4];
 							long var237 = ((long) var236 + 11745L) * 86400000L;
@@ -1816,32 +1816,32 @@ public class ScriptRunner {
 							int var239 = field197.get(5);
 							int var240 = field197.get(2);
 							int var241 = field197.get(1);
-							field194[var5++] = var239 + "-" + field190[var240] + "-" + var241;
+							chatTyped[var5++] = var239 + "-" + field190[var240] + "-" + var241;
 							continue;
 						}
-						if (var367 == 4105) {
+						if (opcode == 4105) {
 							var5 -= 2;
-							String var242 = field194[var5];
-							String var243 = field194[var5 + 1];
+							String var242 = chatTyped[var5];
+							String var243 = chatTyped[var5 + 1];
 							if (Client.localPlayer.field2786 != null && Client.localPlayer.field2786.field1222) {
-								field194[var5++] = var243;
+								chatTyped[var5++] = var243;
 								continue;
 							}
-							field194[var5++] = var242;
+							chatTyped[var5++] = var242;
 							continue;
 						}
-						if (var367 == 4106) {
+						if (opcode == 4106) {
 							var4--;
 							int var244 = field188[var4];
-							field194[var5++] = Integer.toString(var244);
+							chatTyped[var5++] = Integer.toString(var244);
 							continue;
 						}
-						if (var367 == 4107) {
+						if (opcode == 4107) {
 							var5 -= 2;
 							int[] var245 = field188;
 							int var246 = var4++;
-							String var247 = field194[var5];
-							String var248 = field194[var5 + 1];
+							String var247 = chatTyped[var5];
+							String var248 = chatTyped[var5 + 1];
 							int var249 = Client.lang;
 							int var250 = var247.length();
 							int var251 = var248.length();
@@ -1955,9 +1955,9 @@ public class ScriptRunner {
 							var245[var246] = var280;
 							continue;
 						}
-						if (var367 == 4108) {
+						if (opcode == 4108) {
 							var5--;
-							String var281 = field194[var5];
+							String var281 = chatTyped[var5];
 							var4 -= 2;
 							int var282 = field188[var4];
 							int var283 = field188[var4 + 1];
@@ -1966,9 +1966,9 @@ public class ScriptRunner {
 							field188[var4++] = var285.method2889(var281, var282);
 							continue;
 						}
-						if (var367 == 4109) {
+						if (opcode == 4109) {
 							var5--;
-							String var286 = field194[var5];
+							String var286 = chatTyped[var5];
 							var4 -= 2;
 							int var287 = field188[var4];
 							int var288 = field188[var4 + 1];
@@ -1977,33 +1977,33 @@ public class ScriptRunner {
 							field188[var4++] = var290.method2818(var286, var287);
 							continue;
 						}
-						if (var367 == 4110) {
+						if (opcode == 4110) {
 							var5 -= 2;
-							String var291 = field194[var5];
-							String var292 = field194[var5 + 1];
+							String var291 = chatTyped[var5];
+							String var292 = chatTyped[var5 + 1];
 							var4--;
 							if (field188[var4] == 1) {
-								field194[var5++] = var291;
+								chatTyped[var5++] = var291;
 							} else {
-								field194[var5++] = var292;
+								chatTyped[var5++] = var292;
 							}
 							continue;
 						}
-						if (var367 == 4111) {
+						if (opcode == 4111) {
 							var5--;
-							String var293 = field194[var5];
-							field194[var5++] = PixFont.method2844(var293);
+							String var293 = chatTyped[var5];
+							chatTyped[var5++] = PixFont.method2844(var293);
 							continue;
 						}
-						if (var367 == 4112) {
+						if (opcode == 4112) {
 							var5--;
-							String var294 = field194[var5];
+							String var294 = chatTyped[var5];
 							var4--;
 							int var295 = field188[var4];
-							field194[var5++] = var294 + (char) var295;
+							chatTyped[var5++] = var294 + (char) var295;
 							continue;
 						}
-						if (var367 == 4113) {
+						if (opcode == 4113) {
 							var4--;
 							int var296 = field188[var4];
 							int[] var297 = field188;
@@ -2022,7 +2022,7 @@ public class ScriptRunner {
 							var297[var298] = var300 ? 1 : 0;
 							continue;
 						}
-						if (var367 == 4114) {
+						if (opcode == 4114) {
 							var4--;
 							int var301 = field188[var4];
 							int[] var302 = field188;
@@ -2032,13 +2032,13 @@ public class ScriptRunner {
 							var302[var303] = var305 ? 1 : 0;
 							continue;
 						}
-						if (var367 == 4115) {
+						if (opcode == 4115) {
 							var4--;
 							int var306 = field188[var4];
 							field188[var4++] = JStringUtil.method1124((char) var306) ? 1 : 0;
 							continue;
 						}
-						if (var367 == 4116) {
+						if (opcode == 4116) {
 							var4--;
 							int var307 = field188[var4];
 							int[] var308 = field188;
@@ -2048,9 +2048,9 @@ public class ScriptRunner {
 							var308[var309] = var311 ? 1 : 0;
 							continue;
 						}
-						if (var367 == 4117) {
+						if (opcode == 4117) {
 							var5--;
-							String var312 = field194[var5];
+							String var312 = chatTyped[var5];
 							if (var312 == null) {
 								field188[var4++] = 0;
 							} else {
@@ -2058,18 +2058,18 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 4118) {
+						if (opcode == 4118) {
 							var5--;
-							String var313 = field194[var5];
+							String var313 = chatTyped[var5];
 							var4 -= 2;
 							int var314 = field188[var4];
 							int var315 = field188[var4 + 1];
-							field194[var5++] = var313.substring(var314, var315);
+							chatTyped[var5++] = var313.substring(var314, var315);
 							continue;
 						}
-						if (var367 == 4119) {
+						if (opcode == 4119) {
 							var5--;
-							String var316 = field194[var5];
+							String var316 = chatTyped[var5];
 							StringBuilder var317 = new StringBuilder(var316.length());
 							boolean var318 = false;
 							for (int var319 = 0; var319 < var316.length(); var319++) {
@@ -2082,61 +2082,61 @@ public class ScriptRunner {
 									var317.append(var320);
 								}
 							}
-							field194[var5++] = var317.toString();
+							chatTyped[var5++] = var317.toString();
 							continue;
 						}
-						if (var367 == 4120) {
+						if (opcode == 4120) {
 							var5--;
-							String var321 = field194[var5];
+							String var321 = chatTyped[var5];
 							var4--;
 							int var322 = field188[var4];
 							field188[var4++] = var321.indexOf(var322);
 							continue;
 						}
-					} else if (var367 < 4300) {
-						if (var367 == 4200) {
+					} else if (opcode < 4300) {
+						if (opcode == 4200) {
 							var4--;
 							int var323 = field188[var4];
-							field194[var5++] = ObjType.get(var323).name;
+							chatTyped[var5++] = ObjType.get(var323).name;
 							continue;
 						}
-						if (var367 == 4201) {
+						if (opcode == 4201) {
 							var4 -= 2;
 							int var324 = field188[var4];
 							int var325 = field188[var4 + 1];
 							ObjType var326 = ObjType.get(var324);
 							if (var325 >= 1 && var325 <= 5 && var326.op[var325 - 1] != null) {
-								field194[var5++] = var326.op[var325 - 1];
+								chatTyped[var5++] = var326.op[var325 - 1];
 								continue;
 							}
-							field194[var5++] = "";
+							chatTyped[var5++] = "";
 							continue;
 						}
-						if (var367 == 4202) {
+						if (opcode == 4202) {
 							var4 -= 2;
 							int var327 = field188[var4];
 							int var328 = field188[var4 + 1];
 							ObjType var329 = ObjType.get(var327);
 							if (var328 >= 1 && var328 <= 5 && var329.iop[var328 - 1] != null) {
-								field194[var5++] = var329.iop[var328 - 1];
+								chatTyped[var5++] = var329.iop[var328 - 1];
 								continue;
 							}
-							field194[var5++] = "";
+							chatTyped[var5++] = "";
 							continue;
 						}
-						if (var367 == 4203) {
+						if (opcode == 4203) {
 							var4--;
 							int var330 = field188[var4];
 							field188[var4++] = ObjType.get(var330).cost;
 							continue;
 						}
-						if (var367 == 4204) {
+						if (opcode == 4204) {
 							var4--;
 							int var331 = field188[var4];
 							field188[var4++] = ObjType.get(var331).stackable == 1 ? 1 : 0;
 							continue;
 						}
-						if (var367 == 4205) {
+						if (opcode == 4205) {
 							var4--;
 							int var332 = field188[var4];
 							ObjType var333 = ObjType.get(var332);
@@ -2147,7 +2147,7 @@ public class ScriptRunner {
 							field188[var4++] = var332;
 							continue;
 						}
-						if (var367 == 4206) {
+						if (opcode == 4206) {
 							var4--;
 							int var334 = field188[var4];
 							ObjType var335 = ObjType.get(var334);
@@ -2158,18 +2158,18 @@ public class ScriptRunner {
 							field188[var4++] = var334;
 							continue;
 						}
-						if (var367 == 4207) {
+						if (opcode == 4207) {
 							var4--;
 							int var336 = field188[var4];
 							field188[var4++] = ObjType.get(var336).membersWorld ? 1 : 0;
 							continue;
 						}
-					} else if (var367 < 5100) {
-						if (var367 == 5000) {
+					} else if (opcode < 5100) {
+						if (opcode == 5000) {
 							field188[var4++] = Client.field2145;
 							continue;
 						}
-						if (var367 == 5001) {
+						if (opcode == 5001) {
 							var4 -= 3;
 							Client.field2145 = field188[var4];
 							int var337 = field188[var4 + 1];
@@ -2199,9 +2199,9 @@ public class ScriptRunner {
 							Client.out.p1(Client.field2146);
 							continue;
 						}
-						if (var367 == 5002) {
+						if (opcode == 5002) {
 							var5--;
-							String var342 = field194[var5];
+							String var342 = chatTyped[var5];
 							var4 -= 2;
 							int var343 = field188[var4];
 							int var344 = field188[var4 + 1];
@@ -2212,7 +2212,7 @@ public class ScriptRunner {
 							Client.out.p1(var344);
 							continue;
 						}
-						if (var367 == 5003) {
+						if (opcode == 5003) {
 							var4--;
 							int var345 = field188[var4];
 							String var346 = null;
@@ -2222,10 +2222,10 @@ public class ScriptRunner {
 							if (var346 == null) {
 								var346 = "";
 							}
-							field194[var5++] = var346;
+							chatTyped[var5++] = var346;
 							continue;
 						}
-						if (var367 == 5004) {
+						if (opcode == 5004) {
 							var4--;
 							int var347 = field188[var4];
 							int var348 = -1;
@@ -2235,7 +2235,7 @@ public class ScriptRunner {
 							field188[var4++] = var348;
 							continue;
 						}
-						if (var367 == 5005) {
+						if (opcode == 5005) {
 							if (Client.field680 == null) {
 								field188[var4++] = -1;
 							} else {
@@ -2243,138 +2243,143 @@ public class ScriptRunner {
 							}
 							continue;
 						}
-						if (var367 == 5008) {
+						if (opcode == 5008) {
 							var5--;
-							String var349 = field194[var5];
-							if (var349.startsWith("::")) {
-								Client.method1790(var349);
+
+							String message = chatTyped[var5];
+							if (message.startsWith("::")) {
+								Client.doCheat(message);
 							} else {
-								String var350 = var349.toLowerCase();
-								byte var351 = 0;
-								if (var350.startsWith(EnglishLocale.field1031)) {
-									var351 = 0;
-									var349 = var349.substring(EnglishLocale.field1031.length());
-								} else if (var350.startsWith(EnglishLocale.field1033)) {
-									var351 = 1;
-									var349 = var349.substring(EnglishLocale.field1033.length());
-								} else if (var350.startsWith(EnglishLocale.field1035)) {
-									var351 = 2;
-									var349 = var349.substring(EnglishLocale.field1035.length());
-								} else if (var350.startsWith(EnglishLocale.field1083)) {
-									var351 = 3;
-									var349 = var349.substring(EnglishLocale.field1083.length());
-								} else if (var350.startsWith(EnglishLocale.field1039)) {
-									var351 = 4;
-									var349 = var349.substring(EnglishLocale.field1039.length());
-								} else if (var350.startsWith(EnglishLocale.field1041)) {
-									var351 = 5;
-									var349 = var349.substring(EnglishLocale.field1041.length());
-								} else if (var350.startsWith(EnglishLocale.field954)) {
-									var351 = 6;
-									var349 = var349.substring(EnglishLocale.field954.length());
-								} else if (var350.startsWith(EnglishLocale.field977)) {
-									var351 = 7;
-									var349 = var349.substring(EnglishLocale.field977.length());
-								} else if (var350.startsWith(EnglishLocale.field1047)) {
-									var351 = 8;
-									var349 = var349.substring(EnglishLocale.field1047.length());
-								} else if (var350.startsWith(EnglishLocale.field1023)) {
-									var351 = 9;
-									var349 = var349.substring(EnglishLocale.field1023.length());
-								} else if (var350.startsWith(EnglishLocale.field1008)) {
-									var351 = 10;
-									var349 = var349.substring(EnglishLocale.field1008.length());
-								} else if (var350.startsWith(EnglishLocale.field1053)) {
-									var351 = 11;
-									var349 = var349.substring(EnglishLocale.field1053.length());
+								String colorLower = message.toLowerCase();
+								byte color = 0;
+								if (colorLower.startsWith(EnglishLocale.COLOR_YELLOW)) {
+									color = 0;
+									message = message.substring(EnglishLocale.COLOR_YELLOW.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_RED)) {
+									color = 1;
+									message = message.substring(EnglishLocale.COLOR_RED.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_GREEN)) {
+									color = 2;
+									message = message.substring(EnglishLocale.COLOR_GREEN.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_CYAN)) {
+									color = 3;
+									message = message.substring(EnglishLocale.COLOR_CYAN.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_PURPLE)) {
+									color = 4;
+									message = message.substring(EnglishLocale.COLOR_PURPLE.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_WHITE)) {
+									color = 5;
+									message = message.substring(EnglishLocale.COLOR_WHITE.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_FLASH1)) {
+									color = 6;
+									message = message.substring(EnglishLocale.COLOR_FLASH1.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_FLASH2)) {
+									color = 7;
+									message = message.substring(EnglishLocale.COLOR_FLASH2.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_FLASH3)) {
+									color = 8;
+									message = message.substring(EnglishLocale.COLOR_FLASH3.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_GLOW1)) {
+									color = 9;
+									message = message.substring(EnglishLocale.COLOR_GLOW1.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_GLOW2)) {
+									color = 10;
+									message = message.substring(EnglishLocale.COLOR_GLOW2.length());
+								} else if (colorLower.startsWith(EnglishLocale.COLOR_GLOW3)) {
+									color = 11;
+									message = message.substring(EnglishLocale.COLOR_GLOW3.length());
 								} else if (Client.lang != 0) {
-									if (var350.startsWith(EnglishLocale.field1032)) {
-										var351 = 0;
-										var349 = var349.substring(EnglishLocale.field1032.length());
-									} else if (var350.startsWith(EnglishLocale.field1034)) {
-										var351 = 1;
-										var349 = var349.substring(EnglishLocale.field1034.length());
-									} else if (var350.startsWith(EnglishLocale.field1036)) {
-										var351 = 2;
-										var349 = var349.substring(EnglishLocale.field1036.length());
-									} else if (var350.startsWith(EnglishLocale.field1038)) {
-										var351 = 3;
-										var349 = var349.substring(EnglishLocale.field1038.length());
-									} else if (var350.startsWith(EnglishLocale.field1040)) {
-										var351 = 4;
-										var349 = var349.substring(EnglishLocale.field1040.length());
-									} else if (var350.startsWith(EnglishLocale.field1042)) {
-										var351 = 5;
-										var349 = var349.substring(EnglishLocale.field1042.length());
-									} else if (var350.startsWith(EnglishLocale.field919)) {
-										var351 = 6;
-										var349 = var349.substring(EnglishLocale.field919.length());
-									} else if (var350.startsWith(EnglishLocale.field1046)) {
-										var351 = 7;
-										var349 = var349.substring(EnglishLocale.field1046.length());
-									} else if (var350.startsWith(EnglishLocale.field1048)) {
-										var351 = 8;
-										var349 = var349.substring(EnglishLocale.field1048.length());
-									} else if (var350.startsWith(EnglishLocale.field1050)) {
-										var351 = 9;
-										var349 = var349.substring(EnglishLocale.field1050.length());
-									} else if (var350.startsWith(EnglishLocale.field896)) {
-										var351 = 10;
-										var349 = var349.substring(EnglishLocale.field896.length());
-									} else if (var350.startsWith(EnglishLocale.field1054)) {
-										var351 = 11;
-										var349 = var349.substring(EnglishLocale.field1054.length());
+									if (colorLower.startsWith(EnglishLocale.GER_COLOR_YELLOW)) {
+										color = 0;
+										message = message.substring(EnglishLocale.GER_COLOR_YELLOW.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_RED)) {
+										color = 1;
+										message = message.substring(EnglishLocale.GER_COLOR_RED.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_GREEN)) {
+										color = 2;
+										message = message.substring(EnglishLocale.GER_COLOR_GREEN.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_CYAN)) {
+										color = 3;
+										message = message.substring(EnglishLocale.GER_COLOR_CYAN.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_PURPLE)) {
+										color = 4;
+										message = message.substring(EnglishLocale.GER_COLOR_PURPLE.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_WHITE)) {
+										color = 5;
+										message = message.substring(EnglishLocale.GER_COLOR_WHITE.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_FLASH1)) {
+										color = 6;
+										message = message.substring(EnglishLocale.GER_COLOR_FLASH1.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_FLASH2)) {
+										color = 7;
+										message = message.substring(EnglishLocale.GER_COLOR_FLASH2.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_FLASH3)) {
+										color = 8;
+										message = message.substring(EnglishLocale.GER_COLOR_FLASH3.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_GLOW1)) {
+										color = 9;
+										message = message.substring(EnglishLocale.GER_COLOR_GLOW1.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_GLOW2)) {
+										color = 10;
+										message = message.substring(EnglishLocale.GER_COLOR_GLOW2.length());
+									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_GLOW3)) {
+										color = 11;
+										message = message.substring(EnglishLocale.GER_COLOR_GLOW3.length());
 									}
 								}
-								String var352 = var349.toLowerCase();
-								byte var353 = 0;
-								if (var352.startsWith(EnglishLocale.field1055)) {
-									var353 = 1;
-									var349 = var349.substring(EnglishLocale.field1055.length());
-								} else if (var352.startsWith(EnglishLocale.field1057)) {
-									var353 = 2;
-									var349 = var349.substring(EnglishLocale.field1057.length());
-								} else if (var352.startsWith(EnglishLocale.field1059)) {
-									var353 = 3;
-									var349 = var349.substring(EnglishLocale.field1059.length());
-								} else if (var352.startsWith(EnglishLocale.field895)) {
-									var353 = 4;
-									var349 = var349.substring(EnglishLocale.field895.length());
-								} else if (var352.startsWith(EnglishLocale.field1063)) {
-									var353 = 5;
-									var349 = var349.substring(EnglishLocale.field1063.length());
+
+								String effectLower = message.toLowerCase();
+								byte effect = 0;
+								if (effectLower.startsWith(EnglishLocale.EFFECT_WAVE)) {
+									effect = 1;
+									message = message.substring(EnglishLocale.EFFECT_WAVE.length());
+								} else if (effectLower.startsWith(EnglishLocale.EFFECT_WAVE2)) {
+									effect = 2;
+									message = message.substring(EnglishLocale.EFFECT_WAVE2.length());
+								} else if (effectLower.startsWith(EnglishLocale.EFFECT_SHAKE)) {
+									effect = 3;
+									message = message.substring(EnglishLocale.EFFECT_SHAKE.length());
+								} else if (effectLower.startsWith(EnglishLocale.EFFECT_SCROLL)) {
+									effect = 4;
+									message = message.substring(EnglishLocale.EFFECT_SCROLL.length());
+								} else if (effectLower.startsWith(EnglishLocale.EFFECT_SLIDE)) {
+									effect = 5;
+									message = message.substring(EnglishLocale.EFFECT_SLIDE.length());
 								} else if (Client.lang != 0) {
-									if (var352.startsWith(EnglishLocale.field959)) {
-										var353 = 1;
-										var349 = var349.substring(EnglishLocale.field959.length());
-									} else if (var352.startsWith(EnglishLocale.field1058)) {
-										var353 = 2;
-										var349 = var349.substring(EnglishLocale.field1058.length());
-									} else if (var352.startsWith(EnglishLocale.field1060)) {
-										var353 = 3;
-										var349 = var349.substring(EnglishLocale.field1060.length());
-									} else if (var352.startsWith(EnglishLocale.field907)) {
-										var353 = 4;
-										var349 = var349.substring(EnglishLocale.field907.length());
-									} else if (var352.startsWith(EnglishLocale.field878)) {
-										var353 = 5;
-										var349 = var349.substring(EnglishLocale.field878.length());
+									if (effectLower.startsWith(EnglishLocale.GER_EFFECT_WAVE)) {
+										effect = 1;
+										message = message.substring(EnglishLocale.GER_EFFECT_WAVE.length());
+									} else if (effectLower.startsWith(EnglishLocale.GER_EFFECT_WAVE2)) {
+										effect = 2;
+										message = message.substring(EnglishLocale.GER_EFFECT_WAVE2.length());
+									} else if (effectLower.startsWith(EnglishLocale.GER_EFFECT_SHAKE)) {
+										effect = 3;
+										message = message.substring(EnglishLocale.GER_EFFECT_SHAKE.length());
+									} else if (effectLower.startsWith(EnglishLocale.GER_EFFECT_SCROLL)) {
+										effect = 4;
+										message = message.substring(EnglishLocale.GER_EFFECT_SCROLL.length());
+									} else if (effectLower.startsWith(EnglishLocale.GER_EFFECT_SLIDE)) {
+										effect = 5;
+										message = message.substring(EnglishLocale.GER_EFFECT_SLIDE.length());
 									}
 								}
+
 								Client.out.pisaac1(205);
 								Client.out.p1(0);
-								int var354 = Client.out.pos;
-								Client.out.p1(var351);
-								Client.out.p1(var353);
-								WordPack.method911(Client.out, var349);
-								Client.out.psize1(Client.out.pos - var354);
+								int start = Client.out.pos;
+
+								Client.out.p1(color);
+								Client.out.p1(effect);
+								WordPack.method911(Client.out, message);
+
+								Client.out.psize1(Client.out.pos - start);
 							}
 							continue;
 						}
-						if (var367 == 5009) {
+						if (opcode == 5009) {
 							var5 -= 2;
-							String var355 = field194[var5];
-							String var356 = field194[var5 + 1];
+							String var355 = chatTyped[var5];
+							String var356 = chatTyped[var5 + 1];
 							Client.out.pisaac1(211);
 							Client.out.p2(0);
 							int var357 = Client.out.pos;
@@ -2383,7 +2388,7 @@ public class ScriptRunner {
 							Client.out.psize2(Client.out.pos - var357);
 							continue;
 						}
-						if (var367 == 5010) {
+						if (opcode == 5010) {
 							var4--;
 							int var358 = field188[var4];
 							String var359 = null;
@@ -2393,10 +2398,10 @@ public class ScriptRunner {
 							if (var359 == null) {
 								var359 = "";
 							}
-							field194[var5++] = var359;
+							chatTyped[var5++] = var359;
 							continue;
 						}
-						if (var367 == 5011) {
+						if (opcode == 5011) {
 							var4--;
 							int var360 = field188[var4];
 							String var361 = null;
@@ -2406,24 +2411,24 @@ public class ScriptRunner {
 							if (var361 == null) {
 								var361 = "";
 							}
-							field194[var5++] = var361;
+							chatTyped[var5++] = var361;
 							continue;
 						}
-						if (var367 == 5015) {
+						if (opcode == 5015) {
 							String var362;
-							if (Client.localPlayer == null || Client.localPlayer.field2796 == null) {
+							if (Client.localPlayer == null || Client.localPlayer.name == null) {
 								var362 = "";
 							} else {
-								var362 = Client.localPlayer.field2796;
+								var362 = Client.localPlayer.name;
 							}
-							field194[var5++] = var362;
+							chatTyped[var5++] = var362;
 							continue;
 						}
-						if (var367 == 5016) {
+						if (opcode == 5016) {
 							field188[var4++] = Client.field2146;
 							continue;
 						}
-						if (var367 == 5017) {
+						if (opcode == 5017) {
 							field188[var4++] = Client.field2141;
 							continue;
 						}
