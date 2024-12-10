@@ -160,4 +160,8 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 			}
 		}
 	}
+
+	public static int imethod3() {
+		return idleCycles++;
+	}
 }

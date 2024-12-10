@@ -28,4 +28,8 @@ public class WorldEntrySettings {
 	public static boolean method904(int arg0) {
 		return (arg0 >> 28 & 0x1) != 0;
 	}
+
+	public static boolean imethod1(int var491) {
+		return (var491 >> 29 & 0x1) != 0;
+	}
 }
