@@ -99,6 +99,20 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("z.ap")
 	public static boolean focus;
 
+	protected final void initApplication(int width, int height, int revision) {
+		frame = new Frame();
+		frame.setTitle("Jagex");
+		frame.setResizable(false);
+		frame.setBackground(Color.BLACK);
+		frame.addWindowListener(this);
+		frame.setVisible(true);
+		frame.toFront();
+		Insets insets = frame.getInsets();
+		frame.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
+
+		this.init();
+	}
+
 	@ObfuscatedName("dj.z(IIIB)V")
 	public final void method1354(int arg0, int arg1, int arg2) {
 		try {
@@ -121,7 +135,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			}
 			signlink.startThread(this, 1);
 		} catch (Exception var5) {
-			JagException.report(null, (Throwable) var5);
+			JagException.report(null, var5);
 			this.error("crash");
 		}
 	}

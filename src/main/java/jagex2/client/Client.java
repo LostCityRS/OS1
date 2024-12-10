@@ -1,7 +1,6 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import deob.ViewBox;
 import jagex2.config.*;
 import jagex2.dash3d.*;
 import jagex2.datastruct.*;
@@ -1151,14 +1150,8 @@ public class Client extends GameShell {
 	}
 
 	public static void main(String[] args) {
-		try {
-			GameShell.frame = new ViewBox(765, 503);
-
-			Client app = new Client();
-			app.init();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		Client app = new Client();
+		app.initApplication(765, 503, 1);
 	}
 
 	@Override
