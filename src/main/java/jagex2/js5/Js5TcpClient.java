@@ -390,4 +390,8 @@ public class Js5TcpClient {
 		long var2 = (long) ((arg0 << 16) + arg1);
 		return field812 != null && field812.key == var2 ? field1196.pos * 99 / (field1196.data.length - field812.field2490) + 1 : 0;
 	}
+
+	public static int imethod1() {
+		return field1188 + field1186;
+	}
 }
