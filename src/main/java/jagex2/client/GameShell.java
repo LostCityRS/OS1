@@ -492,4 +492,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			GameShell.canvas.repaint();
 		}
 	}
+
+	public static void imethod2() {
+		Client.progressBar = null;
+		GameShell.field1159 = null;
+		GameShell.field2489 = null;
+	}
 }

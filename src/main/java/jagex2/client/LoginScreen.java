@@ -294,22 +294,7 @@ public class LoginScreen {
 				field133 = "";
 			}
 			while (true) {
-				while (true) {
-					JavaKeyboardProvider var18 = JavaKeyboardProvider.field460;
-					boolean var19;
-					synchronized (JavaKeyboardProvider.field460) {
-						if (JavaKeyboardProvider.field479 == JavaKeyboardProvider.field424) {
-							var19 = false;
-						} else {
-							JavaKeyboardProvider.field114 = JavaKeyboardProvider.field478[JavaKeyboardProvider.field479];
-							JavaKeyboardProvider.field1162 = JavaKeyboardProvider.field477[JavaKeyboardProvider.field479];
-							JavaKeyboardProvider.field479 = JavaKeyboardProvider.field479 + 1 & 0x7F;
-							var19 = true;
-						}
-					}
-					if (!var19) {
-						return;
-					}
+				while (JavaKeyboardProvider.imethod2()) {
 					boolean var21 = false;
 					for (int var22 = 0; var22 < field158.length(); var22++) {
 						if (JavaKeyboardProvider.field1162 == field158.charAt(var22)) {
@@ -1081,5 +1066,84 @@ public class LoginScreen {
 		}
 		method747(arg0, arg1, var6, arg3, arg4);
 		method747(arg0, var6 + 1, arg2, arg3, arg4);
+	}
+
+	public static void imethod9(Canvas var1, Js5Provider var2, Js5Provider var3) {
+		if (Js5TcpClient.field1507) {
+			return;
+		}
+		Pix2D.method2589();
+		byte[] var4 = var2.getFile("title.jpg", "");
+		field146 = new Pix32(var4, var1);
+		field348 = field146.method2719();
+		field131 = SpriteDataProvider.method457(var3, "logo", "");
+		field137 = SpriteDataProvider.method457(var3, "titlebox", "");
+		field153 = SpriteDataProvider.method457(var3, "titlebutton", "");
+		field165 = SpriteDataProvider.method541(var3, "runes", "");
+		field132 = SpriteDataProvider.method541(var3, "title_mute", "");
+		field827 = new int[256];
+		for (int var5 = 0; var5 < 64; var5++) {
+			field827[var5] = var5 * 262144;
+		}
+		for (int var6 = 0; var6 < 64; var6++) {
+			field827[var6 + 64] = var6 * 1024 + 16711680;
+		}
+		for (int var7 = 0; var7 < 64; var7++) {
+			field827[var7 + 128] = var7 * 4 + 16776960;
+		}
+		for (int var8 = 0; var8 < 64; var8++) {
+			field827[var8 + 192] = 16777215;
+		}
+		field813 = new int[256];
+		for (int var9 = 0; var9 < 64; var9++) {
+			field813[var9] = var9 * 1024;
+		}
+		for (int var10 = 0; var10 < 64; var10++) {
+			field813[var10 + 64] = var10 * 4 + 65280;
+		}
+		for (int var11 = 0; var11 < 64; var11++) {
+			field813[var11 + 128] = var11 * 262144 + 65535;
+		}
+		for (int var12 = 0; var12 < 64; var12++) {
+			field813[var12 + 192] = 16777215;
+		}
+		field141 = new int[256];
+		for (int var13 = 0; var13 < 64; var13++) {
+			field141[var13] = var13 * 4;
+		}
+		for (int var14 = 0; var14 < 64; var14++) {
+			field141[var14 + 64] = var14 * 262144 + 255;
+		}
+		for (int var15 = 0; var15 < 64; var15++) {
+			field141[var15 + 128] = var15 * 1024 + 16711935;
+		}
+		for (int var16 = 0; var16 < 64; var16++) {
+			field141[var16 + 192] = 16777215;
+		}
+		field140 = new int[256];
+		field489 = new int[32768];
+		field527 = new int[32768];
+		method920(null);
+		field144 = new int[32768];
+		field9 = new int[32768];
+		field151 = 0;
+		field164 = "";
+		field133 = "";
+		field160 = false;
+		if (Client.field2169 == 0) {
+			field142 = true;
+		} else {
+			field142 = false;
+		}
+		if (field142) {
+			MidiPlayer.imethod2();
+		} else {
+			MidiPlayer.imethod1(Client.field1110);
+		}
+		Js5TcpClient.method343(false);
+		Js5TcpClient.field1507 = true;
+		field146.method2667(0, 0);
+		field348.method2667(382, 0);
+		field131.method2747(382 - field131.field2513 / 2, 18);
 	}
 }

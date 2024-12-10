@@ -188,4 +188,18 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 			field476[223] = 28;
 		}
 	}
+
+	public static boolean imethod2() {
+		JavaKeyboardProvider var446 = field460;
+		synchronized (var446) {
+			if (field479 == field424) {
+				return false;
+			} else {
+				field114 = field478[field479];
+				field1162 = field477[field479];
+				field479 = field479 + 1 & 0x7F;
+				return true;
+			}
+		}
+	}
 }

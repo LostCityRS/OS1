@@ -2,6 +2,7 @@ package jagex2.sound;
 
 import deob.ObfuscatedName;
 import jagex2.js5.Js5Index;
+import jagex2.js5.Js5Provider;
 
 @ObfuscatedName("bd")
 public class MidiPlayer {
@@ -167,5 +168,21 @@ public class MidiPlayer {
 			field1118 = null;
 		}
 		return false;
+	}
+
+	public static void imethod1(Js5Provider var17) {
+		int var18 = var17.getGroupId("scape main");
+		int var19 = var17.getFileId(var18, "");
+		method95(2, var17, var18, var19, 255, false);
+	}
+
+	public static void imethod2() {
+		field1117 = 1;
+		field1118 = null;
+		field349 = -1;
+		field1121 = -1;
+		field1120 = 0;
+		field1625 = false;
+		field1152 = 2;
 	}
 }
