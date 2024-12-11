@@ -11,18 +11,18 @@ public class ClientInvCache extends Linkable {
 	public static HashTable field1623 = new HashTable(32);
 
 	@ObfuscatedName("dl.c")
-	public int[] field1622 = new int[] { -1 };
+	public int[] objId = new int[] { -1 };
 
 	@ObfuscatedName("dl.n")
-	public int[] field1624 = new int[] { 0 };
+	public int[] objCount = new int[] { 0 };
 
 	@ObfuscatedName("r.c(III)I")
 	public static int method5(int arg0, int arg1) {
 		ClientInvCache var2 = (ClientInvCache) field1623.get((long) arg0);
 		if (var2 == null) {
 			return 0;
-		} else if (arg1 >= 0 && arg1 < var2.field1624.length) {
-			return var2.field1624[arg1];
+		} else if (arg1 >= 0 && arg1 < var2.objCount.length) {
+			return var2.objCount[arg1];
 		} else {
 			return 0;
 		}
@@ -37,9 +37,9 @@ public class ClientInvCache extends Linkable {
 			return 0;
 		} else {
 			int var3 = 0;
-			for (int var4 = 0; var4 < var2.field1624.length; var4++) {
-				if (var2.field1622[var4] == arg1) {
-					var3 += var2.field1624[var4];
+			for (int var4 = 0; var4 < var2.objCount.length; var4++) {
+				if (var2.objId[var4] == arg1) {
+					var3 += var2.objCount[var4];
 				}
 			}
 			return var3;
@@ -53,22 +53,22 @@ public class ClientInvCache extends Linkable {
 			var4 = new ClientInvCache();
 			field1623.put(var4, (long) arg0);
 		}
-		if (var4.field1622.length <= arg1) {
+		if (var4.objId.length <= arg1) {
 			int[] var5 = new int[arg1 + 1];
 			int[] var6 = new int[arg1 + 1];
-			for (int var7 = 0; var7 < var4.field1622.length; var7++) {
-				var5[var7] = var4.field1622[var7];
-				var6[var7] = var4.field1624[var7];
+			for (int var7 = 0; var7 < var4.objId.length; var7++) {
+				var5[var7] = var4.objId[var7];
+				var6[var7] = var4.objCount[var7];
 			}
-			for (int var8 = var4.field1622.length; var8 < arg1; var8++) {
+			for (int var8 = var4.objId.length; var8 < arg1; var8++) {
 				var5[var8] = -1;
 				var6[var8] = 0;
 			}
-			var4.field1622 = var5;
-			var4.field1624 = var6;
+			var4.objId = var5;
+			var4.objCount = var6;
 		}
-		var4.field1622[arg1] = arg2;
-		var4.field1624[arg1] = arg3;
+		var4.objId[arg1] = arg2;
+		var4.objCount[arg1] = arg3;
 	}
 
 	@ObfuscatedName("n.z(IB)V")

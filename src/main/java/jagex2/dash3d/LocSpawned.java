@@ -7,16 +7,16 @@ import jagex2.datastruct.Linkable;
 public class LocSpawned extends Linkable {
 
 	@ObfuscatedName("dn.m")
-	public int field1638;
+	public int level;
 
 	@ObfuscatedName("dn.c")
 	public int field1630;
 
 	@ObfuscatedName("dn.n")
-	public int field1633;
+	public int localX;
 
 	@ObfuscatedName("dn.j")
-	public int field1632;
+	public int localZ;
 
 	@ObfuscatedName("dn.z")
 	public int field1629;
@@ -40,5 +40,5 @@ public class LocSpawned extends Linkable {
 	public int field1639 = 0;
 
 	@ObfuscatedName("dn.w")
-	public int field1640 = -1;
+	public int duration = -1;
 }

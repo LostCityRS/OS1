@@ -42,6 +42,6 @@ public class AnimFrameset extends DoublyLinkable {
 
 	@ObfuscatedName("fr.z(IB)Z")
 	public boolean method2652(int arg0) {
-		return this.field2488[arg0].field655;
+		return this.field2488[arg0].hasAlpha;
 	}
 }

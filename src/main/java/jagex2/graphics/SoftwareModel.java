@@ -513,13 +513,13 @@ public class SoftwareModel extends Entity {
 			return;
 		}
 		AnimFrame var3 = arg0.field2488[arg1];
-		AnimBase var4 = var3.field659;
+		AnimBase var4 = var3.base;
 		baseX = 0;
 		baseY = 0;
 		baseZ = 0;
-		for (int var5 = 0; var5 < var3.field660; var5++) {
-			int var6 = var3.field661[var5];
-			this.method3007(var4.field1723[var6], var4.field1721[var6], var3.field662[var5], var3.field663[var5], var3.field664[var5]);
+		for (int var5 = 0; var5 < var3.length; var5++) {
+			int var6 = var3.groups[var5];
+			this.method3007(var4.types[var6], var4.labels[var6], var3.x[var5], var3.y[var5], var3.z[var5]);
 		}
 		this.field2745 = 0;
 	}
@@ -535,20 +535,20 @@ public class SoftwareModel extends Entity {
 		}
 		AnimFrame var6 = arg0.field2488[arg1];
 		AnimFrame var7 = arg2.field2488[arg3];
-		AnimBase var8 = var6.field659;
+		AnimBase var8 = var6.base;
 		baseX = 0;
 		baseY = 0;
 		baseZ = 0;
 		byte var9 = 0;
 		int var17 = var9 + 1;
 		int var10 = arg4[var9];
-		for (int var11 = 0; var11 < var6.field660; var11++) {
-			int var12 = var6.field661[var11];
+		for (int var11 = 0; var11 < var6.length; var11++) {
+			int var12 = var6.groups[var11];
 			while (var12 > var10) {
 				var10 = arg4[var17++];
 			}
-			if (var10 != var12 || var8.field1723[var12] == 0) {
-				this.method3007(var8.field1723[var12], var8.field1721[var12], var6.field662[var11], var6.field663[var11], var6.field664[var11]);
+			if (var10 != var12 || var8.types[var12] == 0) {
+				this.method3007(var8.types[var12], var8.labels[var12], var6.x[var11], var6.y[var11], var6.z[var11]);
 			}
 		}
 		baseX = 0;
@@ -557,13 +557,13 @@ public class SoftwareModel extends Entity {
 		byte var13 = 0;
 		int var18 = var13 + 1;
 		int var14 = arg4[var13];
-		for (int var15 = 0; var15 < var7.field660; var15++) {
-			int var16 = var7.field661[var15];
+		for (int var15 = 0; var15 < var7.length; var15++) {
+			int var16 = var7.groups[var15];
 			while (var16 > var14) {
 				var14 = arg4[var18++];
 			}
-			if (var14 == var16 || var8.field1723[var16] == 0) {
-				this.method3007(var8.field1723[var16], var8.field1721[var16], var7.field662[var15], var7.field663[var15], var7.field664[var15]);
+			if (var14 == var16 || var8.types[var16] == 0) {
+				this.method3007(var8.types[var16], var8.labels[var16], var7.x[var15], var7.y[var15], var7.z[var15]);
 			}
 		}
 		this.field2745 = 0;

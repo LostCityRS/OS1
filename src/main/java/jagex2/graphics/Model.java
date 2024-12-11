@@ -1257,20 +1257,20 @@ public class Model extends Entity {
 			}
 			if (var19 == 0) {
 				VertexNormal var20 = this.field2703[var3];
-				var20.field548 += var16;
-				var20.field546 += var17;
-				var20.field547 += var18;
-				var20.field545++;
+				var20.x += var16;
+				var20.y += var17;
+				var20.z += var18;
+				var20.w++;
 				VertexNormal var21 = this.field2703[var4];
-				var21.field548 += var16;
-				var21.field546 += var17;
-				var21.field547 += var18;
-				var21.field545++;
+				var21.x += var16;
+				var21.y += var17;
+				var21.z += var18;
+				var21.w++;
 				VertexNormal var22 = this.field2703[var5];
-				var22.field548 += var16;
-				var22.field546 += var17;
-				var22.field547 += var18;
-				var22.field545++;
+				var22.x += var16;
+				var22.y += var17;
+				var22.z += var18;
+				var22.w++;
 			} else if (var19 == 1) {
 				if (this.field2702 == null) {
 					this.field2702 = new FaceNormal[this.faceCount];
@@ -1340,7 +1340,7 @@ public class Model extends Entity {
 		int var8 = arg1.vertexCount;
 		for (int var9 = 0; var9 < arg0.vertexCount; var9++) {
 			VertexNormal var10 = arg0.field2703[var9];
-			if (var10.field545 == 0) {
+			if (var10.w == 0) {
 				continue;
 			}
 			int var11 = arg0.vertexY[var9] - arg3;
@@ -1355,7 +1355,7 @@ public class Model extends Entity {
 				}
 				for (int var14 = 0; var14 < var8; var14++) {
 					VertexNormal var15 = arg1.field2703[var14];
-					if (var7[var14] != var12 || arg1.vertexZ[var14] != var13 || arg1.vertexY[var14] != var11 || var15.field545 == 0) {
+					if (var7[var14] != var12 || arg1.vertexZ[var14] != var13 || arg1.vertexY[var14] != var11 || var15.w == 0) {
 						continue;
 					}
 					if (arg0.field2685 == null) {
@@ -1372,14 +1372,14 @@ public class Model extends Entity {
 					if (var17 == null) {
 						var17 = arg1.field2685[var14] = new VertexNormal(var15);
 					}
-					var16.field548 += var15.field548;
-					var16.field546 += var15.field546;
-					var16.field547 += var15.field547;
-					var16.field545 += var15.field545;
-					var17.field548 += var10.field548;
-					var17.field546 += var10.field546;
-					var17.field547 += var10.field547;
-					var17.field545 += var10.field545;
+					var16.x += var15.x;
+					var16.y += var15.y;
+					var16.z += var15.z;
+					var16.w += var15.w;
+					var17.x += var10.x;
+					var17.y += var10.y;
+					var17.z += var10.z;
+					var17.w += var10.w;
 					var6++;
 					field2683[var9] = field2715;
 					field2714[var14] = field2715;
@@ -1485,7 +1485,7 @@ public class Model extends Entity {
 					} else {
 						var20 = this.field2685[this.faceVertexA[var15]];
 					}
-					int var21 = (var20.field547 * arg4 + var20.field548 * arg2 + var20.field546 * arg3) / (var20.field545 * var7) + arg0;
+					int var21 = (var20.z * arg4 + var20.x * arg2 + var20.y * arg3) / (var20.w * var7) + arg0;
 					var8.field2778[var15] = method2943(var19, var21);
 					VertexNormal var22;
 					if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
@@ -1493,7 +1493,7 @@ public class Model extends Entity {
 					} else {
 						var22 = this.field2685[this.faceVertexB[var15]];
 					}
-					int var23 = (var22.field547 * arg4 + var22.field548 * arg2 + var22.field546 * arg3) / (var22.field545 * var7) + arg0;
+					int var23 = (var22.z * arg4 + var22.x * arg2 + var22.y * arg3) / (var22.w * var7) + arg0;
 					var8.field2731[var15] = method2943(var19, var23);
 					VertexNormal var24;
 					if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
@@ -1501,7 +1501,7 @@ public class Model extends Entity {
 					} else {
 						var24 = this.field2685[this.faceVertexC[var15]];
 					}
-					int var25 = (var24.field547 * arg4 + var24.field548 * arg2 + var24.field546 * arg3) / (var24.field545 * var7) + arg0;
+					int var25 = (var24.z * arg4 + var24.x * arg2 + var24.y * arg3) / (var24.w * var7) + arg0;
 					var8.field2732[var15] = method2943(var19, var25);
 				} else if (var16 == 1) {
 					FaceNormal var26 = this.field2702[var15];
@@ -1521,7 +1521,7 @@ public class Model extends Entity {
 				} else {
 					var28 = this.field2685[this.faceVertexA[var15]];
 				}
-				int var29 = (var28.field547 * arg4 + var28.field548 * arg2 + var28.field546 * arg3) / (var28.field545 * var7) + arg0;
+				int var29 = (var28.z * arg4 + var28.x * arg2 + var28.y * arg3) / (var28.w * var7) + arg0;
 				var8.field2778[var15] = method2939(var29);
 				VertexNormal var30;
 				if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
@@ -1529,7 +1529,7 @@ public class Model extends Entity {
 				} else {
 					var30 = this.field2685[this.faceVertexB[var15]];
 				}
-				int var31 = (var30.field547 * arg4 + var30.field548 * arg2 + var30.field546 * arg3) / (var30.field545 * var7) + arg0;
+				int var31 = (var30.z * arg4 + var30.x * arg2 + var30.y * arg3) / (var30.w * var7) + arg0;
 				var8.field2731[var15] = method2939(var31);
 				VertexNormal var32;
 				if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
@@ -1537,7 +1537,7 @@ public class Model extends Entity {
 				} else {
 					var32 = this.field2685[this.faceVertexC[var15]];
 				}
-				int var33 = (var32.field547 * arg4 + var32.field548 * arg2 + var32.field546 * arg3) / (var32.field545 * var7) + arg0;
+				int var33 = (var32.z * arg4 + var32.x * arg2 + var32.y * arg3) / (var32.w * var7) + arg0;
 				var8.field2732[var15] = method2939(var33);
 			} else if (var16 == 1) {
 				FaceNormal var34 = this.field2702[var15];

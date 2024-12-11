@@ -10,7 +10,7 @@ public class VarProvider {
 	public static int[] BITMASK = new int[32];
 
 	@ObfuscatedName("cm.d")
-	public static int[] baseVarps;
+	public static int[] varCache;
 
 	@ObfuscatedName("cm.l")
 	public static int[] varps;
@@ -22,7 +22,7 @@ public class VarProvider {
 			acc += acc;
 		}
 
-		baseVarps = new int[2000];
+		varCache = new int[2000];
 		varps = new int[2000];
 	}
 

@@ -1193,8 +1193,8 @@ public class ScriptRunner {
 							int var120;
 							if (var119 == null) {
 								var120 = -1;
-							} else if (var116 >= 0 && var116 < var119.field1622.length) {
-								var120 = var119.field1622[var116];
+							} else if (var116 >= 0 && var116 < var119.objId.length) {
+								var120 = var119.objId[var116];
 							} else {
 								var120 = -1;
 							}
@@ -1278,8 +1278,8 @@ public class ScriptRunner {
 							int var146;
 							if (var145 == null) {
 								var146 = -1;
-							} else if (var142 >= 0 && var142 < var145.field1622.length) {
-								var146 = var145.field1622[var142];
+							} else if (var142 >= 0 && var142 < var145.objId.length) {
+								var146 = var145.objId[var142];
 							} else {
 								var146 = -1;
 							}
@@ -1469,10 +1469,10 @@ public class ScriptRunner {
 							}
 							int var171 = 0;
 							while (true) {
-								if (var171 >= Client.field2194) {
+								if (var171 >= Client.ignoreCount) {
 									continue label2277;
 								}
-								IgnoreListEntry var172 = Client.field2196[var171];
+								IgnoreListEntry var172 = Client.ignoreList[var171];
 								String var173 = var172.field40;
 								String var174 = NamespaceUtil.method743(var173, Client.namespace);
 								boolean var175;
@@ -1484,9 +1484,9 @@ public class ScriptRunner {
 									var175 = var170.equals(var174);
 								}
 								if (var175) {
-									Client.field2194--;
-									for (int var176 = var171; var176 < Client.field2194; var176++) {
-										Client.field2196[var176] = Client.field2196[var176 + 1];
+									Client.ignoreCount--;
+									for (int var176 = var171; var176 < Client.ignoreCount; var176++) {
+										Client.ignoreList[var176] = Client.ignoreList[var176 + 1];
 									}
 									Client.field1977 = Client.field2117;
 									Client.out.pisaac1(248);
@@ -1591,15 +1591,15 @@ public class ScriptRunner {
 							if (Client.field2171 == 0) {
 								field188[var4++] = -1;
 							} else {
-								field188[var4++] = Client.field2194;
+								field188[var4++] = Client.ignoreCount;
 							}
 							continue;
 						}
 						if (opcode == 3622) {
 							var4--;
 							int var188 = field188[var4];
-							if (Client.field2171 != 0 && var188 < Client.field2194) {
-								chatTyped[var5++] = Client.field2196[var188].field40;
+							if (Client.field2171 != 0 && var188 < Client.ignoreCount) {
+								chatTyped[var5++] = Client.ignoreList[var188].field40;
 								continue;
 							}
 							chatTyped[var5++] = "";
@@ -1611,7 +1611,7 @@ public class ScriptRunner {
 							if (var189.startsWith(TextUtil.imgTag(0)) || var189.startsWith(TextUtil.imgTag(1))) {
 								var189 = var189.substring(7);
 							}
-							field188[var4++] = Client.method761(var189) ? 1 : 0;
+							field188[var4++] = Client.isIgnored(var189) ? 1 : 0;
 							continue;
 						}
 						if (opcode == 3624) {

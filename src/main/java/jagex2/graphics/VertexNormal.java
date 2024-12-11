@@ -6,24 +6,24 @@ import deob.ObfuscatedName;
 public class VertexNormal {
 
 	@ObfuscatedName("ao.r")
-	public int field548;
+	public int x;
 
 	@ObfuscatedName("ao.d")
-	public int field546;
+	public int y;
 
 	@ObfuscatedName("ao.l")
-	public int field547;
+	public int z;
 
 	@ObfuscatedName("ao.m")
-	public int field545;
+	public int w;
 
 	public VertexNormal() {
 	}
 
-	public VertexNormal(VertexNormal arg0) {
-		this.field548 = arg0.field548;
-		this.field546 = arg0.field546;
-		this.field547 = arg0.field547;
-		this.field545 = arg0.field545;
+	public VertexNormal(VertexNormal normal) {
+		this.x = normal.x;
+		this.y = normal.y;
+		this.z = normal.z;
+		this.w = normal.w;
 	}
 }
