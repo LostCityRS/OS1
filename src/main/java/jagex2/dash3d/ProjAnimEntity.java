@@ -153,7 +153,7 @@ public class ProjAnimEntity extends Entity {
 	}
 
 	@ObfuscatedName("fh.g(I)Lfo;")
-	public final SoftwareModel method2643() {
+	public final SoftwareModel getModel() {
 		SpotAnimType var1 = SpotAnimType.get(this.field2568);
 		SoftwareModel var2 = var1.method2455(this.field2589);
 		if (var2 == null) {

@@ -71,7 +71,7 @@ public class SpotAnimEntity extends Entity {
 	}
 
 	@ObfuscatedName("fn.g(I)Lfo;")
-	public final SoftwareModel method2643() {
+	public final SoftwareModel getModel() {
 		SpotAnimType var1 = SpotAnimType.get(this.field2608);
 		SoftwareModel var2;
 		if (this.field2605) {

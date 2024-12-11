@@ -15,26 +15,26 @@ public class Decor {
 	public int field707;
 
 	@ObfuscatedName("bh.m")
-	public int field711;
+	public int type;
 
 	@ObfuscatedName("bh.c")
 	public int field705;
 
 	@ObfuscatedName("bh.n")
-	public int field708;
+	public int x;
 
 	@ObfuscatedName("bh.j")
-	public int field706;
+	public int z;
 
 	@ObfuscatedName("bh.z")
-	public Entity field712;
+	public Entity model;
 
 	@ObfuscatedName("bh.g")
 	public Entity field713;
 
 	@ObfuscatedName("bh.q")
-	public int field714 = 0;
+	public int bitset = 0;
 
 	@ObfuscatedName("bh.i")
-	public int field715 = 0;
+	public int info = 0;
 }

@@ -367,7 +367,7 @@ public class SoftwareModel extends Entity {
 			}
 		} else {
 			for (int var26 = 0; var26 < var15.field2722; var26++) {
-				int var27 = (-this.field2724[var26] << 16) / this.field2487;
+				int var27 = (-this.field2724[var26] << 16) / this.minY;
 				if (var27 < arg5) {
 					int var28 = this.field2723[var26] + arg1;
 					int var29 = this.field2779[var26] + arg3;
@@ -457,15 +457,15 @@ public class SoftwareModel extends Entity {
 			return;
 		}
 		this.field2745 = 1;
-		this.field2487 = 0;
+		this.minY = 0;
 		this.field2746 = 0;
 		this.field2747 = 0;
 		for (int var1 = 0; var1 < this.field2722; var1++) {
 			int var2 = this.field2723[var1];
 			int var3 = this.field2724[var1];
 			int var4 = this.field2779[var1];
-			if (-var3 > this.field2487) {
-				this.field2487 = -var3;
+			if (-var3 > this.minY) {
+				this.minY = -var3;
 			}
 			if (var3 > this.field2746) {
 				this.field2746 = var3;
@@ -476,7 +476,7 @@ public class SoftwareModel extends Entity {
 			}
 		}
 		this.field2747 = (int) (Math.sqrt((double) this.field2747) + 0.99D);
-		this.field2749 = (int) (Math.sqrt((double) (this.field2487 * this.field2487 + this.field2747 * this.field2747)) + 0.99D);
+		this.field2749 = (int) (Math.sqrt((double) (this.minY * this.minY + this.field2747 * this.field2747)) + 0.99D);
 		this.field2748 = this.field2749 + (int) (Math.sqrt((double) (this.field2747 * this.field2747 + this.field2746 * this.field2746)) + 0.99D);
 	}
 
@@ -865,7 +865,7 @@ public class SoftwareModel extends Entity {
 	}
 
 	@ObfuscatedName("fo.z(IIIIIIIII)V")
-	public void method2642(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public void draw(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		field2760[0] = -1;
 		if (this.field2745 != 1) {
 			this.method3002();
@@ -892,12 +892,12 @@ public class SoftwareModel extends Entity {
 		if (var19 / var13 <= Pix3D.field2535) {
 			return;
 		}
-		int var20 = (this.field2487 * arg2 >> 16) + var18;
+		int var20 = (this.minY * arg2 >> 16) + var18;
 		int var21 = var17 - var20 << 9;
 		if (var21 / var13 >= Pix3D.field2537) {
 			return;
 		}
-		int var22 = (this.field2487 * arg1 >> 16) + var12;
+		int var22 = (this.minY * arg1 >> 16) + var12;
 		boolean var23 = false;
 		boolean var24 = false;
 		if (var11 - var22 <= 50) {

@@ -13,7 +13,7 @@ public class NpcEntity extends PathingEntity {
 	public NpcType type;
 
 	@ObfuscatedName("ge.g(I)Lfo;")
-	public final SoftwareModel method2643() {
+	public final SoftwareModel getModel() {
 		if (this.type == null) {
 			return null;
 		}
@@ -24,7 +24,7 @@ public class NpcEntity extends PathingEntity {
 			return null;
 		}
 		var3.method3002();
-		this.field2626 = var3.field2487;
+		this.field2626 = var3.minY;
 		if (this.spotanimId != -1 && this.spotanimFrame != -1) {
 			SoftwareModel var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
 			if (var4 != null) {

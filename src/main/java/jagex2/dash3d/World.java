@@ -449,7 +449,7 @@ public class World {
 				} else {
 					var22 = new LocEntity(arg3, 22, arg4, arg0, arg1, arg2, var9.anim, true, null);
 				}
-				arg6.method714(arg0, arg1, arg2, var17, var22, var20, var21);
+				arg6.addGroundDecor(arg0, arg1, arg2, var17, var22, var20, var21);
 				if (var9.blockwalk == 1 && arg7 != null) {
 					arg7.method1213(arg1, arg2);
 				}
@@ -461,7 +461,7 @@ public class World {
 			} else {
 				var45 = new LocEntity(arg3, 10, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			if (var45 != null && arg6.method585(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.shadow) {
+			if (var45 != null && arg6.add(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.shadow) {
 				int var46 = 15;
 				if (var45 instanceof SoftwareModel) {
 					var46 = ((SoftwareModel) var45).method3004() / 4;
@@ -487,7 +487,7 @@ public class World {
 			} else {
 				var23 = new LocEntity(arg3, arg5, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method585(arg0, arg1, arg2, var17, 1, 1, var23, 0, var20, var21);
+			arg6.add(arg0, arg1, arg2, var17, 1, 1, var23, 0, var20, var21);
 			if (arg5 >= 12 && arg5 <= 17 && arg5 != 13 && arg0 > 0) {
 				levelOccludemap[arg0][arg1][arg2] |= 0x924;
 			}
@@ -501,7 +501,7 @@ public class World {
 			} else {
 				var24 = new LocEntity(arg3, 0, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method572(arg0, arg1, arg2, var17, var24, null, ROTATION_WALL_TYPE[arg4], 0, var20, var21);
+			arg6.addWall(arg0, arg1, arg2, var17, var24, null, ROTATION_WALL_TYPE[arg4], 0, var20, var21);
 			if (arg4 == 0) {
 				if (var9.shadow) {
 					levelShademap[arg0][arg1][arg2] = 50;
@@ -539,7 +539,7 @@ public class World {
 				arg7.method1195(arg1, arg2, arg5, arg4, var9.blockrange);
 			}
 			if (var9.wallwidth != 16) {
-				arg6.method580(arg0, arg1, arg2, var9.wallwidth);
+				arg6.setDecorOffset(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 1) {
 			Entity var25;
@@ -548,7 +548,7 @@ public class World {
 			} else {
 				var25 = new LocEntity(arg3, 1, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method572(arg0, arg1, arg2, var17, var25, null, ROTATION_WALL_CORNER_TYPE[arg4], 0, var20, var21);
+			arg6.addWall(arg0, arg1, arg2, var17, var25, null, ROTATION_WALL_CORNER_TYPE[arg4], 0, var20, var21);
 			if (var9.shadow) {
 				if (arg4 == 0) {
 					levelShademap[arg0][arg1][arg2 + 1] = 50;
@@ -574,7 +574,7 @@ public class World {
 				var27 = new LocEntity(arg3, 2, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 				var28 = new LocEntity(arg3, 2, var26, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method572(arg0, arg1, arg2, var17, var27, var28, ROTATION_WALL_TYPE[arg4], ROTATION_WALL_TYPE[var26], var20, var21);
+			arg6.addWall(arg0, arg1, arg2, var17, var27, var28, ROTATION_WALL_TYPE[arg4], ROTATION_WALL_TYPE[var26], var20, var21);
 			if (var9.occlude) {
 				if (arg4 == 0) {
 					levelOccludemap[arg0][arg1][arg2] |= 0x249;
@@ -594,7 +594,7 @@ public class World {
 				arg7.method1195(arg1, arg2, arg5, arg4, var9.blockrange);
 			}
 			if (var9.wallwidth != 16) {
-				arg6.method580(arg0, arg1, arg2, var9.wallwidth);
+				arg6.setDecorOffset(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 3) {
 			Entity var29;
@@ -603,7 +603,7 @@ public class World {
 			} else {
 				var29 = new LocEntity(arg3, 3, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method572(arg0, arg1, arg2, var17, var29, null, ROTATION_WALL_CORNER_TYPE[arg4], 0, var20, var21);
+			arg6.addWall(arg0, arg1, arg2, var17, var29, null, ROTATION_WALL_CORNER_TYPE[arg4], 0, var20, var21);
 			if (var9.shadow) {
 				if (arg4 == 0) {
 					levelShademap[arg0][arg1][arg2 + 1] = 50;
@@ -625,12 +625,12 @@ public class World {
 			} else {
 				var30 = new LocEntity(arg3, arg5, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method585(arg0, arg1, arg2, var17, 1, 1, var30, 0, var20, var21);
+			arg6.add(arg0, arg1, arg2, var17, 1, 1, var30, 0, var20, var21);
 			if (var9.blockwalk != 0 && arg7 != null) {
 				arg7.method1198(arg1, arg2, var10, var11, var9.blockrange);
 			}
 			if (var9.wallwidth != 16) {
-				arg6.method580(arg0, arg1, arg2, var9.wallwidth);
+				arg6.setDecorOffset(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 4) {
 			Entity var31;
@@ -639,10 +639,10 @@ public class World {
 			} else {
 				var31 = new LocEntity(arg3, 4, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method589(arg0, arg1, arg2, var17, var31, null, ROTATION_WALL_TYPE[arg4], 0, 0, 0, var20, var21);
+			arg6.addDecor(arg0, arg1, arg2, var17, var31, null, ROTATION_WALL_TYPE[arg4], 0, 0, 0, var20, var21);
 		} else if (arg5 == 5) {
 			int var32 = 16;
-			int var33 = arg6.method590(arg0, arg1, arg2);
+			int var33 = arg6.getWallBitset(arg0, arg1, arg2);
 			if (var33 != 0) {
 				var32 = LocType.get(var33 >> 14 & 0x7FFF).wallwidth;
 			}
@@ -652,10 +652,10 @@ public class World {
 			} else {
 				var34 = new LocEntity(arg3, 4, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method589(arg0, arg1, arg2, var17, var34, null, ROTATION_WALL_TYPE[arg4], 0, WALL_DECORATION_ROTATION_FORWARD_X[arg4] * var32, WALL_DECORATION_ROTATION_FORWARD_Z[arg4] * var32, var20, var21);
+			arg6.addDecor(arg0, arg1, arg2, var17, var34, null, ROTATION_WALL_TYPE[arg4], 0, WALL_DECORATION_ROTATION_FORWARD_X[arg4] * var32, WALL_DECORATION_ROTATION_FORWARD_Z[arg4] * var32, var20, var21);
 		} else if (arg5 == 6) {
 			int var35 = 8;
-			int var36 = arg6.method590(arg0, arg1, arg2);
+			int var36 = arg6.getWallBitset(arg0, arg1, arg2);
 			if (var36 != 0) {
 				var35 = LocType.get(var36 >> 14 & 0x7FFF).wallwidth / 2;
 			}
@@ -665,7 +665,7 @@ public class World {
 			} else {
 				var37 = new LocEntity(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method589(arg0, arg1, arg2, var17, var37, null, 256, arg4, field31[arg4] * var35, field32[arg4] * var35, var20, var21);
+			arg6.addDecor(arg0, arg1, arg2, var17, var37, null, 256, arg4, field31[arg4] * var35, field32[arg4] * var35, var20, var21);
 		} else if (arg5 == 7) {
 			int var38 = arg4 + 2 & 0x3;
 			Entity var39;
@@ -674,10 +674,10 @@ public class World {
 			} else {
 				var39 = new LocEntity(arg3, 4, var38 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method589(arg0, arg1, arg2, var17, var39, null, 256, var38, 0, 0, var20, var21);
+			arg6.addDecor(arg0, arg1, arg2, var17, var39, null, 256, var38, 0, 0, var20, var21);
 		} else if (arg5 == 8) {
 			int var40 = 8;
-			int var41 = arg6.method590(arg0, arg1, arg2);
+			int var41 = arg6.getWallBitset(arg0, arg1, arg2);
 			if (var41 != 0) {
 				var40 = LocType.get(var41 >> 14 & 0x7FFF).wallwidth / 2;
 			}
@@ -691,7 +691,7 @@ public class World {
 				var43 = new LocEntity(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 				var44 = new LocEntity(arg3, 4, var42 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.method589(arg0, arg1, arg2, var17, var43, var44, 256, arg4, field31[arg4] * var40, field32[arg4] * var40, var20, var21);
+			arg6.addDecor(arg0, arg1, arg2, var17, var43, var44, 256, arg4, field31[arg4] * var40, field32[arg4] * var40, var20, var21);
 		}
 	}
 
@@ -865,7 +865,7 @@ public class World {
 									var56 = Pix3D.palette[mulHSL(var49, 96)];
 								}
 								if (var39 == 0) {
-									arg0.method569(var6, var21, var34, 0, 0, -1, var40, var41, var42, var43, mulHSL(var48, var44), mulHSL(var48, var45), mulHSL(var48, var46), mulHSL(var48, var47), 0, 0, 0, 0, var56, 0);
+									arg0.setTile(var6, var21, var34, 0, 0, -1, var40, var41, var42, var43, mulHSL(var48, var44), mulHSL(var48, var45), mulHSL(var48, var46), mulHSL(var48, var47), 0, 0, 0, 0, var56, 0);
 								} else {
 									int var57 = levelTileOverlayShape[var6][var21][var34] + 1;
 									byte var58 = levelTileOverlayRotation[var6][var21][var34];
@@ -906,7 +906,7 @@ public class World {
 										int var68 = hsl24to16(var66, var59.field2412, var67);
 										var65 = Pix3D.palette[adjustLightness(var68, 96)];
 									}
-									arg0.method569(var6, var21, var34, var57, var58, var60, var40, var41, var42, var43, mulHSL(var48, var44), mulHSL(var48, var45), mulHSL(var48, var46), mulHSL(var48, var47), adjustLightness(var62, var44), adjustLightness(var62, var45), adjustLightness(var62, var46), adjustLightness(var62, var47), var56, var65);
+									arg0.setTile(var6, var21, var34, var57, var58, var60, var40, var41, var42, var43, mulHSL(var48, var44), mulHSL(var48, var45), mulHSL(var48, var46), mulHSL(var48, var47), adjustLightness(var62, var44), adjustLightness(var62, var45), adjustLightness(var62, var46), adjustLightness(var62, var47), var56, var65);
 								}
 							}
 						}
@@ -923,7 +923,7 @@ public class World {
 					} else {
 						var75 = var6 - 1;
 					}
-					arg0.method568(var6, var70, var69, var75);
+					arg0.setDrawLevel(var6, var70, var69, var75);
 				}
 			}
 			levelTileUnderlayIds[var6] = null;
@@ -932,11 +932,11 @@ public class World {
 			levelTileOverlayRotation[var6] = null;
 			levelShademap[var6] = null;
 		}
-		arg0.method640(-50, -10, -50);
+		arg0.buildModels(-50, -10, -50);
 		for (int var76 = 0; var76 < 104; var76++) {
 			for (int var77 = 0; var77 < 104; var77++) {
 				if ((levelTileFlags[1][var76][var77] & 0x2) == 2) {
-					arg0.method566(var76, var77);
+					arg0.setBridge(var76, var77);
 				}
 			}
 		}
@@ -984,7 +984,7 @@ public class World {
 								short var92 = 240;
 								int var93 = levelHeightmap[var88][var84][var85] - var92;
 								int var94 = levelHeightmap[var87][var84][var85];
-								World3D.method651(var81, 1, var84 * 128, var84 * 128, var85 * 128, var86 * 128 + 128, var93, var94);
+								World3D.addOccluder(var81, 1, var84 * 128, var84 * 128, var85 * 128, var86 * 128 + 128, var93, var94);
 								for (int var95 = var87; var95 <= var88; var95++) {
 									for (int var96 = var85; var96 <= var86; var96++) {
 										levelOccludemap[var95][var84][var96] &= ~var78;
@@ -1024,7 +1024,7 @@ public class World {
 								short var104 = 240;
 								int var105 = levelHeightmap[var100][var97][var83] - var104;
 								int var106 = levelHeightmap[var99][var97][var83];
-								World3D.method651(var81, 2, var97 * 128, var98 * 128 + 128, var83 * 128, var83 * 128, var105, var106);
+								World3D.addOccluder(var81, 2, var97 * 128, var98 * 128 + 128, var83 * 128, var83 * 128, var105, var106);
 								for (int var107 = var99; var107 <= var100; var107++) {
 									for (int var108 = var97; var108 <= var98; var108++) {
 										levelOccludemap[var107][var108][var83] &= ~var79;
@@ -1061,7 +1061,7 @@ public class World {
 							}
 							if ((var110 - var109 + 1) * (var112 - var111 + 1) >= 4) {
 								int var115 = levelHeightmap[var82][var109][var111];
-								World3D.method651(var81, 4, var109 * 128, var110 * 128 + 128, var111 * 128, var112 * 128 + 128, var115, var115);
+								World3D.addOccluder(var81, 4, var109 * 128, var110 * 128 + 128, var111 * 128, var112 * 128 + 128, var115, var115);
 								for (int var116 = var109; var116 <= var110; var116++) {
 									for (int var117 = var111; var117 <= var112; var117++) {
 										levelOccludemap[var82][var116][var117] &= ~var80;
@@ -1235,7 +1235,7 @@ public class World {
 			} else {
 				var22 = new LocEntity(arg4, 22, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method714(arg0, arg2, arg3, var17, var22, var20, var21);
+			arg7.addGroundDecor(arg0, arg2, arg3, var17, var22, var20, var21);
 			if (var9.blockwalk == 1) {
 				arg8.method1213(arg2, arg3);
 			}
@@ -1247,7 +1247,7 @@ public class World {
 				var45 = new LocEntity(arg4, 10, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			if (var45 != null) {
-				arg7.method585(arg0, arg2, arg3, var17, var10, var11, var45, arg6 == 11 ? 256 : 0, var20, var21);
+				arg7.add(arg0, arg2, arg3, var17, var10, var11, var45, arg6 == 11 ? 256 : 0, var20, var21);
 			}
 			if (var9.blockwalk != 0) {
 				arg8.method1198(arg2, arg3, var10, var11, var9.blockrange);
@@ -1259,7 +1259,7 @@ public class World {
 			} else {
 				var23 = new LocEntity(arg4, arg6, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method585(arg0, arg2, arg3, var17, 1, 1, var23, 0, var20, var21);
+			arg7.add(arg0, arg2, arg3, var17, 1, 1, var23, 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.method1198(arg2, arg3, var10, var11, var9.blockrange);
 			}
@@ -1270,7 +1270,7 @@ public class World {
 			} else {
 				var24 = new LocEntity(arg4, 0, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method572(arg0, arg2, arg3, var17, var24, null, ROTATION_WALL_TYPE[arg5], 0, var20, var21);
+			arg7.addWall(arg0, arg2, arg3, var17, var24, null, ROTATION_WALL_TYPE[arg5], 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.method1195(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
@@ -1281,7 +1281,7 @@ public class World {
 			} else {
 				var25 = new LocEntity(arg4, 1, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method572(arg0, arg2, arg3, var17, var25, null, ROTATION_WALL_CORNER_TYPE[arg5], 0, var20, var21);
+			arg7.addWall(arg0, arg2, arg3, var17, var25, null, ROTATION_WALL_CORNER_TYPE[arg5], 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.method1195(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
@@ -1296,7 +1296,7 @@ public class World {
 				var27 = new LocEntity(arg4, 2, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 				var28 = new LocEntity(arg4, 2, var26, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method572(arg0, arg2, arg3, var17, var27, var28, ROTATION_WALL_TYPE[arg5], ROTATION_WALL_TYPE[var26], var20, var21);
+			arg7.addWall(arg0, arg2, arg3, var17, var27, var28, ROTATION_WALL_TYPE[arg5], ROTATION_WALL_TYPE[var26], var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.method1195(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
@@ -1307,7 +1307,7 @@ public class World {
 			} else {
 				var29 = new LocEntity(arg4, 3, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method572(arg0, arg2, arg3, var17, var29, null, ROTATION_WALL_CORNER_TYPE[arg5], 0, var20, var21);
+			arg7.addWall(arg0, arg2, arg3, var17, var29, null, ROTATION_WALL_CORNER_TYPE[arg5], 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.method1195(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
@@ -1318,7 +1318,7 @@ public class World {
 			} else {
 				var30 = new LocEntity(arg4, arg6, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method585(arg0, arg2, arg3, var17, 1, 1, var30, 0, var20, var21);
+			arg7.add(arg0, arg2, arg3, var17, 1, 1, var30, 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.method1198(arg2, arg3, var10, var11, var9.blockrange);
 			}
@@ -1329,10 +1329,10 @@ public class World {
 			} else {
 				var31 = new LocEntity(arg4, 4, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method589(arg0, arg2, arg3, var17, var31, null, ROTATION_WALL_TYPE[arg5], 0, 0, 0, var20, var21);
+			arg7.addDecor(arg0, arg2, arg3, var17, var31, null, ROTATION_WALL_TYPE[arg5], 0, 0, 0, var20, var21);
 		} else if (arg6 == 5) {
 			int var32 = 16;
-			int var33 = arg7.method590(arg0, arg2, arg3);
+			int var33 = arg7.getWallBitset(arg0, arg2, arg3);
 			if (var33 != 0) {
 				var32 = LocType.get(var33 >> 14 & 0x7FFF).wallwidth;
 			}
@@ -1342,10 +1342,10 @@ public class World {
 			} else {
 				var34 = new LocEntity(arg4, 4, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method589(arg0, arg2, arg3, var17, var34, null, ROTATION_WALL_TYPE[arg5], 0, WALL_DECORATION_ROTATION_FORWARD_X[arg5] * var32, WALL_DECORATION_ROTATION_FORWARD_Z[arg5] * var32, var20, var21);
+			arg7.addDecor(arg0, arg2, arg3, var17, var34, null, ROTATION_WALL_TYPE[arg5], 0, WALL_DECORATION_ROTATION_FORWARD_X[arg5] * var32, WALL_DECORATION_ROTATION_FORWARD_Z[arg5] * var32, var20, var21);
 		} else if (arg6 == 6) {
 			int var35 = 8;
-			int var36 = arg7.method590(arg0, arg2, arg3);
+			int var36 = arg7.getWallBitset(arg0, arg2, arg3);
 			if (var36 != 0) {
 				var35 = LocType.get(var36 >> 14 & 0x7FFF).wallwidth / 2;
 			}
@@ -1355,7 +1355,7 @@ public class World {
 			} else {
 				var37 = new LocEntity(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method589(arg0, arg2, arg3, var17, var37, null, 256, arg5, field31[arg5] * var35, field32[arg5] * var35, var20, var21);
+			arg7.addDecor(arg0, arg2, arg3, var17, var37, null, 256, arg5, field31[arg5] * var35, field32[arg5] * var35, var20, var21);
 		} else if (arg6 == 7) {
 			int var38 = arg5 + 2 & 0x3;
 			Entity var39;
@@ -1364,10 +1364,10 @@ public class World {
 			} else {
 				var39 = new LocEntity(arg4, 4, var38 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method589(arg0, arg2, arg3, var17, var39, null, 256, var38, 0, 0, var20, var21);
+			arg7.addDecor(arg0, arg2, arg3, var17, var39, null, 256, var38, 0, 0, var20, var21);
 		} else if (arg6 == 8) {
 			int var40 = 8;
-			int var41 = arg7.method590(arg0, arg2, arg3);
+			int var41 = arg7.getWallBitset(arg0, arg2, arg3);
 			if (var41 != 0) {
 				var40 = LocType.get(var41 >> 14 & 0x7FFF).wallwidth / 2;
 			}
@@ -1381,7 +1381,7 @@ public class World {
 				var43 = new LocEntity(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 				var44 = new LocEntity(arg4, 4, var42 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.method589(arg0, arg2, arg3, var17, var43, var44, 256, arg5, field31[arg5] * var40, field32[arg5] * var40, var20, var21);
+			arg7.addDecor(arg0, arg2, arg3, var17, var43, var44, 256, arg5, field31[arg5] * var40, field32[arg5] * var40, var20, var21);
 		}
 	}
 }

@@ -1052,7 +1052,7 @@ public class Model extends Entity {
 			}
 		} else {
 			for (int var26 = 0; var26 < var15.vertexCount; var26++) {
-				int var27 = (-this.vertexY[var26] << 16) / this.field2487;
+				int var27 = (-this.vertexY[var26] << 16) / this.minY;
 				if (var27 < arg5) {
 					int var28 = this.vertexX[var26] + arg1;
 					int var29 = this.vertexZ[var26] + arg3;
@@ -1296,7 +1296,7 @@ public class Model extends Entity {
 		if (this.field2707) {
 			return;
 		}
-		this.field2487 = 0;
+		this.minY = 0;
 		this.field2671 = 0;
 		this.field2686 = 999999;
 		this.field2710 = -999999;
@@ -1318,8 +1318,8 @@ public class Model extends Entity {
 			if (var4 > this.field2698) {
 				this.field2698 = var4;
 			}
-			if (-var3 > this.field2487) {
-				this.field2487 = -var3;
+			if (-var3 > this.minY) {
+				this.minY = -var3;
 			}
 			if (var3 > this.field2671) {
 				this.field2671 = var3;
@@ -1329,7 +1329,7 @@ public class Model extends Entity {
 	}
 
 	@ObfuscatedName("fw.an(Lfw;Lfw;IIIZ)V")
-	public static void method2941(Model arg0, Model arg1, int arg2, int arg3, int arg4, boolean arg5) {
+	public static void mergeNormals(Model arg0, Model arg1, int arg2, int arg3, int arg4, boolean arg5) {
 		arg0.method2940();
 		arg0.method2932();
 		arg1.method2940();
@@ -1340,65 +1340,68 @@ public class Model extends Entity {
 		int var8 = arg1.vertexCount;
 		for (int var9 = 0; var9 < arg0.vertexCount; var9++) {
 			VertexNormal var10 = arg0.field2703[var9];
-			if (var10.field545 != 0) {
-				int var11 = arg0.vertexY[var9] - arg3;
-				if (var11 <= arg1.field2671) {
-					int var12 = arg0.vertexX[var9] - arg2;
-					if (var12 >= arg1.field2686 && var12 <= arg1.field2710) {
-						int var13 = arg0.vertexZ[var9] - arg4;
-						if (var13 >= arg1.field2712 && var13 <= arg1.field2698) {
-							for (int var14 = 0; var14 < var8; var14++) {
-								VertexNormal var15 = arg1.field2703[var14];
-								if (var7[var14] == var12 && arg1.vertexZ[var14] == var13 && arg1.vertexY[var14] == var11 && var15.field545 != 0) {
-									if (arg0.field2685 == null) {
-										arg0.field2685 = new VertexNormal[arg0.vertexCount];
-									}
-									if (arg1.field2685 == null) {
-										arg1.field2685 = new VertexNormal[var8];
-									}
-									VertexNormal var16 = arg0.field2685[var9];
-									if (var16 == null) {
-										var16 = arg0.field2685[var9] = new VertexNormal(var10);
-									}
-									VertexNormal var17 = arg1.field2685[var14];
-									if (var17 == null) {
-										var17 = arg1.field2685[var14] = new VertexNormal(var15);
-									}
-									var16.field548 += var15.field548;
-									var16.field546 += var15.field546;
-									var16.field547 += var15.field547;
-									var16.field545 += var15.field545;
-									var17.field548 += var10.field548;
-									var17.field546 += var10.field546;
-									var17.field547 += var10.field547;
-									var17.field545 += var10.field545;
-									var6++;
-									field2683[var9] = field2715;
-									field2714[var14] = field2715;
-								}
-							}
-						}
+			if (var10.field545 == 0) {
+				continue;
+			}
+			int var11 = arg0.vertexY[var9] - arg3;
+			if (var11 <= arg1.field2671) {
+				int var12 = arg0.vertexX[var9] - arg2;
+				if (var12 < arg1.field2686 || var12 > arg1.field2710) {
+					continue;
+				}
+				int var13 = arg0.vertexZ[var9] - arg4;
+				if (var13 < arg1.field2712 || var13 > arg1.field2698) {
+					continue;
+				}
+				for (int var14 = 0; var14 < var8; var14++) {
+					VertexNormal var15 = arg1.field2703[var14];
+					if (var7[var14] != var12 || arg1.vertexZ[var14] != var13 || arg1.vertexY[var14] != var11 || var15.field545 == 0) {
+						continue;
 					}
+					if (arg0.field2685 == null) {
+						arg0.field2685 = new VertexNormal[arg0.vertexCount];
+					}
+					if (arg1.field2685 == null) {
+						arg1.field2685 = new VertexNormal[var8];
+					}
+					VertexNormal var16 = arg0.field2685[var9];
+					if (var16 == null) {
+						var16 = arg0.field2685[var9] = new VertexNormal(var10);
+					}
+					VertexNormal var17 = arg1.field2685[var14];
+					if (var17 == null) {
+						var17 = arg1.field2685[var14] = new VertexNormal(var15);
+					}
+					var16.field548 += var15.field548;
+					var16.field546 += var15.field546;
+					var16.field547 += var15.field547;
+					var16.field545 += var15.field545;
+					var17.field548 += var10.field548;
+					var17.field546 += var10.field546;
+					var17.field547 += var10.field547;
+					var17.field545 += var10.field545;
+					var6++;
+					field2683[var9] = field2715;
+					field2714[var14] = field2715;
 				}
 			}
 		}
-		if (var6 < 3 || !arg5) {
-			return;
-		}
-		for (int var18 = 0; var18 < arg0.faceCount; var18++) {
-			if (field2683[arg0.faceVertexA[var18]] == field2715 && field2683[arg0.faceVertexB[var18]] == field2715 && field2683[arg0.faceVertexC[var18]] == field2715) {
-				if (arg0.field2679 == null) {
-					arg0.field2679 = new byte[arg0.faceCount];
+		if (var6 >= 3 && arg5) {
+			for (int var18 = 0; var18 < arg0.faceCount; var18++) {
+				if (field2683[arg0.faceVertexA[var18]] == field2715 && field2683[arg0.faceVertexB[var18]] == field2715 && field2683[arg0.faceVertexC[var18]] == field2715) {
+					if (arg0.field2679 == null) {
+						arg0.field2679 = new byte[arg0.faceCount];
+					}
+					arg0.field2679[var18] = 2;
 				}
-				arg0.field2679[var18] = 2;
 			}
-		}
-		for (int var19 = 0; var19 < arg1.faceCount; var19++) {
-			if (field2714[arg1.faceVertexA[var19]] == field2715 && field2714[arg1.faceVertexB[var19]] == field2715 && field2714[arg1.faceVertexC[var19]] == field2715) {
-				if (arg1.field2679 == null) {
-					arg1.field2679 = new byte[arg1.faceCount];
+			for (int var19 = 0; var19 < arg1.faceCount; var19++) {
+				if (field2714[arg1.faceVertexA[var19]] == field2715 && field2714[arg1.faceVertexB[var19]] == field2715 && field2714[arg1.faceVertexC[var19]] == field2715) {
+					if (arg1.field2679 == null) {
+						arg1.field2679 = new byte[arg1.faceCount];
+					}
+					arg1.field2679[var19] = 2;
 				}
-				arg1.field2679[var19] = 2;
 			}
 		}
 	}

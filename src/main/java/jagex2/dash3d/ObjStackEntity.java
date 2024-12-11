@@ -14,7 +14,7 @@ public class ObjStackEntity extends Entity {
 	public int field2601;
 
 	@ObfuscatedName("fy.g(I)Lfo;")
-	public final SoftwareModel method2643() {
+	public final SoftwareModel getModel() {
 		return ObjType.get(this.field2600).getModel(this.field2601);
 	}
 }

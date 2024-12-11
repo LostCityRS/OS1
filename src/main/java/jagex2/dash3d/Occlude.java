@@ -6,56 +6,56 @@ import deob.ObfuscatedName;
 public class Occlude {
 
 	@ObfuscatedName("bs.r")
-	public int field726;
+	public int minTileX;
 
 	@ObfuscatedName("bs.d")
-	public int field735;
+	public int maxTileX;
 
 	@ObfuscatedName("bs.l")
-	public int field725;
+	public int minTileZ;
 
 	@ObfuscatedName("bs.m")
-	public int field724;
+	public int maxTileZ;
 
 	@ObfuscatedName("bs.c")
-	public int field737;
+	public int type;
 
 	@ObfuscatedName("bs.n")
-	public int field739;
+	public int minX;
 
 	@ObfuscatedName("bs.j")
-	public int field723;
+	public int maxX;
 
 	@ObfuscatedName("bs.z")
-	public int field730;
+	public int minZ;
 
 	@ObfuscatedName("bs.g")
-	public int field731;
+	public int maxZ;
 
 	@ObfuscatedName("bs.q")
-	public int field727;
+	public int minY;
 
 	@ObfuscatedName("bs.i")
-	public int field733;
+	public int maxY;
 
 	@ObfuscatedName("bs.s")
-	public int field734;
+	public int mode;
 
 	@ObfuscatedName("bs.u")
-	public int field728;
+	public int minDeltaX;
 
 	@ObfuscatedName("bs.v")
-	public int field736;
+	public int maxDeltaX;
 
 	@ObfuscatedName("bs.w")
-	public int field729;
+	public int minDeltaZ;
 
 	@ObfuscatedName("bs.e")
-	public int field738;
+	public int maxDeltaZ;
 
 	@ObfuscatedName("bs.b")
-	public int field732;
+	public int minDeltaY;
 
 	@ObfuscatedName("bs.y")
-	public int field740;
+	public int maxDeltaY;
 }

@@ -63,7 +63,7 @@ public class LocEntity extends Entity {
 	}
 
 	@ObfuscatedName("ff.g(I)Lfo;")
-	public final SoftwareModel method2643() {
+	public final SoftwareModel getModel() {
 		if (this.anim != null) {
 			int var1 = Client.loopCycle - this.animCycle;
 			if (var1 > 100 && this.anim.replayoff > 0) {

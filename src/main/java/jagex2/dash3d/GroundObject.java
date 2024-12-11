@@ -15,17 +15,17 @@ public class GroundObject {
 	public int field682;
 
 	@ObfuscatedName("ax.m")
-	public Entity field686;
+	public Entity bottomObj;
 
 	@ObfuscatedName("ax.c")
-	public Entity field685;
+	public Entity topObj;
 
 	@ObfuscatedName("ax.n")
-	public Entity field687;
+	public Entity middleObj;
 
 	@ObfuscatedName("ax.j")
 	public int field688;
 
 	@ObfuscatedName("ax.z")
-	public int field689;
+	public int offset;
 }

@@ -15,11 +15,11 @@ public class GroundDecor {
 	public int field700;
 
 	@ObfuscatedName("af.m")
-	public int field702;
+	public int bitset;
 
 	@ObfuscatedName("af.c")
-	public Entity field701;
+	public Entity model;
 
 	@ObfuscatedName("af.n")
-	public int field698;
+	public int info;
 }

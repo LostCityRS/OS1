@@ -6,29 +6,29 @@ import deob.ObfuscatedName;
 public class Wall {
 
 	@ObfuscatedName("at.r")
-	public int field648;
+	public int y;
 
 	@ObfuscatedName("at.d")
-	public int field650;
+	public int x;
 
 	@ObfuscatedName("at.l")
-	public int field645;
+	public int z;
 
 	@ObfuscatedName("at.m")
-	public int field644;
+	public int typeA;
 
 	@ObfuscatedName("at.c")
-	public int field643;
+	public int typeB;
 
 	@ObfuscatedName("at.n")
-	public Entity field646;
+	public Entity modelA;
 
 	@ObfuscatedName("at.j")
-	public Entity field649;
+	public Entity modelB;
 
 	@ObfuscatedName("at.z")
-	public int field647 = 0;
+	public int bitset = 0;
 
 	@ObfuscatedName("at.g")
-	public int field651 = 0;
+	public int info = 0;
 }
