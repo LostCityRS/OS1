@@ -118,7 +118,7 @@ public class ScriptRunner {
 			}
 
 			int opcount = 0;
-			label2277: while (true) {
+			while (true) {
 				opcount++;
 				if (opcount > 200000) {
 					throw new RuntimeException("slow");
@@ -255,8 +255,8 @@ public class ScriptRunner {
 					if (opcode == 34) {
 						// pop_int_local
 						int var10001 = intOperands[pc];
-						isp--;
 
+						isp--;
 						intLocals[var10001] = intStack[isp];
 						continue;
 					}
@@ -268,14 +268,15 @@ public class ScriptRunner {
 					if (opcode == 36) {
 						// pop_string_local
 						int var10001 = intOperands[pc];
-						ssp--;
 
+						ssp--;
 						stringLocals[var10001] = stringStack[ssp];
 						continue;
 					}
 					if (opcode == 37) {
 						// join_string
 						int var28 = intOperands[pc];
+
 						ssp -= var28;
 						String var29 = StringUtil.method1785(stringStack, ssp, var28);
 
@@ -334,6 +335,7 @@ public class ScriptRunner {
 					if (opcode == 43) {
 						// pop_varc_int
 						int var10001 = intOperands[pc];
+
 						isp--;
 						Client.field2120[var10001] = intStack[isp];
 						continue;
@@ -346,53 +348,52 @@ public class ScriptRunner {
 						isp--;
 						int var39 = intStack[isp];
 
-						if (var39 >= 0 && var39 <= 5000) {
-							field193[var37] = var39;
+                        if (var39 < 0 || var39 > 5000) {
+                            throw new RuntimeException();
+                        }
 
-							byte var40 = -1;
-							if (var38 == 105) {
-								var40 = 0;
-							}
+						field193[var37] = var39;
 
-							int var41 = 0;
-							while (true) {
-								if (var41 >= var39) {
-									continue label2277;
-								}
-
-								field192[var37][var41] = var40;
-								var41++;
-							}
+						byte var40 = -1;
+						if (var38 == 105) {
+							var40 = 0;
 						}
 
-						throw new RuntimeException();
-					}
+						for (int var41 = 0; var41 < var39; var41++) {
+							field192[var37][var41] = var40;
+						}
+
+						continue;
+                    }
 					if (opcode == 45) {
 						// push_array_int
 						int var42 = intOperands[pc];
+
 						isp--;
 						int var43 = intStack[isp];
 
-						if (var43 >= 0 && var43 < field193[var42]) {
-							intStack[isp++] = field192[var42][var43];
-							continue;
-						}
+                        if (var43 < 0 || var43 >= field193[var42]) {
+                            throw new RuntimeException();
+                        }
 
-						throw new RuntimeException();
-					}
+                        intStack[isp++] = field192[var42][var43];
+                        continue;
+
+                    }
 					if (opcode == 46) {
 						// pop_array_int
 						int var44 = intOperands[pc];
+
 						isp -= 2;
 						int var45 = intStack[isp];
 
-						if (var45 >= 0 && var45 < field193[var44]) {
-							field192[var44][var45] = intStack[isp + 1];
-							continue;
-						}
+                        if (var45 < 0 || var45 >= field193[var44]) {
+                            throw new RuntimeException();
+                        }
 
-						throw new RuntimeException();
-					}
+                        field192[var44][var45] = intStack[isp + 1];
+                        continue;
+                    }
 					if (opcode == 47) {
 						// push_varc_str
 						String var46 = Client.field1996[intOperands[pc]];
@@ -406,8 +407,8 @@ public class ScriptRunner {
 					if (opcode == 48) {
 						// pop_varc_str
 						int var10001 = intOperands[pc];
-						ssp--;
 
+						ssp--;
 						Client.field1996[var10001] = stringStack[ssp];
 						continue;
 					}
