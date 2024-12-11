@@ -3,8 +3,8 @@ package jagex2.sound;
 import deob.ObfuscatedName;
 import jagex2.client.SignLink;
 import jagex2.datastruct.ArrayUtil;
-import jagex2.datastruct.MonotonicTime;
-import jagex2.datastruct.PreciseSleep;
+import jagex2.datastruct.time.MonotonicTime;
+import jagex2.datastruct.time.PreciseSleep;
 
 import java.awt.*;
 

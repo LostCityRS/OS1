@@ -1,8 +1,8 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import jagex2.dash3d.Entity;
 import jagex2.dash3d.Unused10;
+import jagex2.dash3d.entity.Entity;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 
@@ -1585,5 +1585,44 @@ public class Model extends Entity {
 			arg0 = 126;
 		}
 		return arg0;
+	}
+
+	@ObfuscatedName("ao")
+	public static class VertexNormal {
+
+		@ObfuscatedName("ao.r")
+		public int x;
+
+		@ObfuscatedName("ao.d")
+		public int y;
+
+		@ObfuscatedName("ao.l")
+		public int z;
+
+		@ObfuscatedName("ao.m")
+		public int w;
+
+		public VertexNormal() {
+		}
+
+		public VertexNormal(VertexNormal normal) {
+			this.x = normal.x;
+			this.y = normal.y;
+			this.z = normal.z;
+			this.w = normal.w;
+		}
+	}
+
+	@ObfuscatedName("ag")
+	public static class FaceNormal {
+
+		@ObfuscatedName("ag.r")
+		public int field552;
+
+		@ObfuscatedName("ag.d")
+		public int field551;
+
+		@ObfuscatedName("ag.l")
+		public int field550;
 	}
 }

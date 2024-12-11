@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex2.client.JagException;
 import jagex2.client.PrivilegedRequest;
 import jagex2.client.SignLink;
-import jagex2.datastruct.PreciseSleep;
+import jagex2.datastruct.time.PreciseSleep;
 
 import java.io.EOFException;
 import java.io.IOException;

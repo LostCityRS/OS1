@@ -4,10 +4,10 @@ import deob.ObfuscatedName;
 import jagex2.client.JagException;
 import jagex2.datastruct.ByteArrayCopier;
 import jagex2.datastruct.IntHashTable;
-import jagex2.datastruct.JStringUtil;
-import jagex2.io.BZip2;
-import jagex2.io.GZip;
 import jagex2.io.Packet;
+import jagex2.io.compress.BZip2;
+import jagex2.io.compress.GZip;
+import jagex2.jstring.StringUtil;
 
 @ObfuscatedName("ch")
 public abstract class Js5Index {
@@ -423,21 +423,21 @@ public abstract class Js5Index {
 	@ObfuscatedName("ch.y(Ljava/lang/String;I)I")
 	public int getGroupId(String arg0) {
 		String var2 = arg0.toLowerCase();
-		return this.groupNameHashTable.get(JStringUtil.hashCode(var2));
+		return this.groupNameHashTable.get(StringUtil.hashCode(var2));
 	}
 
 	@ObfuscatedName("ch.t(ILjava/lang/String;B)I")
 	public int getFileId(int arg0, String arg1) {
 		String var3 = arg1.toLowerCase();
-		return this.fileNameHashTables[arg0].get(JStringUtil.hashCode(var3));
+		return this.fileNameHashTables[arg0].get(StringUtil.hashCode(var3));
 	}
 
 	@ObfuscatedName("ch.f(Ljava/lang/String;Ljava/lang/String;I)[B")
 	public byte[] getFile(String arg0, String arg1) {
 		String var3 = arg0.toLowerCase();
 		String var4 = arg1.toLowerCase();
-		int var5 = this.groupNameHashTable.get(JStringUtil.hashCode(var3));
-		int var6 = this.fileNameHashTables[var5].get(JStringUtil.hashCode(var4));
+		int var5 = this.groupNameHashTable.get(StringUtil.hashCode(var3));
+		int var6 = this.fileNameHashTables[var5].get(StringUtil.hashCode(var4));
 		return this.getFile(var5, var6);
 	}
 
@@ -445,15 +445,15 @@ public abstract class Js5Index {
 	public boolean download(String arg0, String arg1) {
 		String var3 = arg0.toLowerCase();
 		String var4 = arg1.toLowerCase();
-		int var5 = this.groupNameHashTable.get(JStringUtil.hashCode(var3));
-		int var6 = this.fileNameHashTables[var5].get(JStringUtil.hashCode(var4));
+		int var5 = this.groupNameHashTable.get(StringUtil.hashCode(var3));
+		int var6 = this.fileNameHashTables[var5].get(StringUtil.hashCode(var4));
 		return this.download(var5, var6);
 	}
 
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
 	public void download(String arg0) {
 		String var2 = arg0.toLowerCase();
-		int var3 = this.groupNameHashTable.get(JStringUtil.hashCode(var2));
+		int var3 = this.groupNameHashTable.get(StringUtil.hashCode(var2));
 		if (var3 >= 0) {
 			this.download(var3);
 		}

@@ -2,7 +2,7 @@ package jagex2.config;
 
 import deob.ObfuscatedName;
 import jagex2.client.VarProvider;
-import jagex2.dash3d.Entity;
+import jagex2.dash3d.entity.Entity;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.Model;

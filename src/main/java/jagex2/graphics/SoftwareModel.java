@@ -1,7 +1,7 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import jagex2.dash3d.Entity;
+import jagex2.dash3d.entity.Entity;
 
 @ObfuscatedName("fo")
 public class SoftwareModel extends Entity {

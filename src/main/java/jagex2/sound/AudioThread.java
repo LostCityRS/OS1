@@ -3,7 +3,7 @@ package jagex2.sound;
 import deob.ObfuscatedName;
 import jagex2.client.JagException;
 import jagex2.client.SignLink;
-import jagex2.datastruct.PreciseSleep;
+import jagex2.datastruct.time.PreciseSleep;
 
 import java.awt.event.ActionEvent;
 

@@ -6,10 +6,10 @@ import deob.ObfuscatedName;
 public class ChatLinkList {
 
 	@ObfuscatedName("cb.r")
-	public ChatNode field1493 = new ChatNode();
+	public ChatLinkable field1493 = new ChatLinkable();
 
 	@ObfuscatedName("cb.d")
-	public ChatNode field1494;
+	public ChatLinkable field1494;
 
 	public ChatLinkList() {
 		this.field1493.field1502 = this.field1493;
@@ -17,7 +17,7 @@ public class ChatLinkList {
 	}
 
 	@ObfuscatedName("cb.r(Ldd;)V")
-	public void method1267(ChatNode arg0) {
+	public void method1267(ChatLinkable arg0) {
 		if (arg0.field1503 != null) {
 			arg0.method1322();
 		}
@@ -28,8 +28,8 @@ public class ChatLinkList {
 	}
 
 	@ObfuscatedName("cb.d()Ldd;")
-	public ChatNode method1268() {
-		ChatNode var1 = this.field1493.field1502;
+	public ChatLinkable method1268() {
+		ChatLinkable var1 = this.field1493.field1502;
 		if (this.field1493 == var1) {
 			this.field1494 = null;
 			return null;
@@ -40,8 +40,8 @@ public class ChatLinkList {
 	}
 
 	@ObfuscatedName("cb.l()Ldd;")
-	public ChatNode method1274() {
-		ChatNode var1 = this.field1494;
+	public ChatLinkable method1274() {
+		ChatLinkable var1 = this.field1494;
 		if (this.field1493 == var1) {
 			this.field1494 = null;
 			return null;

@@ -5,6 +5,8 @@ import jagex2.client.Client;
 import jagex2.config.FloType;
 import jagex2.config.FluType;
 import jagex2.config.LocType;
+import jagex2.dash3d.entity.Entity;
+import jagex2.dash3d.entity.LocEntity;
 import jagex2.graphics.Pix3D;
 import jagex2.graphics.SoftwareModel;
 import jagex2.io.Packet;

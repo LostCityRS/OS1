@@ -1,7 +1,7 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import jagex2.dash3d.PlayerModel;
+import jagex2.dash3d.entity.PlayerModel;
 import jagex2.datastruct.Linkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.*;

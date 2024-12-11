@@ -5,6 +5,7 @@ import jagex2.client.Client;
 import jagex2.config.LocType;
 import jagex2.datastruct.LinkList;
 import jagex2.datastruct.Linkable;
+import jagex2.sound.synth.Wave;
 
 @ObfuscatedName("de")
 public class PositionedSound extends Linkable {

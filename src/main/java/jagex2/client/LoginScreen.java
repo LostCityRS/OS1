@@ -1,15 +1,17 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import jagex2.datastruct.JStringUtil;
-import jagex2.datastruct.TextUtil;
+import jagex2.client.input.JavaKeyboardProvider;
+import jagex2.client.input.JavaMouseProvider;
 import jagex2.graphics.*;
 import jagex2.io.ClientStream;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Provider;
 import jagex2.js5.Js5TcpClient;
 import jagex2.jstring.Locale;
-import jagex2.sound.MidiPlayer;
+import jagex2.jstring.StringUtil;
+import jagex2.jstring.TextUtil;
+import jagex2.sound.midi.MidiPlayer;
 
 import java.awt.*;
 import java.net.URL;
@@ -381,7 +383,7 @@ public class LoginScreen {
 			var89 = var92 + 15;
 			String var8 = Locale.field1073;
 			String var9 = password;
-			String var10 = JStringUtil.method946('*', var9.length());
+			String var10 = StringUtil.method946('*', var9.length());
 			arg0.method2821(var8 + var10, 274, var89, 16777215, 0);
 			var89 += 15;
 		}
@@ -416,7 +418,7 @@ public class LoginScreen {
 				var94 = var97 + 15;
 				String var19 = Locale.field1073;
 				String var20 = password;
-				String var21 = JStringUtil.method946('*', var20.length());
+				String var21 = StringUtil.method946('*', var20.length());
 				arg0.method2821(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 274, var94, 16777215, 0);
 				var94 += 15;
 				short var22 = 302;

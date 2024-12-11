@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex2.client.LoginScreen;
 import jagex2.datastruct.DoublyLinkList;
 import jagex2.datastruct.HashTable;
-import jagex2.datastruct.MonotonicTime;
+import jagex2.datastruct.time.MonotonicTime;
 import jagex2.io.ClientStream;
 import jagex2.io.Packet;
 

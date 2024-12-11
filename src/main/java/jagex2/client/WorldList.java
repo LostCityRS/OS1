@@ -1,7 +1,7 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
-import jagex2.datastruct.MonotonicTime;
+import jagex2.datastruct.time.MonotonicTime;
 import jagex2.io.Packet;
 
 import java.io.DataInputStream;

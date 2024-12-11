@@ -1,19 +1,43 @@
 package jagex2.client;
 
 import deob.ObfuscatedName;
+import jagex2.client.clientscript.ClientScript;
+import jagex2.client.clientscript.HookRequest;
+import jagex2.client.clientscript.ScriptRunner;
+import jagex2.client.input.JavaKeyboardProvider;
+import jagex2.client.input.JavaMouseProvider;
+import jagex2.client.input.MouseTracking;
+import jagex2.client.input.MouseWheelProvider;
+import jagex2.client.params.JavConfigParameter;
+import jagex2.client.params.ModeGame;
+import jagex2.client.params.ModeWhat;
+import jagex2.client.social.*;
 import jagex2.config.*;
-import jagex2.dash3d.*;
-import jagex2.datastruct.*;
+import jagex2.dash3d.CollisionMap;
+import jagex2.dash3d.SceneBuilderProvider;
+import jagex2.dash3d.World;
+import jagex2.dash3d.World3D;
+import jagex2.dash3d.entity.*;
+import jagex2.dash3d.type.Decor;
+import jagex2.dash3d.type.GroundDecor;
+import jagex2.dash3d.type.Location;
+import jagex2.dash3d.type.Wall;
+import jagex2.datastruct.ChatLinkList;
+import jagex2.datastruct.HashTable;
+import jagex2.datastruct.LinkList;
+import jagex2.datastruct.Linkable;
+import jagex2.datastruct.time.MonotonicTime;
 import jagex2.graphics.*;
 import jagex2.io.*;
 import jagex2.js5.Js5NetProviderRequest;
 import jagex2.js5.Js5Provider;
 import jagex2.js5.Js5ProviderThread;
 import jagex2.js5.Js5TcpClient;
-import jagex2.jstring.Cp1252;
-import jagex2.jstring.Locale;
-import jagex2.jstring.JString;
+import jagex2.jstring.*;
 import jagex2.sound.*;
+import jagex2.sound.midi.MidiPcmStream;
+import jagex2.sound.midi.MidiPlayer;
+import jagex2.sound.synth.Wave;
 import jagex2.wordenc.Huffman;
 import jagex2.wordenc.WordPack;
 
@@ -2316,7 +2340,7 @@ public class Client extends GameShell {
 				}
 			}
 		}
-		for (ComponentPointer var12 = (ComponentPointer) field1918.method1284(); var12 != null; var12 = (ComponentPointer) field1918.method1280()) {
+		for (SubInterface var12 = (SubInterface) field1918.method1284(); var12 != null; var12 = (SubInterface) field1918.method1280()) {
 			method408(var12, true);
 		}
 		field2083 = -1;
@@ -4944,7 +4968,7 @@ public class Client extends GameShell {
 		}
 		if (var3 == 26) {
 			out.pisaac1(129);
-			for (ComponentPointer var25 = (ComponentPointer) field1918.method1284(); var25 != null; var25 = (ComponentPointer) field1918.method1280()) {
+			for (SubInterface var25 = (SubInterface) field1918.method1284(); var25 != null; var25 = (SubInterface) field1918.method1280()) {
 				if (var25.field1597 == 0 || var25.field1597 == 3) {
 					method408(var25, true);
 				}
@@ -5775,7 +5799,7 @@ public class Client extends GameShell {
                 if (var10.subcomponents != null) {
                     method92(var10.subcomponents, var10.parentlayer, var19, var20, var21, var22, var12 - var10.scrollX, var13 - var10.scrollY, var11);
                 }
-                ComponentPointer var164 = (ComponentPointer) field1918.get((long) var10.parentlayer);
+                SubInterface var164 = (SubInterface) field1918.get((long) var10.parentlayer);
                 if (var164 != null) {
                     if (var164.field1597 == 0 && JavaMouseProvider.mouseX >= var19 && JavaMouseProvider.mouseY >= var20 && JavaMouseProvider.mouseX < var21 && JavaMouseProvider.mouseY < var22 && !field2066 && !field2092) {
                         field1994[0] = Locale.field1078;
@@ -6189,7 +6213,7 @@ public class Client extends GameShell {
 				}
 				String var5 = "";
 				if (field170 != null) {
-					var5 = JStringUtil.method1846(field170.field508);
+					var5 = StringUtil.method1846(field170.field508);
 					if (field170.field511 != null) {
 						var5 = (String) field170.field511;
 					}
@@ -6481,7 +6505,7 @@ public class Client extends GameShell {
 							if (var9.subcomponents != null) {
 								method1836(var9.subcomponents, var9.parentlayer, var12, var13, var14, var15, var10 - var9.scrollX, var11 - var9.scrollY);
 							}
-							ComponentPointer var24 = (ComponentPointer) field1918.get((long) var9.parentlayer);
+							SubInterface var24 = (SubInterface) field1918.get((long) var9.parentlayer);
 							if (var24 != null) {
 								method1145(var24.field1598, var12, var13, var14, var15, var10, var11);
 							}
@@ -6746,7 +6770,7 @@ public class Client extends GameShell {
 					if (var3.subcomponents != null) {
 						method561(var3.subcomponents, arg1);
 					}
-					ComponentPointer var4 = (ComponentPointer) field1918.get((long) var3.parentlayer);
+					SubInterface var4 = (SubInterface) field1918.get((long) var3.parentlayer);
 					if (var4 != null) {
 						method725(var4.field1598, arg1);
 					}
@@ -6795,7 +6819,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("g.fn(B)V")
 	public static void method93() {
-		for (ComponentPointer var0 = (ComponentPointer) field1918.method1284(); var0 != null; var0 = (ComponentPointer) field1918.method1280()) {
+		for (SubInterface var0 = (SubInterface) field1918.method1284(); var0 != null; var0 = (SubInterface) field1918.method1280()) {
 			int var1 = var0.field1598;
 			if (IfType.openInterface(var1)) {
 				boolean var2 = true;
@@ -6886,7 +6910,7 @@ public class Client extends GameShell {
 					if (var3.subcomponents != null) {
 						method1146(var3.subcomponents, var3.parentlayer);
 					}
-					ComponentPointer var4 = (ComponentPointer) field1918.get((long) var3.parentlayer);
+					SubInterface var4 = (SubInterface) field1918.get((long) var3.parentlayer);
 					if (var4 != null) {
 						imethod23(var4.field1598);
 					}
@@ -7071,8 +7095,8 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cz.gq(IIIB)Ldy;")
-	public static final ComponentPointer method1147(int arg0, int arg1, int arg2) {
-		ComponentPointer var3 = new ComponentPointer();
+	public static final SubInterface method1147(int arg0, int arg1, int arg2) {
+		SubInterface var3 = new SubInterface();
 		var3.field1598 = arg1;
 		var3.field1597 = arg2;
 		field1918.put(var3, (long) arg0);
@@ -7096,7 +7120,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("am.gr(Ldy;ZI)V")
-	public static final void method408(ComponentPointer arg0, boolean arg1) {
+	public static final void method408(SubInterface arg0, boolean arg1) {
 		int var2 = arg0.field1598;
 		int var3 = (int) arg0.nodeId;
 		arg0.unlink();
@@ -8375,7 +8399,7 @@ public class Client extends GameShell {
 				stream.read(in.data, 0, 1);
 				in.pos = 0;
 				packetType = in.gisaac1();
-				packetSize = ServerProt.sizes[packetType];
+				packetSize = Protocol.SERVERPROT_SIZE[packetType];
 				var80--;
 			}
 
@@ -8422,14 +8446,14 @@ public class Client extends GameShell {
 			}
 			if (packetType == 168) {
 				String var83 = in.gjstr();
-				String var91 = PixFont.method2844(JStringUtil.method54(imethod16(in)));
+				String var91 = PixFont.method2844(StringUtil.method54(imethod16(in)));
 				addMessage(6, var83, var91);
 				packetType = -1;
 				return true;
 			}
 			if (packetType == 87) {
 				int var92 = in.g4();
-				ComponentPointer var93 = (ComponentPointer) field1918.get((long) var92);
+				SubInterface var93 = (SubInterface) field1918.get((long) var92);
 				if (var93 != null) {
 					method408(var93, true);
 				}
@@ -8580,7 +8604,7 @@ public class Client extends GameShell {
 				if (!var123 && overrideChat == 0) {
 					field2148[field2149] = var121;
 					field2149 = (field2149 + 1) % 100;
-					String var132 = PixFont.method2844(JStringUtil.method54(imethod16(in)));
+					String var132 = PixFont.method2844(StringUtil.method54(imethod16(in)));
 					if (var120 == 2 || var120 == 3) {
 						addMessage(7, TextUtil.imgTag(1) + var115, var132);
 					} else if (var120 == 1) {
@@ -8596,7 +8620,7 @@ public class Client extends GameShell {
 				int var133 = in.g1_alt2();
 				int var134 = in.g2_alt2();
 				int var135 = in.g4_alt1();
-				ComponentPointer var136 = (ComponentPointer) field1918.get((long) var135);
+				SubInterface var136 = (SubInterface) field1918.get((long) var135);
 				if (var136 != null) {
 					method408(var136, var136.field1598 != var134);
 				}
@@ -8817,7 +8841,7 @@ public class Client extends GameShell {
 					int var182 = in.g4();
 					int var183 = in.g2();
 					int var184 = in.g1();
-					ComponentPointer var185 = (ComponentPointer) field1918.get((long) var182);
+					SubInterface var185 = (SubInterface) field1918.get((long) var182);
 					if (var185 != null && var185.field1598 != var183) {
 						method408(var185, true);
 						var185 = null;
@@ -8827,7 +8851,7 @@ public class Client extends GameShell {
 					}
 					var185.field1599 = true;
 				}
-				for (ComponentPointer var186 = (ComponentPointer) field1918.method1284(); var186 != null; var186 = (ComponentPointer) field1918.method1280()) {
+				for (SubInterface var186 = (SubInterface) field1918.method1284(); var186 != null; var186 = (SubInterface) field1918.method1280()) {
 					if (var186.field1599) {
 						var186.field1599 = false;
 					} else {
@@ -9199,7 +9223,7 @@ public class Client extends GameShell {
 				if (!var278 && overrideChat == 0) {
 					field2148[field2149] = var276;
 					field2149 = (field2149 + 1) % 100;
-					String var287 = PixFont.method2844(JStringUtil.method54(imethod16(in)));
+					String var287 = PixFont.method2844(StringUtil.method54(imethod16(in)));
 					if (var275 == 2 || var275 == 3) {
 						addMessage(9, TextUtil.imgTag(1) + var268, var287, JString.method782(var269));
 					} else if (var275 == 1) {
@@ -9962,7 +9986,7 @@ public class Client extends GameShell {
 					field2016.pos = 0;
 					in.gdata(field2016.data, 0, var30);
 					field2016.pos = 0;
-					String var33 = PixFont.method2844(JStringUtil.method54(WordPack.method1035(field2016)));
+					String var33 = PixFont.method2844(StringUtil.method54(WordPack.method1035(field2016)));
 					var26.field2644 = var33.trim();
 					var26.field2652 = var28 >> 8;
 					var26.field2670 = var28 & 0xFF;

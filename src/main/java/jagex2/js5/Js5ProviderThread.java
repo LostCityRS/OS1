@@ -3,7 +3,7 @@ package jagex2.js5;
 import deob.ObfuscatedName;
 import jagex2.client.JagException;
 import jagex2.datastruct.LinkList;
-import jagex2.datastruct.PreciseSleep;
+import jagex2.datastruct.time.PreciseSleep;
 import jagex2.io.FileStream;
 
 @ObfuscatedName("cc")

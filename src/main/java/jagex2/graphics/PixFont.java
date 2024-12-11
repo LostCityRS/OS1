@@ -1,7 +1,7 @@
 package jagex2.graphics;
 
 import deob.ObfuscatedName;
-import jagex2.datastruct.JStringUtil;
+import jagex2.jstring.StringUtil;
 
 import java.util.Random;
 
@@ -214,7 +214,7 @@ public abstract class PixFont extends Pix2D {
 							if (var7.startsWith("img=")) {
 								try {
 									String var8 = var7.substring(4);
-									int var9 = JStringUtil.method91(var8, 10, true);
+									int var9 = StringUtil.method91(var8, 10, true);
 									var4 += field2553[var9].field2517;
 									var3 = -1;
 								} catch (Exception var12) {
@@ -288,7 +288,7 @@ public abstract class PixFont extends Pix2D {
 					} else if (var16.startsWith("img=")) {
 						try {
 							String var17 = var16.substring(4);
-							int var18 = JStringUtil.method91(var17, 10, true);
+							int var18 = StringUtil.method91(var17, 10, true);
 							var4 += field2553[var18].field2517;
 							var11 = 0;
 						} catch (Exception var22) {
@@ -531,23 +531,23 @@ public abstract class PixFont extends Pix2D {
 	public void method2832(String arg0) {
 		try {
 			if (arg0.startsWith("col=")) {
-				field2560 = JStringUtil.method557(arg0.substring(4), 16);
+				field2560 = StringUtil.method557(arg0.substring(4), 16);
 			} else if (arg0.equals("/col")) {
 				field2560 = field2545;
 			} else if (arg0.startsWith("str=")) {
-				field2555 = JStringUtil.method557(arg0.substring(4), 16);
+				field2555 = StringUtil.method557(arg0.substring(4), 16);
 			} else if (arg0.equals("str")) {
 				field2555 = 8388608;
 			} else if (arg0.equals("/str")) {
 				field2555 = -1;
 			} else if (arg0.startsWith("u=")) {
-				field2559 = JStringUtil.method557(arg0.substring(2), 16);
+				field2559 = StringUtil.method557(arg0.substring(2), 16);
 			} else if (arg0.equals("u")) {
 				field2559 = 0;
 			} else if (arg0.equals("/u")) {
 				field2559 = -1;
 			} else if (arg0.startsWith("shad=")) {
-				field2558 = JStringUtil.method557(arg0.substring(5), 16);
+				field2558 = StringUtil.method557(arg0.substring(5), 16);
 			} else if (arg0.equals("shad")) {
 				field2558 = 0;
 			} else if (arg0.equals("/shad")) {
@@ -598,7 +598,7 @@ public abstract class PixFont extends Pix2D {
 							if (var9.startsWith("img=")) {
 								try {
 									String var10 = var9.substring(4);
-									int var11 = JStringUtil.method91(var10, 10, true);
+									int var11 = StringUtil.method91(var10, 10, true);
 									Pix8 var13 = field2553[var11];
 									var13.method2747(arg1, this.field2550 + var4 - var13.field2518);
 									arg1 += var13.field2517;
@@ -687,7 +687,7 @@ public abstract class PixFont extends Pix2D {
 									}
 									var9++;
 									String var15 = var12.substring(4);
-									int var16 = JStringUtil.method91(var15, 10, true);
+									int var16 = StringUtil.method91(var15, 10, true);
 									Pix8 var18 = field2553[var16];
 									var18.method2747(arg1 + var13, this.field2550 + var6 - var18.field2518 + var14);
 									arg1 += var18.field2517;

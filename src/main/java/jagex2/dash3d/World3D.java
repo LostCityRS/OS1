@@ -1,6 +1,8 @@
 package jagex2.dash3d;
 
 import deob.ObfuscatedName;
+import jagex2.dash3d.entity.Entity;
+import jagex2.dash3d.type.*;
 import jagex2.datastruct.LinkList;
 import jagex2.graphics.Model;
 import jagex2.graphics.Pix3D;

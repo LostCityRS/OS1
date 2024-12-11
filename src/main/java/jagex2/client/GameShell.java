@@ -2,10 +2,11 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import deob.Settings;
-import jagex2.datastruct.*;
+import jagex2.datastruct.time.*;
 import jagex2.graphics.AwtPixMap;
 import jagex2.graphics.BufferedPixMap;
 import jagex2.graphics.PixMap;
+import jagex2.jstring.StringUtil;
 
 import java.applet.Applet;
 import java.awt.*;
@@ -217,8 +218,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 							}
 						}
 						String var6 = var2.substring(6, var3);
-						if (JStringUtil.method62(var6)) {
-							int var7 = JStringUtil.method91(var6, 10, true);
+						if (StringUtil.method62(var6)) {
+							int var7 = StringUtil.method91(var6, 10, true);
 							if (var7 < 10) {
 								this.error("wrongjava");
 								return;
