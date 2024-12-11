@@ -5,6 +5,7 @@ import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
+import jagex2.js5.Js5Provider;
 
 @ObfuscatedName("fe")
 public class EnumType extends DoublyLinkable {
@@ -92,5 +93,9 @@ public class EnumType extends DoublyLinkable {
 				this.intValues[var4] = arg0.g4();
 			}
 		}
+	}
+
+	public static void init(Js5Provider var40) {
+		configJs5 = var40;
 	}
 }

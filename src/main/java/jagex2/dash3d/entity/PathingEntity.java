@@ -46,10 +46,10 @@ public abstract class PathingEntity extends Entity {
 	public int runanim = -1;
 
 	@ObfuscatedName("fz.f")
-	public String field2644 = null;
+	public String chat = null;
 
 	@ObfuscatedName("fz.k")
-	public int field2634 = 100;
+	public int chatTimer = 100;
 
 	@ObfuscatedName("fz.o")
 	public int field2652 = 0;

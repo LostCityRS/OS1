@@ -5,6 +5,7 @@ import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
+import jagex2.js5.Js5Provider;
 
 @ObfuscatedName("fp")
 public class InvType extends DoublyLinkable {
@@ -36,19 +37,22 @@ public class InvType extends DoublyLinkable {
 		}
 	}
 
-	// inlined
 	public static InvType get(int id) {
-		InvType cached = (InvType) InvType.cache.get(id);
+		InvType cached = (InvType) cache.get(id);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] buf = InvType.configJs5.getFile(5, id);
+		byte[] buf = configJs5.getFile(5, id);
 		InvType inv = new InvType();
 		if (buf != null) {
 			inv.decode(new Packet(buf));
 		}
-		InvType.cache.put(inv, id);
+		cache.put(inv, id);
 		return inv;
+	}
+
+	public static void init(Js5Provider var39) {
+		configJs5 = var39;
 	}
 }

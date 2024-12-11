@@ -12,7 +12,7 @@ public class ProjAnimEntity extends Entity {
 	public int field2568;
 
 	@ObfuscatedName("fh.z")
-	public int field2583;
+	public int level;
 
 	@ObfuscatedName("fh.g")
 	public int field2574;
@@ -27,10 +27,10 @@ public class ProjAnimEntity extends Entity {
 	public int field2571;
 
 	@ObfuscatedName("fh.u")
-	public int field2572;
+	public int startCycle;
 
 	@ObfuscatedName("fh.v")
-	public int field2573;
+	public int endCycle;
 
 	@ObfuscatedName("fh.w")
 	public int field2567;
@@ -39,7 +39,7 @@ public class ProjAnimEntity extends Entity {
 	public int field2575;
 
 	@ObfuscatedName("fh.b")
-	public int field2582;
+	public int target;
 
 	@ObfuscatedName("fh.y")
 	public boolean field2587 = false;
@@ -85,15 +85,15 @@ public class ProjAnimEntity extends Entity {
 
 	public ProjAnimEntity(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
 		this.field2568 = arg0;
-		this.field2583 = arg1;
+		this.level = arg1;
 		this.field2574 = arg2;
 		this.field2569 = arg3;
 		this.field2570 = arg4;
-		this.field2572 = arg5;
-		this.field2573 = arg6;
+		this.startCycle = arg5;
+		this.endCycle = arg6;
 		this.field2567 = arg7;
 		this.field2575 = arg8;
-		this.field2582 = arg9;
+		this.target = arg9;
 		this.field2571 = arg10;
 		this.field2587 = false;
 		int var12 = SpotAnimType.get(this.field2568).anim;
@@ -105,7 +105,7 @@ public class ProjAnimEntity extends Entity {
 	}
 
 	@ObfuscatedName("fh.b(IIIII)V")
-	public final void method2896(int arg0, int arg1, int arg2, int arg3) {
+	public final void updateVelocity(int arg0, int arg1, int arg2, int arg3) {
 		if (!this.field2587) {
 			double var5 = (double) (arg0 - this.field2574);
 			double var7 = (double) (arg1 - this.field2569);
@@ -114,7 +114,7 @@ public class ProjAnimEntity extends Entity {
 			this.field2579 = (double) this.field2575 * var7 / var9 + (double) this.field2569;
 			this.field2576 = this.field2570;
 		}
-		double var11 = (double) (this.field2573 + 1 - arg3);
+		double var11 = (double) (this.endCycle + 1 - arg3);
 		this.field2578 = ((double) arg0 - this.field2580) / var11;
 		this.field2581 = ((double) arg1 - this.field2579) / var11;
 		this.field2566 = Math.sqrt(this.field2581 * this.field2581 + this.field2578 * this.field2578);
@@ -125,7 +125,7 @@ public class ProjAnimEntity extends Entity {
 	}
 
 	@ObfuscatedName("fh.y(IB)V")
-	public final void method2895(int arg0) {
+	public final void update(int arg0) {
 		this.field2587 = true;
 		this.field2580 += (double) arg0 * this.field2578;
 		this.field2579 += (double) arg0 * this.field2581;

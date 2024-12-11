@@ -1386,4 +1386,20 @@ public class World {
 			arg7.addDecor(arg0, arg2, arg3, var17, var43, var44, 256, arg5, field31[arg5] * var40, field32[arg5] * var40, var20, var21);
 		}
 	}
+
+	public static void imethod1() {
+		currentLevel = 99;
+		levelTileUnderlayIds = new byte[4][104][104];
+		levelTileOverlayIds = new byte[4][104][104];
+		levelTileOverlayShape = new byte[4][104][104];
+		levelTileOverlayRotation = new byte[4][104][104];
+		levelOccludemap = new int[4][105][105];
+		levelShademap = new byte[4][105][105];
+		levelLightmap = new int[105][105];
+		blendChroma = new int[104];
+		blendSaturation = new int[104];
+		blendLightness = new int[104];
+		blendLuminance = new int[104];
+		blendMagnitude = new int[104];
+	}
 }

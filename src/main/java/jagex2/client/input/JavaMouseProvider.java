@@ -58,14 +58,14 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 	public static long mouseClickTime = 0L;
 
 	@ObfuscatedName("v.r(Ljava/awt/Component;I)V")
-	public static void method163(Component arg0) {
+	public static void addListeners(Component arg0) {
 		arg0.addMouseListener(field491);
 		arg0.addMouseMotionListener(field491);
 		arg0.addFocusListener(field491);
 	}
 
 	@ObfuscatedName("ek.d(II)V")
-	public static void method1845(int arg0) {
+	public static void setIdleCycles(int arg0) {
 		idleCycles = arg0;
 	}
 
@@ -145,7 +145,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 		}
 	}
 
-	public static void imethod1(Canvas var2) {
+	public static void removeListeners(Canvas var2) {
 		var2.removeMouseListener(field491);
 		var2.removeMouseMotionListener(field491);
 		var2.removeFocusListener(field491);
@@ -161,7 +161,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 		}
 	}
 
-	public static int imethod3() {
+	public static int getIdleCycles() {
 		return idleCycles++;
 	}
 }

@@ -7,6 +7,7 @@ import jagex2.graphics.Model;
 import jagex2.graphics.SoftwareModel;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
+import jagex2.js5.Js5Provider;
 
 @ObfuscatedName("eu")
 public class SpotAnimType extends DoublyLinkable {
@@ -166,5 +167,10 @@ public class SpotAnimType extends DoublyLinkable {
 			}
 		}
 		return var6;
+	}
+
+	public static void init(Js5Provider var36, Js5Provider var37) {
+		configJs5 = var36;
+		modelJs5 = var37;
 	}
 }

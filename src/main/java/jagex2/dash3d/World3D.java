@@ -421,7 +421,7 @@ public class World3D {
 	}
 
 	@ObfuscatedName("aq.s(IIIIILfu;IIZ)Z")
-	public boolean addTemporary(int arg0, int arg1, int arg2, int arg3, int arg4, Entity arg5, int arg6, int arg7, boolean arg8) {
+	public boolean add(int arg0, int arg1, int arg2, int arg3, int arg4, Entity arg5, int arg6, int arg7, boolean arg8) {
 		if (arg5 == null) {
 			return true;
 		}
@@ -451,7 +451,7 @@ public class World3D {
 	}
 
 	@ObfuscatedName("aq.u(IIIIILfu;IIIIII)Z")
-	public boolean addTemporary(int arg0, int arg1, int arg2, int arg3, int arg4, Entity arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+	public boolean add(int arg0, int arg1, int arg2, int arg3, int arg4, Entity arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
 		return arg5 == null ? true : this.add(arg0, arg8, arg9, arg10 - arg8 + 1, arg11 - arg9 + 1, arg1, arg2, arg3, arg5, arg6, true, arg7, 0);
 	}
 

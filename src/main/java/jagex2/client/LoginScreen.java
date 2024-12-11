@@ -593,8 +593,8 @@ public class LoginScreen {
 				} else {
 					int var67 = 256 - var65;
 					int var68 = field140[var65];
-					int var69 = GameShell.drawArea.field538[var60];
-					GameShell.drawArea.field538[var60++] = ((var68 & 0xFF00) * var65 + (var69 & 0xFF00) * var67 & 0xFF0000) + ((var68 & 0xFF00FF) * var65 + (var69 & 0xFF00FF) * var67 & 0xFF00FF00) >> 8;
+					int var69 = GameShell.drawArea.data[var60];
+					GameShell.drawArea.data[var60++] = ((var68 & 0xFF00) * var65 + (var69 & 0xFF00) * var67 & 0xFF0000) + ((var68 & 0xFF00FF) * var65 + (var69 & 0xFF00FF) * var67 & 0xFF00FF00) >> 8;
 				}
 			}
 			var60 += var63 + 765 - 128;
@@ -615,8 +615,8 @@ public class LoginScreen {
 				} else {
 					int var79 = 256 - var77;
 					int var80 = field140[var77];
-					int var81 = GameShell.drawArea.field538[var75];
-					GameShell.drawArea.field538[var75++] = ((var80 & 0xFF00FF) * var77 + (var81 & 0xFF00FF) * var79 & 0xFF00FF00) + ((var80 & 0xFF00) * var77 + (var81 & 0xFF00) * var79 & 0xFF0000) >> 8;
+					int var81 = GameShell.drawArea.data[var75];
+					GameShell.drawArea.data[var75++] = ((var80 & 0xFF00FF) * var77 + (var81 & 0xFF00FF) * var79 & 0xFF00FF00) + ((var80 & 0xFF00) * var77 + (var81 & 0xFF00) * var79 & 0xFF0000) >> 8;
 				}
 			}
 			var70 += 128 - var74;
@@ -642,7 +642,7 @@ public class LoginScreen {
 		}
 		try {
 			Graphics var86 = GameShell.canvas.getGraphics();
-			GameShell.drawArea.method545(var86, 0, 0);
+			GameShell.drawArea.draw(var86, 0, 0);
 		} catch (Exception var88) {
 			GameShell.canvas.repaint();
 		}
@@ -841,7 +841,7 @@ public class LoginScreen {
 		}
 		try {
 			Graphics var23 = GameShell.canvas.getGraphics();
-			GameShell.drawArea.method545(var23, 0, 0);
+			GameShell.drawArea.draw(var23, 0, 0);
 		} catch (Exception var25) {
 			GameShell.canvas.repaint();
 		}

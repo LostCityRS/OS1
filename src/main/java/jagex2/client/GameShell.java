@@ -237,11 +237,11 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			PixMap var12;
 			try {
 				BufferedPixMap var11 = new BufferedPixMap();
-				var11.method548(var8, var9, var10);
+				var11.create(var8, var9, var10);
 				var12 = var11;
 			} catch (Throwable var23) {
 				AwtPixMap var14 = new AwtPixMap();
-				var14.method548(var8, var9, var10);
+				var14.create(var8, var9, var10);
 				var12 = var14;
 			}
 			drawArea = var12;
