@@ -64,10 +64,10 @@ public class IfType extends Linkable {
 	public int clientCode = 0;
 
 	@ObfuscatedName("eg.k")
-	public int field1788 = 0;
+	public int x = 0;
 
 	@ObfuscatedName("eg.o")
-	public int field1810 = 0;
+	public int y = 0;
 
 	@ObfuscatedName("eg.a")
 	public int field1780 = 0;
@@ -85,16 +85,16 @@ public class IfType extends Linkable {
 	public boolean hide = false;
 
 	@ObfuscatedName("eg.ac")
-	public int field1796 = 0;
+	public int scrollX = 0;
 
 	@ObfuscatedName("eg.aa")
-	public int field1797 = 0;
+	public int scrollY = 0;
 
 	@ObfuscatedName("eg.as")
-	public int field1884 = 0;
+	public int scrollWidth = 0;
 
 	@ObfuscatedName("eg.am")
-	public int scroll = 0;
+	public int scrollHeight = 0;
 
 	@ObfuscatedName("eg.ap")
 	public int colour = 0;
@@ -160,10 +160,10 @@ public class IfType extends Linkable {
 	public int activeAnim = -1;
 
 	@ObfuscatedName("eg.bh")
-	public int field1821 = 0;
+	public int xof = 0;
 
 	@ObfuscatedName("eg.bi")
-	public int field1798 = 0;
+	public int yof = 0;
 
 	@ObfuscatedName("eg.bs")
 	public int xan = 0;
@@ -172,7 +172,7 @@ public class IfType extends Linkable {
 	public int yan = 0;
 
 	@ObfuscatedName("eg.bv")
-	public int field1817 = 0;
+	public int zan = 0;
 
 	@ObfuscatedName("eg.bg")
 	public int zoom = 100;
@@ -472,8 +472,8 @@ public class IfType extends Linkable {
 		this.type = buf.g1();
 		this.buttonType = buf.g1();
 		this.clientCode = buf.g2();
-		this.field1790 = this.field1788 = buf.g2b();
-		this.field1780 = this.field1810 = buf.g2b();
+		this.field1790 = this.x = buf.g2b();
+		this.field1780 = this.y = buf.g2b();
 		this.width = buf.g2();
 		this.height = buf.g2();
 		this.alpha = buf.g1();
@@ -518,7 +518,7 @@ public class IfType extends Linkable {
 		}
 
 		if (this.type == 0) {
-			this.scroll = buf.g2();
+			this.scrollHeight = buf.g2();
 			this.hide = buf.g1() == 1;
 		}
 
@@ -715,8 +715,8 @@ public class IfType extends Linkable {
 
 		this.type = buf.g1();
 		this.clientCode = buf.g2();
-		this.field1790 = this.field1788 = buf.g2b();
-		this.field1780 = this.field1810 = buf.g2b();
+		this.field1790 = this.x = buf.g2b();
+		this.field1780 = this.y = buf.g2b();
 
 		this.width = buf.g2();
 		if (this.type == 9) {
@@ -734,8 +734,8 @@ public class IfType extends Linkable {
 
 		this.hide = buf.g1() == 1;
 		if (this.type == 0) {
-			this.field1884 = buf.g2();
-			this.scroll = buf.g2();
+			this.scrollWidth = buf.g2();
+			this.scrollHeight = buf.g2();
 		}
 
 		if (this.type == 5) {
@@ -755,11 +755,11 @@ public class IfType extends Linkable {
 			if (this.model == 65535) {
 				this.model = -1;
 			}
-			this.field1821 = buf.g2b();
-			this.field1798 = buf.g2b();
+			this.xof = buf.g2b();
+			this.yof = buf.g2b();
 			this.xan = buf.g2();
 			this.yan = buf.g2();
-			this.field1817 = buf.g2();
+			this.zan = buf.g2();
 			this.zoom = buf.g2();
 			this.anim = buf.g2();
 			if (this.anim == 65535) {

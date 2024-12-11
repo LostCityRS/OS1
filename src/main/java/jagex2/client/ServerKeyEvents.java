@@ -3,9 +3,9 @@ package jagex2.client;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("cv")
-public class WorldEntrySettings {
+public class ServerKeyEvents {
 
-	public WorldEntrySettings() throws Throwable {
+	public ServerKeyEvents() throws Throwable {
 		throw new Error();
 	}
 
