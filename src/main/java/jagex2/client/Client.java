@@ -2287,8 +2287,8 @@ public class Client extends GameShell {
 		for (int var6 = 0; var6 < VarPlayerType.field2352; var6++) {
 			VarPlayerType var7 = VarPlayerType.get(var6);
 			if (var7 != null && var7.clientcode == 0) {
-				VarProvider.field1211[var6] = 0;
-				VarProvider.field1210[var6] = 0;
+				VarProvider.baseVarps[var6] = 0;
+				VarProvider.varps[var6] = 0;
 			}
 		}
 		for (int var8 = 0; var8 < field2120.length; var8++) {
@@ -2450,7 +2450,7 @@ public class Client extends GameShell {
 		FluType.method2580();
 		IdkType.field2396.clear();
 		LocType.unload();
-		NpcType.method1334();
+		NpcType.clear();
 		ObjType.typeCache.clear();
 		ObjType.modelCache.clear();
 		ObjType.iconCache.clear();
@@ -3211,23 +3211,25 @@ public class Client extends GameShell {
 	public static final void method1503(boolean arg0) {
 		for (int var1 = 0; var1 < npcCount; var1++) {
 			NpcEntity var2 = npcs[field1956[var1]];
-			int var3 = (field1956[var1] << 14) + 536870912;
-			if (var2 != null && var2.isVisible() && var2.type.alwaysontop == arg0 && var2.type.method2339()) {
-				int var4 = var2.x >> 7;
-				int var5 = var2.z >> 7;
-				if (var4 >= 0 && var4 < 104 && var5 >= 0 && var5 < 104) {
-					if (var2.size == 1 && (var2.x & 0x7F) == 64 && (var2.z & 0x7F) == 64) {
-						if (sceneCycle == tileLastOccupiedCycle[var4][var5]) {
-							continue;
-						}
-						tileLastOccupiedCycle[var4][var5] = sceneCycle;
-					}
-					if (!var2.type.active) {
-						var3 -= Integer.MIN_VALUE;
-					}
-					scene.addTemporary(currentLevel, var2.x, var2.z, getHeightmapY(var2.x + (var2.size * 64 - 64), var2.z + (var2.size * 64 - 64), currentLevel), var2.size * 64 - 64 + 60, var2, var2.yaw, var3, var2.needsForwardDrawPadding);
-				}
+			int var3 = (field1956[var1] << 14) + 0x20000000;
+			if (var2 == null || !var2.isVisible() || var2.type.alwaysontop != arg0 || !var2.type.isNotMulti()) {
+				continue;
 			}
+			int var4 = var2.x >> 7;
+			int var5 = var2.z >> 7;
+			if (var4 < 0 || var4 >= 104 || var5 < 0 || var5 >= 104) {
+				continue;
+			}
+			if (var2.size == 1 && (var2.x & 0x7F) == 64 && (var2.z & 0x7F) == 64) {
+				if (sceneCycle == tileLastOccupiedCycle[var4][var5]) {
+					continue;
+				}
+				tileLastOccupiedCycle[var4][var5] = sceneCycle;
+			}
+			if (!var2.type.active) {
+				var3 -= Integer.MIN_VALUE;
+			}
+			scene.addTemporary(currentLevel, var2.x, var2.z, getHeightmapY(var2.x + (var2.size * 64 - 64), var2.z + (var2.size * 64 - 64), currentLevel), var2.size * 64 - 64 + 60, var2, var2.yaw, var3, var2.needsForwardDrawPadding);
 		}
 	}
 
@@ -4695,7 +4697,7 @@ public class Client extends GameShell {
 			IfType var8 = IfType.get(var2);
 			if (var8.scripts != null && var8.scripts[0][0] == 5) {
 				int var9 = var8.scripts[0][1];
-				VarProvider.field1210[var9] = 1 - VarProvider.field1210[var9];
+				VarProvider.varps[var9] = 1 - VarProvider.varps[var9];
 				method778(var9);
 			}
 		}
@@ -4838,8 +4840,8 @@ public class Client extends GameShell {
 			IfType var17 = IfType.get(var2);
 			if (var17.scripts != null && var17.scripts[0][0] == 5) {
 				int var18 = var17.scripts[0][1];
-				if (VarProvider.field1210[var18] != var17.scriptOperand[0]) {
-					VarProvider.field1210[var18] = var17.scriptOperand[0];
+				if (VarProvider.varps[var18] != var17.scriptOperand[0]) {
+					VarProvider.varps[var18] = var17.scriptOperand[0];
 					method778(var18);
 				}
 			}
@@ -5111,11 +5113,11 @@ public class Client extends GameShell {
 			if (var39 != null) {
 				NpcType var40 = var39.type;
 				if (var40.multinpc != null) {
-					var40 = var40.method2332();
+					var40 = var40.getMultiNpc();
 				}
 				if (var40 != null) {
 					out.pisaac1(52);
-					out.p2(var40.field2271);
+					out.p2(var40.index);
 				}
 			}
 		}
@@ -5454,7 +5456,7 @@ public class Client extends GameShell {
 			return;
 		}
 		if (arg0.multinpc != null) {
-			arg0 = arg0.method2332();
+			arg0 = arg0.getMultiNpc();
 		}
 		if (arg0 == null || !arg0.active) {
 			return;
@@ -6322,13 +6324,13 @@ public class Client extends GameShell {
 					}
 				}
 				if (var6 == 5) {
-					var7 = VarProvider.field1210[var2[var4++]];
+					var7 = VarProvider.varps[var2[var4++]];
 				}
 				if (var6 == 6) {
 					var7 = PlayerStats.levelExperience[field1960[var2[var4++]] - 1];
 				}
 				if (var6 == 7) {
-					var7 = VarProvider.field1210[var2[var4++]] * 100 / 46875;
+					var7 = VarProvider.varps[var2[var4++]] * 100 / 46875;
 				}
 				if (var6 == 8) {
 					var7 = localPlayer.field2789;
@@ -6361,13 +6363,13 @@ public class Client extends GameShell {
 					var7 = field2089;
 				}
 				if (var6 == 13) {
-					int var20 = VarProvider.field1210[var2[var4++]];
+					int var20 = VarProvider.varps[var2[var4++]];
 					int var21 = var2[var4++];
 					var7 = (var20 & 0x1 << var21) == 0 ? 0 : 1;
 				}
 				if (var6 == 14) {
 					int var22 = var2[var4++];
-					var7 = VarProvider.method1130(var22);
+					var7 = VarProvider.getVarbit(var22);
 				}
 				if (var6 == 15) {
 					var8 = 1;
@@ -6936,7 +6938,7 @@ public class Client extends GameShell {
 		if (var1 == 0) {
 			return;
 		}
-		int var2 = VarProvider.field1210[arg0];
+		int var2 = VarProvider.varps[arg0];
 		if (var1 == 1) {
 			if (var2 == 1) {
 				Pix3D.setBrightness(0.9D);
@@ -7193,7 +7195,7 @@ public class Client extends GameShell {
 				if (var15 != null && var15.isVisible()) {
 					NpcType var16 = var15.type;
 					if (var16 != null && var16.multinpc != null) {
-						var16 = var16.method2332();
+						var16 = var16.getMultiNpc();
 					}
 					if (var16 != null && var16.minimap && var16.active) {
 						int var17 = var15.x / 32 - localPlayer.x / 32;
@@ -8402,9 +8404,9 @@ public class Client extends GameShell {
 			if (packetType == 180) {
 				int var81 = in.g2_alt3();
 				int var82 = in.g4();
-				VarProvider.field1211[var81] = var82;
-				if (VarProvider.field1210[var81] != var82) {
-					VarProvider.field1210[var81] = var82;
+				VarProvider.baseVarps[var81] = var82;
+				if (VarProvider.varps[var81] != var82) {
+					VarProvider.varps[var81] = var82;
 					method778(var81);
 				}
 				field2110[++field2084 - 1 & 0x1F] = var81;
@@ -8520,9 +8522,9 @@ public class Client extends GameShell {
 			if (packetType == 88) {
 				int var113 = in.g2_alt1();
 				byte var114 = in.g1b_alt3();
-				VarProvider.field1211[var113] = var114;
-				if (VarProvider.field1210[var113] != var114) {
-					VarProvider.field1210[var113] = var114;
+				VarProvider.baseVarps[var113] = var114;
+				if (VarProvider.varps[var113] != var114) {
+					VarProvider.varps[var113] = var114;
 					method778(var113);
 				}
 				field2110[++field2084 - 1 & 0x1F] = var113;
@@ -8846,8 +8848,8 @@ public class Client extends GameShell {
 				for (int var197 = 0; var197 < VarPlayerType.field2352; var197++) {
 					VarPlayerType var198 = VarPlayerType.get(var197);
 					if (var198 != null && var198.clientcode == 0) {
-						VarProvider.field1211[var197] = 0;
-						VarProvider.field1210[var197] = 0;
+						VarProvider.baseVarps[var197] = 0;
+						VarProvider.varps[var197] = 0;
 					}
 				}
 				method93();
@@ -9558,9 +9560,9 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (packetType == 111) {
-				for (int var361 = 0; var361 < VarProvider.field1210.length; var361++) {
-					if (VarProvider.field1211[var361] != VarProvider.field1210[var361]) {
-						VarProvider.field1210[var361] = VarProvider.field1211[var361];
+				for (int var361 = 0; var361 < VarProvider.varps.length; var361++) {
+					if (VarProvider.baseVarps[var361] != VarProvider.varps[var361]) {
+						VarProvider.varps[var361] = VarProvider.baseVarps[var361];
 						method778(var361);
 						field2110[++field2084 - 1 & 0x1F] = var361;
 					}
@@ -10836,7 +10838,7 @@ public class Client extends GameShell {
 				if (var75 instanceof NpcEntity) {
 					NpcType var76 = ((NpcEntity) var75).type;
 					if (var76.multinpc != null) {
-						var76 = var76.method2332();
+						var76 = var76.getMultiNpc();
 					}
 					if (var76 == null) {
 						continue;
@@ -10845,7 +10847,7 @@ public class Client extends GameShell {
 				if (var74 >= playerCount) {
 					NpcType var79 = ((NpcEntity) var75).type;
 					if (var79.multinpc != null) {
-						var79 = var79.method2332();
+						var79 = var79.getMultiNpc();
 					}
 					if (var79.headicon >= 0 && var79.headicon < field187.length) {
 						method948(var75, var75.field2626 + 15);

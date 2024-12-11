@@ -743,7 +743,7 @@ public class SoftwareModel extends Entity {
 	}
 
 	@ObfuscatedName("fo.ap(III)V")
-	public void method3013(int arg0, int arg1, int arg2) {
+	public void scale(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.field2722; var4++) {
 			this.field2723[var4] = this.field2723[var4] * arg0 / 128;
 			this.field2724[var4] = this.field2724[var4] * arg1 / 128;

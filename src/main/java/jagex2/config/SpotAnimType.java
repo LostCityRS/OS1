@@ -149,7 +149,7 @@ public class SpotAnimType extends DoublyLinkable {
 			var6 = SeqType.get(this.anim).method2439(var2, arg0);
 		}
 		if (this.resizeh != 128 || this.resizev != 128) {
-			var6.method3013(this.resizeh, this.resizev, this.resizeh);
+			var6.scale(this.resizeh, this.resizev, this.resizeh);
 		}
 		if (this.angle != 0) {
 			if (this.angle == 90) {

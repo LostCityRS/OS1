@@ -19,7 +19,7 @@ public class NpcEntity extends PathingEntity {
 		}
 		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.get(this.primarySeqId) : null;
 		SeqType var2 = this.secondarySeqId == -1 || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.get(this.secondarySeqId);
-		SoftwareModel var3 = this.type.method2330(var1, this.primarySeqFrame, var2, this.field2641);
+		SoftwareModel var3 = this.type.getModel(var1, this.primarySeqFrame, var2, this.field2641);
 		if (var3 == null) {
 			return null;
 		}

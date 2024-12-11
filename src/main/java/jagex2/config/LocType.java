@@ -608,9 +608,9 @@ public class LocType extends DoublyLinkable {
 	public final LocType getMultiLoc() {
 		int var1 = -1;
 		if (this.multivarbit != -1) {
-			var1 = VarProvider.method1130(this.multivarbit);
+			var1 = VarProvider.getVarbit(this.multivarbit);
 		} else if (this.multivarp != -1) {
-			var1 = VarProvider.field1210[this.multivarp];
+			var1 = VarProvider.varps[this.multivarp];
 		}
 		return var1 < 0 || var1 >= this.multiloc.length || this.multiloc[var1] == -1 ? null : get(this.multiloc[var1]);
 	}

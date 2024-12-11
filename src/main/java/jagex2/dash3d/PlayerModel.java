@@ -176,7 +176,7 @@ public class PlayerModel {
 	@ObfuscatedName("ct.j(Leo;ILeo;IB)Lfo;")
 	public SoftwareModel method1174(SeqType arg0, int arg1, SeqType arg2, int arg3) {
 		if (this.field1225 != -1) {
-			return NpcType.get(this.field1225).method2330(arg0, arg1, arg2, arg3);
+			return NpcType.get(this.field1225).getModel(arg0, arg1, arg2, arg3);
 		}
 		long var5 = this.field1226;
 		int[] var7 = this.field1228;
@@ -263,7 +263,7 @@ public class PlayerModel {
 	@ObfuscatedName("ct.z(I)Lfw;")
 	public Model method1192() {
 		if (this.field1225 != -1) {
-			return NpcType.get(this.field1225).method2331();
+			return NpcType.get(this.field1225).getHeadModel();
 		}
 		boolean var1 = false;
 		for (int var2 = 0; var2 < 12; var2++) {
@@ -309,7 +309,7 @@ public class PlayerModel {
 
 	@ObfuscatedName("ct.g(I)I")
 	public int method1176() {
-		return this.field1225 == -1 ? (this.field1228[11] << 5) + (this.field1228[8] << 10) + (this.field1228[0] << 15) + (this.field1223[4] << 20) + (this.field1223[0] << 25) + this.field1228[1] : NpcType.get(this.field1225).field2271 + 305419896;
+		return this.field1225 == -1 ? (this.field1228[11] << 5) + (this.field1228[8] << 10) + (this.field1228[0] << 15) + (this.field1223[4] << 20) + (this.field1223[0] << 25) + this.field1228[1] : NpcType.get(this.field1225).index + 305419896;
 	}
 
 	@ObfuscatedName("ba.q(I)V")

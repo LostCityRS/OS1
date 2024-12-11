@@ -14,19 +14,19 @@ import jagex2.jstring.Locale;
 public class NpcType extends DoublyLinkable {
 
 	@ObfuscatedName("em.n")
-	public static Js5Index field2281;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("dy.j")
-	public static Js5Index field1600;
+	public static Js5Index modelJs5;
 
 	@ObfuscatedName("em.z")
-	public static LruCache field2274 = new LruCache(64);
+	public static LruCache configCache = new LruCache(64);
 
 	@ObfuscatedName("em.g")
-	public static LruCache field2288 = new LruCache(50);
+	public static LruCache modelCache = new LruCache(50);
 
 	@ObfuscatedName("em.q")
-	public int field2271;
+	public int index;
 
 	@ObfuscatedName("em.i")
 	public String name = "null";
@@ -119,26 +119,28 @@ public class NpcType extends DoublyLinkable {
 	public boolean walksmoothing = true;
 
 	@ObfuscatedName("by.z(Lch;Lch;B)V")
-	public static void init(Js5Index arg0, Js5Index arg1) {
-		field2281 = arg0;
-		field1600 = arg1;
+	public static void init(Js5Index config, Js5Index model) {
+		configJs5 = config;
+		modelJs5 = model;
 	}
 
 	@ObfuscatedName("f.g(IB)Lem;")
-	public static NpcType get(int arg0) {
-		NpcType var1 = (NpcType) field2274.get((long) arg0);
-		if (var1 != null) {
-			return var1;
+	public static NpcType get(int id) {
+		NpcType cached = (NpcType) configCache.get(id);
+		if (cached != null) {
+			return cached;
 		}
-		byte[] var2 = field2281.getFile(9, arg0);
-		NpcType var3 = new NpcType();
-		var3.field2271 = arg0;
-		if (var2 != null) {
-			var3.decode(new Packet(var2));
+
+		byte[] buf = configJs5.getFile(9, id);
+		NpcType npc = new NpcType();
+		npc.index = id;
+		if (buf != null) {
+			npc.decode(new Packet(buf));
 		}
-		var3.postDecode();
-		field2274.put(var3, (long) arg0);
-		return var3;
+		npc.postDecode();
+
+		configCache.put(npc, id);
+		return npc;
 	}
 
 	@ObfuscatedName("em.q(I)V")
@@ -146,235 +148,267 @@ public class NpcType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("em.i(Lev;I)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("em.s(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 1) {
-			int var3 = arg0.g1();
-			this.models = new int[var3];
-			for (int var4 = 0; var4 < var3; var4++) {
-				this.models[var4] = arg0.g2();
+	public void decodeInner(Packet buf, int code) {
+		if (code == 1) {
+			int count = buf.g1();
+			this.models = new int[count];
+
+			for (int i = 0; i < count; i++) {
+				this.models[i] = buf.g2();
 			}
-		} else if (arg1 == 2) {
-			this.name = arg0.gjstr();
-		} else if (arg1 == 12) {
-			this.size = arg0.g1();
-		} else if (arg1 == 13) {
-			this.readyanim = arg0.g2();
-		} else if (arg1 == 14) {
-			this.walkanim = arg0.g2();
-		} else if (arg1 == 15) {
-			this.field2287 = arg0.g2();
-		} else if (arg1 == 16) {
-			this.field2278 = arg0.g2();
-		} else if (arg1 == 17) {
-			this.walkanim = arg0.g2();
-			this.walkanim_b = arg0.g2();
-			this.walkanim_r = arg0.g2();
-			this.walkanim_l = arg0.g2();
-		} else if (arg1 >= 30 && arg1 < 35) {
-			this.op[arg1 - 30] = arg0.gjstr();
-			if (this.op[arg1 - 30].equalsIgnoreCase(Locale.hidden)) {
-				this.op[arg1 - 30] = null;
+		} else if (code == 2) {
+			this.name = buf.gjstr();
+		} else if (code == 12) {
+			this.size = buf.g1();
+		} else if (code == 13) {
+			this.readyanim = buf.g2();
+		} else if (code == 14) {
+			this.walkanim = buf.g2();
+		} else if (code == 15) {
+			this.field2287 = buf.g2();
+		} else if (code == 16) {
+			this.field2278 = buf.g2();
+		} else if (code == 17) {
+			this.walkanim = buf.g2();
+			this.walkanim_b = buf.g2();
+			this.walkanim_r = buf.g2();
+			this.walkanim_l = buf.g2();
+		} else if (code >= 30 && code < 35) {
+			this.op[code - 30] = buf.gjstr();
+			if (this.op[code - 30].equalsIgnoreCase(Locale.hidden)) {
+				this.op[code - 30] = null;
 			}
-		} else if (arg1 == 40) {
-			int var5 = arg0.g1();
-			this.recol_s = new short[var5];
-			this.recol_d = new short[var5];
-			for (int var6 = 0; var6 < var5; var6++) {
-				this.recol_s[var6] = (short) arg0.g2();
-				this.recol_d[var6] = (short) arg0.g2();
+		} else if (code == 40) {
+			int count = buf.g1();
+			this.recol_s = new short[count];
+			this.recol_d = new short[count];
+
+			for (int i = 0; i < count; i++) {
+				this.recol_s[i] = (short) buf.g2();
+				this.recol_d[i] = (short) buf.g2();
 			}
-		} else if (arg1 == 41) {
-			int var7 = arg0.g1();
-			this.retex_s = new short[var7];
-			this.retex_d = new short[var7];
-			for (int var8 = 0; var8 < var7; var8++) {
-				this.retex_s[var8] = (short) arg0.g2();
-				this.retex_d[var8] = (short) arg0.g2();
+		} else if (code == 41) {
+			int count = buf.g1();
+			this.retex_s = new short[count];
+			this.retex_d = new short[count];
+
+			for (int i = 0; i < count; i++) {
+				this.retex_s[i] = (short) buf.g2();
+				this.retex_d[i] = (short) buf.g2();
 			}
-		} else if (arg1 == 60) {
-			int var9 = arg0.g1();
-			this.heads = new int[var9];
-			for (int var10 = 0; var10 < var9; var10++) {
-				this.heads[var10] = arg0.g2();
+		} else if (code == 60) {
+			int count = buf.g1();
+			this.heads = new int[count];
+
+			for (int i = 0; i < count; i++) {
+				this.heads[i] = buf.g2();
 			}
-		} else if (arg1 == 93) {
+		} else if (code == 93) {
 			this.minimap = false;
-		} else if (arg1 == 95) {
-			this.vislevel = arg0.g2();
-		} else if (arg1 == 97) {
-			this.resizeh = arg0.g2();
-		} else if (arg1 == 98) {
-			this.resizev = arg0.g2();
-		} else if (arg1 == 99) {
+		} else if (code == 95) {
+			this.vislevel = buf.g2();
+		} else if (code == 97) {
+			this.resizeh = buf.g2();
+		} else if (code == 98) {
+			this.resizev = buf.g2();
+		} else if (code == 99) {
 			this.alwaysontop = true;
-		} else if (arg1 == 100) {
-			this.ambient = arg0.g1b();
-		} else if (arg1 == 101) {
-			this.contrast = arg0.g1b();
-		} else if (arg1 == 102) {
-			this.headicon = arg0.g2();
-		} else if (arg1 == 103) {
-			this.turnspeed = arg0.g2();
-		} else if (arg1 == 106) {
-			this.multivarbit = arg0.g2();
+		} else if (code == 100) {
+			this.ambient = buf.g1b();
+		} else if (code == 101) {
+			this.contrast = buf.g1b() * 5;
+		} else if (code == 102) {
+			this.headicon = buf.g2();
+		} else if (code == 103) {
+			this.turnspeed = buf.g2();
+		} else if (code == 106) {
+			this.multivarbit = buf.g2();
 			if (this.multivarbit == 65535) {
 				this.multivarbit = -1;
 			}
-			this.multivarp = arg0.g2();
+
+			this.multivarp = buf.g2();
 			if (this.multivarp == 65535) {
 				this.multivarp = -1;
 			}
-			int var11 = arg0.g1();
-			this.multinpc = new int[var11 + 1];
-			for (int var12 = 0; var12 <= var11; var12++) {
-				this.multinpc[var12] = arg0.g2();
-				if (this.multinpc[var12] == 65535) {
-					this.multinpc[var12] = -1;
+
+			int count = buf.g1();
+			this.multinpc = new int[count + 1];
+			for (int i = 0; i <= count; i++) {
+				this.multinpc[i] = buf.g2();
+				if (this.multinpc[i] == 65535) {
+					this.multinpc[i] = -1;
 				}
 			}
-		} else if (arg1 == 107) {
+		} else if (code == 107) {
 			this.active = false;
-		} else if (arg1 == 109) {
+		} else if (code == 109) {
 			this.walksmoothing = false;
 		}
 	}
 
 	@ObfuscatedName("em.u(Leo;ILeo;IB)Lfo;")
-	public final SoftwareModel method2330(SeqType arg0, int arg1, SeqType arg2, int arg3) {
+	public final SoftwareModel getModel(SeqType primaryAnim, int arg1, SeqType secondaryAnim, int arg3) {
 		if (this.multinpc != null) {
-			NpcType var5 = this.method2332();
-			return var5 == null ? null : var5.method2330(arg0, arg1, arg2, arg3);
+			NpcType npc = this.getMultiNpc();
+			return npc == null ? null : npc.getModel(primaryAnim, arg1, secondaryAnim, arg3);
 		}
-		SoftwareModel var6 = (SoftwareModel) field2288.get((long) this.field2271);
-		if (var6 == null) {
-			boolean var7 = false;
-			for (int var8 = 0; var8 < this.models.length; var8++) {
-				if (!field1600.download(this.models[var8], 0)) {
-					var7 = true;
+
+		SoftwareModel cached = (SoftwareModel) modelCache.get(this.index);
+		if (cached == null) {
+			boolean needsModel = false;
+			for (int i = 0; i < this.models.length; i++) {
+				if (!modelJs5.download(this.models[i], 0)) {
+					needsModel = true;
 				}
 			}
-			if (var7) {
+
+			if (needsModel) {
 				return null;
 			}
-			Model[] var9 = new Model[this.models.length];
-			for (int var10 = 0; var10 < this.models.length; var10++) {
-				var9[var10] = Model.tryGet(field1600, this.models[var10], 0);
+
+			Model[] models = new Model[this.models.length];
+			for (int i = 0; i < this.models.length; i++) {
+				models[i] = Model.tryGet(modelJs5, this.models[i], 0);
 			}
-			Model var11;
-			if (var9.length == 1) {
-				var11 = var9[0];
+
+			Model model;
+			if (models.length == 1) {
+				model = models[0];
 			} else {
-				var11 = new Model(var9, var9.length);
+				model = new Model(models, models.length);
 			}
+
 			if (this.recol_s != null) {
-				for (int var12 = 0; var12 < this.recol_s.length; var12++) {
-					var11.recolour(this.recol_s[var12], this.recol_d[var12]);
+				for (int i = 0; i < this.recol_s.length; i++) {
+					model.recolour(this.recol_s[i], this.recol_d[i]);
 				}
 			}
+
 			if (this.retex_s != null) {
-				for (int var13 = 0; var13 < this.retex_s.length; var13++) {
-					var11.retexture(this.retex_s[var13], this.retex_d[var13]);
+				for (int i = 0; i < this.retex_s.length; i++) {
+					model.retexture(this.retex_s[i], this.retex_d[i]);
 				}
 			}
-			var6 = var11.calculateNormals(this.ambient + 64, this.contrast * 5 + 850, -30, -50, -30);
-			field2288.put(var6, (long) this.field2271);
+
+			cached = model.calculateNormals(this.ambient + 64, this.contrast + 850, -30, -50, -30);
+			modelCache.put(cached, this.index);
 		}
-		SoftwareModel var14;
-		if (arg0 != null && arg2 != null) {
-			var14 = arg0.method2421(var6, arg1, arg2, arg3);
-		} else if (arg0 != null) {
-			var14 = arg0.method2436(var6, arg1);
-		} else if (arg2 == null) {
-			var14 = var6.method2999(true);
+
+		SoftwareModel model;
+		if (primaryAnim != null && secondaryAnim != null) {
+			model = primaryAnim.method2421(cached, arg1, secondaryAnim, arg3);
+		} else if (primaryAnim != null) {
+			model = primaryAnim.method2436(cached, arg1);
+		} else if (secondaryAnim == null) {
+			model = cached.method2999(true);
 		} else {
-			var14 = arg2.method2436(var6, arg3);
+			model = secondaryAnim.method2436(cached, arg3);
 		}
+
 		if (this.resizeh != 128 || this.resizev != 128) {
-			var14.method3013(this.resizeh, this.resizev, this.resizeh);
+			model.scale(this.resizeh, this.resizev, this.resizeh);
 		}
-		return var14;
+
+		return model;
 	}
 
 	@ObfuscatedName("em.v(I)Lfw;")
-	public final Model method2331() {
+	public final Model getHeadModel() {
 		if (this.multinpc != null) {
-			NpcType var1 = this.method2332();
-			return var1 == null ? null : var1.method2331();
-		} else if (this.heads == null) {
-			return null;
-		} else {
-			boolean var2 = false;
-			for (int var3 = 0; var3 < this.heads.length; var3++) {
-				if (!field1600.download(this.heads[var3], 0)) {
-					var2 = true;
-				}
-			}
-			if (var2) {
-				return null;
-			}
-			Model[] var4 = new Model[this.heads.length];
-			for (int var5 = 0; var5 < this.heads.length; var5++) {
-				var4[var5] = Model.tryGet(field1600, this.heads[var5], 0);
-			}
-			Model var6;
-			if (var4.length == 1) {
-				var6 = var4[0];
-			} else {
-				var6 = new Model(var4, var4.length);
-			}
-			if (this.recol_s != null) {
-				for (int var7 = 0; var7 < this.recol_s.length; var7++) {
-					var6.recolour(this.recol_s[var7], this.recol_d[var7]);
-				}
-			}
-			if (this.retex_s != null) {
-				for (int var8 = 0; var8 < this.retex_s.length; var8++) {
-					var6.retexture(this.retex_s[var8], this.retex_d[var8]);
-				}
-			}
-			return var6;
+			NpcType npc = this.getMultiNpc();
+			return npc == null ? null : npc.getHeadModel();
 		}
+
+		if (this.heads == null) {
+			return null;
+		}
+
+		boolean needsModel = false;
+		for (int i = 0; i < this.heads.length; i++) {
+			if (!modelJs5.download(this.heads[i], 0)) {
+				needsModel = true;
+			}
+		}
+
+		if (needsModel) {
+			return null;
+		}
+
+		Model[] models = new Model[this.heads.length];
+		for (int i = 0; i < this.heads.length; i++) {
+			models[i] = Model.tryGet(modelJs5, this.heads[i], 0);
+		}
+
+		Model model;
+		if (models.length == 1) {
+			model = models[0];
+		} else {
+			model = new Model(models, models.length);
+		}
+
+		if (this.recol_s != null) {
+			for (int i = 0; i < this.recol_s.length; i++) {
+				model.recolour(this.recol_s[i], this.recol_d[i]);
+			}
+		}
+
+		if (this.retex_s != null) {
+			for (int i = 0; i < this.retex_s.length; i++) {
+				model.retexture(this.retex_s[i], this.retex_d[i]);
+			}
+		}
+
+		return model;
 	}
 
 	@ObfuscatedName("em.w(B)Lem;")
-	public final NpcType method2332() {
-		int var1 = -1;
+	public final NpcType getMultiNpc() {
+		int value = -1;
 		if (this.multivarbit != -1) {
-			var1 = VarProvider.method1130(this.multivarbit);
+			value = VarProvider.getVarbit(this.multivarbit);
 		} else if (this.multivarp != -1) {
-			var1 = VarProvider.field1210[this.multivarp];
+			value = VarProvider.varps[this.multivarp];
 		}
-		return var1 < 0 || var1 >= this.multinpc.length || this.multinpc[var1] == -1 ? null : get(this.multinpc[var1]);
+
+		if (value < 0 || value >= this.multinpc.length || this.multinpc[value] == -1) {
+			return null;
+		}
+
+		return get(this.multinpc[value]);
 	}
 
 	@ObfuscatedName("em.e(I)Z")
-	public boolean method2339() {
+	public boolean isNotMulti() {
 		if (this.multinpc == null) {
 			return true;
 		}
-		int var1 = -1;
+
+		int value = -1;
 		if (this.multivarbit != -1) {
-			var1 = VarProvider.method1130(this.multivarbit);
+			value = VarProvider.getVarbit(this.multivarbit);
 		} else if (this.multivarp != -1) {
-			var1 = VarProvider.field1210[this.multivarp];
+			value = VarProvider.varps[this.multivarp];
 		}
-		return var1 >= 0 && var1 < this.multinpc.length && this.multinpc[var1] != -1;
+
+		return value >= 0 && value < this.multinpc.length && this.multinpc[value] != -1;
 	}
 
 	@ObfuscatedName("df.b(I)V")
-	public static void method1334() {
-		field2274.clear();
-		field2288.clear();
+	public static void clear() {
+		configCache.clear();
+		modelCache.clear();
 	}
 }

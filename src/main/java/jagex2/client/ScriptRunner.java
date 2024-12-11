@@ -133,13 +133,13 @@ public class ScriptRunner {
 					}
 					if (opcode == 1) {
 						int var16 = var8[var6];
-						field188[var4++] = VarProvider.field1210[var16];
+						field188[var4++] = VarProvider.varps[var16];
 						continue;
 					}
 					if (opcode == 2) {
 						int var17 = var8[var6];
 						var4--;
-						VarProvider.field1210[var17] = field188[var4];
+						VarProvider.varps[var17] = field188[var4];
 						continue;
 					}
 					if (opcode == 3) {
@@ -193,7 +193,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 25) {
 						int var19 = var8[var6];
-						field188[var4++] = VarProvider.method1130(var19);
+						field188[var4++] = VarProvider.getVarbit(var19);
 						continue;
 					}
 					if (opcode == 27) {
@@ -204,12 +204,12 @@ public class ScriptRunner {
 						int var23 = var22.basevar;
 						int var24 = var22.startbit;
 						int var25 = var22.endbit;
-						int var26 = VarProvider.field1212[var25 - var24];
+						int var26 = VarProvider.BITMASK[var25 - var24];
 						if (var21 < 0 || var21 > var26) {
 							var21 = 0;
 						}
 						int var27 = var26 << var24;
-						VarProvider.field1210[var23] = VarProvider.field1210[var23] & ~var27 | var21 << var24 & var27;
+						VarProvider.varps[var23] = VarProvider.varps[var23] & ~var27 | var21 << var24 & var27;
 						continue;
 					}
 					if (opcode == 31) {

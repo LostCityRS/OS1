@@ -1005,7 +1005,7 @@ public class IfType extends Linkable {
 					var7 = var8.calculateNormals(64, 768, -50, -10, -50);
 				}
 				if (var5 == 2) {
-					Model var9 = NpcType.get(var6).method2331();
+					Model var9 = NpcType.get(var6).getHeadModel();
 					if (var9 == null) {
 						field1870 = true;
 						return null;
