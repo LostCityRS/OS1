@@ -107,7 +107,7 @@ public class SceneTextureProvider extends Linkable {
 				}
 			}
 			for (int var17 = 0; var17 < var10.length; var17++) {
-				var10[var17] = Pix3D.method2756(var10[var17], arg0);
+				var10[var17] = Pix3D.setGamma(var10[var17], arg0);
 			}
 			int var18;
 			if (var7 == 0) {

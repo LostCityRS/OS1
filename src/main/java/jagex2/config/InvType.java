@@ -13,7 +13,7 @@ public class InvType extends DoublyLinkable {
 	public static Js5Index configJs5;
 
 	@ObfuscatedName("fp.j")
-	public static LruCache field2475 = new LruCache(64);
+	public static LruCache cache = new LruCache(64);
 
 	@ObfuscatedName("fp.z")
 	public int size = 0;
@@ -30,9 +30,25 @@ public class InvType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fp.g(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 2) {
-			this.size = arg0.g2();
+	public void decodeInner(Packet buf, int code) {
+		if (code == 2) {
+			this.size = buf.g2();
 		}
+	}
+
+	// inlined
+	public static InvType get(int id) {
+		InvType cached = (InvType) InvType.cache.get(id);
+		if (cached != null) {
+			return cached;
+		}
+
+		byte[] buf = InvType.configJs5.getFile(5, id);
+		InvType inv = new InvType();
+		if (buf != null) {
+			inv.decode(new Packet(buf));
+		}
+		InvType.cache.put(inv, id);
+		return inv;
 	}
 }

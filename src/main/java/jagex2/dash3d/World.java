@@ -862,7 +862,7 @@ public class World {
 								}
 								int var56 = 0;
 								if (var49 != -1) {
-									var56 = Pix3D.field2538[mulHSL(var49, 96)];
+									var56 = Pix3D.palette[mulHSL(var49, 96)];
 								}
 								if (var39 == 0) {
 									arg0.method569(var6, var21, var34, 0, 0, -1, var40, var41, var42, var43, mulHSL(var48, var44), mulHSL(var48, var45), mulHSL(var48, var46), mulHSL(var48, var47), 0, 0, 0, 0, var56, 0);
@@ -893,7 +893,7 @@ public class World {
 									}
 									int var65 = 0;
 									if (var61 != -2) {
-										var65 = Pix3D.field2538[adjustLightness(var61, 96)];
+										var65 = Pix3D.palette[adjustLightness(var61, 96)];
 									}
 									if (var59.averageRgb != -1) {
 										int var66 = randomHueOffset + var59.field2410 & 0xFF;
@@ -904,7 +904,7 @@ public class World {
 											var67 = 255;
 										}
 										int var68 = hsl24to16(var66, var59.field2412, var67);
-										var65 = Pix3D.field2538[adjustLightness(var68, 96)];
+										var65 = Pix3D.palette[adjustLightness(var68, 96)];
 									}
 									arg0.method569(var6, var21, var34, var57, var58, var60, var40, var41, var42, var43, mulHSL(var48, var44), mulHSL(var48, var45), mulHSL(var48, var46), mulHSL(var48, var47), adjustLightness(var62, var44), adjustLightness(var62, var45), adjustLightness(var62, var46), adjustLightness(var62, var47), var56, var65);
 								}

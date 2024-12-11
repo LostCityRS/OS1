@@ -1404,9 +1404,9 @@ public class Model extends Entity {
 	}
 
 	@ObfuscatedName("fw.ah(IIIII)Lfo;")
-	public final SoftwareModel method2942(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public final SoftwareModel calculateNormals(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		this.method2932();
-		int var6 = (int) Math.sqrt((double) (arg4 * arg4 + arg2 * arg2 + arg3 * arg3));
+		int var6 = (int) Math.sqrt(arg4 * arg4 + arg2 * arg2 + arg3 * arg3);
 		int var7 = arg1 * var6 >> 8;
 		SoftwareModel var8 = new SoftwareModel();
 		var8.field2778 = new int[this.faceCount];

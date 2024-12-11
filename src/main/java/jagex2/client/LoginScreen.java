@@ -572,9 +572,9 @@ public class LoginScreen {
 				field140[var58] = field827[var58];
 			}
 		}
-		Pix2D.method2605(0, 9, 128, var55 + 7);
+		Pix2D.setBounds(0, 9, 128, var55 + 7);
 		field146.method2667(0, 0);
-		Pix2D.method2584();
+		Pix2D.resetBounds();
 		int var59 = 0;
 		int var60 = 6885;
 		for (int var61 = 1; var61 < var55 - 1; var61++) {
@@ -597,9 +597,9 @@ public class LoginScreen {
 			}
 			var60 += var63 + 765 - 128;
 		}
-		Pix2D.method2605(637, 9, 765, var55 + 7);
+		Pix2D.setBounds(637, 9, 765, var55 + 7);
 		field348.method2667(382, 0);
-		Pix2D.method2584();
+		Pix2D.resetBounds();
 		int var70 = 0;
 		int var71 = 7546;
 		for (int var72 = 1; var72 < var55 - 1; var72++) {

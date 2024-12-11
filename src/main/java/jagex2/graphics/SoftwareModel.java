@@ -85,7 +85,7 @@ public class SoftwareModel extends Entity {
 	public int[][] field2743;
 
 	@ObfuscatedName("fo.av")
-	public boolean field2744 = false;
+	public boolean picking = false;
 
 	@ObfuscatedName("fo.ak")
 	public int field2745;
@@ -187,7 +187,7 @@ public class SoftwareModel extends Entity {
 	public static int[] field2721 = Pix3D.cosTable;
 
 	@ObfuscatedName("fo.bz")
-	public static int[] field2769 = Pix3D.field2538;
+	public static int[] field2769 = Pix3D.palette;
 
 	@ObfuscatedName("fo.bm")
 	public static int[] field2781 = Pix3D.divTable2;
@@ -347,7 +347,7 @@ public class SoftwareModel extends Entity {
 			var15.field2765 = this.field2765;
 			var15.field2742 = this.field2742;
 			var15.field2743 = this.field2743;
-			var15.field2744 = this.field2744;
+			var15.picking = this.picking;
 			var15.field2724 = new int[var15.field2722];
 		} else {
 			var15 = this;
@@ -446,7 +446,7 @@ public class SoftwareModel extends Entity {
 		arg1.field2765 = this.field2765;
 		arg1.field2742 = this.field2742;
 		arg1.field2743 = this.field2743;
-		arg1.field2744 = this.field2744;
+		arg1.picking = this.picking;
 		arg1.field2745 = 0;
 		return arg1;
 	}
@@ -931,7 +931,7 @@ public class SoftwareModel extends Entity {
 			int var32 = field2719 - Pix3D.centerX;
 			int var33 = field2775 - Pix3D.centerY;
 			if (var32 > var28 && var32 < var29 && var33 > var30 && var33 < var31) {
-				if (this.field2744) {
+				if (this.picking) {
 					field2730[field2741++] = arg8;
 				} else {
 					var26 = true;
@@ -1177,11 +1177,11 @@ public class SoftwareModel extends Entity {
 		int var2 = this.field2727[arg0];
 		int var3 = this.field2726[arg0];
 		int var4 = this.field2729[arg0];
-		Pix3D.field2524 = field2751[arg0];
+		Pix3D.clipX = field2751[arg0];
 		if (this.field2728 == null) {
-			Pix3D.field2523 = 0;
+			Pix3D.alpha = 0;
 		} else {
-			Pix3D.field2523 = this.field2728[arg0] & 0xFF;
+			Pix3D.alpha = this.field2728[arg0] & 0xFF;
 		}
 		if (this.field2718 != null && this.field2718[arg0] != -1) {
 			int var6;
@@ -1205,7 +1205,7 @@ public class SoftwareModel extends Entity {
 		} else if (this.field2732[arg0] == -1) {
 			Pix3D.method2767(field2754[var2], field2754[var3], field2754[var4], field2753[var2], field2753[var3], field2753[var4], field2769[this.field2778[arg0]]);
 		} else {
-			Pix3D.method2794(field2754[var2], field2754[var3], field2754[var4], field2753[var2], field2753[var3], field2753[var4], this.field2778[arg0], this.field2731[arg0], this.field2732[arg0]);
+			Pix3D.fillGouraudTriangle(field2754[var2], field2754[var3], field2754[var4], field2753[var2], field2753[var3], field2753[var4], this.field2778[arg0], this.field2731[arg0], this.field2732[arg0]);
 		}
 	}
 
@@ -1221,9 +1221,9 @@ public class SoftwareModel extends Entity {
 		int var9 = field2777[var6];
 		int var10 = field2777[var7];
 		if (this.field2728 == null) {
-			Pix3D.field2523 = 0;
+			Pix3D.alpha = 0;
 		} else {
-			Pix3D.field2523 = this.field2728[arg0] & 0xFF;
+			Pix3D.alpha = this.field2728[arg0] & 0xFF;
 		}
 		if (var8 >= 50) {
 			field2740[var4] = field2753[var5];
@@ -1294,10 +1294,10 @@ public class SoftwareModel extends Entity {
 		int var29 = field2736[0];
 		int var30 = field2736[1];
 		int var31 = field2736[2];
-		Pix3D.field2524 = false;
+		Pix3D.clipX = false;
 		if (var4 == 3) {
 			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX) {
-				Pix3D.field2524 = true;
+				Pix3D.clipX = true;
 			}
 			if (this.field2718 != null && this.field2718[arg0] != -1) {
 				int var33;
@@ -1321,14 +1321,14 @@ public class SoftwareModel extends Entity {
 			} else if (this.field2732[arg0] == -1) {
 				Pix3D.method2767(var29, var30, var31, var26, var27, var28, field2769[this.field2778[arg0]]);
 			} else {
-				Pix3D.method2794(var29, var30, var31, var26, var27, var28, field2734[0], field2734[1], field2734[2]);
+				Pix3D.fillGouraudTriangle(var29, var30, var31, var26, var27, var28, field2734[0], field2734[1], field2734[2]);
 			}
 		}
 		if (var4 != 4) {
 			return;
 		}
 		if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX || field2740[3] < 0 || field2740[3] > Pix3D.boundX) {
-			Pix3D.field2524 = true;
+			Pix3D.clipX = true;
 		}
 		if (this.field2718 != null && this.field2718[arg0] != -1) {
 			int var37;
@@ -1357,8 +1357,8 @@ public class SoftwareModel extends Entity {
 			Pix3D.method2767(var29, var30, var31, var26, var27, var28, var41);
 			Pix3D.method2767(var29, var31, field2736[3], var26, var28, field2740[3], var41);
 		} else {
-			Pix3D.method2794(var29, var30, var31, var26, var27, var28, field2734[0], field2734[1], field2734[2]);
-			Pix3D.method2794(var29, var31, field2736[3], var26, var28, field2740[3], field2734[0], field2734[2], field2734[3]);
+			Pix3D.fillGouraudTriangle(var29, var30, var31, var26, var27, var28, field2734[0], field2734[1], field2734[2]);
+			Pix3D.fillGouraudTriangle(var29, var31, field2736[3], var26, var28, field2740[3], field2734[0], field2734[2], field2734[3]);
 		}
 	}
 

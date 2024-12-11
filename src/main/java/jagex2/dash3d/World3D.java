@@ -91,7 +91,7 @@ public class World3D {
 	public static Location[] field640 = new Location[100];
 
 	@ObfuscatedName("aq.av")
-	public static boolean field612 = false;
+	public static boolean takingInput = false;
 
 	@ObfuscatedName("aq.ak")
 	public static int field600 = 0;
@@ -103,10 +103,10 @@ public class World3D {
 	public static int field615 = 0;
 
 	@ObfuscatedName("aq.ah")
-	public static int field580 = -1;
+	public static int clickTileX = -1;
 
 	@ObfuscatedName("aq.ay")
-	public static int field629 = -1;
+	public static int clickTileZ = -1;
 
 	@ObfuscatedName("aq.ao")
 	public static int field620 = 4;
@@ -698,23 +698,23 @@ public class World3D {
 								Model var10 = (Model) var8.field649;
 								this.method597(var10, var4, var5, var6, 1, 1);
 								Model.method2941(var9, var10, 0, 0, 0, false);
-								var8.field649 = var10.method2942(var10.field2708, var10.field2706, arg0, arg1, arg2);
+								var8.field649 = var10.calculateNormals(var10.field2708, var10.field2706, arg0, arg1, arg2);
 							}
-							var8.field646 = var9.method2942(var9.field2708, var9.field2706, arg0, arg1, arg2);
+							var8.field646 = var9.calculateNormals(var9.field2708, var9.field2706, arg0, arg1, arg2);
 						}
 						for (int var11 = 0; var11 < var7.field1712; var11++) {
 							Location var12 = var7.field1700[var11];
 							if (var12 != null && var12.field672 instanceof Model) {
 								Model var13 = (Model) var12.field672;
 								this.method597(var13, var4, var5, var6, var12.field673 - var12.field675 + 1, var12.field667 - var12.field674 + 1);
-								var12.field672 = var13.method2942(var13.field2708, var13.field2706, arg0, arg1, arg2);
+								var12.field672 = var13.calculateNormals(var13.field2708, var13.field2706, arg0, arg1, arg2);
 							}
 						}
 						GroundDecor var14 = var7.field1709;
 						if (var14 != null && var14.field701 instanceof Model) {
 							Model var15 = (Model) var14.field701;
 							this.method596(var15, var4, var5, var6);
-							var14.field701 = var15.method2942(var15.field2708, var15.field2706, arg0, arg1, arg2);
+							var14.field701 = var15.calculateNormals(var15.field2708, var15.field2706, arg0, arg1, arg2);
 						}
 					}
 				}
@@ -942,12 +942,12 @@ public class World3D {
 
 	@ObfuscatedName("aq.ay(III)V")
 	public void method601(int arg0, int arg1, int arg2) {
-		field612 = true;
+		takingInput = true;
 		field600 = arg0;
 		field598 = arg1;
 		field615 = arg2;
-		field580 = -1;
-		field629 = -1;
+		clickTileX = -1;
+		clickTileZ = -1;
 	}
 
 	@ObfuscatedName("aq.al(IIIIII)V")
@@ -1054,7 +1054,7 @@ public class World3D {
 							}
 						}
 						if (field595 == 0) {
-							field612 = false;
+							takingInput = false;
 							return;
 						}
 					}
@@ -1099,14 +1099,14 @@ public class World3D {
 							}
 						}
 						if (field595 == 0) {
-							field612 = false;
+							takingInput = false;
 							return;
 						}
 					}
 				}
 			}
 		}
-		field612 = false;
+		takingInput = false;
 	}
 
 	@ObfuscatedName("aq.ab(Les;Z)V")
@@ -1208,7 +1208,7 @@ public class World3D {
 												}
 											} else if (!this.method707(var7, var4, var5)) {
 												var18 = true;
-												if (var3.field1701.field691 != 12345678 || field612 && var6 <= field600) {
+												if (var3.field1701.northEastColour != 12345678 || takingInput && var6 <= field600) {
 													this.drawTileUnderlay(var3.field1701, var7, sinEyePitch, cosEyePitch, sinEyeYaw, cosEyeYaw, var4, var5);
 												}
 											}
@@ -1605,49 +1605,49 @@ public class World3D {
 		int var50 = (var36 << 9) / var37 + Pix3D.centerY;
 		int var51 = (var39 << 9) / var43 + Pix3D.centerX;
 		int var52 = (var42 << 9) / var43 + Pix3D.centerY;
-		Pix3D.field2523 = 0;
+		Pix3D.alpha = 0;
 		if ((var48 - var52) * (var49 - var51) - (var47 - var51) * (var50 - var52) > 0) {
-			Pix3D.field2524 = false;
+			Pix3D.clipX = false;
 			if (var49 < 0 || var51 < 0 || var47 < 0 || var49 > Pix3D.boundX || var51 > Pix3D.boundX || var47 > Pix3D.boundX) {
-				Pix3D.field2524 = true;
+				Pix3D.clipX = true;
 			}
-			if (field612 && this.method607(field598, field615, var50, var52, var48, var49, var51, var47)) {
-				field580 = arg6;
-				field629 = arg7;
+			if (takingInput && this.pointInsideTriangle(field598, field615, var50, var52, var48, var49, var51, var47)) {
+				clickTileX = arg6;
+				clickTileZ = arg7;
 			}
-			if (arg0.field695 == -1) {
-				if (arg0.field691 != 12345678) {
-					Pix3D.method2794(var50, var52, var48, var49, var51, var47, arg0.field691, arg0.field694, arg0.field692);
+			if (arg0.textureId == -1) {
+				if (arg0.northEastColour != 12345678) {
+					Pix3D.fillGouraudTriangle(var50, var52, var48, var49, var51, var47, arg0.northEastColour, arg0.field694, arg0.field692);
 				}
 			} else if (field593) {
-				int var53 = Pix3D.sceneProvider.method731(arg0.field695);
-				Pix3D.method2794(var50, var52, var48, var49, var51, var47, method612(var53, arg0.field691), method612(var53, arg0.field694), method612(var53, arg0.field692));
-			} else if (arg0.field693) {
-				Pix3D.method2771(var50, var52, var48, var49, var51, var47, arg0.field691, arg0.field694, arg0.field692, var21, var27, var39, var24, var30, var42, var25, var31, var43, arg0.field695);
+				int var53 = Pix3D.sceneProvider.method731(arg0.textureId);
+				Pix3D.fillGouraudTriangle(var50, var52, var48, var49, var51, var47, method612(var53, arg0.northEastColour), method612(var53, arg0.field694), method612(var53, arg0.field692));
+			} else if (arg0.flat) {
+				Pix3D.fillTexturedTriangle(var50, var52, var48, var49, var51, var47, arg0.northEastColour, arg0.field694, arg0.field692, var21, var27, var39, var24, var30, var42, var25, var31, var43, arg0.textureId);
 			} else {
-				Pix3D.method2771(var50, var52, var48, var49, var51, var47, arg0.field691, arg0.field694, arg0.field692, var33, var39, var27, var36, var42, var30, var37, var43, var31, arg0.field695);
+				Pix3D.fillTexturedTriangle(var50, var52, var48, var49, var51, var47, arg0.northEastColour, arg0.field694, arg0.field692, var33, var39, var27, var36, var42, var30, var37, var43, var31, arg0.textureId);
 			}
 		}
 		if ((var45 - var47) * (var52 - var48) - (var46 - var48) * (var51 - var47) <= 0) {
 			return;
 		}
-		Pix3D.field2524 = false;
+		Pix3D.clipX = false;
 		if (var45 < 0 || var47 < 0 || var51 < 0 || var45 > Pix3D.boundX || var47 > Pix3D.boundX || var51 > Pix3D.boundX) {
-			Pix3D.field2524 = true;
+			Pix3D.clipX = true;
 		}
-		if (field612 && this.method607(field598, field615, var46, var48, var52, var45, var47, var51)) {
-			field580 = arg6;
-			field629 = arg7;
+		if (takingInput && this.pointInsideTriangle(field598, field615, var46, var48, var52, var45, var47, var51)) {
+			clickTileX = arg6;
+			clickTileZ = arg7;
 		}
-		if (arg0.field695 == -1) {
+		if (arg0.textureId == -1) {
 			if (arg0.field696 != 12345678) {
-				Pix3D.method2794(var46, var48, var52, var45, var47, var51, arg0.field696, arg0.field692, arg0.field694);
+				Pix3D.fillGouraudTriangle(var46, var48, var52, var45, var47, var51, arg0.field696, arg0.field692, arg0.field694);
 			}
 		} else if (field593) {
-			int var54 = Pix3D.sceneProvider.method731(arg0.field695);
-			Pix3D.method2794(var46, var48, var52, var45, var47, var51, method612(var54, arg0.field696), method612(var54, arg0.field692), method612(var54, arg0.field694));
+			int var54 = Pix3D.sceneProvider.method731(arg0.textureId);
+			Pix3D.fillGouraudTriangle(var46, var48, var52, var45, var47, var51, method612(var54, arg0.field696), method612(var54, arg0.field692), method612(var54, arg0.field694));
 		} else {
-			Pix3D.method2771(var46, var48, var52, var45, var47, var51, arg0.field696, arg0.field692, arg0.field694, var21, var27, var39, var24, var30, var42, var25, var31, var43, arg0.field695);
+			Pix3D.fillTexturedTriangle(var46, var48, var52, var45, var47, var51, arg0.field696, arg0.field692, arg0.field694, var21, var27, var39, var24, var30, var42, var25, var31, var43, arg0.textureId);
 		}
 	}
 
@@ -1673,7 +1673,7 @@ public class World3D {
 			TileOverlay.field573[var9] = (var13 << 9) / var17 + Pix3D.centerX;
 			TileOverlay.field574[var9] = (var16 << 9) / var17 + Pix3D.centerY;
 		}
-		Pix3D.field2523 = 0;
+		Pix3D.alpha = 0;
 		int var19 = arg0.field561.length;
 		for (int var20 = 0; var20 < var19; var20++) {
 			int var21 = arg0.field561[var20];
@@ -1686,25 +1686,25 @@ public class World3D {
 			int var28 = TileOverlay.field574[var22];
 			int var29 = TileOverlay.field574[var23];
 			if ((var24 - var25) * (var29 - var28) - (var26 - var25) * (var27 - var28) > 0) {
-				Pix3D.field2524 = false;
+				Pix3D.clipX = false;
 				if (var24 < 0 || var25 < 0 || var26 < 0 || var24 > Pix3D.boundX || var25 > Pix3D.boundX || var26 > Pix3D.boundX) {
-					Pix3D.field2524 = true;
+					Pix3D.clipX = true;
 				}
-				if (field612 && this.method607(field598, field615, var27, var28, var29, var24, var25, var26)) {
-					field580 = arg5;
-					field629 = arg6;
+				if (takingInput && this.pointInsideTriangle(field598, field615, var27, var28, var29, var24, var25, var26)) {
+					clickTileX = arg5;
+					clickTileZ = arg6;
 				}
 				if (arg0.field567 == null || arg0.field567[var20] == -1) {
 					if (arg0.field566[var20] != 12345678) {
-						Pix3D.method2794(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20]);
+						Pix3D.fillGouraudTriangle(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20]);
 					}
 				} else if (field593) {
 					int var30 = Pix3D.sceneProvider.method731(arg0.field567[var20]);
-					Pix3D.method2794(var27, var28, var29, var24, var25, var26, method612(var30, arg0.field566[var20]), method612(var30, arg0.field562[var20]), method612(var30, arg0.field569[var20]));
+					Pix3D.fillGouraudTriangle(var27, var28, var29, var24, var25, var26, method612(var30, arg0.field566[var20]), method612(var30, arg0.field562[var20]), method612(var30, arg0.field569[var20]));
 				} else if (arg0.field568) {
-					Pix3D.method2771(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20], TileOverlay.field575[0], TileOverlay.field575[1], TileOverlay.field575[3], TileOverlay.field576[0], TileOverlay.field576[1], TileOverlay.field576[3], TileOverlay.field577[0], TileOverlay.field577[1], TileOverlay.field577[3], arg0.field567[var20]);
+					Pix3D.fillTexturedTriangle(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20], TileOverlay.field575[0], TileOverlay.field575[1], TileOverlay.field575[3], TileOverlay.field576[0], TileOverlay.field576[1], TileOverlay.field576[3], TileOverlay.field577[0], TileOverlay.field577[1], TileOverlay.field577[3], arg0.field567[var20]);
 				} else {
-					Pix3D.method2771(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20], TileOverlay.field575[var21], TileOverlay.field575[var22], TileOverlay.field575[var23], TileOverlay.field576[var21], TileOverlay.field576[var22], TileOverlay.field576[var23], TileOverlay.field577[var21], TileOverlay.field577[var22], TileOverlay.field577[var23], arg0.field567[var20]);
+					Pix3D.fillTexturedTriangle(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20], TileOverlay.field575[var21], TileOverlay.field575[var22], TileOverlay.field575[var23], TileOverlay.field576[var21], TileOverlay.field576[var22], TileOverlay.field576[var23], TileOverlay.field577[var21], TileOverlay.field577[var22], TileOverlay.field577[var23], arg0.field567[var20]);
 				}
 			}
 		}
@@ -1722,7 +1722,7 @@ public class World3D {
 	}
 
 	@ObfuscatedName("aq.aq(IIIIIIII)Z")
-	public boolean method607(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public boolean pointInsideTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		if (arg1 < arg2 && arg1 < arg3 && arg1 < arg4) {
 			return false;
 		} else if (arg1 > arg2 && arg1 > arg3 && arg1 > arg4) {

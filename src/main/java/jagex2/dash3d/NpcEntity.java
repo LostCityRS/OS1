@@ -34,7 +34,7 @@ public class NpcEntity extends PathingEntity {
 			}
 		}
 		if (this.type.size == 1) {
-			var3.field2744 = true;
+			var3.picking = true;
 		}
 		return var3;
 	}

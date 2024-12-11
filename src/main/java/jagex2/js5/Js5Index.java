@@ -179,7 +179,7 @@ public abstract class Js5Index {
 	}
 
 	@ObfuscatedName("ch.d(IB)V")
-	public void requestDownload(int arg0) {
+	public void download(int arg0) {
 	}
 
 	@ObfuscatedName("ch.l(III)[B")
@@ -210,7 +210,7 @@ public abstract class Js5Index {
 	}
 
 	@ObfuscatedName("ch.c(III)Z")
-	public boolean requestDownload(int arg0, int arg1) {
+	public boolean download(int arg0, int arg1) {
 		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
 			return false;
 		} else if (this.unpacked[arg0][arg1] != null) {
@@ -442,20 +442,20 @@ public abstract class Js5Index {
 	}
 
 	@ObfuscatedName("ch.k(Ljava/lang/String;Ljava/lang/String;B)Z")
-	public boolean requestDownload(String arg0, String arg1) {
+	public boolean download(String arg0, String arg1) {
 		String var3 = arg0.toLowerCase();
 		String var4 = arg1.toLowerCase();
 		int var5 = this.groupNameHashTable.get(JStringUtil.hashCode(var3));
 		int var6 = this.fileNameHashTables[var5].get(JStringUtil.hashCode(var4));
-		return this.requestDownload(var5, var6);
+		return this.download(var5, var6);
 	}
 
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
-	public void requestDownload(String arg0) {
+	public void download(String arg0) {
 		String var2 = arg0.toLowerCase();
 		int var3 = this.groupNameHashTable.get(JStringUtil.hashCode(var2));
 		if (var3 >= 0) {
-			this.requestDownload(var3);
+			this.download(var3);
 		}
 	}
 

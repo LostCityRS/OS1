@@ -7,25 +7,25 @@ import deob.ObfuscatedName;
 public class EnglishLocale {
 
 	@ObfuscatedName("ba.r")
-	public static String field1077 = "Members object";
+	public static String MEMBERS_OBJECT = "Members object";
 
 	@ObfuscatedName("ba.d")
-	public static String field867 = "Take";
+	public static String OP_TAKE = "Take";
 
 	@ObfuscatedName("ba.l")
-	public static String field868 = "Drop";
+	public static String OP_DROP = "Drop";
 
 	@ObfuscatedName("ba.m")
 	public static String hidden = "Hidden";
 
 	@ObfuscatedName("ba.c")
-	public static String field966 = "Ok";
+	public static String BUTTON_OK = "Ok";
 
 	@ObfuscatedName("ba.n")
-	public static String field1013 = "Select";
+	public static String BUTTON_SELECT = "Select";
 
 	@ObfuscatedName("ba.j")
-	public static String field872 = "Continue";
+	public static String BUTTON_CONTINUE = "Continue";
 
 	@ObfuscatedName("ba.z")
 	public static String field873 = "Loading - please wait.";

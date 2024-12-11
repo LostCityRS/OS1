@@ -202,7 +202,7 @@ public class PlayerModel {
 				if (var12 >= 256 && var12 < 512 && !IdkType.get(var12 - 256).method2461()) {
 					var10 = true;
 				}
-				if (var12 >= 512 && !ObjType.get(var12 - 512).method2547(this.field1222)) {
+				if (var12 >= 512 && !ObjType.get(var12 - 512).downloadWornModel(this.field1222)) {
 					var10 = true;
 				}
 			}
@@ -226,7 +226,7 @@ public class PlayerModel {
 						}
 					}
 					if (var16 >= 512) {
-						Model var18 = ObjType.get(var16 - 512).method2525(this.field1222);
+						Model var18 = ObjType.get(var16 - 512).getWornModel(this.field1222);
 						if (var18 != null) {
 							var13[var14++] = var18;
 						}
@@ -241,7 +241,7 @@ public class PlayerModel {
 						var19.recolour(field1224[var20], field1229[var20][this.field1223[var20]]);
 					}
 				}
-				var9 = var19.method2942(64, 850, -30, -50, -30);
+				var9 = var19.calculateNormals(64, 850, -30, -50, -30);
 				field1231.put(var9, var5);
 				this.field1227 = var5;
 			}
@@ -271,7 +271,7 @@ public class PlayerModel {
 			if (var3 >= 256 && var3 < 512 && !IdkType.get(var3 - 256).method2463()) {
 				var1 = true;
 			}
-			if (var3 >= 512 && !ObjType.get(var3 - 512).method2554(this.field1222)) {
+			if (var3 >= 512 && !ObjType.get(var3 - 512).downloadHeadModel(this.field1222)) {
 				var1 = true;
 			}
 		}
@@ -289,7 +289,7 @@ public class PlayerModel {
 				}
 			}
 			if (var7 >= 512) {
-				Model var9 = ObjType.get(var7 - 512).method2527(this.field1222);
+				Model var9 = ObjType.get(var7 - 512).getHeadModel(this.field1222);
 				if (var9 != null) {
 					var4[var5++] = var9;
 				}

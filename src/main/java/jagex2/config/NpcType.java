@@ -260,7 +260,7 @@ public class NpcType extends DoublyLinkable {
 		if (var6 == null) {
 			boolean var7 = false;
 			for (int var8 = 0; var8 < this.models.length; var8++) {
-				if (!field1600.requestDownload(this.models[var8], 0)) {
+				if (!field1600.download(this.models[var8], 0)) {
 					var7 = true;
 				}
 			}
@@ -287,7 +287,7 @@ public class NpcType extends DoublyLinkable {
 					var11.retexture(this.retex_s[var13], this.retex_d[var13]);
 				}
 			}
-			var6 = var11.method2942(this.ambient + 64, this.contrast * 5 + 850, -30, -50, -30);
+			var6 = var11.calculateNormals(this.ambient + 64, this.contrast * 5 + 850, -30, -50, -30);
 			field2288.put(var6, (long) this.field2271);
 		}
 		SoftwareModel var14;
@@ -316,7 +316,7 @@ public class NpcType extends DoublyLinkable {
 		} else {
 			boolean var2 = false;
 			for (int var3 = 0; var3 < this.heads.length; var3++) {
-				if (!field1600.requestDownload(this.heads[var3], 0)) {
+				if (!field1600.download(this.heads[var3], 0)) {
 					var2 = true;
 				}
 			}

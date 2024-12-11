@@ -12,16 +12,16 @@ public class TileUnderlay {
 	public int field692;
 
 	@ObfuscatedName("ai.l")
-	public int field691;
+	public int northEastColour;
 
 	@ObfuscatedName("ai.m")
 	public int field694;
 
 	@ObfuscatedName("ai.c")
-	public int field695;
+	public int textureId;
 
 	@ObfuscatedName("ai.n")
-	public boolean field693 = true;
+	public boolean flat = true;
 
 	@ObfuscatedName("ai.j")
 	public int field697;
@@ -29,10 +29,10 @@ public class TileUnderlay {
 	public TileUnderlay(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, boolean arg6) {
 		this.field696 = arg0;
 		this.field692 = arg1;
-		this.field691 = arg2;
+		this.northEastColour = arg2;
 		this.field694 = arg3;
-		this.field695 = arg4;
+		this.textureId = arg4;
 		this.field697 = arg5;
-		this.field693 = arg6;
+		this.flat = arg6;
 	}
 }

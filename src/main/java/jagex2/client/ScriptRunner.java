@@ -456,8 +456,8 @@ public class ScriptRunner {
 					if (opcode == 1003) {
 						var4--;
 						boolean var62 = field188[var4] == 1;
-						if (var61.field1880 != var62) {
-							var61.field1880 = var62;
+						if (var61.hide != var62) {
+							var61.hide = var62;
 							Client.method1238(var61);
 						}
 						continue;
@@ -481,8 +481,8 @@ public class ScriptRunner {
 							var63.field1796 = 0;
 						}
 						var63.field1797 = field188[var4 + 1];
-						if (var63.field1797 > var63.field1799 - var63.height) {
-							var63.field1797 = var63.field1799 - var63.height;
+						if (var63.field1797 > var63.scroll - var63.height) {
+							var63.field1797 = var63.scroll - var63.height;
 						}
 						if (var63.field1797 < 0) {
 							var63.field1797 = 0;
@@ -492,19 +492,19 @@ public class ScriptRunner {
 					}
 					if (opcode == 1101) {
 						var4--;
-						var63.field1822 = field188[var4];
+						var63.colour = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
 					if (opcode == 1102) {
 						var4--;
-						var63.field1893 = field188[var4] == 1;
+						var63.fill = field188[var4] == 1;
 						Client.method1238(var63);
 						continue;
 					}
 					if (opcode == 1103) {
 						var4--;
-						var63.field1805 = field188[var4];
+						var63.alpha = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
@@ -516,7 +516,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 1105) {
 						var4--;
-						var63.field1807 = field188[var4];
+						var63.graphic = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
@@ -533,9 +533,9 @@ public class ScriptRunner {
 						continue;
 					}
 					if (opcode == 1108) {
-						var63.field1815 = 1;
+						var63.modelType = 1;
 						var4--;
-						var63.field1816 = field188[var4];
+						var63.model = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
@@ -543,18 +543,18 @@ public class ScriptRunner {
 						var4 -= 6;
 						var63.field1821 = field188[var4];
 						var63.field1798 = field188[var4 + 1];
-						var63.field1848 = field188[var4 + 2];
-						var63.field1824 = field188[var4 + 3];
+						var63.xan = field188[var4 + 2];
+						var63.yan = field188[var4 + 3];
 						var63.field1817 = field188[var4 + 4];
-						var63.field1826 = field188[var4 + 5];
+						var63.zoom = field188[var4 + 5];
 						Client.method1238(var63);
 						continue;
 					}
 					if (opcode == 1110) {
 						var4--;
 						int var64 = field188[var4];
-						if (var63.field1863 != var64) {
-							var63.field1863 = var64;
+						if (var63.anim != var64) {
+							var63.anim = var64;
 							var63.field1779 = 0;
 							var63.field1890 = 0;
 							Client.method1238(var63);
@@ -570,21 +570,21 @@ public class ScriptRunner {
 					if (opcode == 1112) {
 						var5--;
 						String var65 = chatTyped[var5];
-						if (!var65.equals(var63.field1830)) {
-							var63.field1830 = var65;
+						if (!var65.equals(var63.text)) {
+							var63.text = var65;
 							Client.method1238(var63);
 						}
 						continue;
 					}
 					if (opcode == 1113) {
 						var4--;
-						var63.field1829 = field188[var4];
+						var63.font = field188[var4];
 						Client.method1238(var63);
 						continue;
 					}
 					if (opcode == 1114) {
 						var4 -= 3;
-						var63.field1864 = field188[var4];
+						var63.center = field188[var4];
 						var63.field1834 = field188[var4 + 1];
 						var63.field1832 = field188[var4 + 2];
 						Client.method1238(var63);
@@ -592,7 +592,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 1115) {
 						var4--;
-						var63.field1835 = field188[var4] == 1;
+						var63.shadowed = field188[var4] == 1;
 						Client.method1238(var63);
 						continue;
 					}
@@ -623,7 +623,7 @@ public class ScriptRunner {
 					if (opcode == 1120) {
 						var4 -= 2;
 						var63.field1884 = field188[var4];
-						var63.field1799 = field188[var4 + 1];
+						var63.scroll = field188[var4 + 1];
 						Client.method1238(var63);
 						continue;
 					}
@@ -644,26 +644,26 @@ public class ScriptRunner {
 						var66.field1791 = var67;
 						var66.field1888 = var68;
 						ObjType var69 = ObjType.get(var67);
-						var66.field1848 = var69.xan2d;
-						var66.field1824 = var69.yan2d;
+						var66.xan = var69.xan2d;
+						var66.yan = var69.yan2d;
 						var66.field1817 = var69.zan2d;
 						var66.field1821 = var69.xof2d;
 						var66.field1798 = var69.yof2d;
-						var66.field1826 = var69.zoom2d;
+						var66.zoom = var69.zoom2d;
 						if (var66.width > 0) {
-							var66.field1826 = var66.field1826 * 32 / var66.width;
+							var66.zoom = var66.zoom * 32 / var66.width;
 						}
 						continue;
 					}
 					if (opcode == 1201) {
-						var66.field1815 = 2;
+						var66.modelType = 2;
 						var4--;
-						var66.field1816 = field188[var4];
+						var66.model = field188[var4];
 						continue;
 					}
 					if (opcode == 1202) {
-						var66.field1815 = 3;
-						var66.field1816 = Client.localPlayer.field2786.method1176();
+						var66.modelType = 3;
+						var66.model = Client.localPlayer.field2786.method1176();
 						continue;
 					}
 				} else if ((opcode >= 1300 && opcode < 1400) || (opcode >= 2300 && opcode < 2400)) {
@@ -715,7 +715,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 1306) {
 						var5--;
-						var70.field1841 = chatTyped[var5];
+						var70.targetVerb = chatTyped[var5];
 						continue;
 					}
 					if (opcode == 1307) {
@@ -861,7 +861,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (opcode == 1504) {
-							field188[var4++] = var81.field1880 ? 1 : 0;
+							field188[var4++] = var81.hide ? 1 : 0;
 							continue;
 						}
 						if (opcode == 1505) {
@@ -879,7 +879,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (opcode == 1602) {
-							chatTyped[var5++] = var82.field1830;
+							chatTyped[var5++] = var82.text;
 							continue;
 						}
 						if (opcode == 1603) {
@@ -887,15 +887,15 @@ public class ScriptRunner {
 							continue;
 						}
 						if (opcode == 1604) {
-							field188[var4++] = var82.field1799;
+							field188[var4++] = var82.scroll;
 							continue;
 						}
 						if (opcode == 1605) {
-							field188[var4++] = var82.field1826;
+							field188[var4++] = var82.zoom;
 							continue;
 						}
 						if (opcode == 1606) {
-							field188[var4++] = var82.field1848;
+							field188[var4++] = var82.xan;
 							continue;
 						}
 						if (opcode == 1607) {
@@ -903,7 +903,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (opcode == 1608) {
-							field188[var4++] = var82.field1824;
+							field188[var4++] = var82.yan;
 							continue;
 						}
 					} else if (opcode < 1800) {
@@ -969,7 +969,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (opcode == 2504) {
-							field188[var4++] = var86.field1880 ? 1 : 0;
+							field188[var4++] = var86.hide ? 1 : 0;
 							continue;
 						}
 						if (opcode == 2505) {
@@ -988,7 +988,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (opcode == 2602) {
-							chatTyped[var5++] = var87.field1830;
+							chatTyped[var5++] = var87.text;
 							continue;
 						}
 						if (opcode == 2603) {
@@ -996,15 +996,15 @@ public class ScriptRunner {
 							continue;
 						}
 						if (opcode == 2604) {
-							field188[var4++] = var87.field1799;
+							field188[var4++] = var87.scroll;
 							continue;
 						}
 						if (opcode == 2605) {
-							field188[var4++] = var87.field1826;
+							field188[var4++] = var87.zoom;
 							continue;
 						}
 						if (opcode == 2606) {
-							field188[var4++] = var87.field1848;
+							field188[var4++] = var87.xan;
 							continue;
 						}
 						if (opcode == 2607) {
@@ -1012,7 +1012,7 @@ public class ScriptRunner {
 							continue;
 						}
 						if (opcode == 2608) {
-							field188[var4++] = var87.field1824;
+							field188[var4++] = var87.yan;
 							continue;
 						}
 					} else if (opcode < 2800) {
@@ -1218,22 +1218,7 @@ public class ScriptRunner {
 						if (opcode == 3304) {
 							var4--;
 							int var125 = field188[var4];
-							int[] var126 = field188;
-							int var127 = var4++;
-							InvType var128 = (InvType) InvType.field2475.get((long) var125);
-							InvType var129;
-							if (var128 == null) {
-								byte[] var130 = InvType.configJs5.getFile(5, var125);
-								InvType var131 = new InvType();
-								if (var130 != null) {
-									var131.decode(new Packet(var130));
-								}
-								InvType.field2475.put(var131, (long) var125);
-								var129 = var131;
-							} else {
-								var129 = var128;
-							}
-							var126[var127] = var129.size;
+							field188[var4++] = InvType.get(var125).size;
 							continue;
 						}
 						if (opcode == 3305) {
@@ -2161,7 +2146,7 @@ public class ScriptRunner {
 						if (opcode == 4207) {
 							var4--;
 							int var336 = field188[var4];
-							field188[var4++] = ObjType.get(var336).membersWorld ? 1 : 0;
+							field188[var4++] = ObjType.get(var336).members ? 1 : 0;
 							continue;
 						}
 					} else if (opcode < 5100) {

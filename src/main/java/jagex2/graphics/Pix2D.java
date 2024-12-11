@@ -28,15 +28,15 @@ public class Pix2D extends DoublyLinkable {
 	public static int right = 0;
 
 	@ObfuscatedName("fv.z([III)V")
-	public static void method2583(int[] arg0, int arg1, int arg2) {
+	public static void bind(int[] arg0, int arg1, int arg2) {
 		data = arg0;
 		width2d = arg1;
 		height2d = arg2;
-		method2605(0, 0, arg1, arg2);
+		setBounds(0, 0, arg1, arg2);
 	}
 
 	@ObfuscatedName("fv.g()V")
-	public static void method2584() {
+	public static void resetBounds() {
 		left = 0;
 		top = 0;
 		right = width2d;
@@ -44,7 +44,7 @@ public class Pix2D extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fv.q(IIII)V")
-	public static void method2605(int arg0, int arg1, int arg2, int arg3) {
+	public static void setBounds(int arg0, int arg1, int arg2, int arg3) {
 		if (arg0 < 0) {
 			arg0 = 0;
 		}

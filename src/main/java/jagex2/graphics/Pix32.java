@@ -76,7 +76,7 @@ public class Pix32 extends Pix2D {
 
 	@ObfuscatedName("fq.bn()V")
 	public void method2662() {
-		method2583(this.field2506, this.field2508, this.field2501);
+		bind(this.field2506, this.field2508, this.field2501);
 	}
 
 	@ObfuscatedName("fq.be(III)V")
@@ -286,7 +286,7 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.cj(II)V")
-	public void method2671(int arg0, int arg1) {
+	public void draw(int arg0, int arg1) {
 		int var3 = this.field2502 + arg0;
 		int var4 = this.field2499 + arg1;
 		int var5 = Pix2D.width2d * var4 + var3;
@@ -447,7 +447,7 @@ public class Pix32 extends Pix2D {
 	@ObfuscatedName("fq.co(IIII)V")
 	public void method2699(int arg0, int arg1, int arg2, int arg3) {
 		if (arg2 == 256) {
-			this.method2671(arg0, arg1);
+			this.draw(arg0, arg1);
 			return;
 		}
 		int var5 = this.field2502 + arg0;

@@ -199,7 +199,7 @@ public class PlayerEntity extends PathingEntity {
 				var6.method3012(this.x - this.locOffsetX, this.y - this.locOffsetY, this.z - this.locOffsetZ);
 			}
 		}
-		var3.field2744 = true;
+		var3.picking = true;
 		return var3;
 	}
 

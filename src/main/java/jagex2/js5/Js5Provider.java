@@ -76,7 +76,7 @@ public class Js5Provider extends Js5Index {
 	}
 
 	@ObfuscatedName("dq.d(IB)V")
-	public void requestDownload(int arg0) {
+	public void download(int arg0) {
 		Js5TcpClient.method555(this.field1574, arg0);
 	}
 

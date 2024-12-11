@@ -7,7 +7,7 @@ import jagex2.dash3d.SceneProvider;
 public class Pix3D extends Pix2D {
 
 	@ObfuscatedName("fx.u")
-	public static boolean field2524 = false;
+	public static boolean clipX = false;
 
 	@ObfuscatedName("fx.v")
 	public static boolean field2543 = false;
@@ -16,10 +16,10 @@ public class Pix3D extends Pix2D {
 	public static boolean field2521 = false;
 
 	@ObfuscatedName("fx.e")
-	public static boolean field2522 = true;
+	public static boolean jagged = true;
 
 	@ObfuscatedName("fx.b")
-	public static int field2523 = 0;
+	public static int alpha = 0;
 
 	@ObfuscatedName("fx.a")
 	public static int centerX;
@@ -49,7 +49,7 @@ public class Pix3D extends Pix2D {
 	public static int[] field2527 = new int[1024];
 
 	@ObfuscatedName("fx.ap")
-	public static int[] field2538 = new int[65536];
+	public static int[] palette = new int[65536];
 
 	@ObfuscatedName("fx.av")
 	public static SceneProvider sceneProvider;
@@ -135,17 +135,17 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.ba(Law;)V")
-	public static final void method2760(SceneProvider arg0) {
+	public static final void setSceneProvider(SceneProvider arg0) {
 		sceneProvider = arg0;
 	}
 
 	@ObfuscatedName("fx.bc(D)V")
-	public static final void method2761(double arg0) {
-		method2762(arg0, 0, 512);
+	public static final void setBrightness(double arg0) {
+		setBrightness(arg0, 0, 512);
 	}
 
 	@ObfuscatedName("fx.br(DII)V")
-	public static final void method2762(double arg0, int arg1, int arg2) {
+	public static final void setBrightness(double arg0, int arg1, int arg2) {
 		double var4 = arg0 + (Math.random() * 0.03D - 0.015D);
 		int var6 = arg1 * 128;
 		for (int var7 = arg1; var7 < arg2; var7++) {
@@ -204,17 +204,17 @@ public class Pix3D extends Pix2D {
 				int var32 = (int) (var17 * 256.0D);
 				int var33 = (int) (var19 * 256.0D);
 				int var34 = (var31 << 16) + (var32 << 8) + var33;
-				int var35 = method2756(var34, var4);
+				int var35 = setGamma(var34, var4);
 				if (var35 == 0) {
 					var35 = 1;
 				}
-				field2538[var6++] = var35;
+				palette[var6++] = var35;
 			}
 		}
 	}
 
 	@ObfuscatedName("fx.bb(ID)I")
-	public static int method2756(int arg0, double arg1) {
+	public static int setGamma(int arg0, double arg1) {
 		double var3 = (double) (arg0 >> 16) / 256.0D;
 		double var5 = (double) (arg0 >> 8 & 0xFF) / 256.0D;
 		double var7 = (double) (arg0 & 0xFF) / 256.0D;
@@ -229,11 +229,11 @@ public class Pix3D extends Pix2D {
 
 	@ObfuscatedName("fx.bd(III)V")
 	public static void method2764(int arg0, int arg1, int arg2) {
-		field2524 = arg0 < 0 || arg0 > boundX || arg1 < 0 || arg1 > boundX || arg2 < 0 || arg2 > boundX;
+		clipX = arg0 < 0 || arg0 > boundX || arg1 < 0 || arg1 > boundX || arg2 < 0 || arg2 > boundX;
 	}
 
 	@ObfuscatedName("fx.cr(IIIIIIIII)V")
-	public static final void method2794(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static final void fillGouraudTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		int var9 = arg4 - arg3;
 		int var10 = arg1 - arg0;
 		int var11 = arg5 - arg3;
@@ -299,14 +299,14 @@ public class Pix3D extends Pix2D {
 									if (var28 < 0) {
 										return;
 									}
-									method2766(Pix2D.data, var30, 0, 0, var24 >> 16, var23 >> 16, var21, var19);
+									drawGouraudScanline(Pix2D.data, var30, 0, 0, var24 >> 16, var23 >> 16, var21, var19);
 									var23 += var17;
 									var24 += var15;
 									var21 += var20;
 									var30 += Pix2D.width2d;
 								}
 							}
-							method2766(Pix2D.data, var30, 0, 0, var22 >> 16, var23 >> 16, var21, var19);
+							drawGouraudScanline(Pix2D.data, var30, 0, 0, var22 >> 16, var23 >> 16, var21, var19);
 							var23 += var17;
 							var22 += var16;
 							var21 += var20;
@@ -324,14 +324,14 @@ public class Pix3D extends Pix2D {
 									if (var25 < 0) {
 										return;
 									}
-									method2766(Pix2D.data, var27, 0, 0, var23 >> 16, var24 >> 16, var21, var19);
+									drawGouraudScanline(Pix2D.data, var27, 0, 0, var23 >> 16, var24 >> 16, var21, var19);
 									var23 += var17;
 									var24 += var15;
 									var21 += var20;
 									var27 += Pix2D.width2d;
 								}
 							}
-							method2766(Pix2D.data, var27, 0, 0, var23 >> 16, var22 >> 16, var21, var19);
+							drawGouraudScanline(Pix2D.data, var27, 0, 0, var23 >> 16, var22 >> 16, var21, var19);
 							var23 += var17;
 							var22 += var16;
 							var21 += var20;
@@ -364,14 +364,14 @@ public class Pix3D extends Pix2D {
 									if (var34 < 0) {
 										return;
 									}
-									method2766(Pix2D.data, var36, 0, 0, var33 >> 16, var31 >> 16, var21, var19);
+									drawGouraudScanline(Pix2D.data, var36, 0, 0, var33 >> 16, var31 >> 16, var21, var19);
 									var33 += var15;
 									var31 += var16;
 									var21 += var20;
 									var36 += Pix2D.width2d;
 								}
 							}
-							method2766(Pix2D.data, var36, 0, 0, var32 >> 16, var31 >> 16, var21, var19);
+							drawGouraudScanline(Pix2D.data, var36, 0, 0, var32 >> 16, var31 >> 16, var21, var19);
 							var32 += var17;
 							var31 += var16;
 							var21 += var20;
@@ -389,14 +389,14 @@ public class Pix3D extends Pix2D {
 									if (var37 < 0) {
 										return;
 									}
-									method2766(Pix2D.data, var39, 0, 0, var31 >> 16, var33 >> 16, var21, var19);
+									drawGouraudScanline(Pix2D.data, var39, 0, 0, var31 >> 16, var33 >> 16, var21, var19);
 									var33 += var15;
 									var31 += var16;
 									var21 += var20;
 									var39 += Pix2D.width2d;
 								}
 							}
-							method2766(Pix2D.data, var39, 0, 0, var31 >> 16, var32 >> 16, var21, var19);
+							drawGouraudScanline(Pix2D.data, var39, 0, 0, var31 >> 16, var32 >> 16, var21, var19);
 							var32 += var17;
 							var31 += var16;
 							var21 += var20;
@@ -440,14 +440,14 @@ public class Pix3D extends Pix2D {
 									if (var47 < 0) {
 										return;
 									}
-									method2766(Pix2D.data, var49, 0, 0, var43 >> 16, var42 >> 16, var40, var19);
+									drawGouraudScanline(Pix2D.data, var49, 0, 0, var43 >> 16, var42 >> 16, var40, var19);
 									var42 += var16;
 									var43 += var17;
 									var40 += var20;
 									var49 += Pix2D.width2d;
 								}
 							}
-							method2766(Pix2D.data, var49, 0, 0, var41 >> 16, var42 >> 16, var40, var19);
+							drawGouraudScanline(Pix2D.data, var49, 0, 0, var41 >> 16, var42 >> 16, var40, var19);
 							var42 += var16;
 							var41 += var15;
 							var40 += var20;
@@ -465,14 +465,14 @@ public class Pix3D extends Pix2D {
 									if (var44 < 0) {
 										return;
 									}
-									method2766(Pix2D.data, var46, 0, 0, var42 >> 16, var43 >> 16, var40, var19);
+									drawGouraudScanline(Pix2D.data, var46, 0, 0, var42 >> 16, var43 >> 16, var40, var19);
 									var42 += var16;
 									var43 += var17;
 									var40 += var20;
 									var46 += Pix2D.width2d;
 								}
 							}
-							method2766(Pix2D.data, var46, 0, 0, var42 >> 16, var41 >> 16, var40, var19);
+							drawGouraudScanline(Pix2D.data, var46, 0, 0, var42 >> 16, var41 >> 16, var40, var19);
 							var42 += var16;
 							var41 += var15;
 							var40 += var20;
@@ -505,14 +505,14 @@ public class Pix3D extends Pix2D {
 									if (var53 < 0) {
 										return;
 									}
-									method2766(Pix2D.data, var55, 0, 0, var52 >> 16, var50 >> 16, var40, var19);
+									drawGouraudScanline(Pix2D.data, var55, 0, 0, var52 >> 16, var50 >> 16, var40, var19);
 									var52 += var17;
 									var50 += var15;
 									var40 += var20;
 									var55 += Pix2D.width2d;
 								}
 							}
-							method2766(Pix2D.data, var55, 0, 0, var51 >> 16, var50 >> 16, var40, var19);
+							drawGouraudScanline(Pix2D.data, var55, 0, 0, var51 >> 16, var50 >> 16, var40, var19);
 							var51 += var16;
 							var50 += var15;
 							var40 += var20;
@@ -530,14 +530,14 @@ public class Pix3D extends Pix2D {
 									if (var56 < 0) {
 										return;
 									}
-									method2766(Pix2D.data, var58, 0, 0, var50 >> 16, var52 >> 16, var40, var19);
+									drawGouraudScanline(Pix2D.data, var58, 0, 0, var50 >> 16, var52 >> 16, var40, var19);
 									var52 += var17;
 									var50 += var15;
 									var40 += var20;
 									var58 += Pix2D.width2d;
 								}
 							}
-							method2766(Pix2D.data, var58, 0, 0, var50 >> 16, var51 >> 16, var40, var19);
+							drawGouraudScanline(Pix2D.data, var58, 0, 0, var50 >> 16, var51 >> 16, var40, var19);
 							var51 += var16;
 							var50 += var15;
 							var40 += var20;
@@ -580,14 +580,14 @@ public class Pix3D extends Pix2D {
 								if (var63 < 0) {
 									return;
 								}
-								method2766(Pix2D.data, var65, 0, 0, var61 >> 16, var62 >> 16, var59, var19);
+								drawGouraudScanline(Pix2D.data, var65, 0, 0, var61 >> 16, var62 >> 16, var59, var19);
 								var61 += var15;
 								var62 += var16;
 								var59 += var20;
 								var65 += Pix2D.width2d;
 							}
 						}
-						method2766(Pix2D.data, var65, 0, 0, var61 >> 16, var60 >> 16, var59, var19);
+						drawGouraudScanline(Pix2D.data, var65, 0, 0, var61 >> 16, var60 >> 16, var59, var19);
 						var61 += var15;
 						var60 += var17;
 						var59 += var20;
@@ -605,14 +605,14 @@ public class Pix3D extends Pix2D {
 								if (var66 < 0) {
 									return;
 								}
-								method2766(Pix2D.data, var68, 0, 0, var62 >> 16, var61 >> 16, var59, var19);
+								drawGouraudScanline(Pix2D.data, var68, 0, 0, var62 >> 16, var61 >> 16, var59, var19);
 								var61 += var15;
 								var62 += var16;
 								var59 += var20;
 								var68 += Pix2D.width2d;
 							}
 						}
-						method2766(Pix2D.data, var68, 0, 0, var60 >> 16, var61 >> 16, var59, var19);
+						drawGouraudScanline(Pix2D.data, var68, 0, 0, var60 >> 16, var61 >> 16, var59, var19);
 						var61 += var15;
 						var60 += var17;
 						var59 += var20;
@@ -645,14 +645,14 @@ public class Pix3D extends Pix2D {
 								if (var72 < 0) {
 									return;
 								}
-								method2766(Pix2D.data, var74, 0, 0, var71 >> 16, var69 >> 16, var59, var19);
+								drawGouraudScanline(Pix2D.data, var74, 0, 0, var71 >> 16, var69 >> 16, var59, var19);
 								var71 += var16;
 								var69 += var17;
 								var59 += var20;
 								var74 += Pix2D.width2d;
 							}
 						}
-						method2766(Pix2D.data, var74, 0, 0, var70 >> 16, var69 >> 16, var59, var19);
+						drawGouraudScanline(Pix2D.data, var74, 0, 0, var70 >> 16, var69 >> 16, var59, var19);
 						var70 += var15;
 						var69 += var17;
 						var59 += var20;
@@ -670,14 +670,14 @@ public class Pix3D extends Pix2D {
 								if (var75 < 0) {
 									return;
 								}
-								method2766(Pix2D.data, var77, 0, 0, var69 >> 16, var71 >> 16, var59, var19);
+								drawGouraudScanline(Pix2D.data, var77, 0, 0, var69 >> 16, var71 >> 16, var59, var19);
 								var71 += var16;
 								var69 += var17;
 								var59 += var20;
 								var77 += Pix2D.width2d;
 							}
 						}
-						method2766(Pix2D.data, var77, 0, 0, var69 >> 16, var70 >> 16, var59, var19);
+						drawGouraudScanline(Pix2D.data, var77, 0, 0, var69 >> 16, var70 >> 16, var59, var19);
 						var70 += var15;
 						var69 += var17;
 						var59 += var20;
@@ -689,8 +689,8 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.cs([IIIIIIII)V")
-	public static final void method2766(int[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-		if (field2524) {
+	public static final void drawGouraudScanline(int[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+		if (clipX) {
 			if (arg5 > boundX) {
 				arg5 = boundX;
 			}
@@ -703,19 +703,19 @@ public class Pix3D extends Pix2D {
 		}
 		int var8 = arg1 + arg4;
 		int var9 = arg4 * arg7 + arg6;
-		if (!field2522) {
+		if (!jagged) {
 			int var27 = arg5 - arg4;
-			if (field2523 == 0) {
+			if (alpha == 0) {
 				do {
-					arg0[var8++] = field2538[var9 >> 8];
+					arg0[var8++] = palette[var9 >> 8];
 					var9 += arg7;
 					var27--;
 				} while (var27 > 0);
 			} else {
-				int var28 = field2523;
-				int var29 = 256 - field2523;
+				int var28 = alpha;
+				int var29 = 256 - alpha;
 				do {
-					int var30 = field2538[var9 >> 8];
+					int var30 = palette[var9 >> 8];
 					var9 += arg7;
 					int var31 = ((var30 & 0xFF00FF) * var29 >> 8 & 0xFF00FF) + ((var30 & 0xFF00) * var29 >> 8 & 0xFF00);
 					int var32 = arg0[var8];
@@ -727,10 +727,10 @@ public class Pix3D extends Pix2D {
 		}
 		int var10 = arg5 - arg4 >> 2;
 		int var11 = arg7 << 2;
-		if (field2523 == 0) {
+		if (alpha == 0) {
 			if (var10 > 0) {
 				do {
-					int var12 = field2538[var9 >> 8];
+					int var12 = palette[var9 >> 8];
 					var9 += var11;
 					arg0[var8++] = var12;
 					arg0[var8++] = var12;
@@ -741,7 +741,7 @@ public class Pix3D extends Pix2D {
 			}
 			int var13 = arg5 - arg4 & 0x3;
 			if (var13 > 0) {
-				int var14 = field2538[var9 >> 8];
+				int var14 = palette[var9 >> 8];
 				do {
 					arg0[var8++] = var14;
 					var13--;
@@ -749,11 +749,11 @@ public class Pix3D extends Pix2D {
 			}
 			return;
 		}
-		int var15 = field2523;
-		int var16 = 256 - field2523;
+		int var15 = alpha;
+		int var16 = 256 - alpha;
 		if (var10 > 0) {
 			do {
-				int var17 = field2538[var9 >> 8];
+				int var17 = palette[var9 >> 8];
 				var9 += var11;
 				int var18 = ((var17 & 0xFF00FF) * var16 >> 8 & 0xFF00FF) + ((var17 & 0xFF00) * var16 >> 8 & 0xFF00);
 				int var19 = arg0[var8];
@@ -771,7 +771,7 @@ public class Pix3D extends Pix2D {
 		if (var23 <= 0) {
 			return;
 		}
-		int var24 = field2538[var9 >> 8];
+		int var24 = palette[var9 >> 8];
 		int var25 = ((var24 & 0xFF00FF) * var16 >> 8 & 0xFF00FF) + ((var24 & 0xFF00) * var16 >> 8 & 0xFF00);
 		do {
 			int var26 = arg0[var8];
@@ -1187,7 +1187,7 @@ public class Pix3D extends Pix2D {
 
 	@ObfuscatedName("fx.cl([IIIIII)V")
 	public static final void method2768(int[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-		if (field2524) {
+		if (clipX) {
 			if (arg5 > boundX) {
 				arg5 = boundX;
 			}
@@ -1200,7 +1200,7 @@ public class Pix3D extends Pix2D {
 		}
 		int var6 = arg1 + arg4;
 		int var7 = arg5 - arg4 >> 2;
-		if (field2523 == 0) {
+		if (alpha == 0) {
 			while (true) {
 				var7--;
 				if (var7 < 0) {
@@ -1218,7 +1218,7 @@ public class Pix3D extends Pix2D {
 				arg0[var6++] = arg2;
 				arg0[var6++] = arg2;
 			}
-		} else if (field2523 == 254) {
+		} else if (alpha == 254) {
 			while (true) {
 				var7--;
 				if (var7 < 0) {
@@ -1237,8 +1237,8 @@ public class Pix3D extends Pix2D {
 				arg0[var6++] = arg0[var6];
 			}
 		} else {
-			int var10 = field2523;
-			int var11 = 256 - field2523;
+			int var10 = alpha;
+			int var11 = 256 - alpha;
 			int var12 = ((arg2 & 0xFF00FF) * var11 >> 8 & 0xFF00FF) + ((arg2 & 0xFF00) * var11 >> 8 & 0xFF00);
 			while (true) {
 				var7--;
@@ -1270,7 +1270,7 @@ public class Pix3D extends Pix2D {
 		int[] var19 = sceneProvider.method735(arg18);
 		if (var19 == null) {
 			int var20 = sceneProvider.method731(arg18);
-			method2794(arg0, arg1, arg2, arg3, arg4, arg5, method2773(var20, arg6), method2773(var20, arg7), method2773(var20, arg8));
+			fillGouraudTriangle(arg0, arg1, arg2, arg3, arg4, arg5, method2773(var20, arg6), method2773(var20, arg7), method2773(var20, arg8));
 			return;
 		}
 		field2521 = sceneProvider.method733(arg18);
@@ -1836,7 +1836,7 @@ public class Pix3D extends Pix2D {
 
 	@ObfuscatedName("fx.ca([I[IIIIIIIIIIIIII)V")
 	public static final void method2755(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
-		if (field2524) {
+		if (clipX) {
 			if (arg6 > boundX) {
 				arg6 = boundX;
 			}
@@ -2242,11 +2242,11 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.co(IIIIIIIIIIIIIIIIIII)V")
-	public static final void method2771(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
+	public static final void fillTexturedTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
 		int[] var19 = sceneProvider.method735(arg18);
 		if (var19 == null) {
 			int var20 = sceneProvider.method731(arg18);
-			method2794(arg0, arg1, arg2, arg3, arg4, arg5, method2773(var20, arg6), method2773(var20, arg7), method2773(var20, arg8));
+			fillGouraudTriangle(arg0, arg1, arg2, arg3, arg4, arg5, method2773(var20, arg6), method2773(var20, arg7), method2773(var20, arg8));
 			return;
 		}
 		field2521 = sceneProvider.method733(arg18);
@@ -2329,7 +2329,7 @@ public class Pix3D extends Pix2D {
 									if (var56 < 0) {
 										return;
 									}
-									method2802(Pix2D.data, var19, 0, 0, var58, var50 >> 16, var51 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
+									drawTexturedScanline(Pix2D.data, var19, 0, 0, var58, var50 >> 16, var51 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
 									var50 += var29;
 									var51 += var28;
 									var48 += var32;
@@ -2339,7 +2339,7 @@ public class Pix3D extends Pix2D {
 									var55 += var47;
 								}
 							}
-							method2802(Pix2D.data, var19, 0, 0, var58, var50 >> 16, var49 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
+							drawTexturedScanline(Pix2D.data, var19, 0, 0, var58, var50 >> 16, var49 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
 							var50 += var29;
 							var49 += var27;
 							var48 += var32;
@@ -2360,7 +2360,7 @@ public class Pix3D extends Pix2D {
 									if (var59 < 0) {
 										return;
 									}
-									method2802(Pix2D.data, var19, 0, 0, var61, var51 >> 16, var50 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
+									drawTexturedScanline(Pix2D.data, var19, 0, 0, var61, var51 >> 16, var50 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
 									var50 += var29;
 									var51 += var28;
 									var48 += var32;
@@ -2370,7 +2370,7 @@ public class Pix3D extends Pix2D {
 									var55 += var47;
 								}
 							}
-							method2802(Pix2D.data, var19, 0, 0, var61, var49 >> 16, var50 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
+							drawTexturedScanline(Pix2D.data, var19, 0, 0, var61, var49 >> 16, var50 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
 							var50 += var29;
 							var49 += var27;
 							var48 += var32;
@@ -2410,7 +2410,7 @@ public class Pix3D extends Pix2D {
 									if (var72 < 0) {
 										return;
 									}
-									method2802(Pix2D.data, var19, 0, 0, var74, var62 >> 16, var64 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
+									drawTexturedScanline(Pix2D.data, var19, 0, 0, var74, var62 >> 16, var64 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
 									var64 += var28;
 									var62 += var27;
 									var48 += var32;
@@ -2420,7 +2420,7 @@ public class Pix3D extends Pix2D {
 									var68 += var47;
 								}
 							}
-							method2802(Pix2D.data, var19, 0, 0, var74, var62 >> 16, var63 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
+							drawTexturedScanline(Pix2D.data, var19, 0, 0, var74, var62 >> 16, var63 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
 							var63 += var29;
 							var62 += var27;
 							var48 += var32;
@@ -2441,7 +2441,7 @@ public class Pix3D extends Pix2D {
 									if (var69 < 0) {
 										return;
 									}
-									method2802(Pix2D.data, var19, 0, 0, var71, var64 >> 16, var62 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
+									drawTexturedScanline(Pix2D.data, var19, 0, 0, var71, var64 >> 16, var62 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
 									var64 += var28;
 									var62 += var27;
 									var48 += var32;
@@ -2451,7 +2451,7 @@ public class Pix3D extends Pix2D {
 									var68 += var47;
 								}
 							}
-							method2802(Pix2D.data, var19, 0, 0, var71, var63 >> 16, var62 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
+							drawTexturedScanline(Pix2D.data, var19, 0, 0, var71, var63 >> 16, var62 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
 							var63 += var29;
 							var62 += var27;
 							var48 += var32;
@@ -2502,7 +2502,7 @@ public class Pix3D extends Pix2D {
 									if (var83 < 0) {
 										return;
 									}
-									method2802(Pix2D.data, var19, 0, 0, var85, var77 >> 16, var78 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
+									drawTexturedScanline(Pix2D.data, var19, 0, 0, var85, var77 >> 16, var78 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
 									var77 += var27;
 									var78 += var29;
 									var75 += var32;
@@ -2512,7 +2512,7 @@ public class Pix3D extends Pix2D {
 									var82 += var47;
 								}
 							}
-							method2802(Pix2D.data, var19, 0, 0, var85, var77 >> 16, var76 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
+							drawTexturedScanline(Pix2D.data, var19, 0, 0, var85, var77 >> 16, var76 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
 							var77 += var27;
 							var76 += var28;
 							var75 += var32;
@@ -2533,7 +2533,7 @@ public class Pix3D extends Pix2D {
 									if (var86 < 0) {
 										return;
 									}
-									method2802(Pix2D.data, var19, 0, 0, var88, var78 >> 16, var77 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
+									drawTexturedScanline(Pix2D.data, var19, 0, 0, var88, var78 >> 16, var77 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
 									var77 += var27;
 									var78 += var29;
 									var75 += var32;
@@ -2543,7 +2543,7 @@ public class Pix3D extends Pix2D {
 									var82 += var47;
 								}
 							}
-							method2802(Pix2D.data, var19, 0, 0, var88, var76 >> 16, var77 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
+							drawTexturedScanline(Pix2D.data, var19, 0, 0, var88, var76 >> 16, var77 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
 							var77 += var27;
 							var76 += var28;
 							var75 += var32;
@@ -2583,7 +2583,7 @@ public class Pix3D extends Pix2D {
 									if (var96 < 0) {
 										return;
 									}
-									method2802(Pix2D.data, var19, 0, 0, var98, var91 >> 16, var89 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
+									drawTexturedScanline(Pix2D.data, var19, 0, 0, var98, var91 >> 16, var89 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
 									var91 += var29;
 									var89 += var28;
 									var75 += var32;
@@ -2593,7 +2593,7 @@ public class Pix3D extends Pix2D {
 									var95 += var47;
 								}
 							}
-							method2802(Pix2D.data, var19, 0, 0, var98, var90 >> 16, var89 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
+							drawTexturedScanline(Pix2D.data, var19, 0, 0, var98, var90 >> 16, var89 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
 							var90 += var27;
 							var89 += var28;
 							var75 += var32;
@@ -2614,7 +2614,7 @@ public class Pix3D extends Pix2D {
 									if (var99 < 0) {
 										return;
 									}
-									method2802(Pix2D.data, var19, 0, 0, var101, var89 >> 16, var91 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
+									drawTexturedScanline(Pix2D.data, var19, 0, 0, var101, var89 >> 16, var91 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
 									var91 += var29;
 									var89 += var28;
 									var75 += var32;
@@ -2624,7 +2624,7 @@ public class Pix3D extends Pix2D {
 									var95 += var47;
 								}
 							}
-							method2802(Pix2D.data, var19, 0, 0, var101, var89 >> 16, var90 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
+							drawTexturedScanline(Pix2D.data, var19, 0, 0, var101, var89 >> 16, var90 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
 							var90 += var27;
 							var89 += var28;
 							var75 += var32;
@@ -2674,7 +2674,7 @@ public class Pix3D extends Pix2D {
 								if (var110 < 0) {
 									return;
 								}
-								method2802(Pix2D.data, var19, 0, 0, var112, var104 >> 16, var105 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
+								drawTexturedScanline(Pix2D.data, var19, 0, 0, var112, var104 >> 16, var105 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
 								var104 += var28;
 								var105 += var27;
 								var102 += var32;
@@ -2684,7 +2684,7 @@ public class Pix3D extends Pix2D {
 								var109 += var47;
 							}
 						}
-						method2802(Pix2D.data, var19, 0, 0, var112, var104 >> 16, var103 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
+						drawTexturedScanline(Pix2D.data, var19, 0, 0, var112, var104 >> 16, var103 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
 						var104 += var28;
 						var103 += var29;
 						var102 += var32;
@@ -2705,7 +2705,7 @@ public class Pix3D extends Pix2D {
 								if (var113 < 0) {
 									return;
 								}
-								method2802(Pix2D.data, var19, 0, 0, var115, var105 >> 16, var104 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
+								drawTexturedScanline(Pix2D.data, var19, 0, 0, var115, var105 >> 16, var104 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
 								var104 += var28;
 								var105 += var27;
 								var102 += var32;
@@ -2715,7 +2715,7 @@ public class Pix3D extends Pix2D {
 								var109 += var47;
 							}
 						}
-						method2802(Pix2D.data, var19, 0, 0, var115, var103 >> 16, var104 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
+						drawTexturedScanline(Pix2D.data, var19, 0, 0, var115, var103 >> 16, var104 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
 						var104 += var28;
 						var103 += var29;
 						var102 += var32;
@@ -2755,7 +2755,7 @@ public class Pix3D extends Pix2D {
 								if (var123 < 0) {
 									return;
 								}
-								method2802(Pix2D.data, var19, 0, 0, var125, var118 >> 16, var116 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
+								drawTexturedScanline(Pix2D.data, var19, 0, 0, var125, var118 >> 16, var116 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
 								var118 += var27;
 								var116 += var29;
 								var102 += var32;
@@ -2765,7 +2765,7 @@ public class Pix3D extends Pix2D {
 								var122 += var47;
 							}
 						}
-						method2802(Pix2D.data, var19, 0, 0, var125, var117 >> 16, var116 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
+						drawTexturedScanline(Pix2D.data, var19, 0, 0, var125, var117 >> 16, var116 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
 						var117 += var28;
 						var116 += var29;
 						var102 += var32;
@@ -2786,7 +2786,7 @@ public class Pix3D extends Pix2D {
 								if (var126 < 0) {
 									return;
 								}
-								method2802(Pix2D.data, var19, 0, 0, var128, var116 >> 16, var118 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
+								drawTexturedScanline(Pix2D.data, var19, 0, 0, var128, var116 >> 16, var118 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
 								var118 += var27;
 								var116 += var29;
 								var102 += var32;
@@ -2796,7 +2796,7 @@ public class Pix3D extends Pix2D {
 								var122 += var47;
 							}
 						}
-						method2802(Pix2D.data, var19, 0, 0, var128, var116 >> 16, var117 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
+						drawTexturedScanline(Pix2D.data, var19, 0, 0, var128, var116 >> 16, var117 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
 						var117 += var28;
 						var116 += var29;
 						var102 += var32;
@@ -2811,8 +2811,8 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.ch([I[IIIIIIIIIIIIII)V")
-	public static final void method2802(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
-		if (field2524) {
+	public static final void drawTexturedScanline(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
+		if (clipX) {
 			if (arg6 > boundX) {
 				arg6 = boundX;
 			}

@@ -119,7 +119,7 @@ public class IdkType extends DoublyLinkable {
 		}
 		boolean var1 = true;
 		for (int var2 = 0; var2 < this.models.length; var2++) {
-			if (!field2397.requestDownload(this.models[var2], 0)) {
+			if (!field2397.download(this.models[var2], 0)) {
 				var1 = false;
 			}
 		}
@@ -158,7 +158,7 @@ public class IdkType extends DoublyLinkable {
 	public boolean method2463() {
 		boolean var1 = true;
 		for (int var2 = 0; var2 < 5; var2++) {
-			if (this.heads[var2] != -1 && !field2397.requestDownload(this.heads[var2], 0)) {
+			if (this.heads[var2] != -1 && !field2397.download(this.heads[var2], 0)) {
 				var1 = false;
 			}
 		}
