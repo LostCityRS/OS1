@@ -15,7 +15,7 @@ public class ChatFilterPrivacy {
 	public static final ChatFilterPrivacy field1105 = new ChatFilterPrivacy(2);
 
 	@ObfuscatedName("bb.m")
-	public final int field1107;
+	public final int index;
 
 	@ObfuscatedName("be.r(I)[Lbb;")
 	public static ChatFilterPrivacy[] values() {
@@ -23,6 +23,17 @@ public class ChatFilterPrivacy {
 	}
 
 	public ChatFilterPrivacy(int arg0) {
-		this.field1107 = arg0;
+		this.index = arg0;
+	}
+
+	public static ChatFilterPrivacy get(int id) {
+		ChatFilterPrivacy[] all = ChatFilterPrivacy.values();
+		for (int i = 0; i < all.length; i++) {
+			ChatFilterPrivacy privacy = all[i];
+			if (privacy.index == id) {
+				return privacy;
+			}
+		}
+		return null;
 	}
 }

@@ -112,10 +112,10 @@ public class IfType extends Linkable {
 	public boolean fill = false;
 
 	@ObfuscatedName("eg.ah")
-	public int alpha = 0;
+	public int trans = 0;
 
 	@ObfuscatedName("eg.ay")
-	public int field1804 = 1;
+	public int lineWidth = 1;
 
 	@ObfuscatedName("eg.al")
 	public int graphic = -1;
@@ -124,22 +124,22 @@ public class IfType extends Linkable {
 	public int activeGraphic = -1;
 
 	@ObfuscatedName("eg.ao")
-	public int field1784 = 0;
+	public int angle2d = 0;
 
 	@ObfuscatedName("eg.ag")
-	public boolean field1794 = false;
+	public boolean tiling = false;
 
 	@ObfuscatedName("eg.ar")
-	public int field1811 = 0;
+	public int outline = 0;
 
 	@ObfuscatedName("eg.aq")
-	public int field1812 = 0;
+	public int graphicShadow = 0;
 
 	@ObfuscatedName("eg.at")
-	public boolean field1849;
+	public boolean vflip;
 
 	@ObfuscatedName("eg.ae")
-	public boolean field1814;
+	public boolean hflip;
 
 	@ObfuscatedName("eg.au")
 	public int modelType = 1;
@@ -181,7 +181,7 @@ public class IfType extends Linkable {
 	public int field1827 = 0;
 
 	@ObfuscatedName("eg.bt")
-	public boolean field1828 = false;
+	public boolean modelOrthographic = false;
 
 	@ObfuscatedName("eg.bw")
 	public int font = -1;
@@ -476,7 +476,7 @@ public class IfType extends Linkable {
 		this.field1780 = this.y = buf.g2b();
 		this.width = buf.g2();
 		this.height = buf.g2();
-		this.alpha = buf.g1();
+		this.trans = buf.g1();
 
 		this.layerid = buf.g2();
 		if (this.layerid == 65535) {
@@ -740,13 +740,13 @@ public class IfType extends Linkable {
 
 		if (this.type == 5) {
 			this.graphic = buf.g4();
-			this.field1784 = buf.g2();
-			this.field1794 = buf.g1() == 1;
-			this.alpha = buf.g1();
-			this.field1811 = buf.g1();
-			this.field1812 = buf.g4();
-			this.field1849 = buf.g1() == 1;
-			this.field1814 = buf.g1() == 1;
+			this.angle2d = buf.g2();
+			this.tiling = buf.g1() == 1;
+			this.trans = buf.g1();
+			this.outline = buf.g1();
+			this.graphicShadow = buf.g4();
+			this.vflip = buf.g1() == 1;
+			this.hflip = buf.g1() == 1;
 		}
 
 		if (this.type == 6) {
@@ -765,7 +765,7 @@ public class IfType extends Linkable {
 			if (this.anim == 65535) {
 				this.anim = -1;
 			}
-			this.field1828 = buf.g1() == 1;
+			this.modelOrthographic = buf.g1() == 1;
 		}
 
 		if (this.type == 4) {
@@ -784,11 +784,11 @@ public class IfType extends Linkable {
 		if (this.type == 3) {
 			this.colour = buf.g4();
 			this.fill = buf.g1() == 1;
-			this.alpha = buf.g1();
+			this.trans = buf.g1();
 		}
 
 		if (this.type == 9) {
-			this.field1804 = buf.g1();
+			this.lineWidth = buf.g1();
 			this.colour = buf.g4();
 		}
 
@@ -883,7 +883,7 @@ public class IfType extends Linkable {
 		if (var2 == -1) {
 			return null;
 		}
-		long var3 = ((long) this.field1812 << 40) + ((this.field1814 ? 1L : 0L) << 39) + ((this.field1849 ? 1L : 0L) << 38) + ((long) this.field1811 << 36) + (long) var2;
+		long var3 = ((long) this.graphicShadow << 40) + ((this.hflip ? 1L : 0L) << 39) + ((this.vflip ? 1L : 0L) << 38) + ((long) this.outline << 36) + (long) var2;
 		Pix32 var5 = (Pix32) field1778.get(var3);
 		if (var5 != null) {
 			return var5;
@@ -899,23 +899,23 @@ public class IfType extends Linkable {
 			field1870 = true;
 			return null;
 		}
-		if (this.field1849) {
+		if (this.vflip) {
 			var7.method2711();
 		}
-		if (this.field1814) {
+		if (this.hflip) {
 			var7.method2666();
 		}
-		if (this.field1811 > 0) {
-			var7.method2725(this.field1811);
+		if (this.outline > 0) {
+			var7.method2725(this.outline);
 		}
-		if (this.field1811 >= 1) {
+		if (this.outline >= 1) {
 			var7.method2714(1);
 		}
-		if (this.field1811 >= 2) {
+		if (this.outline >= 2) {
 			var7.method2714(16777215);
 		}
-		if (this.field1812 != 0) {
-			var7.method2669(this.field1812);
+		if (this.graphicShadow != 0) {
+			var7.method2669(this.graphicShadow);
 		}
 		field1778.put(var7, var3);
 		return var7;

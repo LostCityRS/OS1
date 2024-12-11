@@ -894,10 +894,10 @@ public class Client extends GameShell {
 	public static int[] field2144 = new int[] { 16776960, 16711680, 65280, 65535, 16711935, 16777215 };
 
 	@ObfuscatedName("client.mf")
-	public static int field2145 = 0;
+	public static int publicChatFilter = 0;
 
 	@ObfuscatedName("client.mz")
-	public static int field2146 = 0;
+	public static int tradeChatFilter = 0;
 
 	@ObfuscatedName("client.mj")
 	public static long[] field2148 = new long[100];
@@ -1161,7 +1161,7 @@ public class Client extends GameShell {
 	public static FileStream masterIndex;
 
 	@ObfuscatedName("au.mg")
-	public static ChatFilterPrivacy field680;
+	public static ChatFilterPrivacy privateChatFilter;
 
 	@ObfuscatedName("eh.nd")
 	public static ClanMember[] field1774;
@@ -4974,7 +4974,7 @@ public class Client extends GameShell {
 				}
 			}
 			if (field2087 != null) {
-				method1238(field2087);
+				requestRedrawComponent(field2087);
 				field2087 = null;
 			}
 		}
@@ -5067,7 +5067,7 @@ public class Client extends GameShell {
 				field43 = var2;
 				field2107 = var1;
 				field386 = var34;
-				method1238(var35);
+				requestRedrawComponent(var35);
 				field2077 = 0;
 				String var37;
 				if (ServerKeyEvents.method1350(method1512(var33)) == 0) {
@@ -5199,7 +5199,7 @@ public class Client extends GameShell {
 			field557 = var1;
 			field502 = var2;
 			field555 = var4;
-			method1238(var45);
+			requestRedrawComponent(var45);
 			field2078 = TextUtil.colTag(16748608) + ObjType.get(var4).name + TextUtil.colTag(16777215);
 			if (field2078 == null) {
 				field2078 = "null";
@@ -5218,7 +5218,7 @@ public class Client extends GameShell {
 			out.p2_alt2(var1);
 			out.p4(var2);
 			field2087 = IfType.method947(var2, var1);
-			method1238(field2087);
+			requestRedrawComponent(field2087);
 		}
 		if (var3 == 23) {
 			scene.click(currentLevel, var1, var2);
@@ -5314,20 +5314,20 @@ public class Client extends GameShell {
 		}
 		if (field2077 != 0) {
 			field2077 = 0;
-			method1238(IfType.get(field502));
+			requestRedrawComponent(IfType.get(field502));
 		}
 		if (field2079) {
 			method913();
 		}
 		if (selectedArea != null && selectedCycle == 0) {
-			method1238(selectedArea);
+			requestRedrawComponent(selectedArea);
 		}
 	}
 
 	@ObfuscatedName("ao.ec(ILjava/lang/String;I)V")
 	public static void method558(int arg0, String arg1) {
-		String var2 = JString.method762(arg1);
-		String var3 = JString.method782(JString.method1001(var2));
+		String var2 = JString.toDisplayName(arg1);
+		String var3 = JString.method782(JString.toBase37(var2));
 		if (var3 == null) {
 			var3 = "";
 		}
@@ -5373,7 +5373,7 @@ public class Client extends GameShell {
 			ScriptRunner.runHook(var1);
 		}
 		field2079 = false;
-		method1238(var0);
+		requestRedrawComponent(var0);
 	}
 
 	@ObfuscatedName("bd.eu(IIILjava/lang/String;I)V")
@@ -5693,7 +5693,7 @@ public class Client extends GameShell {
             }
             int var12 = var10.x + arg6;
             int var13 = var10.y + arg7;
-            int var14 = var10.alpha;
+            int var14 = var10.trans;
             if (field2094 == var10) {
                 if (arg1 != 0xabcdabcd && !var10.field1858) {
                     field1516 = arg0;
@@ -5839,7 +5839,7 @@ public class Client extends GameShell {
                                     var179 = ObjType.getIcon(var178, var10.invSlotObjCount[var171], 1, 3153952, false);
                                 }
                                 if (var179 == null) {
-                                    method1238(var10);
+                                    requestRedrawComponent(var10);
                                 } else if (objDragInterface == var10 && hoveredSlot == var171) {
                                     int var180 = JavaMouseProvider.mouseX - objGrabX;
                                     int var181 = JavaMouseProvider.mouseY - objGrabY;
@@ -5866,7 +5866,7 @@ public class Client extends GameShell {
                                             }
                                             var182.scrollY -= var183;
                                             objGrabY += var183;
-                                            method1238(var182);
+                                            requestRedrawComponent(var182);
                                         }
                                         if (var175 + var181 + 32 > Pix2D.bottom && var182.scrollY < var182.scrollHeight - var182.height) {
                                             int var184 = sceneDelta * (var175 + var181 + 32 - Pix2D.bottom) / 3;
@@ -5878,7 +5878,7 @@ public class Client extends GameShell {
                                             }
                                             var182.scrollY += var184;
                                             objGrabY -= var184;
-                                            method1238(var182);
+                                            requestRedrawComponent(var182);
                                         }
                                     }
                                 } else if (selectedArea == var10 && field2031 == var171) {
@@ -5892,7 +5892,7 @@ public class Client extends GameShell {
                             if (var185 != null) {
                                 var185.draw(var174, var175);
                             } else if (IfType.field1870) {
-                                method1238(var10);
+                                requestRedrawComponent(var10);
                             }
                         }
                         var171++;
@@ -5961,7 +5961,7 @@ public class Client extends GameShell {
                     }
                     var187.method2824(var188, var12, var13, var10.width, var10.height, var189, var10.shadowed ? 0 : -1, var10.center, var10.field1834, var10.field1832);
                 } else if (IfType.field1870) {
-                    method1238(var10);
+                    requestRedrawComponent(var10);
                 }
             } else if (var10.type == 5) {
                 if (var10.if3) {
@@ -5969,19 +5969,19 @@ public class Client extends GameShell {
                     if (var10.field1791 == -1) {
                         var192 = var10.method1827(false);
                     } else {
-                        var192 = ObjType.getIcon(var10.field1791, var10.field1888, var10.field1811, var10.field1812, false);
+                        var192 = ObjType.getIcon(var10.field1791, var10.field1888, var10.outline, var10.graphicShadow, false);
                     }
                     if (var192 != null) {
                         int var193 = var192.field2504;
                         int var194 = var192.field2505;
-                        if (var10.field1794) {
+                        if (var10.tiling) {
                             Pix2D.method2586(var12, var13, var10.width + var12, var10.height + var13);
                             int var195 = (var10.width + (var193 - 1)) / var193;
                             int var196 = (var10.height + (var194 - 1)) / var194;
                             for (int var197 = 0; var197 < var195; var197++) {
                                 for (int var198 = 0; var198 < var196; var198++) {
-                                    if (var10.field1784 != 0) {
-                                        var192.method2685(var193 / 2 + var193 * var197 + var12, var194 / 2 + var194 * var198 + var13, var10.field1784, 4096);
+                                    if (var10.angle2d != 0) {
+                                        var192.method2685(var193 / 2 + var193 * var197 + var12, var194 / 2 + var194 * var198 + var13, var10.angle2d, 4096);
                                     } else if (var14 == 0) {
                                         var192.draw(var193 * var197 + var12, var194 * var198 + var13);
                                     } else {
@@ -5992,8 +5992,8 @@ public class Client extends GameShell {
                             Pix2D.setBounds(arg2, arg3, arg4, arg5);
                         } else {
                             int var199 = var10.width * 4096 / var193;
-                            if (var10.field1784 != 0) {
-                                var192.method2685(var10.width / 2 + var12, var10.height / 2 + var13, var10.field1784, var199);
+                            if (var10.angle2d != 0) {
+                                var192.method2685(var10.width / 2 + var12, var10.height / 2 + var13, var10.angle2d, var199);
                             } else if (var14 != 0) {
                                 var192.method2678(var12, var13, var10.width, var10.height, 256 - (var14 & 0xFF));
                             } else if (var10.width == var193 && var10.height == var194) {
@@ -6003,14 +6003,14 @@ public class Client extends GameShell {
                             }
                         }
                     } else if (IfType.field1870) {
-                        method1238(var10);
+                        requestRedrawComponent(var10);
                     }
                 } else {
                     Pix32 var191 = var10.method1827(method56(var10));
                     if (var191 != null) {
                         var191.draw(var12, var13);
                     } else if (IfType.field1870) {
-                        method1238(var10);
+                        requestRedrawComponent(var10);
                     }
                 }
             } else if (var10.type == 6) {
@@ -6029,7 +6029,7 @@ public class Client extends GameShell {
                         ObjType var205 = var204.getObj(var10.field1888);
                         var202 = var205.getModel(1);
                         if (var202 == null) {
-                            method1238(var10);
+                            requestRedrawComponent(var10);
                         } else {
                             var202.method3002();
                             var203 = var202.minY / 2;
@@ -6044,13 +6044,13 @@ public class Client extends GameShell {
                 } else if (var201 == -1) {
                     var202 = var10.method1802(null, -1, var200, localPlayer.field2786);
                     if (var202 == null && IfType.field1870) {
-                        method1238(var10);
+                        requestRedrawComponent(var10);
                     }
                 } else {
                     SeqType var206 = SeqType.get(var201);
                     var202 = var10.method1802(var206, var10.field1779, var200, localPlayer.field2786);
                     if (var202 == null && IfType.field1870) {
-                        method1238(var10);
+                        requestRedrawComponent(var10);
                     }
                 }
                 Pix3D.method2784(var10.width / 2 + var12, var10.height / 2 + var13);
@@ -6059,7 +6059,7 @@ public class Client extends GameShell {
                 if (var202 != null) {
                     if (var10.if3) {
                         var202.method3002();
-                        if (var10.field1828) {
+                        if (var10.modelOrthographic) {
                             var202.method3020(0, var10.yan, var10.zan, var10.xan, var10.xof, var10.yof + var203 + var207, var10.yof + var208, var10.zoom);
                         } else {
                             var202.method3014(0, var10.yan, var10.zan, var10.xan, var10.xof, var10.yof + var203 + var207, var10.yof + var208);
@@ -6073,7 +6073,7 @@ public class Client extends GameShell {
                 SoftwareFont var209 = var10.method1800();
                 if (var209 == null) {
                     if (IfType.field1870) {
-                        method1238(var10);
+                        requestRedrawComponent(var10);
                     }
                     continue;
                 }
@@ -6155,7 +6155,7 @@ public class Client extends GameShell {
                     var228 += var219.field2550 + 1;
                 }
             } else if (var10.type == 9) {
-                if (var10.field1804 == 1) {
+                if (var10.lineWidth == 1) {
                     Pix2D.method2618(var12, var13, var10.width + var12, var10.height + var13, var10.colour);
                 } else {
                     int var232 = var10.width >= 0 ? var10.width : -var10.width;
@@ -6172,10 +6172,10 @@ public class Client extends GameShell {
                         } else {
                             var236 = -var236;
                         }
-                        int var237 = var10.field1804 * var236 >> 17;
-                        int var238 = var10.field1804 * var236 + 1 >> 17;
-                        int var239 = var10.field1804 * var235 >> 17;
-                        int var240 = var10.field1804 * var235 + 1 >> 17;
+                        int var237 = var10.lineWidth * var236 >> 17;
+                        int var238 = var10.lineWidth * var236 + 1 >> 17;
+                        int var239 = var10.lineWidth * var235 >> 17;
+                        int var240 = var10.lineWidth * var235 + 1 >> 17;
                         int var241 = var12 + var237;
                         int var242 = var12 - var238;
                         int var243 = var10.width + var12 - var238;
@@ -6250,10 +6250,10 @@ public class Client extends GameShell {
 		if (JavaMouseProvider.mouseButton != 0) {
 			if (arg5 >= arg1 && arg5 < arg1 + 16 && arg6 >= arg2 && arg6 < arg2 + 16) {
 				arg0.scrollY -= 4;
-				method1238(arg0);
+				requestRedrawComponent(arg0);
 			} else if (arg5 >= arg1 && arg5 < arg1 + 16 && arg6 >= arg2 + arg3 - 16 && arg6 < arg2 + arg3) {
 				arg0.scrollY += 4;
-				method1238(arg0);
+				requestRedrawComponent(arg0);
 			} else if (arg5 >= arg1 - field2004 && arg5 < field2004 + arg1 + 16 && arg6 >= arg2 + 16 && arg6 < arg2 + arg3 - 16) {
 				int var7 = (arg3 - 32) * arg3 / arg4;
 				if (var7 < 8) {
@@ -6262,7 +6262,7 @@ public class Client extends GameShell {
 				int var8 = arg6 - arg2 - 16 - var7 / 2;
 				int var9 = arg3 - 32 - var7;
 				arg0.scrollY = (arg4 - arg3) * var8 / var9;
-				method1238(arg0);
+				requestRedrawComponent(arg0);
 				field2003 = true;
 			}
 		}
@@ -6272,7 +6272,7 @@ public class Client extends GameShell {
 		int var10 = arg0.width;
 		if (arg5 >= arg1 - var10 && arg6 >= arg2 && arg5 < arg1 + 16 && arg6 <= arg2 + arg3) {
 			arg0.scrollY += field2122 * 45;
-			method1238(arg0);
+			requestRedrawComponent(arg0);
 		}
 	}
 
@@ -6493,7 +6493,7 @@ public class Client extends GameShell {
 				}
 				if (!var9.if3 || var12 < var14 && var13 < var15) {
 					if (var9.clientCode == 1337) {
-						method1238(var9);
+						requestRedrawComponent(var9);
 					} else if (var9.clientCode == 1338) {
 						method344(var10, var11);
 					} else {
@@ -6811,7 +6811,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cq.fy(Leg;I)V")
-	public static void method1238(IfType arg0) {
+	public static void requestRedrawComponent(IfType arg0) {
 		if (field2063 == arg0.field1899) {
 			field2175[arg0.field1898] = true;
 		}
@@ -6834,7 +6834,7 @@ public class Client extends GameShell {
 					int var5 = (int) var0.nodeId;
 					IfType var6 = IfType.get(var5);
 					if (var6 != null) {
-						method1238(var6);
+						requestRedrawComponent(var6);
 					}
 				}
 			}
@@ -6936,7 +6936,7 @@ public class Client extends GameShell {
 										var3.field1779 = 0;
 									}
 								}
-								method1238(var3);
+								requestRedrawComponent(var3);
 							}
 						}
 					}
@@ -6947,7 +6947,7 @@ public class Client extends GameShell {
 						int var12 = sceneDelta * var10;
 						var3.xan = var3.xan + var11 & 0x7FF;
 						var3.yan = var3.yan + var12 & 0x7FF;
-						method1238(var3);
+						requestRedrawComponent(var3);
 					}
 				}
 			}
@@ -7104,10 +7104,10 @@ public class Client extends GameShell {
 		ScriptRunner.executeOnLoad(arg1);
 		IfType var4 = IfType.get(arg0);
 		if (var4 != null) {
-			method1238(var4);
+			requestRedrawComponent(var4);
 		}
 		if (field2087 != null) {
-			method1238(field2087);
+			requestRedrawComponent(field2087);
 			field2087 = null;
 		}
 		field2066 = false;
@@ -7146,7 +7146,7 @@ public class Client extends GameShell {
 		method109(var2);
 		IfType var6 = IfType.get(var3);
 		if (var6 != null) {
-			method1238(var6);
+			requestRedrawComponent(var6);
 		}
 		field2066 = false;
 		menuSize = 0;
@@ -8112,12 +8112,12 @@ public class Client extends GameShell {
         if (selectedArea != null) {
             selectedCycle++;
             if (selectedCycle >= 15) {
-                method1238(selectedArea);
+                requestRedrawComponent(selectedArea);
                 selectedArea = null;
             }
         }
         if (objDragInterface != null) {
-            method1238(objDragInterface);
+            requestRedrawComponent(objDragInterface);
             objDragCycles++;
             if (JavaMouseProvider.mouseX > objGrabX + 5 || JavaMouseProvider.mouseX < objGrabX - 5 || JavaMouseProvider.mouseY > objGrabY + 5 || JavaMouseProvider.mouseY < objGrabY - 5) {
                 objGrabThreshold = true;
@@ -8266,18 +8266,18 @@ public class Client extends GameShell {
 		imethod32();
 		if (field37 != var444) {
 			if (var444 != null) {
-				method1238(var444);
+				requestRedrawComponent(var444);
 			}
 			if (field37 != null) {
-				method1238(field37);
+				requestRedrawComponent(field37);
 			}
 		}
 		if (field654 != var445 && field2076 == field1995) {
 			if (var445 != null) {
-				method1238(var445);
+				requestRedrawComponent(var445);
 			}
 			if (field654 != null) {
-				method1238(field654);
+				requestRedrawComponent(field654);
 			}
 		}
 		if (field654 == null) {
@@ -8287,7 +8287,7 @@ public class Client extends GameShell {
 		} else if (field1995 < field2076) {
 			field1995++;
 			if (field2076 == field1995) {
-				method1238(field654);
+				requestRedrawComponent(field654);
 			}
 		}
 		imethod33();
@@ -8458,7 +8458,7 @@ public class Client extends GameShell {
 					method408(var93, true);
 				}
 				if (field2087 != null) {
-					method1238(field2087);
+					requestRedrawComponent(field2087);
 					field2087 = null;
 				}
 				packetType = -1;
@@ -8472,7 +8472,7 @@ public class Client extends GameShell {
 					var96.anim = var94;
 					var96.field1779 = 0;
 					var96.field1890 = 0;
-					method1238(var96);
+					requestRedrawComponent(var96);
 				}
 				packetType = -1;
 				return true;
@@ -8638,8 +8638,8 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (packetType == 137) {
-				field2145 = in.g1();
-				field2146 = in.g1();
+				publicChatFilter = in.g1();
+				tradeChatFilter = in.g1();
 				packetType = -1;
 				return true;
 			}
@@ -8704,7 +8704,7 @@ public class Client extends GameShell {
 				IfType var153 = IfType.get(var147);
 				if (var153.colour != var152) {
 					var153.colour = var152;
-					method1238(var153);
+					requestRedrawComponent(var153);
 				}
 				packetType = -1;
 				return true;
@@ -8719,7 +8719,7 @@ public class Client extends GameShell {
 				if (var157.x != var158 || var157.y != var159) {
 					var157.x = var158;
 					var157.y = var159;
-					method1238(var157);
+					requestRedrawComponent(var157);
 				}
 				packetType = -1;
 				return true;
@@ -8817,7 +8817,7 @@ public class Client extends GameShell {
 				}
 
 				if (com != null) {
-					method1238(com);
+					requestRedrawComponent(com);
 				}
 
 				method93();
@@ -8888,7 +8888,7 @@ public class Client extends GameShell {
 				IfType var196 = IfType.get(var194);
 				if (var196.hide != var195) {
 					var196.hide = var195;
-					method1238(var196);
+					requestRedrawComponent(var196);
 				}
 				packetType = -1;
 				return true;
@@ -8955,7 +8955,7 @@ public class Client extends GameShell {
 				if (var208.modelType != 2 || var208.model != var207) {
 					var208.modelType = 2;
 					var208.model = var207;
-					method1238(var208);
+					requestRedrawComponent(var208);
 				}
 				packetType = -1;
 				return true;
@@ -9007,7 +9007,7 @@ public class Client extends GameShell {
 					com.invSlotObjId[i] = 0;
 				}
 
-				method1238(com);
+				requestRedrawComponent(com);
 
 				packetType = -1;
 				return true;
@@ -9020,23 +9020,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (packetType == 70) {
-				int var220 = in.g1();
-				ChatFilterPrivacy[] var221 = ChatFilterPrivacy.values();
-				int var222 = 0;
-				ChatFilterPrivacy var224;
-				while (true) {
-					if (var222 >= var221.length) {
-						var224 = null;
-						break;
-					}
-					ChatFilterPrivacy var223 = var221[var222];
-					if (var223.field1107 == var220) {
-						var224 = var223;
-						break;
-					}
-					var222++;
-				}
-				field680 = var224;
+				privateChatFilter = ChatFilterPrivacy.get(in.g1());
 				packetType = -1;
 				return true;
 			}
@@ -9185,7 +9169,7 @@ public class Client extends GameShell {
 					if (var265.width > 0) {
 						var265.zoom = var265.zoom * 32 / var265.width;
 					}
-					method1238(var265);
+					requestRedrawComponent(var265);
 				} else {
 					if (var263 == -1) {
 						var265.modelType = 0;
@@ -9198,7 +9182,7 @@ public class Client extends GameShell {
 					var265.xan = var266.xan2d;
 					var265.yan = var266.yan2d;
 					var265.zoom = var266.zoom2d * 100 / var264;
-					method1238(var265);
+					requestRedrawComponent(var265);
 				}
 				packetType = -1;
 				return true;
@@ -9348,7 +9332,7 @@ public class Client extends GameShell {
 				}
 				field2155 = in.gjstr();
 				long var309 = in.g8();
-				field1955 = JString.method768(var309);
+				field1955 = JString.fromBase37(var309);
 				field1511 = in.g1b();
 				int var311 = in.g1();
 				if (var311 == 255) {
@@ -9437,7 +9421,7 @@ public class Client extends GameShell {
 				}
 
 				if (com != null) {
-					method1238(com);
+					requestRedrawComponent(com);
 				}
 
 				method93();
@@ -9504,7 +9488,7 @@ public class Client extends GameShell {
 					}
 					if (var333.scrollY != var332) {
 						var333.scrollY = var332;
-						method1238(var333);
+						requestRedrawComponent(var333);
 					}
 				}
 				packetType = -1;
@@ -9520,7 +9504,7 @@ public class Client extends GameShell {
 					var338.xan = var334;
 					var338.yan = var337;
 					var338.zoom = var335;
-					method1238(var338);
+					requestRedrawComponent(var338);
 				}
 				packetType = -1;
 				return true;
@@ -9539,7 +9523,7 @@ public class Client extends GameShell {
 				if (var341.modelType != 1 || var341.model != var339) {
 					var341.modelType = 1;
 					var341.model = var339;
-					method1238(var341);
+					requestRedrawComponent(var341);
 				}
 				packetType = -1;
 				return true;
@@ -9599,7 +9583,7 @@ public class Client extends GameShell {
 				IfType var356 = IfType.get(var355);
 				var356.modelType = 3;
 				var356.model = localPlayer.field2786.method1176();
-				method1238(var356);
+				requestRedrawComponent(var356);
 				packetType = -1;
 				return true;
 			}
@@ -9659,7 +9643,7 @@ public class Client extends GameShell {
 				IfType var379 = IfType.get(var378);
 				if (!var377.equals(var379.text)) {
 					var379.text = var377;
-					method1238(var379);
+					requestRedrawComponent(var379);
 				}
 				packetType = -1;
 				return true;
@@ -10388,7 +10372,7 @@ public class Client extends GameShell {
 	}
 
 	public static void imethod31() {
-		method1238(field2094);
+		requestRedrawComponent(field2094);
 		field1219++;
 		if (field2102 && field2126) {
 			int var458 = JavaMouseProvider.mouseX;
@@ -10519,13 +10503,13 @@ public class Client extends GameShell {
 						objGrabThreshold = false;
 						objDragCycles = 0;
 						if (objDragInterface != null) {
-							method1238(objDragInterface);
+							requestRedrawComponent(objDragInterface);
 						}
 						objDragInterface = IfType.get(var489);
 						hoveredSlot = var488;
 						objGrabX = JavaMouseProvider.mouseClickX;
 						objGrabY = JavaMouseProvider.mouseClickY;
-						method1238(objDragInterface);
+						requestRedrawComponent(objDragInterface);
 						return;
 					}
 				}
@@ -10961,7 +10945,7 @@ public class Client extends GameShell {
 						}
 					}
 				}
-				if (var75.field2644 != null && (var74 >= playerCount || field2145 == 0 || field2145 == 3 || field2145 == 1 && method785(((PlayerEntity) var75).name))) {
+				if (var75.field2644 != null && (var74 >= playerCount || publicChatFilter == 0 || publicChatFilter == 3 || publicChatFilter == 1 && method785(((PlayerEntity) var75).name))) {
 					method948(var75, var75.field2626);
 					if (field2140 > -1 && field2012 < field2013) {
 						field2017[field2012] = field704.method2882(var75.field2644) / 2;
@@ -11360,5 +11344,91 @@ public class Client extends GameShell {
                 }
             }
         }
+	}
+
+	public static void imethod42(String var186) {
+		if (field1774 != null) {
+			out.pisaac1(245);
+			out.p1(Packet.pjstrlen(var186));
+			out.pjstr(var186);
+		}
+	}
+
+	public static void imethod43(String var169) {
+		if (var169 == null) {
+			return;
+		}
+
+		String var170 = NamespaceUtil.method743(var169, namespace);
+		if (var170 == null) {
+			return;
+		}
+
+		for (int var171 = 0; var171 < ignoreCount; var171++) {
+			IgnoreListEntry var172 = ignoreList[var171];
+			String var173 = var172.field40;
+			String var174 = NamespaceUtil.method743(var173, namespace);
+
+			boolean var175;
+			if (var169 == null || var173 == null) {
+				var175 = false;
+			} else if (var169.startsWith("#") || var173.startsWith("#")) {
+				var175 = var169.equals(var173);
+			} else {
+				var175 = var170.equals(var174);
+			}
+
+			if (var175) {
+				ignoreCount--;
+
+				for (int var176 = var171; var176 < ignoreCount; var176++) {
+					ignoreList[var176] = ignoreList[var176 + 1];
+				}
+
+				field1977 = field2117;
+				out.pisaac1(248);
+				out.p1(Packet.pjstrlen(var169));
+				out.pjstr(var169);
+				break;
+			}
+		}
+	}
+
+	public static void imethod44(String var164, int var165) {
+		out.pisaac1(252);
+		out.p1(Packet.pjstrlen(var164) + 1);
+		out.pjstr(var164);
+		out.p1_alt1(var165);
+	}
+
+	public static void imethod45(int var113, int var114) {
+		if (field2169 != 0 && var113 != -1) {
+			MidiPlayer.method1125(midiJingleJs5, var113, 0, field2169, false);
+			field2189 = true;
+		}
+	}
+
+	public static void imethod46(int var110, int var111, int var112) {
+		if (field1952 != 0 && var111 != 0 && field2176 < 50) {
+			field2177[field2176] = var110;
+			field2006[field2176] = var111;
+			field2179[field2176] = var112;
+			field2181[field2176] = null;
+			field2180[field2176] = 0;
+			field2176++;
+		}
+	}
+
+	public static void imethod47() {
+		out.pisaac1(129);
+		for (SubInterface var95 = (SubInterface) field1918.method1284(); var95 != null; var95 = (SubInterface) field1918.method1280()) {
+			if (var95.field1597 == 0 || var95.field1597 == 3) {
+				method408(var95, true);
+			}
+		}
+		if (field2087 != null) {
+			requestRedrawComponent(field2087);
+			field2087 = null;
+		}
 	}
 }

@@ -3,14 +3,11 @@ package jagex2.client.clientscript;
 import deob.ObfuscatedName;
 import jagex2.client.*;
 import jagex2.client.social.ChatFilterPrivacy;
-import jagex2.client.social.IgnoreListEntry;
-import jagex2.client.social.NamespaceUtil;
 import jagex2.config.*;
 import jagex2.graphics.PixFont;
 import jagex2.graphics.SoftwareFont;
 import jagex2.io.Packet;
 import jagex2.jstring.*;
-import jagex2.sound.midi.MidiPlayer;
 import jagex2.wordenc.WordPack;
 
 import java.util.Calendar;
@@ -210,14 +207,17 @@ public class ScriptRunner {
 					if (opcode == 25) {
 						// push_varbit
 						int var19 = intOperands[pc];
+
 						intStack[isp++] = VarProvider.getVarbit(var19);
 						continue;
 					}
 					if (opcode == 27) {
 						// pop_varbit
 						int var20 = intOperands[pc];
+
 						isp--;
 						int var21 = intStack[isp];
+
 						VarBitType var22 = VarBitType.get(var20);
 						int var23 = var22.basevar;
 						int var24 = var22.startbit;
@@ -226,6 +226,7 @@ public class ScriptRunner {
 						if (var21 < 0 || var21 > var26) {
 							var21 = 0;
 						}
+
 						int var27 = var26 << var24;
 						VarProvider.varps[var23] = VarProvider.varps[var23] & ~var27 | var21 << var24 & var27;
 						continue;
@@ -255,6 +256,7 @@ public class ScriptRunner {
 						// pop_int_local
 						int var10001 = intOperands[pc];
 						isp--;
+
 						intLocals[var10001] = intStack[isp];
 						continue;
 					}
@@ -267,6 +269,7 @@ public class ScriptRunner {
 						// pop_string_local
 						int var10001 = intOperands[pc];
 						ssp--;
+
 						stringLocals[var10001] = stringStack[ssp];
 						continue;
 					}
@@ -275,6 +278,7 @@ public class ScriptRunner {
 						int var28 = intOperands[pc];
 						ssp -= var28;
 						String var29 = StringUtil.method1785(stringStack, ssp, var28);
+
 						stringStack[ssp++] = var29;
 						continue;
 					}
@@ -338,23 +342,29 @@ public class ScriptRunner {
 						// define_array
 						int var37 = intOperands[pc] >> 16;
 						int var38 = intOperands[pc] & 0xFFFF;
+
 						isp--;
 						int var39 = intStack[isp];
+
 						if (var39 >= 0 && var39 <= 5000) {
 							field193[var37] = var39;
+
 							byte var40 = -1;
 							if (var38 == 105) {
 								var40 = 0;
 							}
+
 							int var41 = 0;
 							while (true) {
 								if (var41 >= var39) {
 									continue label2277;
 								}
+
 								field192[var37][var41] = var40;
 								var41++;
 							}
 						}
+
 						throw new RuntimeException();
 					}
 					if (opcode == 45) {
@@ -362,10 +372,12 @@ public class ScriptRunner {
 						int var42 = intOperands[pc];
 						isp--;
 						int var43 = intStack[isp];
+
 						if (var43 >= 0 && var43 < field193[var42]) {
 							intStack[isp++] = field192[var42][var43];
 							continue;
 						}
+
 						throw new RuntimeException();
 					}
 					if (opcode == 46) {
@@ -373,10 +385,12 @@ public class ScriptRunner {
 						int var44 = intOperands[pc];
 						isp -= 2;
 						int var45 = intStack[isp];
+
 						if (var45 >= 0 && var45 < field193[var44]) {
 							field192[var44][var45] = intStack[isp + 1];
 							continue;
 						}
+
 						throw new RuntimeException();
 					}
 					if (opcode == 47) {
@@ -385,6 +399,7 @@ public class ScriptRunner {
 						if (var46 == null) {
 							var46 = "null";
 						}
+
 						stringStack[ssp++] = var46;
 						continue;
 					}
@@ -392,6 +407,7 @@ public class ScriptRunner {
 						// pop_varc_str
 						int var10001 = intOperands[pc];
 						ssp--;
+
 						Client.field1996[var10001] = stringStack[ssp];
 						continue;
 					}
@@ -414,10 +430,12 @@ public class ScriptRunner {
 						if (var49 == 0) {
 							throw new RuntimeException();
 						}
+
 						IfType var51 = IfType.get(var48);
 						if (var51.subcomponents == null) {
 							var51.subcomponents = new IfType[var50 + 1];
 						}
+
 						if (var51.subcomponents.length <= var50) {
 							IfType[] var52 = new IfType[var50 + 1];
 							for (int var53 = 0; var53 < var51.subcomponents.length; var53++) {
@@ -425,9 +443,11 @@ public class ScriptRunner {
 							}
 							var51.subcomponents = var52;
 						}
+
 						if (var50 > 0 && var51.subcomponents[var50 - 1] == null) {
-							throw new RuntimeException("" + (var50 - 1));
+							throw new RuntimeException("Gap at:" + (var50 - 1));
 						}
+
 						IfType var54 = new IfType();
 						var54.type = var49;
 						var54.layerid = var54.parentlayer = var51.parentlayer;
@@ -439,23 +459,26 @@ public class ScriptRunner {
 						} else {
 							activeComponent = var54;
 						}
-						Client.method1238(var51);
+
+						Client.requestRedrawComponent(var51);
 						continue;
 					}
 					if (opcode == 101) {
 						// cc_delete
 						IfType var55 = secondary ? activeComponent2 : activeComponent;
 						IfType var56 = IfType.get(var55.parentlayer);
+
 						var56.subcomponents[var55.subid] = null;
-						Client.method1238(var56);
+						Client.requestRedrawComponent(var56);
 						continue;
 					}
 					if (opcode == 102) {
 						// cc_deleteall
 						isp--;
 						IfType var57 = IfType.get(intStack[isp]);
+
 						var57.subcomponents = null;
-						Client.method1238(var57);
+						Client.requestRedrawComponent(var57);
 						continue;
 					}
 					if (opcode == 200) {
@@ -463,16 +486,20 @@ public class ScriptRunner {
 						isp -= 2;
 						int var58 = intStack[isp];
 						int var59 = intStack[isp + 1];
+
 						IfType var60 = IfType.method947(var58, var59);
 						if (var60 != null && var59 != -1) {
 							intStack[isp++] = 1;
+
 							if (secondary) {
 								activeComponent2 = var60;
 							} else {
 								activeComponent = var60;
 							}
+
 							continue;
 						}
+
 						intStack[isp++] = 0;
 						continue;
 					}
@@ -485,12 +512,14 @@ public class ScriptRunner {
 					} else {
 						var61 = secondary ? activeComponent2 : activeComponent;
 					}
+
 					if (opcode == 1000) {
 						// if/cc_setposition
 						isp -= 2;
 						var61.x = intStack[isp];
 						var61.y = intStack[isp + 1];
-						Client.method1238(var61);
+
+						Client.requestRedrawComponent(var61);
 						continue;
 					}
 					if (opcode == 1001) {
@@ -498,16 +527,19 @@ public class ScriptRunner {
 						isp -= 2;
 						var61.width = intStack[isp];
 						var61.height = intStack[isp + 1];
-						Client.method1238(var61);
+
+						Client.requestRedrawComponent(var61);
 						continue;
 					}
 					if (opcode == 1003) {
 						// if/cc_sethide
 						isp--;
 						boolean var62 = intStack[isp] == 1;
+
 						if (var61.hide != var62) {
 							var61.hide = var62;
-							Client.method1238(var61);
+
+							Client.requestRedrawComponent(var61);
 						}
 						continue;
 					}
@@ -520,9 +552,11 @@ public class ScriptRunner {
 					} else {
 						var63 = secondary ? activeComponent2 : activeComponent;
 					}
+
 					if (opcode == 1100) {
 						// if/cc_setscrollpos
 						isp -= 2;
+
 						var63.scrollX = intStack[isp];
 						if (var63.scrollX > var63.scrollWidth - var63.width) {
 							var63.scrollX = var63.scrollWidth - var63.width;
@@ -530,6 +564,7 @@ public class ScriptRunner {
 						if (var63.scrollX < 0) {
 							var63.scrollX = 0;
 						}
+
 						var63.scrollY = intStack[isp + 1];
 						if (var63.scrollY > var63.scrollHeight - var63.height) {
 							var63.scrollY = var63.scrollHeight - var63.height;
@@ -537,64 +572,74 @@ public class ScriptRunner {
 						if (var63.scrollY < 0) {
 							var63.scrollY = 0;
 						}
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1101) {
 						// if/cc_setcolour
 						isp--;
 						var63.colour = intStack[isp];
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1102) {
 						// if/cc_setfill
 						isp--;
 						var63.fill = intStack[isp] == 1;
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1103) {
 						// if/cc_settrans
 						isp--;
-						var63.alpha = intStack[isp];
-						Client.method1238(var63);
+						var63.trans = intStack[isp];
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1104) {
 						// if/cc_setlinewid
 						isp--;
-						var63.field1804 = intStack[isp];
-						Client.method1238(var63);
+						var63.lineWidth = intStack[isp];
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1105) {
 						// if/cc_setgraphic
 						isp--;
 						var63.graphic = intStack[isp];
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1106) {
 						// if/cc_set2dangle
 						isp--;
-						var63.field1784 = intStack[isp];
-						Client.method1238(var63);
+						var63.angle2d = intStack[isp];
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1107) {
 						// if/cc_settiling
 						isp--;
-						var63.field1794 = intStack[isp] == 1;
-						Client.method1238(var63);
+						var63.tiling = intStack[isp] == 1;
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1108) {
 						// if/cc_setmodel
 						var63.modelType = 1;
+
 						isp--;
 						var63.model = intStack[isp];
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1109) {
@@ -606,35 +651,41 @@ public class ScriptRunner {
 						var63.yan = intStack[isp + 3];
 						var63.zan = intStack[isp + 4];
 						var63.zoom = intStack[isp + 5];
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1110) {
 						// if/cc_setmodelanim
 						isp--;
 						int var64 = intStack[isp];
+
 						if (var63.anim != var64) {
 							var63.anim = var64;
 							var63.field1779 = 0;
 							var63.field1890 = 0;
-							Client.method1238(var63);
+
+							Client.requestRedrawComponent(var63);
 						}
 						continue;
 					}
 					if (opcode == 1111) {
 						// if/cc_setmodelorthog
 						isp--;
-						var63.field1828 = intStack[isp] == 1;
-						Client.method1238(var63);
+						var63.modelOrthographic = intStack[isp] == 1;
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1112) {
 						// if/cc_settext
 						ssp--;
 						String var65 = stringStack[ssp];
+
 						if (!var65.equals(var63.text)) {
 							var63.text = var65;
-							Client.method1238(var63);
+
+							Client.requestRedrawComponent(var63);
 						}
 						continue;
 					}
@@ -642,7 +693,8 @@ public class ScriptRunner {
 						// if/cc_settextfont
 						isp--;
 						var63.font = intStack[isp];
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1114) {
@@ -651,42 +703,48 @@ public class ScriptRunner {
 						var63.center = intStack[isp];
 						var63.field1834 = intStack[isp + 1];
 						var63.field1832 = intStack[isp + 2];
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1115) {
 						// if/cc_settextshadow
 						isp--;
 						var63.shadowed = intStack[isp] == 1;
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1116) {
 						// if/cc_setoutline
 						isp--;
-						var63.field1811 = intStack[isp];
-						Client.method1238(var63);
+						var63.outline = intStack[isp];
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1117) {
 						// if/cc_setgraphicshadow
 						isp--;
-						var63.field1812 = intStack[isp];
-						Client.method1238(var63);
+						var63.graphicShadow = intStack[isp];
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1118) {
 						// if/cc_setvflip
 						isp--;
-						var63.field1849 = intStack[isp] == 1;
-						Client.method1238(var63);
+						var63.vflip = intStack[isp] == 1;
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1119) {
 						// if/cc_sethflip
 						isp--;
-						var63.field1814 = intStack[isp] == 1;
-						Client.method1238(var63);
+						var63.hflip = intStack[isp] == 1;
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 					if (opcode == 1120) {
@@ -694,7 +752,8 @@ public class ScriptRunner {
 						isp -= 2;
 						var63.scrollWidth = intStack[isp];
 						var63.scrollHeight = intStack[isp + 1];
-						Client.method1238(var63);
+
+						Client.requestRedrawComponent(var63);
 						continue;
 					}
 				} else if (opcode >= 1200 && opcode < 1300 || !(opcode < 2200 || opcode >= 2300)) {
@@ -706,12 +765,15 @@ public class ScriptRunner {
 					} else {
 						var66 = secondary ? activeComponent2 : activeComponent;
 					}
-					Client.method1238(var66);
+
+					Client.requestRedrawComponent(var66);
+
 					if (opcode == 1200) {
 						// if/cc_setobject
 						isp -= 2;
 						int var67 = intStack[isp];
 						int var68 = intStack[isp + 1];
+
 						var66.field1791 = var67;
 						var66.field1888 = var68;
 						ObjType var69 = ObjType.get(var67);
@@ -729,6 +791,7 @@ public class ScriptRunner {
 					if (opcode == 1201) {
 						// if/cc_setnpchead
 						var66.modelType = 2;
+
 						isp--;
 						var66.model = intStack[isp];
 						continue;
@@ -736,6 +799,7 @@ public class ScriptRunner {
 					if (opcode == 1202) {
 						// if/cc_setplayerhead_self
 						var66.modelType = 3;
+
 						var66.model = Client.localPlayer.field2786.method1176();
 						continue;
 					}
@@ -748,15 +812,18 @@ public class ScriptRunner {
 					} else {
 						var70 = secondary ? activeComponent2 : activeComponent;
 					}
+
 					if (opcode == 1300) {
 						// if/cc_setop
 						isp--;
 						int var71 = intStack[isp] - 1;
+
 						if (var71 >= 0 && var71 <= 9) {
 							ssp--;
 							var70.method1829(var71, stringStack[ssp]);
 							continue;
 						}
+
 						ssp--;
 						continue;
 					}
@@ -765,6 +832,7 @@ public class ScriptRunner {
 						isp -= 2;
 						int var72 = intStack[isp];
 						int var73 = intStack[isp + 1];
+
 						var70.field1845 = IfType.method947(var72, var73);
 						continue;
 					}
@@ -812,6 +880,7 @@ public class ScriptRunner {
 					} else {
 						var74 = secondary ? activeComponent2 : activeComponent;
 					}
+
 					ssp--;
 					String var75 = stringStack[ssp];
 					int[] var76 = null;
@@ -827,6 +896,7 @@ public class ScriptRunner {
 						}
 						var75 = var75.substring(0, var75.length() - 1);
 					}
+
 					Object[] var78 = new Object[var75.length() + 1];
 					for (int var79 = var78.length - 1; var79 >= 1; var79--) {
 						if (var75.charAt(var79 - 1) == 's') {
@@ -837,6 +907,7 @@ public class ScriptRunner {
 							var78[var79] = Integer.valueOf(intStack[isp]);
 						}
 					}
+
 					isp--;
 					int var80 = intStack[isp];
 					if (var80 == -1) {
@@ -844,6 +915,7 @@ public class ScriptRunner {
 					} else {
 						var78[0] = Integer.valueOf(var80);
 					}
+
 					if (opcode == 1400) {
 						// if/cc_setonclick
 						var74.field1852 = var78;
@@ -1056,11 +1128,13 @@ public class ScriptRunner {
 						// cc_getop
 						isp--;
 						int var85 = intStack[isp];
+
 						int var368 = var85 - 1;
 						if (var84.field1844 != null && var368 < var84.field1844.length && var84.field1844[var368] != null) {
 							stringStack[ssp++] = var84.field1844[var368];
 							continue;
 						}
+
 						stringStack[ssp++] = "";
 						continue;
 					}
@@ -1158,6 +1232,7 @@ public class ScriptRunner {
 					if (opcode == 2700) {
 						// if_getinvobject
 						isp--;
+
 						IfType var88 = IfType.get(intStack[isp]);
 						intStack[isp++] = var88.field1791;
 						continue;
@@ -1165,6 +1240,7 @@ public class ScriptRunner {
 					if (opcode == 2701) {
 						// if_getinvcount
 						isp--;
+
 						IfType var89 = IfType.get(intStack[isp]);
 						if (var89.field1791 == -1) {
 							intStack[isp++] = 0;
@@ -1177,7 +1253,8 @@ public class ScriptRunner {
 						// if_hassub
 						isp--;
 						int var90 = intStack[isp];
-						SubInterface var91 = (SubInterface) Client.field1918.get((long) var90);
+
+						SubInterface var91 = (SubInterface) Client.field1918.get(var90);
 						if (var91 == null) {
 							intStack[isp++] = 0;
 						} else {
@@ -1197,11 +1274,13 @@ public class ScriptRunner {
 						// if_getop
 						isp--;
 						int var93 = intStack[isp];
+
 						int var369 = var93 - 1;
 						if (var92.field1844 != null && var369 < var92.field1844.length && var92.field1844[var369] != null) {
 							stringStack[ssp++] = var92.field1844[var369];
 							continue;
 						}
+
 						stringStack[ssp++] = "";
 						continue;
 					}
@@ -1219,38 +1298,33 @@ public class ScriptRunner {
 						// mes
 						ssp--;
 						String var94 = stringStack[ssp];
+
 						Client.addMessage(0, "", var94);
 						continue;
 					}
 					if (opcode == 3101) {
 						// anim
 						isp -= 2;
+
 						Client.method1040(Client.localPlayer, intStack[isp], intStack[isp + 1]);
 						continue;
 					}
 					if (opcode == 3103) {
 						// if_close
-						Client.out.pisaac1(129);
-						for (SubInterface var95 = (SubInterface) Client.field1918.method1284(); var95 != null; var95 = (SubInterface) Client.field1918.method1280()) {
-							if (var95.field1597 == 0 || var95.field1597 == 3) {
-								Client.method408(var95, true);
-							}
-						}
-						if (Client.field2087 != null) {
-							Client.method1238(Client.field2087);
-							Client.field2087 = null;
-						}
+						Client.imethod47();
 						continue;
 					}
 					if (opcode == 3104) {
 						// resume_countdialog
 						ssp--;
 						String var96 = stringStack[ssp];
+
 						int var97 = 0;
 						if (StringUtil.method62(var96)) {
 							int var98 = StringUtil.method91(var96, 10, true);
 							var97 = var98;
 						}
+
 						Client.out.pisaac1(27);
 						Client.out.p4(var97);
 						continue;
@@ -1259,6 +1333,7 @@ public class ScriptRunner {
 						// resume_namedialog
 						ssp--;
 						String var99 = stringStack[ssp];
+
 						Client.out.pisaac1(223);
 						Client.out.p1(var99.length() + 1);
 						Client.out.pjstr(var99);
@@ -1268,6 +1343,7 @@ public class ScriptRunner {
 						// resume_stringdialog
 						ssp--;
 						String var100 = stringStack[ssp];
+
 						Client.out.pisaac1(127);
 						Client.out.p1(var100.length() + 1);
 						Client.out.pjstr(var100);
@@ -1277,8 +1353,10 @@ public class ScriptRunner {
 						// opplayer
 						isp--;
 						int var101 = intStack[isp];
+
 						ssp--;
 						String var102 = stringStack[ssp];
+
 						Client.method558(var101, var102);
 						continue;
 					}
@@ -1288,6 +1366,7 @@ public class ScriptRunner {
 						int var103 = intStack[isp];
 						int var104 = intStack[isp + 1];
 						int var105 = intStack[isp + 2];
+
 						IfType var106 = IfType.get(var105);
 						Client.method1102(var106, var103, var104);
 						continue;
@@ -1297,6 +1376,7 @@ public class ScriptRunner {
 						isp -= 2;
 						int var107 = intStack[isp];
 						int var108 = intStack[isp + 1];
+
 						IfType var109 = secondary ? activeComponent2 : activeComponent;
 						Client.method1102(var109, var107, var108);
 						continue;
@@ -1305,34 +1385,22 @@ public class ScriptRunner {
 					if (opcode == 3200) {
 						// sound_synth
 						isp -= 3;
-						int var110 = intStack[isp];
-						int var111 = intStack[isp + 1];
-						int var112 = intStack[isp + 2];
-						if (Client.field1952 != 0 && var111 != 0 && Client.field2176 < 50) {
-							Client.field2177[Client.field2176] = var110;
-							Client.field2006[Client.field2176] = var111;
-							Client.field2179[Client.field2176] = var112;
-							Client.field2181[Client.field2176] = null;
-							Client.field2180[Client.field2176] = 0;
-							Client.field2176++;
-						}
+
+						Client.imethod46(intStack[isp], intStack[isp + 1], intStack[isp + 2]);
 						continue;
 					}
 					if (opcode == 3201) {
 						// sound_song
 						isp--;
+
 						Client.method1232(intStack[isp]);
 						continue;
 					}
 					if (opcode == 3202) {
 						// sound_jingle
 						isp -= 2;
-						int var113 = intStack[isp];
-						int var10000 = intStack[isp + 1];
-						if (Client.field2169 != 0 && var113 != -1) {
-							MidiPlayer.method1125(Client.midiJingleJs5, var113, 0, Client.field2169, false);
-							Client.field2189 = true;
-						}
+
+						Client.imethod45(intStack[isp], intStack[isp + 1]);
 						continue;
 					}
 				} else if (opcode < 3400) {
@@ -1346,18 +1414,8 @@ public class ScriptRunner {
 						isp -= 2;
 						int var115 = intStack[isp];
 						int var116 = intStack[isp + 1];
-						int[] var117 = intStack;
-						int var118 = isp++;
-						ClientInvCache var119 = (ClientInvCache) ClientInvCache.field1623.get((long) var115);
-						int var120;
-						if (var119 == null) {
-							var120 = -1;
-						} else if (var116 >= 0 && var116 < var119.objId.length) {
-							var120 = var119.objId[var116];
-						} else {
-							var120 = -1;
-						}
-						var117[var118] = var120;
+
+						intStack[isp++] = ClientInvCache.getObj(var115, var116);
 						continue;
 					}
 					if (opcode == 3302) {
@@ -1365,7 +1423,8 @@ public class ScriptRunner {
 						isp -= 2;
 						int var121 = intStack[isp];
 						int var122 = intStack[isp + 1];
-						intStack[isp++] = ClientInvCache.method5(var121, var122);
+
+						intStack[isp++] = ClientInvCache.getNum(var121, var122);
 						continue;
 					}
 					if (opcode == 3303) {
@@ -1373,13 +1432,15 @@ public class ScriptRunner {
 						isp -= 2;
 						int var123 = intStack[isp];
 						int var124 = intStack[isp + 1];
-						intStack[isp++] = ClientInvCache.method1446(var123, var124);
+
+						intStack[isp++] = ClientInvCache.getTotal(var123, var124);
 						continue;
 					}
 					if (opcode == 3304) {
 						// inv_size
 						isp--;
 						int var125 = intStack[isp];
+
 						intStack[isp++] = InvType.get(var125).size;
 						continue;
 					}
@@ -1387,6 +1448,7 @@ public class ScriptRunner {
 						// stat
 						isp--;
 						int var132 = intStack[isp];
+
 						intStack[isp++] = Client.field2060[var132];
 						continue;
 					}
@@ -1394,6 +1456,7 @@ public class ScriptRunner {
 						// stat_base
 						isp--;
 						int var133 = intStack[isp];
+
 						intStack[isp++] = Client.field1960[var133];
 						continue;
 					}
@@ -1401,6 +1464,7 @@ public class ScriptRunner {
 						// stat_xp
 						isp--;
 						int var134 = intStack[isp];
+
 						intStack[isp++] = Client.field2062[var134];
 						continue;
 					}
@@ -1409,6 +1473,7 @@ public class ScriptRunner {
 						int var135 = Client.currentLevel;
 						int var136 = (Client.localPlayer.x >> 7) + Client.sceneBaseTileX;
 						int var137 = (Client.localPlayer.z >> 7) + Client.sceneBaseTileZ;
+
 						intStack[isp++] = (var135 << 28) + (var136 << 14) + var137;
 						continue;
 					}
@@ -1416,6 +1481,7 @@ public class ScriptRunner {
 						// coordx
 						isp--;
 						int var138 = intStack[isp];
+
 						intStack[isp++] = var138 >> 14 & 0x3FFF;
 						continue;
 					}
@@ -1423,6 +1489,7 @@ public class ScriptRunner {
 						// coordy
 						isp--;
 						int var139 = intStack[isp];
+
 						intStack[isp++] = var139 >> 28;
 						continue;
 					}
@@ -1430,6 +1497,7 @@ public class ScriptRunner {
 						// coordz
 						isp--;
 						int var140 = intStack[isp];
+
 						intStack[isp++] = var140 & 0x3FFF;
 						continue;
 					}
@@ -1443,18 +1511,8 @@ public class ScriptRunner {
 						isp -= 2;
 						int var141 = intStack[isp] + 32768;
 						int var142 = intStack[isp + 1];
-						int[] var143 = intStack;
-						int var144 = isp++;
-						ClientInvCache var145 = (ClientInvCache) ClientInvCache.field1623.get((long) var141);
-						int var146;
-						if (var145 == null) {
-							var146 = -1;
-						} else if (var142 >= 0 && var142 < var145.objId.length) {
-							var146 = var145.objId[var142];
-						} else {
-							var146 = -1;
-						}
-						var143[var144] = var146;
+
+						intStack[isp++] = ClientInvCache.getObj(var141, var142);
 						continue;
 					}
 					if (opcode == 3314) {
@@ -1462,7 +1520,8 @@ public class ScriptRunner {
 						isp -= 2;
 						int var147 = intStack[isp] + 32768;
 						int var148 = intStack[isp + 1];
-						intStack[isp++] = ClientInvCache.method5(var147, var148);
+
+						intStack[isp++] = ClientInvCache.getNum(var147, var148);
 						continue;
 					}
 					if (opcode == 3315) {
@@ -1470,7 +1529,8 @@ public class ScriptRunner {
 						isp -= 2;
 						int var149 = intStack[isp] + 32768;
 						int var150 = intStack[isp + 1];
-						intStack[isp++] = ClientInvCache.method1446(var149, var150);
+
+						intStack[isp++] = ClientInvCache.getTotal(var149, var150);
 						continue;
 					}
 					if (opcode == 3316) {
@@ -1520,6 +1580,7 @@ public class ScriptRunner {
 
 						EnumType var153 = EnumType.get(var151);
 						if (var153.outputtype != 's') {
+							// ?
 						}
 
 						for (int var154 = 0; var154 < var153.count; var154++) {
@@ -1529,9 +1590,11 @@ public class ScriptRunner {
 								break;
 							}
 						}
+
 						if (var153 != null) {
 							stringStack[ssp++] = var153.defaultString;
 						}
+
 						continue;
 					}
 					if (opcode == 3408) {
@@ -1555,6 +1618,7 @@ public class ScriptRunner {
 									break;
 								}
 							}
+
 							if (var159 != null) {
 								if (var156 == 115) {
 									stringStack[ssp++] = var159.defaultString;
@@ -1562,13 +1626,16 @@ public class ScriptRunner {
 									intStack[isp++] = var159.defaultInt;
 								}
 							}
+
 							continue;
 						}
+
 						if (var156 == 115) {
 							stringStack[ssp++] = "null";
 						} else {
 							intStack[isp++] = 0;
 						}
+
 						continue;
 					}
 				} else if (opcode < 3700) {
@@ -1586,22 +1653,26 @@ public class ScriptRunner {
 					if (opcode == 3601) {
 						// friend_getname
 						isp--;
+
 						int var161 = intStack[isp];
 						if (Client.field2171 == 2 && var161 < Client.field2071) {
 							stringStack[ssp++] = Client.field2111[var161].field173;
 							continue;
 						}
+
 						stringStack[ssp++] = "";
 						continue;
 					}
 					if (opcode == 3602) {
 						// friend_getworld
 						isp--;
+
 						int var162 = intStack[isp];
 						if (Client.field2171 == 2 && var162 < Client.field2071) {
 							intStack[isp++] = Client.field2111[var162].field174;
 							continue;
 						}
+
 						intStack[isp++] = 0;
 						continue;
 					}
@@ -1609,10 +1680,12 @@ public class ScriptRunner {
 						// friend_getrank
 						isp--;
 						int var163 = intStack[isp];
+
 						if (Client.field2171 == 2 && var163 < Client.field2071) {
 							intStack[isp++] = Client.field2111[var163].field175;
 							continue;
 						}
+
 						intStack[isp++] = 0;
 						continue;
 					}
@@ -1620,18 +1693,18 @@ public class ScriptRunner {
 						// friend_setrank
 						ssp--;
 						String var164 = stringStack[ssp];
+
 						isp--;
 						int var165 = intStack[isp];
-						Client.out.pisaac1(252);
-						Client.out.p1(Packet.pjstrlen(var164) + 1);
-						Client.out.pjstr(var164);
-						Client.out.p1_alt1(var165);
+
+						Client.imethod44(var164, var165);
 						continue;
 					}
 					if (opcode == 3605) {
 						// friend_add
 						ssp--;
 						String var166 = stringStack[ssp];
+
 						Client.method1103(var166);
 						continue;
 					}
@@ -1639,6 +1712,7 @@ public class ScriptRunner {
 						// friend_del
 						ssp--;
 						String var167 = stringStack[ssp];
+
 						Client.method560(var167);
 						continue;
 					}
@@ -1646,6 +1720,7 @@ public class ScriptRunner {
 						// ignore_add
 						ssp--;
 						String var168 = stringStack[ssp];
+
 						Client.method315(var168, false);
 						continue;
 					}
@@ -1653,50 +1728,19 @@ public class ScriptRunner {
 						// ignore_del
 						ssp--;
 						String var169 = stringStack[ssp];
-						if (var169 == null) {
-							continue;
-						}
-						String var170 = NamespaceUtil.method743(var169, Client.namespace);
-						if (var170 == null) {
-							continue;
-						}
-						int var171 = 0;
-						while (true) {
-							if (var171 >= Client.ignoreCount) {
-								continue label2277;
-							}
-							IgnoreListEntry var172 = Client.ignoreList[var171];
-							String var173 = var172.field40;
-							String var174 = NamespaceUtil.method743(var173, Client.namespace);
-							boolean var175;
-							if (var169 == null || var173 == null) {
-								var175 = false;
-							} else if (var169.startsWith("#") || var173.startsWith("#")) {
-								var175 = var169.equals(var173);
-							} else {
-								var175 = var170.equals(var174);
-							}
-							if (var175) {
-								Client.ignoreCount--;
-								for (int var176 = var171; var176 < Client.ignoreCount; var176++) {
-									Client.ignoreList[var176] = Client.ignoreList[var176 + 1];
-								}
-								Client.field1977 = Client.field2117;
-								Client.out.pisaac1(248);
-								Client.out.p1(Packet.pjstrlen(var169));
-								Client.out.pjstr(var169);
-								continue label2277;
-							}
-							var171++;
-						}
+
+						Client.imethod43(var169);
+						continue;
 					}
 					if (opcode == 3609) {
 						// friend_test
 						ssp--;
 						String var177 = stringStack[ssp];
+
 						if (var177.startsWith(TextUtil.imgTag(0)) || var177.startsWith(TextUtil.imgTag(1))) {
 							var177 = var177.substring(7);
 						}
+
 						intStack[isp++] = Client.method785(var177) ? 1 : 0;
 						continue;
 					}
@@ -1705,14 +1749,7 @@ public class ScriptRunner {
 						if (Client.field1955 == null) {
 							stringStack[ssp++] = "";
 						} else {
-							String[] var178 = stringStack;
-							int var179 = ssp++;
-							String var180 = Client.field1955;
-							String var181 = JString.method782(JString.method1001(var180));
-							if (var181 == null) {
-								var181 = "";
-							}
-							var178[var179] = var181;
+							stringStack[ssp++] = JString.imethod1(Client.field1955);
 						}
 						continue;
 					}
@@ -1729,10 +1766,12 @@ public class ScriptRunner {
 						// clan_getchatusername
 						isp--;
 						int var183 = intStack[isp];
+
 						if (Client.field1955 != null && var183 < Client.field1220) {
 							stringStack[ssp++] = Client.field1774[var183].field1617;
 							continue;
 						}
+
 						stringStack[ssp++] = "";
 						continue;
 					}
@@ -1740,10 +1779,12 @@ public class ScriptRunner {
 						// clan_getchatuserworld
 						isp--;
 						int var184 = intStack[isp];
+
 						if (Client.field1955 != null && var184 < Client.field1220) {
 							intStack[isp++] = Client.field1774[var184].field1620;
 							continue;
 						}
+
 						intStack[isp++] = 0;
 						continue;
 					}
@@ -1751,10 +1792,12 @@ public class ScriptRunner {
 						// clan_getchatuserrank
 						isp--;
 						int var185 = intStack[isp];
+
 						if (Client.field1955 != null && var185 < Client.field1220) {
 							intStack[isp++] = Client.field1774[var185].field1619;
 							continue;
 						}
+
 						intStack[isp++] = 0;
 						continue;
 					}
@@ -1767,11 +1810,8 @@ public class ScriptRunner {
 						// clan_kickuser
 						ssp--;
 						String var186 = stringStack[ssp];
-						if (Client.field1774 != null) {
-							Client.out.pisaac1(245);
-							Client.out.p1(Packet.pjstrlen(var186));
-							Client.out.pjstr(var186);
-						}
+
+						Client.imethod42(var186);
 						continue;
 					}
 					if (opcode == 3618) {
@@ -1783,6 +1823,7 @@ public class ScriptRunner {
 						// clan_joinchat
 						ssp--;
 						String var187 = stringStack[ssp];
+
 						Client.method742(var187);
 						continue;
 					}
@@ -1804,10 +1845,12 @@ public class ScriptRunner {
 						// ignore_getname
 						isp--;
 						int var188 = intStack[isp];
+
 						if (Client.field2171 != 0 && var188 < Client.ignoreCount) {
 							stringStack[ssp++] = Client.ignoreList[var188].field40;
 							continue;
 						}
+
 						stringStack[ssp++] = "";
 						continue;
 					}
@@ -1815,9 +1858,11 @@ public class ScriptRunner {
 						// ignore_test
 						ssp--;
 						String var189 = stringStack[ssp];
+
 						if (var189.startsWith(TextUtil.imgTag(0)) || var189.startsWith(TextUtil.imgTag(1))) {
 							var189 = var189.substring(7);
 						}
+
 						intStack[isp++] = Client.isIgnored(var189) ? 1 : 0;
 						continue;
 					}
@@ -1825,10 +1870,12 @@ public class ScriptRunner {
 						// clan_isself
 						isp--;
 						int var190 = intStack[isp];
+
 						if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].field1617.equalsIgnoreCase(Client.localPlayer.name)) {
 							intStack[isp++] = 1;
 							continue;
 						}
+
 						intStack[isp++] = 0;
 						continue;
 					}
@@ -1837,14 +1884,7 @@ public class ScriptRunner {
 						if (Client.field2155 == null) {
 							stringStack[ssp++] = "";
 						} else {
-							String[] var191 = stringStack;
-							int var192 = ssp++;
-							String var193 = Client.field2155;
-							String var194 = JString.method782(JString.method1001(var193));
-							if (var194 == null) {
-								var194 = "";
-							}
-							var191[var192] = var194;
+							stringStack[ssp++] = JString.imethod1(Client.field2155);
 						}
 						continue;
 					}
@@ -1967,7 +2007,7 @@ public class ScriptRunner {
 						if (var221 == 0) {
 							intStack[isp++] = 0;
 						} else {
-							intStack[isp++] = (int) Math.pow((double) var221, (double) var222);
+							intStack[isp++] = (int) Math.pow(var221, var222);
 						}
 						continue;
 					}
@@ -1982,7 +2022,7 @@ public class ScriptRunner {
 						} else if (var224 == 0) {
 							intStack[isp++] = Integer.MAX_VALUE;
 						} else {
-							intStack[isp++] = (int) Math.pow((double) var223, 1.0D / (double) var224);
+							intStack[isp++] = (int) Math.pow(var223, 1.0D / (double) var224);
 						}
 						continue;
 					}
@@ -2075,128 +2115,15 @@ public class ScriptRunner {
 						// tostring
 						isp--;
 						int var244 = intStack[isp];
+
 						stringStack[ssp++] = Integer.toString(var244);
 						continue;
 					}
 					if (opcode == 4107) {
 						// compare
 						ssp -= 2;
-						int[] var245 = intStack;
-						int var246 = isp++;
-						String var247 = stringStack[ssp];
-						String var248 = stringStack[ssp + 1];
 
-						int var249 = Client.lang;
-						int var250 = var247.length();
-						int var251 = var248.length();
-						int var252 = 0;
-						int var253 = 0;
-						byte var254 = 0;
-						byte var255 = 0;
-						int var256;
-						label2100: while (true) {
-							if (var252 - var254 >= var250 && var253 - var255 >= var251) {
-								int var267 = Math.min(var250, var251);
-								for (int var268 = 0; var268 < var267; var268++) {
-									char var271 = var247.charAt(var268);
-									char var272 = var248.charAt(var268);
-									if (var271 != var272 && Character.toUpperCase(var271) != Character.toUpperCase(var272)) {
-										char var273 = Character.toLowerCase(var271);
-										char var274 = Character.toLowerCase(var272);
-										if (var273 != var274) {
-											var256 = StringComparator.method1018(var273, var249) - StringComparator.method1018(var274, var249);
-											break label2100;
-										}
-									}
-								}
-								int var275 = var250 - var251;
-								if (var275 == 0) {
-									for (int var276 = 0; var276 < var267; var276++) {
-										char var277 = var247.charAt(var276);
-										char var278 = var248.charAt(var276);
-										if (var277 != var278) {
-											var256 = StringComparator.method1018(var277, var249) - StringComparator.method1018(var278, var249);
-											break label2100;
-										}
-									}
-									var256 = 0;
-								} else {
-									var256 = var275;
-								}
-								break;
-							}
-							if (var252 - var254 >= var250) {
-								var256 = -1;
-								break;
-							}
-							if (var253 - var255 >= var251) {
-								var256 = 1;
-								break;
-							}
-							char var257;
-							if (var254 == 0) {
-								var257 = var247.charAt(var252++);
-							} else {
-								var257 = (char) var254;
-								boolean var258 = false;
-							}
-							char var259;
-							if (var255 == 0) {
-								var259 = var248.charAt(var253++);
-							} else {
-								var259 = (char) var255;
-								boolean var260 = false;
-							}
-							byte var261;
-							if (var257 == 198) {
-								var261 = 69;
-							} else if (var257 == 230) {
-								var261 = 101;
-							} else if (var257 == 223) {
-								var261 = 115;
-							} else if (var257 == 338) {
-								var261 = 69;
-							} else if (var257 == 339) {
-								var261 = 101;
-							} else {
-								var261 = 0;
-							}
-							var254 = var261;
-							byte var262;
-							if (var259 == 198) {
-								var262 = 69;
-							} else if (var259 == 230) {
-								var262 = 101;
-							} else if (var259 == 223) {
-								var262 = 115;
-							} else if (var259 == 338) {
-								var262 = 69;
-							} else if (var259 == 339) {
-								var262 = 101;
-							} else {
-								var262 = 0;
-							}
-							var255 = var262;
-							char var263 = StringComparator.method342(var257, var249);
-							char var264 = StringComparator.method342(var259, var249);
-							if (var263 != var264 && Character.toUpperCase(var263) != Character.toUpperCase(var264)) {
-								char var265 = Character.toLowerCase(var263);
-								char var266 = Character.toLowerCase(var264);
-								if (var265 != var266) {
-									var256 = StringComparator.method1018(var265, var249) - StringComparator.method1018(var266, var249);
-									break;
-								}
-							}
-						}
-						byte var280;
-						if (var256 > 0) {
-							var280 = 1;
-						} else if (var256 < 0) {
-							var280 = -1;
-						} else {
-							var280 = 0;
-						}
-						var245[var246] = var280;
+						intStack[isp++] = StringUtil.compare(stringStack[ssp], stringStack[ssp + 1]);
 						continue;
 					}
 					if (opcode == 4108) {
@@ -2265,33 +2192,15 @@ public class ScriptRunner {
 						isp--;
 						int var296 = intStack[isp];
 
-						int[] var297 = intStack;
-						int var298 = isp++;
-						char var299 = (char) var296;
-						boolean var300;
-						if (var299 >= ' ' && var299 <= '~') {
-							var300 = true;
-						} else if (var299 >= 160 && var299 <= 255) {
-							var300 = true;
-						} else if (var299 == 8364 || var299 == 338 || var299 == 8212 || var299 == 339 || var299 == 376) {
-							var300 = true;
-						} else {
-							var300 = false;
-						}
-
-						var297[var298] = var300 ? 1 : 0;
+						intStack[isp++] = StringUtil.isPrintable((char) var296) ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4114) {
 						// char_isalphanumeric
 						isp--;
 						int var301 = intStack[isp];
-						int[] var302 = intStack;
 
-						int var303 = isp++;
-						char var304 = (char) var301;
-						boolean var305 = var304 >= '0' && var304 <= '9' || var304 >= 'A' && var304 <= 'Z' || var304 >= 'a' && var304 <= 'z';
-						var302[var303] = var305 ? 1 : 0;
+						intStack[isp++] = StringUtil.isAlphaNumeric((char) var301) ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4115) {
@@ -2299,19 +2208,15 @@ public class ScriptRunner {
 						isp--;
 						int var306 = intStack[isp];
 
-						intStack[isp++] = StringUtil.method1124((char) var306) ? 1 : 0;
+						intStack[isp++] = StringUtil.isAlpha((char) var306) ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4116) {
 						// char_isnumeric
 						isp--;
 						int var307 = intStack[isp];
-						int[] var308 = intStack;
 
-						int var309 = isp++;
-						char var310 = (char) var307;
-						boolean var311 = var310 >= '0' && var310 <= '9';
-						var308[var309] = var311 ? 1 : 0;
+						intStack[isp++] = StringUtil.isNumeric((char) var307) ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4117) {
@@ -2464,40 +2369,23 @@ public class ScriptRunner {
 				} else if (opcode < 5100) {
 					if (opcode == 5000) {
 						// chat_getfilter_public
-						intStack[isp++] = Client.field2145;
+						intStack[isp++] = Client.publicChatFilter;
 						continue;
 					}
 					if (opcode == 5001) {
 						// chat_setfilter
 						isp -= 3;
-						Client.field2145 = intStack[isp];
-						int var337 = intStack[isp + 1];
-
-						ChatFilterPrivacy[] var338 = ChatFilterPrivacy.values();
-						int var339 = 0;
-						ChatFilterPrivacy var341;
-						while (true) {
-							if (var339 >= var338.length) {
-								var341 = null;
-								break;
-							}
-							ChatFilterPrivacy var340 = var338[var339];
-							if (var340.field1107 == var337) {
-								var341 = var340;
-								break;
-							}
-							var339++;
+						Client.publicChatFilter = intStack[isp];
+						Client.privateChatFilter = ChatFilterPrivacy.get(intStack[isp + 1]);
+						if (Client.privateChatFilter == null) {
+							Client.privateChatFilter = ChatFilterPrivacy.field1106;
 						}
-						Client.field680 = var341;
-						if (Client.field680 == null) {
-							Client.field680 = ChatFilterPrivacy.field1106;
-						}
-						Client.field2146 = intStack[isp + 2];
+						Client.tradeChatFilter = intStack[isp + 2];
 
 						Client.out.pisaac1(167);
-						Client.out.p1(Client.field2145);
-						Client.out.p1(Client.field680.field1107);
-						Client.out.p1(Client.field2146);
+						Client.out.p1(Client.publicChatFilter);
+						Client.out.p1(Client.privateChatFilter.index);
+						Client.out.p1(Client.tradeChatFilter);
 						continue;
 					}
 					if (opcode == 5002) {
@@ -2548,10 +2436,11 @@ public class ScriptRunner {
 					}
 					if (opcode == 5005) {
 						// chat_getfilter_private
-						if (Client.field680 == null) {
+						// rs3
+						if (Client.privateChatFilter == null) {
 							intStack[isp++] = -1;
 						} else {
-							intStack[isp++] = Client.field680.field1107;
+							intStack[isp++] = Client.privateChatFilter.index;
 						}
 						continue;
 					}
@@ -2727,6 +2616,7 @@ public class ScriptRunner {
 					if (opcode == 5011) {
 						isp--;
 						int var360 = intStack[isp];
+
 						String var361 = null;
 						if (var360 < 100) {
 							var361 = Client.field2173[var360];
@@ -2734,6 +2624,7 @@ public class ScriptRunner {
 						if (var361 == null) {
 							var361 = "";
 						}
+
 						stringStack[ssp++] = var361;
 						continue;
 					}
@@ -2745,12 +2636,13 @@ public class ScriptRunner {
 						} else {
 							var362 = Client.localPlayer.name;
 						}
+
 						stringStack[ssp++] = var362;
 						continue;
 					}
 					if (opcode == 5016) {
 						// chat_getfilter_trade
-						intStack[isp++] = Client.field2146;
+						intStack[isp++] = Client.tradeChatFilter;
 						continue;
 					}
 					if (opcode == 5017) {

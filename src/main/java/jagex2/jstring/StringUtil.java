@@ -1,6 +1,7 @@
 package jagex2.jstring;
 
 import deob.ObfuscatedName;
+import jagex2.client.Client;
 
 @ObfuscatedName("cl")
 public class StringUtil {
@@ -199,8 +200,8 @@ public class StringUtil {
 	}
 
 	@ObfuscatedName("cu.z(CI)Z")
-	public static boolean method1124(char arg0) {
-		return arg0 >= 'A' && arg0 <= 'Z' || arg0 >= 'a' && arg0 <= 'z';
+	public static boolean isAlpha(char c) {
+		return c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
 	}
 
 	@ObfuscatedName("n.g(Ljava/lang/String;B)Ljava/lang/String;")
@@ -236,5 +237,141 @@ public class StringUtil {
 			var2[var3] = arg0;
 		}
 		return new String(var2);
+	}
+
+	public static boolean isNumeric(char c) {
+		return c >= '0' && c <= '9';
+	}
+
+	public static boolean isAlphaNumeric(char c) {
+		return c >= '0' && c <= '9' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
+	}
+
+	public static boolean isPrintable(char c) {
+		if (c >= ' ' && c <= '~') {
+			return true;
+		} else if (c >= 160 && c <= 255) {
+			return true;
+		} else if (c == 8364 || c == 338 || c == 8212 || c == 339 || c == 376) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static int compare(String var247, String var248) {
+		int var249 = Client.lang;
+		int var250 = var247.length();
+		int var251 = var248.length();
+		int var252 = 0;
+		int var253 = 0;
+		byte var254 = 0;
+		byte var255 = 0;
+		int var256;
+		label2100: while (true) {
+			if (var252 - var254 >= var250 && var253 - var255 >= var251) {
+				int var267 = Math.min(var250, var251);
+				for (int var268 = 0; var268 < var267; var268++) {
+					char var271 = var247.charAt(var268);
+					char var272 = var248.charAt(var268);
+					if (var271 != var272 && Character.toUpperCase(var271) != Character.toUpperCase(var272)) {
+						char var273 = Character.toLowerCase(var271);
+						char var274 = Character.toLowerCase(var272);
+						if (var273 != var274) {
+							var256 = StringComparator.method1018(var273, var249) - StringComparator.method1018(var274, var249);
+							break label2100;
+						}
+					}
+				}
+				int var275 = var250 - var251;
+				if (var275 == 0) {
+					for (int var276 = 0; var276 < var267; var276++) {
+						char var277 = var247.charAt(var276);
+						char var278 = var248.charAt(var276);
+						if (var277 != var278) {
+							var256 = StringComparator.method1018(var277, var249) - StringComparator.method1018(var278, var249);
+							break label2100;
+						}
+					}
+					var256 = 0;
+				} else {
+					var256 = var275;
+				}
+				break;
+			}
+			if (var252 - var254 >= var250) {
+				var256 = -1;
+				break;
+			}
+			if (var253 - var255 >= var251) {
+				var256 = 1;
+				break;
+			}
+			char var257;
+			if (var254 == 0) {
+				var257 = var247.charAt(var252++);
+			} else {
+				var257 = (char) var254;
+				boolean var258 = false;
+			}
+			char var259;
+			if (var255 == 0) {
+				var259 = var248.charAt(var253++);
+			} else {
+				var259 = (char) var255;
+				boolean var260 = false;
+			}
+			byte var261;
+			if (var257 == 198) {
+				var261 = 69;
+			} else if (var257 == 230) {
+				var261 = 101;
+			} else if (var257 == 223) {
+				var261 = 115;
+			} else if (var257 == 338) {
+				var261 = 69;
+			} else if (var257 == 339) {
+				var261 = 101;
+			} else {
+				var261 = 0;
+			}
+			var254 = var261;
+			byte var262;
+			if (var259 == 198) {
+				var262 = 69;
+			} else if (var259 == 230) {
+				var262 = 101;
+			} else if (var259 == 223) {
+				var262 = 115;
+			} else if (var259 == 338) {
+				var262 = 69;
+			} else if (var259 == 339) {
+				var262 = 101;
+			} else {
+				var262 = 0;
+			}
+			var255 = var262;
+			char var263 = StringComparator.method342(var257, var249);
+			char var264 = StringComparator.method342(var259, var249);
+			if (var263 != var264 && Character.toUpperCase(var263) != Character.toUpperCase(var264)) {
+				char var265 = Character.toLowerCase(var263);
+				char var266 = Character.toLowerCase(var264);
+				if (var265 != var266) {
+					var256 = StringComparator.method1018(var265, var249) - StringComparator.method1018(var266, var249);
+					break;
+				}
+			}
+		}
+
+		byte var280;
+		if (var256 > 0) {
+			var280 = 1;
+		} else if (var256 < 0) {
+			var280 = -1;
+		} else {
+			var280 = 0;
+		}
+
+		return var280;
 	}
 }

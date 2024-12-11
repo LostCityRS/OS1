@@ -13,7 +13,7 @@ public class JString {
 	}
 
 	@ObfuscatedName("cj.r(Ljava/lang/CharSequence;I)J")
-	public static long method1001(CharSequence arg0) {
+	public static long toBase37(CharSequence arg0) {
 		long var1 = 0L;
 		int var3 = arg0.length();
 		for (int var4 = 0; var4 < var3; var4++) {
@@ -37,7 +37,7 @@ public class JString {
 	}
 
 	@ObfuscatedName("bk.d(J)Ljava/lang/String;")
-	public static String method768(long arg0) {
+	public static String fromBase37(long arg0) {
 		if (arg0 <= 0L || arg0 >= 6582952005840035281L) {
 			return null;
 		} else if (arg0 % 37L == 0L) {
@@ -92,8 +92,16 @@ public class JString {
 	}
 
 	@ObfuscatedName("bs.m(Ljava/lang/CharSequence;I)Ljava/lang/String;")
-	public static String method762(CharSequence arg0) {
-		String var1 = method768(method1001(arg0));
+	public static String toDisplayName(CharSequence arg0) {
+		String var1 = fromBase37(toBase37(arg0));
+		if (var1 == null) {
+			var1 = "";
+		}
+		return var1;
+	}
+
+	public static String imethod1(String arg0) {
+		String var1 = JString.method782(JString.toBase37(arg0));
 		if (var1 == null) {
 			var1 = "";
 		}
