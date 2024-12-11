@@ -34,7 +34,7 @@ public class HashTable {
 	public Linkable get(long arg0) {
 		Linkable var3 = this.buckets[(int) (arg0 & (long) (this.bucketCount - 1))];
 		for (this.sentinel = var3.next; this.sentinel != var3; this.sentinel = this.sentinel.next) {
-			if (this.sentinel.key == arg0) {
+			if (this.sentinel.nodeId == arg0) {
 				Linkable var4 = this.sentinel;
 				this.sentinel = this.sentinel.next;
 				return var4;
@@ -54,7 +54,7 @@ public class HashTable {
 		arg0.next = var4;
 		arg0.prev.next = arg0;
 		arg0.next.prev = arg0;
-		arg0.key = arg1;
+		arg0.nodeId = arg1;
 	}
 
 	@ObfuscatedName("cf.l()V")

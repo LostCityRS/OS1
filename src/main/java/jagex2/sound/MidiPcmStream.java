@@ -112,7 +112,7 @@ public class MidiPcmStream extends PcmStream {
 			var6 = new int[] { arg3 };
 		}
 		for (ByteArrayNode var7 = (ByteArrayNode) arg0.field1734.method1284(); var7 != null; var7 = (ByteArrayNode) arg0.field1734.method1280()) {
-			int var8 = (int) var7.key;
+			int var8 = (int) var7.nodeId;
 			MidiInstrument var9 = (MidiInstrument) this.field2230.get((long) var8);
 			if (var9 == null) {
 				var9 = MidiInstrument.method49(arg1, var8);

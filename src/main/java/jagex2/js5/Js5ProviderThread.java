@@ -27,7 +27,7 @@ public class Js5ProviderThread implements Runnable {
 		LinkList var4 = field1208;
 		synchronized (field1208) {
 			for (Js5NetProviderRequest var5 = (Js5NetProviderRequest) field1208.head(); var5 != null; var5 = (Js5NetProviderRequest) field1208.next()) {
-				if ((long) arg0 == var5.key && var5.field1770 == arg1 && var5.field1772 == 0) {
+				if ((long) arg0 == var5.nodeId && var5.field1770 == arg1 && var5.field1772 == 0) {
 					var3 = var5.field1771;
 					break;
 				}
@@ -62,13 +62,13 @@ public class Js5ProviderThread implements Runnable {
 					}
 				} else {
 					if (var2.field1772 == 0) {
-						var2.field1770.write((int) var2.key, var2.field1771, var2.field1771.length);
+						var2.field1770.write((int) var2.nodeId, var2.field1771, var2.field1771.length);
 						LinkList var4 = field1208;
 						synchronized (field1208) {
 							var2.unlink();
 						}
 					} else if (var2.field1772 == 1) {
-						var2.field1771 = var2.field1770.read((int) var2.key);
+						var2.field1771 = var2.field1770.read((int) var2.nodeId);
 						LinkList var6 = field1208;
 						synchronized (field1208) {
 							field1206.push(var2);

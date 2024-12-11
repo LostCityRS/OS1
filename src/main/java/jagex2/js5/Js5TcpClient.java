@@ -109,9 +109,9 @@ public class Js5TcpClient {
 					Js5NetRequest var3 = (Js5NetRequest) field1185.method1284();
 					Packet var4 = new Packet(4);
 					var4.p1(1);
-					var4.p3((int) var3.key);
+					var4.p3((int) var3.nodeId);
 					LoginScreen.field169.write(var4.data, 0, 4);
-					field1187.put(var3, var3.key);
+					field1187.put(var3, var3.nodeId);
 					field1186--;
 					field1188++;
 				}
@@ -119,10 +119,10 @@ public class Js5TcpClient {
 					Js5NetRequest var5 = (Js5NetRequest) field1189.head();
 					Packet var6 = new Packet(4);
 					var6.p1(0);
-					var6.p3((int) var5.key);
+					var6.p3((int) var5.nodeId);
 					LoginScreen.field169.write(var6.data, 0, 4);
 					var5.unlink2();
-					field1199.put(var5, var5.key);
+					field1199.put(var5, var5.nodeId);
 					field1191--;
 					field1197++;
 				}
@@ -205,7 +205,7 @@ public class Js5TcpClient {
 						field1196.pos += var21;
 						field1201 += var21;
 						if (field1196.pos == var20) {
-							if (field812.key == 16711935L) {
+							if (field812.nodeId == 16711935L) {
 								field542 = field1196;
 								for (int var23 = 0; var23 < 256; var23++) {
 									Js5Provider var24 = field1200[var23];
@@ -232,7 +232,7 @@ public class Js5TcpClient {
 								}
 								field1198 = 0;
 								field1203 = 0;
-								field812.field2492.method1467((int) (field812.key & 0xFFFFL), field1196.data, (field812.key & 0xFF0000L) == 16711680L, field1194);
+								field812.field2492.method1467((int) (field812.nodeId & 0xFFFFL), field1196.data, (field812.nodeId & 0xFF0000L) == 16711680L, field1194);
 							}
 							field812.unlink();
 							if (field1194) {
@@ -326,12 +326,12 @@ public class Js5TcpClient {
 						return;
 					}
 					field1189.addHead(var4);
-					field1193.put(var4, var4.key);
+					field1193.put(var4, var4.nodeId);
 					field1191++;
 					field1197--;
 				}
 			}
-			field1185.put(var3, var3.key);
+			field1185.put(var3, var3.nodeId);
 			field1186++;
 			field1188--;
 		}
@@ -388,7 +388,7 @@ public class Js5TcpClient {
 	@ObfuscatedName("v.n(III)I")
 	public static int method161(int arg0, int arg1) {
 		long var2 = (long) ((arg0 << 16) + arg1);
-		return field812 != null && field812.key == var2 ? field1196.pos * 99 / (field1196.data.length - field812.field2490) + 1 : 0;
+		return field812 != null && field812.nodeId == var2 ? field1196.pos * 99 / (field1196.data.length - field812.field2490) + 1 : 0;
 	}
 
 	public static int imethod1() {

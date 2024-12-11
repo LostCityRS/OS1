@@ -9,65 +9,77 @@ import jagex2.io.Packet;
 public class ClientScript extends DoublyLinkable {
 
 	@ObfuscatedName("ep.n")
-	public static LruCache field2262 = new LruCache(128);
+	public static LruCache cache = new LruCache(128);
 
 	@ObfuscatedName("ep.j")
-	public int[] field2261;
+	public int[] instructions;
 
 	@ObfuscatedName("ep.z")
-	public int[] field2260;
+	public int[] intOperands;
 
 	@ObfuscatedName("ep.g")
-	public String[] field2264;
+	public String[] stringOperands;
 
 	@ObfuscatedName("ep.q")
-	public int field2263;
+	public int intLocalCount;
 
 	@ObfuscatedName("ep.i")
-	public int field2265;
+	public int stringLocalCount;
 
 	@ObfuscatedName("ep.s")
-	public int field2266;
+	public int intArgCount;
 
 	@ObfuscatedName("ep.u")
-	public int field2267;
+	public int stringArgCount;
+
+	// was in 468, not in os
+	public String name;
 
 	@ObfuscatedName("bq.z(II)Lep;")
-	public static ClientScript method872(int arg0) {
-		ClientScript var1 = (ClientScript) field2262.get((long) arg0);
-		if (var1 != null) {
-			return var1;
+	public static ClientScript get(int id) {
+		ClientScript cached = (ClientScript) cache.get(id);
+		if (cached != null) {
+			return cached;
 		}
-		byte[] var2 = Client.clientScriptJs5.getFile(arg0, 0);
-		if (var2 == null) {
+
+		byte[] data = Client.clientScriptJs5.getFile(id, 0);
+		if (data == null) {
 			return null;
 		}
-		ClientScript var3 = new ClientScript();
-		Packet var4 = new Packet(var2);
-		var4.pos = var4.data.length - 12;
-		int var5 = var4.g4();
-		var3.field2263 = var4.g2();
-		var3.field2265 = var4.g2();
-		var3.field2266 = var4.g2();
-		var3.field2267 = var4.g2();
-		var4.pos = 0;
-		var4.fastgstr();
-		var3.field2261 = new int[var5];
-		var3.field2260 = new int[var5];
-		var3.field2264 = new String[var5];
-		int var6 = 0;
-		while (var4.pos < var4.data.length - 12) {
-			int var7 = var4.g2();
-			if (var7 == 3) {
-				var3.field2264[var6] = var4.gjstr();
-			} else if (var7 >= 100 || var7 == 21 || var7 == 38 || var7 == 39) {
-				var3.field2260[var6] = var4.g1();
+
+		ClientScript script = new ClientScript();
+
+		Packet buf = new Packet(data);
+		buf.pos = buf.data.length - 12;
+
+		int instructionCount = buf.g4();
+		script.intLocalCount = buf.g2();
+		script.stringLocalCount = buf.g2();
+		script.intArgCount = buf.g2();
+		script.stringArgCount = buf.g2();
+
+		buf.pos = 0;
+		script.name = buf.fastgstr();
+
+		script.instructions = new int[instructionCount];
+		script.intOperands = new int[instructionCount];
+		script.stringOperands = new String[instructionCount];
+
+		int i = 0;
+		while (buf.pos < buf.data.length - 12) {
+			int op = buf.g2();
+			if (op == 3) {
+				script.stringOperands[i] = buf.gjstr();
+			} else if (op >= 100 || op == 21 || op == 38 || op == 39) {
+				script.intOperands[i] = buf.g1();
 			} else {
-				var3.field2260[var6] = var4.g4();
+				script.intOperands[i] = buf.g4();
 			}
-			var3.field2261[var6++] = var7;
+
+			script.instructions[i++] = op;
 		}
-		field2262.put(var3, (long) arg0);
-		return var3;
+
+		cache.put(script, id);
+		return script;
 	}
 }

@@ -3,7 +3,7 @@ package jagex2.client;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("z")
-public class GoSubFrame {
+public class ScriptFrame {
 
 	@ObfuscatedName("z.r")
 	public ClientScript script;

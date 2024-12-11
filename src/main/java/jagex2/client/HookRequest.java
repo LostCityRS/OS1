@@ -8,29 +8,29 @@ import jagex2.datastruct.Linkable;
 public class HookRequest extends Linkable {
 
 	@ObfuscatedName("du.m")
-	public Object[] field1588;
+	public Object[] onop;
 
 	@ObfuscatedName("du.c")
 	public IfType component;
 
 	@ObfuscatedName("du.n")
-	public int field1589;
+	public int mouseX;
 
 	@ObfuscatedName("du.j")
-	public int field1587;
+	public int mouseY;
 
 	@ObfuscatedName("du.z")
-	public int field1591;
+	public int opindex;
 
 	@ObfuscatedName("du.g")
-	public IfType field1592;
+	public IfType drop;
 
 	@ObfuscatedName("du.q")
-	public int field1593;
+	public int key;
 
 	@ObfuscatedName("du.i")
-	public int field1594;
+	public int keyChar;
 
 	@ObfuscatedName("du.s")
-	public String field1595;
+	public String opbase;
 }

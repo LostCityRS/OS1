@@ -13,7 +13,7 @@ import jagex2.jstring.Locale;
 public class IfType extends Linkable {
 
 	@ObfuscatedName("av.m")
-	public static IfType[][] field373;
+	public static IfType[][] interfaces;
 
 	@ObfuscatedName("df.c")
 	public static boolean[] field1508;
@@ -46,7 +46,7 @@ public class IfType extends Linkable {
 	public boolean if3 = false;
 
 	@ObfuscatedName("eg.w")
-	public int field1783 = -1;
+	public int parentlayer = -1;
 
 	@ObfuscatedName("eg.e")
 	public int subid = -1;
@@ -250,7 +250,7 @@ public class IfType extends Linkable {
 	public boolean field1813 = false;
 
 	@ObfuscatedName("eg.cp")
-	public Object[] field1775;
+	public Object[] onload;
 
 	@ObfuscatedName("eg.ca")
 	public Object[] field1852;
@@ -402,7 +402,7 @@ public class IfType extends Linkable {
 		field1776 = arg1;
 		field1564 = arg2;
 		field1800 = arg3;
-		field373 = new IfType[field1806.getGroupCount()][];
+		interfaces = new IfType[field1806.getGroupCount()][];
 		field1508 = new boolean[field1806.getGroupCount()];
 	}
 
@@ -410,13 +410,13 @@ public class IfType extends Linkable {
 	public static IfType get(int arg0) {
 		int var1 = arg0 >> 16;
 		int var2 = arg0 & 0xFFFF;
-		if (field373[var1] == null || field373[var1][var2] == null) {
-			boolean var3 = method1501(var1);
+		if (interfaces[var1] == null || interfaces[var1][var2] == null) {
+			boolean var3 = openInterface(var1);
 			if (!var3) {
 				return null;
 			}
 		}
-		return field373[var1][var2];
+		return interfaces[var1][var2];
 	}
 
 	@ObfuscatedName("bd.j(IIB)Leg;")
@@ -432,7 +432,7 @@ public class IfType extends Linkable {
 	}
 
 	@ObfuscatedName("dw.z(II)Z")
-	public static boolean method1501(int arg0) {
+	public static boolean openInterface(int arg0) {
 		if (field1508[arg0]) {
 			return true;
 		} else if (field1806.isGroupReady(arg0)) {
@@ -441,19 +441,19 @@ public class IfType extends Linkable {
 				field1508[arg0] = true;
 				return true;
 			}
-			if (field373[arg0] == null) {
-				field373[arg0] = new IfType[var1];
+			if (interfaces[arg0] == null) {
+				interfaces[arg0] = new IfType[var1];
 			}
 			for (int var2 = 0; var2 < var1; var2++) {
-				if (field373[arg0][var2] == null) {
+				if (interfaces[arg0][var2] == null) {
 					byte[] var3 = field1806.getFile(arg0, var2);
 					if (var3 != null) {
-						field373[arg0][var2] = new IfType();
-						field373[arg0][var2].field1783 = (arg0 << 16) + var2;
+						interfaces[arg0][var2] = new IfType();
+						interfaces[arg0][var2].parentlayer = (arg0 << 16) + var2;
 						if (var3[0] == -1) {
-							field373[arg0][var2].decodeIf3(new Packet(var3));
+							interfaces[arg0][var2].decodeIf3(new Packet(var3));
 						} else {
-							field373[arg0][var2].decodeIf1(new Packet(var3));
+							interfaces[arg0][var2].decodeIf1(new Packet(var3));
 						}
 					}
 				}
@@ -482,7 +482,7 @@ public class IfType extends Linkable {
 		if (this.layerid == 65535) {
 			this.layerid = -1;
 		} else {
-			this.layerid += this.field1783 & 0xFFFF0000;
+			this.layerid += this.parentlayer & 0xFFFF0000;
 		}
 
 		this.field1882 = buf.g2();
@@ -729,7 +729,7 @@ public class IfType extends Linkable {
 		if (this.layerid == 65535) {
 			this.layerid = -1;
 		} else {
-			this.layerid += this.field1783 & 0xFFFF0000;
+			this.layerid += this.parentlayer & 0xFFFF0000;
 		}
 
 		this.hide = buf.g1() == 1;
@@ -806,7 +806,7 @@ public class IfType extends Linkable {
 		this.field1887 = buf.g1();
 		this.field1858 = buf.g1() == 1;
 		this.targetVerb = buf.gjstr();
-		this.field1775 = this.method1813(buf);
+		this.onload = this.method1813(buf);
 		this.field1856 = this.method1813(buf);
 		this.field1838 = this.method1813(buf);
 		this.field1836 = this.method1813(buf);
