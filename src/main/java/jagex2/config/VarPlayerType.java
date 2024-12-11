@@ -61,7 +61,7 @@ public class VarPlayerType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("cz.s(I)V")
-	public static void method1148() {
+	public static void unload() {
 		field2479.clear();
 	}
 }

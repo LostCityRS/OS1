@@ -173,4 +173,9 @@ public class SpotAnimType extends DoublyLinkable {
 		configJs5 = var36;
 		modelJs5 = var37;
 	}
+
+	public static void unload() {
+		field2379.clear();
+		field2392.clear();
+	}
 }

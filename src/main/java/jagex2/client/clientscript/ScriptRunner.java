@@ -663,8 +663,8 @@ public class ScriptRunner {
 
 						if (var63.anim != var64) {
 							var63.anim = var64;
-							var63.field1779 = 0;
-							var63.field1890 = 0;
+							var63.seqFrame = 0;
+							var63.seqCycle = 0;
 
 							Client.requestRedrawComponent(var63);
 						}
@@ -701,7 +701,7 @@ public class ScriptRunner {
 					if (opcode == 1114) {
 						// if/cc_settextalign
 						isp -= 3;
-						var63.center = intStack[isp];
+						var63.halign = intStack[isp];
 						var63.field1834 = intStack[isp + 1];
 						var63.field1832 = intStack[isp + 2];
 
@@ -1450,7 +1450,7 @@ public class ScriptRunner {
 						isp--;
 						int var132 = intStack[isp];
 
-						intStack[isp++] = Client.field2060[var132];
+						intStack[isp++] = Client.skillLevel[var132];
 						continue;
 					}
 					if (opcode == 3306) {
@@ -1458,7 +1458,7 @@ public class ScriptRunner {
 						isp--;
 						int var133 = intStack[isp];
 
-						intStack[isp++] = Client.field1960[var133];
+						intStack[isp++] = Client.skillBaseLevel[var133];
 						continue;
 					}
 					if (opcode == 3307) {
@@ -1466,7 +1466,7 @@ public class ScriptRunner {
 						isp--;
 						int var134 = intStack[isp];
 
-						intStack[isp++] = Client.field2062[var134];
+						intStack[isp++] = Client.skillExperience[var134];
 						continue;
 					}
 					if (opcode == 3308) {
@@ -1812,7 +1812,7 @@ public class ScriptRunner {
 						ssp--;
 						String var186 = stringStack[ssp];
 
-						Client.imethod42(var186);
+						Client.clanKickUser(var186);
 						continue;
 					}
 					if (opcode == 3618) {
@@ -1825,12 +1825,12 @@ public class ScriptRunner {
 						ssp--;
 						String var187 = stringStack[ssp];
 
-						Client.method742(var187);
+						Client.clanJoinChat(var187);
 						continue;
 					}
 					if (opcode == 3620) {
 						// clan_leavechat
-						Client.method388();
+						Client.clanLeaveChat();
 						continue;
 					}
 					if (opcode == 3621) {

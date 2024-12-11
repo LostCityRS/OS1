@@ -25,7 +25,7 @@ public class PlayerEntity extends PathingEntity {
 	public int field2800 = -1;
 
 	@ObfuscatedName("fi.bz")
-	public int field2789 = 0;
+	public int combatLevel = 0;
 
 	@ObfuscatedName("fi.bm")
 	public int field2790 = 0;
@@ -70,7 +70,7 @@ public class PlayerEntity extends PathingEntity {
 	public int field2803 = 0;
 
 	@ObfuscatedName("fi.am(Lev;I)V")
-	public final void method3061(Packet arg0) {
+	public final void read(Packet arg0) {
 		arg0.pos = 0;
 		int var2 = arg0.g1();
 		this.field2787 = arg0.g1b();
@@ -138,7 +138,7 @@ public class PlayerEntity extends PathingEntity {
 		if (Client.localPlayer == this) {
 			JagException.username = this.name;
 		}
-		this.field2789 = arg0.g1();
+		this.combatLevel = arg0.g1();
 		this.field2790 = arg0.g2();
 		if (this.field2786 == null) {
 			this.field2786 = new PlayerModel();

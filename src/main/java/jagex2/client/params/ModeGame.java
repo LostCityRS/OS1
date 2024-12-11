@@ -24,7 +24,7 @@ public class ModeGame implements ModeGameProvider {
 	public static final ModeGame OLDSCAPE = new ModeGame("oldscape", "RuneScape 2007", 5);
 
 	@ObfuscatedName("bp.j")
-	public final int game;
+	public final int index;
 
 	@ObfuscatedName("bm.l(I)[Lbp;")
 	public static ModeGame[] values() {
@@ -32,11 +32,22 @@ public class ModeGame implements ModeGameProvider {
 	}
 
 	public ModeGame(String arg0, String arg1, int arg2) {
-		this.game = arg2;
+		this.index = arg2;
 	}
 
 	@ObfuscatedName("bp.r(B)I")
-	public int getGame() {
-		return this.game;
+	public int getIndex() {
+		return this.index;
+	}
+
+	public static ModeGame get(int id) {
+		ModeGame[] all = ModeGame.values();
+		for (int i = 0; i < all.length; i++) {
+			ModeGame mode = all[i];
+			if (mode.getIndex() == id) {
+				return mode;
+			}
+		}
+		return null;
 	}
 }

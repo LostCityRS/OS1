@@ -5,7 +5,6 @@ import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
-import jagex2.js5.Js5Provider;
 
 @ObfuscatedName("fb")
 public class FloType extends DoublyLinkable {
@@ -153,5 +152,9 @@ public class FloType extends DoublyLinkable {
 
 	public static void init(Js5Index arg0) {
 		configJs5 = arg0;
+	}
+
+	public static void unload() {
+		field2411.clear();
 	}
 }

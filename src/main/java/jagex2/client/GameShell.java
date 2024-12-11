@@ -44,7 +44,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static int field1539 = 1;
 
 	@ObfuscatedName("dj.q")
-	public static int field1540 = 0;
+	public static int fps = 0;
 
 	@ObfuscatedName("bc.i")
 	public static Timer field1100;
@@ -304,7 +304,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		field833 = field833 + 1 & 0x1F;
 		if (var3 != 0L && var1 > var3) {
 			int var5 = (int) (var1 - var3);
-			field1540 = ((var5 >> 1) + 32000) / var5;
+			fps = ((var5 >> 1) + 32000) / var5;
 		}
 		if (++field1547 - 1 > 50) {
 			field1547 -= 50;

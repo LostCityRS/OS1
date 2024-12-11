@@ -1189,7 +1189,7 @@ public class World {
 	}
 
 	@ObfuscatedName("bc.t(IIIIIIILaq;Lck;I)V")
-	public static final void method918(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, World3D arg7, CollisionMap arg8) {
+	public static final void addLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, World3D arg7, CollisionMap arg8) {
 		LocType var9 = LocType.get(arg4);
 		int var10;
 		int var11;

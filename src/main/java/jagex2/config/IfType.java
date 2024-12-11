@@ -196,7 +196,7 @@ public class IfType extends Linkable {
 	public int field1832 = 0;
 
 	@ObfuscatedName("eg.bu")
-	public int center = 0;
+	public int halign = 0;
 
 	@ObfuscatedName("eg.bo")
 	public int field1834 = 0;
@@ -364,10 +364,10 @@ public class IfType extends Linkable {
 	public int field1888 = 0;
 
 	@ObfuscatedName("eg.dr")
-	public int field1779 = 0;
+	public int seqFrame = 0;
 
 	@ObfuscatedName("eg.du")
-	public int field1890 = 0;
+	public int seqCycle = 0;
 
 	@ObfuscatedName("eg.dy")
 	public IfType[] subcomponents;
@@ -584,7 +584,7 @@ public class IfType extends Linkable {
 		}
 
 		if (this.type == 4 || this.type == 1) {
-			this.center = buf.g1();
+			this.halign = buf.g1();
 			this.field1834 = buf.g1();
 			this.field1832 = buf.g1();
 			this.font = buf.g2();
@@ -646,7 +646,7 @@ public class IfType extends Linkable {
 			this.invSlotObjId = new int[this.height * this.width];
 			this.invSlotObjCount = new int[this.height * this.width];
 
-			this.center = buf.g1();
+			this.halign = buf.g1();
 			this.font = buf.g2();
 			if (this.font == 65535) {
 				this.font = -1;
@@ -775,7 +775,7 @@ public class IfType extends Linkable {
 			}
 			this.text = buf.gjstr();
 			this.field1832 = buf.g1();
-			this.center = buf.g1();
+			this.halign = buf.g1();
 			this.field1834 = buf.g1();
 			this.shadowed = buf.g1() == 1;
 			this.colour = buf.g4();
@@ -1042,7 +1042,7 @@ public class IfType extends Linkable {
 	}
 
 	@ObfuscatedName("ch.y(I)V")
-	public static void method1104() {
+	public static void unload() {
 		field1778.clear();
 		field1850.clear();
 		field1891.clear();

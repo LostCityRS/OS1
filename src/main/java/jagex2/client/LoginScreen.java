@@ -356,42 +356,42 @@ public class LoginScreen {
 		}
 		if (Client.gameState == 0 || Client.gameState == 5) {
 			byte var2 = 20;
-			arg0.method2880(Locale.field1065, 382, 245 - var2, 16777215, -1);
+			arg0.drawStringCenter(Locale.field1065, 382, 245 - var2, 16777215, -1);
 			int var3 = 253 - var2;
 			Pix2D.method2639(230, var3, 304, 34, 9179409);
 			Pix2D.method2639(231, var3 + 1, 302, 32, 0);
 			Pix2D.method2637(232, var3 + 2, progress * 3, 30, 9179409);
 			Pix2D.method2637(progress * 3 + 232, var3 + 2, 300 - progress * 3, 30, 0);
-			arg0.method2880(message, 382, 276 - var2, 16777215, -1);
+			arg0.drawStringCenter(message, 382, 276 - var2, 16777215, -1);
 		}
 		if (Client.gameState == 20) {
 			field137.method2747(382 - field137.field2513 / 2, 271 - field137.field2514 / 2);
 			short var4 = 211;
-			arg0.method2880(line1Message, 382, var4, 16776960, 0);
+			arg0.drawStringCenter(line1Message, 382, var4, 16776960, 0);
 			int var89 = var4 + 15;
-			arg0.method2880(line2Message, 382, var89, 16776960, 0);
+			arg0.drawStringCenter(line2Message, 382, var89, 16776960, 0);
 			int var90 = var89 + 15;
-			arg0.method2880(line3Message, 382, var90, 16776960, 0);
+			arg0.drawStringCenter(line3Message, 382, var90, 16776960, 0);
 			int var91 = var90 + 15;
 			int var92 = var91 + 10;
-			arg0.method2821(Locale.field903, 272, var92, 16777215, 0);
+			arg0.drawString(Locale.field903, 272, var92, 16777215, 0);
 			short var5 = 200;
 			String var6;
-			for (var6 = username; arg0.method2882(var6) > var5; var6 = var6.substring(0, var6.length() - 1)) {
+			for (var6 = username; arg0.stringWidth(var6) > var5; var6 = var6.substring(0, var6.length() - 1)) {
 			}
-			arg0.method2821(PixFont.method2844(var6), 312, var92, 16777215, 0);
+			arg0.drawString(PixFont.method2844(var6), 312, var92, 16777215, 0);
 			var89 = var92 + 15;
 			String var8 = Locale.field1073;
 			String var9 = password;
 			String var10 = StringUtil.method946('*', var9.length());
-			arg0.method2821(var8 + var10, 274, var89, 16777215, 0);
+			arg0.drawString(var8 + var10, 274, var89, 16777215, 0);
 			var89 += 15;
 		}
 		if (Client.gameState == 10) {
 			field137.method2747(202, 171);
 			if (field151 == 0) {
 				short var11 = 251;
-				arg0.method2880(Locale.field1074, 382, var11, 16776960, 0);
+				arg0.drawStringCenter(Locale.field1074, 382, var11, 16776960, 0);
 				int var93 = var11 + 30;
 				short var12 = 302;
 				short var13 = 291;
@@ -402,47 +402,47 @@ public class LoginScreen {
 				arg0.method2824(Locale.field1076, var14 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 			} else if (field151 == 2) {
 				short var15 = 211;
-				arg0.method2880(line1Message, 382, var15, 16776960, 0);
+				arg0.drawStringCenter(line1Message, 382, var15, 16776960, 0);
 				int var94 = var15 + 15;
-				arg0.method2880(line2Message, 382, var94, 16776960, 0);
+				arg0.drawStringCenter(line2Message, 382, var94, 16776960, 0);
 				int var95 = var94 + 15;
-				arg0.method2880(line3Message, 382, var95, 16776960, 0);
+				arg0.drawStringCenter(line3Message, 382, var95, 16776960, 0);
 				int var96 = var95 + 15;
 				int var97 = var96 + 10;
-				arg0.method2821(Locale.field903, 272, var97, 16777215, 0);
+				arg0.drawString(Locale.field903, 272, var97, 16777215, 0);
 				short var16 = 200;
 				String var17;
-				for (var17 = username; arg0.method2882(var17) > var16; var17 = var17.substring(1)) {
+				for (var17 = username; arg0.stringWidth(var17) > var16; var17 = var17.substring(1)) {
 				}
-				arg0.method2821(PixFont.method2844(var17) + (field150 == 0 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 312, var97, 16777215, 0);
+				arg0.drawString(PixFont.method2844(var17) + (field150 == 0 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 312, var97, 16777215, 0);
 				var94 = var97 + 15;
 				String var19 = Locale.field1073;
 				String var20 = password;
 				String var21 = StringUtil.method946('*', var20.length());
-				arg0.method2821(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 274, var94, 16777215, 0);
+				arg0.drawString(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 274, var94, 16777215, 0);
 				var94 += 15;
 				short var22 = 302;
 				short var23 = 321;
 				field153.method2747(var22 - 73, var23 - 20);
-				arg0.method2880(Locale.field995, var22, var23 + 5, 16777215, 0);
+				arg0.drawStringCenter(Locale.field995, var22, var23 + 5, 16777215, 0);
 				short var24 = 462;
 				field153.method2747(var24 - 73, var23 - 20);
-				arg0.method2880(Locale.field1078, var24, var23 + 5, 16777215, 0);
+				arg0.drawStringCenter(Locale.field1078, var24, var23 + 5, 16777215, 0);
 			} else if (field151 == 3) {
-				arg0.method2880(Locale.field1079, 382, 211, 16776960, 0);
+				arg0.drawStringCenter(Locale.field1079, 382, 211, 16776960, 0);
 				short var25 = 236;
-				arg0.method2880(Locale.field992, 382, var25, 16777215, 0);
+				arg0.drawStringCenter(Locale.field992, 382, var25, 16777215, 0);
 				int var98 = var25 + 15;
-				arg0.method2880(Locale.field1081, 382, var98, 16777215, 0);
+				arg0.drawStringCenter(Locale.field1081, 382, var98, 16777215, 0);
 				int var99 = var98 + 15;
-				arg0.method2880(Locale.field1082, 382, var99, 16777215, 0);
+				arg0.drawStringCenter(Locale.field1082, 382, var99, 16777215, 0);
 				int var100 = var99 + 15;
-				arg0.method2880(Locale.field1084, 382, var100, 16777215, 0);
+				arg0.drawStringCenter(Locale.field1084, 382, var100, 16777215, 0);
 				int var101 = var100 + 15;
 				short var26 = 382;
 				short var27 = 321;
 				field153.method2747(var26 - 73, var27 - 20);
-				arg0.method2880(Locale.field1078, var26, var27 + 5, 16777215, 0);
+				arg0.drawStringCenter(Locale.field1078, var26, var27 + 5, 16777215, 0);
 			}
 		}
 		if (field147 > 0) {
@@ -632,11 +632,11 @@ public class LoginScreen {
 				byte var84 = 100;
 				byte var85 = 35;
 				field215.method2747(var82, var83);
-				arg0.method2880(Locale.field1043 + " " + Client.worldid, var84 / 2 + var82, var85 / 2 + var83 - 2, 16777215, 0);
+				arg0.drawStringCenter(Locale.field1043 + " " + Client.worldid, var84 / 2 + var82, var85 / 2 + var83 - 2, 16777215, 0);
 				if (field35 == null) {
-					arg1.method2880(Locale.field1072, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
+					arg1.drawStringCenter(Locale.field1072, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
 				} else {
-					arg1.method2880(Locale.field1093, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
+					arg1.drawStringCenter(Locale.field1093, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
 				}
 			}
 		}
@@ -715,12 +715,12 @@ public class LoginScreen {
 		Pix2D.method2637(0, 23, 765, 480, 0);
 		Pix2D.method2592(0, 0, 125, 23, 12425273, 9135624);
 		Pix2D.method2592(125, 0, 640, 23, 5197647, 2697513);
-		arg0.method2880(Locale.field1066, 62, 15, 0, -1);
+		arg0.drawStringCenter(Locale.field1066, 62, 15, 0, -1);
 		if (field811 != null) {
 			field811[1].method2747(140, 1);
-			arg1.method2821(Locale.field1085, 152, 10, 16777215, -1);
+			arg1.drawString(Locale.field1085, 152, 10, 16777215, -1);
 			field811[0].method2747(140, 12);
-			arg1.method2821(Locale.field916, 152, 21, 16777215, -1);
+			arg1.drawString(Locale.field916, 152, 21, 16777215, -1);
 		}
 		if (field681 != null) {
 			short var2 = 280;
@@ -734,7 +734,7 @@ public class LoginScreen {
 			} else {
 				field681[1].method2747(var2 + 15, 4);
 			}
-			arg0.method2821(Locale.field1087, var2 + 32, 17, 16777215, -1);
+			arg0.drawString(Locale.field1087, var2 + 32, 17, 16777215, -1);
 			short var3 = 390;
 			if (field130[0] == 1 && field167[0] == 0) {
 				field681[2].method2747(var3, 4);
@@ -746,7 +746,7 @@ public class LoginScreen {
 			} else {
 				field681[1].method2747(var3 + 15, 4);
 			}
-			arg0.method2821(Locale.field894, var3 + 32, 17, 16777215, -1);
+			arg0.drawString(Locale.field894, var3 + 32, 17, 16777215, -1);
 			short var4 = 500;
 			if (field130[0] == 2 && field167[0] == 0) {
 				field681[2].method2747(var4, 4);
@@ -758,7 +758,7 @@ public class LoginScreen {
 			} else {
 				field681[1].method2747(var4 + 15, 4);
 			}
-			arg0.method2821(Locale.field1091, var4 + 32, 17, 16777215, -1);
+			arg0.drawString(Locale.field1091, var4 + 32, 17, 16777215, -1);
 			short var5 = 610;
 			if (field130[0] == 3 && field167[0] == 0) {
 				field681[2].method2747(var5, 4);
@@ -770,10 +770,10 @@ public class LoginScreen {
 			} else {
 				field681[1].method2747(var5 + 15, 4);
 			}
-			arg0.method2821(Locale.field1090, var5 + 32, 17, 16777215, -1);
+			arg0.drawString(Locale.field1090, var5 + 32, 17, 16777215, -1);
 		}
 		Pix2D.method2637(708, 4, 50, 16, 0);
-		arg1.method2880(Locale.field1078, 733, 16, 16777215, -1);
+		arg1.drawStringCenter(Locale.field1078, 733, 16, 16777215, -1);
 		field168 = -1;
 		if (field1530 != null) {
 			byte var6 = 88;
@@ -828,8 +828,8 @@ public class LoginScreen {
 				if (field2612 != null) {
 					field2612[var20.field48 + (var20.field50 ? 8 : 0)].method2747(var17 + 29, var16);
 				}
-				arg0.method2880(Integer.toString(var20.field49), var17 + 15, var7 / 2 + var16 + 5, 0, -1);
-				arg1.method2880(var22, var17 + 60, var7 / 2 + var16 + 5, 268435455, -1);
+				arg0.drawStringCenter(Integer.toString(var20.field49), var17 + 15, var7 / 2 + var16 + 5, 0, -1);
+				arg1.drawStringCenter(var22, var17 + 60, var7 / 2 + var16 + 5, 268435455, -1);
 				var16 += var7 + var13;
 				var18++;
 				if (var18 >= var9) {
@@ -1130,7 +1130,7 @@ public class LoginScreen {
 		username = "";
 		password = "";
 		field160 = false;
-		if (Client.field2169 == 0) {
+		if (Client.midiVolume == 0) {
 			field142 = true;
 		} else {
 			field142 = false;

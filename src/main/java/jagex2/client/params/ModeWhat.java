@@ -27,4 +27,19 @@ public class ModeWhat {
 		this.name = arg0;
 		this.id = arg1;
 	}
+
+	public static ModeWhat[] values() {
+		return new ModeWhat[] { ModeWhat.RC, ModeWhat.WIP, ModeWhat.BUILDLIVE, ModeWhat.LIVE };
+	}
+
+	public static ModeWhat get(int id) {
+		ModeWhat[] all = ModeWhat.values();
+		for (int i = 0; i < all.length; i++) {
+			ModeWhat mode = all[i];
+			if (mode.id == id) {
+				return mode;
+			}
+		}
+		return null;
+	}
 }

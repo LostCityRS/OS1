@@ -136,7 +136,7 @@ public class FluType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fg.v(I)V")
-	public static void method2580() {
+	public static void unload() {
 		field2355.clear();
 	}
 }

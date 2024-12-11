@@ -36,7 +36,7 @@ public class SoundBank {
 		if (var8 != null) {
 			return var8;
 		} else if (arg2 == null || arg2[0] > 0) {
-			Wave var9 = Wave.method294(this.field313, arg0, arg1);
+			Wave var9 = Wave.generate(this.field313, arg0, arg1);
 			if (var9 == null) {
 				return null;
 			}

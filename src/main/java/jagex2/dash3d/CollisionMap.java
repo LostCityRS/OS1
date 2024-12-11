@@ -6,10 +6,10 @@ import deob.ObfuscatedName;
 public class CollisionMap {
 
 	@ObfuscatedName("ck.am")
-	public int field1265 = 0;
+	public int offsetX = 0;
 
 	@ObfuscatedName("ck.ap")
-	public int field1249 = 0;
+	public int offsetZ = 0;
 
 	@ObfuscatedName("ck.av")
 	public int field1264;
@@ -42,8 +42,8 @@ public class CollisionMap {
 
 	@ObfuscatedName("ck.d(IIIIZI)V")
 	public void method1195(int arg0, int arg1, int arg2, int arg3, boolean arg4) {
-		int var6 = arg0 - this.field1265;
-		int var7 = arg1 - this.field1249;
+		int var6 = arg0 - this.offsetX;
+		int var7 = arg1 - this.offsetZ;
 		if (arg2 == 0) {
 			if (arg3 == 0) {
 				this.method1201(var6, var7, 128);
@@ -172,8 +172,8 @@ public class CollisionMap {
 		if (arg4) {
 			var6 += 131072;
 		}
-		int var7 = arg0 - this.field1265;
-		int var8 = arg1 - this.field1249;
+		int var7 = arg0 - this.offsetX;
+		int var8 = arg1 - this.offsetZ;
 		for (int var9 = var7; var9 < arg2 + var7; var9++) {
 			if (var9 >= 0 && var9 < this.field1264) {
 				for (int var10 = var8; var10 < arg3 + var8; var10++) {
@@ -187,15 +187,15 @@ public class CollisionMap {
 
 	@ObfuscatedName("ck.m(III)V")
 	public void method1199(int arg0, int arg1) {
-		int var3 = arg0 - this.field1265;
-		int var4 = arg1 - this.field1249;
+		int var3 = arg0 - this.offsetX;
+		int var4 = arg1 - this.offsetZ;
 		this.flags[var3][var4] |= 0x200000;
 	}
 
 	@ObfuscatedName("ck.c(IIB)V")
 	public void method1213(int arg0, int arg1) {
-		int var3 = arg0 - this.field1265;
-		int var4 = arg1 - this.field1249;
+		int var3 = arg0 - this.offsetX;
+		int var4 = arg1 - this.offsetZ;
 		this.flags[var3][var4] |= 0x40000;
 	}
 
@@ -205,9 +205,9 @@ public class CollisionMap {
 	}
 
 	@ObfuscatedName("ck.j(IIIIZI)V")
-	public void method1202(int arg0, int arg1, int arg2, int arg3, boolean arg4) {
-		int var6 = arg0 - this.field1265;
-		int var7 = arg1 - this.field1249;
+	public void removeWall(int arg0, int arg1, int arg2, int arg3, boolean arg4) {
+		int var6 = arg0 - this.offsetX;
+		int var7 = arg1 - this.offsetZ;
 		if (arg2 == 0) {
 			if (arg3 == 0) {
 				this.method1214(var6, var7, 128);
@@ -331,13 +331,13 @@ public class CollisionMap {
 	}
 
 	@ObfuscatedName("ck.z(IIIIIZI)V")
-	public void method1217(int arg0, int arg1, int arg2, int arg3, int arg4, boolean arg5) {
+	public void removeLoc(int arg0, int arg1, int arg2, int arg3, int arg4, boolean arg5) {
 		int var7 = 256;
 		if (arg5) {
 			var7 += 131072;
 		}
-		int var8 = arg0 - this.field1265;
-		int var9 = arg1 - this.field1249;
+		int var8 = arg0 - this.offsetX;
+		int var9 = arg1 - this.offsetZ;
 		if (arg4 == 1 || arg4 == 3) {
 			int var10 = arg2;
 			arg2 = arg3;
@@ -360,9 +360,9 @@ public class CollisionMap {
 	}
 
 	@ObfuscatedName("ck.q(III)V")
-	public void method1205(int arg0, int arg1) {
-		int var3 = arg0 - this.field1265;
-		int var4 = arg1 - this.field1249;
+	public void removeBlocked(int arg0, int arg1) {
+		int var3 = arg0 - this.offsetX;
+		int var4 = arg1 - this.offsetZ;
 		this.flags[var3][var4] &= 0xFFFBFFFF;
 	}
 
@@ -371,10 +371,10 @@ public class CollisionMap {
 		if (arg0 == arg2 && arg1 == arg3) {
 			return true;
 		}
-		int var7 = arg0 - this.field1265;
-		int var8 = arg1 - this.field1249;
-		int var9 = arg2 - this.field1265;
-		int var10 = arg3 - this.field1249;
+		int var7 = arg0 - this.offsetX;
+		int var8 = arg1 - this.offsetZ;
+		int var9 = arg2 - this.offsetX;
+		int var10 = arg3 - this.offsetZ;
 		if (arg4 == 0) {
 			if (arg5 == 0) {
 				if (var9 - 1 == var7 && var8 == var10) {
@@ -495,10 +495,10 @@ public class CollisionMap {
 		if (arg0 == arg2 && arg1 == arg3) {
 			return true;
 		}
-		int var7 = arg0 - this.field1265;
-		int var8 = arg1 - this.field1249;
-		int var9 = arg2 - this.field1265;
-		int var10 = arg3 - this.field1249;
+		int var7 = arg0 - this.offsetX;
+		int var8 = arg1 - this.offsetZ;
+		int var9 = arg2 - this.offsetX;
+		int var10 = arg3 - this.offsetZ;
 		if (arg4 == 6 || arg4 == 7) {
 			if (arg4 == 7) {
 				arg5 = arg5 + 2 & 0x3;
@@ -556,14 +556,14 @@ public class CollisionMap {
 		int var9 = arg3 + arg5 - 1;
 		if (arg0 >= arg2 && arg0 <= var8 && arg1 >= arg3 && arg1 <= var9) {
 			return true;
-		} else if (arg2 - 1 == arg0 && arg1 >= arg3 && arg1 <= var9 && (this.flags[arg0 - this.field1265][arg1 - this.field1249] & 0x8) == 0 && (arg6 & 0x8) == 0) {
+		} else if (arg2 - 1 == arg0 && arg1 >= arg3 && arg1 <= var9 && (this.flags[arg0 - this.offsetX][arg1 - this.offsetZ] & 0x8) == 0 && (arg6 & 0x8) == 0) {
 			return true;
-		} else if (var8 + 1 == arg0 && arg1 >= arg3 && arg1 <= var9 && (this.flags[arg0 - this.field1265][arg1 - this.field1249] & 0x80) == 0 && (arg6 & 0x2) == 0) {
+		} else if (var8 + 1 == arg0 && arg1 >= arg3 && arg1 <= var9 && (this.flags[arg0 - this.offsetX][arg1 - this.offsetZ] & 0x80) == 0 && (arg6 & 0x2) == 0) {
 			return true;
-		} else if (arg3 - 1 == arg1 && arg0 >= arg2 && arg0 <= var8 && (this.flags[arg0 - this.field1265][arg1 - this.field1249] & 0x2) == 0 && (arg6 & 0x4) == 0) {
+		} else if (arg3 - 1 == arg1 && arg0 >= arg2 && arg0 <= var8 && (this.flags[arg0 - this.offsetX][arg1 - this.offsetZ] & 0x2) == 0 && (arg6 & 0x4) == 0) {
 			return true;
 		} else {
-			return var9 + 1 == arg1 && arg0 >= arg2 && arg0 <= var8 && (this.flags[arg0 - this.field1265][arg1 - this.field1249] & 0x20) == 0 && (arg6 & 0x1) == 0;
+			return var9 + 1 == arg1 && arg0 >= arg2 && arg0 <= var8 && (this.flags[arg0 - this.offsetX][arg1 - this.offsetZ] & 0x20) == 0 && (arg6 & 0x1) == 0;
 		}
 	}
 }

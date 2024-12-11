@@ -506,7 +506,7 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		if (!arg4 && (obj.stackable == 1 || count != 1) && count != -1) {
-			font.method2821(formatObjCountTagged(count), 0, 9, 0xffff00, 1);
+			font.drawString(formatObjCountTagged(count), 0, 9, 0xffff00, 1);
 		}
 
 		if (!arg4) {
@@ -673,5 +673,11 @@ public class ObjType extends DoublyLinkable {
 		membersWorld = var34;
 		configJs5.getFileCount(10);
 		font = var35;
+	}
+
+	public static void unload() {
+		typeCache.clear();
+		modelCache.clear();
+		iconCache.clear();
 	}
 }

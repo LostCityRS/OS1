@@ -192,7 +192,7 @@ public abstract class PixFont extends Pix2D {
 	}
 
 	@ObfuscatedName("fs.bp(Ljava/lang/String;)I")
-	public int method2882(String arg0) {
+	public int stringWidth(String arg0) {
 		if (arg0 == null) {
 			return 0;
 		}
@@ -338,7 +338,7 @@ public abstract class PixFont extends Pix2D {
 		int var3 = this.method2817(arg0, new int[] { arg1 }, field2565);
 		int var4 = 0;
 		for (int var5 = 0; var5 < var3; var5++) {
-			int var6 = this.method2882(field2565[var5]);
+			int var6 = this.stringWidth(field2565[var5]);
 			if (var6 > var4) {
 				var4 = var6;
 			}
@@ -376,26 +376,26 @@ public abstract class PixFont extends Pix2D {
 	}
 
 	@ObfuscatedName("fs.bd(Ljava/lang/String;IIII)V")
-	public void method2821(String arg0, int arg1, int arg2, int arg3, int arg4) {
+	public void drawString(String arg0, int arg1, int arg2, int arg3, int arg4) {
 		if (arg0 != null) {
 			this.method2843(arg3, arg4);
-			this.method2892(arg0, arg1, arg2);
+			this.drawString(arg0, arg1, arg2);
 		}
 	}
 
 	@ObfuscatedName("fs.cr(Ljava/lang/String;IIII)V")
-	public void method2864(String arg0, int arg1, int arg2, int arg3, int arg4) {
+	public void drawStringRight(String arg0, int arg1, int arg2, int arg3, int arg4) {
 		if (arg0 != null) {
 			this.method2843(arg3, arg4);
-			this.method2892(arg0, arg1 - this.method2882(arg0), arg2);
+			this.drawString(arg0, arg1 - this.stringWidth(arg0), arg2);
 		}
 	}
 
 	@ObfuscatedName("fs.cs(Ljava/lang/String;IIII)V")
-	public void method2880(String arg0, int arg1, int arg2, int arg3, int arg4) {
+	public void drawStringCenter(String arg0, int arg1, int arg2, int arg3, int arg4) {
 		if (arg0 != null) {
 			this.method2843(arg3, arg4);
-			this.method2892(arg0, arg1 - this.method2882(arg0) / 2, arg2);
+			this.drawString(arg0, arg1 - this.stringWidth(arg0) / 2, arg2);
 		}
 	}
 
@@ -433,16 +433,16 @@ public abstract class PixFont extends Pix2D {
 		}
 		for (int var15 = 0; var15 < var12; var15++) {
 			if (arg7 == 0) {
-				this.method2892(field2565[var15], arg1, var13);
+				this.drawString(field2565[var15], arg1, var13);
 			} else if (arg7 == 1) {
-				this.method2892(field2565[var15], arg1 + (arg3 - this.method2882(field2565[var15])) / 2, var13);
+				this.drawString(field2565[var15], arg1 + (arg3 - this.stringWidth(field2565[var15])) / 2, var13);
 			} else if (arg7 == 2) {
-				this.method2892(field2565[var15], arg1 + arg3 - this.method2882(field2565[var15]), var13);
+				this.drawString(field2565[var15], arg1 + arg3 - this.stringWidth(field2565[var15]), var13);
 			} else if (var12 - 1 == var15) {
-				this.method2892(field2565[var15], arg1, var13);
+				this.drawString(field2565[var15], arg1, var13);
 			} else {
 				this.method2831(field2565[var15], arg3);
-				this.method2892(field2565[var15], arg1, var13);
+				this.drawString(field2565[var15], arg1, var13);
 				field2562 = 0;
 			}
 			var13 += arg9;
@@ -460,7 +460,7 @@ public abstract class PixFont extends Pix2D {
 		for (int var8 = 0; var8 < arg0.length(); var8++) {
 			var7[var8] = (int) (Math.sin((double) arg5 / 5.0D + (double) var8 / 2.0D) * 5.0D);
 		}
-		this.method2833(arg0, arg1 - this.method2882(arg0) / 2, arg2, null, var7);
+		this.method2833(arg0, arg1 - this.stringWidth(arg0) / 2, arg2, null, var7);
 	}
 
 	@ObfuscatedName("fs.cp(Ljava/lang/String;IIIII)V")
@@ -475,7 +475,7 @@ public abstract class PixFont extends Pix2D {
 			var7[var9] = (int) (Math.sin((double) arg5 / 5.0D + (double) var9 / 5.0D) * 5.0D);
 			var8[var9] = (int) (Math.sin((double) arg5 / 5.0D + (double) var9 / 3.0D) * 5.0D);
 		}
-		this.method2833(arg0, arg1 - this.method2882(arg0) / 2, arg2, var7, var8);
+		this.method2833(arg0, arg1 - this.stringWidth(arg0) / 2, arg2, var7, var8);
 	}
 
 	@ObfuscatedName("fs.ca(Ljava/lang/String;IIIIII)V")
@@ -492,7 +492,7 @@ public abstract class PixFont extends Pix2D {
 		for (int var11 = 0; var11 < arg0.length(); var11++) {
 			var10[var11] = (int) (Math.sin((double) arg5 / 1.0D + (double) var11 / 1.5D) * var8);
 		}
-		this.method2833(arg0, arg1 - this.method2882(arg0) / 2, arg2, null, var10);
+		this.method2833(arg0, arg1 - this.stringWidth(arg0) / 2, arg2, null, var10);
 	}
 
 	@ObfuscatedName("fs.co(Ljava/lang/String;IIIII)V")
@@ -574,12 +574,12 @@ public abstract class PixFont extends Pix2D {
 			}
 		}
 		if (var3 > 0) {
-			field2562 = (arg1 - this.method2882(arg0) << 8) / var3;
+			field2562 = (arg1 - this.stringWidth(arg0) << 8) / var3;
 		}
 	}
 
 	@ObfuscatedName("fs.cm(Ljava/lang/String;II)V")
-	public void method2892(String arg0, int arg1, int arg2) {
+	public void drawString(String arg0, int arg1, int arg2) {
 		int var4 = arg2 - this.field2550;
 		int var5 = -1;
 		int var6 = -1;

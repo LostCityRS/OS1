@@ -187,4 +187,8 @@ public class IdkType extends DoublyLinkable {
 		}
 		return var4;
 	}
+
+	public static void unload() {
+		field2396.clear();
+	}
 }

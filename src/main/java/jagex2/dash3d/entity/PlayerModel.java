@@ -313,7 +313,7 @@ public class PlayerModel {
 	}
 
 	@ObfuscatedName("ba.q(I)V")
-	public static void method912() {
+	public static void unload() {
 		field1231.clear();
 	}
 }

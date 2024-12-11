@@ -63,4 +63,8 @@ public class VarBitType extends DoublyLinkable {
 	public static void init(Js5Provider var38) {
 		configJs5 = var38;
 	}
+
+	public static void unload() {
+		field2417.clear();
+	}
 }

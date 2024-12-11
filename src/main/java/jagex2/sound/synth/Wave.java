@@ -18,7 +18,7 @@ public class Wave {
 	public int field309;
 
 	@ObfuscatedName("o.r(Lch;II)Lo;")
-	public static Wave method294(Js5Index arg0, int arg1, int arg2) {
+	public static Wave generate(Js5Index arg0, int arg1, int arg2) {
 		byte[] var3 = arg0.getFile(arg1, arg2);
 		return var3 == null ? null : new Wave(new Packet(var3));
 	}

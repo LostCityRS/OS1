@@ -323,7 +323,7 @@ public class SeqType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("cu.t(I)V")
-	public static void method1123() {
+	public static void unload() {
 		field2362.clear();
 		field2370.clear();
 	}

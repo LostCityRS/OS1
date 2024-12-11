@@ -407,7 +407,7 @@ public class NpcType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("df.b(I)V")
-	public static void clear() {
+	public static void unload() {
 		configCache.clear();
 		modelCache.clear();
 	}

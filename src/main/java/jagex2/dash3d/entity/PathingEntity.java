@@ -145,7 +145,7 @@ public abstract class PathingEntity extends Entity {
 	public int forceMoveFaceDirection;
 
 	@ObfuscatedName("fz.bi")
-	public int field2660 = 0;
+	public int cycle = 0;
 
 	@ObfuscatedName("fz.bs")
 	public int field2626 = 200;
@@ -178,7 +178,7 @@ public abstract class PathingEntity extends Entity {
 	public int seqPathLength = 0;
 
 	@ObfuscatedName("fz.b(IIZB)V")
-	public final void method2907(int arg0, int arg1, boolean arg2) {
+	public final void move(int arg0, int arg1, boolean arg2) {
 		if (this.primarySeqId != -1 && SeqType.get(this.primarySeqId).postanim_move == 1) {
 			this.primarySeqId = -1;
 		}
@@ -210,7 +210,7 @@ public abstract class PathingEntity extends Entity {
 	}
 
 	@ObfuscatedName("fz.y(IZI)V")
-	public final void method2908(int arg0, boolean arg1) {
+	public final void step(int arg0, boolean arg1) {
 		int var3 = this.pathTileX[0];
 		int var4 = this.pathTileZ[0];
 		if (arg0 == 0) {

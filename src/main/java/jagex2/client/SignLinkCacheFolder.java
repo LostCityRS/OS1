@@ -2,6 +2,7 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import jagex2.io.BufferedFile;
+import jagex2.io.CacheUtil;
 import jagex2.io.FileOnDisk;
 import jagex2.io.Packet;
 
@@ -267,6 +268,88 @@ public class SignLinkCacheFolder {
 			masterIndex.method137();
 			uidDat.method137();
 		} catch (Exception var2) {
+		}
+	}
+
+	public static void imethod1(String var18, int var19) {
+		try {
+			archiveCount = 16;
+			field368 = var19;
+			try {
+				field294 = System.getProperty("os.name");
+			} catch (Exception var37) {
+				field294 = "Unknown";
+			}
+			field199 = field294.toLowerCase();
+			try {
+				homeDir = System.getProperty("user.home");
+				if (homeDir != null) {
+					homeDir = homeDir + "/";
+				}
+			} catch (Exception var36) {
+			}
+			try {
+				if (field199.startsWith("win")) {
+					if (homeDir == null) {
+						homeDir = System.getenv("USERPROFILE");
+					}
+				} else if (homeDir == null) {
+					homeDir = System.getenv("HOME");
+				}
+				if (homeDir != null) {
+					homeDir = homeDir + "/";
+				}
+			} catch (Exception var35) {
+			}
+			if (homeDir == null) {
+				homeDir = "~/";
+			}
+			historicCacheLocations = new String[] { "c:/rscache/", "/rscache/", "c:/windows/", "c:/winnt/", "c:/", homeDir, "/tmp/", "" };
+			historicCacheDirectories = new String[] { ".jagex_cache_" + field368, ".file_store_" + field368 };
+			label130: for (int var23 = 0; var23 < 4; var23++) {
+				cacheDirectory = method102("oldschool", var18, var23);
+				if (!cacheDirectory.exists()) {
+					cacheDirectory.mkdirs();
+				}
+				File[] var24 = cacheDirectory.listFiles();
+				if (var24 == null) {
+					break;
+				}
+				File[] var25 = var24;
+				int var26 = 0;
+				while (true) {
+					if (var26 >= var25.length) {
+						break label130;
+					}
+					File var27 = var25[var26];
+					boolean var30;
+					try {
+						RandomAccessFile var28 = new RandomAccessFile(var27, "rw");
+						int var29 = var28.read();
+						var28.seek(0L);
+						var28.write(var29);
+						var28.seek(0L);
+						var28.close();
+						var30 = true;
+					} catch (Exception var34) {
+						var30 = false;
+					}
+					if (!var30) {
+						break;
+					}
+					var26++;
+				}
+			}
+			CacheUtil.method61(cacheDirectory);
+			method1166();
+			cacheDat = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.dat2"), "rw", 1048576000L), 5200, 0);
+			masterIndex = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx255"), "rw", 1048576L), 6000, 0);
+			cacheIndex = new BufferedFile[archiveCount];
+			for (int var32 = 0; var32 < archiveCount; var32++) {
+				cacheIndex[var32] = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx" + var32), "rw", 1048576L), 6000, 0);
+			}
+		} catch (Exception var38) {
+			JagException.report(null, var38);
 		}
 	}
 }

@@ -10,7 +10,7 @@ public class LocSpawned extends Linkable {
 	public int level;
 
 	@ObfuscatedName("dn.c")
-	public int field1630;
+	public int layer;
 
 	@ObfuscatedName("dn.n")
 	public int localX;
@@ -19,25 +19,25 @@ public class LocSpawned extends Linkable {
 	public int localZ;
 
 	@ObfuscatedName("dn.z")
-	public int field1629;
+	public int previousType;
 
 	@ObfuscatedName("dn.g")
-	public int field1634;
+	public int previousRotation;
 
 	@ObfuscatedName("dn.q")
-	public int field1635;
+	public int previousShape;
 
 	@ObfuscatedName("dn.i")
-	public int field1636;
+	public int type;
 
 	@ObfuscatedName("dn.s")
-	public int field1637;
+	public int rotation;
 
 	@ObfuscatedName("dn.u")
-	public int field1631;
+	public int shape;
 
 	@ObfuscatedName("dn.v")
-	public int field1639 = 0;
+	public int delay = 0;
 
 	@ObfuscatedName("dn.w")
 	public int duration = -1;
