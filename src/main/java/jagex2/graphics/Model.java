@@ -103,7 +103,7 @@ public class Model extends Entity {
 	public int[][] field2701;
 
 	@ObfuscatedName("fw.ay")
-	public VertexNormal2[] field2702;
+	public FaceNormal[] field2702;
 
 	@ObfuscatedName("fw.al")
 	public VertexNormal[] field2703;
@@ -1273,9 +1273,9 @@ public class Model extends Entity {
 				var22.field545++;
 			} else if (var19 == 1) {
 				if (this.field2702 == null) {
-					this.field2702 = new VertexNormal2[this.faceCount];
+					this.field2702 = new FaceNormal[this.faceCount];
 				}
-				VertexNormal2 var23 = this.field2702[var2] = new VertexNormal2();
+				FaceNormal var23 = this.field2702[var2] = new FaceNormal();
 				var23.field552 = var16;
 				var23.field551 = var17;
 				var23.field550 = var18;
@@ -1501,7 +1501,7 @@ public class Model extends Entity {
 					int var25 = (var24.field547 * arg4 + var24.field548 * arg2 + var24.field546 * arg3) / (var24.field545 * var7) + arg0;
 					var8.field2732[var15] = method2943(var19, var25);
 				} else if (var16 == 1) {
-					VertexNormal2 var26 = this.field2702[var15];
+					FaceNormal var26 = this.field2702[var15];
 					int var27 = (var26.field550 * arg4 + var26.field552 * arg2 + var26.field551 * arg3) / (var7 / 2 + var7) + arg0;
 					var8.field2778[var15] = method2943(this.field2704[var15] & 0xFFFF, var27);
 					var8.field2732[var15] = -1;
@@ -1537,7 +1537,7 @@ public class Model extends Entity {
 				int var33 = (var32.field547 * arg4 + var32.field548 * arg2 + var32.field546 * arg3) / (var32.field545 * var7) + arg0;
 				var8.field2732[var15] = method2939(var33);
 			} else if (var16 == 1) {
-				VertexNormal2 var34 = this.field2702[var15];
+				FaceNormal var34 = this.field2702[var15];
 				int var35 = (var34.field550 * arg4 + var34.field552 * arg2 + var34.field551 * arg3) / (var7 / 2 + var7) + arg0;
 				var8.field2778[var15] = method2939(var35);
 				var8.field2732[var15] = -1;

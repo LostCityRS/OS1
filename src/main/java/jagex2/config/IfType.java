@@ -7,7 +7,7 @@ import jagex2.datastruct.LruCache;
 import jagex2.graphics.*;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
-import jagex2.jstring.EnglishLocale;
+import jagex2.jstring.Locale;
 
 @ObfuscatedName("eg")
 public class IfType extends Linkable {
@@ -349,7 +349,7 @@ public class IfType extends Linkable {
 	public String targetText = "";
 
 	@ObfuscatedName("eg.dp")
-	public String option = EnglishLocale.BUTTON_OK;
+	public String option = Locale.BUTTON_OK;
 
 	@ObfuscatedName("eg.dm")
 	public int[] invSlotObjId;
@@ -688,13 +688,13 @@ public class IfType extends Linkable {
 
 			if (this.option.length() == 0) {
 				if (this.buttonType == 1) {
-					this.option = EnglishLocale.BUTTON_OK;
+					this.option = Locale.BUTTON_OK;
 				} else if (this.buttonType == 4) {
-					this.option = EnglishLocale.BUTTON_SELECT;
+					this.option = Locale.BUTTON_SELECT;
 				} else if (this.buttonType == 5) {
-					this.option = EnglishLocale.BUTTON_SELECT;
+					this.option = Locale.BUTTON_SELECT;
 				} else if (this.buttonType == 6) {
-					this.option = EnglishLocale.BUTTON_CONTINUE;
+					this.option = Locale.BUTTON_CONTINUE;
 				}
 			}
 		}

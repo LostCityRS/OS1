@@ -2,10 +2,10 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import jagex2.datastruct.MonotonicTime;
-import jagex2.datastruct.NodeLinkable;
+import jagex2.datastruct.ChatNode;
 
 @ObfuscatedName("dr")
-public class TimestampMessage extends NodeLinkable {
+public class TimestampMessage extends ChatNode {
 
 	@ObfuscatedName("dr.l")
 	public String field1584;

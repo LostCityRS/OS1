@@ -8,7 +8,7 @@ import jagex2.datastruct.TextUtil;
 import jagex2.graphics.PixFont;
 import jagex2.graphics.SoftwareFont;
 import jagex2.io.Packet;
-import jagex2.jstring.EnglishLocale;
+import jagex2.jstring.Locale;
 import jagex2.jstring.JString;
 import jagex2.sound.MidiPlayer;
 import jagex2.wordenc.WordPack;
@@ -2237,115 +2237,115 @@ public class ScriptRunner {
 							} else {
 								String colorLower = message.toLowerCase();
 								byte color = 0;
-								if (colorLower.startsWith(EnglishLocale.COLOR_YELLOW)) {
+								if (colorLower.startsWith(Locale.COLOR_YELLOW)) {
 									color = 0;
-									message = message.substring(EnglishLocale.COLOR_YELLOW.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_RED)) {
+									message = message.substring(Locale.COLOR_YELLOW.length());
+								} else if (colorLower.startsWith(Locale.COLOR_RED)) {
 									color = 1;
-									message = message.substring(EnglishLocale.COLOR_RED.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_GREEN)) {
+									message = message.substring(Locale.COLOR_RED.length());
+								} else if (colorLower.startsWith(Locale.COLOR_GREEN)) {
 									color = 2;
-									message = message.substring(EnglishLocale.COLOR_GREEN.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_CYAN)) {
+									message = message.substring(Locale.COLOR_GREEN.length());
+								} else if (colorLower.startsWith(Locale.COLOR_CYAN)) {
 									color = 3;
-									message = message.substring(EnglishLocale.COLOR_CYAN.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_PURPLE)) {
+									message = message.substring(Locale.COLOR_CYAN.length());
+								} else if (colorLower.startsWith(Locale.COLOR_PURPLE)) {
 									color = 4;
-									message = message.substring(EnglishLocale.COLOR_PURPLE.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_WHITE)) {
+									message = message.substring(Locale.COLOR_PURPLE.length());
+								} else if (colorLower.startsWith(Locale.COLOR_WHITE)) {
 									color = 5;
-									message = message.substring(EnglishLocale.COLOR_WHITE.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_FLASH1)) {
+									message = message.substring(Locale.COLOR_WHITE.length());
+								} else if (colorLower.startsWith(Locale.COLOR_FLASH1)) {
 									color = 6;
-									message = message.substring(EnglishLocale.COLOR_FLASH1.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_FLASH2)) {
+									message = message.substring(Locale.COLOR_FLASH1.length());
+								} else if (colorLower.startsWith(Locale.COLOR_FLASH2)) {
 									color = 7;
-									message = message.substring(EnglishLocale.COLOR_FLASH2.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_FLASH3)) {
+									message = message.substring(Locale.COLOR_FLASH2.length());
+								} else if (colorLower.startsWith(Locale.COLOR_FLASH3)) {
 									color = 8;
-									message = message.substring(EnglishLocale.COLOR_FLASH3.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_GLOW1)) {
+									message = message.substring(Locale.COLOR_FLASH3.length());
+								} else if (colorLower.startsWith(Locale.COLOR_GLOW1)) {
 									color = 9;
-									message = message.substring(EnglishLocale.COLOR_GLOW1.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_GLOW2)) {
+									message = message.substring(Locale.COLOR_GLOW1.length());
+								} else if (colorLower.startsWith(Locale.COLOR_GLOW2)) {
 									color = 10;
-									message = message.substring(EnglishLocale.COLOR_GLOW2.length());
-								} else if (colorLower.startsWith(EnglishLocale.COLOR_GLOW3)) {
+									message = message.substring(Locale.COLOR_GLOW2.length());
+								} else if (colorLower.startsWith(Locale.COLOR_GLOW3)) {
 									color = 11;
-									message = message.substring(EnglishLocale.COLOR_GLOW3.length());
+									message = message.substring(Locale.COLOR_GLOW3.length());
 								} else if (Client.lang != 0) {
-									if (colorLower.startsWith(EnglishLocale.GER_COLOR_YELLOW)) {
+									if (colorLower.startsWith(Locale.GER_COLOR_YELLOW)) {
 										color = 0;
-										message = message.substring(EnglishLocale.GER_COLOR_YELLOW.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_RED)) {
+										message = message.substring(Locale.GER_COLOR_YELLOW.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_RED)) {
 										color = 1;
-										message = message.substring(EnglishLocale.GER_COLOR_RED.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_GREEN)) {
+										message = message.substring(Locale.GER_COLOR_RED.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_GREEN)) {
 										color = 2;
-										message = message.substring(EnglishLocale.GER_COLOR_GREEN.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_CYAN)) {
+										message = message.substring(Locale.GER_COLOR_GREEN.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_CYAN)) {
 										color = 3;
-										message = message.substring(EnglishLocale.GER_COLOR_CYAN.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_PURPLE)) {
+										message = message.substring(Locale.GER_COLOR_CYAN.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_PURPLE)) {
 										color = 4;
-										message = message.substring(EnglishLocale.GER_COLOR_PURPLE.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_WHITE)) {
+										message = message.substring(Locale.GER_COLOR_PURPLE.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_WHITE)) {
 										color = 5;
-										message = message.substring(EnglishLocale.GER_COLOR_WHITE.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_FLASH1)) {
+										message = message.substring(Locale.GER_COLOR_WHITE.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_FLASH1)) {
 										color = 6;
-										message = message.substring(EnglishLocale.GER_COLOR_FLASH1.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_FLASH2)) {
+										message = message.substring(Locale.GER_COLOR_FLASH1.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_FLASH2)) {
 										color = 7;
-										message = message.substring(EnglishLocale.GER_COLOR_FLASH2.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_FLASH3)) {
+										message = message.substring(Locale.GER_COLOR_FLASH2.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_FLASH3)) {
 										color = 8;
-										message = message.substring(EnglishLocale.GER_COLOR_FLASH3.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_GLOW1)) {
+										message = message.substring(Locale.GER_COLOR_FLASH3.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_GLOW1)) {
 										color = 9;
-										message = message.substring(EnglishLocale.GER_COLOR_GLOW1.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_GLOW2)) {
+										message = message.substring(Locale.GER_COLOR_GLOW1.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_GLOW2)) {
 										color = 10;
-										message = message.substring(EnglishLocale.GER_COLOR_GLOW2.length());
-									} else if (colorLower.startsWith(EnglishLocale.GER_COLOR_GLOW3)) {
+										message = message.substring(Locale.GER_COLOR_GLOW2.length());
+									} else if (colorLower.startsWith(Locale.GER_COLOR_GLOW3)) {
 										color = 11;
-										message = message.substring(EnglishLocale.GER_COLOR_GLOW3.length());
+										message = message.substring(Locale.GER_COLOR_GLOW3.length());
 									}
 								}
 
 								String effectLower = message.toLowerCase();
 								byte effect = 0;
-								if (effectLower.startsWith(EnglishLocale.EFFECT_WAVE)) {
+								if (effectLower.startsWith(Locale.EFFECT_WAVE)) {
 									effect = 1;
-									message = message.substring(EnglishLocale.EFFECT_WAVE.length());
-								} else if (effectLower.startsWith(EnglishLocale.EFFECT_WAVE2)) {
+									message = message.substring(Locale.EFFECT_WAVE.length());
+								} else if (effectLower.startsWith(Locale.EFFECT_WAVE2)) {
 									effect = 2;
-									message = message.substring(EnglishLocale.EFFECT_WAVE2.length());
-								} else if (effectLower.startsWith(EnglishLocale.EFFECT_SHAKE)) {
+									message = message.substring(Locale.EFFECT_WAVE2.length());
+								} else if (effectLower.startsWith(Locale.EFFECT_SHAKE)) {
 									effect = 3;
-									message = message.substring(EnglishLocale.EFFECT_SHAKE.length());
-								} else if (effectLower.startsWith(EnglishLocale.EFFECT_SCROLL)) {
+									message = message.substring(Locale.EFFECT_SHAKE.length());
+								} else if (effectLower.startsWith(Locale.EFFECT_SCROLL)) {
 									effect = 4;
-									message = message.substring(EnglishLocale.EFFECT_SCROLL.length());
-								} else if (effectLower.startsWith(EnglishLocale.EFFECT_SLIDE)) {
+									message = message.substring(Locale.EFFECT_SCROLL.length());
+								} else if (effectLower.startsWith(Locale.EFFECT_SLIDE)) {
 									effect = 5;
-									message = message.substring(EnglishLocale.EFFECT_SLIDE.length());
+									message = message.substring(Locale.EFFECT_SLIDE.length());
 								} else if (Client.lang != 0) {
-									if (effectLower.startsWith(EnglishLocale.GER_EFFECT_WAVE)) {
+									if (effectLower.startsWith(Locale.GER_EFFECT_WAVE)) {
 										effect = 1;
-										message = message.substring(EnglishLocale.GER_EFFECT_WAVE.length());
-									} else if (effectLower.startsWith(EnglishLocale.GER_EFFECT_WAVE2)) {
+										message = message.substring(Locale.GER_EFFECT_WAVE.length());
+									} else if (effectLower.startsWith(Locale.GER_EFFECT_WAVE2)) {
 										effect = 2;
-										message = message.substring(EnglishLocale.GER_EFFECT_WAVE2.length());
-									} else if (effectLower.startsWith(EnglishLocale.GER_EFFECT_SHAKE)) {
+										message = message.substring(Locale.GER_EFFECT_WAVE2.length());
+									} else if (effectLower.startsWith(Locale.GER_EFFECT_SHAKE)) {
 										effect = 3;
-										message = message.substring(EnglishLocale.GER_EFFECT_SHAKE.length());
-									} else if (effectLower.startsWith(EnglishLocale.GER_EFFECT_SCROLL)) {
+										message = message.substring(Locale.GER_EFFECT_SHAKE.length());
+									} else if (effectLower.startsWith(Locale.GER_EFFECT_SCROLL)) {
 										effect = 4;
-										message = message.substring(EnglishLocale.GER_EFFECT_SCROLL.length());
-									} else if (effectLower.startsWith(EnglishLocale.GER_EFFECT_SLIDE)) {
+										message = message.substring(Locale.GER_EFFECT_SCROLL.length());
+									} else if (effectLower.startsWith(Locale.GER_EFFECT_SLIDE)) {
 										effect = 5;
-										message = message.substring(EnglishLocale.GER_EFFECT_SLIDE.length());
+										message = message.substring(Locale.GER_EFFECT_SLIDE.length());
 									}
 								}
 

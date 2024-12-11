@@ -6,7 +6,7 @@ import jagex2.datastruct.LruCache;
 import jagex2.graphics.*;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
-import jagex2.jstring.EnglishLocale;
+import jagex2.jstring.Locale;
 
 @ObfuscatedName("fj")
 public class ObjType extends DoublyLinkable {
@@ -81,10 +81,10 @@ public class ObjType extends DoublyLinkable {
 	public boolean members = false;
 
 	@ObfuscatedName("fj.aa")
-	public String[] op = new String[] { null, null, EnglishLocale.OP_TAKE, null, null };
+	public String[] op = new String[] { null, null, Locale.OP_TAKE, null, null };
 
 	@ObfuscatedName("fj.as")
-	public String[] iop = new String[] { null, null, null, null, EnglishLocale.OP_DROP };
+	public String[] iop = new String[] { null, null, null, null, Locale.OP_DROP };
 
 	@ObfuscatedName("fj.am")
 	public int manwear = -1;
@@ -172,7 +172,7 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		if (!membersWorld && obj.members) {
-			obj.name = EnglishLocale.MEMBERS_OBJECT;
+			obj.name = Locale.MEMBERS_OBJECT;
 			obj.op = null;
 			obj.iop = null;
 			obj.team = 0;
@@ -238,7 +238,7 @@ public class ObjType extends DoublyLinkable {
 			this.womanwear2 = buf.g2();
 		} else if (code >= 30 && code < 35) {
 			this.op[code - 30] = buf.gjstr();
-			if (this.op[code - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
+			if (this.op[code - 30].equalsIgnoreCase(Locale.hidden)) {
 				this.op[code - 30] = null;
 			}
 		} else if (code >= 35 && code < 40) {
@@ -524,9 +524,9 @@ public class ObjType extends DoublyLinkable {
 		if (cost < 100000) {
 			return "<col=ffff00>" + cost + "</col>";
 		} else if (cost < 10000000) {
-			return "<col=ffffff>" + cost / 1000 + EnglishLocale.K_SUFFIX2 + "</col>";
+			return "<col=ffffff>" + cost / 1000 + Locale.K_SUFFIX2 + "</col>";
 		} else {
-			return "<col=00ff80>" + cost / 1000000 + EnglishLocale.M_SUFFIX2 + "</col>";
+			return "<col=00ff80>" + cost / 1000000 + Locale.M_SUFFIX2 + "</col>";
 		}
 	}
 

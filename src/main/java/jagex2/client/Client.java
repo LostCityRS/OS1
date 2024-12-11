@@ -11,7 +11,7 @@ import jagex2.js5.Js5Provider;
 import jagex2.js5.Js5ProviderThread;
 import jagex2.js5.Js5TcpClient;
 import jagex2.jstring.Cp1252;
-import jagex2.jstring.EnglishLocale;
+import jagex2.jstring.Locale;
 import jagex2.jstring.JString;
 import jagex2.sound.*;
 import jagex2.wordenc.Huffman;
@@ -981,7 +981,7 @@ public class Client extends GameShell {
 	public static FriendListEntry[] field2111 = new FriendListEntry[200];
 
 	@ObfuscatedName("client.pm")
-	public static NodeLinkList field2193 = new NodeLinkList();
+	public static ChatLinkList field2193 = new ChatLinkList();
 
 	@ObfuscatedName("client.pr")
 	public static int field2194 = 0;
@@ -1449,20 +1449,20 @@ public class Client extends GameShell {
 					field2024 = field1972;
 				}
 				int var12 = (field2024 * 50 - field1972 * 50) / field2024;
-				method1789(EnglishLocale.field873 + TextUtil.br + TextUtil.openParen + var12 + "%" + TextUtil.closeParen, false);
+				method1789(Locale.field873 + TextUtil.br + TextUtil.openParen + var12 + "%" + TextUtil.closeParen, false);
 			} else if (field2192 == 2) {
 				if (field1974 > field1975) {
 					field1975 = field1974;
 				}
 				int var13 = (field1975 * 50 - field1974 * 50) / field1975 + 50;
-				method1789(EnglishLocale.field873 + TextUtil.br + TextUtil.openParen + var13 + "%" + TextUtil.closeParen, false);
+				method1789(Locale.field873 + TextUtil.br + TextUtil.openParen + var13 + "%" + TextUtil.closeParen, false);
 			} else {
-				method1789(EnglishLocale.field873, false);
+				method1789(Locale.field873, false);
 			}
 		} else if (gameState == 30) {
 			imethod22();
 		} else if (gameState == 40) {
-			method1789(EnglishLocale.field874 + TextUtil.br + EnglishLocale.field875, false);
+			method1789(Locale.field874 + TextUtil.br + Locale.field875, false);
 		}
 
 		if (gameState == 30 && field2137 == 0 && !fullredraw) {
@@ -1665,7 +1665,7 @@ public class Client extends GameShell {
 				levelCollisionMap[var0] = new CollisionMap(104, 104);
 			}
 			field1627 = new Pix32(512, 512);
-			LoginScreen.message = EnglishLocale.field876;
+			LoginScreen.message = Locale.field876;
 			LoginScreen.progress = 5;
 			field1940 = 20;
 		} else if (field1940 == 20) {
@@ -1677,7 +1677,7 @@ public class Client extends GameShell {
 				var1[var2] = var4 * var5 >> 16;
 			}
 			World3D.method599(var1, 500, 800, 512, 334);
-			LoginScreen.message = EnglishLocale.field1026;
+			LoginScreen.message = Locale.field1026;
 			LoginScreen.progress = 10;
 			field1940 = 30;
 		} else if (field1940 == 30) {
@@ -1697,7 +1697,7 @@ public class Client extends GameShell {
 			fontMetricJs5 = createJs5(13, true, false, true);
 			vorbisJs5 = createJs5(14, false, true, false);
 			midiInstrumentJs5 = createJs5(15, false, true, true);
-			LoginScreen.message = EnglishLocale.field960;
+			LoginScreen.message = Locale.field960;
 			LoginScreen.progress = 20;
 			field1940 = 40;
 		} else if (field1940 == 40) {
@@ -1719,12 +1719,12 @@ public class Client extends GameShell {
 			int var21 = var20 + vorbisJs5.method1483() * 2 / 100;
 			int var22 = var21 + midiInstrumentJs5.method1483() * 2 / 100;
 			if (var22 == 100) {
-				LoginScreen.message = EnglishLocale.field880;
+				LoginScreen.message = Locale.field880;
 				LoginScreen.progress = 30;
 				field1940 = 45;
 			} else {
 				if (var22 != 0) {
-					LoginScreen.message = EnglishLocale.field1049 + var22 + "%";
+					LoginScreen.message = Locale.field1049 + var22 + "%";
 				}
 				LoginScreen.progress = 30;
 			}
@@ -1739,7 +1739,7 @@ public class Client extends GameShell {
 			field1460 = new MixerPcmStream();
 			field1585.method240(field1460);
 			field1733 = new PcmResampler(22050, AudioChannel.field241);
-			LoginScreen.message = EnglishLocale.field911;
+			LoginScreen.message = Locale.field911;
 			LoginScreen.progress = 35;
 			field1940 = 50;
 		} else if (field1940 == 50) {
@@ -1760,10 +1760,10 @@ public class Client extends GameShell {
 				var24++;
 			}
 			if (var24 < 3) {
-				LoginScreen.message = EnglishLocale.field882 + var24 * 100 / 3 + "%";
+				LoginScreen.message = Locale.field882 + var24 * 100 / 3 + "%";
 				LoginScreen.progress = 40;
 			} else {
-				LoginScreen.message = EnglishLocale.field883;
+				LoginScreen.message = Locale.field883;
 				LoginScreen.progress = 40;
 				field1940 = 60;
 			}
@@ -1796,10 +1796,10 @@ public class Client extends GameShell {
 			var26.download("sl_button", "");
 			int var30 = LoginScreen.method162();
 			if (var27 < var30) {
-				LoginScreen.message = EnglishLocale.field884 + var27 * 100 / var30 + "%";
+				LoginScreen.message = Locale.field884 + var27 * 100 / var30 + "%";
 				LoginScreen.progress = 50;
 			} else {
-				LoginScreen.message = EnglishLocale.field885;
+				LoginScreen.message = Locale.field885;
 				LoginScreen.progress = 50;
 				method729(5);
 				field1940 = 70;
@@ -1834,11 +1834,11 @@ public class Client extends GameShell {
 				InvType.configJs5 = var39;
 				Js5Provider var40 = configJs5;
 				EnumType.configJs5 = var40;
-				LoginScreen.message = EnglishLocale.field887;
+				LoginScreen.message = Locale.field887;
 				LoginScreen.progress = 60;
 				field1940 = 80;
 			} else {
-				LoginScreen.message = EnglishLocale.field962 + configJs5.method1470() + "%";
+				LoginScreen.message = Locale.field962 + configJs5.method1470() + "%";
 				LoginScreen.progress = 60;
 			}
 		} else if (field1940 == 80) {
@@ -1914,7 +1914,7 @@ public class Client extends GameShell {
 				var41++;
 			}
 			if (var41 < 14) {
-				LoginScreen.message = EnglishLocale.field888 + var41 * 100 / 14 + "%";
+				LoginScreen.message = Locale.field888 + var41 * 100 / 14 + "%";
 				LoginScreen.progress = 70;
 			} else {
 				PixFont.field2553 = field1769;
@@ -1963,7 +1963,7 @@ public class Client extends GameShell {
 					field829[var51 - 5] = var52 - 25;
 					field1474[var51 - 5] = var53 - var52;
 				}
-				LoginScreen.message = EnglishLocale.field889;
+				LoginScreen.message = Locale.field889;
 				LoginScreen.progress = 70;
 				field1940 = 90;
 			}
@@ -1972,43 +1972,43 @@ public class Client extends GameShell {
 				SceneBuilderProvider var55 = new SceneBuilderProvider(textureJs5, spriteJs5, 20, 0.8D, lowMemory ? 64 : 128);
 				Pix3D.setSceneProvider(var55);
 				Pix3D.setBrightness(0.8D);
-				LoginScreen.message = EnglishLocale.field891;
+				LoginScreen.message = Locale.field891;
 				LoginScreen.progress = 90;
 				field1940 = 110;
 			} else {
-				LoginScreen.message = EnglishLocale.field890 + textureJs5.method1470() + "%";
+				LoginScreen.message = Locale.field890 + textureJs5.method1470() + "%";
 				LoginScreen.progress = 90;
 			}
 		} else if (field1940 == 110) {
 			mouseTracking = new MouseTracking();
 			GameShell.signlink.startThread(mouseTracking, 10);
-			LoginScreen.message = EnglishLocale.field892;
+			LoginScreen.message = Locale.field892;
 			LoginScreen.progress = 94;
 			field1940 = 120;
 		} else if (field1940 == 120) {
 			if (binaryJs5.download("huffman", "")) {
 				Huffman var56 = new Huffman(binaryJs5.getFile("huffman", ""));
 				WordPack.method816(var56);
-				LoginScreen.message = EnglishLocale.field1051;
+				LoginScreen.message = Locale.field1051;
 				LoginScreen.progress = 96;
 				field1940 = 130;
 			} else {
-				LoginScreen.message = EnglishLocale.field1062 + "%";
+				LoginScreen.message = Locale.field1062 + "%";
 				LoginScreen.progress = 96;
 			}
 		} else if (field1940 == 130) {
 			if (!interfaceJs5.fetchAll()) {
-				LoginScreen.message = EnglishLocale.field1017 + interfaceJs5.method1470() * 4 / 5 + "%";
+				LoginScreen.message = Locale.field1017 + interfaceJs5.method1470() * 4 / 5 + "%";
 				LoginScreen.progress = 100;
 			} else if (!clientScriptJs5.fetchAll()) {
-				LoginScreen.message = EnglishLocale.field1017 + (clientScriptJs5.method1470() / 6 + 80) + "%";
+				LoginScreen.message = Locale.field1017 + (clientScriptJs5.method1470() / 6 + 80) + "%";
 				LoginScreen.progress = 100;
 			} else if (fontMetricJs5.fetchAll()) {
-				LoginScreen.message = EnglishLocale.field1045;
+				LoginScreen.message = Locale.field1045;
 				LoginScreen.progress = 100;
 				field1940 = 140;
 			} else {
-				LoginScreen.message = EnglishLocale.field1017 + (fontMetricJs5.method1470() / 20 + 96) + "%";
+				LoginScreen.message = Locale.field1017 + (fontMetricJs5.method1470() / 20 + 96) + "%";
 				LoginScreen.progress = 100;
 			}
 		} else if (field1940 == 140) {
@@ -2165,7 +2165,7 @@ public class Client extends GameShell {
 			}
 			if (loginState == 8) {
 				field1948 = 0;
-				LoginScreen.showMessage(EnglishLocale.field964, EnglishLocale.field898, field1950 / 60 + EnglishLocale.field899);
+				LoginScreen.showMessage(Locale.field964, Locale.field898, field1950 / 60 + Locale.field899);
 				if (--field1950 <= 0) {
 					loginState = 0;
 				}
@@ -2342,69 +2342,69 @@ public class Client extends GameShell {
 	@ObfuscatedName("bf.dk(II)V")
 	public static void method838(int response) {
 		if (response == -3) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_3M_LINE1, EnglishLocale.LOGIN_RESPONSE_3M_LINE2, EnglishLocale.LOGIN_RESPONSE_3M_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_3M_LINE1, Locale.LOGIN_RESPONSE_3M_LINE2, Locale.LOGIN_RESPONSE_3M_LINE3);
 		} else if (response == -2) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_2M_LINE1, EnglishLocale.LOGIN_RESPONSE_2M_LINE2, EnglishLocale.LOGIN_RESPONSE_2M_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_2M_LINE1, Locale.LOGIN_RESPONSE_2M_LINE2, Locale.LOGIN_RESPONSE_2M_LINE3);
 		} else if (response == -1) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_1M_LINE1, EnglishLocale.LOGIN_RESPONSE_1M_LINE2, EnglishLocale.LOGIN_RESPONSE_1M_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_1M_LINE1, Locale.LOGIN_RESPONSE_1M_LINE2, Locale.LOGIN_RESPONSE_1M_LINE3);
 		} else if (response == 3) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_3_LINE1, EnglishLocale.LOGIN_RESPONSE_3_LINE2, EnglishLocale.LOGIN_RESPONSE_3_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_3_LINE1, Locale.LOGIN_RESPONSE_3_LINE2, Locale.LOGIN_RESPONSE_3_LINE3);
 		} else if (response == 4) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_4_LINE1, EnglishLocale.LOGIN_RESPONSE_4_LINE2, EnglishLocale.LOGIN_RESPONSE_4_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_4_LINE1, Locale.LOGIN_RESPONSE_4_LINE2, Locale.LOGIN_RESPONSE_4_LINE3);
 		} else if (response == 5) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_5_LINE1, EnglishLocale.LOGIN_RESPONSE_5_LINE2, EnglishLocale.LOGIN_RESPONSE_5_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_5_LINE1, Locale.LOGIN_RESPONSE_5_LINE2, Locale.LOGIN_RESPONSE_5_LINE3);
 		} else if (response == 6) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_6_LINE1, EnglishLocale.LOGIN_RESPONSE_6_LINE2, EnglishLocale.LOGIN_RESPONSE_6_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_6_LINE1, Locale.LOGIN_RESPONSE_6_LINE2, Locale.LOGIN_RESPONSE_6_LINE3);
 		} else if (response == 7) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_7_LINE1, EnglishLocale.LOGIN_RESPONSE_7_LINE2, EnglishLocale.LOGIN_RESPONSE_7_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_7_LINE1, Locale.LOGIN_RESPONSE_7_LINE2, Locale.LOGIN_RESPONSE_7_LINE3);
 		} else if (response == 8) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_8_LINE1, EnglishLocale.LOGIN_RESPONSE_8_LINE2, EnglishLocale.LOGIN_RESPONSE_8_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_8_LINE1, Locale.LOGIN_RESPONSE_8_LINE2, Locale.LOGIN_RESPONSE_8_LINE3);
 		} else if (response == 9) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_9_LINE1, EnglishLocale.LOGIN_RESPONSE_9_LINE2, EnglishLocale.LOGIN_RESPONSE_9_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_9_LINE1, Locale.LOGIN_RESPONSE_9_LINE2, Locale.LOGIN_RESPONSE_9_LINE3);
 		} else if (response == 10) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_10_LINE1, EnglishLocale.LOGIN_RESPONSE_10_LINE2, EnglishLocale.LOGIN_RESPONSE_10_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_10_LINE1, Locale.LOGIN_RESPONSE_10_LINE2, Locale.LOGIN_RESPONSE_10_LINE3);
 		} else if (response == 11) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_11_LINE1, EnglishLocale.LOGIN_RESPONSE_11_LINE2, EnglishLocale.LOGIN_RESPONSE_11_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_11_LINE1, Locale.LOGIN_RESPONSE_11_LINE2, Locale.LOGIN_RESPONSE_11_LINE3);
 		} else if (response == 12) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_12_LINE1, EnglishLocale.LOGIN_RESPONSE_12_LINE2, EnglishLocale.LOGIN_RESPONSE_12_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_12_LINE1, Locale.LOGIN_RESPONSE_12_LINE2, Locale.LOGIN_RESPONSE_12_LINE3);
 		} else if (response == 13) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_13_LINE1, EnglishLocale.LOGIN_RESPONSE_13_LINE2, EnglishLocale.LOGIN_RESPONSE_13_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_13_LINE1, Locale.LOGIN_RESPONSE_13_LINE2, Locale.LOGIN_RESPONSE_13_LINE3);
 		} else if (response == 14) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_14_LINE1, EnglishLocale.LOGIN_RESPONSE_14_LINE2, EnglishLocale.LOGIN_RESPONSE_14_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_14_LINE1, Locale.LOGIN_RESPONSE_14_LINE2, Locale.LOGIN_RESPONSE_14_LINE3);
 		} else if (response == 16) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_16_LINE1, EnglishLocale.LOGIN_RESPONSE_16_LINE2, EnglishLocale.LOGIN_RESPONSE_16_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_16_LINE1, Locale.LOGIN_RESPONSE_16_LINE2, Locale.LOGIN_RESPONSE_16_LINE3);
 		} else if (response == 17) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_17_LINE1, EnglishLocale.LOGIN_RESPONSE_17_LINE2, EnglishLocale.LOGIN_RESPONSE_17_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_17_LINE1, Locale.LOGIN_RESPONSE_17_LINE2, Locale.LOGIN_RESPONSE_17_LINE3);
 		} else if (response == 18) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_18_LINE1, EnglishLocale.LOGIN_RESPONSE_18_LINE2, EnglishLocale.LOGIN_RESPONSE_18_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_18_LINE1, Locale.LOGIN_RESPONSE_18_LINE2, Locale.LOGIN_RESPONSE_18_LINE3);
 		} else if (response == 19) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_19_LINE1, EnglishLocale.LOGIN_RESPONSE_19_LINE2, EnglishLocale.LOGIN_RESPONSE_19_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_19_LINE1, Locale.LOGIN_RESPONSE_19_LINE2, Locale.LOGIN_RESPONSE_19_LINE3);
 		} else if (response == 20) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_20_LINE1, EnglishLocale.LOGIN_RESPONSE_20_LINE2, EnglishLocale.LOGIN_RESPONSE_20_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_20_LINE1, Locale.LOGIN_RESPONSE_20_LINE2, Locale.LOGIN_RESPONSE_20_LINE3);
 		} else if (response == 22) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_22_LINE1, EnglishLocale.LOGIN_RESPONSE_22_LINE2, EnglishLocale.LOGIN_RESPONSE_22_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_22_LINE1, Locale.LOGIN_RESPONSE_22_LINE2, Locale.LOGIN_RESPONSE_22_LINE3);
 		} else if (response == 23) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_23_LINE1, EnglishLocale.LOGIN_RESPONSE_23_LINE2, EnglishLocale.LOGIN_RESPONSE_23_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_23_LINE1, Locale.LOGIN_RESPONSE_23_LINE2, Locale.LOGIN_RESPONSE_23_LINE3);
 		} else if (response == 24) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_24_LINE1, EnglishLocale.LOGIN_RESPONSE_24_LINE2, EnglishLocale.LOGIN_RESPONSE_24_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_24_LINE1, Locale.LOGIN_RESPONSE_24_LINE2, Locale.LOGIN_RESPONSE_24_LINE3);
 		} else if (response == 25) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_25_LINE1, EnglishLocale.LOGIN_RESPONSE_25_LINE2, EnglishLocale.LOGIN_RESPONSE_25_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_25_LINE1, Locale.LOGIN_RESPONSE_25_LINE2, Locale.LOGIN_RESPONSE_25_LINE3);
 		} else if (response == 26) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_26_LINE1, EnglishLocale.LOGIN_RESPONSE_26_LINE2, EnglishLocale.LOGIN_RESPONSE_26_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_26_LINE1, Locale.LOGIN_RESPONSE_26_LINE2, Locale.LOGIN_RESPONSE_26_LINE3);
 		} else if (response == 27) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_27_LINE1, EnglishLocale.LOGIN_RESPONSE_27_LINE2, EnglishLocale.LOGIN_RESPONSE_27_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_27_LINE1, Locale.LOGIN_RESPONSE_27_LINE2, Locale.LOGIN_RESPONSE_27_LINE3);
 		} else if (response == 31) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_31_LINE1, EnglishLocale.LOGIN_RESPONSE_31_LINE2, EnglishLocale.LOGIN_RESPONSE_31_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_31_LINE1, Locale.LOGIN_RESPONSE_31_LINE2, Locale.LOGIN_RESPONSE_31_LINE3);
 		} else if (response == 32) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_32_LINE1, EnglishLocale.LOGIN_RESPONSE_32_LINE2, EnglishLocale.LOGIN_RESPONSE_32_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_32_LINE1, Locale.LOGIN_RESPONSE_32_LINE2, Locale.LOGIN_RESPONSE_32_LINE3);
 		} else if (response == 37) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_37_LINE1, EnglishLocale.LOGIN_RESPONSE_37_LINE2, EnglishLocale.LOGIN_RESPONSE_37_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_37_LINE1, Locale.LOGIN_RESPONSE_37_LINE2, Locale.LOGIN_RESPONSE_37_LINE3);
 		} else if (response == 38) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_38_LINE1, EnglishLocale.LOGIN_RESPONSE_38_LINE2, EnglishLocale.LOGIN_RESPONSE_38_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_38_LINE1, Locale.LOGIN_RESPONSE_38_LINE2, Locale.LOGIN_RESPONSE_38_LINE3);
 		} else if (response == 55) {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_55_LINE1, EnglishLocale.LOGIN_RESPONSE_55_LINE2, EnglishLocale.LOGIN_RESPONSE_55_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_55_LINE1, Locale.LOGIN_RESPONSE_55_LINE2, Locale.LOGIN_RESPONSE_55_LINE3);
 		} else {
-			LoginScreen.showMessage(EnglishLocale.LOGIN_RESPONSE_LINE1, EnglishLocale.LOGIN_RESPONSE_LINE2, EnglishLocale.LOGIN_RESPONSE_LINE3);
+			LoginScreen.showMessage(Locale.LOGIN_RESPONSE_LINE1, Locale.LOGIN_RESPONSE_LINE2, Locale.LOGIN_RESPONSE_LINE3);
 		}
 		method729(10);
 	}
@@ -3494,7 +3494,7 @@ public class Client extends GameShell {
 			field2128 = 0;
 		}
 		method729(25);
-		method1789(EnglishLocale.field873, true);
+		method1789(Locale.field873, true);
 		int var5 = sceneBaseTileX;
 		int var6 = sceneBaseTileZ;
 		sceneBaseTileX = (arg0 - 6) * 8;
@@ -4588,7 +4588,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("bk.ep(B)V")
 	public static final void showContextMenu() {
-		int var0 = field704.method2882(EnglishLocale.field1028);
+		int var0 = field704.method2882(Locale.field1028);
 		for (int var1 = 0; var1 < menuSize; var1++) {
 			int var2 = field704.method2882(method1239(var1));
 			if (var2 > var0) {
@@ -5330,7 +5330,7 @@ public class Client extends GameShell {
 			}
 		}
 		if (!found) {
-			addMessage(0, "", EnglishLocale.UNABLE_TO_FIND + var5);
+			addMessage(0, "", Locale.UNABLE_TO_FIND + var5);
 		}
 	}
 
@@ -5445,7 +5445,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("cq.fb(IS)Ljava/lang/String;")
 	public static String method1239(int arg0) {
-		return field2072[arg0].length() > 0 ? field1994[arg0] + EnglishLocale.SPACE + field2072[arg0] : field1994[arg0];
+		return field2072[arg0].length() > 0 ? field1994[arg0] + Locale.SPACE + field2072[arg0] : field1994[arg0];
 	}
 
 	@ObfuscatedName("z.fc(Lem;IIII)V")
@@ -5484,10 +5484,10 @@ public class Client extends GameShell {
 			} else {
 				var9 = TextUtil.colTag(16776960);
 			}
-			var4 = var4 + var9 + " " + TextUtil.openParen + EnglishLocale.LEVEL_PREFIX + arg0.vislevel + TextUtil.closeParen;
+			var4 = var4 + var9 + " " + TextUtil.openParen + Locale.LEVEL_PREFIX + arg0.vislevel + TextUtil.closeParen;
 		}
 		if (field2077 == 1) {
-			method8(EnglishLocale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16776960) + var4, 7, arg1, arg2, arg3);
+			method8(Locale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16776960) + var4, 7, arg1, arg2, arg3);
 		} else if (!field2079) {
 			String[] var10 = arg0.op;
 			if (field2001) {
@@ -5495,7 +5495,7 @@ public class Client extends GameShell {
 			}
 			if (var10 != null) {
 				for (int var11 = 4; var11 >= 0; var11--) {
-					if (var10[var11] != null && !var10[var11].equalsIgnoreCase(EnglishLocale.OP_ATTACK)) {
+					if (var10[var11] != null && !var10[var11].equalsIgnoreCase(Locale.OP_ATTACK)) {
 						byte var12 = 0;
 						if (var11 == 0) {
 							var12 = 9;
@@ -5518,7 +5518,7 @@ public class Client extends GameShell {
 			}
 			if (var10 != null) {
 				for (int var13 = 4; var13 >= 0; var13--) {
-					if (var10[var13] != null && var10[var13].equalsIgnoreCase(EnglishLocale.OP_ATTACK)) {
+					if (var10[var13] != null && var10[var13].equalsIgnoreCase(Locale.OP_ATTACK)) {
 						short var14 = 0;
 						if (arg0.vislevel > localPlayer.field2789) {
 							var14 = 2000;
@@ -5543,7 +5543,7 @@ public class Client extends GameShell {
 					}
 				}
 			}
-			method8(EnglishLocale.OP_EXAMINE, TextUtil.colTag(16776960) + var4, 1003, arg1, arg2, arg3);
+			method8(Locale.OP_EXAMINE, TextUtil.colTag(16776960) + var4, 1003, arg1, arg2, arg3);
 		} else if ((field386 & 0x2) == 2) {
 			method8(field2048, field2082 + " " + TextUtil.arrow + " " + TextUtil.colTag(16776960) + var4, 8, arg1, arg2, arg3);
 		}
@@ -5580,17 +5580,17 @@ public class Client extends GameShell {
 			} else {
 				var8 = TextUtil.colTag(16776960);
 			}
-			var9 = var4 + var8 + " " + TextUtil.openParen + EnglishLocale.LEVEL_PREFIX + arg0.field2789 + TextUtil.closeParen;
+			var9 = var4 + var8 + " " + TextUtil.openParen + Locale.LEVEL_PREFIX + arg0.field2789 + TextUtil.closeParen;
 		} else {
-			var9 = arg0.name + " " + TextUtil.openParen + EnglishLocale.SKILL_PREFIX + arg0.field2790 + TextUtil.closeParen;
+			var9 = arg0.name + " " + TextUtil.openParen + Locale.SKILL_PREFIX + arg0.field2790 + TextUtil.closeParen;
 		}
 		if (field2077 == 1) {
-			method8(EnglishLocale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16777215) + var9, 14, arg1, arg2, arg3);
+			method8(Locale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16777215) + var9, 14, arg1, arg2, arg3);
 		} else if (!field2079) {
 			for (int var10 = 7; var10 >= 0; var10--) {
 				if (field2053[var10] != null) {
 					short var11 = 0;
-					if (field2053[var10].equalsIgnoreCase(EnglishLocale.OP_ATTACK)) {
+					if (field2053[var10].equalsIgnoreCase(Locale.OP_ATTACK)) {
 						if (arg0.field2789 > localPlayer.field2789) {
 							var11 = 2000;
 						}
@@ -5776,7 +5776,7 @@ public class Client extends GameShell {
                 ComponentPointer var164 = (ComponentPointer) field1918.get((long) var10.field1783);
                 if (var164 != null) {
                     if (var164.field1597 == 0 && JavaMouseProvider.mouseX >= var19 && JavaMouseProvider.mouseY >= var20 && JavaMouseProvider.mouseX < var21 && JavaMouseProvider.mouseY < var22 && !field2066 && !field2092) {
-                        field1994[0] = EnglishLocale.field1078;
+                        field1994[0] = Locale.field1078;
                         field2072[0] = "";
                         field2069[0] = 1006;
                         menuSize = 1;
@@ -5926,8 +5926,8 @@ public class Client extends GameShell {
                         }
                     }
                     if (field2087 == var10) {
-                        EnglishLocale var10000 = null;
-                        var188 = EnglishLocale.PLEASE_WAIT;
+                        Locale var10000 = null;
+                        var188 = Locale.PLEASE_WAIT;
                         var189 = var10.colour;
                     }
                     if (!var10.if3) {
@@ -6205,9 +6205,9 @@ public class Client extends GameShell {
 			value = value.substring(0, i) + TextUtil.comma + value.substring(i);
 		}
 		if (value.length() > 9) {
-			return " " + TextUtil.colTag(0xff80) + value.substring(0, value.length() - 8) + EnglishLocale.M_SUFFIX + " " + TextUtil.openParen + value + TextUtil.closeParen + TextUtil.colEnd;
+			return " " + TextUtil.colTag(0xff80) + value.substring(0, value.length() - 8) + Locale.M_SUFFIX + " " + TextUtil.openParen + value + TextUtil.closeParen + TextUtil.colEnd;
 		} else if (value.length() > 6) {
-			return " " + TextUtil.colTag(0xffffff) + value.substring(0, value.length() - 4) + EnglishLocale.K_SUFFIX + " " + TextUtil.openParen + value + TextUtil.closeParen + TextUtil.colEnd;
+			return " " + TextUtil.colTag(0xffffff) + value.substring(0, value.length() - 4) + Locale.K_SUFFIX + " " + TextUtil.openParen + value + TextUtil.closeParen + TextUtil.colEnd;
 		} else {
 			return " " + TextUtil.colTag(0xffff00) + value + TextUtil.colEnd;
 		}
@@ -7369,7 +7369,7 @@ public class Client extends GameShell {
 			return;
 		}
 		if (field2071 >= 200 && field2130 != 1 || field2071 >= 200) {
-			addMessage(0, "", EnglishLocale.field1021);
+			addMessage(0, "", Locale.field1021);
 			return;
 		}
 		String var1 = NamespaceUtil.method743(arg0, namespace);
@@ -7380,13 +7380,13 @@ public class Client extends GameShell {
 			FriendListEntry var3 = field2111[var2];
 			String var4 = NamespaceUtil.method743(var3.field173, namespace);
 			if (var4 != null && var4.equals(var1)) {
-				addMessage(0, "", arg0 + EnglishLocale.field913);
+				addMessage(0, "", arg0 + Locale.field913);
 				return;
 			}
 			if (var3.field177 != null) {
 				String var5 = NamespaceUtil.method743(var3.field177, namespace);
 				if (var5 != null && var5.equals(var1)) {
-					addMessage(0, "", arg0 + EnglishLocale.field913);
+					addMessage(0, "", arg0 + Locale.field913);
 					return;
 				}
 			}
@@ -7395,19 +7395,19 @@ public class Client extends GameShell {
 			IgnoreListEntry var7 = field2196[var6];
 			String var8 = NamespaceUtil.method743(var7.field40, namespace);
 			if (var8 != null && var8.equals(var1)) {
-				addMessage(0, "", EnglishLocale.field1027 + arg0 + EnglishLocale.field1052);
+				addMessage(0, "", Locale.field1027 + arg0 + Locale.field1052);
 				return;
 			}
 			if (var7.field39 != null) {
 				String var9 = NamespaceUtil.method743(var7.field39, namespace);
 				if (var9 != null && var9.equals(var1)) {
-					addMessage(0, "", EnglishLocale.field1027 + arg0 + EnglishLocale.field1052);
+					addMessage(0, "", Locale.field1027 + arg0 + Locale.field1052);
 					return;
 				}
 			}
 		}
 		if (NamespaceUtil.method743(localPlayer.name, namespace).equals(var1)) {
-			addMessage(0, "", EnglishLocale.field1069);
+			addMessage(0, "", Locale.field1069);
 		} else {
 			out.pisaac1(203);
 			out.p1(Packet.pjstrlen(arg0));
@@ -7421,7 +7421,7 @@ public class Client extends GameShell {
 			return;
 		}
 		if (field2194 >= 100) {
-			addMessage(0, "", EnglishLocale.field1020);
+			addMessage(0, "", Locale.field1020);
 			return;
 		}
 		String var2 = NamespaceUtil.method743(arg0, namespace);
@@ -7432,13 +7432,13 @@ public class Client extends GameShell {
 			IgnoreListEntry var4 = field2196[var3];
 			String var5 = NamespaceUtil.method743(var4.field40, namespace);
 			if (var5 != null && var5.equals(var2)) {
-				addMessage(0, "", arg0 + EnglishLocale.field1024);
+				addMessage(0, "", arg0 + Locale.field1024);
 				return;
 			}
 			if (var4.field39 != null) {
 				String var6 = NamespaceUtil.method743(var4.field39, namespace);
 				if (var6 != null && var6.equals(var2)) {
-					addMessage(0, "", arg0 + EnglishLocale.field1024);
+					addMessage(0, "", arg0 + Locale.field1024);
 					return;
 				}
 			}
@@ -7447,19 +7447,19 @@ public class Client extends GameShell {
 			FriendListEntry var8 = field2111[var7];
 			String var9 = NamespaceUtil.method743(var8.field173, namespace);
 			if (var9 != null && var9.equals(var2)) {
-				addMessage(0, "", EnglishLocale.field1029 + arg0 + EnglishLocale.field1030);
+				addMessage(0, "", Locale.field1029 + arg0 + Locale.field1030);
 				return;
 			}
 			if (var8.field177 != null) {
 				String var10 = NamespaceUtil.method743(var8.field177, namespace);
 				if (var10 != null && var10.equals(var2)) {
-					addMessage(0, "", EnglishLocale.field1029 + arg0 + EnglishLocale.field1030);
+					addMessage(0, "", Locale.field1029 + arg0 + Locale.field1030);
 					return;
 				}
 			}
 		}
 		if (NamespaceUtil.method743(localPlayer.name, namespace).equals(var2)) {
-			addMessage(0, "", EnglishLocale.field1000);
+			addMessage(0, "", Locale.field1000);
 		} else {
 			out.pisaac1(231);
 			out.p1(Packet.pjstrlen(arg0));
@@ -7667,7 +7667,7 @@ public class Client extends GameShell {
 			return;
 		}
 		if (field2192 != 0) {
-			method1789(EnglishLocale.field873 + TextUtil.br + TextUtil.openParen + 100 + "%" + TextUtil.closeParen, true);
+			method1789(Locale.field873 + TextUtil.br + TextUtil.openParen + 100 + "%" + TextUtil.closeParen, true);
 		}
 		method1351();
 		method746();
@@ -8453,7 +8453,7 @@ public class Client extends GameShell {
 						var99 = true;
 					}
 					if (!var99 && field2038 == 0) {
-						addMessage(4, var98, EnglishLocale.NOTIFY_TRADE);
+						addMessage(4, var98, Locale.NOTIFY_TRADE);
 					}
 				} else if (var97.endsWith(":duelreq:")) {
 					String var100 = NamespaceUtil.method743(var97.substring(0, var97.indexOf(":")), namespace);
@@ -8462,7 +8462,7 @@ public class Client extends GameShell {
 						var101 = true;
 					}
 					if (!var101 && field2038 == 0) {
-						addMessage(8, var100, EnglishLocale.NOTIFY_DUEL);
+						addMessage(8, var100, Locale.NOTIFY_DUEL);
 					}
 				} else if (var97.endsWith(":chalreq:")) {
 					String var102 = NamespaceUtil.method743(var97.substring(0, var97.indexOf(":")), namespace);
@@ -10006,7 +10006,7 @@ public class Client extends GameShell {
 
 	public static void imethod22() {
 		if (!field2066) {
-			field1994[0] = EnglishLocale.field1078;
+			field1994[0] = Locale.field1078;
 			field2072[0] = "";
 			field2069[0] = 1006;
 			menuSize = 1;
@@ -10094,7 +10094,7 @@ public class Client extends GameShell {
 		Pix2D.method2637(var27, var28, var29, var30, var31);
 		Pix2D.method2637(var27 + 1, var28 + 1, var29 - 2, 16, 0);
 		Pix2D.method2639(var27 + 1, var28 + 18, var29 - 2, var30 - 19, 0);
-		field704.method2821(EnglishLocale.field1028, var27 + 3, var28 + 14, var31, -1);
+		field704.method2821(Locale.field1028, var27 + 3, var28 + 14, var31, -1);
 		int var32 = JavaMouseProvider.mouseX;
 		int var33 = JavaMouseProvider.mouseY;
 		for (int var34 = 0; var34 < menuSize; var34++) {
@@ -10120,14 +10120,14 @@ public class Client extends GameShell {
 		if (menuSize >= 2 || field2077 != 0 || field2079) {
 			String var26;
 			if (field2077 == 1 && menuSize < 2) {
-				var26 = EnglishLocale.OP_USE + EnglishLocale.SPACE + field2078 + " " + TextUtil.arrow;
+				var26 = Locale.OP_USE + Locale.SPACE + field2078 + " " + TextUtil.arrow;
 			} else if (field2079 && menuSize < 2) {
-				var26 = field2048 + EnglishLocale.SPACE + field2082 + " " + TextUtil.arrow;
+				var26 = field2048 + Locale.SPACE + field2082 + " " + TextUtil.arrow;
 			} else {
 				var26 = method1239(menuSize - 1);
 			}
 			if (menuSize > 2) {
-				var26 = var26 + TextUtil.colTag(0xffffff) + " " + '/' + " " + (menuSize - 2) + EnglishLocale.field1009;
+				var26 = var26 + TextUtil.colTag(0xffffff) + " " + '/' + " " + (menuSize - 2) + Locale.field1009;
 			}
 			field704.method2828(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
 		}
@@ -10618,7 +10618,7 @@ public class Client extends GameShell {
 		}
 		if (field1921) {
 			Pix2D.method2637(var12, var13, var31, var32, 0);
-			method1789(EnglishLocale.field873, false);
+			method1789(Locale.field873, false);
 		}
 		if (!field1921 && !field2066 && var72 >= var12 && var72 < var12 + var31 && var73 >= var13 && var73 < var13 + var32) {
 			imethod41(var12, var13, var72, var73);
@@ -10643,7 +10643,7 @@ public class Client extends GameShell {
 			}
 		}
 		if (var10.buttonType == 3) {
-			method8(EnglishLocale.CLOSE, "", 26, 0, 0, var10.field1783);
+			method8(Locale.CLOSE, "", 26, 0, 0, var10.field1783);
 		}
 		if (var10.buttonType == 4) {
 			method8(var10.option, "", 28, 0, 0, var10.field1783);
@@ -10675,7 +10675,7 @@ public class Client extends GameShell {
 									boolean var140 = (var139 >> 30 & 0x1) != 0;
 									if (var140) {
 										if (field502 != var10.field1783 || field557 != var133) {
-											method8(EnglishLocale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var138.name, 31, var138.index, var133, var10.field1783);
+											method8(Locale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var138.name, 31, var138.index, var133, var10.field1783);
 										}
 										break label1831;
 									}
@@ -10707,14 +10707,14 @@ public class Client extends GameShell {
 											}
 											method8(var143[var146], TextUtil.colTag(16748608) + var138.name, var147, var138.index, var133, var10.field1783);
 										} else if (var146 == 4) {
-											method8(EnglishLocale.OP_DROP, TextUtil.colTag(16748608) + var138.name, 37, var138.index, var133, var10.field1783);
+											method8(Locale.OP_DROP, TextUtil.colTag(16748608) + var138.name, 37, var138.index, var133, var10.field1783);
 										}
 									}
 								}
 								int var148 = method1512(var10);
 								boolean var149 = (var148 >> 31 & 0x1) != 0;
 								if (var149) {
-									method8(EnglishLocale.OP_USE, TextUtil.colTag(16748608) + var138.name, 38, var138.index, var133, var10.field1783);
+									method8(Locale.OP_USE, TextUtil.colTag(16748608) + var138.name, 38, var138.index, var133, var10.field1783);
 								}
 								int var150 = method1512(var10);
 								boolean var151 = (var150 >> 30 & 0x1) != 0;
@@ -10762,7 +10762,7 @@ public class Client extends GameShell {
 										}
 									}
 								}
-								method8(EnglishLocale.OP_EXAMINE, TextUtil.colTag(16748608) + var138.name, 1005, var138.index, var133, var10.field1783);
+								method8(Locale.OP_EXAMINE, TextUtil.colTag(16748608) + var138.name, 1005, var138.index, var133, var10.field1783);
 							}
 						}
 					}
@@ -10795,7 +10795,7 @@ public class Client extends GameShell {
 					}
 				}
 				if (WorldEntrySettings.method745(method1512(var10))) {
-					method8(EnglishLocale.BUTTON_CONTINUE, "", 30, 0, var10.subid, var10.field1783);
+					method8(Locale.BUTTON_CONTINUE, "", 30, 0, var10.subid, var10.field1783);
 				}
 			}
 		}
@@ -11145,7 +11145,7 @@ public class Client extends GameShell {
 
 	public static void imethod41(int var12, int var13, int var72, int var73) {
 		if (field2077 == 0 && !field2079) {
-			method8(EnglishLocale.WALK_HERE, "", 23, 0, var72 - var12, var73 - var13);
+			method8(Locale.WALK_HERE, "", 23, 0, var72 - var12, var73 - var13);
 		}
 		int var100 = -1;
 		for (int var101 = 0; var101 < SoftwareModel.field2741; var101++) {
@@ -11167,7 +11167,7 @@ public class Client extends GameShell {
                     continue;
                 }
                 if (field2077 == 1) {
-                    method8(EnglishLocale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(65535) + var107.name, 1, var102, var103, var104);
+                    method8(Locale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(65535) + var107.name, 1, var102, var103, var104);
                 } else if (!field2079) {
                     String[] var108 = var107.op;
                     if (field2001) {
@@ -11196,7 +11196,7 @@ public class Client extends GameShell {
                             }
                         }
                     }
-                    method8(EnglishLocale.OP_EXAMINE, TextUtil.colTag(65535) + var107.name, 1002, var107.id << 14, var103, var104);
+                    method8(Locale.OP_EXAMINE, TextUtil.colTag(65535) + var107.name, 1002, var107.id << 14, var103, var104);
                 } else if ((field386 & 0x4) == 4) {
                     method8(field2048, field2082 + " " + TextUtil.arrow + " " + TextUtil.colTag(65535) + var107.name, 2, var102, var103, var104);
                 }
@@ -11245,7 +11245,7 @@ public class Client extends GameShell {
                 for (ObjStackEntity var122 = (ObjStackEntity) var121.tail(); var122 != null; var122 = (ObjStackEntity) var121.prev()) {
                     ObjType var123 = ObjType.get(var122.field2600);
                     if (field2077 == 1) {
-                        method8(EnglishLocale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var123.name, 16, var122.field2600, var103, var104);
+                        method8(Locale.OP_USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var123.name, 16, var122.field2600, var103, var104);
                     } else if (!field2079) {
                         String[] var124 = var123.op;
                         if (field2001) {
@@ -11271,10 +11271,10 @@ public class Client extends GameShell {
                                 }
                                 method8(var124[var125], TextUtil.colTag(16748608) + var123.name, var126, var122.field2600, var103, var104);
                             } else if (var125 == 2) {
-                                method8(EnglishLocale.OP_TAKE, TextUtil.colTag(16748608) + var123.name, 20, var122.field2600, var103, var104);
+                                method8(Locale.OP_TAKE, TextUtil.colTag(16748608) + var123.name, 20, var122.field2600, var103, var104);
                             }
                         }
-                        method8(EnglishLocale.OP_EXAMINE, TextUtil.colTag(16748608) + var123.name, 1004, var122.field2600, var103, var104);
+                        method8(Locale.OP_EXAMINE, TextUtil.colTag(16748608) + var123.name, 1004, var122.field2600, var103, var104);
                     } else if ((field386 & 0x1) == 1) {
                         method8(field2048, field2082 + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var123.name, 17, var122.field2600, var103, var104);
                     }

@@ -16,7 +16,7 @@ public abstract class ByteArrayCopier {
 		if (arg0.length > 136 && !field799) {
 			try {
 				ByteBufferNode var2 = new ByteBufferNode();
-				var2.method801(arg0);
+				var2.set(arg0);
 				return var2;
 			} catch (Throwable var7) {
 				field799 = true;
@@ -58,5 +58,5 @@ public abstract class ByteArrayCopier {
 	public abstract byte[] method800();
 
 	@ObfuscatedName("bw.m([BI)V")
-	public abstract void method801(byte[] arg0);
+	public abstract void set(byte[] arg0);
 }

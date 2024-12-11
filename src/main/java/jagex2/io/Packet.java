@@ -36,7 +36,7 @@ public class Packet extends Linkable {
 	}
 
 	public Packet(int arg0) {
-		this.data = ByteArrayPool.method773(arg0);
+		this.data = ByteArrayPool.alloc(arg0);
 		this.pos = 0;
 	}
 

@@ -122,7 +122,7 @@ public class MidiPcmStream extends PcmStream {
 				}
 				this.field2230.put(var9, (long) var8);
 			}
-			if (!var9.method1784(arg2, var7.field1903, var6)) {
+			if (!var9.method1784(arg2, var7.data, var6)) {
 				var5 = false;
 			}
 		}

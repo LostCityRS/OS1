@@ -3,13 +3,13 @@ package jagex2.datastruct;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("dd")
-public class NodeLinkable {
+public class ChatNode {
 
 	@ObfuscatedName("dd.r")
-	public NodeLinkable field1502;
+	public ChatNode field1502;
 
 	@ObfuscatedName("dd.d")
-	public NodeLinkable field1503;
+	public ChatNode field1503;
 
 	@ObfuscatedName("dd.r()V")
 	public void method1322() {

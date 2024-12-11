@@ -6,9 +6,9 @@ import deob.ObfuscatedName;
 public class ByteArrayNode extends Linkable {
 
 	@ObfuscatedName("ew.m")
-	public byte[] field1903;
+	public byte[] data;
 
-	public ByteArrayNode(byte[] arg0) {
-		this.field1903 = arg0;
+	public ByteArrayNode(byte[] src) {
+		this.data = src;
 	}
 }

@@ -3,7 +3,7 @@ package jagex2.graphics;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("ag")
-public class VertexNormal2 {
+public class FaceNormal {
 
 	@ObfuscatedName("ag.r")
 	public int field552;

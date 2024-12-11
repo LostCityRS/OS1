@@ -3,21 +3,21 @@ package jagex2.datastruct;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("cb")
-public class NodeLinkList {
+public class ChatLinkList {
 
 	@ObfuscatedName("cb.r")
-	public NodeLinkable field1493 = new NodeLinkable();
+	public ChatNode field1493 = new ChatNode();
 
 	@ObfuscatedName("cb.d")
-	public NodeLinkable field1494;
+	public ChatNode field1494;
 
-	public NodeLinkList() {
+	public ChatLinkList() {
 		this.field1493.field1502 = this.field1493;
 		this.field1493.field1503 = this.field1493;
 	}
 
 	@ObfuscatedName("cb.r(Ldd;)V")
-	public void method1267(NodeLinkable arg0) {
+	public void method1267(ChatNode arg0) {
 		if (arg0.field1503 != null) {
 			arg0.method1322();
 		}
@@ -28,8 +28,8 @@ public class NodeLinkList {
 	}
 
 	@ObfuscatedName("cb.d()Ldd;")
-	public NodeLinkable method1268() {
-		NodeLinkable var1 = this.field1493.field1502;
+	public ChatNode method1268() {
+		ChatNode var1 = this.field1493.field1502;
 		if (this.field1493 == var1) {
 			this.field1494 = null;
 			return null;
@@ -40,8 +40,8 @@ public class NodeLinkList {
 	}
 
 	@ObfuscatedName("cb.l()Ldd;")
-	public NodeLinkable method1274() {
-		NodeLinkable var1 = this.field1494;
+	public ChatNode method1274() {
+		ChatNode var1 = this.field1494;
 		if (this.field1493 == var1) {
 			this.field1494 = null;
 			return null;

@@ -2,9 +2,8 @@ package jagex2.jstring;
 
 import deob.ObfuscatedName;
 
-// todo: english-specific in practice but should just be locale
 @ObfuscatedName("ba")
-public class EnglishLocale {
+public class Locale {
 
 	@ObfuscatedName("ba.r")
 	public static String MEMBERS_OBJECT = "Members object";
@@ -693,7 +692,7 @@ public class EnglishLocale {
 	@ObfuscatedName("ba.hc")
 	public static String field1072 = "Click to switch";
 
-	public EnglishLocale() throws Throwable {
+	public Locale() throws Throwable {
 		throw new Error();
 	}
 }

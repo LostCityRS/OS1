@@ -359,7 +359,7 @@ public class Song extends Linkable {
 								var20 = new ByteArrayNode(new byte[128]);
 								this.field1734.put(var20, (long) var19);
 							}
-							var20.field1903[var17] = 1;
+							var20.data[var17] = 1;
 						}
 					}
 					var4.method960(var7);

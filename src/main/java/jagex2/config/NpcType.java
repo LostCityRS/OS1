@@ -8,7 +8,7 @@ import jagex2.graphics.Model;
 import jagex2.graphics.SoftwareModel;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
-import jagex2.jstring.EnglishLocale;
+import jagex2.jstring.Locale;
 
 @ObfuscatedName("em")
 public class NpcType extends DoublyLinkable {
@@ -183,7 +183,7 @@ public class NpcType extends DoublyLinkable {
 			this.walkanim_l = arg0.g2();
 		} else if (arg1 >= 30 && arg1 < 35) {
 			this.op[arg1 - 30] = arg0.gjstr();
-			if (this.op[arg1 - 30].equalsIgnoreCase(EnglishLocale.hidden)) {
+			if (this.op[arg1 - 30].equalsIgnoreCase(Locale.hidden)) {
 				this.op[arg1 - 30] = null;
 			}
 		} else if (arg1 == 40) {
