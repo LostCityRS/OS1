@@ -4,9 +4,9 @@ import deob.ObfuscatedName;
 import jagex2.dash3d.entity.Entity;
 import jagex2.dash3d.type.*;
 import jagex2.datastruct.LinkList;
-import jagex2.graphics.ModelMetadata;
+import jagex2.graphics.ModelUnlit;
 import jagex2.graphics.Pix3D;
-import jagex2.graphics.Model;
+import jagex2.graphics.ModelLit;
 
 @ObfuscatedName("aq")
 public class World3D {
@@ -345,8 +345,8 @@ public class World3D {
 		Ground var11 = this.levelTiles[arg0][arg1][arg2];
 		if (var11 != null) {
 			for (int var12 = 0; var12 < var11.locCount; var12++) {
-				if ((var11.locs[var12].info & 0x100) == 0x100 && var11.locs[var12].model instanceof Model) {
-					Model var13 = (Model) var11.locs[var12].model;
+				if ((var11.locs[var12].info & 0x100) == 0x100 && var11.locs[var12].model instanceof ModelLit) {
+					ModelLit var13 = (ModelLit) var11.locs[var12].model;
 					var13.method3002();
 					if (var13.minY > var10) {
 						var10 = var13.minY;
@@ -708,28 +708,28 @@ public class World3D {
 						continue;
 					}
 					Wall var8 = var7.wall;
-					if (var8 != null && var8.modelA instanceof ModelMetadata) {
-						ModelMetadata var9 = (ModelMetadata) var8.modelA;
+					if (var8 != null && var8.modelA instanceof ModelUnlit) {
+						ModelUnlit var9 = (ModelUnlit) var8.modelA;
 						this.mergeLocNormals(var9, var4, var5, var6, 1, 1);
-						if (var8.modelB instanceof ModelMetadata) {
-							ModelMetadata var10 = (ModelMetadata) var8.modelB;
+						if (var8.modelB instanceof ModelUnlit) {
+							ModelUnlit var10 = (ModelUnlit) var8.modelB;
 							this.mergeLocNormals(var10, var4, var5, var6, 1, 1);
-							ModelMetadata.mergeNormals(var9, var10, 0, 0, 0, false);
+							ModelUnlit.mergeNormals(var9, var10, 0, 0, 0, false);
 							var8.modelB = var10.calculateNormals(var10.field2708, var10.field2706, arg0, arg1, arg2);
 						}
 						var8.modelA = var9.calculateNormals(var9.field2708, var9.field2706, arg0, arg1, arg2);
 					}
 					for (int var11 = 0; var11 < var7.locCount; var11++) {
 						Location var12 = var7.locs[var11];
-						if (var12 != null && var12.model instanceof ModelMetadata) {
-							ModelMetadata var13 = (ModelMetadata) var12.model;
+						if (var12 != null && var12.model instanceof ModelUnlit) {
+							ModelUnlit var13 = (ModelUnlit) var12.model;
 							this.mergeLocNormals(var13, var4, var5, var6, var12.maxSceneTileX - var12.minSceneTileX + 1, var12.maxSceneTileZ - var12.minSceneTileZ + 1);
 							var12.model = var13.calculateNormals(var13.field2708, var13.field2706, arg0, arg1, arg2);
 						}
 					}
 					GroundDecor var14 = var7.groundDecor;
-					if (var14 != null && var14.model instanceof ModelMetadata) {
-						ModelMetadata var15 = (ModelMetadata) var14.model;
+					if (var14 != null && var14.model instanceof ModelUnlit) {
+						ModelUnlit var15 = (ModelUnlit) var14.model;
 						this.mergeGroundDecorNormals(var15, var4, var5, var6);
 						var14.model = var15.calculateNormals(var15.field2708, var15.field2706, arg0, arg1, arg2);
 					}
@@ -739,40 +739,40 @@ public class World3D {
 	}
 
 	@ObfuscatedName("aq.av(Lfw;III)V")
-	public void mergeGroundDecorNormals(ModelMetadata arg0, int arg1, int arg2, int arg3) {
+	public void mergeGroundDecorNormals(ModelUnlit arg0, int arg1, int arg2, int arg3) {
 		if (arg2 < this.maxTileX) {
 			Ground var5 = this.levelTiles[arg1][arg2 + 1][arg3];
-			if (var5 != null && var5.groundDecor != null && var5.groundDecor.model instanceof ModelMetadata) {
-				ModelMetadata var6 = (ModelMetadata) var5.groundDecor.model;
-				ModelMetadata.mergeNormals(arg0, var6, 128, 0, 0, true);
+			if (var5 != null && var5.groundDecor != null && var5.groundDecor.model instanceof ModelUnlit) {
+				ModelUnlit var6 = (ModelUnlit) var5.groundDecor.model;
+				ModelUnlit.mergeNormals(arg0, var6, 128, 0, 0, true);
 			}
 		}
 		if (arg3 < this.maxTileX) {
 			Ground var7 = this.levelTiles[arg1][arg2][arg3 + 1];
-			if (var7 != null && var7.groundDecor != null && var7.groundDecor.model instanceof ModelMetadata) {
-				ModelMetadata var8 = (ModelMetadata) var7.groundDecor.model;
-				ModelMetadata.mergeNormals(arg0, var8, 0, 0, 128, true);
+			if (var7 != null && var7.groundDecor != null && var7.groundDecor.model instanceof ModelUnlit) {
+				ModelUnlit var8 = (ModelUnlit) var7.groundDecor.model;
+				ModelUnlit.mergeNormals(arg0, var8, 0, 0, 128, true);
 			}
 		}
 		if (arg2 < this.maxTileX && arg3 < this.maxTileZ) {
 			Ground var9 = this.levelTiles[arg1][arg2 + 1][arg3 + 1];
-			if (var9 != null && var9.groundDecor != null && var9.groundDecor.model instanceof ModelMetadata) {
-				ModelMetadata var10 = (ModelMetadata) var9.groundDecor.model;
-				ModelMetadata.mergeNormals(arg0, var10, 128, 0, 128, true);
+			if (var9 != null && var9.groundDecor != null && var9.groundDecor.model instanceof ModelUnlit) {
+				ModelUnlit var10 = (ModelUnlit) var9.groundDecor.model;
+				ModelUnlit.mergeNormals(arg0, var10, 128, 0, 128, true);
 			}
 		}
 		if (arg2 >= this.maxTileX || arg3 <= 0) {
 			return;
 		}
 		Ground var11 = this.levelTiles[arg1][arg2 + 1][arg3 - 1];
-		if (var11 != null && var11.groundDecor != null && var11.groundDecor.model instanceof ModelMetadata) {
-			ModelMetadata var12 = (ModelMetadata) var11.groundDecor.model;
-			ModelMetadata.mergeNormals(arg0, var12, 128, 0, -128, true);
+		if (var11 != null && var11.groundDecor != null && var11.groundDecor.model instanceof ModelUnlit) {
+			ModelUnlit var12 = (ModelUnlit) var11.groundDecor.model;
+			ModelUnlit.mergeNormals(arg0, var12, 128, 0, -128, true);
 		}
 	}
 
 	@ObfuscatedName("aq.ak(Lfw;IIIII)V")
-	public void mergeLocNormals(ModelMetadata arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public void mergeLocNormals(ModelUnlit arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		boolean var7 = true;
 		int var8 = arg2;
 		int var9 = arg2 + arg4;
@@ -797,22 +797,22 @@ public class World3D {
 					int var16 = (this.levelHeightmaps[var12][var13 + 1][var14] + this.levelHeightmaps[var12][var13][var14] + this.levelHeightmaps[var12][var13][var14 + 1] + this.levelHeightmaps[var12][var13 + 1][var14 + 1]) / 4 - (this.levelHeightmaps[arg1][arg2 + 1][arg3] + this.levelHeightmaps[arg1][arg2][arg3] + this.levelHeightmaps[arg1][arg2][arg3 + 1] + this.levelHeightmaps[arg1][arg2 + 1][arg3 + 1]) / 4;
 					Wall var17 = var15.wall;
 					if (var17 != null) {
-						if (var17.modelA instanceof ModelMetadata) {
-							ModelMetadata var18 = (ModelMetadata) var17.modelA;
-							ModelMetadata.mergeNormals(arg0, var18, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
+						if (var17.modelA instanceof ModelUnlit) {
+							ModelUnlit var18 = (ModelUnlit) var17.modelA;
+							ModelUnlit.mergeNormals(arg0, var18, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
 						}
-						if (var17.modelB instanceof ModelMetadata) {
-							ModelMetadata var19 = (ModelMetadata) var17.modelB;
-							ModelMetadata.mergeNormals(arg0, var19, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
+						if (var17.modelB instanceof ModelUnlit) {
+							ModelUnlit var19 = (ModelUnlit) var17.modelB;
+							ModelUnlit.mergeNormals(arg0, var19, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
 						}
 					}
 					for (int var20 = 0; var20 < var15.locCount; var20++) {
 						Location var21 = var15.locs[var20];
-						if (var21 != null && var21.model instanceof ModelMetadata) {
-							ModelMetadata var22 = (ModelMetadata) var21.model;
+						if (var21 != null && var21.model instanceof ModelUnlit) {
+							ModelUnlit var22 = (ModelUnlit) var21.model;
 							int var23 = var21.maxSceneTileX - var21.minSceneTileX + 1;
 							int var24 = var21.maxSceneTileZ - var21.minSceneTileZ + 1;
-							ModelMetadata.mergeNormals(arg0, var22, (var21.minSceneTileX - arg2) * 128 + (var23 - arg4) * 64, var16, (var21.minSceneTileZ - arg3) * 128 + (var24 - arg5) * 64, var7);
+							ModelUnlit.mergeNormals(arg0, var22, (var21.minSceneTileX - arg2) * 128 + (var23 - arg4) * 64, var16, (var21.minSceneTileZ - arg3) * 128 + (var24 - arg5) * 64, var7);
 						}
 					}
 				}

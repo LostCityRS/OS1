@@ -3,8 +3,8 @@ package jagex2.config;
 import deob.ObfuscatedName;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
-import jagex2.graphics.ModelMetadata;
-import jagex2.graphics.Model;
+import jagex2.graphics.ModelUnlit;
+import jagex2.graphics.ModelLit;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 import jagex2.js5.Js5Provider;
@@ -123,10 +123,10 @@ public class SpotAnimType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eu.i(IS)Lfo;")
-	public final Model method2455(int arg0) {
-		Model var2 = (Model) field2392.get((long) this.field2382);
+	public final ModelLit method2455(int arg0) {
+		ModelLit var2 = (ModelLit) field2392.get((long) this.field2382);
 		if (var2 == null) {
-			ModelMetadata var3 = ModelMetadata.tryGet(modelJs5, this.model, 0);
+			ModelUnlit var3 = ModelUnlit.tryGet(modelJs5, this.model, 0);
 			if (var3 == null) {
 				return null;
 			}
@@ -143,7 +143,7 @@ public class SpotAnimType extends DoublyLinkable {
 			var2 = var3.calculateNormals(this.ambient + 64, this.contrast + 850, -30, -50, -30);
 			field2392.put(var2, (long) this.field2382);
 		}
-		Model var6;
+		ModelLit var6;
 		if (this.anim == -1 || arg0 == -1) {
 			var6 = var2.method3040(true);
 		} else {

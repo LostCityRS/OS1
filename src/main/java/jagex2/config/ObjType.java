@@ -322,7 +322,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.u(II)Lfw;")
-	public final ModelMetadata getInvModel(int count) {
+	public final ModelUnlit getInvModel(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -336,7 +336,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelMetadata model = ModelMetadata.tryGet(modelJs5, this.model, 0);
+		ModelUnlit model = ModelUnlit.tryGet(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -361,7 +361,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.v(IB)Lfo;")
-	public final Model getModel(int count) {
+	public final ModelLit getModel(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -375,12 +375,12 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		Model cached = (Model) modelCache.get(this.index);
+		ModelLit cached = (ModelLit) modelCache.get(this.index);
 		if (cached != null) {
 			return cached;
 		}
 
-		ModelMetadata model = ModelMetadata.tryGet(modelJs5, this.model, 0);
+		ModelUnlit model = ModelUnlit.tryGet(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -401,7 +401,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		Model litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
+		ModelLit litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 		litModel.picking = true;
 		modelCache.put(litModel, this.index);
 		return litModel;
@@ -449,7 +449,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		Model model = obj.getModel(1);
+		ModelLit model = obj.getModel(1);
 		if (model == null) {
 			return null;
 		}
@@ -559,7 +559,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.t(ZI)Lfw;")
-	public final ModelMetadata getWornModel(boolean gender) {
+	public final ModelUnlit getWornModel(boolean gender) {
 		int wear1 = this.manwear;
 		int wear2 = this.manwear2;
 		int wear3 = this.manwear3;
@@ -573,16 +573,16 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelMetadata model = ModelMetadata.tryGet(modelJs5, wear1, 0);
+		ModelUnlit model = ModelUnlit.tryGet(modelJs5, wear1, 0);
 		if (wear2 != -1) {
-			ModelMetadata model2 = ModelMetadata.tryGet(modelJs5, wear2, 0);
+			ModelUnlit model2 = ModelUnlit.tryGet(modelJs5, wear2, 0);
 			if (wear3 == -1) {
-				ModelMetadata[] models = new ModelMetadata[] { model, model2 };
-				model = new ModelMetadata(models, 2);
+				ModelUnlit[] models = new ModelUnlit[] { model, model2 };
+				model = new ModelUnlit(models, 2);
 			} else {
-				ModelMetadata model3 = ModelMetadata.tryGet(modelJs5, wear3, 0);
-				ModelMetadata[] models = new ModelMetadata[] { model, model2, model3 };
-				model = new ModelMetadata(models, 3);
+				ModelUnlit model3 = ModelUnlit.tryGet(modelJs5, wear3, 0);
+				ModelUnlit[] models = new ModelUnlit[] { model, model2, model3 };
+				model = new ModelUnlit(models, 3);
 			}
 		}
 
@@ -629,7 +629,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.k(ZI)Lfw;")
-	public final ModelMetadata getHeadModel(boolean gender) {
+	public final ModelUnlit getHeadModel(boolean gender) {
 		int head1 = this.manhead;
 		int head2 = this.manhead2;
 		if (gender) {
@@ -641,11 +641,11 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelMetadata model = ModelMetadata.tryGet(modelJs5, head1, 0);
+		ModelUnlit model = ModelUnlit.tryGet(modelJs5, head1, 0);
 		if (head2 != -1) {
-			ModelMetadata model2 = ModelMetadata.tryGet(modelJs5, head2, 0);
-			ModelMetadata[] models = new ModelMetadata[] { model, model2 };
-			model = new ModelMetadata(models, 2);
+			ModelUnlit model2 = ModelUnlit.tryGet(modelJs5, head2, 0);
+			ModelUnlit[] models = new ModelUnlit[] { model, model2 };
+			model = new ModelUnlit(models, 2);
 		}
 
 		if (this.recol_s != null) {

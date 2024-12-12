@@ -3,7 +3,7 @@ package jagex2.dash3d.entity;
 import deob.ObfuscatedName;
 import jagex2.config.SeqType;
 import jagex2.config.SpotAnimType;
-import jagex2.graphics.Model;
+import jagex2.graphics.ModelLit;
 
 @ObfuscatedName("fh")
 public class ProjAnimEntity extends Entity {
@@ -153,9 +153,9 @@ public class ProjAnimEntity extends Entity {
 	}
 
 	@ObfuscatedName("fh.g(I)Lfo;")
-	public final Model getModel() {
+	public final ModelLit getModel() {
 		SpotAnimType var1 = SpotAnimType.get(this.field2568);
-		Model var2 = var1.method2455(this.field2589);
+		ModelLit var2 = var1.method2455(this.field2589);
 		if (var2 == null) {
 			return null;
 		} else {

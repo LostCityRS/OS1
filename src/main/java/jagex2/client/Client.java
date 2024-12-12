@@ -3883,7 +3883,7 @@ public class Client extends GameShell {
 				int var25 = (var10 << 7) + (width << 6);
 				int var26 = (var11 << 7) + (length << 6);
 
-				Model var27 = loc.method2386(var3, var4, var23, var25, locOffsetY, var26);
+				ModelLit var27 = loc.method2386(var3, var4, var23, var25, locOffsetY, var26);
 				if (var27 != null) {
 					appendLoc(currentLevel, var10, var11, var5, -1, 0, 0, var7 + 1, var0 + 1);
 					player.locStartCycle = loopCycle + var7;
@@ -5861,7 +5861,7 @@ public class Client extends GameShell {
                 } else {
                     var201 = var10.anim;
                 }
-                Model var202 = null;
+                ModelLit var202 = null;
                 int var203 = 0;
                 if (var10.field1791 != -1) {
                     ObjType var204 = ObjType.get(var10.field1791);
@@ -10477,13 +10477,13 @@ public class Client extends GameShell {
 		int var72 = JavaMouseProvider.mouseX;
 		int var73 = JavaMouseProvider.mouseY;
 		if (var72 >= var12 && var72 < var12 + var31 && var73 >= var13 && var73 < var13 + var32) {
-			Model.checkHover = true;
-			Model.pickedCount = 0;
-			Model.mouseX = JavaMouseProvider.mouseX - var12;
-			Model.mouseY = JavaMouseProvider.mouseY - var13;
+			ModelLit.checkHover = true;
+			ModelLit.pickedCount = 0;
+			ModelLit.mouseX = JavaMouseProvider.mouseX - var12;
+			ModelLit.mouseY = JavaMouseProvider.mouseY - var13;
 		} else {
-			Model.checkHover = false;
-			Model.pickedCount = 0;
+			ModelLit.checkHover = false;
+			ModelLit.pickedCount = 0;
 		}
 		method1351();
 		Pix2D.method2637(var12, var13, var31, var32, 0);
@@ -11035,8 +11035,8 @@ public class Client extends GameShell {
 			method8(Locale.WALK_HERE, "", 23, 0, var72 - var12, var73 - var13);
 		}
 		int var100 = -1;
-		for (int var101 = 0; var101 < Model.pickedCount; var101++) {
-			int var102 = Model.pickedBitsets[var101];
+		for (int var101 = 0; var101 < ModelLit.pickedCount; var101++) {
+			int var102 = ModelLit.pickedBitsets[var101];
 			int var103 = var102 & 0x7F;
 			int var104 = var102 >> 7 & 0x7F;
 			int var105 = var102 >> 29 & 0x3;

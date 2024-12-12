@@ -3,7 +3,7 @@ package jagex2.config;
 import deob.ObfuscatedName;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
-import jagex2.graphics.ModelMetadata;
+import jagex2.graphics.ModelUnlit;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 
@@ -139,21 +139,21 @@ public class IdkType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fd.u(S)Lfw;")
-	public ModelMetadata getModel() {
+	public ModelUnlit getModel() {
 		if (this.models == null) {
 			return null;
 		}
 
-		ModelMetadata[] models = new ModelMetadata[this.models.length];
+		ModelUnlit[] models = new ModelUnlit[this.models.length];
 		for (int i = 0; i < this.models.length; i++) {
-			models[i] = ModelMetadata.tryGet(modelJs5, this.models[i], 0);
+			models[i] = ModelUnlit.tryGet(modelJs5, this.models[i], 0);
 		}
 
-		ModelMetadata model;
+		ModelUnlit model;
 		if (models.length == 1) {
 			model = models[0];
 		} else {
-			model = new ModelMetadata(models, models.length);
+			model = new ModelUnlit(models, models.length);
 		}
 
 		if (this.recol_s != null) {
@@ -183,16 +183,16 @@ public class IdkType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fd.w(B)Lfw;")
-	public ModelMetadata getHeadModel() {
-		ModelMetadata[] models = new ModelMetadata[5];
+	public ModelUnlit getHeadModel() {
+		ModelUnlit[] models = new ModelUnlit[5];
 		int modelCount = 0;
 		for (int i = 0; i < 5; i++) {
 			if (this.heads[i] != -1) {
-				models[modelCount++] = ModelMetadata.tryGet(modelJs5, this.heads[i], 0);
+				models[modelCount++] = ModelUnlit.tryGet(modelJs5, this.heads[i], 0);
 			}
 		}
 
-		ModelMetadata model = new ModelMetadata(models, modelCount);
+		ModelUnlit model = new ModelUnlit(models, modelCount);
 		if (this.recol_s != null) {
 			for (int i = 0; i < this.recol_s.length; i++) {
 				model.recolour(this.recol_s[i], this.recol_d[i]);

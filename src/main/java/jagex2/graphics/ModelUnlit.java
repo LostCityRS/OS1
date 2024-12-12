@@ -7,7 +7,7 @@ import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 
 @ObfuscatedName("fw")
-public class ModelMetadata extends Entity {
+public class ModelUnlit extends Entity {
 
 	@ObfuscatedName("fw.j")
 	public int vertexCount = 0;
@@ -150,16 +150,16 @@ public class ModelMetadata extends Entity {
 	@ObfuscatedName("fw.bh")
 	public static int[] cosTable = Pix3D.cosTable;
 
-	public ModelMetadata() {
+	public ModelUnlit() {
 	}
 
 	@ObfuscatedName("fw.b(Lch;II)Lfw;")
-	public static ModelMetadata tryGet(Js5Index arg0, int arg1, int arg2) {
+	public static ModelUnlit tryGet(Js5Index arg0, int arg1, int arg2) {
 		byte[] var3 = arg0.getFile(arg1, arg2);
-		return var3 == null ? null : new ModelMetadata(var3);
+		return var3 == null ? null : new ModelUnlit(var3);
 	}
 
-	public ModelMetadata(byte[] arg0) {
+	public ModelUnlit(byte[] arg0) {
 		if (arg0[arg0.length - 1] == -1 && arg0[arg0.length - 2] == -1) {
 			this.method2944(arg0);
 		} else {
@@ -710,7 +710,7 @@ public class ModelMetadata extends Entity {
 		}
 	}
 
-	public ModelMetadata(ModelMetadata[] arg0, int arg1) {
+	public ModelUnlit(ModelUnlit[] arg0, int arg1) {
 		boolean var3 = false;
 		boolean var4 = false;
 		boolean var5 = false;
@@ -722,7 +722,7 @@ public class ModelMetadata extends Entity {
 		this.texturedFaceCount = 0;
 		this.field2684 = -1;
 		for (int var9 = 0; var9 < arg1; var9++) {
-			ModelMetadata var10 = arg0[var9];
+			ModelUnlit var10 = arg0[var9];
 			if (var10 != null) {
 				this.vertexCount += var10.vertexCount;
 				this.faceCount += var10.faceCount;
@@ -787,7 +787,7 @@ public class ModelMetadata extends Entity {
 		this.faceCount = 0;
 		this.texturedFaceCount = 0;
 		for (int var11 = 0; var11 < arg1; var11++) {
-			ModelMetadata var12 = arg0[var11];
+			ModelUnlit var12 = arg0[var11];
 			if (var12 != null) {
 				for (int var13 = 0; var13 < var12.faceCount; var13++) {
 					if (var3 && var12.field2679 != null) {
@@ -854,7 +854,7 @@ public class ModelMetadata extends Entity {
 	}
 
 	@ObfuscatedName("fw.f(Lfw;I)I")
-	public final int method2947(ModelMetadata arg0, int arg1) {
+	public final int method2947(ModelUnlit arg0, int arg1) {
 		int var3 = -1;
 		int var4 = arg0.vertexX[arg1];
 		int var5 = arg0.vertexY[arg1];
@@ -877,7 +877,7 @@ public class ModelMetadata extends Entity {
 		return var3;
 	}
 
-	public ModelMetadata(ModelMetadata arg0, boolean arg1, boolean arg2, boolean arg3, boolean arg4) {
+	public ModelUnlit(ModelUnlit arg0, boolean arg1, boolean arg2, boolean arg3, boolean arg4) {
 		this.vertexCount = arg0.vertexCount;
 		this.faceCount = arg0.faceCount;
 		this.texturedFaceCount = arg0.texturedFaceCount;
@@ -955,8 +955,8 @@ public class ModelMetadata extends Entity {
 	}
 
 	@ObfuscatedName("fw.k()Lfw;")
-	public ModelMetadata method2982() {
-		ModelMetadata var1 = new ModelMetadata();
+	public ModelUnlit method2982() {
+		ModelUnlit var1 = new ModelUnlit();
 		if (this.field2679 != null) {
 			var1.field2679 = new byte[this.faceCount];
 			for (int var2 = 0; var2 < this.faceCount; var2++) {
@@ -1001,7 +1001,7 @@ public class ModelMetadata extends Entity {
 	}
 
 	@ObfuscatedName("fw.o([[IIIIZI)Lfw;")
-	public ModelMetadata method2928(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
+	public ModelUnlit method2928(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
 		this.calculateBoundsAABB();
 		int var7 = this.minX + arg1;
 		int var8 = this.maxX + arg1;
@@ -1017,9 +1017,9 @@ public class ModelMetadata extends Entity {
 		if (arg0[var11][var13] == arg2 && arg0[var12][var13] == arg2 && arg0[var11][var14] == arg2 && arg0[var12][var14] == arg2) {
 			return this;
 		}
-		ModelMetadata var15;
+		ModelUnlit var15;
 		if (arg4) {
-			var15 = new ModelMetadata();
+			var15 = new ModelUnlit();
 			var15.vertexCount = this.vertexCount;
 			var15.faceCount = this.faceCount;
 			var15.texturedFaceCount = this.texturedFaceCount;
@@ -1369,7 +1369,7 @@ public class ModelMetadata extends Entity {
 	}
 
 	@ObfuscatedName("fw.an(Lfw;Lfw;IIIZ)V")
-	public static void mergeNormals(ModelMetadata arg0, ModelMetadata arg1, int arg2, int arg3, int arg4, boolean arg5) {
+	public static void mergeNormals(ModelUnlit arg0, ModelUnlit arg1, int arg2, int arg3, int arg4, boolean arg5) {
 		arg0.calculateBoundsAABB();
 		arg0.calculateNormals();
 		arg1.calculateBoundsAABB();
@@ -1448,11 +1448,11 @@ public class ModelMetadata extends Entity {
 	}
 
 	@ObfuscatedName("fw.ah(IIIII)Lfo;")
-	public final Model calculateNormals(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public final ModelLit calculateNormals(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		this.calculateNormals();
 		int var6 = (int) Math.sqrt(arg4 * arg4 + arg2 * arg2 + arg3 * arg3);
 		int var7 = arg1 * var6 >> 8;
-		Model var8 = new Model();
+		ModelLit var8 = new ModelLit();
 		var8.faceColorA = new int[this.faceCount];
 		var8.faceColorB = new int[this.faceCount];
 		var8.faceColorC = new int[this.faceCount];

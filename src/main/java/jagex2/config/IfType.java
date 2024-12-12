@@ -978,7 +978,7 @@ public class IfType extends Linkable {
 	}
 
 	@ObfuscatedName("eg.b(Leo;IZLct;I)Lfo;")
-	public Model method1802(SeqType arg0, int arg1, boolean arg2, PlayerModel arg3) {
+	public ModelLit method1802(SeqType arg0, int arg1, boolean arg2, PlayerModel arg3) {
 		field1870 = false;
 		int var5;
 		int var6;
@@ -994,10 +994,10 @@ public class IfType extends Linkable {
 		} else if (var5 == 1 && var6 == -1) {
 			return null;
 		} else {
-			Model var7 = (Model) field1850.get((long) ((var5 << 16) + var6));
+			ModelLit var7 = (ModelLit) field1850.get((long) ((var5 << 16) + var6));
 			if (var7 == null) {
 				if (var5 == 1) {
-					ModelMetadata var8 = ModelMetadata.tryGet(field1776, var6, 0);
+					ModelUnlit var8 = ModelUnlit.tryGet(field1776, var6, 0);
 					if (var8 == null) {
 						field1870 = true;
 						return null;
@@ -1005,7 +1005,7 @@ public class IfType extends Linkable {
 					var7 = var8.calculateNormals(64, 768, -50, -10, -50);
 				}
 				if (var5 == 2) {
-					ModelMetadata var9 = NpcType.get(var6).getHeadModel();
+					ModelUnlit var9 = NpcType.get(var6).getHeadModel();
 					if (var9 == null) {
 						field1870 = true;
 						return null;
@@ -1016,7 +1016,7 @@ public class IfType extends Linkable {
 					if (arg3 == null) {
 						return null;
 					}
-					ModelMetadata var10 = arg3.method1192();
+					ModelUnlit var10 = arg3.method1192();
 					if (var10 == null) {
 						field1870 = true;
 						return null;
@@ -1025,7 +1025,7 @@ public class IfType extends Linkable {
 				}
 				if (var5 == 4) {
 					ObjType var11 = ObjType.get(var6);
-					ModelMetadata var12 = var11.getInvModel(10);
+					ModelUnlit var12 = var11.getInvModel(10);
 					if (var12 == null) {
 						field1870 = true;
 						return null;

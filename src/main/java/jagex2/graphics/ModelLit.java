@@ -4,16 +4,16 @@ import deob.ObfuscatedName;
 import jagex2.dash3d.entity.Entity;
 
 @ObfuscatedName("fo")
-public class Model extends Entity {
+public class ModelLit extends Entity {
 
 	@ObfuscatedName("fo.j")
-	public static Model field2758 = new Model();
+	public static ModelLit field2758 = new ModelLit();
 
 	@ObfuscatedName("fo.z")
 	public static byte[] field2770 = new byte[1];
 
 	@ObfuscatedName("fo.g")
-	public static Model field2720 = new Model();
+	public static ModelLit field2720 = new ModelLit();
 
 	@ObfuscatedName("fo.q")
 	public static byte[] field2725 = new byte[1];
@@ -192,10 +192,10 @@ public class Model extends Entity {
 	@ObfuscatedName("fo.bm")
 	public static int[] divTable2 = Pix3D.divTable2;
 
-	public Model() {
+	public ModelLit() {
 	}
 
-	public Model(Model[] models, int count) {
+	public ModelLit(ModelLit[] models, int count) {
 		boolean var3 = false;
 		boolean var4 = false;
 		boolean var5 = false;
@@ -205,7 +205,7 @@ public class Model extends Entity {
 		this.field2738 = 0;
 		this.field2737 = -1;
 		for (int var7 = 0; var7 < count; var7++) {
-			Model var8 = models[var7];
+			ModelLit var8 = models[var7];
 			if (var8 != null) {
 				this.vertexCount += var8.vertexCount;
 				this.field2780 += var8.field2780;
@@ -255,7 +255,7 @@ public class Model extends Entity {
 		this.field2780 = 0;
 		this.field2738 = 0;
 		for (int var9 = 0; var9 < count; var9++) {
-			Model var10 = models[var9];
+			ModelLit var10 = models[var9];
 			if (var10 != null) {
 				for (int var11 = 0; var11 < var10.field2780; var11++) {
 					this.faceVertexA[this.field2780] = var10.faceVertexA[var11] + this.vertexCount;
@@ -307,7 +307,7 @@ public class Model extends Entity {
 	}
 
 	@ObfuscatedName("fo.b([[IIIIZI)Lfo;")
-	public Model method3054(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
+	public ModelLit method3054(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
 		this.method3002();
 		int var7 = arg1 - this.field2747;
 		int var8 = this.field2747 + arg1;
@@ -323,9 +323,9 @@ public class Model extends Entity {
 		if (arg0[var11][var13] == arg2 && arg0[var12][var13] == arg2 && arg0[var11][var14] == arg2 && arg0[var12][var14] == arg2) {
 			return this;
 		}
-		Model var15;
+		ModelLit var15;
 		if (arg4) {
-			var15 = new Model();
+			var15 = new ModelLit();
 			var15.vertexCount = this.vertexCount;
 			var15.field2780 = this.field2780;
 			var15.field2738 = this.field2738;
@@ -387,7 +387,7 @@ public class Model extends Entity {
 	}
 
 	@ObfuscatedName("fo.y(Z)Lfo;")
-	public Model method2999(boolean arg0) {
+	public ModelLit method2999(boolean arg0) {
 		if (!arg0 && field2770.length < this.field2780) {
 			field2770 = new byte[this.field2780 + 100];
 		}
@@ -395,7 +395,7 @@ public class Model extends Entity {
 	}
 
 	@ObfuscatedName("fo.t(Z)Lfo;")
-	public Model method3040(boolean arg0) {
+	public ModelLit method3040(boolean arg0) {
 		if (!arg0 && field2725.length < this.field2780) {
 			field2725 = new byte[this.field2780 + 100];
 		}
@@ -403,7 +403,7 @@ public class Model extends Entity {
 	}
 
 	@ObfuscatedName("fo.f(ZLfo;[B)Lfo;")
-	public Model method3046(boolean copyAlpha, Model model, byte[] arg2) {
+	public ModelLit method3046(boolean copyAlpha, ModelLit model, byte[] arg2) {
 		model.vertexCount = this.vertexCount;
 		model.field2780 = this.field2780;
 		model.field2738 = this.field2738;
