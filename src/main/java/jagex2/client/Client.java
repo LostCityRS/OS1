@@ -10477,13 +10477,13 @@ public class Client extends GameShell {
 		int var72 = JavaMouseProvider.mouseX;
 		int var73 = JavaMouseProvider.mouseY;
 		if (var72 >= var12 && var72 < var12 + var31 && var73 >= var13 && var73 < var13 + var32) {
-			ModelLit.checkHover = true;
-			ModelLit.pickedCount = 0;
+			ModelLit.mouseCheck = true;
+			ModelLit.pickedEntityCount = 0;
 			ModelLit.mouseX = JavaMouseProvider.mouseX - var12;
 			ModelLit.mouseY = JavaMouseProvider.mouseY - var13;
 		} else {
-			ModelLit.checkHover = false;
-			ModelLit.pickedCount = 0;
+			ModelLit.mouseCheck = false;
+			ModelLit.pickedEntityCount = 0;
 		}
 		method1351();
 		Pix2D.method2637(var12, var13, var31, var32, 0);
@@ -11035,8 +11035,8 @@ public class Client extends GameShell {
 			method8(Locale.WALK_HERE, "", 23, 0, var72 - var12, var73 - var13);
 		}
 		int var100 = -1;
-		for (int var101 = 0; var101 < ModelLit.pickedCount; var101++) {
-			int var102 = ModelLit.pickedBitsets[var101];
+		for (int var101 = 0; var101 < ModelLit.pickedEntityCount; var101++) {
+			int var102 = ModelLit.pickedEntityTypecode[var101];
 			int var103 = var102 & 0x7F;
 			int var104 = var102 >> 7 & 0x7F;
 			int var105 = var102 >> 29 & 0x3;

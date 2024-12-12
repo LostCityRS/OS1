@@ -165,20 +165,25 @@ public class ModelLit extends Entity {
 	@ObfuscatedName("fo.bw")
 	public static int baseZ;
 
+	// jag::oldscape::dash3d::MousePickingHelper::m_mouseCheck
 	@ObfuscatedName("fo.by")
-	public static boolean checkHover = false;
+	public static boolean mouseCheck = false;
 
+	// jag::oldscape::dash3d::MousePickingHelper::m_mouseX
 	@ObfuscatedName("fo.bx")
 	public static int mouseX = 0;
 
+	// jag::oldscape::dash3d::MousePickingHelper::m_mouseY
 	@ObfuscatedName("fo.bf")
 	public static int mouseY = 0;
 
+	// jag::oldscape::dash3d::MousePickingHelper::m_pickedEntityCount
 	@ObfuscatedName("fo.bu")
-	public static int pickedCount = 0;
+	public static int pickedEntityCount = 0;
 
+	// jag::oldscape::dash3d::MousePickingHelper::m_pickedEntityTypecode
 	@ObfuscatedName("fo.bo")
-	public static int[] pickedBitsets = new int[1000];
+	public static int[] pickedEntityTypecode = new int[1000];
 
 	@ObfuscatedName("fo.bq")
 	public static int[] sinTable = Pix3D.sinTable;
@@ -866,7 +871,7 @@ public class ModelLit extends Entity {
 	}
 
 	@ObfuscatedName("fo.z(IIIIIIIII)V")
-	public void draw(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int bitset) {
+	public void draw(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int typecode) {
 		tmpDepthFaceCount[0] = -1;
 
 		if (this.field2745 != 1) {
@@ -915,7 +920,7 @@ public class ModelLit extends Entity {
 		boolean var25 = var24 || this.field2738 > 0;
 		boolean picking = false;
 
-		if (bitset > 0 && checkHover) {
+		if (typecode > 0 && mouseCheck) {
 			int var27 = var11 - var12;
 			if (var27 <= 50) {
 				var27 = 50;
@@ -942,7 +947,7 @@ public class ModelLit extends Entity {
 			int var33 = mouseY - Pix3D.centerY;
 			if (var32 > var28 && var32 < var29 && var33 > var30 && var33 < var31) {
 				if (this.picking) {
-					pickedBitsets[pickedCount++] = bitset;
+					pickedEntityTypecode[pickedEntityCount++] = typecode;
 				} else {
 					picking = true;
 				}
@@ -995,13 +1000,13 @@ public class ModelLit extends Entity {
 		}
 
 		try {
-			this.draw(clipped, picking, bitset);
+			this.draw(clipped, picking, typecode);
 		} catch (Exception var53) {
 		}
 	}
 
 	@ObfuscatedName("fo.az(ZZI)V")
-	public final void draw(boolean clipped, boolean picking, int bitset) {
+	public final void draw(boolean clipped, boolean picking, int typecode) {
 		if (this.maxDepth >= 1600) {
 			return;
 		}
@@ -1049,7 +1054,7 @@ public class ModelLit extends Entity {
 					}
 				} else {
 					if (picking && this.pointWithinTriangle(mouseX, mouseY, vertexScreenY[var6], vertexScreenY[var7], vertexScreenY[var8], var9, var10, var11)) {
-						pickedBitsets[pickedCount++] = bitset;
+						pickedEntityTypecode[pickedEntityCount++] = typecode;
 						picking = false;
 					}
 
