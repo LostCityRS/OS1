@@ -175,7 +175,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	@ObfuscatedName("dj.q(I)Z")
 	public final boolean checkhost() {
-		if (Settings.SKIP_HOST_CHECK) {
+		if (Settings.NO_HOST_CHECK) {
 			return true;
 		}
 

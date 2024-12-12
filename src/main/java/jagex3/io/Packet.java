@@ -337,7 +337,7 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.az([IIII)V")
 	public void tinyenc(int[] arg0, int arg1, int arg2) {
-		if (Settings.SKIP_TINYENC) {
+		if (Settings.NO_TINYENC) {
 			return;
 		}
 
@@ -392,7 +392,7 @@ public class Packet extends Linkable {
 		byte[] var4 = new byte[var3];
 		this.gdata(var4, 0, var3);
 
-		if (Settings.SKIP_RSA) {
+		if (Settings.NO_RSA) {
 			this.p2(var4.length);
 			this.pdata(var4, 0, var4.length);
 		} else {
@@ -434,82 +434,148 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.ab(II)V")
 	public void p1_alt1(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p1(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) (arg0 + 128);
 	}
 
 	@ObfuscatedName("ev.ao(IS)V")
 	public void p1_alt2(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p1(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) -arg0;
 	}
 
 	@ObfuscatedName("ev.ag(II)V")
 	public void p1_alt3(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p1(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) (128 - arg0);
 	}
 
 	@ObfuscatedName("ev.ar(I)I")
 	public int g1_alt1() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g1();
+		}
+
 		return this.data[++this.pos - 1] - 128 & 0xFF;
 	}
 
 	@ObfuscatedName("ev.aq(I)I")
 	public int g1_alt2() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g1();
+		}
+
 		return -this.data[++this.pos - 1] & 0xFF;
 	}
 
 	@ObfuscatedName("ev.at(I)I")
 	public int g1_alt3() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g1();
+		}
+
 		return 128 - this.data[++this.pos - 1] & 0xFF;
 	}
 
 	@ObfuscatedName("ev.ae(I)B")
 	public byte g1b_alt1() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g1b();
+		}
+
 		return (byte) (this.data[++this.pos - 1] - 128);
 	}
 
 	@ObfuscatedName("ev.au(I)B")
 	public byte g1b_alt3() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g1b();
+		}
+
 		return (byte) (128 - this.data[++this.pos - 1]);
 	}
 
 	@ObfuscatedName("ev.ax(IB)V")
 	public void p2_alt1(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p2(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) arg0;
 		this.data[++this.pos - 1] = (byte) (arg0 >> 8);
 	}
 
 	@ObfuscatedName("ev.ai(IB)V")
 	public void p2_alt2(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p2(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) (arg0 >> 8);
 		this.data[++this.pos - 1] = (byte) (arg0 + 128);
 	}
 
 	@ObfuscatedName("ev.aj(II)V")
 	public void p2_alt3(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p2(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) (arg0 + 128);
 		this.data[++this.pos - 1] = (byte) (arg0 >> 8);
 	}
 
 	@ObfuscatedName("ev.aw(I)I")
 	public int g2_alt1() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g2();
+		}
+
 		this.pos += 2;
 		return ((this.data[this.pos - 1] & 0xFF) << 8) + (this.data[this.pos - 2] & 0xFF);
 	}
 
 	@ObfuscatedName("ev.af(I)I")
 	public int g2_alt2() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g2();
+		}
+
 		this.pos += 2;
 		return ((this.data[this.pos - 2] & 0xFF) << 8) + (this.data[this.pos - 1] - 128 & 0xFF);
 	}
 
 	@ObfuscatedName("ev.bh(I)I")
 	public int g2_alt3() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g2();
+		}
+
 		this.pos += 2;
 		return ((this.data[this.pos - 1] & 0xFF) << 8) + (this.data[this.pos - 2] - 128 & 0xFF);
 	}
 
 	@ObfuscatedName("ev.bi(I)I")
 	public int g2b_alt1() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g2b();
+		}
+
 		this.pos += 2;
 		int var1 = ((this.data[this.pos - 1] & 0xFF) << 8) + (this.data[this.pos - 2] & 0xFF);
 		if (var1 > 32767) {
@@ -520,6 +586,10 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.bs(B)I")
 	public int g2b_alt2() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g2b();
+		}
+
 		this.pos += 2;
 		int var1 = ((this.data[this.pos - 2] & 0xFF) << 8) + (this.data[this.pos - 1] - 128 & 0xFF);
 		if (var1 > 32767) {
@@ -530,6 +600,10 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.bk(S)I")
 	public int g2b_alt3() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g2b();
+		}
+
 		this.pos += 2;
 		int var1 = ((this.data[this.pos - 1] & 0xFF) << 8) + (this.data[this.pos - 2] - 128 & 0xFF);
 		if (var1 > 32767) {
@@ -540,12 +614,21 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.bv(I)I")
 	public int g3_alt2() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g3();
+		}
+
 		this.pos += 3;
 		return (this.data[this.pos - 3] & 0xFF) + ((this.data[this.pos - 1] & 0xFF) << 16) + ((this.data[this.pos - 2] & 0xFF) << 8);
 	}
 
 	@ObfuscatedName("ev.bw(IS)V")
 	public void p4_alt1(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p4(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) arg0;
 		this.data[++this.pos - 1] = (byte) (arg0 >> 8);
 		this.data[++this.pos - 1] = (byte) (arg0 >> 16);
@@ -554,6 +637,11 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.by(II)V")
 	public void p4_alt2(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p4(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) (arg0 >> 8);
 		this.data[++this.pos - 1] = (byte) arg0;
 		this.data[++this.pos - 1] = (byte) (arg0 >> 24);
@@ -562,6 +650,11 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.bx(IS)V")
 	public void p4_alt3(int arg0) {
+		if (Settings.NO_ALT_METHODS) {
+			this.p4(arg0);
+			return;
+		}
+
 		this.data[++this.pos - 1] = (byte) (arg0 >> 16);
 		this.data[++this.pos - 1] = (byte) (arg0 >> 24);
 		this.data[++this.pos - 1] = (byte) arg0;
@@ -570,24 +663,41 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.bf(I)I")
 	public int g4_alt1() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g4();
+		}
+
 		this.pos += 4;
 		return (this.data[this.pos - 4] & 0xFF) + ((this.data[this.pos - 3] & 0xFF) << 8) + ((this.data[this.pos - 2] & 0xFF) << 16) + ((this.data[this.pos - 1] & 0xFF) << 24);
 	}
 
 	@ObfuscatedName("ev.bu(I)I")
 	public int g4_alt2() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g4();
+		}
+
 		this.pos += 4;
 		return (this.data[this.pos - 3] & 0xFF) + ((this.data[this.pos - 4] & 0xFF) << 8) + ((this.data[this.pos - 2] & 0xFF) << 24) + ((this.data[this.pos - 1] & 0xFF) << 16);
 	}
 
 	@ObfuscatedName("ev.bo(B)I")
 	public int g4_alt3() {
+		if (Settings.NO_ALT_METHODS) {
+			return this.g4();
+		}
+
 		this.pos += 4;
 		return (this.data[this.pos - 2] & 0xFF) + ((this.data[this.pos - 1] & 0xFF) << 8) + ((this.data[this.pos - 3] & 0xFF) << 24) + ((this.data[this.pos - 4] & 0xFF) << 16);
 	}
 
 	@ObfuscatedName("ev.bq([BIII)V")
 	public void gdata_alt1(byte[] arg0, int arg1, int arg2) {
+		if (Settings.NO_ALT_METHODS) {
+			this.gdata(arg0, arg1, arg2);
+			return;
+		}
+
 		for (int var4 = arg1 + arg2 - 1; var4 >= arg1; var4--) {
 			arg0[var4] = this.data[++this.pos - 1];
 		}

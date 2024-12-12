@@ -26,7 +26,7 @@ public class PacketBit extends Packet {
 
 	@ObfuscatedName("ea.gt(II)V")
 	public void pisaac1(int arg0) {
-		if (Settings.SKIP_ISAAC) {
+		if (Settings.NO_ISAAC) {
 			this.data[++this.pos - 1] = (byte) arg0;
 		} else {
 			this.data[++this.pos - 1] = (byte) (arg0 + this.random.takeNextValue());
@@ -35,7 +35,7 @@ public class PacketBit extends Packet {
 
 	@ObfuscatedName("ea.gg(B)I")
 	public int gisaac1() {
-		if (Settings.SKIP_ISAAC) {
+		if (Settings.NO_ISAAC) {
 			return this.data[++this.pos - 1] & 0xFF;
 		} else {
 			return (this.data[++this.pos - 1] - this.random.takeNextValue()) & 0xFF;
