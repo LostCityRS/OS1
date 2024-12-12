@@ -1,4 +1,4 @@
-package jagex2.dash3d.entity;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.client.Client;
@@ -6,9 +6,9 @@ import jagex2.client.JagException;
 import jagex2.config.ObjType;
 import jagex2.config.SeqType;
 import jagex2.config.SpotAnimType;
-import jagex2.graphics.ModelLit;
 import jagex2.io.Packet;
 
+// ClientPlayer?
 @ObfuscatedName("fi")
 public class PlayerEntity extends PathingEntity {
 
@@ -49,7 +49,7 @@ public class PlayerEntity extends PathingEntity {
 	public int locOffsetZ;
 
 	@ObfuscatedName("fi.bb")
-	public ModelLit locModel;
+	public ModelUnlit locModel;
 
 	@ObfuscatedName("fi.bd")
 	public int minTileX;
@@ -147,24 +147,24 @@ public class PlayerEntity extends PathingEntity {
 	}
 
 	@ObfuscatedName("fi.g(I)Lfo;")
-	public final ModelLit getModel() {
+	public final ModelUnlit getModel() {
 		if (this.field2786 == null) {
 			return null;
 		}
 		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.get(this.primarySeqId) : null;
 		SeqType var2 = this.secondarySeqId == -1 || this.lowMemory || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.get(this.secondarySeqId);
-		ModelLit var3 = this.field2786.method1174(var1, this.primarySeqFrame, var2, this.field2641);
+		ModelUnlit var3 = this.field2786.method1174(var1, this.primarySeqFrame, var2, this.field2641);
 		if (var3 == null) {
 			return null;
 		}
 		var3.method3002();
 		this.field2626 = var3.minY;
 		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
-			ModelLit var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
+			ModelUnlit var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
 			if (var4 != null) {
 				var4.method3012(0, -this.field2629, 0);
-				ModelLit[] var5 = new ModelLit[] { var3, var4 };
-				var3 = new ModelLit(var5, 2);
+				ModelUnlit[] var5 = new ModelUnlit[] { var3, var4 };
+				var3 = new ModelUnlit(var5, 2);
 			}
 		}
 		if (!this.lowMemory && this.locModel != null) {
@@ -172,7 +172,7 @@ public class PlayerEntity extends PathingEntity {
 				this.locModel = null;
 			}
 			if (Client.loopCycle >= this.locStartCycle && Client.loopCycle < this.locEndCycle) {
-				ModelLit var6 = this.locModel;
+				ModelUnlit var6 = this.locModel;
 				var6.method3012(this.locOffsetX - this.x, this.locOffsetY - this.y, this.locOffsetZ - this.z);
 				if (this.dstYaw == 512) {
 					var6.method3008();
@@ -184,8 +184,8 @@ public class PlayerEntity extends PathingEntity {
 				} else if (this.dstYaw == 1536) {
 					var6.method3008();
 				}
-				ModelLit[] var7 = new ModelLit[] { var3, var6 };
-				var3 = new ModelLit(var7, 2);
+				ModelUnlit[] var7 = new ModelUnlit[] { var3, var6 };
+				var3 = new ModelUnlit(var7, 2);
 				if (this.dstYaw == 512) {
 					var6.method3008();
 				} else if (this.dstYaw == 1024) {

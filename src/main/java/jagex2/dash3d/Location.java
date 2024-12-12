@@ -1,8 +1,8 @@
-package jagex2.dash3d.type;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
-import jagex2.dash3d.entity.Entity;
 
+// jag::oldscape::dash3d::Sprite (?)
 @ObfuscatedName("au")
 public class Location {
 

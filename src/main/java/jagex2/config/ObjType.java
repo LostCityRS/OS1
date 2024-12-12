@@ -1,6 +1,9 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
+import jagex2.dash3d.ModelUnlit;
+import jagex2.dash3d.ModelLit;
+import jagex2.dash3d.Pix3D;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.*;
@@ -322,7 +325,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.u(II)Lfw;")
-	public final ModelUnlit getInvModel(int count) {
+	public final ModelLit getInvModel(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -336,7 +339,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelUnlit model = ModelUnlit.tryGet(modelJs5, this.model, 0);
+		ModelLit model = ModelLit.tryGet(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -361,7 +364,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.v(IB)Lfo;")
-	public final ModelLit getModel(int count) {
+	public final ModelUnlit getModel(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -375,12 +378,12 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelLit cached = (ModelLit) modelCache.get(this.index);
+		ModelUnlit cached = (ModelUnlit) modelCache.get(this.index);
 		if (cached != null) {
 			return cached;
 		}
 
-		ModelUnlit model = ModelUnlit.tryGet(modelJs5, this.model, 0);
+		ModelLit model = ModelLit.tryGet(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -401,7 +404,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelLit litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
+		ModelUnlit litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 		litModel.picking = true;
 		modelCache.put(litModel, this.index);
 		return litModel;
@@ -449,7 +452,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelLit model = obj.getModel(1);
+		ModelUnlit model = obj.getModel(1);
 		if (model == null) {
 			return null;
 		}
@@ -559,7 +562,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.t(ZI)Lfw;")
-	public final ModelUnlit getWornModel(boolean gender) {
+	public final ModelLit getWornModel(boolean gender) {
 		int wear1 = this.manwear;
 		int wear2 = this.manwear2;
 		int wear3 = this.manwear3;
@@ -573,16 +576,16 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelUnlit model = ModelUnlit.tryGet(modelJs5, wear1, 0);
+		ModelLit model = ModelLit.tryGet(modelJs5, wear1, 0);
 		if (wear2 != -1) {
-			ModelUnlit model2 = ModelUnlit.tryGet(modelJs5, wear2, 0);
+			ModelLit model2 = ModelLit.tryGet(modelJs5, wear2, 0);
 			if (wear3 == -1) {
-				ModelUnlit[] models = new ModelUnlit[] { model, model2 };
-				model = new ModelUnlit(models, 2);
+				ModelLit[] models = new ModelLit[] { model, model2 };
+				model = new ModelLit(models, 2);
 			} else {
-				ModelUnlit model3 = ModelUnlit.tryGet(modelJs5, wear3, 0);
-				ModelUnlit[] models = new ModelUnlit[] { model, model2, model3 };
-				model = new ModelUnlit(models, 3);
+				ModelLit model3 = ModelLit.tryGet(modelJs5, wear3, 0);
+				ModelLit[] models = new ModelLit[] { model, model2, model3 };
+				model = new ModelLit(models, 3);
 			}
 		}
 
@@ -629,7 +632,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.k(ZI)Lfw;")
-	public final ModelUnlit getHeadModel(boolean gender) {
+	public final ModelLit getHeadModel(boolean gender) {
 		int head1 = this.manhead;
 		int head2 = this.manhead2;
 		if (gender) {
@@ -641,11 +644,11 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelUnlit model = ModelUnlit.tryGet(modelJs5, head1, 0);
+		ModelLit model = ModelLit.tryGet(modelJs5, head1, 0);
 		if (head2 != -1) {
-			ModelUnlit model2 = ModelUnlit.tryGet(modelJs5, head2, 0);
-			ModelUnlit[] models = new ModelUnlit[] { model, model2 };
-			model = new ModelUnlit(models, 2);
+			ModelLit model2 = ModelLit.tryGet(modelJs5, head2, 0);
+			ModelLit[] models = new ModelLit[] { model, model2 };
+			model = new ModelLit(models, 2);
 		}
 
 		if (this.recol_s != null) {

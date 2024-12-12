@@ -1,4 +1,4 @@
-package jagex2.dash3d.type;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 

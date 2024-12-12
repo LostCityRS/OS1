@@ -2,6 +2,7 @@ package jagex2.io;
 
 import deob.ObfuscatedName;
 
+// jag::Isaac
 @ObfuscatedName("bl")
 public class Isaac {
 

@@ -2,6 +2,7 @@ package jagex2.wordenc;
 
 import deob.ObfuscatedName;
 
+// jag::game::Huffman
 @ObfuscatedName("by")
 public class Huffman {
 

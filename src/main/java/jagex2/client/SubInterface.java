@@ -3,6 +3,7 @@ package jagex2.client;
 import deob.ObfuscatedName;
 import jagex2.datastruct.Linkable;
 
+// jag::oldscape::SubInterface
 @ObfuscatedName("dy")
 public class SubInterface extends Linkable {
 

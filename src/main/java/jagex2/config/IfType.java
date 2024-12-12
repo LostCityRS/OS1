@@ -1,7 +1,9 @@
 package jagex2.config;
 
 import deob.ObfuscatedName;
-import jagex2.dash3d.entity.PlayerModel;
+import jagex2.dash3d.ModelUnlit;
+import jagex2.dash3d.ModelLit;
+import jagex2.dash3d.PlayerModel;
 import jagex2.datastruct.Linkable;
 import jagex2.datastruct.LruCache;
 import jagex2.graphics.*;
@@ -978,7 +980,7 @@ public class IfType extends Linkable {
 	}
 
 	@ObfuscatedName("eg.b(Leo;IZLct;I)Lfo;")
-	public ModelLit method1802(SeqType arg0, int arg1, boolean arg2, PlayerModel arg3) {
+	public ModelUnlit method1802(SeqType arg0, int arg1, boolean arg2, PlayerModel arg3) {
 		field1870 = false;
 		int var5;
 		int var6;
@@ -994,10 +996,10 @@ public class IfType extends Linkable {
 		} else if (var5 == 1 && var6 == -1) {
 			return null;
 		} else {
-			ModelLit var7 = (ModelLit) field1850.get((long) ((var5 << 16) + var6));
+			ModelUnlit var7 = (ModelUnlit) field1850.get((long) ((var5 << 16) + var6));
 			if (var7 == null) {
 				if (var5 == 1) {
-					ModelUnlit var8 = ModelUnlit.tryGet(field1776, var6, 0);
+					ModelLit var8 = ModelLit.tryGet(field1776, var6, 0);
 					if (var8 == null) {
 						field1870 = true;
 						return null;
@@ -1005,7 +1007,7 @@ public class IfType extends Linkable {
 					var7 = var8.calculateNormals(64, 768, -50, -10, -50);
 				}
 				if (var5 == 2) {
-					ModelUnlit var9 = NpcType.get(var6).getHeadModel();
+					ModelLit var9 = NpcType.get(var6).getHeadModel();
 					if (var9 == null) {
 						field1870 = true;
 						return null;
@@ -1016,7 +1018,7 @@ public class IfType extends Linkable {
 					if (arg3 == null) {
 						return null;
 					}
-					ModelUnlit var10 = arg3.method1192();
+					ModelLit var10 = arg3.method1192();
 					if (var10 == null) {
 						field1870 = true;
 						return null;
@@ -1025,7 +1027,7 @@ public class IfType extends Linkable {
 				}
 				if (var5 == 4) {
 					ObjType var11 = ObjType.get(var6);
-					ModelUnlit var12 = var11.getInvModel(10);
+					ModelLit var12 = var11.getInvModel(10);
 					if (var12 == null) {
 						field1870 = true;
 						return null;

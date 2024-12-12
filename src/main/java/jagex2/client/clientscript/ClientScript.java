@@ -6,6 +6,7 @@ import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
 import jagex2.io.Packet;
 
+// jag::oldscape::ClientScript
 @ObfuscatedName("ep")
 public class ClientScript extends DoublyLinkable {
 

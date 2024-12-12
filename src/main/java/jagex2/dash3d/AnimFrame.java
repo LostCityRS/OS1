@@ -1,8 +1,9 @@
-package jagex2.graphics;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.io.Packet;
 
+// jag::oldscape::dash3d::AnimFrame
 @ObfuscatedName("ae")
 public class AnimFrame {
 

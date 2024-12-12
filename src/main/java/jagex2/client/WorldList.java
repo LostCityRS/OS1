@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.URL;
 
+// jag::oldscape::GameWorld (?)
 @ObfuscatedName("i")
 public class WorldList {
 

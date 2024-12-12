@@ -2,6 +2,7 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 
+// jag::oldscape::GameWorld (?)
 @ObfuscatedName("c")
 public class WorldEntry {
 

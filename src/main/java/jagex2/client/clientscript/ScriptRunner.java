@@ -13,6 +13,7 @@ import jagex2.wordenc.WordPack;
 import java.util.Calendar;
 import java.util.Date;
 
+// jag::oldscape::ScriptRunner
 @ObfuscatedName("s")
 public class ScriptRunner {
 
@@ -38,7 +39,7 @@ public class ScriptRunner {
 	public static int fp = 0;
 
 	@ObfuscatedName("s.g")
-	public static ScriptFrame[] frames = new ScriptFrame[50];
+	public static GoSubFrame[] frames = new GoSubFrame[50];
 
 	@ObfuscatedName("p.q")
 	public static IfType activeComponent;
@@ -57,7 +58,7 @@ public class ScriptRunner {
 	}
 
 	@ObfuscatedName("bv.r(Ldu;B)V")
-	public static void runHook(HookRequest req) {
+	public static void runHook(HookReq req) {
 		Object[] onop = req.onop;
 		int id = (Integer) onop[0];
 
@@ -195,7 +196,7 @@ public class ScriptRunner {
 							return;
 						}
 
-						ScriptFrame frame = frames[--fp];
+						GoSubFrame frame = frames[--fp];
 						script = frame.script;
 						instructions = script.instructions;
 						intOperands = script.intOperands;
@@ -312,7 +313,7 @@ public class ScriptRunner {
 						isp -= proc.intArgCount;
 						ssp -= proc.stringArgCount;
 
-						ScriptFrame frame = new ScriptFrame();
+						GoSubFrame frame = new GoSubFrame();
 						frame.script = script;
 						frame.pc = pc;
 						frame.intLocals = intLocals;
@@ -2725,7 +2726,7 @@ public class ScriptRunner {
 			IfType com = all[i];
 
 			if (com.onload != null) {
-				HookRequest req = new HookRequest();
+				HookReq req = new HookReq();
 				req.component = com;
 				req.onop = com.onload;
 				runHook(req);

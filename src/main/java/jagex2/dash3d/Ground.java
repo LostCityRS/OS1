@@ -1,8 +1,9 @@
-package jagex2.dash3d.type;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.datastruct.Linkable;
 
+// jag::oldscape::dash3d::Ground
 @ObfuscatedName("es")
 public class Ground extends Linkable {
 

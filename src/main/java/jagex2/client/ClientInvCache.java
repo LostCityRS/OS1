@@ -4,6 +4,7 @@ import deob.ObfuscatedName;
 import jagex2.datastruct.HashTable;
 import jagex2.datastruct.Linkable;
 
+// jag::oldscape::ClientInvCache
 @ObfuscatedName("dl")
 public class ClientInvCache extends Linkable {
 

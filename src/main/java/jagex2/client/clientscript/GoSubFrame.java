@@ -2,8 +2,9 @@ package jagex2.client.clientscript;
 
 import deob.ObfuscatedName;
 
+// jag::game::GoSubFrame, jag::oldscape::ClientGosubFrame
 @ObfuscatedName("z")
-public class ScriptFrame {
+public class GoSubFrame {
 
 	@ObfuscatedName("z.r")
 	public ClientScript script;

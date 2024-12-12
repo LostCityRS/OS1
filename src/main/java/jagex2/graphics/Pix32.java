@@ -5,6 +5,7 @@ import deob.ObfuscatedName;
 import java.awt.*;
 import java.awt.image.PixelGrabber;
 
+// jag::oldscape::graphics::Pix32
 @ObfuscatedName("fq")
 public class Pix32 extends Pix2D {
 

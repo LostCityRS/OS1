@@ -4,8 +4,9 @@ import deob.ObfuscatedName;
 import jagex2.config.IfType;
 import jagex2.datastruct.Linkable;
 
+// jag::oldscape::HookReq
 @ObfuscatedName("du")
-public class HookRequest extends Linkable {
+public class HookReq extends Linkable {
 
 	@ObfuscatedName("du.m")
 	public Object[] onop;

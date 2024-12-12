@@ -2,11 +2,11 @@ package jagex2.config;
 
 import deob.ObfuscatedName;
 import jagex2.client.VarProvider;
-import jagex2.dash3d.entity.Entity;
+import jagex2.dash3d.Entity;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
-import jagex2.graphics.ModelUnlit;
-import jagex2.graphics.ModelLit;
+import jagex2.dash3d.ModelLit;
+import jagex2.dash3d.ModelUnlit;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 import jagex2.jstring.Locale;
@@ -36,7 +36,7 @@ public class LocType extends DoublyLinkable {
 	public static LruCache field2307 = new LruCache(30);
 
 	@ObfuscatedName("ey.u")
-	public static ModelUnlit[] temp = new ModelUnlit[4];
+	public static ModelLit[] temp = new ModelLit[4];
 
 	@ObfuscatedName("ey.v")
 	public int id;
@@ -428,7 +428,7 @@ public class LocType extends DoublyLinkable {
 		}
 		Entity var9 = (Entity) field2306.get(var7);
 		if (var9 == null) {
-			ModelUnlit var10 = this.getModel(arg0, arg1);
+			ModelLit var10 = this.getModel(arg0, arg1);
 			if (var10 == null) {
 				return null;
 			}
@@ -443,29 +443,29 @@ public class LocType extends DoublyLinkable {
 			field2306.put(var9, var7);
 		}
 		if (this.sharelight) {
-			var9 = ((ModelUnlit) var9).method2982();
+			var9 = ((ModelLit) var9).method2982();
 		}
 		if (this.skewType >= 0) {
-			if (var9 instanceof ModelLit) {
-				var9 = ((ModelLit) var9).method3054(arg2, arg3, arg4, arg5, true, this.skewType);
-			} else if (var9 instanceof ModelUnlit) {
-				var9 = ((ModelUnlit) var9).method2928(arg2, arg3, arg4, arg5, true, this.skewType);
+			if (var9 instanceof ModelUnlit) {
+				var9 = ((ModelUnlit) var9).method3054(arg2, arg3, arg4, arg5, true, this.skewType);
+			} else if (var9 instanceof ModelLit) {
+				var9 = ((ModelLit) var9).method2928(arg2, arg3, arg4, arg5, true, this.skewType);
 			}
 		}
 		return var9;
 	}
 
 	@ObfuscatedName("ey.e(II[[IIIII)Lfo;")
-	public final ModelLit method2386(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5) {
+	public final ModelUnlit method2386(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5) {
 		long var7;
 		if (this.shapes == null) {
 			var7 = (this.id << 10) + arg1;
 		} else {
 			var7 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
-		ModelLit var9 = (ModelLit) field2307.get(var7);
+		ModelUnlit var9 = (ModelUnlit) field2307.get(var7);
 		if (var9 == null) {
-			ModelUnlit var10 = this.getModel(arg0, arg1);
+			ModelLit var10 = this.getModel(arg0, arg1);
 			if (var10 == null) {
 				return null;
 			}
@@ -479,16 +479,16 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.b(II[[IIIILeo;IB)Lfo;")
-	public final ModelLit method2376(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5, SeqType arg6, int arg7) {
+	public final ModelUnlit method2376(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5, SeqType arg6, int arg7) {
 		long var9;
 		if (this.shapes == null) {
 			var9 = (this.id << 10) + arg1;
 		} else {
 			var9 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
-		ModelLit var11 = (ModelLit) field2307.get(var9);
+		ModelUnlit var11 = (ModelUnlit) field2307.get(var9);
 		if (var11 == null) {
-			ModelUnlit var12 = this.getModel(arg0, arg1);
+			ModelLit var12 = this.getModel(arg0, arg1);
 			if (var12 == null) {
 				return null;
 			}
@@ -498,7 +498,7 @@ public class LocType extends DoublyLinkable {
 		if (arg6 == null && this.skewType == -1) {
 			return var11;
 		}
-		ModelLit var13;
+		ModelUnlit var13;
 		if (arg6 == null) {
 			var13 = var11.method2999(true);
 		} else {
@@ -511,8 +511,8 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.y(IIB)Lfw;")
-	public final ModelUnlit getModel(int arg0, int arg1) {
-		ModelUnlit var3 = null;
+	public final ModelLit getModel(int arg0, int arg1) {
+		ModelLit var3 = null;
 		if (this.shapes == null) {
 			if (arg0 != 10) {
 				return null;
@@ -530,9 +530,9 @@ public class LocType extends DoublyLinkable {
 				if (var4) {
 					var7 += 65536;
 				}
-				var3 = (ModelUnlit) modelCacheStatic.get((long) var7);
+				var3 = (ModelLit) modelCacheStatic.get((long) var7);
 				if (var3 == null) {
-					var3 = ModelUnlit.tryGet(modelJs5, var7 & 0xFFFF, 0);
+					var3 = ModelLit.tryGet(modelJs5, var7 & 0xFFFF, 0);
 					if (var3 == null) {
 						return null;
 					}
@@ -546,7 +546,7 @@ public class LocType extends DoublyLinkable {
 				}
 			}
 			if (var5 > 1) {
-				var3 = new ModelUnlit(temp, var5);
+				var3 = new ModelLit(temp, var5);
 			}
 		} else {
 			int var8 = -1;
@@ -564,9 +564,9 @@ public class LocType extends DoublyLinkable {
 			if (var11) {
 				var10 += 65536;
 			}
-			var3 = (ModelUnlit) modelCacheStatic.get((long) var10);
+			var3 = (ModelLit) modelCacheStatic.get((long) var10);
 			if (var3 == null) {
-				var3 = ModelUnlit.tryGet(modelJs5, var10 & 0xFFFF, 0);
+				var3 = ModelLit.tryGet(modelJs5, var10 & 0xFFFF, 0);
 				if (var3 == null) {
 					return null;
 				}
@@ -588,7 +588,7 @@ public class LocType extends DoublyLinkable {
 		} else {
 			var13 = true;
 		}
-		ModelUnlit var14 = new ModelUnlit(var3, arg1 == 0 && !var12 && !var13, this.recol_s == null, this.retex_s == null, true);
+		ModelLit var14 = new ModelLit(var3, arg1 == 0 && !var12 && !var13, this.recol_s == null, this.retex_s == null, true);
 		if (arg0 == 4 && arg1 > 3) {
 			var14.method2933(256);
 			var14.translate(45, 0, -45);

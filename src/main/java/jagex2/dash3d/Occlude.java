@@ -2,6 +2,7 @@ package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 
+// jag::oldscape::dash3d::Occlude
 @ObfuscatedName("bs")
 public class Occlude {
 

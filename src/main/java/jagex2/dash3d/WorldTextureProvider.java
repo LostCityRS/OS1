@@ -6,7 +6,7 @@ import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 
 @ObfuscatedName("bi")
-public class SceneTextureProvider implements TextureProvider {
+public class WorldTextureProvider implements TextureProvider {
 
 	@ObfuscatedName("bi.r")
 	public Texture[] field719;
@@ -29,7 +29,7 @@ public class SceneTextureProvider implements TextureProvider {
 	@ObfuscatedName("bi.j")
 	public Js5Index spriteJs5;
 
-	public SceneTextureProvider(Js5Index textureJs5, Js5Index sprite, int arg2, double brightness, int resolution) {
+	public WorldTextureProvider(Js5Index textureJs5, Js5Index sprite, int arg2, double brightness, int resolution) {
 		this.spriteJs5 = sprite;
 		this.field717 = arg2;
 		this.field718 = this.field717;

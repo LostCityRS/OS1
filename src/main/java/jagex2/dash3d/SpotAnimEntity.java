@@ -1,9 +1,8 @@
-package jagex2.dash3d.entity;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.config.SeqType;
 import jagex2.config.SpotAnimType;
-import jagex2.graphics.ModelLit;
 
 @ObfuscatedName("fn")
 public class SpotAnimEntity extends Entity {
@@ -71,9 +70,9 @@ public class SpotAnimEntity extends Entity {
 	}
 
 	@ObfuscatedName("fn.g(I)Lfo;")
-	public final ModelLit getModel() {
+	public final ModelUnlit getModel() {
 		SpotAnimType var1 = SpotAnimType.get(this.field2608);
-		ModelLit var2;
+		ModelUnlit var2;
 		if (this.seqComplete) {
 			var2 = var1.method2455(-1);
 		} else {

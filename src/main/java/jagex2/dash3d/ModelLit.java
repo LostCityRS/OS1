@@ -1,13 +1,12 @@
-package jagex2.graphics;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
-import jagex2.dash3d.Unused10;
-import jagex2.dash3d.entity.Entity;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 
+// jag::oldscape::dash3d::ModelLit (?)
 @ObfuscatedName("fw")
-public class ModelUnlit extends Entity {
+public class ModelLit extends Entity {
 
 	@ObfuscatedName("fw.j")
 	public int vertexCount = 0;
@@ -150,16 +149,16 @@ public class ModelUnlit extends Entity {
 	@ObfuscatedName("fw.bh")
 	public static int[] cosTable = Pix3D.cosTable;
 
-	public ModelUnlit() {
+	public ModelLit() {
 	}
 
 	@ObfuscatedName("fw.b(Lch;II)Lfw;")
-	public static ModelUnlit tryGet(Js5Index arg0, int arg1, int arg2) {
+	public static ModelLit tryGet(Js5Index arg0, int arg1, int arg2) {
 		byte[] var3 = arg0.getFile(arg1, arg2);
-		return var3 == null ? null : new ModelUnlit(var3);
+		return var3 == null ? null : new ModelLit(var3);
 	}
 
-	public ModelUnlit(byte[] arg0) {
+	public ModelLit(byte[] arg0) {
 		if (arg0[arg0.length - 1] == -1 && arg0[arg0.length - 2] == -1) {
 			this.method2944(arg0);
 		} else {
@@ -710,7 +709,7 @@ public class ModelUnlit extends Entity {
 		}
 	}
 
-	public ModelUnlit(ModelUnlit[] arg0, int arg1) {
+	public ModelLit(ModelLit[] arg0, int arg1) {
 		boolean var3 = false;
 		boolean var4 = false;
 		boolean var5 = false;
@@ -722,7 +721,7 @@ public class ModelUnlit extends Entity {
 		this.texturedFaceCount = 0;
 		this.field2684 = -1;
 		for (int var9 = 0; var9 < arg1; var9++) {
-			ModelUnlit var10 = arg0[var9];
+			ModelLit var10 = arg0[var9];
 			if (var10 != null) {
 				this.vertexCount += var10.vertexCount;
 				this.faceCount += var10.faceCount;
@@ -787,7 +786,7 @@ public class ModelUnlit extends Entity {
 		this.faceCount = 0;
 		this.texturedFaceCount = 0;
 		for (int var11 = 0; var11 < arg1; var11++) {
-			ModelUnlit var12 = arg0[var11];
+			ModelLit var12 = arg0[var11];
 			if (var12 != null) {
 				for (int var13 = 0; var13 < var12.faceCount; var13++) {
 					if (var3 && var12.field2679 != null) {
@@ -854,7 +853,7 @@ public class ModelUnlit extends Entity {
 	}
 
 	@ObfuscatedName("fw.f(Lfw;I)I")
-	public final int method2947(ModelUnlit arg0, int arg1) {
+	public final int method2947(ModelLit arg0, int arg1) {
 		int var3 = -1;
 		int var4 = arg0.vertexX[arg1];
 		int var5 = arg0.vertexY[arg1];
@@ -877,7 +876,7 @@ public class ModelUnlit extends Entity {
 		return var3;
 	}
 
-	public ModelUnlit(ModelUnlit arg0, boolean arg1, boolean arg2, boolean arg3, boolean arg4) {
+	public ModelLit(ModelLit arg0, boolean arg1, boolean arg2, boolean arg3, boolean arg4) {
 		this.vertexCount = arg0.vertexCount;
 		this.faceCount = arg0.faceCount;
 		this.texturedFaceCount = arg0.texturedFaceCount;
@@ -955,8 +954,8 @@ public class ModelUnlit extends Entity {
 	}
 
 	@ObfuscatedName("fw.k()Lfw;")
-	public ModelUnlit method2982() {
-		ModelUnlit var1 = new ModelUnlit();
+	public ModelLit method2982() {
+		ModelLit var1 = new ModelLit();
 		if (this.field2679 != null) {
 			var1.field2679 = new byte[this.faceCount];
 			for (int var2 = 0; var2 < this.faceCount; var2++) {
@@ -1001,7 +1000,7 @@ public class ModelUnlit extends Entity {
 	}
 
 	@ObfuscatedName("fw.o([[IIIIZI)Lfw;")
-	public ModelUnlit method2928(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
+	public ModelLit method2928(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
 		this.calculateBoundsAABB();
 		int var7 = this.minX + arg1;
 		int var8 = this.maxX + arg1;
@@ -1017,9 +1016,9 @@ public class ModelUnlit extends Entity {
 		if (arg0[var11][var13] == arg2 && arg0[var12][var13] == arg2 && arg0[var11][var14] == arg2 && arg0[var12][var14] == arg2) {
 			return this;
 		}
-		ModelUnlit var15;
+		ModelLit var15;
 		if (arg4) {
-			var15 = new ModelUnlit();
+			var15 = new ModelLit();
 			var15.vertexCount = this.vertexCount;
 			var15.faceCount = this.faceCount;
 			var15.texturedFaceCount = this.texturedFaceCount;
@@ -1369,7 +1368,7 @@ public class ModelUnlit extends Entity {
 	}
 
 	@ObfuscatedName("fw.an(Lfw;Lfw;IIIZ)V")
-	public static void mergeNormals(ModelUnlit arg0, ModelUnlit arg1, int arg2, int arg3, int arg4, boolean arg5) {
+	public static void mergeNormals(ModelLit arg0, ModelLit arg1, int arg2, int arg3, int arg4, boolean arg5) {
 		arg0.calculateBoundsAABB();
 		arg0.calculateNormals();
 		arg1.calculateBoundsAABB();
@@ -1448,11 +1447,11 @@ public class ModelUnlit extends Entity {
 	}
 
 	@ObfuscatedName("fw.ah(IIIII)Lfo;")
-	public final ModelLit calculateNormals(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public final ModelUnlit calculateNormals(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		this.calculateNormals();
 		int var6 = (int) Math.sqrt(arg4 * arg4 + arg2 * arg2 + arg3 * arg3);
 		int var7 = arg1 * var6 >> 8;
-		ModelLit var8 = new ModelLit();
+		ModelUnlit var8 = new ModelUnlit();
 		var8.faceColorA = new int[this.faceCount];
 		var8.faceColorB = new int[this.faceCount];
 		var8.faceColorC = new int[this.faceCount];
@@ -1626,44 +1625,5 @@ public class ModelUnlit extends Entity {
 			arg0 = 126;
 		}
 		return arg0;
-	}
-
-	@ObfuscatedName("ao")
-	public static class VertexNormal {
-
-		@ObfuscatedName("ao.r")
-		public int x;
-
-		@ObfuscatedName("ao.d")
-		public int y;
-
-		@ObfuscatedName("ao.l")
-		public int z;
-
-		@ObfuscatedName("ao.m")
-		public int w;
-
-		public VertexNormal() {
-		}
-
-		public VertexNormal(VertexNormal normal) {
-			this.x = normal.x;
-			this.y = normal.y;
-			this.z = normal.z;
-			this.w = normal.w;
-		}
-	}
-
-	@ObfuscatedName("ag")
-	public static class FaceNormal {
-
-		@ObfuscatedName("ag.r")
-		public int field552;
-
-		@ObfuscatedName("ag.d")
-		public int field551;
-
-		@ObfuscatedName("ag.l")
-		public int field550;
 	}
 }

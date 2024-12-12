@@ -1,4 +1,4 @@
-package jagex2.dash3d.entity;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.datastruct.Linkable;

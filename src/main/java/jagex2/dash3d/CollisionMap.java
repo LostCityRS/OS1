@@ -2,6 +2,7 @@ package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 
+// jag::oldscape::movement::CollisionMap
 @ObfuscatedName("ck")
 public class CollisionMap {
 

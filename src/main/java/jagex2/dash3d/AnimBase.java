@@ -1,9 +1,10 @@
-package jagex2.graphics;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.datastruct.Linkable;
 import jagex2.io.Packet;
 
+// jag::oldscape::dash3d::AnimBase
 @ObfuscatedName("ez")
 public class AnimBase extends Linkable {
 

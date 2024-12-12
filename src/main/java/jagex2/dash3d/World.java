@@ -5,10 +5,6 @@ import jagex2.client.Client;
 import jagex2.config.FloType;
 import jagex2.config.FluType;
 import jagex2.config.LocType;
-import jagex2.dash3d.entity.Entity;
-import jagex2.dash3d.entity.LocEntity;
-import jagex2.graphics.Pix3D;
-import jagex2.graphics.ModelLit;
 import jagex2.io.Packet;
 import jagex2.sound.PositionedSound;
 
@@ -465,8 +461,8 @@ public class World {
 			}
 			if (var45 != null && arg6.add(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.shadow) {
 				int var46 = 15;
-				if (var45 instanceof ModelLit) {
-					var46 = ((ModelLit) var45).method3004() / 4;
+				if (var45 instanceof ModelUnlit) {
+					var46 = ((ModelUnlit) var45).method3004() / 4;
 					if (var46 > 30) {
 						var46 = 30;
 					}

@@ -1,8 +1,9 @@
-package jagex2.dash3d.entity;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.config.SeqType;
 
+// jag::PathingEntity
 @ObfuscatedName("fz")
 public abstract class PathingEntity extends Entity {
 

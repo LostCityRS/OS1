@@ -2,7 +2,6 @@ package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.datastruct.Linkable;
-import jagex2.graphics.Pix3D;
 import jagex2.graphics.Pix8;
 import jagex2.graphics.SpriteDataProvider;
 import jagex2.io.Packet;

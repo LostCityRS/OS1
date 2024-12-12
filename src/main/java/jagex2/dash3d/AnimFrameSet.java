@@ -1,17 +1,18 @@
-package jagex2.graphics;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LinkList;
 import jagex2.js5.Js5Index;
 
+// jag::oldscape::dash3d::AnimFrameSet
 @ObfuscatedName("fr")
-public class AnimFrameset extends DoublyLinkable {
+public class AnimFrameSet extends DoublyLinkable {
 
 	@ObfuscatedName("fr.n")
 	public AnimFrame[] field2488;
 
-	public AnimFrameset(Js5Index arg0, Js5Index arg1, int arg2, boolean arg3) {
+	public AnimFrameSet(Js5Index arg0, Js5Index arg1, int arg2, boolean arg3) {
 		LinkList var5 = new LinkList();
 		int var6 = arg0.getFileCount(arg2);
 		this.field2488 = new AnimFrame[var6];

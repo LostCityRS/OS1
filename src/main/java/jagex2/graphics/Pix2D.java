@@ -3,6 +3,7 @@ package jagex2.graphics;
 import deob.ObfuscatedName;
 import jagex2.datastruct.DoublyLinkable;
 
+// jag::oldscape::graphics::Pix2D
 @ObfuscatedName("fv")
 public class Pix2D extends DoublyLinkable {
 

@@ -4,6 +4,7 @@ import deob.ObfuscatedName;
 import jagex2.io.Packet;
 import jagex2.jstring.Cp1252;
 
+// jag::game::WordPack
 @ObfuscatedName("dz")
 public class WordPack {
 

@@ -2,7 +2,7 @@ package jagex2.client;
 
 import deob.ObfuscatedName;
 import jagex2.client.clientscript.ClientScript;
-import jagex2.client.clientscript.HookRequest;
+import jagex2.client.clientscript.HookReq;
 import jagex2.client.clientscript.ScriptRunner;
 import jagex2.client.input.JavaKeyboardProvider;
 import jagex2.client.input.JavaMouseProvider;
@@ -13,15 +13,11 @@ import jagex2.client.params.ModeGame;
 import jagex2.client.params.ModeWhat;
 import jagex2.client.social.*;
 import jagex2.config.*;
-import jagex2.dash3d.CollisionMap;
-import jagex2.dash3d.SceneTextureProvider;
-import jagex2.dash3d.World;
-import jagex2.dash3d.World3D;
-import jagex2.dash3d.entity.*;
-import jagex2.dash3d.type.Decor;
-import jagex2.dash3d.type.GroundDecor;
-import jagex2.dash3d.type.Location;
-import jagex2.dash3d.type.Wall;
+import jagex2.dash3d.*;
+import jagex2.dash3d.Decor;
+import jagex2.dash3d.GroundDecor;
+import jagex2.dash3d.Location;
+import jagex2.dash3d.Wall;
 import jagex2.datastruct.ChatLinkList;
 import jagex2.datastruct.HashTable;
 import jagex2.datastruct.LinkList;
@@ -1831,7 +1827,7 @@ public class Client extends GameShell {
 			}
 		} else if (field1940 == 90) {
 			if (textureJs5.fetchAll()) {
-				SceneTextureProvider provider = new SceneTextureProvider(textureJs5, spriteJs5, 20, 0.8D, lowMemory ? 64 : 128);
+				WorldTextureProvider provider = new WorldTextureProvider(textureJs5, spriteJs5, 20, 0.8D, lowMemory ? 64 : 128);
 				Pix3D.setTextureProvider(provider);
 				Pix3D.setBrightness(0.8D);
 
@@ -2308,7 +2304,7 @@ public class Client extends GameShell {
 		VarPlayerType.unload();
 		PlayerModel.unload();
 		IfType.unload();
-		((SceneTextureProvider) Pix3D.textureProvider).method749();
+		((WorldTextureProvider) Pix3D.textureProvider).method749();
 		ClientScript.cache.clear();
 
 		animFrameJs5.discardAll();
@@ -3883,7 +3879,7 @@ public class Client extends GameShell {
 				int var25 = (var10 << 7) + (width << 6);
 				int var26 = (var11 << 7) + (length << 6);
 
-				ModelLit var27 = loc.method2386(var3, var4, var23, var25, locOffsetY, var26);
+				ModelUnlit var27 = loc.method2386(var3, var4, var23, var25, locOffsetY, var26);
 				if (var27 != null) {
 					appendLoc(currentLevel, var10, var11, var5, -1, 0, 0, var7 + 1, var0 + 1);
 					player.locStartCycle = loopCycle + var7;
@@ -4899,7 +4895,7 @@ public class Client extends GameShell {
 				int var34 = ServerKeyEvents.getTargetMask(method1512(var33));
 				IfType var35 = IfType.method947(var2, var1);
 				if (var35 != null && var35.field1861 != null) {
-					HookRequest var36 = new HookRequest();
+					HookReq var36 = new HookReq();
 					var36.component = var35;
 					var36.onop = var35.field1861;
 					ScriptRunner.runHook(var36);
@@ -5207,7 +5203,7 @@ public class Client extends GameShell {
 		}
 		IfType var0 = IfType.method947(field43, field2107);
 		if (var0 != null && var0.field1836 != null) {
-			HookRequest var1 = new HookRequest();
+			HookReq var1 = new HookReq();
 			var1.component = var0;
 			var1.onop = var0.field1836;
 			ScriptRunner.runHook(var1);
@@ -5223,7 +5219,7 @@ public class Client extends GameShell {
 			return;
 		}
 		if (var4.field1847 != null) {
-			HookRequest var5 = new HookRequest();
+			HookReq var5 = new HookReq();
 			var5.component = var4;
 			var5.opindex = arg0;
 			var5.opbase = arg3;
@@ -5861,7 +5857,7 @@ public class Client extends GameShell {
                 } else {
                     var201 = var10.anim;
                 }
-                ModelLit var202 = null;
+                ModelUnlit var202 = null;
                 int var203 = 0;
                 if (var10.field1791 != -1) {
                     ObjType var204 = ObjType.get(var10.field1791);
@@ -6398,7 +6394,7 @@ public class Client extends GameShell {
 
 					if (var9.field1813) {
 						if (var25 && field2122 != 0 && var9.field1831 != null) {
-							HookRequest var30 = new HookRequest();
+							HookReq var30 = new HookReq();
 							var30.component = var9;
 							var30.mouseY = field2122;
 							var30.onop = var9.field1831;
@@ -6412,7 +6408,7 @@ public class Client extends GameShell {
 						if (!var9.field1871 && var27) {
 							var9.field1871 = true;
 							if (var9.field1852 != null) {
-								HookRequest var31 = new HookRequest();
+								HookReq var31 = new HookReq();
 								var31.component = var9;
 								var31.mouseX = JavaMouseProvider.mouseClickX - var10;
 								var31.mouseY = JavaMouseProvider.mouseClickY - var11;
@@ -6421,7 +6417,7 @@ public class Client extends GameShell {
 							}
 						}
 						if (var9.field1871 && var26 && var9.field1853 != null) {
-							HookRequest var32 = new HookRequest();
+							HookReq var32 = new HookReq();
 							var32.component = var9;
 							var32.mouseX = JavaMouseProvider.mouseX - var10;
 							var32.mouseY = JavaMouseProvider.mouseY - var11;
@@ -6431,7 +6427,7 @@ public class Client extends GameShell {
 						if (var9.field1871 && !var26) {
 							var9.field1871 = false;
 							if (var9.field1851 != null) {
-								HookRequest var33 = new HookRequest();
+								HookReq var33 = new HookReq();
 								var33.component = var9;
 								var33.mouseX = JavaMouseProvider.mouseX - var10;
 								var33.mouseY = JavaMouseProvider.mouseY - var11;
@@ -6440,7 +6436,7 @@ public class Client extends GameShell {
 							}
 						}
 						if (var26 && var9.field1855 != null) {
-							HookRequest var34 = new HookRequest();
+							HookReq var34 = new HookReq();
 							var34.component = var9;
 							var34.mouseX = JavaMouseProvider.mouseX - var10;
 							var34.mouseY = JavaMouseProvider.mouseY - var11;
@@ -6450,7 +6446,7 @@ public class Client extends GameShell {
 						if (!var9.field1892 && var25) {
 							var9.field1892 = true;
 							if (var9.field1856 != null) {
-								HookRequest var35 = new HookRequest();
+								HookReq var35 = new HookReq();
 								var35.component = var9;
 								var35.mouseX = JavaMouseProvider.mouseX - var10;
 								var35.mouseY = JavaMouseProvider.mouseY - var11;
@@ -6459,7 +6455,7 @@ public class Client extends GameShell {
 							}
 						}
 						if (var9.field1892 && var25 && var9.field1857 != null) {
-							HookRequest var36 = new HookRequest();
+							HookReq var36 = new HookReq();
 							var36.component = var9;
 							var36.mouseX = JavaMouseProvider.mouseX - var10;
 							var36.mouseY = JavaMouseProvider.mouseY - var11;
@@ -6469,7 +6465,7 @@ public class Client extends GameShell {
 						if (var9.field1892 && !var25) {
 							var9.field1892 = false;
 							if (var9.field1838 != null) {
-								HookRequest var37 = new HookRequest();
+								HookReq var37 = new HookReq();
 								var37.component = var9;
 								var37.mouseX = JavaMouseProvider.mouseX - var10;
 								var37.mouseY = JavaMouseProvider.mouseY - var11;
@@ -6478,14 +6474,14 @@ public class Client extends GameShell {
 							}
 						}
 						if (var9.field1869 != null) {
-							HookRequest var38 = new HookRequest();
+							HookReq var38 = new HookReq();
 							var38.component = var9;
 							var38.onop = var9.field1869;
 							hookRequestsTimer.push(var38);
 						}
 						if (var9.field1839 != null && field2084 > var9.field1895) {
 							if (var9.field1889 == null || field2084 - var9.field1895 > 32) {
-								HookRequest var43 = new HookRequest();
+								HookReq var43 = new HookReq();
 								var43.component = var9;
 								var43.onop = var9.field1839;
 								hookRequests.push(var43);
@@ -6494,7 +6490,7 @@ public class Client extends GameShell {
 									int var40 = field2110[var39 & 0x1F];
 									for (int var41 = 0; var41 < var9.field1889.length; var41++) {
 										if (var9.field1889[var41] == var40) {
-											HookRequest var42 = new HookRequest();
+											HookReq var42 = new HookReq();
 											var42.component = var9;
 											var42.onop = var9.field1839;
 											hookRequests.push(var42);
@@ -6507,7 +6503,7 @@ public class Client extends GameShell {
 						}
 						if (var9.field1865 != null && field2050 > var9.field1879) {
 							if (var9.field1866 == null || field2050 - var9.field1879 > 32) {
-								HookRequest var48 = new HookRequest();
+								HookReq var48 = new HookReq();
 								var48.component = var9;
 								var48.onop = var9.field1865;
 								hookRequests.push(var48);
@@ -6516,7 +6512,7 @@ public class Client extends GameShell {
 									int var45 = field2112[var44 & 0x1F];
 									for (int var46 = 0; var46 < var9.field1866.length; var46++) {
 										if (var9.field1866[var46] == var45) {
-											HookRequest var47 = new HookRequest();
+											HookReq var47 = new HookReq();
 											var47.component = var9;
 											var47.onop = var9.field1865;
 											hookRequests.push(var47);
@@ -6529,7 +6525,7 @@ public class Client extends GameShell {
 						}
 						if (var9.field1867 != null && field1982 > var9.field1897) {
 							if (var9.field1868 == null || field1982 - var9.field1897 > 32) {
-								HookRequest var53 = new HookRequest();
+								HookReq var53 = new HookReq();
 								var53.component = var9;
 								var53.onop = var9.field1867;
 								hookRequests.push(var53);
@@ -6538,7 +6534,7 @@ public class Client extends GameShell {
 									int var50 = field1999[var49 & 0x1F];
 									for (int var51 = 0; var51 < var9.field1868.length; var51++) {
 										if (var9.field1868[var51] == var50) {
-											HookRequest var52 = new HookRequest();
+											HookReq var52 = new HookReq();
 											var52.component = var9;
 											var52.onop = var9.field1867;
 											hookRequests.push(var52);
@@ -6550,25 +6546,25 @@ public class Client extends GameShell {
 							var9.field1897 = field1982;
 						}
 						if (field2116 > var9.field1894 && var9.field1872 != null) {
-							HookRequest var54 = new HookRequest();
+							HookReq var54 = new HookReq();
 							var54.component = var9;
 							var54.onop = var9.field1872;
 							hookRequests.push(var54);
 						}
 						if (field1977 > var9.field1894 && var9.field1877 != null) {
-							HookRequest var55 = new HookRequest();
+							HookReq var55 = new HookReq();
 							var55.component = var9;
 							var55.onop = var9.field1877;
 							hookRequests.push(var55);
 						}
 						if (field2185 > var9.field1894 && var9.field1875 != null) {
-							HookRequest var56 = new HookRequest();
+							HookReq var56 = new HookReq();
 							var56.component = var9;
 							var56.onop = var9.field1875;
 							hookRequests.push(var56);
 						}
 						if (field2119 > var9.field1894 && var9.field1777 != null) {
-							HookRequest var57 = new HookRequest();
+							HookReq var57 = new HookReq();
 							var57.component = var9;
 							var57.onop = var9.field1777;
 							hookRequests.push(var57);
@@ -6576,7 +6572,7 @@ public class Client extends GameShell {
 						var9.field1894 = field2117;
 						if (var9.field1873 != null) {
 							for (int var58 = 0; var58 < field2151; var58++) {
-								HookRequest var59 = new HookRequest();
+								HookReq var59 = new HookReq();
 								var59.component = var9;
 								var59.key = field2153[var58];
 								var59.keyChar = field2152[var58];
@@ -6633,7 +6629,7 @@ public class Client extends GameShell {
 					}
 				}
 				if (arg1 == 0 && var3.field1819 != null) {
-					HookRequest var5 = new HookRequest();
+					HookReq var5 = new HookReq();
 					var5.component = var3;
 					var5.onop = var3.field1819;
 					ScriptRunner.runHook(var5);
@@ -6645,7 +6641,7 @@ public class Client extends GameShell {
 							continue;
 						}
 					}
-					HookRequest var7 = new HookRequest();
+					HookReq var7 = new HookReq();
 					var7.component = var3;
 					var7.onop = var3.field1878;
 					ScriptRunner.runHook(var7);
@@ -6826,16 +6822,16 @@ public class Client extends GameShell {
 		if (clientcode == 1) {
 			if (value == 1) {
 				Pix3D.setBrightness(0.9D);
-				((SceneTextureProvider) Pix3D.textureProvider).method757(0.9D);
+				((WorldTextureProvider) Pix3D.textureProvider).method757(0.9D);
 			} else if (value == 2) {
 				Pix3D.setBrightness(0.8D);
-				((SceneTextureProvider) Pix3D.textureProvider).method757(0.8D);
+				((WorldTextureProvider) Pix3D.textureProvider).method757(0.8D);
 			} else if (value == 3) {
 				Pix3D.setBrightness(0.7D);
-				((SceneTextureProvider) Pix3D.textureProvider).method757(0.7D);
+				((WorldTextureProvider) Pix3D.textureProvider).method757(0.7D);
 			} else if (value == 4) {
 				Pix3D.setBrightness(0.6D);
-				((SceneTextureProvider) Pix3D.textureProvider).method757(0.6D);
+				((WorldTextureProvider) Pix3D.textureProvider).method757(0.6D);
 			}
 
 			ObjType.clear();
@@ -8014,12 +8010,12 @@ public class Client extends GameShell {
 		field2117++;
 
 		// todo: revisit this code if something is broken -- tried to flatten the do { } while () blocks
-		HookRequest var449;
+		HookReq var449;
 		IfType var450;
 		IfType var451;
 
 		do {
-			var449 = (HookRequest) hookRequestsTimer.pop();
+			var449 = (HookReq) hookRequestsTimer.pop();
 			if (var449 == null) {
 				break;
 			}
@@ -8037,7 +8033,7 @@ public class Client extends GameShell {
 		}
 
 		do {
-			var449 = (HookRequest) hookRequestsMouseStop.pop();
+			var449 = (HookReq) hookRequestsMouseStop.pop();
 			if (var449 == null) {
 				break;
 			}
@@ -8055,7 +8051,7 @@ public class Client extends GameShell {
 		}
 
 		do {
-			var449 = (HookRequest) hookRequests.pop();
+			var449 = (HookReq) hookRequests.pop();
 			if (var449 == null) {
 				break;
 			}
@@ -8743,7 +8739,7 @@ public class Client extends GameShell {
 				}
 				stack[0] = Integer.valueOf(in.g4());
 
-				HookRequest req = new HookRequest();
+				HookReq req = new HookReq();
 				req.onop = stack;
 				ScriptRunner.runHook(req);
 				packetType = -1;
@@ -10224,7 +10220,7 @@ public class Client extends GameShell {
 			int var465 = field2162.scrollX + (var460 - field2183);
 			int var466 = field2162.scrollY + (var461 - field2101);
 			if (field2094.field1781 != null && field1927) {
-				HookRequest var467 = new HookRequest();
+				HookReq var467 = new HookReq();
 				var467.component = field2094;
 				var467.mouseX = var465;
 				var467.mouseY = var466;
@@ -10234,7 +10230,7 @@ public class Client extends GameShell {
 			if (JavaMouseProvider.mouseButton == 0) {
 				if (field1927) {
 					if (field2094.field1860 != null) {
-						HookRequest var468 = new HookRequest();
+						HookReq var468 = new HookReq();
 						var468.component = field2094;
 						var468.mouseX = var465;
 						var468.mouseY = var466;
@@ -10477,13 +10473,13 @@ public class Client extends GameShell {
 		int var72 = JavaMouseProvider.mouseX;
 		int var73 = JavaMouseProvider.mouseY;
 		if (var72 >= var12 && var72 < var12 + var31 && var73 >= var13 && var73 < var13 + var32) {
-			ModelLit.mouseCheck = true;
-			ModelLit.pickedEntityCount = 0;
-			ModelLit.mouseX = JavaMouseProvider.mouseX - var12;
-			ModelLit.mouseY = JavaMouseProvider.mouseY - var13;
+			ModelUnlit.mouseCheck = true;
+			ModelUnlit.pickedEntityCount = 0;
+			ModelUnlit.mouseX = JavaMouseProvider.mouseX - var12;
+			ModelUnlit.mouseY = JavaMouseProvider.mouseY - var13;
 		} else {
-			ModelLit.mouseCheck = false;
-			ModelLit.pickedEntityCount = 0;
+			ModelUnlit.mouseCheck = false;
+			ModelUnlit.pickedEntityCount = 0;
 		}
 		method1351();
 		Pix2D.method2637(var12, var13, var31, var32, 0);
@@ -10493,7 +10489,7 @@ public class Client extends GameShell {
 		scene.clearTemporaryLocs();
 		imethod37(var12, var13, var31, var32);
 		drawTileHint(var12, var13);
-		((SceneTextureProvider) Pix3D.textureProvider).method751(sceneDelta);
+		((WorldTextureProvider) Pix3D.textureProvider).method751(sceneDelta);
 		method1843(var12, var13, var31, var32);
 		cameraX = var65;
 		cameraY = var66;
@@ -11035,8 +11031,8 @@ public class Client extends GameShell {
 			method8(Locale.WALK_HERE, "", 23, 0, var72 - var12, var73 - var13);
 		}
 		int var100 = -1;
-		for (int var101 = 0; var101 < ModelLit.pickedEntityCount; var101++) {
-			int var102 = ModelLit.pickedEntityTypecode[var101];
+		for (int var101 = 0; var101 < ModelUnlit.pickedEntityCount; var101++) {
+			int var102 = ModelUnlit.pickedEntityTypecode[var101];
 			int var103 = var102 & 0x7F;
 			int var104 = var102 >> 7 & 0x7F;
 			int var105 = var102 >> 29 & 0x3;

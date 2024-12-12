@@ -2,6 +2,7 @@ package jagex2.graphics;
 
 import deob.ObfuscatedName;
 
+// jag::oldscape::graphics::Pix8
 @ObfuscatedName("ft")
 public class Pix8 extends Pix2D {
 

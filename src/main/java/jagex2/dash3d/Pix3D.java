@@ -1,8 +1,9 @@
-package jagex2.graphics;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
-import jagex2.dash3d.TextureProvider;
+import jagex2.graphics.Pix2D;
 
+// jag::oldscape::dash3d::Pix3D
 @ObfuscatedName("fx")
 public class Pix3D extends Pix2D {
 

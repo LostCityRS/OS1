@@ -9,6 +9,7 @@ import jagex2.io.compress.BZip2;
 import jagex2.io.compress.GZip;
 import jagex2.jstring.StringUtil;
 
+// jag::Js5Index
 @ObfuscatedName("ch")
 public abstract class Js5Index {
 

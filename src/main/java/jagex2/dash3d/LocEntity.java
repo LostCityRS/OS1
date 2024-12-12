@@ -1,11 +1,9 @@
-package jagex2.dash3d.entity;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.client.Client;
 import jagex2.config.LocType;
 import jagex2.config.SeqType;
-import jagex2.dash3d.World;
-import jagex2.graphics.ModelLit;
 
 @ObfuscatedName("ff")
 public class LocEntity extends Entity {
@@ -64,7 +62,7 @@ public class LocEntity extends Entity {
 	}
 
 	@ObfuscatedName("ff.g(I)Lfo;")
-	public final ModelLit getModel() {
+	public final ModelUnlit getModel() {
 		if (this.anim != null) {
 			int var1 = Client.loopCycle - this.animCycle;
 			if (var1 > 100 && this.anim.replayoff > 0) {

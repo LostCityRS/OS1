@@ -1,9 +1,9 @@
-package jagex2.dash3d.entity;
+package jagex2.dash3d;
 
 import deob.ObfuscatedName;
 import jagex2.config.ObjType;
-import jagex2.graphics.ModelLit;
 
+// jag::ObjStackEntity
 @ObfuscatedName("fy")
 public class ObjStackEntity extends Entity {
 
@@ -14,7 +14,7 @@ public class ObjStackEntity extends Entity {
 	public int field2601;
 
 	@ObfuscatedName("fy.g(I)Lfo;")
-	public final ModelLit getModel() {
+	public final ModelUnlit getModel() {
 		return ObjType.get(this.field2600).getModel(this.field2601);
 	}
 }

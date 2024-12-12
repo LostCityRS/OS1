@@ -5,6 +5,7 @@ import jagex2.jstring.StringUtil;
 
 import java.util.Random;
 
+// jag::oldscape::jstring::PixfontGeneric
 @ObfuscatedName("fs")
 public abstract class PixFont extends Pix2D {
 
