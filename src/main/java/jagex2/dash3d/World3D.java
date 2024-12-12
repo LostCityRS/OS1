@@ -4,9 +4,9 @@ import deob.ObfuscatedName;
 import jagex2.dash3d.entity.Entity;
 import jagex2.dash3d.type.*;
 import jagex2.datastruct.LinkList;
-import jagex2.graphics.Model;
+import jagex2.graphics.ModelMetadata;
 import jagex2.graphics.Pix3D;
-import jagex2.graphics.SoftwareModel;
+import jagex2.graphics.Model;
 
 @ObfuscatedName("aq")
 public class World3D {
@@ -345,8 +345,8 @@ public class World3D {
 		Ground var11 = this.levelTiles[arg0][arg1][arg2];
 		if (var11 != null) {
 			for (int var12 = 0; var12 < var11.locCount; var12++) {
-				if ((var11.locs[var12].info & 0x100) == 0x100 && var11.locs[var12].model instanceof SoftwareModel) {
-					SoftwareModel var13 = (SoftwareModel) var11.locs[var12].model;
+				if ((var11.locs[var12].info & 0x100) == 0x100 && var11.locs[var12].model instanceof Model) {
+					Model var13 = (Model) var11.locs[var12].model;
 					var13.method3002();
 					if (var13.minY > var10) {
 						var10 = var13.minY;
@@ -708,28 +708,28 @@ public class World3D {
 						continue;
 					}
 					Wall var8 = var7.wall;
-					if (var8 != null && var8.modelA instanceof Model) {
-						Model var9 = (Model) var8.modelA;
+					if (var8 != null && var8.modelA instanceof ModelMetadata) {
+						ModelMetadata var9 = (ModelMetadata) var8.modelA;
 						this.mergeLocNormals(var9, var4, var5, var6, 1, 1);
-						if (var8.modelB instanceof Model) {
-							Model var10 = (Model) var8.modelB;
+						if (var8.modelB instanceof ModelMetadata) {
+							ModelMetadata var10 = (ModelMetadata) var8.modelB;
 							this.mergeLocNormals(var10, var4, var5, var6, 1, 1);
-							Model.mergeNormals(var9, var10, 0, 0, 0, false);
+							ModelMetadata.mergeNormals(var9, var10, 0, 0, 0, false);
 							var8.modelB = var10.calculateNormals(var10.field2708, var10.field2706, arg0, arg1, arg2);
 						}
 						var8.modelA = var9.calculateNormals(var9.field2708, var9.field2706, arg0, arg1, arg2);
 					}
 					for (int var11 = 0; var11 < var7.locCount; var11++) {
 						Location var12 = var7.locs[var11];
-						if (var12 != null && var12.model instanceof Model) {
-							Model var13 = (Model) var12.model;
+						if (var12 != null && var12.model instanceof ModelMetadata) {
+							ModelMetadata var13 = (ModelMetadata) var12.model;
 							this.mergeLocNormals(var13, var4, var5, var6, var12.maxSceneTileX - var12.minSceneTileX + 1, var12.maxSceneTileZ - var12.minSceneTileZ + 1);
 							var12.model = var13.calculateNormals(var13.field2708, var13.field2706, arg0, arg1, arg2);
 						}
 					}
 					GroundDecor var14 = var7.groundDecor;
-					if (var14 != null && var14.model instanceof Model) {
-						Model var15 = (Model) var14.model;
+					if (var14 != null && var14.model instanceof ModelMetadata) {
+						ModelMetadata var15 = (ModelMetadata) var14.model;
 						this.mergeGroundDecorNormals(var15, var4, var5, var6);
 						var14.model = var15.calculateNormals(var15.field2708, var15.field2706, arg0, arg1, arg2);
 					}
@@ -739,40 +739,40 @@ public class World3D {
 	}
 
 	@ObfuscatedName("aq.av(Lfw;III)V")
-	public void mergeGroundDecorNormals(Model arg0, int arg1, int arg2, int arg3) {
+	public void mergeGroundDecorNormals(ModelMetadata arg0, int arg1, int arg2, int arg3) {
 		if (arg2 < this.maxTileX) {
 			Ground var5 = this.levelTiles[arg1][arg2 + 1][arg3];
-			if (var5 != null && var5.groundDecor != null && var5.groundDecor.model instanceof Model) {
-				Model var6 = (Model) var5.groundDecor.model;
-				Model.mergeNormals(arg0, var6, 128, 0, 0, true);
+			if (var5 != null && var5.groundDecor != null && var5.groundDecor.model instanceof ModelMetadata) {
+				ModelMetadata var6 = (ModelMetadata) var5.groundDecor.model;
+				ModelMetadata.mergeNormals(arg0, var6, 128, 0, 0, true);
 			}
 		}
 		if (arg3 < this.maxTileX) {
 			Ground var7 = this.levelTiles[arg1][arg2][arg3 + 1];
-			if (var7 != null && var7.groundDecor != null && var7.groundDecor.model instanceof Model) {
-				Model var8 = (Model) var7.groundDecor.model;
-				Model.mergeNormals(arg0, var8, 0, 0, 128, true);
+			if (var7 != null && var7.groundDecor != null && var7.groundDecor.model instanceof ModelMetadata) {
+				ModelMetadata var8 = (ModelMetadata) var7.groundDecor.model;
+				ModelMetadata.mergeNormals(arg0, var8, 0, 0, 128, true);
 			}
 		}
 		if (arg2 < this.maxTileX && arg3 < this.maxTileZ) {
 			Ground var9 = this.levelTiles[arg1][arg2 + 1][arg3 + 1];
-			if (var9 != null && var9.groundDecor != null && var9.groundDecor.model instanceof Model) {
-				Model var10 = (Model) var9.groundDecor.model;
-				Model.mergeNormals(arg0, var10, 128, 0, 128, true);
+			if (var9 != null && var9.groundDecor != null && var9.groundDecor.model instanceof ModelMetadata) {
+				ModelMetadata var10 = (ModelMetadata) var9.groundDecor.model;
+				ModelMetadata.mergeNormals(arg0, var10, 128, 0, 128, true);
 			}
 		}
 		if (arg2 >= this.maxTileX || arg3 <= 0) {
 			return;
 		}
 		Ground var11 = this.levelTiles[arg1][arg2 + 1][arg3 - 1];
-		if (var11 != null && var11.groundDecor != null && var11.groundDecor.model instanceof Model) {
-			Model var12 = (Model) var11.groundDecor.model;
-			Model.mergeNormals(arg0, var12, 128, 0, -128, true);
+		if (var11 != null && var11.groundDecor != null && var11.groundDecor.model instanceof ModelMetadata) {
+			ModelMetadata var12 = (ModelMetadata) var11.groundDecor.model;
+			ModelMetadata.mergeNormals(arg0, var12, 128, 0, -128, true);
 		}
 	}
 
 	@ObfuscatedName("aq.ak(Lfw;IIIII)V")
-	public void mergeLocNormals(Model arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public void mergeLocNormals(ModelMetadata arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		boolean var7 = true;
 		int var8 = arg2;
 		int var9 = arg2 + arg4;
@@ -797,22 +797,22 @@ public class World3D {
 					int var16 = (this.levelHeightmaps[var12][var13 + 1][var14] + this.levelHeightmaps[var12][var13][var14] + this.levelHeightmaps[var12][var13][var14 + 1] + this.levelHeightmaps[var12][var13 + 1][var14 + 1]) / 4 - (this.levelHeightmaps[arg1][arg2 + 1][arg3] + this.levelHeightmaps[arg1][arg2][arg3] + this.levelHeightmaps[arg1][arg2][arg3 + 1] + this.levelHeightmaps[arg1][arg2 + 1][arg3 + 1]) / 4;
 					Wall var17 = var15.wall;
 					if (var17 != null) {
-						if (var17.modelA instanceof Model) {
-							Model var18 = (Model) var17.modelA;
-							Model.mergeNormals(arg0, var18, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
+						if (var17.modelA instanceof ModelMetadata) {
+							ModelMetadata var18 = (ModelMetadata) var17.modelA;
+							ModelMetadata.mergeNormals(arg0, var18, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
 						}
-						if (var17.modelB instanceof Model) {
-							Model var19 = (Model) var17.modelB;
-							Model.mergeNormals(arg0, var19, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
+						if (var17.modelB instanceof ModelMetadata) {
+							ModelMetadata var19 = (ModelMetadata) var17.modelB;
+							ModelMetadata.mergeNormals(arg0, var19, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
 						}
 					}
 					for (int var20 = 0; var20 < var15.locCount; var20++) {
 						Location var21 = var15.locs[var20];
-						if (var21 != null && var21.model instanceof Model) {
-							Model var22 = (Model) var21.model;
+						if (var21 != null && var21.model instanceof ModelMetadata) {
+							ModelMetadata var22 = (ModelMetadata) var21.model;
 							int var23 = var21.maxSceneTileX - var21.minSceneTileX + 1;
 							int var24 = var21.maxSceneTileZ - var21.minSceneTileZ + 1;
-							Model.mergeNormals(arg0, var22, (var21.minSceneTileX - arg2) * 128 + (var23 - arg4) * 64, var16, (var21.minSceneTileZ - arg3) * 128 + (var24 - arg5) * 64, var7);
+							ModelMetadata.mergeNormals(arg0, var22, (var21.minSceneTileX - arg2) * 128 + (var23 - arg4) * 64, var16, (var21.minSceneTileZ - arg3) * 128 + (var24 - arg5) * 64, var7);
 						}
 					}
 				}
@@ -1578,162 +1578,192 @@ public class World3D {
 	}
 
 	@ObfuscatedName("aq.ao(Lai;IIIIIII)V")
-	public void drawTileUnderlay(TileUnderlay arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public void drawTileUnderlay(TileUnderlay underlay, int level, int arg2, int arg3, int arg4, int arg5, int tileX, int tileZ) {
 		int var9;
-		int var10 = var9 = (arg6 << 7) - eyeX;
+		int var10 = var9 = (tileX << 7) - eyeX;
 		int var11;
-		int var12 = var11 = (arg7 << 7) - eyeZ;
+		int var12 = var11 = (tileZ << 7) - eyeZ;
 		int var13;
 		int var14 = var13 = var10 + 128;
 		int var15;
 		int var16 = var15 = var12 + 128;
-		int var17 = this.levelHeightmaps[arg1][arg6][arg7] - eyeY;
-		int var18 = this.levelHeightmaps[arg1][arg6 + 1][arg7] - eyeY;
-		int var19 = this.levelHeightmaps[arg1][arg6 + 1][arg7 + 1] - eyeY;
-		int var20 = this.levelHeightmaps[arg1][arg6][arg7 + 1] - eyeY;
+
+		int y0 = this.levelHeightmaps[level][tileX][tileZ] - eyeY;
+		int y1 = this.levelHeightmaps[level][tileX + 1][tileZ] - eyeY;
+		int y2 = this.levelHeightmaps[level][tileX + 1][tileZ + 1] - eyeY;
+		int y3 = this.levelHeightmaps[level][tileX][tileZ + 1] - eyeY;
+
 		int var21 = arg4 * var12 + arg5 * var10 >> 16;
 		int var22 = arg5 * var12 - arg4 * var10 >> 16;
-		int var24 = arg3 * var17 - arg2 * var22 >> 16;
-		int var25 = arg2 * var17 + arg3 * var22 >> 16;
-		if (var25 < 50) {
+		int var24 = arg3 * y0 - arg2 * var22 >> 16;
+		int z0 = arg2 * y0 + arg3 * var22 >> 16;
+
+		if (z0 < 50) {
 			return;
 		}
+
 		int var27 = arg4 * var11 + arg5 * var14 >> 16;
 		int var28 = arg5 * var11 - arg4 * var14 >> 16;
-		int var30 = arg3 * var18 - arg2 * var28 >> 16;
-		int var31 = arg2 * var18 + arg3 * var28 >> 16;
-		if (var31 < 50) {
+		int var30 = arg3 * y1 - arg2 * var28 >> 16;
+		int z1 = arg2 * y1 + arg3 * var28 >> 16;
+
+		if (z1 < 50) {
 			return;
 		}
+
 		int var33 = arg4 * var16 + arg5 * var13 >> 16;
 		int var34 = arg5 * var16 - arg4 * var13 >> 16;
-		int var36 = arg3 * var19 - arg2 * var34 >> 16;
-		int var37 = arg2 * var19 + arg3 * var34 >> 16;
-		if (var37 < 50) {
+		int var36 = arg3 * y2 - arg2 * var34 >> 16;
+		int z2 = arg2 * y2 + arg3 * var34 >> 16;
+
+		if (z2 < 50) {
 			return;
 		}
+
 		int var39 = arg4 * var15 + arg5 * var9 >> 16;
 		int var40 = arg5 * var15 - arg4 * var9 >> 16;
-		int var42 = arg3 * var20 - arg2 * var40 >> 16;
-		int var43 = arg2 * var20 + arg3 * var40 >> 16;
-		if (var43 < 50) {
+		int var42 = arg3 * y3 - arg2 * var40 >> 16;
+		int z3 = arg2 * y3 + arg3 * var40 >> 16;
+
+		if (z3 < 50) {
 			return;
 		}
-		int var45 = (var21 << 9) / var25 + Pix3D.centerX;
-		int var46 = (var24 << 9) / var25 + Pix3D.centerY;
-		int var47 = (var27 << 9) / var31 + Pix3D.centerX;
-		int var48 = (var30 << 9) / var31 + Pix3D.centerY;
-		int var49 = (var33 << 9) / var37 + Pix3D.centerX;
-		int var50 = (var36 << 9) / var37 + Pix3D.centerY;
-		int var51 = (var39 << 9) / var43 + Pix3D.centerX;
-		int var52 = (var42 << 9) / var43 + Pix3D.centerY;
-		Pix3D.alpha = 0;
-		if ((var48 - var52) * (var49 - var51) - (var47 - var51) * (var50 - var52) > 0) {
-			Pix3D.clipX = false;
-			if (var49 < 0 || var51 < 0 || var47 < 0 || var49 > Pix3D.boundX || var51 > Pix3D.boundX || var47 > Pix3D.boundX) {
-				Pix3D.clipX = true;
+
+		int px0 = (var21 << 9) / z0 + Pix3D.centerX;
+		int py0 = (var24 << 9) / z0 + Pix3D.centerY;
+		int pz0 = (var27 << 9) / z1 + Pix3D.centerX;
+
+		int px1 = (var30 << 9) / z1 + Pix3D.centerY;
+		int py1 = (var33 << 9) / z2 + Pix3D.centerX;
+		int pz1 = (var36 << 9) / z2 + Pix3D.centerY;
+
+		int px3 = (var39 << 9) / z3 + Pix3D.centerX;
+		int py3 = (var42 << 9) / z3 + Pix3D.centerY;
+
+		Pix3D.trans = 0;
+
+		if ((px1 - py3) * (py1 - px3) - (pz0 - px3) * (pz1 - py3) > 0) {
+			Pix3D.hclip = false;
+			if (py1 < 0 || px3 < 0 || pz0 < 0 || py1 > Pix3D.boundX || px3 > Pix3D.boundX || pz0 > Pix3D.boundX) {
+				Pix3D.hclip = true;
 			}
-			if (takingInput && this.pointInsideTriangle(mouseX, mouseY, var50, var52, var48, var49, var51, var47)) {
-				clickTileX = arg6;
-				clickTileZ = arg7;
+
+			if (takingInput && this.pointInsideTriangle(mouseX, mouseY, pz1, py3, px1, py1, px3, pz0)) {
+				clickTileX = tileX;
+				clickTileZ = tileZ;
 			}
-			if (arg0.textureId == -1) {
-				if (arg0.northEastColour != 12345678) {
-					Pix3D.fillGouraudTriangle(var50, var52, var48, var49, var51, var47, arg0.northEastColour, arg0.field694, arg0.field692);
+
+			if (underlay.textureId == -1) {
+				if (underlay.northEastColour != 12345678) {
+					Pix3D.gouraudTriangle(pz1, py3, px1, py1, px3, pz0, underlay.northEastColour, underlay.field694, underlay.field692);
 				}
 			} else if (lowMemory) {
-				int var53 = Pix3D.sceneProvider.method731(arg0.textureId);
-				Pix3D.fillGouraudTriangle(var50, var52, var48, var49, var51, var47, method612(var53, arg0.northEastColour), method612(var53, arg0.field694), method612(var53, arg0.field692));
-			} else if (arg0.flat) {
-				Pix3D.fillTexturedTriangle(var50, var52, var48, var49, var51, var47, arg0.northEastColour, arg0.field694, arg0.field692, var21, var27, var39, var24, var30, var42, var25, var31, var43, arg0.textureId);
+				int textureColor = Pix3D.textureProvider.getAverageRgb(underlay.textureId);
+				Pix3D.gouraudTriangle(pz1, py3, px1, py1, px3, pz0, mulLightness(textureColor, underlay.northEastColour), mulLightness(textureColor, underlay.field694), mulLightness(textureColor, underlay.field692));
+			} else if (underlay.flat) {
+				Pix3D.textureTriangle(pz1, py3, px1, py1, px3, pz0, underlay.northEastColour, underlay.field694, underlay.field692, var21, var27, var39, var24, var30, var42, z0, z1, z3, underlay.textureId);
 			} else {
-				Pix3D.fillTexturedTriangle(var50, var52, var48, var49, var51, var47, arg0.northEastColour, arg0.field694, arg0.field692, var33, var39, var27, var36, var42, var30, var37, var43, var31, arg0.textureId);
+				Pix3D.textureTriangle(pz1, py3, px1, py1, px3, pz0, underlay.northEastColour, underlay.field694, underlay.field692, var33, var39, var27, var36, var42, var30, z2, z3, z1, underlay.textureId);
 			}
 		}
-		if ((var45 - var47) * (var52 - var48) - (var46 - var48) * (var51 - var47) <= 0) {
-			return;
-		}
-		Pix3D.clipX = false;
-		if (var45 < 0 || var47 < 0 || var51 < 0 || var45 > Pix3D.boundX || var47 > Pix3D.boundX || var51 > Pix3D.boundX) {
-			Pix3D.clipX = true;
-		}
-		if (takingInput && this.pointInsideTriangle(mouseX, mouseY, var46, var48, var52, var45, var47, var51)) {
-			clickTileX = arg6;
-			clickTileZ = arg7;
-		}
-		if (arg0.textureId == -1) {
-			if (arg0.field696 != 12345678) {
-				Pix3D.fillGouraudTriangle(var46, var48, var52, var45, var47, var51, arg0.field696, arg0.field692, arg0.field694);
-			}
-		} else if (lowMemory) {
-			int var54 = Pix3D.sceneProvider.method731(arg0.textureId);
-			Pix3D.fillGouraudTriangle(var46, var48, var52, var45, var47, var51, method612(var54, arg0.field696), method612(var54, arg0.field692), method612(var54, arg0.field694));
-		} else {
-			Pix3D.fillTexturedTriangle(var46, var48, var52, var45, var47, var51, arg0.field696, arg0.field692, arg0.field694, var21, var27, var39, var24, var30, var42, var25, var31, var43, arg0.textureId);
-		}
-	}
+
+        if ((px0 - pz0) * (py3 - px1) - (py0 - px1) * (px3 - pz0) > 0) {
+            Pix3D.hclip = false;
+            if (px0 < 0 || pz0 < 0 || px3 < 0 || px0 > Pix3D.boundX || pz0 > Pix3D.boundX || px3 > Pix3D.boundX) {
+                Pix3D.hclip = true;
+            }
+
+            if (takingInput && this.pointInsideTriangle(mouseX, mouseY, py0, px1, py3, px0, pz0, px3)) {
+                clickTileX = tileX;
+                clickTileZ = tileZ;
+            }
+
+            if (underlay.textureId == -1) {
+                if (underlay.southwestColour != 12345678) {
+                    Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, underlay.southwestColour, underlay.field692, underlay.field694);
+                }
+            } else if (lowMemory) {
+                int averageColour = Pix3D.textureProvider.getAverageRgb(underlay.textureId);
+                Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, mulLightness(averageColour, underlay.southwestColour), mulLightness(averageColour, underlay.field692), mulLightness(averageColour, underlay.field694));
+            } else {
+                Pix3D.textureTriangle(py0, px1, py3, px0, pz0, px3, underlay.southwestColour, underlay.field692, underlay.field694, var21, var27, var39, var24, var30, var42, z0, z1, z3, underlay.textureId);
+            }
+        }
+    }
 
 	@ObfuscatedName("aq.ag(Lar;IIIIII)V")
-	public void drawTileOverlay(TileOverlay arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
-		int var8 = arg0.field564.length;
-		for (int var9 = 0; var9 < var8; var9++) {
-			int var10 = arg0.field564[var9] - eyeX;
-			int var11 = arg0.field579[var9] - eyeY;
-			int var12 = arg0.field560[var9] - eyeZ;
-			int var13 = arg3 * var12 + arg4 * var10 >> 16;
-			int var14 = arg4 * var12 - arg3 * var10 >> 16;
-			int var16 = arg2 * var11 - arg1 * var14 >> 16;
-			int var17 = arg1 * var11 + arg2 * var14 >> 16;
-			if (var17 < 50) {
+	public void drawTileOverlay(TileOverlay overlay, int sinEyePitch, int cosEyePitch, int sinEyeYaw, int cosEyeYaw, int arg5, int arg6) {
+		int vertexCount = overlay.vertexX.length;
+
+		for (int i = 0; i < vertexCount; i++) {
+			int vX = overlay.vertexX[i] - eyeX;
+			int vY = overlay.vertexY[i] - eyeY;
+			int vZ = overlay.vertexZ[i] - eyeZ;
+
+			int x = ((sinEyeYaw * vZ) + (cosEyeYaw * vX)) >> 16;
+			int temp = ((cosEyeYaw * vZ) - (sinEyeYaw * vX)) >> 16;
+			int y = ((cosEyePitch * vY) - (sinEyePitch * temp)) >> 16;
+			int z = ((sinEyePitch * vY) + (cosEyePitch * temp)) >> 16;
+
+			if (z < 50) {
 				return;
 			}
-			if (arg0.field567 != null) {
-				TileOverlay.field575[var9] = var13;
-				TileOverlay.field576[var9] = var16;
-				TileOverlay.field577[var9] = var17;
+
+			if (overlay.textureTriangleIds != null) {
+				TileOverlay.tmpViewspaceX[i] = x;
+				TileOverlay.tmpViewspaceY[i] = y;
+				TileOverlay.tmpViewspaceZ[i] = z;
 			}
-			TileOverlay.field573[var9] = (var13 << 9) / var17 + Pix3D.centerX;
-			TileOverlay.field574[var9] = (var16 << 9) / var17 + Pix3D.centerY;
+
+			TileOverlay.tmpScreenX[i] = (x << 9) / z + Pix3D.centerX;
+			TileOverlay.tmpScreenY[i] = (y << 9) / z + Pix3D.centerY;
 		}
-		Pix3D.alpha = 0;
-		int var19 = arg0.field561.length;
-		for (int var20 = 0; var20 < var19; var20++) {
-			int var21 = arg0.field561[var20];
-			int var22 = arg0.field572[var20];
-			int var23 = arg0.field565[var20];
-			int var24 = TileOverlay.field573[var21];
-			int var25 = TileOverlay.field573[var22];
-			int var26 = TileOverlay.field573[var23];
-			int var27 = TileOverlay.field574[var21];
-			int var28 = TileOverlay.field574[var22];
-			int var29 = TileOverlay.field574[var23];
-			if ((var24 - var25) * (var29 - var28) - (var26 - var25) * (var27 - var28) > 0) {
-				Pix3D.clipX = false;
-				if (var24 < 0 || var25 < 0 || var26 < 0 || var24 > Pix3D.boundX || var25 > Pix3D.boundX || var26 > Pix3D.boundX) {
-					Pix3D.clipX = true;
+
+		Pix3D.trans = 0;
+
+		int triangleVertexCount = overlay.triangleVertexA.length;
+		for (int var20 = 0; var20 < triangleVertexCount; var20++) {
+			int a = overlay.triangleVertexA[var20];
+			int b = overlay.triangleVertexB[var20];
+			int c = overlay.triangleVertexC[var20];
+
+			int xA = TileOverlay.tmpScreenX[a];
+			int xB = TileOverlay.tmpScreenX[b];
+			int xC = TileOverlay.tmpScreenX[c];
+
+			int yA = TileOverlay.tmpScreenY[a];
+			int yB = TileOverlay.tmpScreenY[b];
+			int yC = TileOverlay.tmpScreenY[c];
+
+			if ((xA - xB) * (yC - yB) - (xC - xB) * (yA - yB) > 0) {
+				Pix3D.hclip = false;
+				if (xA < 0 || xB < 0 || xC < 0 || xA > Pix3D.boundX || xB > Pix3D.boundX || xC > Pix3D.boundX) {
+					Pix3D.hclip = true;
 				}
-				if (takingInput && this.pointInsideTriangle(mouseX, mouseY, var27, var28, var29, var24, var25, var26)) {
+
+				if (takingInput && this.pointInsideTriangle(mouseX, mouseY, yA, yB, yC, xA, xB, xC)) {
 					clickTileX = arg5;
 					clickTileZ = arg6;
 				}
-				if (arg0.field567 == null || arg0.field567[var20] == -1) {
-					if (arg0.field566[var20] != 12345678) {
-						Pix3D.fillGouraudTriangle(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20]);
+
+				if (overlay.textureTriangleIds == null || overlay.textureTriangleIds[var20] == -1) {
+					if (overlay.textureColorA[var20] != 12345678) {
+						Pix3D.gouraudTriangle(yA, yB, yC, xA, xB, xC, overlay.textureColorA[var20], overlay.field562[var20], overlay.field569[var20]);
 					}
 				} else if (lowMemory) {
-					int var30 = Pix3D.sceneProvider.method731(arg0.field567[var20]);
-					Pix3D.fillGouraudTriangle(var27, var28, var29, var24, var25, var26, method612(var30, arg0.field566[var20]), method612(var30, arg0.field562[var20]), method612(var30, arg0.field569[var20]));
-				} else if (arg0.field568) {
-					Pix3D.fillTexturedTriangle(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20], TileOverlay.field575[0], TileOverlay.field575[1], TileOverlay.field575[3], TileOverlay.field576[0], TileOverlay.field576[1], TileOverlay.field576[3], TileOverlay.field577[0], TileOverlay.field577[1], TileOverlay.field577[3], arg0.field567[var20]);
+					int textureColor = Pix3D.textureProvider.getAverageRgb(overlay.textureTriangleIds[var20]);
+					Pix3D.gouraudTriangle(yA, yB, yC, xA, xB, xC, mulLightness(textureColor, overlay.textureColorA[var20]), mulLightness(textureColor, overlay.field562[var20]), mulLightness(textureColor, overlay.field569[var20]));
+				} else if (overlay.flat) {
+					Pix3D.textureTriangle(yA, yB, yC, xA, xB, xC, overlay.textureColorA[var20], overlay.field562[var20], overlay.field569[var20], TileOverlay.tmpViewspaceX[0], TileOverlay.tmpViewspaceX[1], TileOverlay.tmpViewspaceX[3], TileOverlay.tmpViewspaceY[0], TileOverlay.tmpViewspaceY[1], TileOverlay.tmpViewspaceY[3], TileOverlay.tmpViewspaceZ[0], TileOverlay.tmpViewspaceZ[1], TileOverlay.tmpViewspaceZ[3], overlay.textureTriangleIds[var20]);
 				} else {
-					Pix3D.fillTexturedTriangle(var27, var28, var29, var24, var25, var26, arg0.field566[var20], arg0.field562[var20], arg0.field569[var20], TileOverlay.field575[var21], TileOverlay.field575[var22], TileOverlay.field575[var23], TileOverlay.field576[var21], TileOverlay.field576[var22], TileOverlay.field576[var23], TileOverlay.field577[var21], TileOverlay.field577[var22], TileOverlay.field577[var23], arg0.field567[var20]);
+					Pix3D.textureTriangle(yA, yB, yC, xA, xB, xC, overlay.textureColorA[var20], overlay.field562[var20], overlay.field569[var20], TileOverlay.tmpViewspaceX[a], TileOverlay.tmpViewspaceX[b], TileOverlay.tmpViewspaceX[c], TileOverlay.tmpViewspaceY[a], TileOverlay.tmpViewspaceY[b], TileOverlay.tmpViewspaceY[c], TileOverlay.tmpViewspaceZ[a], TileOverlay.tmpViewspaceZ[b], TileOverlay.tmpViewspaceZ[c], overlay.textureTriangleIds[var20]);
 				}
 			}
 		}
 	}
 
 	@ObfuscatedName("aq.ar(II)I")
-	public static final int method612(int arg0, int arg1) {
+	public static final int mulLightness(int arg0, int arg1) {
 		int var2 = (arg0 & 0x7F) * arg1 >> 7;
 		if (var2 < 2) {
 			var2 = 2;

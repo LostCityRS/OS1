@@ -14,7 +14,7 @@ import jagex2.client.params.ModeWhat;
 import jagex2.client.social.*;
 import jagex2.config.*;
 import jagex2.dash3d.CollisionMap;
-import jagex2.dash3d.SceneBuilderProvider;
+import jagex2.dash3d.SceneTextureProvider;
 import jagex2.dash3d.World;
 import jagex2.dash3d.World3D;
 import jagex2.dash3d.entity.*;
@@ -469,16 +469,16 @@ public class Client extends GameShell {
 	public static Pix8 imageMapback;
 
 	@ObfuscatedName("be.fw")
-	public static int[] field853;
+	public static int[] compassMaskLineOffsets;
 
 	@ObfuscatedName("g.fo")
-	public static int[] field171;
+	public static int[] compassMaskLineLengths;
 
 	@ObfuscatedName("bq.fm")
-	public static int[] field829;
+	public static int[] minimapMaskLineOffsets;
 
 	@ObfuscatedName("cd.fi")
-	public static int[] field1474;
+	public static int[] minimapMaskLineLengths;
 
 	@ObfuscatedName("client.ge")
 	public static int field1919 = 2301979;
@@ -1718,92 +1718,112 @@ public class Client extends GameShell {
 				LoginScreen.progress = 60;
 			}
 		} else if (field1940 == 80) {
-			int var41 = 0;
+			int count = 0;
+
 			if (imageCompass == null) {
 				imageCompass = SpriteDataProvider.method4(spriteJs5, "compass", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageMapedge == null) {
 				imageMapedge = SpriteDataProvider.method4(spriteJs5, "mapedge", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageMapscene == null) {
 				imageMapscene = SpriteDataProvider.method541(spriteJs5, "mapscene", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageMapfunction == null) {
 				imageMapfunction = SpriteDataProvider.method830(spriteJs5, "mapfunction", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageHitmarks == null) {
 				imageHitmarks = SpriteDataProvider.method830(spriteJs5, "hitmarks", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageHeadiconsPk == null) {
 				imageHeadiconsPk = SpriteDataProvider.method830(spriteJs5, "headicons_pk", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageHeadiconsPrayer == null) {
 				imageHeadiconsPrayer = SpriteDataProvider.method830(spriteJs5, "headicons_prayer", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageHeadiconsHint == null) {
 				imageHeadiconsHint = SpriteDataProvider.method830(spriteJs5, "headicons_hint", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageMapmarker == null) {
 				imageMapmarker = SpriteDataProvider.method830(spriteJs5, "mapmarker", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageCross == null) {
 				imageCross = SpriteDataProvider.method830(spriteJs5, "cross", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageMapdots == null) {
 				imageMapdots = SpriteDataProvider.method830(spriteJs5, "mapdots", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageScrollbar == null) {
 				imageScrollbar = SpriteDataProvider.method541(spriteJs5, "scrollbar", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageModicons == null) {
 				imageModicons = SpriteDataProvider.method541(spriteJs5, "mod_icons", "");
 			} else {
-				var41++;
+				count++;
 			}
+
 			if (imageMapback == null) {
 				imageMapback = SpriteDataProvider.method457(spriteJs5, "mapback", "");
 			} else {
-				var41++;
+				count++;
 			}
-			if (var41 < 14) {
-				LoginScreen.message = Locale.field888 + var41 * 100 / 14 + "%";
+
+			if (count < 14) {
+				LoginScreen.message = Locale.field888 + count * 100 / 14 + "%";
 				LoginScreen.progress = 70;
 			} else {
-				PixFont.field2553 = imageModicons;
+				PixFont.modicons = imageModicons;
+
 				imageMapedge.method2741();
-				int var42 = (int) (Math.random() * 21.0D) - 10;
-				int var43 = (int) (Math.random() * 21.0D) - 10;
-				int var44 = (int) (Math.random() * 21.0D) - 10;
-				int var45 = (int) (Math.random() * 41.0D) - 20;
-				for (int var46 = 0; var46 < imageMapfunction.length; var46++) {
-					imageMapfunction[var46].method2663(var42 + var45, var43 + var45, var44 + var45);
+
+				int randR = (int) (Math.random() * 21.0D) - 10;
+				int randG = (int) (Math.random() * 21.0D) - 10;
+				int randB = (int) (Math.random() * 21.0D) - 10;
+				int rand = (int) (Math.random() * 41.0D) - 20;
+
+				for (int i = 0; i < imageMapfunction.length; i++) {
+					imageMapfunction[i].method2663(randR + rand, randG + rand, randB + rand);
 				}
-				imageMapscene[0].method2751(var42 + var45, var43 + var45, var44 + var45);
-				imethod49();
+
+				imageMapscene[0].method2751(randR + rand, randG + rand, randB + rand);
+
+				prepareMinimap();
 
 				LoginScreen.message = Locale.field889;
 				LoginScreen.progress = 70;
@@ -1811,8 +1831,8 @@ public class Client extends GameShell {
 			}
 		} else if (field1940 == 90) {
 			if (textureJs5.fetchAll()) {
-				SceneBuilderProvider var55 = new SceneBuilderProvider(textureJs5, spriteJs5, 20, 0.8D, lowMemory ? 64 : 128);
-				Pix3D.setSceneProvider(var55);
+				SceneTextureProvider provider = new SceneTextureProvider(textureJs5, spriteJs5, 20, 0.8D, lowMemory ? 64 : 128);
+				Pix3D.setTextureProvider(provider);
 				Pix3D.setBrightness(0.8D);
 
 				LoginScreen.message = Locale.field891;
@@ -2288,7 +2308,7 @@ public class Client extends GameShell {
 		VarPlayerType.unload();
 		PlayerModel.unload();
 		IfType.unload();
-		((SceneBuilderProvider) Pix3D.sceneProvider).method749();
+		((SceneTextureProvider) Pix3D.textureProvider).method749();
 		ClientScript.cache.clear();
 
 		animFrameJs5.discardAll();
@@ -3863,7 +3883,7 @@ public class Client extends GameShell {
 				int var25 = (var10 << 7) + (width << 6);
 				int var26 = (var11 << 7) + (length << 6);
 
-				SoftwareModel var27 = loc.method2386(var3, var4, var23, var25, locOffsetY, var26);
+				Model var27 = loc.method2386(var3, var4, var23, var25, locOffsetY, var26);
 				if (var27 != null) {
 					appendLoc(currentLevel, var10, var11, var5, -1, 0, 0, var7 + 1, var0 + 1);
 					player.locStartCycle = loopCycle + var7;
@@ -5841,7 +5861,7 @@ public class Client extends GameShell {
                 } else {
                     var201 = var10.anim;
                 }
-                SoftwareModel var202 = null;
+                Model var202 = null;
                 int var203 = 0;
                 if (var10.field1791 != -1) {
                     ObjType var204 = ObjType.get(var10.field1791);
@@ -6806,16 +6826,16 @@ public class Client extends GameShell {
 		if (clientcode == 1) {
 			if (value == 1) {
 				Pix3D.setBrightness(0.9D);
-				((SceneBuilderProvider) Pix3D.sceneProvider).method757(0.9D);
+				((SceneTextureProvider) Pix3D.textureProvider).method757(0.9D);
 			} else if (value == 2) {
 				Pix3D.setBrightness(0.8D);
-				((SceneBuilderProvider) Pix3D.sceneProvider).method757(0.8D);
+				((SceneTextureProvider) Pix3D.textureProvider).method757(0.8D);
 			} else if (value == 3) {
 				Pix3D.setBrightness(0.7D);
-				((SceneBuilderProvider) Pix3D.sceneProvider).method757(0.7D);
+				((SceneTextureProvider) Pix3D.textureProvider).method757(0.7D);
 			} else if (value == 4) {
 				Pix3D.setBrightness(0.6D);
-				((SceneBuilderProvider) Pix3D.sceneProvider).method757(0.6D);
+				((SceneTextureProvider) Pix3D.textureProvider).method757(0.6D);
 			}
 
 			ObjType.clear();
@@ -7014,12 +7034,12 @@ public class Client extends GameShell {
 		method1351();
 		Pix2D.setBounds(arg0, arg1, imageMapback.field2513 + arg0, imageMapback.field2514 + arg1);
 		if (minimapState == 2 || minimapState == 5) {
-			Pix2D.method2599(arg0 + 25, arg1 + 5, 0, field829, field1474);
+			Pix2D.method2599(arg0 + 25, arg1 + 5, 0, minimapMaskLineOffsets, minimapMaskLineLengths);
 		} else {
 			int var3 = orbitCameraYaw + minimapAnticheatAngle & 0x7FF;
 			int var4 = localPlayer.x / 32 + 48;
 			int var5 = 464 - localPlayer.z / 32;
-			imageMinimap.method2680(arg0 + 25, arg1 + 5, 146, 151, var4, var5, var3, minimapZoom + 256, field829, field1474);
+			imageMinimap.method2680(arg0 + 25, arg1 + 5, 146, 151, var4, var5, var3, minimapZoom + 256, minimapMaskLineOffsets, minimapMaskLineLengths);
 			for (int var6 = 0; var6 < field2157; var6++) {
 				int var7 = field2158[var6] * 4 + 2 - localPlayer.x / 32;
 				int var8 = field2159[var6] * 4 + 2 - localPlayer.z / 32;
@@ -7102,9 +7122,9 @@ public class Client extends GameShell {
 			Pix2D.method2637(arg0 + 93 + 4, arg1 + 82 - 4, 3, 3, 16777215);
 		}
 		if (minimapState < 3) {
-			imageCompass.method2680(arg0, arg1, 33, 33, 25, 25, orbitCameraYaw, 256, field853, field171);
+			imageCompass.method2680(arg0, arg1, 33, 33, 25, 25, orbitCameraYaw, 256, compassMaskLineOffsets, compassMaskLineLengths);
 		} else {
-			Pix2D.method2599(arg0, arg1, 0, field853, field171);
+			Pix2D.method2599(arg0, arg1, 0, compassMaskLineOffsets, compassMaskLineLengths);
 		}
 		if (field2132[arg2]) {
 			imageMapback.method2747(arg0, arg1);
@@ -10457,13 +10477,13 @@ public class Client extends GameShell {
 		int var72 = JavaMouseProvider.mouseX;
 		int var73 = JavaMouseProvider.mouseY;
 		if (var72 >= var12 && var72 < var12 + var31 && var73 >= var13 && var73 < var13 + var32) {
-			SoftwareModel.field2773 = true;
-			SoftwareModel.field2741 = 0;
-			SoftwareModel.field2719 = JavaMouseProvider.mouseX - var12;
-			SoftwareModel.field2775 = JavaMouseProvider.mouseY - var13;
+			Model.checkHover = true;
+			Model.pickedCount = 0;
+			Model.mouseX = JavaMouseProvider.mouseX - var12;
+			Model.mouseY = JavaMouseProvider.mouseY - var13;
 		} else {
-			SoftwareModel.field2773 = false;
-			SoftwareModel.field2741 = 0;
+			Model.checkHover = false;
+			Model.pickedCount = 0;
 		}
 		method1351();
 		Pix2D.method2637(var12, var13, var31, var32, 0);
@@ -10473,7 +10493,7 @@ public class Client extends GameShell {
 		scene.clearTemporaryLocs();
 		imethod37(var12, var13, var31, var32);
 		drawTileHint(var12, var13);
-		((SceneBuilderProvider) Pix3D.sceneProvider).method751(sceneDelta);
+		((SceneTextureProvider) Pix3D.textureProvider).method751(sceneDelta);
 		method1843(var12, var13, var31, var32);
 		cameraX = var65;
 		cameraY = var66;
@@ -11015,8 +11035,8 @@ public class Client extends GameShell {
 			method8(Locale.WALK_HERE, "", 23, 0, var72 - var12, var73 - var13);
 		}
 		int var100 = -1;
-		for (int var101 = 0; var101 < SoftwareModel.field2741; var101++) {
-			int var102 = SoftwareModel.field2730[var101];
+		for (int var101 = 0; var101 < Model.pickedCount; var101++) {
+			int var102 = Model.pickedBitsets[var101];
 			int var103 = var102 & 0x7F;
 			int var104 = var102 >> 7 & 0x7F;
 			int var105 = var102 >> 29 & 0x3;
@@ -11264,11 +11284,11 @@ public class Client extends GameShell {
 		return var27;
 	}
 
-	public static void imethod49() {
-		field853 = new int[33];
-		field171 = new int[33];
-		field829 = new int[151];
-		field1474 = new int[151];
+	public static void prepareMinimap() {
+		compassMaskLineOffsets = new int[33];
+		compassMaskLineLengths = new int[33];
+		minimapMaskLineOffsets = new int[151];
+		minimapMaskLineLengths = new int[151];
 		for (int var47 = 0; var47 < 33; var47++) {
 			int var48 = 999;
 			int var49 = 0;
@@ -11282,8 +11302,8 @@ public class Client extends GameShell {
 					break;
 				}
 			}
-			field853[var47] = var48;
-			field171[var47] = var49 - var48;
+			compassMaskLineOffsets[var47] = var48;
+			compassMaskLineLengths[var47] = var49 - var48;
 		}
 		for (int var51 = 5; var51 < 156; var51++) {
 			int var52 = 999;
@@ -11298,8 +11318,8 @@ public class Client extends GameShell {
 					break;
 				}
 			}
-			field829[var51 - 5] = var52 - 25;
-			field1474[var51 - 5] = var53 - var52;
+			minimapMaskLineOffsets[var51 - 5] = var52 - 25;
+			minimapMaskLineLengths[var51 - 5] = var53 - var52;
 		}
 	}
 

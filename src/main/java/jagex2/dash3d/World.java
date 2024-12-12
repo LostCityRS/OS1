@@ -8,7 +8,7 @@ import jagex2.config.LocType;
 import jagex2.dash3d.entity.Entity;
 import jagex2.dash3d.entity.LocEntity;
 import jagex2.graphics.Pix3D;
-import jagex2.graphics.SoftwareModel;
+import jagex2.graphics.Model;
 import jagex2.io.Packet;
 import jagex2.sound.PositionedSound;
 
@@ -465,8 +465,8 @@ public class World {
 			}
 			if (var45 != null && arg6.add(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.shadow) {
 				int var46 = 15;
-				if (var45 instanceof SoftwareModel) {
-					var46 = ((SoftwareModel) var45).method3004() / 4;
+				if (var45 instanceof Model) {
+					var46 = ((Model) var45).method3004() / 4;
 					if (var46 > 30) {
 						var46 = 30;
 					}
@@ -876,7 +876,7 @@ public class World {
 									int var61;
 									int var62;
 									if (var60 >= 0) {
-										var61 = Pix3D.sceneProvider.method731(var60);
+										var61 = Pix3D.textureProvider.getAverageRgb(var60);
 										var62 = -1;
 									} else if (var59.rgb == 16711935) {
 										var62 = -2;

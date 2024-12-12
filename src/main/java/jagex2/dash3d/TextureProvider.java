@@ -3,17 +3,17 @@ package jagex2.dash3d;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("aw")
-public interface SceneProvider {
+public interface TextureProvider {
 
 	@ObfuscatedName("aw.d(II)I")
-	int method731(int arg0);
+	int getAverageRgb(int textureId);
 
 	@ObfuscatedName("aw.l(II)Z")
-	boolean method732(int arg0);
+	boolean isOpaque(int textureId);
 
 	@ObfuscatedName("aw.m(II)Z")
-	boolean method733(int arg0);
+	boolean isLowDetail(int textureId);
 
 	@ObfuscatedName("aw.r(II)[I")
-	int[] method735(int arg0);
+	int[] getTexels(int textureId);
 }

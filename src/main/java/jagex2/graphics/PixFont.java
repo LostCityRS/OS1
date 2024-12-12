@@ -36,7 +36,7 @@ public abstract class PixFont extends Pix2D {
 	public int field2546;
 
 	@ObfuscatedName("fs.o")
-	public static Pix8[] field2553;
+	public static Pix8[] modicons;
 
 	@ObfuscatedName("fs.a")
 	public byte[] field2547;
@@ -215,7 +215,7 @@ public abstract class PixFont extends Pix2D {
 								try {
 									String var8 = var7.substring(4);
 									int var9 = StringUtil.method91(var8, 10, true);
-									var4 += field2553[var9].field2517;
+									var4 += modicons[var9].field2517;
 									var3 = -1;
 								} catch (Exception var12) {
 								}
@@ -289,7 +289,7 @@ public abstract class PixFont extends Pix2D {
 						try {
 							String var17 = var16.substring(4);
 							int var18 = StringUtil.method91(var17, 10, true);
-							var4 += field2553[var18].field2517;
+							var4 += modicons[var18].field2517;
 							var11 = 0;
 						} catch (Exception var22) {
 						}
@@ -599,7 +599,7 @@ public abstract class PixFont extends Pix2D {
 								try {
 									String var10 = var9.substring(4);
 									int var11 = StringUtil.method91(var10, 10, true);
-									Pix8 var13 = field2553[var11];
+									Pix8 var13 = modicons[var11];
 									var13.method2747(arg1, this.field2550 + var4 - var13.field2518);
 									arg1 += var13.field2517;
 									var6 = -1;
@@ -688,7 +688,7 @@ public abstract class PixFont extends Pix2D {
 									var9++;
 									String var15 = var12.substring(4);
 									int var16 = StringUtil.method91(var15, 10, true);
-									Pix8 var18 = field2553[var16];
+									Pix8 var18 = modicons[var16];
 									var18.method2747(arg1 + var13, this.field2550 + var6 - var18.field2518 + var14);
 									arg1 += var18.field2517;
 									var8 = -1;

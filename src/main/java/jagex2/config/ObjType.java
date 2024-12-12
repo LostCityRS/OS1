@@ -322,7 +322,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.u(II)Lfw;")
-	public final Model getInvModel(int count) {
+	public final ModelMetadata getInvModel(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -336,7 +336,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		Model model = Model.tryGet(modelJs5, this.model, 0);
+		ModelMetadata model = ModelMetadata.tryGet(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -361,7 +361,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.v(IB)Lfo;")
-	public final SoftwareModel getModel(int count) {
+	public final Model getModel(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -375,12 +375,12 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		SoftwareModel cached = (SoftwareModel) modelCache.get(this.index);
+		Model cached = (Model) modelCache.get(this.index);
 		if (cached != null) {
 			return cached;
 		}
 
-		Model model = Model.tryGet(modelJs5, this.model, 0);
+		ModelMetadata model = ModelMetadata.tryGet(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -401,7 +401,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		SoftwareModel litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
+		Model litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 		litModel.picking = true;
 		modelCache.put(litModel, this.index);
 		return litModel;
@@ -449,7 +449,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		SoftwareModel model = obj.getModel(1);
+		Model model = obj.getModel(1);
 		if (model == null) {
 			return null;
 		}
@@ -559,7 +559,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.t(ZI)Lfw;")
-	public final Model getWornModel(boolean gender) {
+	public final ModelMetadata getWornModel(boolean gender) {
 		int wear1 = this.manwear;
 		int wear2 = this.manwear2;
 		int wear3 = this.manwear3;
@@ -573,16 +573,16 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		Model model = Model.tryGet(modelJs5, wear1, 0);
+		ModelMetadata model = ModelMetadata.tryGet(modelJs5, wear1, 0);
 		if (wear2 != -1) {
-			Model model2 = Model.tryGet(modelJs5, wear2, 0);
+			ModelMetadata model2 = ModelMetadata.tryGet(modelJs5, wear2, 0);
 			if (wear3 == -1) {
-				Model[] models = new Model[] { model, model2 };
-				model = new Model(models, 2);
+				ModelMetadata[] models = new ModelMetadata[] { model, model2 };
+				model = new ModelMetadata(models, 2);
 			} else {
-				Model model3 = Model.tryGet(modelJs5, wear3, 0);
-				Model[] models = new Model[] { model, model2, model3 };
-				model = new Model(models, 3);
+				ModelMetadata model3 = ModelMetadata.tryGet(modelJs5, wear3, 0);
+				ModelMetadata[] models = new ModelMetadata[] { model, model2, model3 };
+				model = new ModelMetadata(models, 3);
 			}
 		}
 
@@ -629,7 +629,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.k(ZI)Lfw;")
-	public final Model getHeadModel(boolean gender) {
+	public final ModelMetadata getHeadModel(boolean gender) {
 		int head1 = this.manhead;
 		int head2 = this.manhead2;
 		if (gender) {
@@ -641,11 +641,11 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		Model model = Model.tryGet(modelJs5, head1, 0);
+		ModelMetadata model = ModelMetadata.tryGet(modelJs5, head1, 0);
 		if (head2 != -1) {
-			Model model2 = Model.tryGet(modelJs5, head2, 0);
-			Model[] models = new Model[] { model, model2 };
-			model = new Model(models, 2);
+			ModelMetadata model2 = ModelMetadata.tryGet(modelJs5, head2, 0);
+			ModelMetadata[] models = new ModelMetadata[] { model, model2 };
+			model = new ModelMetadata(models, 2);
 		}
 
 		if (this.recol_s != null) {

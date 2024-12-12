@@ -6,16 +6,16 @@ import deob.ObfuscatedName;
 public class TileOverlay {
 
 	@ObfuscatedName("ar.r")
-	public int[] field564;
+	public int[] vertexX;
 
 	@ObfuscatedName("ar.d")
-	public int[] field579;
+	public int[] vertexY;
 
 	@ObfuscatedName("ar.l")
-	public int[] field560;
+	public int[] vertexZ;
 
 	@ObfuscatedName("ar.m")
-	public int[] field566;
+	public int[] textureColorA;
 
 	@ObfuscatedName("ar.c")
 	public int[] field562;
@@ -24,19 +24,19 @@ public class TileOverlay {
 	public int[] field569;
 
 	@ObfuscatedName("ar.j")
-	public int[] field561;
+	public int[] triangleVertexA;
 
 	@ObfuscatedName("ar.z")
-	public int[] field572;
+	public int[] triangleVertexB;
 
 	@ObfuscatedName("ar.g")
-	public int[] field565;
+	public int[] triangleVertexC;
 
 	@ObfuscatedName("ar.q")
-	public int[] field567;
+	public int[] textureTriangleIds;
 
 	@ObfuscatedName("ar.i")
-	public boolean field568 = true;
+	public boolean flat = true;
 
 	@ObfuscatedName("ar.s")
 	public int field563;
@@ -51,19 +51,19 @@ public class TileOverlay {
 	public int field571;
 
 	@ObfuscatedName("ar.e")
-	public static int[] field573 = new int[6];
+	public static int[] tmpScreenX = new int[6];
 
 	@ObfuscatedName("ar.b")
-	public static int[] field574 = new int[6];
+	public static int[] tmpScreenY = new int[6];
 
 	@ObfuscatedName("ar.y")
-	public static int[] field575 = new int[6];
+	public static int[] tmpViewspaceX = new int[6];
 
 	@ObfuscatedName("ar.t")
-	public static int[] field576 = new int[6];
+	public static int[] tmpViewspaceY = new int[6];
 
 	@ObfuscatedName("ar.f")
-	public static int[] field577 = new int[6];
+	public static int[] tmpViewspaceZ = new int[6];
 
 	@ObfuscatedName("ar.k")
 	public static final int[][] field578 = new int[][] { { 1, 3, 5, 7 }, { 1, 3, 5, 7 }, { 1, 3, 5, 7 }, { 1, 3, 5, 7, 6 }, { 1, 3, 5, 7, 6 }, { 1, 3, 5, 7, 6 }, { 1, 3, 5, 7, 6 }, { 1, 3, 5, 7, 2, 6 }, { 1, 3, 5, 7, 2, 8 }, { 1, 3, 5, 7, 2, 8 }, { 1, 3, 5, 7, 11, 12 }, { 1, 3, 5, 7, 11, 12 }, { 1, 3, 5, 7, 13, 14 } };
@@ -73,7 +73,7 @@ public class TileOverlay {
 
 	public TileOverlay(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
 		if (arg5 != arg6 || arg5 != arg7 || arg5 != arg8) {
-			this.field568 = false;
+			this.flat = false;
 		}
 		this.field563 = arg0;
 		this.field558 = arg1;
@@ -85,9 +85,9 @@ public class TileOverlay {
 		int var23 = var20 * 3 / 4;
 		int[] var24 = field578[arg0];
 		int var25 = var24.length;
-		this.field564 = new int[var25];
-		this.field579 = new int[var25];
-		this.field560 = new int[var25];
+		this.vertexX = new int[var25];
+		this.vertexY = new int[var25];
+		this.vertexZ = new int[var25];
 		int[] var26 = new int[var25];
 		int[] var27 = new int[var25];
 		int var28 = arg3 * var20;
@@ -205,22 +205,22 @@ public class TileOverlay {
 				var35 = arg12;
 				var36 = arg16;
 			}
-			this.field564[var30] = var32;
-			this.field579[var30] = var34;
-			this.field560[var30] = var33;
+			this.vertexX[var30] = var32;
+			this.vertexY[var30] = var34;
+			this.vertexZ[var30] = var33;
 			var26[var30] = var35;
 			var27[var30] = var36;
 		}
 		int[] var37 = field570[arg0];
 		int var38 = var37.length / 4;
-		this.field561 = new int[var38];
-		this.field572 = new int[var38];
-		this.field565 = new int[var38];
-		this.field566 = new int[var38];
+		this.triangleVertexA = new int[var38];
+		this.triangleVertexB = new int[var38];
+		this.triangleVertexC = new int[var38];
+		this.textureColorA = new int[var38];
 		this.field562 = new int[var38];
 		this.field569 = new int[var38];
 		if (arg2 != -1) {
-			this.field567 = new int[var38];
+			this.textureTriangleIds = new int[var38];
 		}
 		int var39 = 0;
 		for (int var40 = 0; var40 < var38; var40++) {
@@ -238,22 +238,22 @@ public class TileOverlay {
 			if (var44 < 4) {
 				var44 = var44 - arg1 & 0x3;
 			}
-			this.field561[var40] = var42;
-			this.field572[var40] = var43;
-			this.field565[var40] = var44;
+			this.triangleVertexA[var40] = var42;
+			this.triangleVertexB[var40] = var43;
+			this.triangleVertexC[var40] = var44;
 			if (var41 == 0) {
-				this.field566[var40] = var26[var42];
+				this.textureColorA[var40] = var26[var42];
 				this.field562[var40] = var26[var43];
 				this.field569[var40] = var26[var44];
-				if (this.field567 != null) {
-					this.field567[var40] = -1;
+				if (this.textureTriangleIds != null) {
+					this.textureTriangleIds[var40] = -1;
 				}
 			} else {
-				this.field566[var40] = var27[var42];
+				this.textureColorA[var40] = var27[var42];
 				this.field562[var40] = var27[var43];
 				this.field569[var40] = var27[var44];
-				if (this.field567 != null) {
-					this.field567[var40] = arg2;
+				if (this.textureTriangleIds != null) {
+					this.textureTriangleIds[var40] = arg2;
 				}
 			}
 		}

@@ -4,8 +4,8 @@ import deob.ObfuscatedName;
 import jagex2.client.VarProvider;
 import jagex2.datastruct.DoublyLinkable;
 import jagex2.datastruct.LruCache;
+import jagex2.graphics.ModelMetadata;
 import jagex2.graphics.Model;
-import jagex2.graphics.SoftwareModel;
 import jagex2.io.Packet;
 import jagex2.js5.Js5Index;
 import jagex2.jstring.Locale;
@@ -260,13 +260,13 @@ public class NpcType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("em.u(Leo;ILeo;IB)Lfo;")
-	public final SoftwareModel getModel(SeqType primaryAnim, int arg1, SeqType secondaryAnim, int arg3) {
+	public final Model getModel(SeqType primaryAnim, int arg1, SeqType secondaryAnim, int arg3) {
 		if (this.multinpc != null) {
 			NpcType npc = this.getMultiNpc();
 			return npc == null ? null : npc.getModel(primaryAnim, arg1, secondaryAnim, arg3);
 		}
 
-		SoftwareModel cached = (SoftwareModel) modelCache.get(this.index);
+		Model cached = (Model) modelCache.get(this.index);
 		if (cached == null) {
 			boolean needsModel = false;
 			for (int i = 0; i < this.models.length; i++) {
@@ -279,16 +279,16 @@ public class NpcType extends DoublyLinkable {
 				return null;
 			}
 
-			Model[] models = new Model[this.models.length];
+			ModelMetadata[] models = new ModelMetadata[this.models.length];
 			for (int i = 0; i < this.models.length; i++) {
-				models[i] = Model.tryGet(modelJs5, this.models[i], 0);
+				models[i] = ModelMetadata.tryGet(modelJs5, this.models[i], 0);
 			}
 
-			Model model;
+			ModelMetadata model;
 			if (models.length == 1) {
 				model = models[0];
 			} else {
-				model = new Model(models, models.length);
+				model = new ModelMetadata(models, models.length);
 			}
 
 			if (this.recol_s != null) {
@@ -307,7 +307,7 @@ public class NpcType extends DoublyLinkable {
 			modelCache.put(cached, this.index);
 		}
 
-		SoftwareModel model;
+		Model model;
 		if (primaryAnim != null && secondaryAnim != null) {
 			model = primaryAnim.method2421(cached, arg1, secondaryAnim, arg3);
 		} else if (primaryAnim != null) {
@@ -326,7 +326,7 @@ public class NpcType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("em.v(I)Lfw;")
-	public final Model getHeadModel() {
+	public final ModelMetadata getHeadModel() {
 		if (this.multinpc != null) {
 			NpcType npc = this.getMultiNpc();
 			return npc == null ? null : npc.getHeadModel();
@@ -347,16 +347,16 @@ public class NpcType extends DoublyLinkable {
 			return null;
 		}
 
-		Model[] models = new Model[this.heads.length];
+		ModelMetadata[] models = new ModelMetadata[this.heads.length];
 		for (int i = 0; i < this.heads.length; i++) {
-			models[i] = Model.tryGet(modelJs5, this.heads[i], 0);
+			models[i] = ModelMetadata.tryGet(modelJs5, this.heads[i], 0);
 		}
 
-		Model model;
+		ModelMetadata model;
 		if (models.length == 1) {
 			model = models[0];
 		} else {
-			model = new Model(models, models.length);
+			model = new ModelMetadata(models, models.length);
 		}
 
 		if (this.recol_s != null) {

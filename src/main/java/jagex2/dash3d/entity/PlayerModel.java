@@ -6,8 +6,8 @@ import jagex2.config.NpcType;
 import jagex2.config.ObjType;
 import jagex2.config.SeqType;
 import jagex2.datastruct.LruCache;
+import jagex2.graphics.ModelMetadata;
 import jagex2.graphics.Model;
-import jagex2.graphics.SoftwareModel;
 import jagex2.io.Packet;
 
 @ObfuscatedName("ct")
@@ -174,7 +174,7 @@ public class PlayerModel {
 	}
 
 	@ObfuscatedName("ct.j(Leo;ILeo;IB)Lfo;")
-	public SoftwareModel method1174(SeqType arg0, int arg1, SeqType arg2, int arg3) {
+	public Model method1174(SeqType arg0, int arg1, SeqType arg2, int arg3) {
 		if (this.field1225 != -1) {
 			return NpcType.get(this.field1225).getModel(arg0, arg1, arg2, arg3);
 		}
@@ -194,7 +194,7 @@ public class PlayerModel {
 				var7[3] = arg0.lefthand;
 			}
 		}
-		SoftwareModel var9 = (SoftwareModel) field1231.get(var5);
+		Model var9 = (Model) field1231.get(var5);
 		if (var9 == null) {
 			boolean var10 = false;
 			for (int var11 = 0; var11 < 12; var11++) {
@@ -208,31 +208,31 @@ public class PlayerModel {
 			}
 			if (var10) {
 				if (this.field1227 != -1L) {
-					var9 = (SoftwareModel) field1231.get(this.field1227);
+					var9 = (Model) field1231.get(this.field1227);
 				}
 				if (var9 == null) {
 					return null;
 				}
 			}
 			if (var9 == null) {
-				Model[] var13 = new Model[12];
+				ModelMetadata[] var13 = new ModelMetadata[12];
 				int var14 = 0;
 				for (int var15 = 0; var15 < 12; var15++) {
 					int var16 = var7[var15];
 					if (var16 >= 256 && var16 < 512) {
-						Model var17 = IdkType.get(var16 - 256).getModel();
+						ModelMetadata var17 = IdkType.get(var16 - 256).getModel();
 						if (var17 != null) {
 							var13[var14++] = var17;
 						}
 					}
 					if (var16 >= 512) {
-						Model var18 = ObjType.get(var16 - 512).getWornModel(this.field1222);
+						ModelMetadata var18 = ObjType.get(var16 - 512).getWornModel(this.field1222);
 						if (var18 != null) {
 							var13[var14++] = var18;
 						}
 					}
 				}
-				Model var19 = new Model(var13, var14);
+				ModelMetadata var19 = new ModelMetadata(var13, var14);
 				for (int var20 = 0; var20 < 5; var20++) {
 					if (this.field1223[var20] < field800[var20].length) {
 						var19.recolour(field51[var20], field800[var20][this.field1223[var20]]);
@@ -249,7 +249,7 @@ public class PlayerModel {
 		if (arg0 == null && arg2 == null) {
 			return var9;
 		}
-		SoftwareModel var21;
+		Model var21;
 		if (arg0 != null && arg2 != null) {
 			var21 = arg0.method2421(var9, arg1, arg2, arg3);
 		} else if (arg0 == null) {
@@ -261,7 +261,7 @@ public class PlayerModel {
 	}
 
 	@ObfuscatedName("ct.z(I)Lfw;")
-	public Model method1192() {
+	public ModelMetadata method1192() {
 		if (this.field1225 != -1) {
 			return NpcType.get(this.field1225).getHeadModel();
 		}
@@ -278,24 +278,24 @@ public class PlayerModel {
 		if (var1) {
 			return null;
 		}
-		Model[] var4 = new Model[12];
+		ModelMetadata[] var4 = new ModelMetadata[12];
 		int var5 = 0;
 		for (int var6 = 0; var6 < 12; var6++) {
 			int var7 = this.field1228[var6];
 			if (var7 >= 256 && var7 < 512) {
-				Model var8 = IdkType.get(var7 - 256).getHeadModel();
+				ModelMetadata var8 = IdkType.get(var7 - 256).getHeadModel();
 				if (var8 != null) {
 					var4[var5++] = var8;
 				}
 			}
 			if (var7 >= 512) {
-				Model var9 = ObjType.get(var7 - 512).getHeadModel(this.field1222);
+				ModelMetadata var9 = ObjType.get(var7 - 512).getHeadModel(this.field1222);
 				if (var9 != null) {
 					var4[var5++] = var9;
 				}
 			}
 		}
-		Model var10 = new Model(var4, var5);
+		ModelMetadata var10 = new ModelMetadata(var4, var5);
 		for (int var11 = 0; var11 < 5; var11++) {
 			if (this.field1223[var11] < field800[var11].length) {
 				var10.recolour(field51[var11], field800[var11][this.field1223[var11]]);
