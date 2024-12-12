@@ -6,33 +6,40 @@ import deob.ObfuscatedName;
 public class VorbisMapping {
 
 	@ObfuscatedName("b.r")
-	public int field231;
+	public int submaps;
 
 	@ObfuscatedName("b.d")
-	public int field232;
+	public int mux;
 
 	@ObfuscatedName("b.l")
-	public int[] field234;
+	public int[] submap_floor;
 
 	@ObfuscatedName("b.m")
-	public int[] field233;
+	public int[] submap_residue;
 
 	public VorbisMapping() {
-		VorbisSound.method1561(16);
-		this.field231 = VorbisSound.method1553() == 0 ? 1 : VorbisSound.method1561(4) + 1;
-		if (VorbisSound.method1553() != 0) {
-			VorbisSound.method1561(8);
+		VorbisSound.read_bits(16); // mapping_type
+
+		this.submaps = VorbisSound.read_bool() == 0 ? 1 : VorbisSound.read_bits(4) + 1;
+
+		if (VorbisSound.read_bool() != 0) {
+			VorbisSound.read_bits(8);
 		}
-		VorbisSound.method1561(2);
-		if (this.field231 > 1) {
-			this.field232 = VorbisSound.method1561(4);
+
+		VorbisSound.read_bits(2);
+
+		if (this.submaps > 1) {
+			this.mux = VorbisSound.read_bits(4);
 		}
-		this.field234 = new int[this.field231];
-		this.field233 = new int[this.field231];
-		for (int var1 = 0; var1 < this.field231; var1++) {
-			VorbisSound.method1561(8);
-			this.field234[var1] = VorbisSound.method1561(8);
-			this.field233[var1] = VorbisSound.method1561(8);
+
+		this.submap_floor = new int[this.submaps];
+		this.submap_residue = new int[this.submaps];
+
+		for (int i = 0; i < this.submaps; i++) {
+			VorbisSound.read_bits(8); // discard
+
+			this.submap_floor[i] = VorbisSound.read_bits(8);
+			this.submap_residue[i] = VorbisSound.read_bits(8);
 		}
 	}
 }

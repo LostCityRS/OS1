@@ -44,22 +44,22 @@ public class VorbisSound extends Linkable {
 	public static int field1657;
 
 	@ObfuscatedName("dt.w")
-	public static VorbisCookbook[] field1658;
+	public static VorbisCookbook[] codebooks;
 
 	@ObfuscatedName("dt.e")
-	public static VorbisFloor[] field1659;
+	public static VorbisFloor[] floor_config;
 
 	@ObfuscatedName("dt.b")
-	public static VorbisResidue[] field1668;
+	public static VorbisResidue[] residue_config;
 
 	@ObfuscatedName("dt.y")
-	public static VorbisMapping[] field1661;
+	public static VorbisMapping[] mapping_config;
 
 	@ObfuscatedName("dt.t")
-	public static boolean[] field1662;
+	public static boolean[] blockflag;
 
 	@ObfuscatedName("dt.f")
-	public static int[] field1663;
+	public static int[] mapping;
 
 	@ObfuscatedName("dt.k")
 	public static boolean field1664 = false;
@@ -113,7 +113,7 @@ public class VorbisSound extends Linkable {
 	public int field1680;
 
 	@ObfuscatedName("dt.c(I)F")
-	public static float method1540(int arg0) {
+	public static float float32_unpack(int arg0) {
 		int var1 = arg0 & 0x1FFFFF;
 		int var2 = arg0 & Integer.MIN_VALUE;
 		int var3 = arg0 >> 21 & 0x3FF;
@@ -131,7 +131,7 @@ public class VorbisSound extends Linkable {
 	}
 
 	@ObfuscatedName("dt.j()I")
-	public static int method1553() {
+	public static int read_bool() {
 		int var0 = field1653[field1654] >> field1655 & 0x1;
 		field1655++;
 		field1654 += field1655 >> 3;
@@ -140,9 +140,10 @@ public class VorbisSound extends Linkable {
 	}
 
 	@ObfuscatedName("dt.z(I)I")
-	public static int method1561(int arg0) {
+	public static int read_bits(int arg0) {
 		int var1 = 0;
 		int var2 = 0;
+
 		while (arg0 >= 8 - field1655) {
 			int var3 = 8 - field1655;
 			int var4 = (0x1 << var3) - 1;
@@ -152,11 +153,13 @@ public class VorbisSound extends Linkable {
 			var2 += var3;
 			arg0 -= var3;
 		}
+
 		if (arg0 > 0) {
 			int var5 = (0x1 << arg0) - 1;
 			var1 += (field1653[field1654] >> field1655 & var5) << var2;
 			field1655 += arg0;
 		}
+
 		return var1;
 	}
 
@@ -187,11 +190,13 @@ public class VorbisSound extends Linkable {
 	}
 
 	@ObfuscatedName("dt.q([B)V")
-	public static void method1551(byte[] arg0) {
-		method1536(arg0, 0);
-		field1650 = 0x1 << method1561(4);
-		field1657 = 0x1 << method1561(4);
+	public static void decode(byte[] src) {
+		method1536(src, 0);
+
+		field1650 = 0x1 << read_bits(4);
+		field1657 = 0x1 << read_bits(4);
 		field1649 = new float[field1657];
+
 		for (int var1 = 0; var1 < 2; var1++) {
 			int var2 = var1 == 0 ? field1650 : field1657;
 			int var3 = var2 >> 1;
@@ -213,7 +218,7 @@ public class VorbisSound extends Linkable {
 				var10[var11 * 2 + 1] = -((float) Math.sin((double) (var11 * 4 + 2) * 3.141592653589793D / (double) var2));
 			}
 			int[] var12 = new int[var5];
-			int var13 = IntUtil.method479(var5 - 1);
+			int var13 = IntUtil.ilog(var5 - 1);
 			for (int var14 = 0; var14 < var5; var14++) {
 				int var17 = var14;
 				int var18 = var13;
@@ -237,53 +242,60 @@ public class VorbisSound extends Linkable {
 				field1647 = var12;
 			}
 		}
-		int var21 = method1561(8) + 1;
-		field1658 = new VorbisCookbook[var21];
-		for (int var22 = 0; var22 < var21; var22++) {
-			field1658[var22] = new VorbisCookbook();
+
+		int codebook_count = read_bits(8) + 1;
+		codebooks = new VorbisCookbook[codebook_count];
+		for (int i = 0; i < codebook_count; i++) {
+			codebooks[i] = new VorbisCookbook();
 		}
-		int var23 = method1561(6) + 1;
-		for (int var24 = 0; var24 < var23; var24++) {
-			method1561(16);
+
+		// time domain transfers
+		int x = read_bits(6) + 1;
+		for (int i = 0; i < x; i++) {
+			read_bits(16);
 		}
-		int var25 = method1561(6) + 1;
-		field1659 = new VorbisFloor[var25];
-		for (int var26 = 0; var26 < var25; var26++) {
-			field1659[var26] = new VorbisFloor();
+
+		int floor_count = read_bits(6) + 1;
+		floor_config = new VorbisFloor[floor_count];
+		for (int i = 0; i < floor_count; i++) {
+			floor_config[i] = new VorbisFloor();
 		}
-		int var27 = method1561(6) + 1;
-		field1668 = new VorbisResidue[var27];
-		for (int var28 = 0; var28 < var27; var28++) {
-			field1668[var28] = new VorbisResidue();
+
+		int residue_count = read_bits(6) + 1;
+		residue_config = new VorbisResidue[residue_count];
+		for (int i = 0; i < residue_count; i++) {
+			residue_config[i] = new VorbisResidue();
 		}
-		int var29 = method1561(6) + 1;
-		field1661 = new VorbisMapping[var29];
-		for (int var30 = 0; var30 < var29; var30++) {
-			field1661[var30] = new VorbisMapping();
+
+		int mapping_count = read_bits(6) + 1;
+		mapping_config = new VorbisMapping[mapping_count];
+		for (int i = 0; i < mapping_count; i++) {
+			mapping_config[i] = new VorbisMapping();
 		}
-		int var31 = method1561(6) + 1;
-		field1662 = new boolean[var31];
-		field1663 = new int[var31];
-		for (int var32 = 0; var32 < var31; var32++) {
-			field1662[var32] = method1553() != 0;
-			method1561(16);
-			method1561(16);
-			field1663[var32] = method1561(8);
+
+		int mode_count = read_bits(6) + 1;
+		blockflag = new boolean[mode_count];
+		mapping = new int[mode_count];
+		for (int i = 0; i < mode_count; i++) {
+			blockflag[i] = read_bool() != 0;
+			read_bits(16); // windowtype
+			read_bits(16); // transformtype
+			mapping[i] = read_bits(8);
 		}
 	}
 
 	@ObfuscatedName("dt.i(I)[F")
 	public float[] method1541(int arg0) {
 		method1536(this.field1674[arg0], 0);
-		method1553();
-		int var2 = method1561(IntUtil.method479(field1663.length - 1));
-		boolean var3 = field1662[var2];
+		read_bool();
+		int var2 = read_bits(IntUtil.ilog(mapping.length - 1));
+		boolean var3 = blockflag[var2];
 		int var4 = var3 ? field1657 : field1650;
 		boolean var5 = false;
 		boolean var6 = false;
 		if (var3) {
-			var5 = method1553() != 0;
-			var6 = method1553() != 0;
+			var5 = read_bool() != 0;
+			var6 = read_bool() != 0;
 		}
 		int var7 = var4 >> 1;
 		int var8;
@@ -310,20 +322,20 @@ public class VorbisSound extends Linkable {
 			var12 = var4;
 			var13 = var4 >> 1;
 		}
-		VorbisMapping var14 = field1661[field1663[var2]];
-		int var15 = var14.field232;
-		int var16 = var14.field234[var15];
-		boolean var17 = !field1659[var16].method187();
+		VorbisMapping var14 = mapping_config[mapping[var2]];
+		int var15 = var14.mux;
+		int var16 = var14.submap_floor[var15];
+		boolean var17 = !floor_config[var16].method187();
 		boolean var18 = var17;
-		for (int var19 = 0; var19 < var14.field231; var19++) {
-			VorbisResidue var20 = field1668[var14.field233[var19]];
+		for (int var19 = 0; var19 < var14.submaps; var19++) {
+			VorbisResidue var20 = residue_config[var14.submap_residue[var19]];
 			float[] var21 = field1649;
 			var20.method317(var21, var4 >> 1, var18);
 		}
 		if (!var17) {
-			int var22 = var14.field232;
-			int var23 = var14.field234[var22];
-			field1659[var23].method188(field1649, var4 >> 1);
+			int var22 = var14.mux;
+			int var23 = var14.submap_floor[var22];
+			floor_config[var23].method188(field1649, var4 >> 1);
 		}
 		if (var17) {
 			for (int var24 = var4 >> 1; var24 < var4; var24++) {
@@ -364,7 +376,7 @@ public class VorbisSound extends Linkable {
 				var28[var40 * 4 + 3] = (var41 - var43) * var45 - (var42 - var44) * var46;
 				var28[var40 * 4 + 1] = (var41 - var43) * var46 + (var42 - var44) * var45;
 			}
-			int var47 = IntUtil.method479(var4 - 1);
+			int var47 = IntUtil.ilog(var4 - 1);
 			for (int var48 = 0; var48 < var47 - 3; var48++) {
 				int var49 = var4 >> var48 + 2;
 				int var50 = 0x8 << var48;
@@ -486,7 +498,7 @@ public class VorbisSound extends Linkable {
 			if (var1 == null) {
 				return false;
 			}
-			method1551(var1);
+			decode(var1);
 			field1664 = true;
 		}
 		return true;

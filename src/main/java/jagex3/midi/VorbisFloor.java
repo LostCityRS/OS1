@@ -10,34 +10,99 @@ public class VorbisFloor {
 	public static final int[] field219 = new int[] { 256, 128, 86, 64 };
 
 	@ObfuscatedName("e.d")
-	public static final float[] field220 = new float[] { 1.0649863E-7F, 1.1341951E-7F, 1.2079015E-7F, 1.2863978E-7F, 1.369995E-7F, 1.459025E-7F, 1.5538409E-7F, 1.6548181E-7F, 1.7623574E-7F, 1.8768856E-7F, 1.998856E-7F, 2.128753E-7F, 2.2670913E-7F, 2.4144197E-7F, 2.5713223E-7F, 2.7384212E-7F, 2.9163792E-7F, 3.1059022E-7F, 3.307741E-7F, 3.5226967E-7F, 3.7516213E-7F, 3.995423E-7F, 4.255068E-7F, 4.5315863E-7F, 4.8260745E-7F, 5.1397E-7F, 5.4737063E-7F, 5.829419E-7F, 6.208247E-7F, 6.611694E-7F, 7.041359E-7F, 7.4989464E-7F, 7.98627E-7F, 8.505263E-7F, 9.057983E-7F, 9.646621E-7F, 1.0273513E-6F, 1.0941144E-6F, 1.1652161E-6F, 1.2409384E-6F, 1.3215816E-6F, 1.4074654E-6F, 1.4989305E-6F, 1.5963394E-6F, 1.7000785E-6F, 1.8105592E-6F, 1.9282195E-6F, 2.053526E-6F, 2.1869757E-6F, 2.3290977E-6F, 2.4804558E-6F, 2.6416496E-6F, 2.813319E-6F, 2.9961443E-6F, 3.1908505E-6F, 3.39821E-6F, 3.619045E-6F, 3.8542307E-6F, 4.1047006E-6F, 4.371447E-6F, 4.6555283E-6F, 4.958071E-6F, 5.280274E-6F, 5.623416E-6F, 5.988857E-6F, 6.3780467E-6F, 6.7925284E-6F, 7.2339453E-6F, 7.704048E-6F, 8.2047E-6F, 8.737888E-6F, 9.305725E-6F, 9.910464E-6F, 1.0554501E-5F, 1.1240392E-5F, 1.1970856E-5F, 1.2748789E-5F, 1.3577278E-5F, 1.4459606E-5F, 1.5399271E-5F, 1.6400005E-5F, 1.7465769E-5F, 1.8600793E-5F, 1.9809577E-5F, 2.1096914E-5F, 2.2467912E-5F, 2.3928002E-5F, 2.5482977E-5F, 2.7139005E-5F, 2.890265E-5F, 3.078091E-5F, 3.2781227E-5F, 3.4911533E-5F, 3.718028E-5F, 3.9596467E-5F, 4.2169668E-5F, 4.491009E-5F, 4.7828602E-5F, 5.0936775E-5F, 5.424693E-5F, 5.7772202E-5F, 6.152657E-5F, 6.552491E-5F, 6.9783084E-5F, 7.4317984E-5F, 7.914758E-5F, 8.429104E-5F, 8.976875E-5F, 9.560242E-5F, 1.0181521E-4F, 1.0843174E-4F, 1.1547824E-4F, 1.2298267E-4F, 1.3097477E-4F, 1.3948625E-4F, 1.4855085E-4F, 1.5820454E-4F, 1.6848555E-4F, 1.7943469E-4F, 1.9109536E-4F, 2.0351382E-4F, 2.167393E-4F, 2.3082423E-4F, 2.4582449E-4F, 2.6179955E-4F, 2.7881275E-4F, 2.9693157E-4F, 3.1622787E-4F, 3.3677815E-4F, 3.5866388E-4F, 3.8197188E-4F, 4.0679457E-4F, 4.3323037E-4F, 4.613841E-4F, 4.913675E-4F, 5.2329927E-4F, 5.573062E-4F, 5.935231E-4F, 6.320936E-4F, 6.731706E-4F, 7.16917E-4F, 7.635063E-4F, 8.1312325E-4F, 8.6596457E-4F, 9.2223985E-4F, 9.821722E-4F, 0.0010459992F, 0.0011139743F, 0.0011863665F, 0.0012634633F, 0.0013455702F, 0.0014330129F, 0.0015261382F, 0.0016253153F, 0.0017309374F, 0.0018434235F, 0.0019632196F, 0.0020908006F, 0.0022266726F, 0.0023713743F, 0.0025254795F, 0.0026895993F, 0.0028643848F, 0.0030505287F, 0.003248769F, 0.0034598925F, 0.0036847359F, 0.0039241905F, 0.0041792067F, 0.004450795F, 0.004740033F, 0.005048067F, 0.0053761187F, 0.005725489F, 0.0060975635F, 0.0064938175F, 0.0069158226F, 0.0073652514F, 0.007843887F, 0.008353627F, 0.008896492F, 0.009474637F, 0.010090352F, 0.01074608F, 0.011444421F, 0.012188144F, 0.012980198F, 0.013823725F, 0.014722068F, 0.015678791F, 0.016697686F, 0.017782796F, 0.018938422F, 0.020169148F, 0.021479854F, 0.022875736F, 0.02436233F, 0.025945531F, 0.027631618F, 0.029427277F, 0.031339627F, 0.03337625F, 0.035545226F, 0.037855156F, 0.0403152F, 0.042935107F, 0.045725275F, 0.048696756F, 0.05186135F, 0.05523159F, 0.05882085F, 0.062643364F, 0.06671428F, 0.07104975F, 0.075666964F, 0.08058423F, 0.08582105F, 0.09139818F, 0.097337745F, 0.1036633F, 0.11039993F, 0.11757434F, 0.12521498F, 0.13335215F, 0.14201812F, 0.15124726F, 0.16107617F, 0.1715438F, 0.18269168F, 0.19456401F, 0.20720787F, 0.22067343F, 0.23501402F, 0.25028655F, 0.26655158F, 0.28387362F, 0.3023213F, 0.32196787F, 0.34289113F, 0.36517414F, 0.3889052F, 0.41417846F, 0.44109413F, 0.4697589F, 0.50028646F, 0.53279793F, 0.5674221F, 0.6042964F, 0.64356697F, 0.6853896F, 0.72993004F, 0.777365F, 0.8278826F, 0.88168305F, 0.9389798F, 1.0F };
+	public static final float[] inverse_db_table = new float[] {
+		1.0649863e-07f, 1.1341951e-07f, 1.2079015e-07f, 1.2863978e-07f,
+		1.3699951e-07f, 1.4590251e-07f, 1.5538408e-07f, 1.6548181e-07f,
+		1.7623575e-07f, 1.8768855e-07f, 1.9988561e-07f, 2.1287530e-07f,
+		2.2670913e-07f, 2.4144197e-07f, 2.5713223e-07f, 2.7384213e-07f,
+		2.9163793e-07f, 3.1059021e-07f, 3.3077411e-07f, 3.5226968e-07f,
+		3.7516214e-07f, 3.9954229e-07f, 4.2550680e-07f, 4.5315863e-07f,
+		4.8260743e-07f, 5.1396998e-07f, 5.4737065e-07f, 5.8294187e-07f,
+		6.2082472e-07f, 6.6116941e-07f, 7.0413592e-07f, 7.4989464e-07f,
+		7.9862701e-07f, 8.5052630e-07f, 9.0579828e-07f, 9.6466216e-07f,
+		1.0273513e-06f, 1.0941144e-06f, 1.1652161e-06f, 1.2409384e-06f,
+		1.3215816e-06f, 1.4074654e-06f, 1.4989305e-06f, 1.5963394e-06f,
+		1.7000785e-06f, 1.8105592e-06f, 1.9282195e-06f, 2.0535261e-06f,
+		2.1869758e-06f, 2.3290978e-06f, 2.4804557e-06f, 2.6416497e-06f,
+		2.8133190e-06f, 2.9961443e-06f, 3.1908506e-06f, 3.3982101e-06f,
+		3.6190449e-06f, 3.8542308e-06f, 4.1047004e-06f, 4.3714470e-06f,
+		4.6555282e-06f, 4.9580707e-06f, 5.2802740e-06f, 5.6234160e-06f,
+		5.9888572e-06f, 6.3780469e-06f, 6.7925283e-06f, 7.2339451e-06f,
+		7.7040476e-06f, 8.2047000e-06f, 8.7378876e-06f, 9.3057248e-06f,
+		9.9104632e-06f, 1.0554501e-05f, 1.1240392e-05f, 1.1970856e-05f,
+		1.2748789e-05f, 1.3577278e-05f, 1.4459606e-05f, 1.5399272e-05f,
+		1.6400004e-05f, 1.7465768e-05f, 1.8600792e-05f, 1.9809576e-05f,
+		2.1096914e-05f, 2.2467911e-05f, 2.3928002e-05f, 2.5482978e-05f,
+		2.7139006e-05f, 2.8902651e-05f, 3.0780908e-05f, 3.2781225e-05f,
+		3.4911534e-05f, 3.7180282e-05f, 3.9596466e-05f, 4.2169667e-05f,
+		4.4910090e-05f, 4.7828601e-05f, 5.0936773e-05f, 5.4246931e-05f,
+		5.7772202e-05f, 6.1526565e-05f, 6.5524908e-05f, 6.9783085e-05f,
+		7.4317983e-05f, 7.9147585e-05f, 8.4291040e-05f, 8.9768747e-05f,
+		9.5602426e-05f, 0.00010181521f, 0.00010843174f, 0.00011547824f,
+		0.00012298267f, 0.00013097477f, 0.00013948625f, 0.00014855085f,
+		0.00015820453f, 0.00016848555f, 0.00017943469f, 0.00019109536f,
+		0.00020351382f, 0.00021673929f, 0.00023082423f, 0.00024582449f,
+		0.00026179955f, 0.00027881276f, 0.00029693158f, 0.00031622787f,
+		0.00033677814f, 0.00035866388f, 0.00038197188f, 0.00040679456f,
+		0.00043323036f, 0.00046138411f, 0.00049136745f, 0.00052329927f,
+		0.00055730621f, 0.00059352311f, 0.00063209358f, 0.00067317058f,
+		0.00071691700f, 0.00076350630f, 0.00081312324f, 0.00086596457f,
+		0.00092223983f, 0.00098217216f, 0.0010459992f,  0.0011139742f,
+		0.0011863665f,  0.0012634633f,  0.0013455702f,  0.0014330129f,
+		0.0015261382f,  0.0016253153f,  0.0017309374f,  0.0018434235f,
+		0.0019632195f,  0.0020908006f,  0.0022266726f,  0.0023713743f,
+		0.0025254795f,  0.0026895994f,  0.0028643847f,  0.0030505286f,
+		0.0032487691f,  0.0034598925f,  0.0036847358f,  0.0039241906f,
+		0.0041792066f,  0.0044507950f,  0.0047400328f,  0.0050480668f,
+		0.0053761186f,  0.0057254891f,  0.0060975636f,  0.0064938176f,
+		0.0069158225f,  0.0073652516f,  0.0078438871f,  0.0083536271f,
+		0.0088964928f,  0.009474637f,   0.010090352f,   0.010746080f,
+		0.011444421f,   0.012188144f,   0.012980198f,   0.013823725f,
+		0.014722068f,   0.015678791f,   0.016697687f,   0.017782797f,
+		0.018938423f,   0.020169149f,   0.021479854f,   0.022875735f,
+		0.024362330f,   0.025945531f,   0.027631618f,   0.029427276f,
+		0.031339626f,   0.033376252f,   0.035545228f,   0.037855157f,
+		0.040315199f,   0.042935108f,   0.045725273f,   0.048696758f,
+		0.051861348f,   0.055231591f,   0.058820850f,   0.062643361f,
+		0.066714279f,   0.071049749f,   0.075666962f,   0.080584227f,
+		0.085821044f,   0.091398179f,   0.097337747f,   0.10366330f,
+		0.11039993f,    0.11757434f,    0.12521498f,    0.13335215f,
+		0.14201813f,    0.15124727f,    0.16107617f,    0.17154380f,
+		0.18269168f,    0.19456402f,    0.20720788f,    0.22067342f,
+		0.23501402f,    0.25028656f,    0.26655159f,    0.28387361f,
+		0.30232132f,    0.32196786f,    0.34289114f,    0.36517414f,
+		0.38890521f,    0.41417847f,    0.44109412f,    0.46975890f,
+		0.50028648f,    0.53279791f,    0.56742212f,    0.60429640f,
+		0.64356699f,    0.68538959f,    0.72993007f,    0.77736504f,
+		0.82788260f,    0.88168307f,    0.9389798f,     1.0f
+	};
 
 	@ObfuscatedName("e.l")
-	public int[] field222;
+	public int[] Xlist;
 
 	@ObfuscatedName("e.m")
-	public int field221;
+	public int floor1_multiplier;
 
 	@ObfuscatedName("e.c")
-	public int[] field228;
+	public int[] partition_class_list;
 
 	@ObfuscatedName("e.n")
-	public int[] field224;
+	public int[] class_dimensions;
 
 	@ObfuscatedName("e.j")
-	public int[] field225;
+	public int[] class_subclasses;
 
 	@ObfuscatedName("e.z")
-	public int[] field226;
+	public int[] class_masterbooks;
 
 	@ObfuscatedName("e.g")
-	public int[][] field227;
+	public int[][] subclass_books;
 
 	@ObfuscatedName("e.q")
 	public static int[] field223;
 
 	@ObfuscatedName("e.i")
-	public static int[] field229;
+	public static int[] post;
 
 	@ObfuscatedName("e.s")
 	public static boolean[] field230;
@@ -83,28 +148,34 @@ public class VorbisFloor {
 	}
 
 	@ObfuscatedName("e.m(IIII[FI)V")
-	public void method184(int arg0, int arg1, int arg2, int arg3, float[] arg4, int arg5) {
-		int var7 = arg3 - arg1;
-		int var8 = arg2 - arg0;
-		int var9 = var7 < 0 ? -var7 : var7;
-		int var10 = var7 / var8;
-		int var11 = arg1;
-		int var12 = 0;
-		int var13 = var7 < 0 ? var10 - 1 : var10 + 1;
-		int var14 = var9 - (var10 < 0 ? -var10 : var10) * var8;
-		arg4[arg0] *= field220[arg1];
-		if (arg2 > arg5) {
-			arg2 = arg5;
+	public void render_line(int x0, int y0, int x1, int y1, float[] d, int arg5) {
+		int dy = y1 - y0;
+		int adx = x1 - x0;
+		int ady = dy < 0 ? -dy : dy;
+		int base = dy / adx;
+		int y = y0;
+		int err = 0;
+		int sy = dy < 0 ? base - 1 : base + 1;
+
+		ady -= (base < 0 ? -base : base) * adx;
+
+		d[x0] *= inverse_db_table[y0];
+
+		if (x1 > arg5) {
+			x1 = arg5;
 		}
-		for (int var15 = arg0 + 1; var15 < arg2; var15++) {
-			var12 += var14;
-			if (var12 >= var8) {
-				var12 -= var8;
-				var11 += var13;
+
+		for (int x = x0 + 1; x < x1; x++) {
+			err += ady;
+
+			if (err >= adx) {
+				err -= adx;
+				y += sy;
 			} else {
-				var11 += var10;
+				y += base;
 			}
-			arg4[var15] *= field220[var11];
+
+			d[x] *= inverse_db_table[y];
 		}
 	}
 
@@ -113,112 +184,129 @@ public class VorbisFloor {
 		if (arg0 >= arg1) {
 			return;
 		}
+
 		int var3 = arg0;
 		int var4 = field223[arg0];
-		int var5 = field229[arg0];
+		int var5 = post[arg0];
 		boolean var6 = field230[arg0];
 		for (int var7 = arg0 + 1; var7 <= arg1; var7++) {
 			int var8 = field223[var7];
 			if (var8 < var4) {
 				field223[var3] = var8;
-				field229[var3] = field229[var7];
+				post[var3] = post[var7];
 				field230[var3] = field230[var7];
 				var3++;
 				field223[var7] = field223[var3];
-				field229[var7] = field229[var3];
+				post[var7] = post[var3];
 				field230[var7] = field230[var3];
 			}
 		}
+
 		field223[var3] = var4;
-		field229[var3] = var5;
+		post[var3] = var5;
 		field230[var3] = var6;
+
 		this.method194(arg0, var3 - 1);
 		this.method194(var3 + 1, arg1);
 	}
 
 	public VorbisFloor() {
-		int var1 = VorbisSound.method1561(16);
-		if (var1 != 1) {
+		int floor_types = VorbisSound.read_bits(16);
+		if (floor_types != 1) {
 			throw new RuntimeException();
 		}
-		int var2 = VorbisSound.method1561(5);
-		int var3 = 0;
-		this.field228 = new int[var2];
-		for (int var4 = 0; var4 < var2; var4++) {
-			int var5 = VorbisSound.method1561(4);
-			this.field228[var4] = var5;
-			if (var5 >= var3) {
-				var3 = var5 + 1;
+
+		int partitions = VorbisSound.read_bits(5);
+		int max_class = 0;
+		this.partition_class_list = new int[partitions];
+
+		for (int i = 0; i < partitions; i++) {
+			int value = VorbisSound.read_bits(4);
+			this.partition_class_list[i] = value;
+
+			if (value >= max_class) {
+				max_class = value + 1;
 			}
 		}
-		this.field224 = new int[var3];
-		this.field225 = new int[var3];
-		this.field226 = new int[var3];
-		this.field227 = new int[var3][];
-		for (int var6 = 0; var6 < var3; var6++) {
-			this.field224[var6] = VorbisSound.method1561(3) + 1;
-			int var7 = this.field225[var6] = VorbisSound.method1561(2);
-			if (var7 != 0) {
-				this.field226[var6] = VorbisSound.method1561(8);
+
+		this.class_dimensions = new int[max_class];
+		this.class_subclasses = new int[max_class];
+		this.class_masterbooks = new int[max_class];
+		this.subclass_books = new int[max_class][];
+
+		for (int i = 0; i < max_class; i++) {
+			this.class_dimensions[i] = VorbisSound.read_bits(3) + 1;
+			int subs = this.class_subclasses[i] = VorbisSound.read_bits(2);
+
+			if (subs != 0) {
+				this.class_masterbooks[i] = VorbisSound.read_bits(8);
 			}
-			int var8 = 0x1 << var7;
-			int[] var9 = new int[var8];
-			this.field227[var6] = var9;
-			for (int var10 = 0; var10 < var8; var10++) {
-				var9[var10] = VorbisSound.method1561(8) - 1;
-			}
-		}
-		this.field221 = VorbisSound.method1561(2) + 1;
-		int var11 = VorbisSound.method1561(4);
-		int var12 = 2;
-		for (int var13 = 0; var13 < var2; var13++) {
-			var12 += this.field224[this.field228[var13]];
-		}
-		this.field222 = new int[var12];
-		this.field222[0] = 0;
-		this.field222[1] = 0x1 << var11;
-		int var14 = 2;
-		for (int var15 = 0; var15 < var2; var15++) {
-			int var16 = this.field228[var15];
-			for (int var17 = 0; var17 < this.field224[var16]; var17++) {
-				this.field222[var14++] = VorbisSound.method1561(var11);
+
+			int subclass_count = 0x1 << subs;
+			int[] subclass = new int[subclass_count];
+			this.subclass_books[i] = subclass;
+
+			for (int j = 0; j < subclass_count; j++) {
+				subclass[j] = VorbisSound.read_bits(8) - 1;
 			}
 		}
-		if (field223 == null || field223.length < var14) {
-			field223 = new int[var14];
-			field229 = new int[var14];
-			field230 = new boolean[var14];
+
+		this.floor1_multiplier = VorbisSound.read_bits(2) + 1;
+		int rangebits = VorbisSound.read_bits(4);
+
+		int values = 2;
+		for (int i = 0; i < partitions; i++) {
+			values += this.class_dimensions[this.partition_class_list[i]];
+		}
+
+		this.Xlist = new int[values];
+		this.Xlist[0] = 0;
+		this.Xlist[1] = 0x1 << rangebits;
+
+		values = 2;
+		for (int i = 0; i < partitions; i++) {
+			int partition = this.partition_class_list[i];
+
+			for (int j = 0; j < this.class_dimensions[partition]; j++) {
+				this.Xlist[values++] = VorbisSound.read_bits(rangebits);
+			}
+		}
+
+		if (field223 == null || field223.length < values) {
+			field223 = new int[values];
+			post = new int[values];
+			field230 = new boolean[values];
 		}
 	}
 
 	@ObfuscatedName("e.n()Z")
 	public boolean method187() {
-		boolean var1 = VorbisSound.method1553() != 0;
+		boolean var1 = VorbisSound.read_bool() != 0;
 		if (!var1) {
 			return false;
 		}
-		int var2 = this.field222.length;
+		int var2 = this.Xlist.length;
 		for (int var3 = 0; var3 < var2; var3++) {
-			field223[var3] = this.field222[var3];
+			field223[var3] = this.Xlist[var3];
 		}
-		int var4 = field219[this.field221 - 1];
-		int var5 = IntUtil.method479(var4 - 1);
-		field229[0] = VorbisSound.method1561(var5);
-		field229[1] = VorbisSound.method1561(var5);
+		int var4 = field219[this.floor1_multiplier - 1];
+		int var5 = IntUtil.ilog(var4 - 1);
+		post[0] = VorbisSound.read_bits(var5);
+		post[1] = VorbisSound.read_bits(var5);
 		int var6 = 2;
-		for (int var7 = 0; var7 < this.field228.length; var7++) {
-			int var8 = this.field228[var7];
-			int var9 = this.field224[var8];
-			int var10 = this.field225[var8];
+		for (int var7 = 0; var7 < this.partition_class_list.length; var7++) {
+			int var8 = this.partition_class_list[var7];
+			int var9 = this.class_dimensions[var8];
+			int var10 = this.class_subclasses[var8];
 			int var11 = (0x1 << var10) - 1;
 			int var12 = 0;
 			if (var10 > 0) {
-				var12 = VorbisSound.field1658[this.field226[var8]].method320();
+				var12 = VorbisSound.codebooks[this.class_masterbooks[var8]].method320();
 			}
 			for (int var13 = 0; var13 < var9; var13++) {
-				int var14 = this.field227[var8][var12 & var11];
+				int var14 = this.subclass_books[var8][var12 & var11];
 				var12 >>>= var10;
-				field229[var6++] = var14 >= 0 ? VorbisSound.field1658[var14].method320() : 0;
+				post[var6++] = var14 >= 0 ? VorbisSound.codebooks[var14].method320() : 0;
 			}
 		}
 		return true;
@@ -226,49 +314,57 @@ public class VorbisFloor {
 
 	@ObfuscatedName("e.j([FI)V")
 	public void method188(float[] arg0, int arg1) {
-		int var3 = this.field222.length;
-		int var4 = field219[this.field221 - 1];
+		int var3 = this.Xlist.length;
+		int var4 = field219[this.floor1_multiplier - 1];
+
 		boolean[] var5 = field230;
 		field230[1] = true;
 		var5[0] = true;
+
 		for (int var6 = 2; var6 < var3; var6++) {
 			int var7 = method199(field223, var6);
 			int var8 = method182(field223, var6);
-			int var9 = this.method185(field223[var7], field229[var7], field223[var8], field229[var8], field223[var6]);
-			int var10 = field229[var6];
+			int var9 = this.method185(field223[var7], post[var7], field223[var8], post[var8], field223[var6]);
+			int var10 = post[var6];
 			int var11 = var4 - var9;
 			int var13 = (var11 < var9 ? var11 : var9) << 1;
 			if (var10 == 0) {
 				field230[var6] = false;
-				field229[var6] = var9;
+				post[var6] = var9;
 			} else {
 				boolean[] var14 = field230;
 				field230[var8] = true;
 				var14[var7] = true;
 				field230[var6] = true;
 				if (var10 >= var13) {
-					field229[var6] = var11 > var9 ? var10 - var9 + var9 : var9 - var10 + var11 - 1;
+					post[var6] = var11 > var9 ? var10 - var9 + var9 : var9 - var10 + var11 - 1;
 				} else {
-					field229[var6] = (var10 & 0x1) == 0 ? var10 / 2 + var9 : var9 - (var10 + 1) / 2;
+					post[var6] = (var10 & 0x1) == 0 ? var10 / 2 + var9 : var9 - (var10 + 1) / 2;
 				}
 			}
 		}
+
 		this.method194(0, var3 - 1);
+
 		int var16 = 0;
-		int var17 = field229[0] * this.field221;
+		int var17 = post[0] * this.floor1_multiplier;
+
 		for (int var18 = 1; var18 < var3; var18++) {
 			if (field230[var18]) {
 				int var19 = field223[var18];
-				int var20 = field229[var18] * this.field221;
-				this.method184(var16, var17, var19, var20, arg0, arg1);
+				int var20 = post[var18] * this.floor1_multiplier;
+				this.render_line(var16, var17, var19, var20, arg0, arg1);
+
 				if (var19 >= arg1) {
 					return;
 				}
+
 				var16 = var19;
 				var17 = var20;
 			}
 		}
-		float var21 = field220[var17];
+
+		float var21 = inverse_db_table[var17];
 		for (int var22 = var16; var22 < arg1; var22++) {
 			arg0[var22] *= var21;
 		}

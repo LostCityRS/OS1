@@ -35,7 +35,7 @@ public class IntUtil {
 	}
 
 	@ObfuscatedName("az.l(IB)I")
-	public static int method479(int arg0) {
+	public static int ilog(int arg0) {
 		int var1 = 0;
 		if (arg0 < 0 || arg0 >= 65536) {
 			arg0 >>>= 0x10;
