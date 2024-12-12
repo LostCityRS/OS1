@@ -20,13 +20,14 @@ public class InvType extends DoublyLinkable {
 	public int size = 0;
 
 	@ObfuscatedName("fp.z(Lev;I)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+
+			this.decodeInner(buf, code);
 		}
 	}
 
@@ -43,16 +44,17 @@ public class InvType extends DoublyLinkable {
 			return cached;
 		}
 
-		byte[] buf = configJs5.getFile(5, id);
+		byte[] data = configJs5.getFile(5, id);
 		InvType inv = new InvType();
-		if (buf != null) {
-			inv.decode(new Packet(buf));
+		if (data != null) {
+			inv.decode(new Packet(data));
 		}
+
 		cache.put(inv, id);
 		return inv;
 	}
 
-	public static void init(Js5Provider var39) {
-		configJs5 = var39;
+	public static void init(Js5Provider config) {
+		configJs5 = config;
 	}
 }

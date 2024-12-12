@@ -4876,7 +4876,7 @@ public class Client extends GameShell {
 			IfType var33 = IfType.method947(var2, var1);
 			if (var33 != null) {
 				method913();
-				int var34 = ServerKeyEvents.method1350(method1512(var33));
+				int var34 = ServerKeyEvents.getTargetMask(method1512(var33));
 				IfType var35 = IfType.method947(var2, var1);
 				if (var35 != null && var35.field1861 != null) {
 					HookRequest var36 = new HookRequest();
@@ -4891,7 +4891,7 @@ public class Client extends GameShell {
 				requestRedrawComponent(var35);
 				field2077 = 0;
 				String var37;
-				if (ServerKeyEvents.method1350(method1512(var33)) == 0) {
+				if (ServerKeyEvents.getTargetMask(method1512(var33)) == 0) {
 					var37 = null;
 				} else if (var33.targetVerb == null || var33.targetVerb.trim().length() == 0) {
 					var37 = null;
@@ -6681,7 +6681,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("bs.fz(Leg;I)Leg;")
 	public static IfType method766(IfType arg0) {
 		IfType var1 = arg0;
-		int var2 = ServerKeyEvents.method480(method1512(arg0));
+		int var2 = ServerKeyEvents.getDragDepth(method1512(arg0));
 		IfType var3;
 		if (var2 == 0) {
 			var3 = null;
@@ -7378,7 +7378,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("dn.gg(Leg;B)I")
 	public static int method1512(IfType arg0) {
 		ServerKeyProperties var1 = (ServerKeyProperties) field2061.get(((long) arg0.parentlayer << 32) + (long) arg0.subid);
-		return var1 == null ? arg0.events : var1.field1900;
+		return var1 == null ? arg0.events : var1.events;
 	}
 
 	@ObfuscatedName("bo.gy(Leg;I)Z")
@@ -7409,7 +7409,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("ap.gb(Leg;I)Ljava/lang/String;")
 	public static String method422(IfType arg0) {
-		if (ServerKeyEvents.method1350(method1512(arg0)) == 0) {
+		if (ServerKeyEvents.getTargetMask(method1512(arg0)) == 0) {
 			return null;
 		} else if (arg0.targetVerb == null || arg0.targetVerb.trim().length() == 0) {
 			return null;
@@ -10224,7 +10224,7 @@ public class Client extends GameShell {
 					}
 					if (field2098 != null) {
 						IfType var469 = field2094;
-						int var470 = ServerKeyEvents.method480(method1512(var469));
+						int var470 = ServerKeyEvents.getDragDepth(method1512(var469));
 						IfType var471;
 						if (var470 == 0) {
 							var471 = null;
@@ -10303,7 +10303,7 @@ public class Client extends GameShell {
 					int var488 = field2067[menuSize - 1];
 					int var489 = field2068[menuSize - 1];
 					IfType var490 = IfType.get(var489);
-					if (ServerKeyEvents.method904(method1512(var490)) || ServerKeyEvents.imethod1(method1512(var490))) {
+					if (ServerKeyEvents.isObjSwapEnabled(method1512(var490)) || ServerKeyEvents.isObjReplaceEnabled(method1512(var490))) {
 						objGrabThreshold = false;
 						objDragCycles = 0;
 						if (objDragInterface != null) {
@@ -10498,7 +10498,7 @@ public class Client extends GameShell {
 		}
 		if (var10.buttonType == 2 && !field2079) {
 			String var131;
-			if (ServerKeyEvents.method1350(method1512(var10)) == 0) {
+			if (ServerKeyEvents.getTargetMask(method1512(var10)) == 0) {
 				var131 = null;
 			} else if (var10.targetVerb == null || var10.targetVerb.trim().length() == 0) {
 				var131 = null;
@@ -10661,7 +10661,7 @@ public class Client extends GameShell {
 						method8(var163, var10.field1795, 57, var162 + 1, var10.subid, var10.parentlayer);
 					}
 				}
-				if (ServerKeyEvents.method745(method1512(var10))) {
+				if (ServerKeyEvents.isResumeEnabled(method1512(var10))) {
 					method8(Locale.BUTTON_CONTINUE, "", 30, 0, var10.subid, var10.parentlayer);
 				}
 			}

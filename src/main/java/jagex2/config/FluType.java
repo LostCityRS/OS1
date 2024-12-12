@@ -10,10 +10,10 @@ import jagex2.js5.Js5Index;
 public class FluType extends DoublyLinkable {
 
 	@ObfuscatedName("ec.n")
-	public static Js5Index field2358;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("ec.j")
-	public static LruCache field2355 = new LruCache(64);
+	public static LruCache cache = new LruCache(64);
 
 	@ObfuscatedName("ec.z")
 	public int rgb = 0;
@@ -31,24 +31,26 @@ public class FluType extends DoublyLinkable {
 	public int field2360;
 
 	@ObfuscatedName("u.z(Lch;I)V")
-	public static void init(Js5Index arg0) {
-		field2358 = arg0;
+	public static void init(Js5Index config) {
+		configJs5 = config;
 	}
 
 	@ObfuscatedName("bf.g(IB)Lec;")
-	public static FluType get(int arg0) {
-		FluType var1 = (FluType) field2355.get((long) arg0);
-		if (var1 != null) {
-			return var1;
+	public static FluType get(int id) {
+		FluType cached = (FluType) cache.get(id);
+		if (cached != null) {
+			return cached;
 		}
-		byte[] var2 = field2358.getFile(1, arg0);
-		FluType var3 = new FluType();
-		if (var2 != null) {
-			var3.decode(new Packet(var2), arg0);
+
+		byte[] data = configJs5.getFile(1, id);
+		FluType type = new FluType();
+		if (data != null) {
+			type.decode(new Packet(data), id);
 		}
-		var3.postDecode();
-		field2355.put(var3, (long) arg0);
-		return var3;
+		type.postDecode();
+
+		cache.put(type, id);
+		return type;
 	}
 
 	@ObfuscatedName("ec.q(I)V")
@@ -57,20 +59,21 @@ public class FluType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ec.i(Lev;II)V")
-	public void decode(Packet arg0, int arg1) {
+	public void decode(Packet buf, int id) {
 		while (true) {
-			int var3 = arg0.g1();
-			if (var3 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var3, arg1);
+
+			this.decodeInner(buf, code, id);
 		}
 	}
 
 	@ObfuscatedName("ec.s(Lev;III)V")
-	public void decodeInner(Packet arg0, int arg1, int arg2) {
-		if (arg1 == 1) {
-			this.rgb = arg0.g3();
+	public void decodeInner(Packet buf, int code, int id) {
+		if (code == 1) {
+			this.rgb = buf.g3();
 		}
 	}
 
@@ -137,6 +140,6 @@ public class FluType extends DoublyLinkable {
 
 	@ObfuscatedName("fg.v(I)V")
 	public static void unload() {
-		field2355.clear();
+		cache.clear();
 	}
 }

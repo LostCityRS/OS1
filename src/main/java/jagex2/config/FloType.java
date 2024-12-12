@@ -13,7 +13,7 @@ public class FloType extends DoublyLinkable {
 	public static Js5Index configJs5;
 
 	@ObfuscatedName("fb.j")
-	public static LruCache field2411 = new LruCache(64);
+	public static LruCache cache = new LruCache(64);
 
 	@ObfuscatedName("fb.z")
 	public int rgb = 0;
@@ -46,19 +46,21 @@ public class FloType extends DoublyLinkable {
 	public int field2415;
 
 	@ObfuscatedName("cj.z(II)Lfb;")
-	public static FloType get(int arg0) {
-		FloType var1 = (FloType) field2411.get((long) arg0);
-		if (var1 != null) {
-			return var1;
+	public static FloType get(int id) {
+		FloType cached = (FloType) cache.get(id);
+		if (cached != null) {
+			return cached;
 		}
-		byte[] var2 = configJs5.getFile(4, arg0);
-		FloType var3 = new FloType();
-		if (var2 != null) {
-			var3.decode(new Packet(var2), arg0);
+
+		byte[] data = configJs5.getFile(4, id);
+		FloType type = new FloType();
+		if (data != null) {
+			type.decode(new Packet(data), id);
 		}
-		var3.postDecode();
-		field2411.put(var3, (long) arg0);
-		return var3;
+		type.postDecode();
+
+		cache.put(type, id);
+		return type;
 	}
 
 	@ObfuscatedName("fb.g(B)V")
@@ -69,31 +71,33 @@ public class FloType extends DoublyLinkable {
 			this.field2412 = this.field2413;
 			this.field2415 = this.field2405;
 		}
+
 		this.method2488(this.rgb);
 	}
 
 	@ObfuscatedName("fb.q(Lev;IB)V")
-	public void decode(Packet arg0, int arg1) {
+	public void decode(Packet buf, int id) {
 		while (true) {
-			int var3 = arg0.g1();
-			if (var3 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var3, arg1);
+
+			this.decodeInner(buf, code, id);
 		}
 	}
 
 	@ObfuscatedName("fb.i(Lev;III)V")
-	public void decodeInner(Packet arg0, int arg1, int arg2) {
-		if (arg1 == 1) {
-			this.rgb = arg0.g3();
-		} else if (arg1 == 2) {
-			this.texture = arg0.g1();
-		} else if (arg1 == 5) {
+	public void decodeInner(Packet buf, int code, int id) {
+		if (code == 1) {
+			this.rgb = buf.g3();
+		} else if (code == 2) {
+			this.texture = buf.g1();
+		} else if (code == 5) {
 			this.occlude = false;
-		} else if (arg1 == 7) {
-			this.averageRgb = arg0.g3();
-		} else if (arg1 == 8) {
+		} else if (code == 7) {
+			this.averageRgb = buf.g3();
+		} else if (code == 8) {
 		}
 	}
 
@@ -150,11 +154,11 @@ public class FloType extends DoublyLinkable {
 		}
 	}
 
-	public static void init(Js5Index arg0) {
-		configJs5 = arg0;
+	public static void init(Js5Index config) {
+		configJs5 = config;
 	}
 
 	public static void unload() {
-		field2411.clear();
+		cache.clear();
 	}
 }

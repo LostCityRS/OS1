@@ -10,15 +10,15 @@ public class GameCanvas extends Canvas {
 	@ObfuscatedName("fk.r")
 	public Component component;
 
-	public GameCanvas(Component arg0) {
-		this.component = arg0;
+	public GameCanvas(Component c) {
+		this.component = c;
 	}
 
-	public final void update(Graphics arg0) {
-		this.component.update(arg0);
+	public final void update(Graphics g) {
+		this.component.update(g);
 	}
 
-	public final void paint(Graphics arg0) {
-		this.component.paint(arg0);
+	public final void paint(Graphics g) {
+		this.component.paint(g);
 	}
 }

@@ -7,9 +7,9 @@ import jagex2.datastruct.Linkable;
 public class ServerKeyProperties extends Linkable {
 
 	@ObfuscatedName("el.m")
-	public int field1900;
+	public int events;
 
-	public ServerKeyProperties(int arg0) {
-		this.field1900 = arg0;
+	public ServerKeyProperties(int events) {
+		this.events = events;
 	}
 }

@@ -14,7 +14,7 @@ public class EnumType extends DoublyLinkable {
 	public static Js5Index configJs5;
 
 	@ObfuscatedName("fe.j")
-	public static LruCache field2425 = new LruCache(64);
+	public static LruCache cache = new LruCache(64);
 
 	@ObfuscatedName("fe.z")
 	public int inputtype;
@@ -41,61 +41,68 @@ public class EnumType extends DoublyLinkable {
 	public String[] stringValues;
 
 	@ObfuscatedName("ek.z(II)Lfe;")
-	public static EnumType get(int arg0) {
-		EnumType var1 = (EnumType) field2425.get((long) arg0);
-		if (var1 != null) {
-			return var1;
+	public static EnumType get(int id) {
+		EnumType cached = (EnumType) cache.get(id);
+		if (cached != null) {
+			return cached;
 		}
-		byte[] var2 = configJs5.getFile(8, arg0);
-		EnumType var3 = new EnumType();
-		if (var2 != null) {
-			var3.decode(new Packet(var2));
+
+		byte[] data = configJs5.getFile(8, id);
+		EnumType type = new EnumType();
+		if (data != null) {
+			type.decode(new Packet(data));
 		}
-		field2425.put(var3, (long) arg0);
-		return var3;
+
+		cache.put(type, id);
+		return type;
 	}
 
 	@ObfuscatedName("fe.g(Lev;I)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("fe.q(Lev;IB)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 1) {
-			this.inputtype = arg0.g1();
-		} else if (arg1 == 2) {
-			this.outputtype = (char) arg0.g1();
-		} else if (arg1 == 3) {
-			this.defaultString = arg0.gjstr();
-		} else if (arg1 == 4) {
-			this.defaultInt = arg0.g4();
-		} else if (arg1 == 5) {
-			this.count = arg0.g2();
+	public void decodeInner(Packet buf, int code) {
+		if (code == 1) {
+			this.inputtype = buf.g1();
+		} else if (code == 2) {
+			this.outputtype = (char) buf.g1();
+		} else if (code == 3) {
+			this.defaultString = buf.gjstr();
+		} else if (code == 4) {
+			this.defaultInt = buf.g4();
+		} else if (code == 5) {
+			this.count = buf.g2();
+
 			this.keys = new int[this.count];
 			this.stringValues = new String[this.count];
-			for (int var3 = 0; var3 < this.count; var3++) {
-				this.keys[var3] = arg0.g4();
-				this.stringValues[var3] = arg0.gjstr();
+
+			for (int i = 0; i < this.count; i++) {
+				this.keys[i] = buf.g4();
+				this.stringValues[i] = buf.gjstr();
 			}
-		} else if (arg1 == 6) {
-			this.count = arg0.g2();
+		} else if (code == 6) {
+			this.count = buf.g2();
+
 			this.keys = new int[this.count];
 			this.intValues = new int[this.count];
-			for (int var4 = 0; var4 < this.count; var4++) {
-				this.keys[var4] = arg0.g4();
-				this.intValues[var4] = arg0.g4();
+
+			for (int i = 0; i < this.count; i++) {
+				this.keys[i] = buf.g4();
+				this.intValues[i] = buf.g4();
 			}
 		}
 	}
 
-	public static void init(Js5Provider var40) {
-		configJs5 = var40;
+	public static void init(Js5Provider config) {
+		configJs5 = config;
 	}
 }

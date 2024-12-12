@@ -1122,7 +1122,7 @@ public class ScriptRunner {
 					IfType var84 = secondary ? activeComponent2 : activeComponent;
 					if (opcode == 1800) {
 						// cc_gettargetmask
-						intStack[isp++] = ServerKeyEvents.method1350(Client.method1512(var84));
+						intStack[isp++] = ServerKeyEvents.getTargetMask(Client.method1512(var84));
 						continue;
 					}
 					if (opcode == 1801) {
@@ -1268,7 +1268,7 @@ public class ScriptRunner {
 					IfType var92 = IfType.get(intStack[isp]);
 					if (opcode == 2800) {
 						// if_gettargetmask
-						intStack[isp++] = ServerKeyEvents.method1350(Client.method1512(var92));
+						intStack[isp++] = ServerKeyEvents.getTargetMask(Client.method1512(var92));
 						continue;
 					}
 					if (opcode == 2801) {

@@ -11,16 +11,16 @@ import jagex2.js5.Js5Index;
 public class IdkType extends DoublyLinkable {
 
 	@ObfuscatedName("fd.n")
-	public static Js5Index field2394;
+	public static Js5Index configJs5;
 
 	@ObfuscatedName("fd.j")
-	public static Js5Index field2397;
+	public static Js5Index modelJs5;
 
 	@ObfuscatedName("dl.z")
-	public static int field1628;
+	public static int count;
 
 	@ObfuscatedName("fd.g")
-	public static LruCache field2396 = new LruCache(64);
+	public static LruCache cache = new LruCache(64);
 
 	@ObfuscatedName("fd.q")
 	public int type = -1;
@@ -47,148 +47,168 @@ public class IdkType extends DoublyLinkable {
 	public boolean disable = false;
 
 	@ObfuscatedName("ct.z(Lch;Lch;I)V")
-	public static void init(Js5Index arg0, Js5Index arg1) {
-		field2394 = arg0;
-		field2397 = arg1;
-		field1628 = field2394.getFileCount(3);
+	public static void init(Js5Index config, Js5Index model) {
+		configJs5 = config;
+		modelJs5 = model;
+
+		count = configJs5.getFileCount(3);
 	}
 
 	@ObfuscatedName("p.g(II)Lfd;")
 	public static IdkType get(int arg0) {
-		IdkType var1 = (IdkType) field2396.get((long) arg0);
-		if (var1 != null) {
-			return var1;
+		IdkType cached = (IdkType) cache.get(arg0);
+		if (cached != null) {
+			return cached;
 		}
-		byte[] var2 = field2394.getFile(3, arg0);
-		IdkType var3 = new IdkType();
-		if (var2 != null) {
-			var3.decode(new Packet(var2));
+
+		byte[] data = configJs5.getFile(3, arg0);
+		IdkType type = new IdkType();
+		if (data != null) {
+			type.decode(new Packet(data));
 		}
-		field2396.put(var3, (long) arg0);
-		return var3;
+
+		cache.put(type, arg0);
+		return type;
 	}
 
 	@ObfuscatedName("fd.q(Lev;I)V")
-	public void decode(Packet arg0) {
+	public void decode(Packet buf) {
 		while (true) {
-			int var2 = arg0.g1();
-			if (var2 == 0) {
+			int code = buf.g1();
+			if (code == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+
+			this.decodeInner(buf, code);
 		}
 	}
 
 	@ObfuscatedName("fd.i(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
-		if (arg1 == 1) {
-			this.type = arg0.g1();
-		} else if (arg1 == 2) {
-			int var3 = arg0.g1();
-			this.models = new int[var3];
-			for (int var4 = 0; var4 < var3; var4++) {
-				this.models[var4] = arg0.g2();
+	public void decodeInner(Packet buf, int code) {
+		if (code == 1) {
+			this.type = buf.g1();
+		} else if (code == 2) {
+			int count = buf.g1();
+
+			this.models = new int[count];
+
+			for (int i = 0; i < count; i++) {
+				this.models[i] = buf.g2();
 			}
-		} else if (arg1 == 3) {
+		} else if (code == 3) {
 			this.disable = true;
-		} else if (arg1 == 40) {
-			int var5 = arg0.g1();
-			this.recol_s = new short[var5];
-			this.recol_d = new short[var5];
-			for (int var6 = 0; var6 < var5; var6++) {
-				this.recol_s[var6] = (short) arg0.g2();
-				this.recol_d[var6] = (short) arg0.g2();
+		} else if (code == 40) {
+			int count = buf.g1();
+
+			this.recol_s = new short[count];
+			this.recol_d = new short[count];
+
+			for (int var6 = 0; var6 < count; var6++) {
+				this.recol_s[var6] = (short) buf.g2();
+				this.recol_d[var6] = (short) buf.g2();
 			}
-		} else if (arg1 == 41) {
-			int var7 = arg0.g1();
-			this.retex_s = new short[var7];
-			this.retex_d = new short[var7];
-			for (int var8 = 0; var8 < var7; var8++) {
-				this.retex_s[var8] = (short) arg0.g2();
-				this.retex_d[var8] = (short) arg0.g2();
+		} else if (code == 41) {
+			int count = buf.g1();
+
+			this.retex_s = new short[count];
+			this.retex_d = new short[count];
+
+			for (int var8 = 0; var8 < count; var8++) {
+				this.retex_s[var8] = (short) buf.g2();
+				this.retex_d[var8] = (short) buf.g2();
 			}
-		} else if (arg1 >= 60 && arg1 < 70) {
-			this.heads[arg1 - 60] = arg0.g2();
+		} else if (code >= 60 && code < 70) {
+			this.heads[code - 60] = buf.g2();
 		}
 	}
 
 	@ObfuscatedName("fd.s(I)Z")
-	public boolean method2461() {
+	public boolean isDownloaded() {
 		if (this.models == null) {
 			return true;
 		}
-		boolean var1 = true;
-		for (int var2 = 0; var2 < this.models.length; var2++) {
-			if (!field2397.download(this.models[var2], 0)) {
-				var1 = false;
+
+		boolean status = true;
+		for (int i = 0; i < this.models.length; i++) {
+			if (!modelJs5.download(this.models[i], 0)) {
+				status = false;
 			}
 		}
-		return var1;
+
+		return status;
 	}
 
 	@ObfuscatedName("fd.u(S)Lfw;")
-	public Model method2465() {
+	public Model getModel() {
 		if (this.models == null) {
 			return null;
 		}
-		Model[] var1 = new Model[this.models.length];
-		for (int var2 = 0; var2 < this.models.length; var2++) {
-			var1[var2] = Model.tryGet(field2397, this.models[var2], 0);
+
+		Model[] models = new Model[this.models.length];
+		for (int i = 0; i < this.models.length; i++) {
+			models[i] = Model.tryGet(modelJs5, this.models[i], 0);
 		}
-		Model var3;
-		if (var1.length == 1) {
-			var3 = var1[0];
+
+		Model model;
+		if (models.length == 1) {
+			model = models[0];
 		} else {
-			var3 = new Model(var1, var1.length);
+			model = new Model(models, models.length);
 		}
+
 		if (this.recol_s != null) {
-			for (int var4 = 0; var4 < this.recol_s.length; var4++) {
-				var3.recolour(this.recol_s[var4], this.recol_d[var4]);
+			for (int i = 0; i < this.recol_s.length; i++) {
+				model.recolour(this.recol_s[i], this.recol_d[i]);
 			}
 		}
+
 		if (this.retex_s != null) {
-			for (int var5 = 0; var5 < this.retex_s.length; var5++) {
-				var3.retexture(this.retex_s[var5], this.retex_d[var5]);
+			for (int i = 0; i < this.retex_s.length; i++) {
+				model.retexture(this.retex_s[i], this.retex_d[i]);
 			}
 		}
-		return var3;
+
+		return model;
 	}
 
 	@ObfuscatedName("fd.v(B)Z")
-	public boolean method2463() {
-		boolean var1 = true;
-		for (int var2 = 0; var2 < 5; var2++) {
-			if (this.heads[var2] != -1 && !field2397.download(this.heads[var2], 0)) {
-				var1 = false;
+	public boolean isHeadDownloaded() {
+		boolean status = true;
+		for (int i = 0; i < 5; i++) {
+			if (this.heads[i] != -1 && !modelJs5.download(this.heads[i], 0)) {
+				status = false;
 			}
 		}
-		return var1;
+		return status;
 	}
 
 	@ObfuscatedName("fd.w(B)Lfw;")
-	public Model method2480() {
-		Model[] var1 = new Model[5];
-		int var2 = 0;
-		for (int var3 = 0; var3 < 5; var3++) {
-			if (this.heads[var3] != -1) {
-				var1[var2++] = Model.tryGet(field2397, this.heads[var3], 0);
+	public Model getHeadModel() {
+		Model[] models = new Model[5];
+		int modelCount = 0;
+		for (int i = 0; i < 5; i++) {
+			if (this.heads[i] != -1) {
+				models[modelCount++] = Model.tryGet(modelJs5, this.heads[i], 0);
 			}
 		}
-		Model var4 = new Model(var1, var2);
+
+		Model model = new Model(models, modelCount);
 		if (this.recol_s != null) {
-			for (int var5 = 0; var5 < this.recol_s.length; var5++) {
-				var4.recolour(this.recol_s[var5], this.recol_d[var5]);
+			for (int i = 0; i < this.recol_s.length; i++) {
+				model.recolour(this.recol_s[i], this.recol_d[i]);
 			}
 		}
+
 		if (this.retex_s != null) {
-			for (int var6 = 0; var6 < this.retex_s.length; var6++) {
-				var4.retexture(this.retex_s[var6], this.retex_d[var6]);
+			for (int i = 0; i < this.retex_s.length; i++) {
+				model.retexture(this.retex_s[i], this.retex_d[i]);
 			}
 		}
-		return var4;
+
+		return model;
 	}
 
 	public static void unload() {
-		field2396.clear();
+		cache.clear();
 	}
 }
