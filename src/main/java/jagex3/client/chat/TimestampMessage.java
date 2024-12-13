@@ -14,7 +14,7 @@ public class TimestampMessage extends ChatLinkable {
 	public short field1583;
 
 	public TimestampMessage(String arg0, int arg1) {
-		MonotonicTime.method1135();
+		MonotonicTime.currentTime();
 		this.field1584 = arg0;
 		this.field1583 = (short) arg1;
 	}

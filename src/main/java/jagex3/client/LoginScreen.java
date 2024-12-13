@@ -147,10 +147,10 @@ public class LoginScreen {
 	public static Pix8 field215;
 
 	@ObfuscatedName("g.ax")
-	public static int field161 = 0;
+	public static int worldCount = 0;
 
 	@ObfuscatedName("v.ai")
-	public static WorldEntry[] field214;
+	public static WorldEntry[] worlds;
 
 	@ObfuscatedName("g.bi")
 	public static int[] field130 = new int[] { 0, 1, 2, 3 };
@@ -787,13 +787,13 @@ public class LoginScreen {
 			do {
 				var10 = var9;
 				var11 = var8;
-				if ((var8 - 1) * var9 >= field161) {
+				if ((var8 - 1) * var9 >= worldCount) {
 					var8--;
 				}
-				if ((var9 - 1) * var8 >= field161) {
+				if ((var9 - 1) * var8 >= worldCount) {
 					var9--;
 				}
-				if ((var9 - 1) * var8 >= field161) {
+				if ((var9 - 1) * var8 >= worldCount) {
 					var9--;
 				}
 			} while (var9 != var10 || var8 != var11);
@@ -810,27 +810,27 @@ public class LoginScreen {
 			int var16 = var15 + 23;
 			int var17 = var14;
 			int var18 = 0;
-			for (int var19 = 0; var19 < field161; var19++) {
-				WorldEntry var20 = field214[var19];
+			for (int var19 = 0; var19 < worldCount; var19++) {
+				WorldEntry var20 = worlds[var19];
 				boolean var21 = true;
-				String var22 = Integer.toString(var20.field46);
-				if (var20.field46 == -1) {
+				String var22 = Integer.toString(var20.players);
+				if (var20.players == -1) {
 					var22 = Locale.field1012;
 					var21 = false;
-				} else if (var20.field46 > 1980) {
+				} else if (var20.players > 1980) {
 					var22 = Locale.field1092;
 					var21 = false;
 				}
 				if (JavaMouseProvider.mouseX >= var17 && JavaMouseProvider.mouseY >= var16 && JavaMouseProvider.mouseX < var6 + var17 && JavaMouseProvider.mouseY < var7 + var16 && var21) {
 					field168 = var19;
-					field1530[var20.field50 ? 1 : 0].method2699(var17, var16, 128, 16777215);
+					field1530[var20.members ? 1 : 0].method2699(var17, var16, 128, 16777215);
 				} else {
-					field1530[var20.field50 ? 1 : 0].method2667(var17, var16);
+					field1530[var20.members ? 1 : 0].method2667(var17, var16);
 				}
 				if (field2612 != null) {
-					field2612[var20.field48 + (var20.field50 ? 8 : 0)].method2747(var17 + 29, var16);
+					field2612[var20.country + (var20.members ? 8 : 0)].method2747(var17 + 29, var16);
 				}
-				arg0.drawStringCenter(Integer.toString(var20.field49), var17 + 15, var7 / 2 + var16 + 5, 0, -1);
+				arg0.drawStringCenter(Integer.toString(var20.id), var17 + 15, var7 / 2 + var16 + 5, 0, -1);
 				arg1.drawStringCenter(var22, var17 + 60, var7 / 2 + var16 + 5, 268435455, -1);
 				var16 += var7 + var13;
 				var18++;
@@ -900,12 +900,12 @@ public class LoginScreen {
 		if (field168 == -1) {
 			return;
 		}
-		WorldEntry var5 = field214[field168];
-		if (Client.members == var5.field50) {
-			Client.field52 = var5.field45;
-			Client.worldid = var5.field49;
-			Client.field1641 = Client.modewhere == 0 ? 43594 : var5.field49 + 40000;
-			Client.field13 = Client.modewhere == 0 ? 443 : var5.field49 + 50000;
+		WorldEntry var5 = worlds[field168];
+		if (Client.members == var5.members) {
+			Client.field52 = var5.host;
+			Client.worldid = var5.id;
+			Client.field1641 = Client.modewhere == 0 ? 43594 : var5.id + 40000;
+			Client.field13 = Client.modewhere == 0 ? 443 : var5.id + 50000;
 			Client.field1204 = Client.field1641;
 			field160 = false;
 			field146.method2667(0, 0);
@@ -915,9 +915,9 @@ public class LoginScreen {
 		}
 		String var6 = "";
 		if (Client.modewhere != 0) {
-			var6 = ":" + (var5.field49 + 7000);
+			var6 = ":" + (var5.id + 7000);
 		}
-		String var7 = "http://" + var5.field45 + var6 + "/j" + Client.js;
+		String var7 = "http://" + var5.host + var6 + "/j" + Client.js;
 		try {
 			arg0.getAppletContext().showDocument(new URL(var7), "_self");
 		} catch (Exception var9) {
@@ -930,29 +930,33 @@ public class LoginScreen {
 			if (field35 == null) {
 				field35 = new WorldList(GameShell.signlink, new URL(worldlistUrl));
 			} else {
-				byte[] var0 = field35.method99();
-				if (var0 != null) {
-					Packet var1 = new Packet(var0);
-					field161 = var1.g2();
-					field214 = new WorldEntry[field161];
-					int var2 = 0;
-					while (var2 < field161) {
-						WorldEntry var3 = field214[var2] = new WorldEntry();
-						int var4 = var1.g2();
-						var3.field49 = var4 & 0x7FFF;
-						var3.field50 = (var4 & 0x8000) != 0;
-						var3.field45 = var1.gjstr();
-						var3.field48 = var1.g1();
-						var3.field46 = var1.g2b();
-						var3.field47 = var2++;
-					}
-					method747(field214, 0, field214.length - 1, field130, field167);
-					field160 = true;
-					field35 = null;
+				byte[] src = field35.getWorldList();
+				if (src == null) {
+					return;
 				}
+
+				Packet buf = new Packet(src);
+				worldCount = buf.g2();
+				worlds = new WorldEntry[worldCount];
+				int i = 0;
+
+				while (i < worldCount) {
+					WorldEntry world = worlds[i] = new WorldEntry();
+					int info = buf.g2();
+					world.id = info & 0x7FFF;
+					world.members = (info & 0x8000) != 0;
+					world.host = buf.gjstr();
+					world.country = buf.g1();
+					world.players = buf.g2b();
+					world.index = i++;
+				}
+
+				method747(worlds, 0, worlds.length - 1, field130, field167);
+				field160 = true;
+				field35 = null;
 			}
-		} catch (Exception var6) {
-			var6.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			field35 = null;
 		}
 	}
@@ -973,7 +977,7 @@ public class LoginScreen {
 		}
 		field130 = var2;
 		field167 = var3;
-		method747(field214, 0, field214.length - 1, field130, field167);
+		method747(worlds, 0, worlds.length - 1, field130, field167);
 	}
 
 	@ObfuscatedName("bh.s([Lc;II[I[II)V")
@@ -995,11 +999,11 @@ public class LoginScreen {
 					int var11;
 					int var12;
 					if (arg3[var10] == 2) {
-						var11 = arg0[var6].field47;
-						var12 = var8.field47;
+						var11 = arg0[var6].index;
+						var12 = var8.index;
 					} else if (arg3[var10] == 1) {
-						var11 = arg0[var6].field46;
-						var12 = var8.field46;
+						var11 = arg0[var6].players;
+						var12 = var8.players;
 						if (var11 == -1 && arg4[var10] == 1) {
 							var11 = 2001;
 						}
@@ -1007,11 +1011,11 @@ public class LoginScreen {
 							var12 = 2001;
 						}
 					} else if (arg3[var10] == 3) {
-						var11 = arg0[var6].field50 ? 1 : 0;
-						var12 = var8.field50 ? 1 : 0;
+						var11 = arg0[var6].members ? 1 : 0;
+						var12 = var8.members ? 1 : 0;
 					} else {
-						var11 = arg0[var6].field49;
-						var12 = var8.field49;
+						var11 = arg0[var6].id;
+						var12 = var8.id;
 					}
 					if (var11 != var12) {
 						if ((arg4[var10] != 1 || var11 <= var12) && (arg4[var10] != 0 || var11 >= var12)) {
@@ -1031,11 +1035,11 @@ public class LoginScreen {
 					int var15;
 					int var16;
 					if (arg3[var14] == 2) {
-						var15 = arg0[var5].field47;
-						var16 = var8.field47;
+						var15 = arg0[var5].index;
+						var16 = var8.index;
 					} else if (arg3[var14] == 1) {
-						var15 = arg0[var5].field46;
-						var16 = var8.field46;
+						var15 = arg0[var5].players;
+						var16 = var8.players;
 						if (var15 == -1 && arg4[var14] == 1) {
 							var15 = 2001;
 						}
@@ -1043,11 +1047,11 @@ public class LoginScreen {
 							var16 = 2001;
 						}
 					} else if (arg3[var14] == 3) {
-						var15 = arg0[var5].field50 ? 1 : 0;
-						var16 = var8.field50 ? 1 : 0;
+						var15 = arg0[var5].members ? 1 : 0;
+						var16 = var8.members ? 1 : 0;
 					} else {
-						var15 = arg0[var5].field49;
-						var16 = var8.field49;
+						var15 = arg0[var5].id;
+						var16 = var8.id;
 					}
 					if (var15 != var16) {
 						if ((arg4[var14] != 1 || var15 >= var16) && (arg4[var14] != 0 || var15 <= var16)) {

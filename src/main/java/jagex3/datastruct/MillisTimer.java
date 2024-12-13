@@ -15,7 +15,7 @@ public class MillisTimer extends Timer {
 	public int field1560 = 1;
 
 	@ObfuscatedName("dc.m")
-	public long field1563 = MonotonicTime.method1135();
+	public long field1563 = MonotonicTime.currentTime();
 
 	@ObfuscatedName("dc.c")
 	public int field1562 = 0;
@@ -42,7 +42,7 @@ public class MillisTimer extends Timer {
 		int var4 = this.field1560;
 		this.field1559 = 300;
 		this.field1560 = 1;
-		this.field1563 = MonotonicTime.method1135();
+		this.field1563 = MonotonicTime.currentTime();
 		if (this.field1561[this.field1558] == 0L) {
 			this.field1559 = var3;
 			this.field1560 = var4;

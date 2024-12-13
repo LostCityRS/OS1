@@ -89,7 +89,7 @@ public class Js5TcpClient {
 
 	@ObfuscatedName("by.r(B)Z")
 	public static boolean method826() {
-		long var0 = MonotonicTime.method1135();
+		long var0 = MonotonicTime.currentTime();
 		int var2 = (int) (var0 - field825);
 		field825 = var0;
 		if (var2 > 200) {
@@ -322,7 +322,7 @@ public class Js5TcpClient {
 							}
 						}
 						field1190 = 0;
-						field825 = MonotonicTime.method1135();
+						field825 = MonotonicTime.currentTime();
 						return;
 					}
 					field1189.addHead(var4);

@@ -33,7 +33,7 @@ public class AudioChannel {
 	public int field256 = 32;
 
 	@ObfuscatedName("y.q")
-	public long field244 = MonotonicTime.method1135();
+	public long field244 = MonotonicTime.currentTime();
 
 	@ObfuscatedName("y.i")
 	public int field245;
@@ -150,7 +150,7 @@ public class AudioChannel {
 		if (this.field243 == null) {
 			return;
 		}
-		long var1 = MonotonicTime.method1135();
+		long var1 = MonotonicTime.currentTime();
 		try {
 			if (this.field248 != 0L) {
 				if (var1 < this.field248) {
@@ -231,7 +231,7 @@ public class AudioChannel {
 			this.method218();
 		} catch (Exception var2) {
 			this.method217();
-			this.field248 = MonotonicTime.method1135() + 2000L;
+			this.field248 = MonotonicTime.currentTime() + 2000L;
 		}
 	}
 
@@ -368,7 +368,7 @@ public class AudioChannel {
 		if (this.field242 != null) {
 			this.field242.method1520(arg0, 0, arg1);
 		}
-		this.field244 = MonotonicTime.method1135();
+		this.field244 = MonotonicTime.currentTime();
 	}
 
 	@ObfuscatedName("bw.q(Ldx;I)V")

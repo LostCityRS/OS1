@@ -1166,7 +1166,7 @@ public class Client extends GameShell {
 	public URL getCodeBase() {
 		try {
 			if (GameShell.frame != null) {
-				return new URL("http://localhost");
+				return new URL("http://localhost:7001");
 			}
 		} catch (Exception ignore) {
 		}
@@ -1189,7 +1189,7 @@ public class Client extends GameShell {
 		} else if (name.equals(JavConfigParameter.MEMBERS.id)) {
 			return "true";
 		} else if (name.equals(JavConfigParameter.WORLDLIST_URL.id)) {
-			return "http://localhost/slr.ws?order=LPWM";
+			return "http://localhost:7001/slr.ws?order=LPWM";
 		}
 
 		return null;
@@ -1493,7 +1493,7 @@ public class Client extends GameShell {
 				var1.p4(1); // revision
 				field1102.write(var1.data, 0, 5);
 				field2090++;
-				field1943 = MonotonicTime.method1135();
+				field1943 = MonotonicTime.currentTime();
 			}
 			if (field2090 == 3) {
 				if (gameState <= 5 || field1102.available() > 0) {
@@ -1503,7 +1503,7 @@ public class Client extends GameShell {
 						return;
 					}
 					field2090++;
-				} else if (MonotonicTime.method1135() - field1943 > 30000L) {
+				} else if (MonotonicTime.currentTime() - field1943 > 30000L) {
 					this.method1851(-2);
 					return;
 				}

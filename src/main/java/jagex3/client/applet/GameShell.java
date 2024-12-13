@@ -170,7 +170,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		canvas.requestFocus();
 		fullredraw = true;
 		canvasReplaceRecommended = false;
-		lastCanvasReplace = MonotonicTime.method1135();
+		lastCanvasReplace = MonotonicTime.currentTime();
 	}
 
 	@ObfuscatedName("dj.q(I)Z")
@@ -261,7 +261,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 				SignLink var18;
 				Canvas var19;
 				do {
-					if (killtime != 0L && MonotonicTime.method1135() >= killtime) {
+					if (killtime != 0L && MonotonicTime.currentTime() >= killtime) {
 						break label99;
 					}
 					field1537 = field1100.method380(field1538, field1539);
@@ -288,7 +288,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	@ObfuscatedName("dj.i(I)V")
 	public void mainloopwrapper() {
-		long var1 = MonotonicTime.method1135();
+		long var1 = MonotonicTime.currentTime();
 		long var3 = field1543[field1218];
 		field1543[field1218] = var1;
 		field1218 = field1218 + 1 & 0x1F;
@@ -302,7 +302,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	@ObfuscatedName("dj.s(I)V")
 	public void mainredrawwrapper() {
-		long var1 = MonotonicTime.method1135();
+		long var1 = MonotonicTime.currentTime();
 		long var3 = field1534[field833];
 		field1534[field833] = var1;
 		field833 = field833 + 1 & 0x1F;
@@ -374,13 +374,13 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	public void stop() {
 		if (shell == this && !alreadyshutdown) {
-			killtime = MonotonicTime.method1135() + 4000L;
+			killtime = MonotonicTime.currentTime() + 4000L;
 		}
 	}
 
 	public void destroy() {
 		if (shell == this && !alreadyshutdown) {
-			killtime = MonotonicTime.method1135();
+			killtime = MonotonicTime.currentTime();
 			PreciseSleep.sleep(5000L);
 			this.shutdown();
 		}
@@ -395,7 +395,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			return;
 		}
 		fullredraw = true;
-		if (SignLink.javaVersion != null && SignLink.javaVersion.startsWith("1.5") && MonotonicTime.method1135() - lastCanvasReplace > 1000L) {
+		if (SignLink.javaVersion != null && SignLink.javaVersion.startsWith("1.5") && MonotonicTime.currentTime() - lastCanvasReplace > 1000L) {
 			Rectangle var2 = arg0.getClipBounds();
 			if (var2 == null || var2.width >= canvasWid && var2.height >= canvasHei) {
 				canvasReplaceRecommended = true;

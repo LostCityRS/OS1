@@ -13,7 +13,7 @@ import java.net.URL;
 public class WorldList {
 
 	@ObfuscatedName("i.r")
-	public int field179;
+	public int stage;
 
 	@ObfuscatedName("i.d")
 	public PrivilegedRequest field181;
@@ -38,50 +38,59 @@ public class WorldList {
 
 	public WorldList(SignLink arg0, URL arg1) {
 		this.field181 = arg0.method445(arg1);
-		this.field179 = 0;
-		this.field183 = MonotonicTime.method1135() + 30000L;
+		this.stage = 0;
+		this.field183 = MonotonicTime.currentTime() + 30000L;
 	}
 
 	@ObfuscatedName("i.r(I)[B")
-	public byte[] method99() throws IOException {
-		if (MonotonicTime.method1135() > this.field183) {
+	public byte[] getWorldList() throws IOException {
+		if (MonotonicTime.currentTime() > this.field183) {
 			throw new IOException();
 		}
-		if (this.field179 == 0) {
+
+		if (this.stage == 0) {
 			if (this.field181.field507 == 2) {
 				throw new IOException();
 			}
+
 			if (this.field181.field507 == 1) {
 				this.field180 = (DataInputStream) this.field181.field511;
-				this.field179 = 1;
+				this.stage = 1;
 			}
 		}
-		if (this.field179 == 1) {
-			int var1 = this.field180.available();
-			if (var1 > 0) {
-				if (this.field182 + var1 > 4) {
-					var1 = 4 - this.field182;
+
+		if (this.stage == 1) {
+			int available = this.field180.available();
+			if (available > 0) {
+				if (this.field182 + available > 4) {
+					available = 4 - this.field182;
 				}
-				this.field182 += this.field180.read(this.field185, this.field182, var1);
+
+				this.field182 += this.field180.read(this.field185, this.field182, available);
+
 				if (this.field182 == 4) {
-					int var2 = (new Packet(this.field185)).g4();
-					this.field178 = new byte[var2];
-					this.field179 = 2;
+					int length = (new Packet(this.field185)).g4();
+					this.field178 = new byte[length];
+					this.stage = 2;
 				}
 			}
 		}
-		if (this.field179 == 2) {
-			int var3 = this.field180.available();
-			if (var3 > 0) {
-				if (this.field184 + var3 > this.field178.length) {
-					var3 = this.field178.length - this.field184;
+
+		if (this.stage == 2) {
+			int available = this.field180.available();
+			if (available > 0) {
+				if (this.field184 + available > this.field178.length) {
+					available = this.field178.length - this.field184;
 				}
-				this.field184 += this.field180.read(this.field178, this.field184, var3);
+
+				this.field184 += this.field180.read(this.field178, this.field184, available);
+
 				if (this.field184 == this.field178.length) {
 					return this.field178;
 				}
 			}
 		}
+
 		return null;
 	}
 }
