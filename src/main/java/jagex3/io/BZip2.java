@@ -48,7 +48,8 @@ public class BZip2 {
 		int var9 = arg0.field754;
 		int var10 = var9;
 		int var11 = arg0.field785 + 1;
-		label66: while (true) {
+		label66:
+		while (true) {
 			if (var2 > 0) {
 				while (true) {
 					if (var9 == 0) {

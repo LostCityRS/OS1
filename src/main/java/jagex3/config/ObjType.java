@@ -1,12 +1,14 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.ModelLit;
+import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.Pix3D;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
-import jagex3.graphics.*;
+import jagex3.graphics.Pix2D;
+import jagex3.graphics.Pix32;
+import jagex3.graphics.SoftwareFont;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
 import jagex3.js5.Js5Provider;

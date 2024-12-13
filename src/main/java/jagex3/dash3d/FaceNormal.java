@@ -6,12 +6,12 @@ import deob.ObfuscatedName;
 @ObfuscatedName("ag")
 public class FaceNormal {
 
-    @ObfuscatedName("ag.r")
-    public int field552;
+	@ObfuscatedName("ag.r")
+	public int field552;
 
-    @ObfuscatedName("ag.d")
-    public int field551;
+	@ObfuscatedName("ag.d")
+	public int field551;
 
-    @ObfuscatedName("ag.l")
-    public int field550;
+	@ObfuscatedName("ag.l")
+	public int field550;
 }

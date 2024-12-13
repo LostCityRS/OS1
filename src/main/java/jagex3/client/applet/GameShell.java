@@ -256,7 +256,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 				var15 = new MillisTimer();
 			}
 			field1100 = var15;
-			label99: while (true) {
+			label99:
+			while (true) {
 				SignLink var18;
 				Canvas var19;
 				do {

@@ -125,7 +125,8 @@ public class SignLinkCacheFolder {
 			}
 		}
 		if (var4 == null && arg2 == 0) {
-			label134: for (int var19 = 0; var19 < historicCacheDirectories.length; var19++) {
+			label134:
+			for (int var19 = 0; var19 < historicCacheDirectories.length; var19++) {
 				for (int var20 = 0; var20 < historicCacheLocations.length; var20++) {
 					File var21 = new File(historicCacheLocations[var20] + historicCacheDirectories[var19] + File.separatorChar + arg0 + File.separatorChar);
 					if (var21.exists()) {
@@ -203,7 +204,8 @@ public class SignLinkCacheFolder {
 			if (var0.exists()) {
 				uidDat = new BufferedFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
 			} else {
-				label34: for (int var1 = 0; var1 < historicCacheDirectories.length; var1++) {
+				label34:
+				for (int var1 = 0; var1 < historicCacheDirectories.length; var1++) {
 					for (int var2 = 0; var2 < historicCacheLocations.length; var2++) {
 						File var3 = new File(historicCacheLocations[var2] + historicCacheDirectories[var1] + File.separatorChar + "random.dat");
 						if (var3.exists()) {
@@ -306,7 +308,8 @@ public class SignLinkCacheFolder {
 			}
 			historicCacheLocations = new String[] { "c:/rscache/", "/rscache/", "c:/windows/", "c:/winnt/", "c:/", homeDir, "/tmp/", "" };
 			historicCacheDirectories = new String[] { ".jagex_cache_" + field368, ".file_store_" + field368 };
-			label130: for (int var23 = 0; var23 < 4; var23++) {
+			label130:
+			for (int var23 = 0; var23 < 4; var23++) {
 				cacheDirectory = method102("oldschool", var18, var23);
 				if (!cacheDirectory.exists()) {
 					cacheDirectory.mkdirs();

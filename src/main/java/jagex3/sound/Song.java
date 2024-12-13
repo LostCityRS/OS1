@@ -182,7 +182,8 @@ public class Song extends Linkable {
 		int var67 = 0;
 		int[] var68 = new int[128];
 		int var69 = 0;
-		label223: for (int var70 = 0; var70 < var2; var70++) {
+		label223:
+		for (int var70 = 0; var70 < var2; var70++) {
 			var60.p4(1297379947);
 			var60.pos += 4;
 			int var71 = var60.pos;
@@ -320,7 +321,8 @@ public class Song extends Linkable {
 			var4.method960(var6);
 			var4.method958(var6);
 		}
-		label52: do {
+		label52:
+		do {
 			while (true) {
 				int var7 = var4.method987();
 				int var8 = var4.field1135[var7];

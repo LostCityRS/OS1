@@ -1378,41 +1378,41 @@ public class ModelUnlit extends Entity {
 				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
 			}
 		} else if (elements == 4) {
-            if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX || clippedX[3] < 0 || clippedX[3] > Pix3D.boundX) {
-                Pix3D.hclip = true;
-            }
-            if (this.field2718 != null && this.field2718[arg0] != -1) {
-                int var37;
-                int var38;
-                int var39;
-                if (this.field2735 == null || this.field2735[arg0] == -1) {
-                    var37 = var5;
-                    var38 = var6;
-                    var39 = var7;
-                } else {
-                    int var36 = this.field2735[arg0] & 0xFF;
-                    var37 = this.field2739[var36];
-                    var38 = this.field2774[var36];
-                    var39 = this.field2765[var36];
-                }
-                short var40 = this.field2718[arg0];
-                if (this.faceColorC[arg0] == -1) {
-                    Pix3D.method2769(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-                    Pix3D.method2769(var29, var31, clippedY[3], var26, var28, clippedX[3], this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-                } else {
-                    Pix3D.method2769(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-                    Pix3D.method2769(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-                }
-            } else if (this.faceColorC[arg0] == -1) {
-                int var41 = palette[this.faceColorA[arg0]];
-                Pix3D.method2767(var29, var30, var31, var26, var27, var28, var41);
-                Pix3D.method2767(var29, var31, clippedY[3], var26, var28, clippedX[3], var41);
-            } else {
-                Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
-                Pix3D.gouraudTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3]);
-            }
-        }
-    }
+			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX || clippedX[3] < 0 || clippedX[3] > Pix3D.boundX) {
+				Pix3D.hclip = true;
+			}
+			if (this.field2718 != null && this.field2718[arg0] != -1) {
+				int var37;
+				int var38;
+				int var39;
+				if (this.field2735 == null || this.field2735[arg0] == -1) {
+					var37 = var5;
+					var38 = var6;
+					var39 = var7;
+				} else {
+					int var36 = this.field2735[arg0] & 0xFF;
+					var37 = this.field2739[var36];
+					var38 = this.field2774[var36];
+					var39 = this.field2765[var36];
+				}
+				short var40 = this.field2718[arg0];
+				if (this.faceColorC[arg0] == -1) {
+					Pix3D.method2769(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.method2769(var29, var31, clippedY[3], var26, var28, clippedX[3], this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+				} else {
+					Pix3D.method2769(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.method2769(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+				}
+			} else if (this.faceColorC[arg0] == -1) {
+				int var41 = palette[this.faceColorA[arg0]];
+				Pix3D.method2767(var29, var30, var31, var26, var27, var28, var41);
+				Pix3D.method2767(var29, var31, clippedY[3], var26, var28, clippedX[3], var41);
+			} else {
+				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
+				Pix3D.gouraudTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3]);
+			}
+		}
+	}
 
 	@ObfuscatedName("fo.ay(IIIIIIII)Z")
 	public final boolean pointWithinTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {

@@ -4,9 +4,9 @@ import deob.ObfuscatedName;
 import jagex3.client.JagException;
 import jagex3.datastruct.ByteArrayCopier;
 import jagex3.datastruct.IntHashTable;
-import jagex3.io.Packet;
 import jagex3.io.BZip2;
 import jagex3.io.GZip;
+import jagex3.io.Packet;
 import jagex3.jstring.StringUtil;
 
 // jag::Js5Index

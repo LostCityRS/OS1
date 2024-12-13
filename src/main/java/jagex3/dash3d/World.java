@@ -252,7 +252,8 @@ public class World {
 		boolean var3 = true;
 		Packet var4 = new Packet(arg0);
 		int var5 = -1;
-		label57: while (true) {
+		label57:
+		while (true) {
 			int var6 = var4.gsmart();
 			if (var6 == 0) {
 				return var3;
@@ -961,7 +962,8 @@ public class World {
 							while (var86 < 104 && (levelOccludemap[var82][var84][var86 + 1] & var78) != 0) {
 								var86++;
 							}
-							label351: while (var87 > 0) {
+							label351:
+							while (var87 > 0) {
 								for (int var89 = var85; var89 <= var86; var89++) {
 									if ((levelOccludemap[var87 - 1][var84][var89] & var78) == 0) {
 										break label351;
@@ -969,7 +971,8 @@ public class World {
 								}
 								var87--;
 							}
-							label340: while (var88 < var81) {
+							label340:
+							while (var88 < var81) {
 								for (int var90 = var85; var90 <= var86; var90++) {
 									if ((levelOccludemap[var88 + 1][var84][var90] & var78) == 0) {
 										break label340;
@@ -1001,7 +1004,8 @@ public class World {
 							while (var98 < 104 && (levelOccludemap[var82][var98 + 1][var83] & var79) != 0) {
 								var98++;
 							}
-							label404: while (var99 > 0) {
+							label404:
+							while (var99 > 0) {
 								for (int var101 = var97; var101 <= var98; var101++) {
 									if ((levelOccludemap[var99 - 1][var101][var83] & var79) == 0) {
 										break label404;
@@ -1009,7 +1013,8 @@ public class World {
 								}
 								var99--;
 							}
-							label393: while (var100 < var81) {
+							label393:
+							while (var100 < var81) {
 								for (int var102 = var97; var102 <= var98; var102++) {
 									if ((levelOccludemap[var100 + 1][var102][var83] & var79) == 0) {
 										break label393;
@@ -1041,7 +1046,8 @@ public class World {
 							while (var112 < 104 && (levelOccludemap[var82][var84][var112 + 1] & var80) != 0) {
 								var112++;
 							}
-							label457: while (var109 > 0) {
+							label457:
+							while (var109 > 0) {
 								for (int var113 = var111; var113 <= var112; var113++) {
 									if ((levelOccludemap[var82][var109 - 1][var113] & var80) == 0) {
 										break label457;
@@ -1049,7 +1055,8 @@ public class World {
 								}
 								var109--;
 							}
-							label446: while (var110 < 104) {
+							label446:
+							while (var110 < 104) {
 								for (int var114 = var111; var114 <= var112; var114++) {
 									if ((levelOccludemap[var82][var110 + 1][var114] & var80) == 0) {
 										break label446;

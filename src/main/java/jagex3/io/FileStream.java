@@ -144,7 +144,8 @@ public class FileStream {
 				int var8 = 0;
 				while (true) {
 					if (var7 < arg2) {
-						label129: {
+						label129:
+						{
 							int var9 = 0;
 							if (arg3) {
 								this.dat.seek((long) (var6 * 520));

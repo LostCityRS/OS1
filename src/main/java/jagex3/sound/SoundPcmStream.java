@@ -334,7 +334,8 @@ public class SoundPcmStream extends PcmStream {
 		if (this.field2212 >= 0) {
 			if (this.field2212 > 0) {
 				if (this.field2210) {
-					label131: {
+					label131:
+					{
 						if (this.field2206 < 0) {
 							var9 = this.method2077(arg0, arg1, var5, var10, var4.field2204[this.field2215]);
 							if (this.field2213 >= var5) {
@@ -502,7 +503,8 @@ public class SoundPcmStream extends PcmStream {
 		if (this.field2212 >= 0) {
 			if (this.field2212 > 0) {
 				if (this.field2210) {
-					label121: {
+					label121:
+					{
 						if (this.field2206 < 0) {
 							if (this.field2213 >= var3) {
 								return;
@@ -530,7 +532,8 @@ public class SoundPcmStream extends PcmStream {
 						} while (--this.field2212 != 0);
 					}
 				} else {
-					label153: {
+					label153:
+					{
 						if (this.field2206 < 0) {
 							if (this.field2213 >= var3) {
 								return;

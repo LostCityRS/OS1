@@ -508,7 +508,8 @@ public class LoginScreen {
 				}
 				field128 = 0;
 				int var47 = 0;
-				label286: while (true) {
+				label286:
+				while (true) {
 					if (var47 >= var29) {
 						int var51 = 0;
 						while (true) {

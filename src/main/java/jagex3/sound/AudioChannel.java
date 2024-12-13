@@ -285,7 +285,8 @@ public class AudioChannel {
 			int var4 = 0;
 			int var5 = 255;
 			int var6 = 7;
-			label105: while (var5 != 0) {
+			label105:
+			while (var5 != 0) {
 				int var7;
 				int var8;
 				if (var6 < 0) {
@@ -300,7 +301,8 @@ public class AudioChannel {
 						var5 &= ~(0x1 << var7);
 						PcmStream var10 = null;
 						PcmStream var11 = this.field240[var7];
-						label99: while (true) {
+						label99:
+						while (true) {
 							while (true) {
 								if (var11 == null) {
 									break label99;

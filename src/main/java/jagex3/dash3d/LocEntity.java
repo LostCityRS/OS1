@@ -68,7 +68,8 @@ public class LocEntity extends Entity {
 			if (var1 > 100 && this.anim.replayoff > 0) {
 				var1 = 100;
 			}
-			label47: {
+			label47:
+			{
 				do {
 					do {
 						if (var1 <= this.anim.delay[this.animFrame]) {

@@ -59,7 +59,8 @@ public class StringUtil {
 				var7 = var2;
 				break;
 			}
-			label69: {
+			label69:
+			{
 				char var6 = arg0.charAt(var5);
 				if (var5 == 0) {
 					if (var6 == '-') {
@@ -268,7 +269,8 @@ public class StringUtil {
 		byte var254 = 0;
 		byte var255 = 0;
 		int var256;
-		label2100: while (true) {
+		label2100:
+		while (true) {
 			if (var252 - var254 >= var250 && var253 - var255 >= var251) {
 				int var267 = Math.min(var250, var251);
 				for (int var268 = 0; var268 < var267; var268++) {

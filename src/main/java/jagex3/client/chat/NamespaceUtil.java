@@ -70,7 +70,7 @@ public class NamespaceUtil {
 			if (arg1 == null) {
 				var10 = 12;
 			} else {
-				switch(arg1.field1526) {
+				switch (arg1.field1526) {
 					case 3:
 						var10 = 20;
 						break;
@@ -84,7 +84,7 @@ public class NamespaceUtil {
 					char var13 = arg0.charAt(var12);
 					if (method723(var13)) {
 						char var14;
-						switch(var13) {
+						switch (var13) {
 							case ' ':
 							case '-':
 							case '_':

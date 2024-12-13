@@ -136,7 +136,8 @@ public class ClientStream implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				label84: {
+				label84:
+				{
 					int var3;
 					int var4;
 					synchronized (this) {

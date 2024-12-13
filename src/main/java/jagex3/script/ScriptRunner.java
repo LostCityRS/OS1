@@ -1,17 +1,25 @@
 package jagex3.script;
 
 import deob.ObfuscatedName;
-import jagex3.client.*;
+import jagex3.client.Client;
+import jagex3.client.JagException;
+import jagex3.client.VarProvider;
 import jagex3.client.chat.ChatFilterPrivacy;
 import jagex3.client.ui.ClientInvCache;
 import jagex3.client.ui.IfType;
 import jagex3.client.ui.ServerKeyEvents;
 import jagex3.client.ui.SubInterface;
-import jagex3.config.*;
+import jagex3.config.EnumType;
+import jagex3.config.InvType;
+import jagex3.config.ObjType;
+import jagex3.config.VarBitType;
 import jagex3.graphics.PixFont;
 import jagex3.graphics.SoftwareFont;
 import jagex3.io.Packet;
-import jagex3.jstring.*;
+import jagex3.jstring.JString;
+import jagex3.jstring.Locale;
+import jagex3.jstring.StringUtil;
+import jagex3.jstring.TextUtil;
 import jagex3.wordfilter.WordPack;
 
 import java.util.Calendar;
@@ -353,9 +361,9 @@ public class ScriptRunner {
 						isp--;
 						int var39 = intStack[isp];
 
-                        if (var39 < 0 || var39 > 5000) {
-                            throw new RuntimeException();
-                        }
+						if (var39 < 0 || var39 > 5000) {
+							throw new RuntimeException();
+						}
 
 						field193[var37] = var39;
 
@@ -369,7 +377,7 @@ public class ScriptRunner {
 						}
 
 						continue;
-                    }
+					}
 					if (opcode == 45) {
 						// push_array_int
 						int var42 = intOperands[pc];
@@ -377,14 +385,14 @@ public class ScriptRunner {
 						isp--;
 						int var43 = intStack[isp];
 
-                        if (var43 < 0 || var43 >= field193[var42]) {
-                            throw new RuntimeException();
-                        }
+						if (var43 < 0 || var43 >= field193[var42]) {
+							throw new RuntimeException();
+						}
 
-                        intStack[isp++] = field192[var42][var43];
-                        continue;
+						intStack[isp++] = field192[var42][var43];
+						continue;
 
-                    }
+					}
 					if (opcode == 46) {
 						// pop_array_int
 						int var44 = intOperands[pc];
@@ -392,13 +400,13 @@ public class ScriptRunner {
 						isp -= 2;
 						int var45 = intStack[isp];
 
-                        if (var45 < 0 || var45 >= field193[var44]) {
-                            throw new RuntimeException();
-                        }
+						if (var45 < 0 || var45 >= field193[var44]) {
+							throw new RuntimeException();
+						}
 
-                        field192[var44][var45] = intStack[isp + 1];
-                        continue;
-                    }
+						field192[var44][var45] = intStack[isp + 1];
+						continue;
+					}
 					if (opcode == 47) {
 						// push_varc_str
 						String var46 = Client.field1996[intOperands[pc]];

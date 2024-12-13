@@ -2,10 +2,10 @@ package jagex3.config;
 
 import deob.ObfuscatedName;
 import jagex3.client.VarProvider;
-import jagex3.datastruct.DoublyLinkable;
-import jagex3.datastruct.LruCache;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
+import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
 import jagex3.jstring.Locale;

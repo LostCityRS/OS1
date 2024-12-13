@@ -913,7 +913,8 @@ public class World3D {
 				for (int var18 = -25; var18 < 25; var18++) {
 					for (int var19 = -25; var19 < 25; var19++) {
 						boolean var20 = false;
-						label76: for (int var21 = -1; var21 <= 1; var21++) {
+						label76:
+						for (int var21 = -1; var21 <= 1; var21++) {
 							for (int var22 = -1; var22 <= 1; var22++) {
 								if (var5[var16][var17][var18 + var21 + 25 + 1][var19 + var22 + 25 + 1]) {
 									var20 = true;
@@ -1371,7 +1372,8 @@ public class World3D {
 											int var39 = var3.locCount;
 											var3.containsLocs = false;
 											int var40 = 0;
-											label563: for (int var41 = 0; var41 < var39; var41++) {
+											label563:
+											for (int var41 = 0; var41 < var39; var41++) {
 												Location var42 = var3.locs[var41];
 												if (var42.cycle != cycle) {
 													for (int var43 = var42.minSceneTileX; var43 <= var42.maxSceneTileX; var43++) {
@@ -1662,29 +1664,29 @@ public class World3D {
 			}
 		}
 
-        if ((px0 - pz0) * (py3 - px1) - (py0 - px1) * (px3 - pz0) > 0) {
-            Pix3D.hclip = false;
-            if (px0 < 0 || pz0 < 0 || px3 < 0 || px0 > Pix3D.boundX || pz0 > Pix3D.boundX || px3 > Pix3D.boundX) {
-                Pix3D.hclip = true;
-            }
+		if ((px0 - pz0) * (py3 - px1) - (py0 - px1) * (px3 - pz0) > 0) {
+			Pix3D.hclip = false;
+			if (px0 < 0 || pz0 < 0 || px3 < 0 || px0 > Pix3D.boundX || pz0 > Pix3D.boundX || px3 > Pix3D.boundX) {
+				Pix3D.hclip = true;
+			}
 
-            if (takingInput && this.pointInsideTriangle(mouseX, mouseY, py0, px1, py3, px0, pz0, px3)) {
-                clickTileX = tileX;
-                clickTileZ = tileZ;
-            }
+			if (takingInput && this.pointInsideTriangle(mouseX, mouseY, py0, px1, py3, px0, pz0, px3)) {
+				clickTileX = tileX;
+				clickTileZ = tileZ;
+			}
 
-            if (underlay.textureId == -1) {
-                if (underlay.southwestColour != 12345678) {
-                    Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, underlay.southwestColour, underlay.field692, underlay.field694);
-                }
-            } else if (lowMemory) {
-                int averageColour = Pix3D.textureProvider.getAverageRgb(underlay.textureId);
-                Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, mulLightness(averageColour, underlay.southwestColour), mulLightness(averageColour, underlay.field692), mulLightness(averageColour, underlay.field694));
-            } else {
-                Pix3D.textureTriangle(py0, px1, py3, px0, pz0, px3, underlay.southwestColour, underlay.field692, underlay.field694, var21, var27, var39, var24, var30, var42, z0, z1, z3, underlay.textureId);
-            }
-        }
-    }
+			if (underlay.textureId == -1) {
+				if (underlay.southwestColour != 12345678) {
+					Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, underlay.southwestColour, underlay.field692, underlay.field694);
+				}
+			} else if (lowMemory) {
+				int averageColour = Pix3D.textureProvider.getAverageRgb(underlay.textureId);
+				Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, mulLightness(averageColour, underlay.southwestColour), mulLightness(averageColour, underlay.field692), mulLightness(averageColour, underlay.field694));
+			} else {
+				Pix3D.textureTriangle(py0, px1, py3, px0, pz0, px3, underlay.southwestColour, underlay.field692, underlay.field694, var21, var27, var39, var24, var30, var42, z0, z1, z3, underlay.textureId);
+			}
+		}
+	}
 
 	@ObfuscatedName("aq.ag(Lar;IIIIII)V")
 	public void drawTileOverlay(TileOverlay overlay, int sinEyePitch, int cosEyePitch, int sinEyeYaw, int cosEyeYaw, int arg5, int arg6) {
@@ -1886,7 +1888,8 @@ public class World3D {
 							var19 = 50;
 						}
 						boolean var20 = false;
-						label145: for (int var21 = var18; var21 <= var19; var21++) {
+						label145:
+						for (int var21 = var18; var21 <= var19; var21++) {
 							for (int var22 = var16; var22 <= var17; var22++) {
 								if (visibilityMap[var21][var22]) {
 									var20 = true;
