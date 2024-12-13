@@ -69,6 +69,20 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 		idleCycles = arg0;
 	}
 
+	public static void imethod3() {
+		JavaMouseProvider var8 = field491;
+		synchronized (var8) {
+			mouseButton = field487;
+			mouseX = field501;
+			mouseY = field493;
+			mouseClickButton = field485;
+			mouseClickX = field494;
+			mouseClickY = field495;
+			mouseClickTime = field496;
+			field485 = 0;
+		}
+	}
+
 	public final synchronized void mousePressed(MouseEvent arg0) {
 		if (field491 != null) {
 			idleCycles = 0;

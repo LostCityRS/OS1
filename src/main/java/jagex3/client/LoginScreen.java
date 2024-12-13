@@ -823,7 +823,7 @@ public class LoginScreen {
 				}
 				if (JavaMouseProvider.mouseX >= var17 && JavaMouseProvider.mouseY >= var16 && JavaMouseProvider.mouseX < var6 + var17 && JavaMouseProvider.mouseY < var7 + var16 && var21) {
 					field168 = var19;
-					field1530[var20.members ? 1 : 0].method2699(var17, var16, 128, 16777215);
+					field1530[var20.members ? 1 : 0].method2699(var17, var16, 128, 0xffffff);
 				} else {
 					field1530[var20.members ? 1 : 0].method2667(var17, var16);
 				}
@@ -831,7 +831,7 @@ public class LoginScreen {
 					field2612[var20.country + (var20.members ? 8 : 0)].method2747(var17 + 29, var16);
 				}
 				arg0.drawStringCenter(Integer.toString(var20.id), var17 + 15, var7 / 2 + var16 + 5, 0, -1);
-				arg1.drawStringCenter(var22, var17 + 60, var7 / 2 + var16 + 5, 268435455, -1);
+				arg1.drawStringCenter(var22, var17 + 60, var7 / 2 + var16 + 5, 0xfffffff, -1);
 				var16 += var7 + var13;
 				var18++;
 				if (var18 >= var9) {

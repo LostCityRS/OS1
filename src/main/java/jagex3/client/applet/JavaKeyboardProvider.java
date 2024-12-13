@@ -73,9 +73,34 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 	public static void method1502() {
 		if (field460 != null) {
 			JavaKeyboardProvider var0 = field460;
-			synchronized (field460) {
+			synchronized (var0) {
 				field460 = null;
 			}
+		}
+	}
+
+	public static void imethod4() {
+		JavaKeyboardProvider var4 = field460;
+		synchronized (var4) {
+			idleCycles++;
+			field479 = field424;
+			if (field419 >= 0) {
+				while (field445 != field419) {
+					int var6 = field474[field445];
+					field445 = field445 + 1 & 0x7F;
+					if (var6 < 0) {
+						actionKey[~var6] = false;
+					} else {
+						actionKey[var6] = true;
+					}
+				}
+			} else {
+				for (int var5 = 0; var5 < 112; var5++) {
+					actionKey[var5] = false;
+				}
+				field419 = field445;
+			}
+			field424 = field480;
 		}
 	}
 

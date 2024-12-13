@@ -1283,8 +1283,8 @@ public class Client extends GameShell {
 		imethod1();
 		MidiPlayer.method825();
 		method1351();
-		imethod2();
-		imethod3();
+		JavaKeyboardProvider.imethod4();
+		JavaMouseProvider.imethod3();
 		if (field484 != null) {
 			int var10 = field484.method362();
 			field2122 = var10;
@@ -2354,18 +2354,20 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("p.dh(III)V")
-	public static final void handleMinimapInput(int arg0, int arg1) {
+	public static final void handleMinimapInput(int offsetX, int offsetY) {
 		if (minimapState != 0 && minimapState != 3) {
 			return;
 		}
 
-		if (JavaMouseProvider.mouseClickButton != 1) {
-			int x = JavaMouseProvider.mouseClickX - 25 - arg0;
-			int y = JavaMouseProvider.mouseClickY - 5 - arg1;
+		if (JavaMouseProvider.mouseClickButton == 1) {
+			int x = JavaMouseProvider.mouseClickX - 25 - offsetX;
+			int y = JavaMouseProvider.mouseClickY - 5 - offsetY;
+
 			if (x < 0 || y < 0 || x >= 146 || y >= 151) {
 				return;
 			}
 
+			// make x and y relative to center of minimap
 			x -= 73;
 			y -= 75;
 
@@ -3791,14 +3793,17 @@ public class Client extends GameShell {
 			int var33 = field1984[var37];
 			int var34 = field1985[var37];
 			if (arg10 == 0) {
+				// MOVE_GAMECLICK
 				out.pisaac1(176);
 				out.p1(var32 + var32 + 3);
 			}
 			if (arg10 == 1) {
+				// MOVE_MINIMAPCLICK
 				out.pisaac1(60);
 				out.p1(var32 + var32 + 3 + 14);
 			}
 			if (arg10 == 2) {
+				// MOVE_OPCLICK (custom name)
 				out.pisaac1(214);
 				out.p1(var32 + var32 + 3);
 			}
@@ -7440,45 +7445,6 @@ public class Client extends GameShell {
 				return;
 			}
 			var2.field1773.method1468(var2.field1770, (int) var2.nodeId, var2.field1771, false);
-		}
-	}
-
-	public static void imethod2() {
-		JavaKeyboardProvider var4 = JavaKeyboardProvider.field460;
-		synchronized (var4) {
-			JavaKeyboardProvider.idleCycles++;
-			JavaKeyboardProvider.field479 = JavaKeyboardProvider.field424;
-			if (JavaKeyboardProvider.field419 >= 0) {
-				while (JavaKeyboardProvider.field445 != JavaKeyboardProvider.field419) {
-					int var6 = JavaKeyboardProvider.field474[JavaKeyboardProvider.field445];
-					JavaKeyboardProvider.field445 = JavaKeyboardProvider.field445 + 1 & 0x7F;
-					if (var6 < 0) {
-						JavaKeyboardProvider.actionKey[~var6] = false;
-					} else {
-						JavaKeyboardProvider.actionKey[var6] = true;
-					}
-				}
-			} else {
-				for (int var5 = 0; var5 < 112; var5++) {
-					JavaKeyboardProvider.actionKey[var5] = false;
-				}
-				JavaKeyboardProvider.field419 = JavaKeyboardProvider.field445;
-			}
-			JavaKeyboardProvider.field424 = JavaKeyboardProvider.field480;
-		}
-	}
-
-	public static void imethod3() {
-		JavaMouseProvider var8 = JavaMouseProvider.field491;
-		synchronized (var8) {
-			JavaMouseProvider.mouseButton = JavaMouseProvider.field487;
-			JavaMouseProvider.mouseX = JavaMouseProvider.field501;
-			JavaMouseProvider.mouseY = JavaMouseProvider.field493;
-			JavaMouseProvider.mouseClickButton = JavaMouseProvider.field485;
-			JavaMouseProvider.mouseClickX = JavaMouseProvider.field494;
-			JavaMouseProvider.mouseClickY = JavaMouseProvider.field495;
-			JavaMouseProvider.mouseClickTime = JavaMouseProvider.field496;
-			JavaMouseProvider.field485 = 0;
 		}
 	}
 
