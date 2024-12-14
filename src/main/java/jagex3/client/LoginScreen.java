@@ -21,7 +21,7 @@ import java.net.URL;
 public class LoginScreen {
 
 	@ObfuscatedName("g.r")
-	public static ClientStream field169;
+	public static ClientStream clientStream;
 
 	@ObfuscatedName("g.d")
 	public static Pix8 field137;
@@ -202,7 +202,7 @@ public class LoginScreen {
 		MidiPlayer.field1120 = 0;
 		MidiPlayer.field1625 = false;
 		MidiPlayer.field1152 = 2;
-		Js5TcpClient.method343(true);
+		Js5TcpClient.sendLoginLogoutPacket(true);
 		Js5TcpClient.field1507 = false;
 	}
 
@@ -1146,7 +1146,7 @@ public class LoginScreen {
 		} else {
 			MidiPlayer.imethod1(Client.midiSongJs5);
 		}
-		Js5TcpClient.method343(false);
+		Js5TcpClient.sendLoginLogoutPacket(false);
 		Js5TcpClient.field1507 = true;
 		field146.method2667(0, 0);
 		field348.method2667(382, 0);

@@ -7,11 +7,11 @@ import jagex3.datastruct.DoublyLinkable;
 public class Js5NetRequest extends DoublyLinkable {
 
 	@ObfuscatedName("fl.n")
-	public Js5Provider field2492;
+	public Js5Provider provider;
 
 	@ObfuscatedName("fl.j")
-	public int field2491;
+	public int expectedCrc;
 
 	@ObfuscatedName("fl.z")
-	public byte field2490;
+	public byte padding;
 }

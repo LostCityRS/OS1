@@ -49,13 +49,13 @@ public class Js5Provider extends Js5Index {
 		this.field1574 = arg2;
 		this.field1576 = arg5;
 		int var8 = this.field1574;
-		if (Js5TcpClient.field542 == null) {
-			Js5TcpClient.method827(null, 255, 255, 0, (byte) 0, true);
+		if (Js5TcpClient.masterIndexBuffer == null) {
+			Js5TcpClient.queueRequest(null, 255, 255, 0, (byte) 0, true);
 			Js5TcpClient.field1200[var8] = this;
 		} else {
-			Js5TcpClient.field542.pos = var8 * 8 + 5;
-			int var9 = Js5TcpClient.field542.g4();
-			int var10 = Js5TcpClient.field542.g4();
+			Js5TcpClient.masterIndexBuffer.pos = var8 * 8 + 5;
+			int var9 = Js5TcpClient.masterIndexBuffer.g4();
+			int var10 = Js5TcpClient.masterIndexBuffer.g4();
 			this.method1476(var9, var10);
 		}
 	}
@@ -65,7 +65,7 @@ public class Js5Provider extends Js5Index {
 		if (this.field1575) {
 			return 100;
 		} else if (this.packed == null) {
-			int var1 = Js5TcpClient.method161(255, this.field1574);
+			int var1 = Js5TcpClient.transferProgress(255, this.field1574);
 			if (var1 >= 100) {
 				var1 = 99;
 			}
@@ -77,13 +77,13 @@ public class Js5Provider extends Js5Index {
 
 	@ObfuscatedName("dq.d(IB)V")
 	public void download(int arg0) {
-		Js5TcpClient.method555(this.field1574, arg0);
+		Js5TcpClient.prioritizeRequest(this.field1574, arg0);
 	}
 
 	@ObfuscatedName("dq.i(IB)V")
 	public void fetchGroup(int arg0) {
 		if (this.field1578 == null || this.field1572 == null || !this.field1572[arg0]) {
-			Js5TcpClient.method827(this, this.field1574, arg0, this.groupChecksums[arg0], (byte) 2, true);
+			Js5TcpClient.queueRequest(this, this.field1574, arg0, this.groupChecksums[arg0], (byte) 2, true);
 		} else {
 			Js5ProviderThread.method1122(arg0, this.field1578, this);
 		}
@@ -94,7 +94,7 @@ public class Js5Provider extends Js5Index {
 		this.field1580 = arg0;
 		this.field1577 = arg1;
 		if (this.field1573 == null) {
-			Js5TcpClient.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
+			Js5TcpClient.queueRequest(this, 255, this.field1574, this.field1580, (byte) 0, true);
 		} else {
 			Js5ProviderThread.method1122(this.field1574, this.field1573, this);
 		}
@@ -166,7 +166,7 @@ public class Js5Provider extends Js5Index {
 			if (arg2 == null || arg2.length <= 2) {
 				this.field1572[arg1] = false;
 				if (this.field1576 || arg3) {
-					Js5TcpClient.method827(this, this.field1574, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
+					Js5TcpClient.queueRequest(this, this.field1574, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
 				}
 				return;
 			}
@@ -177,7 +177,7 @@ public class Js5Provider extends Js5Index {
 			if (this.groupChecksums[arg1] != var9 || this.groupVersions[arg1] != var10) {
 				this.field1572[arg1] = false;
 				if (this.field1576 || arg3) {
-					Js5TcpClient.method827(this, this.field1574, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
+					Js5TcpClient.queueRequest(this, this.field1574, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
 				}
 				return;
 			}
@@ -191,7 +191,7 @@ public class Js5Provider extends Js5Index {
 			throw new RuntimeException();
 		}
 		if (arg2 == null) {
-			Js5TcpClient.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
+			Js5TcpClient.queueRequest(this, 255, this.field1574, this.field1580, (byte) 0, true);
 			return;
 		}
 		field1579.reset();
@@ -207,7 +207,7 @@ public class Js5Provider extends Js5Index {
 			var8 = var6.g4();
 		}
 		if (this.field1580 != var5 || this.field1577 != var8) {
-			Js5TcpClient.method827(this, 255, this.field1574, this.field1580, (byte) 0, true);
+			Js5TcpClient.queueRequest(this, 255, this.field1574, this.field1580, (byte) 0, true);
 			return;
 		}
 		this.decode(arg2);
@@ -255,7 +255,7 @@ public class Js5Provider extends Js5Index {
 	@ObfuscatedName("dq.bn(II)I")
 	public int method1472(int arg0) {
 		if (this.packed[arg0] == null) {
-			return this.field1572[arg0] ? 100 : Js5TcpClient.method161(this.field1574, arg0);
+			return this.field1572[arg0] ? 100 : Js5TcpClient.transferProgress(this.field1574, arg0);
 		} else {
 			return 100;
 		}
