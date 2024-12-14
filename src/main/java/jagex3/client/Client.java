@@ -1404,8 +1404,8 @@ public class Client extends GameShell {
 		if (field1585 != null) {
 			field1585.method248();
 		}
-		if (LoginScreen.field169 != null) {
-			LoginScreen.field169.close();
+		if (LoginScreen.clientStream != null) {
+			LoginScreen.clientStream.close();
 		}
 		Js5ProviderThread.method781();
 		SignLinkCacheFolder.method1141();
@@ -1446,7 +1446,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.ci(I)V")
 	public void method1849() {
 		if (gameState != 1000) {
-			boolean var1 = Js5TcpClient.method826();
+			boolean var1 = Js5TcpClient.tick();
 			if (!var1) {
 				this.method1850();
 			}
@@ -1455,19 +1455,19 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.cb(I)V")
 	public void method1850() {
-		if (Js5TcpClient.field1198 >= 4) {
+		if (Js5TcpClient.crcErrorCount >= 4) {
 			this.error("js5crc");
 			gameState = 1000;
 			return;
 		}
-		if (Js5TcpClient.field1203 >= 4) {
+		if (Js5TcpClient.ioErrorCount >= 4) {
 			if (gameState <= 5) {
 				this.error("js5io");
 				gameState = 1000;
 				return;
 			}
 			field1942 = 3000;
-			Js5TcpClient.field1203 = 3;
+			Js5TcpClient.ioErrorCount = 3;
 		}
 		if (--field1942 + 1 > 0) {
 			return;
@@ -1509,7 +1509,7 @@ public class Client extends GameShell {
 				}
 			}
 			if (field2090 == 4) {
-				Js5TcpClient.method96(field1102, gameState > 20);
+				Js5TcpClient.init(field1102, gameState > 20);
 				field36 = null;
 				field1102 = null;
 				field2090 = 0;
@@ -10455,7 +10455,7 @@ public class Client extends GameShell {
 		cameraZ = var67;
 		cameraPitch = var68;
 		cameraYaw = var69;
-		if (field1921 && Js5TcpClient.imethod1() == 0) {
+		if (field1921 && Js5TcpClient.urgentQueueSize() == 0) {
 			field1921 = false;
 		}
 		if (field1921) {

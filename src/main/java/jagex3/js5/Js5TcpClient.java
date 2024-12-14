@@ -18,380 +18,381 @@ public class Js5TcpClient {
 	public static boolean field1507;
 
 	@ObfuscatedName("cu.d")
-	public static int field1190 = 0;
+	public static int timeoutMs = 0;
 
 	@ObfuscatedName("bo.l")
-	public static long field825;
+	public static long lastTickMs;
 
 	@ObfuscatedName("cu.m")
-	public static HashTable field1185 = new HashTable(4096);
+	public static HashTable pendingUrgentQueue = new HashTable(4096);
 
 	@ObfuscatedName("cu.c")
-	public static int field1186 = 0;
+	public static int pendingUrgentQueueSize = 0;
 
 	@ObfuscatedName("cu.n")
-	public static HashTable field1187 = new HashTable(32);
+	public static HashTable urgentQueue = new HashTable(32);
 
 	@ObfuscatedName("cu.j")
-	public static int field1188 = 0;
+	public static int urgentQueueSize = 0;
 
 	@ObfuscatedName("cu.z")
-	public static DoublyLinkList field1189 = new DoublyLinkList();
+	public static DoublyLinkList requestQueue = new DoublyLinkList();
 
 	@ObfuscatedName("cu.g")
-	public static HashTable field1193 = new HashTable(4096);
+	public static HashTable pendingPrefetchQueue = new HashTable(4096);
 
 	@ObfuscatedName("cu.q")
-	public static int field1191 = 0;
+	public static int pendingPrefetchQueueSize = 0;
 
 	@ObfuscatedName("cu.i")
-	public static HashTable field1199 = new HashTable(4096);
+	public static HashTable prefetchQueue = new HashTable(4096);
 
 	@ObfuscatedName("cu.s")
-	public static int field1197 = 0;
+	public static int prefetchQueueSize = 0;
 
 	@ObfuscatedName("cu.u")
-	public static boolean field1194;
+	public static boolean incomingUrgentRequest;
 
 	@ObfuscatedName("bx.v")
-	public static Js5NetRequest field812;
+	public static Js5NetRequest incomingRequest;
 
 	@ObfuscatedName("cu.w")
-	public static Packet field1195 = new Packet(8);
+	public static Packet incomingTransferHeader = new Packet(8);
 
 	@ObfuscatedName("cu.e")
-	public static Packet field1196;
+	public static Packet incomingGroupBuffer;
 
 	@ObfuscatedName("cu.b")
-	public static int field1201 = 0;
+	public static int incomingChunkPos = 0;
 
 	@ObfuscatedName("cu.t")
-	public static CRC32 field1184 = new CRC32();
+	public static CRC32 crc32 = new CRC32();
 
 	@ObfuscatedName("ab.f")
-	public static Packet field542;
+	public static Packet masterIndexBuffer;
 
 	@ObfuscatedName("cu.k")
 	public static Js5Provider[] field1200 = new Js5Provider[256];
 
 	@ObfuscatedName("cu.o")
-	public static byte field1202 = 0;
+	public static byte xorKey = 0;
 
 	@ObfuscatedName("cu.a")
-	public static int field1198 = 0;
+	public static int crcErrorCount = 0;
 
 	@ObfuscatedName("cu.h")
-	public static int field1203 = 0;
+	public static int ioErrorCount = 0;
 
 	public Js5TcpClient() throws Throwable {
 		throw new Error();
 	}
 
 	@ObfuscatedName("by.r(B)Z")
-	public static boolean method826() {
-		long var0 = MonotonicTime.currentTime();
-		int var2 = (int) (var0 - field825);
-		field825 = var0;
-		if (var2 > 200) {
-			var2 = 200;
+	public static boolean tick() {
+		long currentTimeMs = MonotonicTime.currentTime();
+		int timeDelta = (int) (currentTimeMs - lastTickMs);
+		lastTickMs = currentTimeMs;
+		if (timeDelta > 200) {
+			timeDelta = 200;
 		}
-		field1190 += var2;
-		if (field1197 == 0 && field1188 == 0 && field1191 == 0 && field1186 == 0) {
+		timeoutMs += timeDelta;
+		if (prefetchQueueSize == 0 && urgentQueueSize == 0 && pendingPrefetchQueueSize == 0 && pendingUrgentQueueSize == 0) {
 			return true;
-		} else if (LoginScreen.field169 == null) {
+		} else if (LoginScreen.clientStream == null) {
 			return false;
 		} else {
 			try {
-				if (field1190 > 30000) {
+				if (timeoutMs > 30000) {
 					throw new IOException();
 				}
-				while (field1188 < 20 && field1186 > 0) {
-					Js5NetRequest var3 = (Js5NetRequest) field1185.method1284();
-					Packet var4 = new Packet(4);
-					var4.p1(1);
-					var4.p3((int) var3.nodeId);
-					LoginScreen.field169.write(var4.data, 0, 4);
-					field1187.put(var3, var3.nodeId);
-					field1186--;
-					field1188++;
+				while (urgentQueueSize < 20 && pendingUrgentQueueSize > 0) {
+					Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.method1284();
+					Packet packet = new Packet(4);
+					packet.p1(1);
+					packet.p3((int) pendingUrgentRequest.nodeId);
+					LoginScreen.clientStream.write(packet.data, 0, 4);
+					urgentQueue.put(pendingUrgentRequest, pendingUrgentRequest.nodeId);
+					pendingUrgentQueueSize--;
+					urgentQueueSize++;
 				}
-				while (field1197 < 20 && field1191 > 0) {
-					Js5NetRequest var5 = (Js5NetRequest) field1189.head();
-					Packet var6 = new Packet(4);
-					var6.p1(0);
-					var6.p3((int) var5.nodeId);
-					LoginScreen.field169.write(var6.data, 0, 4);
-					var5.unlink2();
-					field1199.put(var5, var5.nodeId);
-					field1191--;
-					field1197++;
+				while (prefetchQueueSize < 20 && pendingPrefetchQueueSize > 0) {
+					Js5NetRequest pendingPrefetchRequest = (Js5NetRequest) requestQueue.head();
+					Packet packet = new Packet(4);
+					packet.p1(0);
+					packet.p3((int) pendingPrefetchRequest.nodeId);
+					LoginScreen.clientStream.write(packet.data, 0, 4);
+					pendingPrefetchRequest.unlink2();
+					prefetchQueue.put(pendingPrefetchRequest, pendingPrefetchRequest.nodeId);
+					pendingPrefetchQueueSize--;
+					prefetchQueueSize++;
 				}
-				for (int var7 = 0; var7 < 100; var7++) {
-					int var8 = LoginScreen.field169.available();
-					if (var8 < 0) {
+				for (int i = 0; i < 100; i++) {
+					int availableBytes = LoginScreen.clientStream.available();
+					if (availableBytes < 0) {
 						throw new IOException();
 					}
-					if (var8 == 0) {
+					if (availableBytes == 0) {
 						break;
 					}
-					field1190 = 0;
-					byte var9 = 0;
-					if (field812 == null) {
-						var9 = 8;
-					} else if (field1201 == 0) {
-						var9 = 1;
+					timeoutMs = 0;
+					byte headerSize = 0;
+					if (incomingRequest == null) {
+						headerSize = 8;
+					} else if (incomingChunkPos == 0) {
+						headerSize = 1;
 					}
-					if (var9 > 0) {
-						int var10 = var9 - field1195.pos;
-						if (var10 > var8) {
-							var10 = var8;
+					if (headerSize > 0) {
+						int readableBytes = headerSize - incomingTransferHeader.pos;
+						if (readableBytes > availableBytes) {
+							readableBytes = availableBytes;
 						}
-						LoginScreen.field169.read(field1195.data, field1195.pos, var10);
-						if (field1202 != 0) {
-							for (int var11 = 0; var11 < var10; var11++) {
-								field1195.data[field1195.pos + var11] ^= field1202;
+						LoginScreen.clientStream.read(incomingTransferHeader.data, incomingTransferHeader.pos, readableBytes);
+						if (xorKey != 0) {
+							for (int j = 0; j < readableBytes; j++) {
+								incomingTransferHeader.data[incomingTransferHeader.pos + j] ^= xorKey;
 							}
 						}
-						field1195.pos += var10;
-						if (field1195.pos < var9) {
+						incomingTransferHeader.pos += readableBytes;
+						if (incomingTransferHeader.pos < headerSize) {
 							break;
 						}
-						if (field812 == null) {
-							field1195.pos = 0;
-							int var12 = field1195.g1();
-							int var13 = field1195.g2();
-							int var14 = field1195.g1();
-							int var15 = field1195.g4();
-							long var16 = (long) ((var12 << 16) + var13);
-							Js5NetRequest var18 = (Js5NetRequest) field1187.get(var16);
-							field1194 = true;
-							if (var18 == null) {
-								var18 = (Js5NetRequest) field1199.get(var16);
-								field1194 = false;
+						if (incomingRequest == null) {
+							incomingTransferHeader.pos = 0;
+							int archiveId = incomingTransferHeader.g1();
+							int groupId = incomingTransferHeader.g2();
+							int compressionType = incomingTransferHeader.g1();
+							int compressedSize = incomingTransferHeader.g4();
+							long key = ((long) archiveId << 16) + groupId;
+							Js5NetRequest request = (Js5NetRequest) urgentQueue.get(key);
+							incomingUrgentRequest = true;
+
+							if (request == null) {
+								request = (Js5NetRequest) prefetchQueue.get(key);
+								incomingUrgentRequest = false;
 							}
-							if (var18 == null) {
+							if (request == null) {
 								throw new IOException();
 							}
-							int var19 = var14 == 0 ? 5 : 9;
-							field812 = var18;
-							field1196 = new Packet(var15 + var19 + field812.field2490);
-							field1196.p1(var14);
-							field1196.p4(var15);
-							field1201 = 8;
-							field1195.pos = 0;
-						} else if (field1201 == 0) {
-							if (field1195.data[0] == -1) {
-								field1201 = 1;
-								field1195.pos = 0;
+							int groupHeaderSize = compressionType == 0 ? 5 : 9;
+							incomingRequest = request;
+							incomingGroupBuffer = new Packet(compressedSize + groupHeaderSize + incomingRequest.padding);
+							incomingGroupBuffer.p1(compressionType);
+							incomingGroupBuffer.p4(compressedSize);
+							incomingChunkPos = 8;
+							incomingTransferHeader.pos = 0;
+						} else if (incomingChunkPos == 0) {
+							if (incomingTransferHeader.data[0] == -1) {
+								incomingChunkPos = 1;
+								incomingTransferHeader.pos = 0;
 							} else {
-								field812 = null;
+								incomingRequest = null;
 							}
 						}
 					} else {
-						int var20 = field1196.data.length - field812.field2490;
-						int var21 = 512 - field1201;
-						if (var21 > var20 - field1196.pos) {
-							var21 = var20 - field1196.pos;
+						int remainingBytes = incomingGroupBuffer.data.length - incomingRequest.padding;
+						int chunkRemainingBytes = 512 - incomingChunkPos;
+						if (chunkRemainingBytes > remainingBytes - incomingGroupBuffer.pos) {
+							chunkRemainingBytes = remainingBytes - incomingGroupBuffer.pos;
 						}
-						if (var21 > var8) {
-							var21 = var8;
+						if (chunkRemainingBytes > availableBytes) {
+							chunkRemainingBytes = availableBytes;
 						}
-						LoginScreen.field169.read(field1196.data, field1196.pos, var21);
-						if (field1202 != 0) {
-							for (int var22 = 0; var22 < var21; var22++) {
-								field1196.data[field1196.pos + var22] ^= field1202;
+						LoginScreen.clientStream.read(incomingGroupBuffer.data, incomingGroupBuffer.pos, chunkRemainingBytes);
+						if (xorKey != 0) {
+							for (int j = 0; j < chunkRemainingBytes; j++) {
+								incomingGroupBuffer.data[incomingGroupBuffer.pos + j] ^= xorKey;
 							}
 						}
-						field1196.pos += var21;
-						field1201 += var21;
-						if (field1196.pos == var20) {
-							if (field812.nodeId == 16711935L) {
-								field542 = field1196;
-								for (int var23 = 0; var23 < 256; var23++) {
-									Js5Provider var24 = field1200[var23];
-									if (var24 != null) {
-										field542.pos = var23 * 8 + 5;
-										int var25 = field542.g4();
-										int var26 = field542.g4();
-										var24.method1476(var25, var26);
+						incomingGroupBuffer.pos += chunkRemainingBytes;
+						incomingChunkPos += chunkRemainingBytes;
+						if (incomingGroupBuffer.pos == remainingBytes) {
+							if (incomingRequest.nodeId == 0xff00ffL) {
+								masterIndexBuffer = incomingGroupBuffer;
+								for (int j = 0; j < 256; j++) {
+									Js5Provider provider = field1200[j];
+									if (provider != null) {
+										masterIndexBuffer.pos = j * 8 + 5;
+										int indexCrc = masterIndexBuffer.g4();
+										int indexVersion = masterIndexBuffer.g4();
+										provider.method1476(indexCrc, indexVersion);
 									}
 								}
 							} else {
-								field1184.reset();
-								field1184.update(field1196.data, 0, var20);
-								int var27 = (int) field1184.getValue();
-								if (field812.field2491 != var27) {
+								crc32.reset();
+								crc32.update(incomingGroupBuffer.data, 0, remainingBytes);
+								int crc = (int) crc32.getValue();
+								if (incomingRequest.expectedCrc != crc) {
 									try {
-										LoginScreen.field169.close();
-									} catch (Exception var32) {
+										LoginScreen.clientStream.close();
+									} catch (Exception ignored) {
 									}
-									field1198++;
-									LoginScreen.field169 = null;
-									field1202 = (byte) (Math.random() * 255.0D + 1.0D);
+									crcErrorCount++;
+									LoginScreen.clientStream = null;
+									xorKey = (byte) (Math.random() * 255.0D + 1.0D);
 									return false;
 								}
-								field1198 = 0;
-								field1203 = 0;
-								field812.field2492.method1467((int) (field812.nodeId & 0xFFFFL), field1196.data, (field812.nodeId & 0xFF0000L) == 16711680L, field1194);
+								crcErrorCount = 0;
+								ioErrorCount = 0;
+								incomingRequest.provider.method1467((int) (incomingRequest.nodeId & 0xFFFFL), incomingGroupBuffer.data, (incomingRequest.nodeId & 0xFF0000L) == 16711680L, incomingUrgentRequest);
 							}
-							field812.unlink();
-							if (field1194) {
-								field1188--;
+							incomingRequest.unlink();
+							if (incomingUrgentRequest) {
+								urgentQueueSize--;
 							} else {
-								field1197--;
+								prefetchQueueSize--;
 							}
-							field1201 = 0;
-							field812 = null;
-							field1196 = null;
+							incomingChunkPos = 0;
+							incomingRequest = null;
+							incomingGroupBuffer = null;
 						} else {
-							if (field1201 != 512) {
+							if (incomingChunkPos != 512) {
 								break;
 							}
-							field1201 = 0;
+							incomingChunkPos = 0;
 						}
 					}
 				}
 				return true;
-			} catch (IOException var33) {
+			} catch (IOException e) {
 				try {
-					LoginScreen.field169.close();
-				} catch (Exception var31) {
+					LoginScreen.clientStream.close();
+				} catch (Exception ignored) {
 				}
-				field1203++;
-				LoginScreen.field169 = null;
+				ioErrorCount++;
+				LoginScreen.clientStream = null;
 				return false;
 			}
 		}
 	}
 
 	@ObfuscatedName("p.d(ZI)V")
-	public static void method343(boolean arg0) {
-		if (LoginScreen.field169 == null) {
+	public static void sendLoginLogoutPacket(boolean loggedIn) {
+		if (LoginScreen.clientStream == null) {
 			return;
 		}
 		try {
-			Packet var1 = new Packet(4);
-			var1.p1(arg0 ? 2 : 3);
-			var1.p3(0);
-			LoginScreen.field169.write(var1.data, 0, 4);
-		} catch (IOException var5) {
+			Packet packet = new Packet(4);
+			packet.p1(loggedIn ? 2 : 3);
+			packet.p3(0);
+			LoginScreen.clientStream.write(packet.data, 0, 4);
+		} catch (IOException e) {
 			try {
-				LoginScreen.field169.close();
-			} catch (Exception var4) {
+				LoginScreen.clientStream.close();
+			} catch (Exception ignored) {
 			}
-			field1203++;
-			LoginScreen.field169 = null;
+			ioErrorCount++;
+			LoginScreen.clientStream = null;
 		}
 	}
 
 	@ObfuscatedName("q.l(Lam;ZB)V")
-	public static void method96(ClientStream arg0, boolean arg1) {
-		if (LoginScreen.field169 != null) {
+	public static void init(ClientStream stream, boolean loggedId) {
+		if (LoginScreen.clientStream != null) {
 			try {
-				LoginScreen.field169.close();
-			} catch (Exception var10) {
+				LoginScreen.clientStream.close();
+			} catch (Exception ignored) {
 			}
-			LoginScreen.field169 = null;
+			LoginScreen.clientStream = null;
 		}
-		LoginScreen.field169 = arg0;
-		method343(arg1);
-		field1195.pos = 0;
-		field812 = null;
-		field1196 = null;
-		field1201 = 0;
+		LoginScreen.clientStream = stream;
+		sendLoginLogoutPacket(loggedId);
+		incomingTransferHeader.pos = 0;
+		incomingRequest = null;
+		incomingGroupBuffer = null;
+		incomingChunkPos = 0;
 		while (true) {
-			Js5NetRequest var3 = (Js5NetRequest) field1187.method1284();
-			if (var3 == null) {
+			Js5NetRequest request = (Js5NetRequest) urgentQueue.method1284();
+			if (request == null) {
 				while (true) {
-					Js5NetRequest var4 = (Js5NetRequest) field1199.method1284();
-					if (var4 == null) {
-						if (field1202 != 0) {
+					Js5NetRequest prefetchRequest = (Js5NetRequest) prefetchQueue.method1284();
+					if (prefetchRequest == null) {
+						if (xorKey != 0) {
 							try {
-								Packet var5 = new Packet(4);
-								var5.p1(4);
-								var5.p1(field1202);
-								var5.p2(0);
-								LoginScreen.field169.write(var5.data, 0, 4);
-							} catch (IOException var9) {
+								Packet packet = new Packet(4);
+								packet.p1(4);
+								packet.p1(xorKey);
+								packet.p2(0);
+								LoginScreen.clientStream.write(packet.data, 0, 4);
+							} catch (IOException e) {
 								try {
-									LoginScreen.field169.close();
-								} catch (Exception var8) {
+									LoginScreen.clientStream.close();
+								} catch (Exception ignored) {
 								}
-								field1203++;
-								LoginScreen.field169 = null;
+								ioErrorCount++;
+								LoginScreen.clientStream = null;
 							}
 						}
-						field1190 = 0;
-						field825 = MonotonicTime.currentTime();
+						timeoutMs = 0;
+						lastTickMs = MonotonicTime.currentTime();
 						return;
 					}
-					field1189.addHead(var4);
-					field1193.put(var4, var4.nodeId);
-					field1191++;
-					field1197--;
+					requestQueue.addHead(prefetchRequest);
+					pendingPrefetchQueue.put(prefetchRequest, prefetchRequest.nodeId);
+					pendingPrefetchQueueSize++;
+					prefetchQueueSize--;
 				}
 			}
-			field1185.put(var3, var3.nodeId);
-			field1186++;
-			field1188--;
+			pendingUrgentQueue.put(request, request.nodeId);
+			pendingUrgentQueueSize++;
+			urgentQueueSize--;
 		}
 	}
 
 	@ObfuscatedName("by.m(Ldq;IIIBZI)V")
-	public static void method827(Js5Provider arg0, int arg1, int arg2, int arg3, byte arg4, boolean arg5) {
-		long var6 = (long) ((arg1 << 16) + arg2);
-		Js5NetRequest var8 = (Js5NetRequest) field1185.get(var6);
-		if (var8 != null) {
+	public static void queueRequest(Js5Provider provider, int archiveId, int groupId, int expectedCrc, byte padding, boolean urgent) {
+		long key = ((long) archiveId << 16) + groupId;
+		Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.get(key);
+		if (pendingUrgentRequest != null) {
 			return;
 		}
-		Js5NetRequest var9 = (Js5NetRequest) field1187.get(var6);
-		if (var9 != null) {
+		Js5NetRequest urgentRequest = (Js5NetRequest) urgentQueue.get(key);
+		if (urgentRequest != null) {
 			return;
 		}
-		Js5NetRequest var10 = (Js5NetRequest) field1193.get(var6);
-		if (var10 == null) {
-			if (!arg5) {
-				Js5NetRequest var11 = (Js5NetRequest) field1199.get(var6);
-				if (var11 != null) {
+		Js5NetRequest pendingPrefetchQueue = (Js5NetRequest) Js5TcpClient.pendingPrefetchQueue.get(key);
+		if (pendingPrefetchQueue == null) {
+			if (!urgent) {
+				Js5NetRequest prefetchRequest = (Js5NetRequest) prefetchQueue.get(key);
+				if (prefetchRequest != null) {
 					return;
 				}
 			}
-			Js5NetRequest var12 = new Js5NetRequest();
-			var12.field2492 = arg0;
-			var12.field2491 = arg3;
-			var12.field2490 = arg4;
-			if (arg5) {
-				field1185.put(var12, var6);
-				field1186++;
+			Js5NetRequest request = new Js5NetRequest();
+			request.provider = provider;
+			request.expectedCrc = expectedCrc;
+			request.padding = padding;
+			if (urgent) {
+				pendingUrgentQueue.put(request, key);
+				pendingUrgentQueueSize++;
 			} else {
-				field1189.push(var12);
-				field1193.put(var12, var6);
-				field1191++;
+				requestQueue.push(request);
+				Js5TcpClient.pendingPrefetchQueue.put(request, key);
+				pendingPrefetchQueueSize++;
 			}
-		} else if (arg5) {
-			var10.unlink2();
-			field1185.put(var10, var6);
-			field1191--;
-			field1186++;
+		} else if (urgent) {
+			pendingPrefetchQueue.unlink2();
+			pendingUrgentQueue.put(pendingPrefetchQueue, key);
+			pendingPrefetchQueueSize--;
+			pendingUrgentQueueSize++;
 		}
 	}
 
 	@ObfuscatedName("ab.c(IIS)V")
-	public static void method555(int arg0, int arg1) {
-		long var2 = (long) ((arg0 << 16) + arg1);
-		Js5NetRequest var4 = (Js5NetRequest) field1193.get(var2);
-		if (var4 != null) {
-			field1189.addHead(var4);
+	public static void prioritizeRequest(int archiveId, int groupId) {
+		long key = ((long) archiveId << 16) + groupId;
+		Js5NetRequest request = (Js5NetRequest) pendingPrefetchQueue.get(key);
+		if (request != null) {
+			requestQueue.addHead(request);
 		}
 	}
 
 	@ObfuscatedName("v.n(III)I")
-	public static int method161(int arg0, int arg1) {
-		long var2 = (long) ((arg0 << 16) + arg1);
-		return field812 != null && field812.nodeId == var2 ? field1196.pos * 99 / (field1196.data.length - field812.field2490) + 1 : 0;
+	public static int transferProgress(int archiveId, int groupId) {
+		long key = ((long) archiveId << 16) + groupId;
+		return incomingRequest != null && incomingRequest.nodeId == key ? incomingGroupBuffer.pos * 99 / (incomingGroupBuffer.data.length - incomingRequest.padding) + 1 : 0;
 	}
 
-	public static int imethod1() {
-		return field1188 + field1186;
+	public static int urgentQueueSize() {
+		return urgentQueueSize + pendingUrgentQueueSize;
 	}
 }
