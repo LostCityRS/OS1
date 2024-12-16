@@ -5,7 +5,7 @@ import jagex3.datastruct.Linkable;
 import jagex3.io.FileStream;
 
 @ObfuscatedName("eh")
-public class Js5NetProviderRequest extends Linkable {
+public class Js5LocalRequest extends Linkable {
 
 	@ObfuscatedName("eh.m")
 	public int field1772;
@@ -17,5 +17,5 @@ public class Js5NetProviderRequest extends Linkable {
 	public FileStream field1770;
 
 	@ObfuscatedName("eh.j")
-	public Js5Provider field1773;
+	public Js5Local field1773;
 }

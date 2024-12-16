@@ -64,118 +64,140 @@ public abstract class Js5Index {
 	@ObfuscatedName("ch.b")
 	public static int maxsize = 0;
 
-	public Js5Index(boolean arg0, boolean arg1) {
-		this.discardPacked = arg0;
-		this.discardUnpacked = arg1;
+	public Js5Index(boolean discardPacked, boolean discardUnpacked) {
+		this.discardPacked = discardPacked;
+		this.discardUnpacked = discardUnpacked;
 	}
 
 	@ObfuscatedName("ch.r([BI)V")
-	public void decode(byte[] arg0) {
-		int var2 = arg0.length;
+	public void decode(byte[] src) {
+		// todo: move to Packet.getcrc
+		int var2 = src.length;
 		int var3 = -1;
 		for (int var4 = 0; var4 < var2; var4++) {
-			var3 = var3 >>> 8 ^ Packet.crctable[(var3 ^ arg0[var4]) & 0xFF];
+			var3 = var3 >>> 8 ^ Packet.crctable[(var3 ^ src[var4]) & 0xFF];
 		}
 		int var5 = ~var3;
 		this.crc = var5;
-		Packet var8 = new Packet(decompress(arg0));
-		int var9 = var8.g1();
-		if (var9 < 5 || var9 > 7) {
-			throw new RuntimeException("");
+
+		Packet buf = new Packet(decompress(src));
+		int protocol = buf.g1();
+		if (protocol < 5 || protocol > 7) {
+			throw new RuntimeException("Incorrect JS5 protocol number: " + protocol);
 		}
-		if (var9 >= 6) {
-			var8.g4();
+
+		if (protocol >= 6) {
+			buf.g4();
 		}
-		int var10 = var8.g1();
-		if (var9 >= 7) {
-			this.size = var8.gSmart2or4();
+
+		int info = buf.g1();
+
+		if (protocol >= 7) {
+			this.size = buf.gSmart2or4();
 		} else {
-			this.size = var8.g2();
+			this.size = buf.g2();
 		}
-		int var11 = 0;
-		int var12 = -1;
+
+		int prevGroupId = 0;
+		int maxGroupId = -1;
 		this.groupIds = new int[this.size];
-		if (var9 >= 7) {
-			for (int var13 = 0; var13 < this.size; var13++) {
-				this.groupIds[var13] = var11 += var8.gSmart2or4();
-				if (this.groupIds[var13] > var12) {
-					var12 = this.groupIds[var13];
+		if (protocol >= 7) {
+			for (int i = 0; i < this.size; i++) {
+				this.groupIds[i] = prevGroupId += buf.gSmart2or4();
+				if (this.groupIds[i] > maxGroupId) {
+					maxGroupId = this.groupIds[i];
 				}
 			}
 		} else {
-			for (int var14 = 0; var14 < this.size; var14++) {
-				this.groupIds[var14] = var11 += var8.g2();
-				if (this.groupIds[var14] > var12) {
-					var12 = this.groupIds[var14];
+			for (int i = 0; i < this.size; i++) {
+				this.groupIds[i] = prevGroupId += buf.g2();
+				if (this.groupIds[i] > maxGroupId) {
+					maxGroupId = this.groupIds[i];
 				}
 			}
 		}
-		this.groupChecksums = new int[var12 + 1];
-		this.groupVersions = new int[var12 + 1];
-		this.groupSizes = new int[var12 + 1];
-		this.fileIds = new int[var12 + 1][];
-		this.packed = new Object[var12 + 1];
-		this.unpacked = new Object[var12 + 1][];
-		if (var10 != 0) {
-			this.groupNameHash = new int[var12 + 1];
-			for (int var15 = 0; var15 < this.size; var15++) {
-				this.groupNameHash[this.groupIds[var15]] = var8.g4();
+
+		this.groupChecksums = new int[maxGroupId + 1];
+		this.groupVersions = new int[maxGroupId + 1];
+		this.groupSizes = new int[maxGroupId + 1];
+		this.fileIds = new int[maxGroupId + 1][];
+		this.packed = new Object[maxGroupId + 1];
+		this.unpacked = new Object[maxGroupId + 1][];
+
+		if (info != 0) {
+			this.groupNameHash = new int[maxGroupId + 1];
+
+			for (int i = 0; i < this.size; i++) {
+				this.groupNameHash[this.groupIds[i]] = buf.g4();
 			}
+
 			this.groupNameHashTable = new IntHashTable(this.groupNameHash);
 		}
-		for (int var16 = 0; var16 < this.size; var16++) {
-			this.groupChecksums[this.groupIds[var16]] = var8.g4();
+
+		for (int i = 0; i < this.size; i++) {
+			this.groupChecksums[this.groupIds[i]] = buf.g4();
 		}
-		for (int var17 = 0; var17 < this.size; var17++) {
-			this.groupVersions[this.groupIds[var17]] = var8.g4();
+
+		for (int i = 0; i < this.size; i++) {
+			this.groupVersions[this.groupIds[i]] = buf.g4();
 		}
-		for (int var18 = 0; var18 < this.size; var18++) {
-			this.groupSizes[this.groupIds[var18]] = var8.g2();
+
+		for (int i = 0; i < this.size; i++) {
+			this.groupSizes[this.groupIds[i]] = buf.g2();
 		}
-		if (var9 >= 7) {
-			for (int var19 = 0; var19 < this.size; var19++) {
-				int var20 = this.groupIds[var19];
-				int var21 = this.groupSizes[var20];
-				int var22 = 0;
-				int var23 = -1;
-				this.fileIds[var20] = new int[var21];
-				for (int var24 = 0; var24 < var21; var24++) {
-					int var25 = this.fileIds[var20][var24] = var22 += var8.gSmart2or4();
-					if (var25 > var23) {
-						var23 = var25;
+
+		if (protocol >= 7) {
+			for (int i = 0; i < this.size; i++) {
+				int id = this.groupIds[i];
+				int size = this.groupSizes[id];
+
+				int prevFileId = 0;
+				int maxFileId = -1;
+				this.fileIds[id] = new int[size];
+				for (int j = 0; j < size; j++) {
+					int fileId = this.fileIds[id][j] = prevFileId += buf.gSmart2or4();
+					if (fileId > maxFileId) {
+						maxFileId = fileId;
 					}
 				}
-				this.unpacked[var20] = new Object[var23 + 1];
+
+				this.unpacked[id] = new Object[maxFileId + 1];
 			}
 		} else {
-			for (int var26 = 0; var26 < this.size; var26++) {
-				int var27 = this.groupIds[var26];
-				int var28 = this.groupSizes[var27];
-				int var29 = 0;
-				int var30 = -1;
-				this.fileIds[var27] = new int[var28];
-				for (int var31 = 0; var31 < var28; var31++) {
-					int var32 = this.fileIds[var27][var31] = var29 += var8.g2();
-					if (var32 > var30) {
-						var30 = var32;
+			for (int i = 0; i < this.size; i++) {
+				int id = this.groupIds[i];
+				int size = this.groupSizes[id];
+
+				int prevFileId = 0;
+				int maxFileId = -1;
+				this.fileIds[id] = new int[size];
+				for (int j = 0; j < size; j++) {
+					int fileId = this.fileIds[id][j] = prevFileId += buf.g2();
+					if (fileId > maxFileId) {
+						maxFileId = fileId;
 					}
 				}
-				this.unpacked[var27] = new Object[var30 + 1];
+
+				this.unpacked[id] = new Object[maxFileId + 1];
 			}
 		}
-		if (var10 == 0) {
-			return;
-		}
-		this.fileNameHashes = new int[var12 + 1][];
-		this.fileNameHashTables = new IntHashTable[var12 + 1];
-		for (int var33 = 0; var33 < this.size; var33++) {
-			int var34 = this.groupIds[var33];
-			int var35 = this.groupSizes[var34];
-			this.fileNameHashes[var34] = new int[this.unpacked[var34].length];
-			for (int var36 = 0; var36 < var35; var36++) {
-				this.fileNameHashes[var34][this.fileIds[var34][var36]] = var8.g4();
+
+		if (info != 0) {
+			this.fileNameHashes = new int[maxGroupId + 1][];
+			this.fileNameHashTables = new IntHashTable[maxGroupId + 1];
+
+			for (int i = 0; i < this.size; i++) {
+				int id = this.groupIds[i];
+				int size = this.groupSizes[id];
+
+				this.fileNameHashes[id] = new int[this.unpacked[id].length];
+
+				for (int j = 0; j < size; j++) {
+					this.fileNameHashes[id][this.fileIds[id][j]] = buf.g4();
+				}
+
+				this.fileNameHashTables[id] = new IntHashTable(this.fileNameHashes[id]);
 			}
-			this.fileNameHashTables[var34] = new IntHashTable(this.fileNameHashes[var34]);
 		}
 	}
 

@@ -14,10 +14,10 @@ import jagex3.io.*;
 import jagex3.javconfig.JavConfigParameter;
 import jagex3.javconfig.ModeGame;
 import jagex3.javconfig.ModeWhat;
-import jagex3.js5.Js5NetProviderRequest;
-import jagex3.js5.Js5Provider;
-import jagex3.js5.Js5ProviderThread;
-import jagex3.js5.Js5TcpClient;
+import jagex3.js5.Js5LocalRequest;
+import jagex3.js5.Js5Local;
+import jagex3.js5.Js5RemoteThread;
+import jagex3.js5.Js5Remote;
 import jagex3.jstring.*;
 import jagex3.midi.MidiPcmStream;
 import jagex3.midi.MidiPlayer;
@@ -152,52 +152,52 @@ public class Client extends GameShell {
 	public static long field1943;
 
 	@ObfuscatedName("bb.bp")
-	public static Js5Provider animFrameJs5;
+	public static Js5Local animFrameJs5;
 
 	@ObfuscatedName("es.ba")
-	public static Js5Provider animBaseJs5;
+	public static Js5Local animBaseJs5;
 
 	@ObfuscatedName("cc.bc")
-	public static Js5Provider configJs5;
+	public static Js5Local configJs5;
 
 	@ObfuscatedName("bd.br")
-	public static Js5Provider interfaceJs5;
+	public static Js5Local interfaceJs5;
 
 	@ObfuscatedName("df.bb")
-	public static Js5Provider synthSoundJs5;
+	public static Js5Local synthSoundJs5;
 
 	@ObfuscatedName("ck.bd")
-	public static Js5Provider mapJs5;
+	public static Js5Local mapJs5;
 
 	@ObfuscatedName("bb.cr")
-	public static Js5Provider midiSongJs5;
+	public static Js5Local midiSongJs5;
 
 	@ObfuscatedName("aa.cs")
-	public static Js5Provider modelJs5;
+	public static Js5Local modelJs5;
 
 	@ObfuscatedName("client.cj")
-	public static Js5Provider spriteJs5;
+	public static Js5Local spriteJs5;
 
 	@ObfuscatedName("client.cl")
-	public static Js5Provider textureJs5;
+	public static Js5Local textureJs5;
 
 	@ObfuscatedName("ab.cp")
-	public static Js5Provider binaryJs5;
+	public static Js5Local binaryJs5;
 
 	@ObfuscatedName("dz.ca")
-	public static Js5Provider midiJingleJs5;
+	public static Js5Local midiJingleJs5;
 
 	@ObfuscatedName("ct.co")
-	public static Js5Provider clientScriptJs5;
+	public static Js5Local clientScriptJs5;
 
 	@ObfuscatedName("cj.ch")
-	public static Js5Provider fontMetricJs5;
+	public static Js5Local fontMetricJs5;
 
 	@ObfuscatedName("ey.cu")
-	public static Js5Provider vorbisJs5;
+	public static Js5Local vorbisJs5;
 
 	@ObfuscatedName("z.cc")
-	public static Js5Provider midiInstrumentJs5;
+	public static Js5Local midiInstrumentJs5;
 
 	@ObfuscatedName("client.cm")
 	public static int field1986 = 0;
@@ -1407,7 +1407,7 @@ public class Client extends GameShell {
 		if (LoginScreen.clientStream != null) {
 			LoginScreen.clientStream.close();
 		}
-		Js5ProviderThread.method781();
+		Js5RemoteThread.method781();
 		SignLinkCacheFolder.method1141();
 	}
 
@@ -1446,7 +1446,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.ci(I)V")
 	public void method1849() {
 		if (gameState != 1000) {
-			boolean var1 = Js5TcpClient.tick();
+			boolean var1 = Js5Remote.tick();
 			if (!var1) {
 				this.method1850();
 			}
@@ -1455,19 +1455,19 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.cb(I)V")
 	public void method1850() {
-		if (Js5TcpClient.crcErrorCount >= 4) {
+		if (Js5Remote.crcErrorCount >= 4) {
 			this.error("js5crc");
 			gameState = 1000;
 			return;
 		}
-		if (Js5TcpClient.ioErrorCount >= 4) {
+		if (Js5Remote.ioErrorCount >= 4) {
 			if (gameState <= 5) {
 				this.error("js5io");
 				gameState = 1000;
 				return;
 			}
 			field1942 = 3000;
-			Js5TcpClient.ioErrorCount = 3;
+			Js5Remote.ioErrorCount = 3;
 		}
 		if (--field1942 + 1 > 0) {
 			return;
@@ -1509,7 +1509,7 @@ public class Client extends GameShell {
 				}
 			}
 			if (field2090 == 4) {
-				Js5TcpClient.init(field1102, gameState > 20);
+				Js5Remote.init(field1102, gameState > 20);
 				field36 = null;
 				field1102 = null;
 				field2090 = 0;
@@ -1868,12 +1868,12 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("u.dd(IZZZB)Ldq;")
-	public static Js5Provider createJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
+	public static Js5Local createJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
 		FileStream stream = null;
 		if (SignLinkCacheFolder.cacheDat != null) {
 			stream = new FileStream(archive, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.cacheIndex[archive], 1000000);
 		}
-		return new Js5Provider(stream, masterIndex, archive, arg1, arg2, arg3);
+		return new Js5Local(stream, masterIndex, archive, arg1, arg2, arg3);
 	}
 
 	@ObfuscatedName("ex.dg(I)V")
@@ -7436,10 +7436,10 @@ public class Client extends GameShell {
 
 	public static void imethod1() {
 		while (true) {
-			LinkList var1 = Js5ProviderThread.field1208;
-			Js5NetProviderRequest var2;
+			LinkList var1 = Js5RemoteThread.field1208;
+			Js5LocalRequest var2;
 			synchronized (var1) {
-				var2 = (Js5NetProviderRequest) Js5ProviderThread.field1206.pop();
+				var2 = (Js5LocalRequest) Js5RemoteThread.field1206.pop();
 			}
 			if (var2 == null) {
 				return;
@@ -10455,7 +10455,7 @@ public class Client extends GameShell {
 		cameraZ = var67;
 		cameraPitch = var68;
 		cameraYaw = var69;
-		if (field1921 && Js5TcpClient.urgentQueueSize() == 0) {
+		if (field1921 && Js5Remote.urgentQueueSize() == 0) {
 			field1921 = false;
 		}
 		if (field1921) {
@@ -11212,7 +11212,7 @@ public class Client extends GameShell {
 		}
 	}
 
-	public static int imethod48(Js5Provider var25, Js5Provider var26) {
+	public static int imethod48(Js5Local var25, Js5Local var26) {
 		int var27 = 0;
 		if (var25.download("title.jpg", "")) {
 			var27++;

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.zip.CRC32;
 
 @ObfuscatedName("cu")
-public class Js5TcpClient {
+public class Js5Remote {
 
 	@ObfuscatedName("df.r")
 	public static boolean field1507;
@@ -54,7 +54,7 @@ public class Js5TcpClient {
 	public static boolean incomingUrgentRequest;
 
 	@ObfuscatedName("bx.v")
-	public static Js5NetRequest incomingRequest;
+	public static Js5RemoteRequest incomingRequest;
 
 	@ObfuscatedName("cu.w")
 	public static Packet incomingTransferHeader = new Packet(8);
@@ -72,7 +72,7 @@ public class Js5TcpClient {
 	public static Packet masterIndexBuffer;
 
 	@ObfuscatedName("cu.k")
-	public static Js5Provider[] field1200 = new Js5Provider[256];
+	public static Js5Local[] field1200 = new Js5Local[256];
 
 	@ObfuscatedName("cu.o")
 	public static byte xorKey = 0;
@@ -83,7 +83,7 @@ public class Js5TcpClient {
 	@ObfuscatedName("cu.h")
 	public static int ioErrorCount = 0;
 
-	public Js5TcpClient() throws Throwable {
+	public Js5Remote() throws Throwable {
 		throw new Error();
 	}
 
@@ -106,7 +106,7 @@ public class Js5TcpClient {
 					throw new IOException();
 				}
 				while (urgentQueueSize < 20 && pendingUrgentQueueSize > 0) {
-					Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.method1284();
+					Js5RemoteRequest pendingUrgentRequest = (Js5RemoteRequest) pendingUrgentQueue.method1284();
 					Packet packet = new Packet(4);
 					packet.p1(1);
 					packet.p3((int) pendingUrgentRequest.nodeId);
@@ -116,7 +116,7 @@ public class Js5TcpClient {
 					urgentQueueSize++;
 				}
 				while (prefetchQueueSize < 20 && pendingPrefetchQueueSize > 0) {
-					Js5NetRequest pendingPrefetchRequest = (Js5NetRequest) requestQueue.head();
+					Js5RemoteRequest pendingPrefetchRequest = (Js5RemoteRequest) requestQueue.head();
 					Packet packet = new Packet(4);
 					packet.p1(0);
 					packet.p3((int) pendingPrefetchRequest.nodeId);
@@ -163,11 +163,11 @@ public class Js5TcpClient {
 							int compressionType = incomingTransferHeader.g1();
 							int compressedSize = incomingTransferHeader.g4();
 							long key = ((long) archiveId << 16) + groupId;
-							Js5NetRequest request = (Js5NetRequest) urgentQueue.get(key);
+							Js5RemoteRequest request = (Js5RemoteRequest) urgentQueue.get(key);
 							incomingUrgentRequest = true;
 
 							if (request == null) {
-								request = (Js5NetRequest) prefetchQueue.get(key);
+								request = (Js5RemoteRequest) prefetchQueue.get(key);
 								incomingUrgentRequest = false;
 							}
 							if (request == null) {
@@ -209,7 +209,7 @@ public class Js5TcpClient {
 							if (incomingRequest.nodeId == 0xff00ffL) {
 								masterIndexBuffer = incomingGroupBuffer;
 								for (int j = 0; j < 256; j++) {
-									Js5Provider provider = field1200[j];
+									Js5Local provider = field1200[j];
 									if (provider != null) {
 										masterIndexBuffer.pos = j * 8 + 5;
 										int indexCrc = masterIndexBuffer.g4();
@@ -301,10 +301,10 @@ public class Js5TcpClient {
 		incomingGroupBuffer = null;
 		incomingChunkPos = 0;
 		while (true) {
-			Js5NetRequest request = (Js5NetRequest) urgentQueue.method1284();
+			Js5RemoteRequest request = (Js5RemoteRequest) urgentQueue.method1284();
 			if (request == null) {
 				while (true) {
-					Js5NetRequest prefetchRequest = (Js5NetRequest) prefetchQueue.method1284();
+					Js5RemoteRequest prefetchRequest = (Js5RemoteRequest) prefetchQueue.method1284();
 					if (prefetchRequest == null) {
 						if (xorKey != 0) {
 							try {
@@ -339,25 +339,25 @@ public class Js5TcpClient {
 	}
 
 	@ObfuscatedName("by.m(Ldq;IIIBZI)V")
-	public static void queueRequest(Js5Provider provider, int archiveId, int groupId, int expectedCrc, byte padding, boolean urgent) {
+	public static void queueRequest(Js5Local provider, int archiveId, int groupId, int expectedCrc, byte padding, boolean urgent) {
 		long key = ((long) archiveId << 16) + groupId;
-		Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.get(key);
+		Js5RemoteRequest pendingUrgentRequest = (Js5RemoteRequest) pendingUrgentQueue.get(key);
 		if (pendingUrgentRequest != null) {
 			return;
 		}
-		Js5NetRequest urgentRequest = (Js5NetRequest) urgentQueue.get(key);
+		Js5RemoteRequest urgentRequest = (Js5RemoteRequest) urgentQueue.get(key);
 		if (urgentRequest != null) {
 			return;
 		}
-		Js5NetRequest pendingPrefetchQueue = (Js5NetRequest) Js5TcpClient.pendingPrefetchQueue.get(key);
+		Js5RemoteRequest pendingPrefetchQueue = (Js5RemoteRequest) Js5Remote.pendingPrefetchQueue.get(key);
 		if (pendingPrefetchQueue == null) {
 			if (!urgent) {
-				Js5NetRequest prefetchRequest = (Js5NetRequest) prefetchQueue.get(key);
+				Js5RemoteRequest prefetchRequest = (Js5RemoteRequest) prefetchQueue.get(key);
 				if (prefetchRequest != null) {
 					return;
 				}
 			}
-			Js5NetRequest request = new Js5NetRequest();
+			Js5RemoteRequest request = new Js5RemoteRequest();
 			request.provider = provider;
 			request.expectedCrc = expectedCrc;
 			request.padding = padding;
@@ -366,7 +366,7 @@ public class Js5TcpClient {
 				pendingUrgentQueueSize++;
 			} else {
 				requestQueue.push(request);
-				Js5TcpClient.pendingPrefetchQueue.put(request, key);
+				Js5Remote.pendingPrefetchQueue.put(request, key);
 				pendingPrefetchQueueSize++;
 			}
 		} else if (urgent) {
@@ -380,7 +380,7 @@ public class Js5TcpClient {
 	@ObfuscatedName("ab.c(IIS)V")
 	public static void prioritizeRequest(int archiveId, int groupId) {
 		long key = ((long) archiveId << 16) + groupId;
-		Js5NetRequest request = (Js5NetRequest) pendingPrefetchQueue.get(key);
+		Js5RemoteRequest request = (Js5RemoteRequest) pendingPrefetchQueue.get(key);
 		if (request != null) {
 			requestQueue.addHead(request);
 		}

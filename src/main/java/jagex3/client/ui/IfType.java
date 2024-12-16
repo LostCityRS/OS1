@@ -462,6 +462,8 @@ public class IfType extends Linkable {
 						} else {
 							interfaces[arg0][var2].decodeIf1(new Packet(var3));
 						}
+
+						System.out.println(arg0 + ":" + var2 + " " + interfaces[arg0][var2].width + "x" + interfaces[arg0][var2].height + " x:" + interfaces[arg0][var2].x + " y:" + interfaces[arg0][var2].y);
 					}
 				}
 			}
@@ -813,6 +815,7 @@ public class IfType extends Linkable {
 		this.field1887 = buf.g1();
 		this.field1858 = buf.g1() == 1;
 		this.targetVerb = buf.gjstr();
+
 		this.onload = this.method1813(buf);
 		this.field1856 = this.method1813(buf);
 		this.field1838 = this.method1813(buf);

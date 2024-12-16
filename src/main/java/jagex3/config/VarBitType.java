@@ -5,7 +5,7 @@ import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Provider;
+import jagex3.js5.Js5Local;
 
 @ObfuscatedName("fc")
 public class VarBitType extends DoublyLinkable {
@@ -60,7 +60,7 @@ public class VarBitType extends DoublyLinkable {
 		}
 	}
 
-	public static void init(Js5Provider var38) {
+	public static void init(Js5Local var38) {
 		configJs5 = var38;
 	}
 

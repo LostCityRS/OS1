@@ -4,10 +4,10 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.DoublyLinkable;
 
 @ObfuscatedName("fl")
-public class Js5NetRequest extends DoublyLinkable {
+public class Js5RemoteRequest extends DoublyLinkable {
 
 	@ObfuscatedName("fl.n")
-	public Js5Provider provider;
+	public Js5Local provider;
 
 	@ObfuscatedName("fl.j")
 	public int expectedCrc;

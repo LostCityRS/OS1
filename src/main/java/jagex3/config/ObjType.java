@@ -11,7 +11,7 @@ import jagex3.graphics.Pix32;
 import jagex3.graphics.SoftwareFont;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Provider;
+import jagex3.js5.Js5Local;
 import jagex3.jstring.Locale;
 
 @ObfuscatedName("fj")
@@ -672,7 +672,7 @@ public class ObjType extends DoublyLinkable {
 		iconCache.clear();
 	}
 
-	public static void init(Js5Provider var32, Js5Provider var33, boolean var34, SoftwareFont var35) {
+	public static void init(Js5Local var32, Js5Local var33, boolean var34, SoftwareFont var35) {
 		configJs5 = var32;
 		modelJs5 = var33;
 		membersWorld = var34;

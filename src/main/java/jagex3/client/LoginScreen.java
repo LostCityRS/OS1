@@ -7,8 +7,8 @@ import jagex3.client.applet.JavaMouseProvider;
 import jagex3.graphics.*;
 import jagex3.io.ClientStream;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Provider;
-import jagex3.js5.Js5TcpClient;
+import jagex3.js5.Js5Local;
+import jagex3.js5.Js5Remote;
 import jagex3.jstring.Locale;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.TextUtil;
@@ -172,7 +172,7 @@ public class LoginScreen {
 
 	@ObfuscatedName("bx.d(I)V")
 	public static void method831() {
-		if (!Js5TcpClient.field1507) {
+		if (!Js5Remote.field1507) {
 			return;
 		}
 		field137 = null;
@@ -202,8 +202,8 @@ public class LoginScreen {
 		MidiPlayer.field1120 = 0;
 		MidiPlayer.field1625 = false;
 		MidiPlayer.field1152 = 2;
-		Js5TcpClient.sendLoginLogoutPacket(true);
-		Js5TcpClient.field1507 = false;
+		Js5Remote.sendLoginLogoutPacket(true);
+		Js5Remote.field1507 = false;
 	}
 
 	@ObfuscatedName("r.l(Ldj;I)V")
@@ -217,7 +217,7 @@ public class LoginScreen {
 			if (field142) {
 				MidiPlayer.method917();
 			} else {
-				Js5Provider var1 = Client.midiSongJs5;
+				Js5Local var1 = Client.midiSongJs5;
 				int var2 = var1.getGroupId("scape main");
 				int var3 = var1.getFileId(var2, "");
 				MidiPlayer.method1125(var1, var2, var3, 255, false);
@@ -1074,8 +1074,8 @@ public class LoginScreen {
 		method747(arg0, var6 + 1, arg2, arg3, arg4);
 	}
 
-	public static void imethod9(Canvas var1, Js5Provider var2, Js5Provider var3) {
-		if (Js5TcpClient.field1507) {
+	public static void imethod9(Canvas var1, Js5Local var2, Js5Local var3) {
+		if (Js5Remote.field1507) {
 			return;
 		}
 		Pix2D.method2589();
@@ -1146,8 +1146,8 @@ public class LoginScreen {
 		} else {
 			MidiPlayer.imethod1(Client.midiSongJs5);
 		}
-		Js5TcpClient.sendLoginLogoutPacket(false);
-		Js5TcpClient.field1507 = true;
+		Js5Remote.sendLoginLogoutPacket(false);
+		Js5Remote.field1507 = true;
 		field146.method2667(0, 0);
 		field348.method2667(382, 0);
 		field131.method2747(382 - field131.field2513 / 2, 18);

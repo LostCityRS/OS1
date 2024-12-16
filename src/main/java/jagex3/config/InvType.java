@@ -5,7 +5,7 @@ import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Provider;
+import jagex3.js5.Js5Local;
 
 @ObfuscatedName("fp")
 public class InvType extends DoublyLinkable {
@@ -54,7 +54,7 @@ public class InvType extends DoublyLinkable {
 		return inv;
 	}
 
-	public static void init(Js5Provider config) {
+	public static void init(Js5Local config) {
 		configJs5 = config;
 	}
 }

@@ -7,7 +7,7 @@ import jagex3.datastruct.PreciseSleep;
 import jagex3.io.FileStream;
 
 @ObfuscatedName("cc")
-public class Js5ProviderThread implements Runnable {
+public class Js5RemoteThread implements Runnable {
 
 	@ObfuscatedName("cc.r")
 	public static LinkList field1208 = new LinkList();
@@ -22,11 +22,11 @@ public class Js5ProviderThread implements Runnable {
 	public static Object field1207 = new Object();
 
 	@ObfuscatedName("cu.m(ILap;Ldq;I)V")
-	public static void method1122(int arg0, FileStream arg1, Js5Provider arg2) {
+	public static void method1122(int arg0, FileStream arg1, Js5Local arg2) {
 		byte[] var3 = null;
 		LinkList var4 = field1208;
 		synchronized (field1208) {
-			for (Js5NetProviderRequest var5 = (Js5NetProviderRequest) field1208.head(); var5 != null; var5 = (Js5NetProviderRequest) field1208.next()) {
+			for (Js5LocalRequest var5 = (Js5LocalRequest) field1208.head(); var5 != null; var5 = (Js5LocalRequest) field1208.next()) {
 				if ((long) arg0 == var5.nodeId && var5.field1770 == arg1 && var5.field1772 == 0) {
 					var3 = var5.field1771;
 					break;
@@ -45,9 +45,9 @@ public class Js5ProviderThread implements Runnable {
 		try {
 			while (true) {
 				LinkList var1 = field1208;
-				Js5NetProviderRequest var2;
+				Js5LocalRequest var2;
 				synchronized (field1208) {
-					var2 = (Js5NetProviderRequest) field1208.head();
+					var2 = (Js5LocalRequest) field1208.head();
 				}
 				if (var2 == null) {
 					PreciseSleep.sleep(100L);

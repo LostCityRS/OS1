@@ -7,7 +7,7 @@ import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Provider;
+import jagex3.js5.Js5Local;
 
 @ObfuscatedName("eu")
 public class SpotAnimType extends DoublyLinkable {
@@ -169,7 +169,7 @@ public class SpotAnimType extends DoublyLinkable {
 		return var6;
 	}
 
-	public static void init(Js5Provider var36, Js5Provider var37) {
+	public static void init(Js5Local var36, Js5Local var37) {
 		configJs5 = var36;
 		modelJs5 = var37;
 	}

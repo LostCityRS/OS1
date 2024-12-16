@@ -2,7 +2,7 @@ package jagex3.midi;
 
 import deob.ObfuscatedName;
 import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Provider;
+import jagex3.js5.Js5Local;
 import jagex3.sound.Song;
 import jagex3.sound.SoundBank;
 
@@ -172,7 +172,7 @@ public class MidiPlayer {
 		return false;
 	}
 
-	public static void imethod1(Js5Provider var17) {
+	public static void imethod1(Js5Local var17) {
 		int var18 = var17.getGroupId("scape main");
 		int var19 = var17.getFileId(var18, "");
 		method95(2, var17, var18, var19, 255, false);
