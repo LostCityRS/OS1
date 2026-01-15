@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 
 // jag::oldscape::dash3d::Sprite (?)
 @ObfuscatedName("au")
-public class Location {
+public class Sprite {
 
 	@ObfuscatedName("au.r")
 	public int level;
@@ -22,7 +22,7 @@ public class Location {
 	public int z;
 
 	@ObfuscatedName("au.n")
-	public Entity model;
+	public ModelSource model;
 
 	@ObfuscatedName("au.j")
 	public int minSceneTileX;

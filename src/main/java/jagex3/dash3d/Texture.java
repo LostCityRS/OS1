@@ -86,9 +86,9 @@ public class Texture extends Linkable {
 		this.field1694 = new int[var6];
 		for (int var7 = 0; var7 < this.field1696.length; var7++) {
 			Pix8 var8 = SpriteDataProvider.method127(arg2, this.field1696[var7]);
-			var8.method2744();
-			byte[] var9 = var8.field2511;
-			int[] var10 = var8.field2512;
+			var8.trim();
+			byte[] var9 = var8.data;
+			int[] var10 = var8.bpal;
 			int var11 = this.field1691[var7];
 			if ((var11 & 0xFF000000) == 0x1000000) {
 			}
@@ -117,18 +117,18 @@ public class Texture extends Linkable {
 			if (var7 == 0) {
 			}
 			if (var18 == 0) {
-				if (var8.field2513 == arg1) {
+				if (var8.wi == arg1) {
 					for (int var19 = 0; var19 < var6; var19++) {
 						this.field1694[var19] = var10[var9[var19] & 0xFF];
 					}
-				} else if (var8.field2513 == 64 && arg1 == 128) {
+				} else if (var8.wi == 64 && arg1 == 128) {
 					int var20 = 0;
 					for (int var21 = 0; var21 < arg1; var21++) {
 						for (int var22 = 0; var22 < arg1; var22++) {
 							this.field1694[var20++] = var10[var9[(var21 >> 1 << 6) + (var22 >> 1)] & 0xFF];
 						}
 					}
-				} else if (var8.field2513 == 128 && arg1 == 64) {
+				} else if (var8.wi == 128 && arg1 == 64) {
 					int var23 = 0;
 					for (int var24 = 0; var24 < arg1; var24++) {
 						for (int var25 = 0; var25 < arg1; var25++) {

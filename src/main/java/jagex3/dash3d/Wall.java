@@ -22,10 +22,10 @@ public class Wall {
 	public int typeB;
 
 	@ObfuscatedName("at.n")
-	public Entity modelA;
+	public ModelSource modelA;
 
 	@ObfuscatedName("at.j")
-	public Entity modelB;
+	public ModelSource modelB;
 
 	@ObfuscatedName("at.z")
 	public int bitset = 0;

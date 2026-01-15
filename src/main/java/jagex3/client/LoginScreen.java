@@ -359,14 +359,14 @@ public class LoginScreen {
 			byte var2 = 20;
 			arg0.drawStringCenter(Locale.field1065, 382, 245 - var2, 16777215, -1);
 			int var3 = 253 - var2;
-			Pix2D.method2639(230, var3, 304, 34, 9179409);
-			Pix2D.method2639(231, var3 + 1, 302, 32, 0);
-			Pix2D.method2637(232, var3 + 2, progress * 3, 30, 9179409);
-			Pix2D.method2637(progress * 3 + 232, var3 + 2, 300 - progress * 3, 30, 0);
+			Pix2D.drawRect(230, var3, 304, 34, 9179409);
+			Pix2D.drawRect(231, var3 + 1, 302, 32, 0);
+			Pix2D.fillRect(232, var3 + 2, progress * 3, 30, 9179409);
+			Pix2D.fillRect(progress * 3 + 232, var3 + 2, 300 - progress * 3, 30, 0);
 			arg0.drawStringCenter(message, 382, 276 - var2, 16777215, -1);
 		}
 		if (Client.gameState == 20) {
-			field137.method2747(382 - field137.field2513 / 2, 271 - field137.field2514 / 2);
+			field137.plotSprite(382 - field137.wi / 2, 271 - field137.hi / 2);
 			short var4 = 211;
 			arg0.drawStringCenter(line1Message, 382, var4, 16776960, 0);
 			int var89 = var4 + 15;
@@ -389,17 +389,17 @@ public class LoginScreen {
 			var89 += 15;
 		}
 		if (Client.gameState == 10) {
-			field137.method2747(202, 171);
+			field137.plotSprite(202, 171);
 			if (field151 == 0) {
 				short var11 = 251;
 				arg0.drawStringCenter(Locale.field1074, 382, var11, 16776960, 0);
 				int var93 = var11 + 30;
 				short var12 = 302;
 				short var13 = 291;
-				field153.method2747(var12 - 73, var13 - 20);
+				field153.plotSprite(var12 - 73, var13 - 20);
 				arg0.method2824(Locale.field989, var12 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 				short var14 = 462;
-				field153.method2747(var14 - 73, var13 - 20);
+				field153.plotSprite(var14 - 73, var13 - 20);
 				arg0.method2824(Locale.field1076, var14 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 			} else if (field151 == 2) {
 				short var15 = 211;
@@ -424,10 +424,10 @@ public class LoginScreen {
 				var94 += 15;
 				short var22 = 302;
 				short var23 = 321;
-				field153.method2747(var22 - 73, var23 - 20);
+				field153.plotSprite(var22 - 73, var23 - 20);
 				arg0.drawStringCenter(Locale.field995, var22, var23 + 5, 16777215, 0);
 				short var24 = 462;
-				field153.method2747(var24 - 73, var23 - 20);
+				field153.plotSprite(var24 - 73, var23 - 20);
 				arg0.drawStringCenter(Locale.field1078, var24, var23 + 5, 16777215, 0);
 			} else if (field151 == 3) {
 				arg0.drawStringCenter(Locale.field1079, 382, 211, 16776960, 0);
@@ -442,7 +442,7 @@ public class LoginScreen {
 				int var101 = var100 + 15;
 				short var26 = 382;
 				short var27 = 321;
-				field153.method2747(var26 - 73, var27 - 20);
+				field153.plotSprite(var26 - 73, var27 - 20);
 				arg0.drawStringCenter(Locale.field1078, var26, var27 + 5, 16777215, 0);
 			}
 		}
@@ -576,9 +576,9 @@ public class LoginScreen {
 				field140[var58] = field827[var58];
 			}
 		}
-		Pix2D.setBounds(0, 9, 128, var55 + 7);
+		Pix2D.setClipping(0, 9, 128, var55 + 7);
 		field146.method2667(0, 0);
-		Pix2D.resetBounds();
+		Pix2D.resetClipping();
 		int var59 = 0;
 		int var60 = 6885;
 		for (int var61 = 1; var61 < var55 - 1; var61++) {
@@ -601,9 +601,9 @@ public class LoginScreen {
 			}
 			var60 += var63 + 765 - 128;
 		}
-		Pix2D.setBounds(637, 9, 765, var55 + 7);
+		Pix2D.setClipping(637, 9, 765, var55 + 7);
 		field348.method2667(382, 0);
-		Pix2D.resetBounds();
+		Pix2D.resetClipping();
 		int var70 = 0;
 		int var71 = 7546;
 		for (int var72 = 1; var72 < var55 - 1; var72++) {
@@ -624,7 +624,7 @@ public class LoginScreen {
 			var70 += 128 - var74;
 			var71 = 765 - var74 - var73 + var75;
 		}
-		field132[field142 ? 1 : 0].method2747(725, 463);
+		field132[field142 ? 1 : 0].plotSprite(725, 463);
 		if (Client.gameState > 5 && Client.lang == 0) {
 			if (field215 == null) {
 				field215 = SpriteDataProvider.method457(Client.spriteJs5, "sl_button", "");
@@ -633,7 +633,7 @@ public class LoginScreen {
 				short var83 = 463;
 				byte var84 = 100;
 				byte var85 = 35;
-				field215.method2747(var82, var83);
+				field215.plotSprite(var82, var83);
 				arg0.drawStringCenter(Locale.field1043 + " " + Client.worldid, var84 / 2 + var82, var85 / 2 + var83 - 2, 16777215, 0);
 				if (field35 == null) {
 					arg1.drawStringCenter(Locale.field1072, var84 / 2 + var82, var85 / 2 + var83 + 12, 16777215, 0);
@@ -682,11 +682,11 @@ public class LoginScreen {
 			return;
 		}
 		int var10 = 0;
-		for (int var11 = 0; var11 < arg0.field2514; var11++) {
-			for (int var12 = 0; var12 < arg0.field2513; var12++) {
-				if (arg0.field2511[var10++] != 0) {
-					int var13 = var12 + 16 + arg0.field2515;
-					int var14 = var11 + 16 + arg0.field2516;
+		for (int var11 = 0; var11 < arg0.hi; var11++) {
+			for (int var12 = 0; var12 < arg0.wi; var12++) {
+				if (arg0.data[var10++] != 0) {
+					int var13 = var12 + 16 + arg0.xof;
+					int var14 = var11 + 16 + arg0.yof;
 					int var15 = (var14 << 7) + var13;
 					field489[var15] = 0;
 				}
@@ -714,67 +714,67 @@ public class LoginScreen {
 		if (field811 == null) {
 			field811 = SpriteDataProvider.method541(Client.spriteJs5, "sl_stars", "");
 		}
-		Pix2D.method2637(0, 23, 765, 480, 0);
+		Pix2D.fillRect(0, 23, 765, 480, 0);
 		Pix2D.method2592(0, 0, 125, 23, 12425273, 9135624);
 		Pix2D.method2592(125, 0, 640, 23, 5197647, 2697513);
 		arg0.drawStringCenter(Locale.field1066, 62, 15, 0, -1);
 		if (field811 != null) {
-			field811[1].method2747(140, 1);
+			field811[1].plotSprite(140, 1);
 			arg1.drawString(Locale.field1085, 152, 10, 16777215, -1);
-			field811[0].method2747(140, 12);
+			field811[0].plotSprite(140, 12);
 			arg1.drawString(Locale.field916, 152, 21, 16777215, -1);
 		}
 		if (field681 != null) {
 			short var2 = 280;
 			if (field130[0] == 0 && field167[0] == 0) {
-				field681[2].method2747(var2, 4);
+				field681[2].plotSprite(var2, 4);
 			} else {
-				field681[0].method2747(var2, 4);
+				field681[0].plotSprite(var2, 4);
 			}
 			if (field130[0] == 0 && field167[0] == 1) {
-				field681[3].method2747(var2 + 15, 4);
+				field681[3].plotSprite(var2 + 15, 4);
 			} else {
-				field681[1].method2747(var2 + 15, 4);
+				field681[1].plotSprite(var2 + 15, 4);
 			}
 			arg0.drawString(Locale.field1087, var2 + 32, 17, 16777215, -1);
 			short var3 = 390;
 			if (field130[0] == 1 && field167[0] == 0) {
-				field681[2].method2747(var3, 4);
+				field681[2].plotSprite(var3, 4);
 			} else {
-				field681[0].method2747(var3, 4);
+				field681[0].plotSprite(var3, 4);
 			}
 			if (field130[0] == 1 && field167[0] == 1) {
-				field681[3].method2747(var3 + 15, 4);
+				field681[3].plotSprite(var3 + 15, 4);
 			} else {
-				field681[1].method2747(var3 + 15, 4);
+				field681[1].plotSprite(var3 + 15, 4);
 			}
 			arg0.drawString(Locale.field894, var3 + 32, 17, 16777215, -1);
 			short var4 = 500;
 			if (field130[0] == 2 && field167[0] == 0) {
-				field681[2].method2747(var4, 4);
+				field681[2].plotSprite(var4, 4);
 			} else {
-				field681[0].method2747(var4, 4);
+				field681[0].plotSprite(var4, 4);
 			}
 			if (field130[0] == 2 && field167[0] == 1) {
-				field681[3].method2747(var4 + 15, 4);
+				field681[3].plotSprite(var4 + 15, 4);
 			} else {
-				field681[1].method2747(var4 + 15, 4);
+				field681[1].plotSprite(var4 + 15, 4);
 			}
 			arg0.drawString(Locale.field1091, var4 + 32, 17, 16777215, -1);
 			short var5 = 610;
 			if (field130[0] == 3 && field167[0] == 0) {
-				field681[2].method2747(var5, 4);
+				field681[2].plotSprite(var5, 4);
 			} else {
-				field681[0].method2747(var5, 4);
+				field681[0].plotSprite(var5, 4);
 			}
 			if (field130[0] == 3 && field167[0] == 1) {
-				field681[3].method2747(var5 + 15, 4);
+				field681[3].plotSprite(var5 + 15, 4);
 			} else {
-				field681[1].method2747(var5 + 15, 4);
+				field681[1].plotSprite(var5 + 15, 4);
 			}
 			arg0.drawString(Locale.field1090, var5 + 32, 17, 16777215, -1);
 		}
-		Pix2D.method2637(708, 4, 50, 16, 0);
+		Pix2D.fillRect(708, 4, 50, 16, 0);
 		arg1.drawStringCenter(Locale.field1078, 733, 16, 16777215, -1);
 		field168 = -1;
 		if (field1530 != null) {
@@ -828,7 +828,7 @@ public class LoginScreen {
 					field1530[var20.members ? 1 : 0].method2667(var17, var16);
 				}
 				if (field2612 != null) {
-					field2612[var20.country + (var20.members ? 8 : 0)].method2747(var17 + 29, var16);
+					field2612[var20.country + (var20.members ? 8 : 0)].plotSprite(var17 + 29, var16);
 				}
 				arg0.drawStringCenter(Integer.toString(var20.id), var17 + 15, var7 / 2 + var16 + 5, 0, -1);
 				arg1.drawStringCenter(var22, var17 + 60, var7 / 2 + var16 + 5, 0xfffffff, -1);
@@ -894,7 +894,7 @@ public class LoginScreen {
 			field160 = false;
 			field146.method2667(0, 0);
 			field348.method2667(382, 0);
-			field131.method2747(382 - field131.field2513 / 2, 18);
+			field131.plotSprite(382 - field131.wi / 2, 18);
 			return;
 		}
 		if (field168 == -1) {
@@ -910,7 +910,7 @@ public class LoginScreen {
 			field160 = false;
 			field146.method2667(0, 0);
 			field348.method2667(382, 0);
-			field131.method2747(382 - field131.field2513 / 2, 18);
+			field131.plotSprite(382 - field131.wi / 2, 18);
 			return;
 		}
 		String var6 = "";
@@ -1078,7 +1078,7 @@ public class LoginScreen {
 		if (Js5Remote.field1507) {
 			return;
 		}
-		Pix2D.method2589();
+		Pix2D.cls();
 		byte[] var4 = var2.getFile("title.jpg", "");
 		field146 = new Pix32(var4, var1);
 		field348 = field146.method2719();
@@ -1150,6 +1150,6 @@ public class LoginScreen {
 		Js5Remote.field1507 = true;
 		field146.method2667(0, 0);
 		field348.method2667(382, 0);
-		field131.method2747(382 - field131.field2513 / 2, 18);
+		field131.plotSprite(382 - field131.wi / 2, 18);
 	}
 }

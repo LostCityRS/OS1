@@ -7,92 +7,92 @@ import deob.ObfuscatedName;
 public class Pix8 extends Pix2D {
 
 	@ObfuscatedName("ft.u")
-	public byte[] field2511;
+	public byte[] data;
 
 	@ObfuscatedName("ft.v")
-	public int[] field2512;
+	public int[] bpal;
 
 	@ObfuscatedName("ft.w")
-	public int field2513;
+	public int wi;
 
 	@ObfuscatedName("ft.e")
-	public int field2514;
+	public int hi;
 
 	@ObfuscatedName("ft.b")
-	public int field2515;
+	public int xof;
 
 	@ObfuscatedName("ft.y")
-	public int field2516;
+	public int yof;
 
 	@ObfuscatedName("ft.t")
-	public int field2517;
+	public int owi;
 
 	@ObfuscatedName("ft.f")
-	public int field2518;
+	public int ohi;
 
 	@ObfuscatedName("ft.bm()V")
-	public void method2744() {
-		if (this.field2517 == this.field2513 && this.field2518 == this.field2514) {
+	public void trim() {
+		if (this.owi == this.wi && this.ohi == this.hi) {
 			return;
 		}
-		byte[] var1 = new byte[this.field2518 * this.field2517];
+		byte[] var1 = new byte[this.ohi * this.owi];
 		int var2 = 0;
-		for (int var3 = 0; var3 < this.field2514; var3++) {
-			for (int var4 = 0; var4 < this.field2513; var4++) {
-				var1[(this.field2516 + var3) * this.field2517 + this.field2515 + var4] = this.field2511[var2++];
+		for (int var3 = 0; var3 < this.hi; var3++) {
+			for (int var4 = 0; var4 < this.wi; var4++) {
+				var1[(this.yof + var3) * this.owi + this.xof + var4] = this.data[var2++];
 			}
 		}
-		this.field2511 = var1;
-		this.field2513 = this.field2517;
-		this.field2514 = this.field2518;
-		this.field2515 = 0;
-		this.field2516 = 0;
+		this.data = var1;
+		this.wi = this.owi;
+		this.hi = this.ohi;
+		this.xof = 0;
+		this.yof = 0;
 	}
 
 	@ObfuscatedName("ft.bn(III)V")
-	public void method2751(int arg0, int arg1, int arg2) {
-		for (int var4 = 0; var4 < this.field2512.length; var4++) {
-			int var5 = this.field2512[var4] >> 16 & 0xFF;
+	public void rgbAdjust(int arg0, int arg1, int arg2) {
+		for (int var4 = 0; var4 < this.bpal.length; var4++) {
+			int var5 = this.bpal[var4] >> 16 & 0xFF;
 			int var6 = arg0 + var5;
 			if (var6 < 0) {
 				var6 = 0;
 			} else if (var6 > 255) {
 				var6 = 255;
 			}
-			int var7 = this.field2512[var4] >> 8 & 0xFF;
+			int var7 = this.bpal[var4] >> 8 & 0xFF;
 			int var8 = arg1 + var7;
 			if (var8 < 0) {
 				var8 = 0;
 			} else if (var8 > 255) {
 				var8 = 255;
 			}
-			int var9 = this.field2512[var4] & 0xFF;
+			int var9 = this.bpal[var4] & 0xFF;
 			int var10 = arg2 + var9;
 			if (var10 < 0) {
 				var10 = 0;
 			} else if (var10 > 255) {
 				var10 = 255;
 			}
-			this.field2512[var4] = (var6 << 16) + (var8 << 8) + var10;
+			this.bpal[var4] = (var6 << 16) + (var8 << 8) + var10;
 		}
 	}
 
 	@ObfuscatedName("ft.be(II)V")
-	public void method2747(int arg0, int arg1) {
-		int var3 = this.field2515 + arg0;
-		int var4 = this.field2516 + arg1;
-		int var5 = Pix2D.width2d * var4 + var3;
+	public void plotSprite(int arg0, int arg1) {
+		int var3 = this.xof + arg0;
+		int var4 = this.yof + arg1;
+		int var5 = Pix2D.width * var4 + var3;
 		int var6 = 0;
-		int var7 = this.field2514;
-		int var8 = this.field2513;
-		int var9 = Pix2D.width2d - var8;
+		int var7 = this.hi;
+		int var8 = this.wi;
+		int var9 = Pix2D.width - var8;
 		int var10 = 0;
 		if (var4 < top) {
 			int var11 = top - var4;
 			var7 -= var11;
 			var4 = top;
 			var6 += var8 * var11;
-			var5 += Pix2D.width2d * var11;
+			var5 += Pix2D.width * var11;
 		}
 		if (var4 + var7 > bottom) {
 			var7 -= var4 + var7 - bottom;
@@ -113,12 +113,12 @@ public class Pix8 extends Pix2D {
 			var9 += var13;
 		}
 		if (var8 > 0 && var7 > 0) {
-			method2745(Pix2D.data, this.field2511, this.field2512, var6, var5, var8, var7, var9, var10);
+			plot(Pix2D.pixels, this.data, this.bpal, var6, var5, var8, var7, var9, var10);
 		}
 	}
 
 	@ObfuscatedName("ft.bp([I[B[IIIIIII)V")
-	public static void method2745(int[] arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static void plot(int[] arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		int var9 = -(arg5 >> 2);
 		int var10 = -(arg5 & 0x3);
 		for (int var11 = -arg6; var11 < 0; var11++) {

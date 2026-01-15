@@ -28,14 +28,14 @@ public class Decor {
 	public int z;
 
 	@ObfuscatedName("bh.z")
-	public Entity model;
+	public ModelSource model;
 
 	@ObfuscatedName("bh.g")
-	public Entity field713;
+	public ModelSource field713;
 
 	@ObfuscatedName("bh.q")
-	public int bitset = 0;
+	public int typecode = 0;
 
 	@ObfuscatedName("bh.i")
-	public int info = 0;
+	public int typecode2 = 0;
 }

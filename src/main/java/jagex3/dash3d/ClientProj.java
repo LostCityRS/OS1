@@ -5,7 +5,7 @@ import jagex3.config.SeqType;
 import jagex3.config.SpotAnimType;
 
 @ObfuscatedName("fh")
-public class ProjAnimEntity extends Entity {
+public class ClientProj extends ModelSource {
 
 	@ObfuscatedName("fh.j")
 	public int field2568;
@@ -82,7 +82,7 @@ public class ProjAnimEntity extends Entity {
 	@ObfuscatedName("fh.am")
 	public int field2590 = 0;
 
-	public ProjAnimEntity(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
+	public ClientProj(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
 		this.field2568 = arg0;
 		this.level = arg1;
 		this.field2574 = arg2;
@@ -152,9 +152,9 @@ public class ProjAnimEntity extends Entity {
 	}
 
 	@ObfuscatedName("fh.g(I)Lfo;")
-	public final ModelUnlit getModel() {
+	public final ModelLit getTempModel() {
 		SpotAnimType var1 = SpotAnimType.get(this.field2568);
-		ModelUnlit var2 = var1.method2455(this.field2589);
+		ModelLit var2 = var1.method2455(this.field2589);
 		if (var2 == null) {
 			return null;
 		} else {

@@ -10,7 +10,7 @@ public class WorldRegion {
 	}
 
 	@ObfuscatedName("bf.r(IIIIIIB)I")
-	public static int method837(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public static int rotateX(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if ((arg5 & 0x1) == 1) {
 			int var6 = arg3;
 			arg3 = arg4;
@@ -29,7 +29,7 @@ public class WorldRegion {
 	}
 
 	@ObfuscatedName("bg.d(IIIIIII)I")
-	public static int method783(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public static int rotateZ(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if ((arg5 & 0x1) == 1) {
 			int var6 = arg3;
 			arg3 = arg4;

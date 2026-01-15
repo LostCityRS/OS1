@@ -47,14 +47,14 @@ public class SpriteDataProvider {
 			Pix8[] var6 = new Pix8[field528];
 			for (int var7 = 0; var7 < field528; var7++) {
 				Pix8 var8 = var6[var7] = new Pix8();
-				var8.field2517 = field533;
-				var8.field2518 = field530;
-				var8.field2515 = field531[var7];
-				var8.field2516 = field532[var7];
-				var8.field2513 = field41[var7];
-				var8.field2514 = field1151[var7];
-				var8.field2512 = field529;
-				var8.field2511 = field863[var7];
+				var8.owi = field533;
+				var8.ohi = field530;
+				var8.xof = field531[var7];
+				var8.yof = field532[var7];
+				var8.wi = field41[var7];
+				var8.hi = field1151[var7];
+				var8.bpal = field529;
+				var8.data = field863[var7];
 			}
 			field531 = null;
 			field532 = null;
@@ -91,17 +91,17 @@ public class SpriteDataProvider {
 			Pix32[] var6 = new Pix32[field528];
 			for (int var7 = 0; var7 < field528; var7++) {
 				Pix32 var8 = var6[var7] = new Pix32();
-				var8.field2504 = field533;
-				var8.field2505 = field530;
-				var8.field2502 = field531[var7];
-				var8.field2499 = field532[var7];
-				var8.field2508 = field41[var7];
-				var8.field2501 = field1151[var7];
-				int var9 = var8.field2508 * var8.field2501;
+				var8.owi = field533;
+				var8.ohi = field530;
+				var8.yof = field531[var7];
+				var8.xof = field532[var7];
+				var8.wi = field41[var7];
+				var8.hi = field1151[var7];
+				int var9 = var8.wi * var8.hi;
 				byte[] var10 = field863[var7];
-				var8.field2506 = new int[var9];
+				var8.data = new int[var9];
 				for (int var11 = 0; var11 < var9; var11++) {
-					var8.field2506[var11] = field529[var10[var11] & 0xFF];
+					var8.data[var11] = field529[var10[var11] & 0xFF];
 				}
 			}
 			field531 = null;
@@ -151,14 +151,14 @@ public class SpriteDataProvider {
 	@ObfuscatedName("ao.j(I)Lft;")
 	public static Pix8 method556() {
 		Pix8 var0 = new Pix8();
-		var0.field2517 = field533;
-		var0.field2518 = field530;
-		var0.field2515 = field531[0];
-		var0.field2516 = field532[0];
-		var0.field2513 = field41[0];
-		var0.field2514 = field1151[0];
-		var0.field2512 = field529;
-		var0.field2511 = field863[0];
+		var0.owi = field533;
+		var0.ohi = field530;
+		var0.xof = field531[0];
+		var0.yof = field532[0];
+		var0.wi = field41[0];
+		var0.hi = field1151[0];
+		var0.bpal = field529;
+		var0.data = field863[0];
 		field531 = null;
 		field532 = null;
 		field41 = null;
@@ -171,17 +171,17 @@ public class SpriteDataProvider {
 	@ObfuscatedName("bi.z(I)Lfq;")
 	public static Pix32 method759() {
 		Pix32 var0 = new Pix32();
-		var0.field2504 = field533;
-		var0.field2505 = field530;
-		var0.field2502 = field531[0];
-		var0.field2499 = field532[0];
-		var0.field2508 = field41[0];
-		var0.field2501 = field1151[0];
-		int var1 = var0.field2508 * var0.field2501;
+		var0.owi = field533;
+		var0.ohi = field530;
+		var0.yof = field531[0];
+		var0.xof = field532[0];
+		var0.wi = field41[0];
+		var0.hi = field1151[0];
+		int var1 = var0.wi * var0.hi;
 		byte[] var2 = field863[0];
-		var0.field2506 = new int[var1];
+		var0.data = new int[var1];
 		for (int var3 = 0; var3 < var1; var3++) {
-			var0.field2506[var3] = field529[var2[var3] & 0xFF];
+			var0.data[var3] = field529[var2[var3] & 0xFF];
 		}
 		field531 = null;
 		field532 = null;

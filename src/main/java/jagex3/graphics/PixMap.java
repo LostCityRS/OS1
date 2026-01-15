@@ -21,7 +21,7 @@ public abstract class PixMap {
 
 	@ObfuscatedName("ab.d(I)V")
 	public final void bind() {
-		Pix2D.bind(this.data, this.width, this.height);
+		Pix2D.setPixels(this.data, this.width, this.height);
 	}
 
 	@ObfuscatedName("ab.l(Ljava/awt/Graphics;III)V")

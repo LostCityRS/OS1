@@ -2,7 +2,7 @@ package jagex3.config;
 
 import deob.ObfuscatedName;
 import jagex3.dash3d.AnimFrameSet;
-import jagex3.dash3d.ModelUnlit;
+import jagex3.dash3d.ModelLit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
@@ -180,28 +180,28 @@ public class SeqType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eo.u(Lfo;II)Lfo;")
-	public ModelUnlit method2436(ModelUnlit arg0, int arg1) {
+	public ModelLit method2436(ModelLit arg0, int arg1) {
 		int var3 = this.frames[arg1];
 		AnimFrameSet var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
 			return arg0.method2999(true);
 		} else {
-			ModelUnlit var6 = arg0.method2999(!var4.method2652(var5));
+			ModelLit var6 = arg0.method2999(!var4.method2652(var5));
 			var6.method3005(var4, var5);
 			return var6;
 		}
 	}
 
 	@ObfuscatedName("eo.v(Lfo;IIB)Lfo;")
-	public ModelUnlit method2419(ModelUnlit arg0, int arg1, int arg2) {
+	public ModelLit method2419(ModelLit arg0, int arg1, int arg2) {
 		int var4 = this.frames[arg1];
 		AnimFrameSet var5 = method760(var4 >> 16);
 		int var6 = var4 & 0xFFFF;
 		if (var5 == null) {
 			return arg0.method2999(true);
 		}
-		ModelUnlit var7 = arg0.method2999(!var5.method2652(var6));
+		ModelLit var7 = arg0.method2999(!var5.method2652(var6));
 		int var8 = arg2 & 0x3;
 		if (var8 == 1) {
 			var7.method3010();
@@ -222,21 +222,21 @@ public class SeqType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eo.w(Lfo;II)Lfo;")
-	public ModelUnlit method2439(ModelUnlit arg0, int arg1) {
+	public ModelLit method2439(ModelLit arg0, int arg1) {
 		int var3 = this.frames[arg1];
 		AnimFrameSet var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
 			return arg0.method3040(true);
 		} else {
-			ModelUnlit var6 = arg0.method3040(!var4.method2652(var5));
+			ModelLit var6 = arg0.method3040(!var4.method2652(var5));
 			var6.method3005(var4, var5);
 			return var6;
 		}
 	}
 
 	@ObfuscatedName("eo.e(Lfo;ILeo;II)Lfo;")
-	public ModelUnlit method2421(ModelUnlit arg0, int arg1, SeqType arg2, int arg3) {
+	public ModelLit method2421(ModelLit arg0, int arg1, SeqType arg2, int arg3) {
 		int var5 = this.frames[arg1];
 		AnimFrameSet var6 = method760(var5 >> 16);
 		int var7 = var5 & 0xFFFF;
@@ -247,18 +247,18 @@ public class SeqType extends DoublyLinkable {
 		AnimFrameSet var9 = method760(var8 >> 16);
 		int var10 = var8 & 0xFFFF;
 		if (var9 == null) {
-			ModelUnlit var11 = arg0.method2999(!var6.method2652(var7));
+			ModelLit var11 = arg0.method2999(!var6.method2652(var7));
 			var11.method3005(var6, var7);
 			return var11;
 		} else {
-			ModelUnlit var12 = arg0.method2999(!var6.method2652(var7) & !var9.method2652(var10));
+			ModelLit var12 = arg0.method2999(!var6.method2652(var7) & !var9.method2652(var10));
 			var12.method3006(var6, var7, var9, var10, this.walkmerge);
 			return var12;
 		}
 	}
 
 	@ObfuscatedName("eo.b(Lfo;IB)Lfo;")
-	public ModelUnlit method2430(ModelUnlit arg0, int arg1) {
+	public ModelLit method2430(ModelLit arg0, int arg1) {
 		int var3 = this.frames[arg1];
 		AnimFrameSet var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
@@ -273,11 +273,11 @@ public class SeqType extends DoublyLinkable {
 			var7 = var8 & 0xFFFF;
 		}
 		if (var6 == null || var7 == 65535) {
-			ModelUnlit var10 = arg0.method2999(!var4.method2652(var5));
+			ModelLit var10 = arg0.method2999(!var4.method2652(var5));
 			var10.method3005(var4, var5);
 			return var10;
 		} else {
-			ModelUnlit var9 = arg0.method2999(!var4.method2652(var5) & !var6.method2652(var7));
+			ModelLit var9 = arg0.method2999(!var4.method2652(var5) & !var6.method2652(var7));
 			var9.method3005(var4, var5);
 			var9.method3005(var6, var7);
 			return var9;

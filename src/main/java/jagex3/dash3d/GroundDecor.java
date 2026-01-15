@@ -19,7 +19,7 @@ public class GroundDecor {
 	public int bitset;
 
 	@ObfuscatedName("af.c")
-	public Entity model;
+	public ModelSource model;
 
 	@ObfuscatedName("af.n")
 	public int info;

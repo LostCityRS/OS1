@@ -1,323 +1,1075 @@
 package jagex3.dash3d;
 
 import deob.ObfuscatedName;
+import jagex3.io.Packet;
+import jagex3.js5.Js5Index;
 
-// jag::oldscape::dash3d::ModeUnlit (?)
-@ObfuscatedName("fo")
-public class ModelUnlit extends Entity {
+@ObfuscatedName("fw")
+public class ModelUnlit extends ModelSource {
 
-	@ObfuscatedName("fo.j")
-	public static ModelUnlit field2758 = new ModelUnlit();
-
-	@ObfuscatedName("fo.z")
-	public static byte[] field2770 = new byte[1];
-
-	@ObfuscatedName("fo.g")
-	public static ModelUnlit field2720 = new ModelUnlit();
-
-	@ObfuscatedName("fo.q")
-	public static byte[] field2725 = new byte[1];
-
-	@ObfuscatedName("fo.i")
+	@ObfuscatedName("fw.j")
 	public int vertexCount = 0;
 
-	@ObfuscatedName("fo.s")
+	@ObfuscatedName("fw.z")
 	public int[] vertexX;
 
-	@ObfuscatedName("fo.u")
+	@ObfuscatedName("fw.g")
 	public int[] vertexY;
 
-	@ObfuscatedName("fo.v")
+	@ObfuscatedName("fw.q")
 	public int[] vertexZ;
 
-	@ObfuscatedName("fo.w")
-	public int field2780 = 0;
+	@ObfuscatedName("fw.i")
+	public int faceCount = 0;
 
-	@ObfuscatedName("fo.e")
+	@ObfuscatedName("fw.s")
 	public int[] faceVertexA;
 
-	@ObfuscatedName("fo.b")
+	@ObfuscatedName("fw.u")
 	public int[] faceVertexB;
 
-	@ObfuscatedName("fo.y")
+	@ObfuscatedName("fw.v")
 	public int[] faceVertexC;
 
-	@ObfuscatedName("fo.t")
-	public int[] faceColorA;
+	@ObfuscatedName("fw.w")
+	public byte[] field2679;
 
-	@ObfuscatedName("fo.f")
-	public int[] faceColorB;
-
-	@ObfuscatedName("fo.k")
-	public int[] faceColorC;
-
-	@ObfuscatedName("fo.o")
+	@ObfuscatedName("fw.e")
 	public byte[] facePriority;
 
-	@ObfuscatedName("fo.a")
+	@ObfuscatedName("fw.b")
 	public byte[] faceAlpha;
 
-	@ObfuscatedName("fo.h")
-	public byte[] field2735;
+	@ObfuscatedName("fw.y")
+	public byte[] field2682;
 
-	@ObfuscatedName("fo.x")
-	public short[] field2718;
+	@ObfuscatedName("fw.t")
+	public short[] faceColour;
 
-	@ObfuscatedName("fo.p")
-	public byte field2737 = 0;
+	@ObfuscatedName("fw.f")
+	public short[] field2705;
 
-	@ObfuscatedName("fo.ad")
-	public int field2738 = 0;
+	@ObfuscatedName("fw.k")
+	public byte priority = 0;
 
-	@ObfuscatedName("fo.ac")
-	public int[] field2739;
+	@ObfuscatedName("fw.o")
+	public int faceTextureCount;
 
-	@ObfuscatedName("fo.aa")
-	public int[] field2774;
+	@ObfuscatedName("fw.a")
+	public byte[] field2687;
 
-	@ObfuscatedName("fo.as")
-	public int[] field2765;
+	@ObfuscatedName("fw.h")
+	public short[] faceTextureP;
 
-	@ObfuscatedName("fo.am")
-	public int[][] field2742;
+	@ObfuscatedName("fw.x")
+	public short[] faceTextureM;
 
-	@ObfuscatedName("fo.ap")
-	public int[][] field2743;
+	@ObfuscatedName("fw.p")
+	public short[] faceTextureN;
 
-	@ObfuscatedName("fo.av")
-	public boolean picking = false;
+	@ObfuscatedName("fw.ad")
+	public short[] field2691;
 
-	@ObfuscatedName("fo.ak")
-	public int field2745;
+	@ObfuscatedName("fw.ac")
+	public short[] field2692;
 
-	@ObfuscatedName("fo.az")
-	public int field2746;
+	@ObfuscatedName("fw.aa")
+	public short[] field2693;
 
-	@ObfuscatedName("fo.an")
-	public int field2747;
+	@ObfuscatedName("fw.as")
+	public short[] field2694;
 
-	@ObfuscatedName("fo.ah")
-	public int maxDepth;
+	@ObfuscatedName("fw.am")
+	public short[] field2695;
 
-	@ObfuscatedName("fo.ay")
-	public int minDepth;
+	@ObfuscatedName("fw.ap")
+	public short[] field2696;
 
-	@ObfuscatedName("fo.ab")
-	public static boolean[] faceClippedX = new boolean[4096];
+	@ObfuscatedName("fw.av")
+	public byte[] field2697;
 
-	@ObfuscatedName("fo.ao")
-	public static boolean[] faceNearClipped = new boolean[4096];
+	@ObfuscatedName("fw.ak")
+	public int[] vertexLabel;
 
-	@ObfuscatedName("fo.ag")
-	public static int[] vertexScreenX = new int[4096];
+	@ObfuscatedName("fw.az")
+	public int[] faceLabel;
 
-	@ObfuscatedName("fo.ar")
-	public static int[] vertexScreenY = new int[4096];
+	@ObfuscatedName("fw.an")
+	public int[][] field2700;
 
-	@ObfuscatedName("fo.aq")
-	public static int[] vertexScreenZ = new int[4096];
+	@ObfuscatedName("fw.ah")
+	public int[][] field2701;
 
-	@ObfuscatedName("fo.at")
-	public static int[] vertexViewSpaceX = new int[4096];
+	@ObfuscatedName("fw.ay")
+	public FaceNormal[] faceNormal;
 
-	@ObfuscatedName("fo.ae")
-	public static int[] vertexViewSpaceY = new int[4096];
+	@ObfuscatedName("fw.al")
+	public VertexNormal[] vertexNormal;
 
-	@ObfuscatedName("fo.au")
-	public static int[] vertexViewSpaceZ = new int[4096];
+	@ObfuscatedName("fw.ab")
+	public VertexNormal[] field2685;
 
-	@ObfuscatedName("fo.ai")
-	public static int[] tmpDepthFaceCount = new int[1600];
+	@ObfuscatedName("fw.ao")
+	public short field2708;
 
-	@ObfuscatedName("fo.aj")
-	public static int[][] tmpDepthFaces = new int[1600][512];
+	@ObfuscatedName("fw.ag")
+	public short field2706;
 
-	@ObfuscatedName("fo.aw")
-	public static int[] tmpPriorityFaceCount = new int[12];
+	@ObfuscatedName("fw.ar")
+	public boolean boundsCalculated = false;
 
-	@ObfuscatedName("fo.af")
-	public static int[][] tmpPriorityFaces = new int[12][2000];
+	@ObfuscatedName("fw.aq")
+	public int radius;
 
-	@ObfuscatedName("fo.bh")
-	public static int[] tmpPriority10FaceDepth = new int[2000];
+	@ObfuscatedName("fw.at")
+	public int minX;
 
-	@ObfuscatedName("fo.bi")
-	public static int[] tmpPriority11FaceDepth = new int[2000];
+	@ObfuscatedName("fw.ae")
+	public int maxX;
 
-	@ObfuscatedName("fo.bs")
-	public static int[] tmpPriorityDepthSum = new int[12];
+	@ObfuscatedName("fw.au")
+	public int minZ;
 
-	@ObfuscatedName("fo.bk")
-	public static int[] clippedX = new int[10];
+	@ObfuscatedName("fw.ax")
+	public int maxZ;
 
-	@ObfuscatedName("fo.bv")
-	public static int[] clippedY = new int[10];
+	@ObfuscatedName("fw.ai")
+	public static int[] field2683 = new int[10000];
 
-	@ObfuscatedName("fo.bg")
-	public static int[] clippedColor = new int[10];
+	@ObfuscatedName("fw.aj")
+	public static int[] field2714 = new int[10000];
 
-	@ObfuscatedName("fo.bl")
-	public static int baseX;
+	@ObfuscatedName("fw.aw")
+	public static int field2715 = 0;
 
-	@ObfuscatedName("fo.bt")
-	public static int baseY;
-
-	@ObfuscatedName("fo.bw")
-	public static int baseZ;
-
-	// jag::oldscape::dash3d::MousePickingHelper::m_mouseCheck
-	@ObfuscatedName("fo.by")
-	public static boolean mouseCheck = false;
-
-	// jag::oldscape::dash3d::MousePickingHelper::m_mouseX
-	@ObfuscatedName("fo.bx")
-	public static int mouseX = 0;
-
-	// jag::oldscape::dash3d::MousePickingHelper::m_mouseY
-	@ObfuscatedName("fo.bf")
-	public static int mouseY = 0;
-
-	// jag::oldscape::dash3d::MousePickingHelper::m_pickedEntityCount
-	@ObfuscatedName("fo.bu")
-	public static int pickedEntityCount = 0;
-
-	// jag::oldscape::dash3d::MousePickingHelper::m_pickedEntityTypecode
-	@ObfuscatedName("fo.bo")
-	public static int[] pickedEntityTypecode = new int[1000];
-
-	@ObfuscatedName("fo.bq")
+	@ObfuscatedName("fw.af")
 	public static int[] sinTable = Pix3D.sinTable;
 
-	@ObfuscatedName("fo.bj")
+	@ObfuscatedName("fw.bh")
 	public static int[] cosTable = Pix3D.cosTable;
-
-	@ObfuscatedName("fo.bz")
-	public static int[] palette = Pix3D.palette;
-
-	@ObfuscatedName("fo.bm")
-	public static int[] divTable2 = Pix3D.divTable2;
 
 	public ModelUnlit() {
 	}
 
-	public ModelUnlit(ModelUnlit[] models, int count) {
+	@ObfuscatedName("fw.b(Lch;II)Lfw;")
+	public static ModelUnlit tryGet(Js5Index arg0, int arg1, int arg2) {
+		byte[] var3 = arg0.getFile(arg1, arg2);
+		return var3 == null ? null : new ModelUnlit(var3);
+	}
+
+	public ModelUnlit(byte[] src) {
+		if (src[src.length - 1] == -1 && src[src.length - 2] == -1) {
+			this.loadOb3(src);
+		} else {
+			this.loadOb2(src);
+		}
+	}
+
+	@ObfuscatedName("fw.y([B)V")
+	public void loadOb3(byte[] src) {
+		Packet var1 = new Packet(src);
+		Packet var3 = new Packet(src);
+		Packet var4 = new Packet(src);
+		Packet var5 = new Packet(src);
+		Packet var6 = new Packet(src);
+		Packet var7 = new Packet(src);
+		Packet var8 = new Packet(src);
+
+		var1.pos = src.length - 23;
+		int var9 = var1.g2();
+		int var10 = var1.g2();
+		int var11 = var1.g1();
+		int var12 = var1.g1();
+		int hasPriorities = var1.g1();
+		int var14 = var1.g1();
+		int var15 = var1.g1();
+		int var16 = var1.g1();
+		int var17 = var1.g1();
+		int var18 = var1.g2();
+		int var19 = var1.g2();
+		int var20 = var1.g2();
+		int var21 = var1.g2();
+		int var22 = var1.g2();
+
+		int var23 = 0;
+		int var24 = 0;
+		int var25 = 0;
+		if (var11 > 0) {
+			this.field2687 = new byte[var11];
+			var1.pos = 0;
+
+			for (int var26 = 0; var26 < var11; var26++) {
+				byte var27 = this.field2687[var26] = var1.g1b();
+				if (var27 == 0) {
+					var23++;
+				}
+				if (var27 >= 1 && var27 <= 3) {
+					var24++;
+				}
+				if (var27 == 2) {
+					var25++;
+				}
+			}
+		}
+
+		int var30 = var9 + var11;
+		int var31 = var30;
+		if (var12 == 1) {
+			var30 += var10;
+		}
+
+		int var33 = var10 + var30;
+		int var34 = var33;
+		if (hasPriorities == 255) {
+			var33 += var10;
+		}
+
+		int var35 = var33;
+		if (var15 == 1) {
+			var33 += var10;
+		}
+
+		int var36 = var33;
+		if (var17 == 1) {
+			var33 += var9;
+		}
+
+		int var37 = var33;
+		if (var14 == 1) {
+			var33 += var10;
+		}
+
+		int var39 = var21 + var33;
+		int var40 = var39;
+		if (var16 == 1) {
+			var39 += var10 * 2;
+		}
+
+		int var42 = var22 + var39;
+		int var44 = var10 * 2 + var42;
+		int var46 = var18 + var44;
+		int var48 = var19 + var46;
+		int var50 = var20 + var48;
+		int var52 = var23 * 6 + var50;
+		int var54 = var24 * 6 + var52;
+		int var56 = var24 * 6 + var54;
+		int var58 = var24 * 2 + var56;
+		int var60 = var24 + var58;
+		int var62 = var24 * 2 + var25 * 2 + var60;
+
+		this.vertexCount = var9;
+		this.faceCount = var10;
+		this.faceTextureCount = var11;
+		this.vertexX = new int[var9];
+		this.vertexY = new int[var9];
+		this.vertexZ = new int[var9];
+		this.faceVertexA = new int[var10];
+		this.faceVertexB = new int[var10];
+		this.faceVertexC = new int[var10];
+
+		if (var17 == 1) {
+			this.vertexLabel = new int[var9];
+		}
+
+		if (var12 == 1) {
+			this.field2679 = new byte[var10];
+		}
+
+		if (hasPriorities == 255) {
+			this.facePriority = new byte[var10];
+		} else {
+			this.priority = (byte) hasPriorities;
+		}
+
+		if (var14 == 1) {
+			this.faceAlpha = new byte[var10];
+		}
+
+		if (var15 == 1) {
+			this.faceLabel = new int[var10];
+		}
+
+		if (var16 == 1) {
+			this.field2705 = new short[var10];
+		}
+
+		if (var16 == 1 && var11 > 0) {
+			this.field2682 = new byte[var10];
+		}
+
+		this.faceColour = new short[var10];
+		if (var11 > 0) {
+			this.faceTextureP = new short[var11];
+			this.faceTextureM = new short[var11];
+			this.faceTextureN = new short[var11];
+			if (var24 > 0) {
+				this.field2691 = new short[var24];
+				this.field2692 = new short[var24];
+				this.field2693 = new short[var24];
+				this.field2694 = new short[var24];
+				this.field2697 = new byte[var24];
+				this.field2695 = new short[var24];
+			}
+			if (var25 > 0) {
+				this.field2696 = new short[var25];
+			}
+		}
+		var1.pos = var11;
+		var3.pos = var44;
+		var4.pos = var46;
+		var5.pos = var48;
+		var6.pos = var36;
+		int var64 = 0;
+		int var65 = 0;
+		int var66 = 0;
+		for (int var67 = 0; var67 < var9; var67++) {
+			int var68 = var1.g1();
+			int var69 = 0;
+			if ((var68 & 0x1) != 0) {
+				var69 = var3.gsmarts();
+			}
+			int var70 = 0;
+			if ((var68 & 0x2) != 0) {
+				var70 = var4.gsmarts();
+			}
+			int var71 = 0;
+			if ((var68 & 0x4) != 0) {
+				var71 = var5.gsmarts();
+			}
+			this.vertexX[var67] = var64 + var69;
+			this.vertexY[var67] = var65 + var70;
+			this.vertexZ[var67] = var66 + var71;
+			var64 = this.vertexX[var67];
+			var65 = this.vertexY[var67];
+			var66 = this.vertexZ[var67];
+			if (var17 == 1) {
+				this.vertexLabel[var67] = var6.g1();
+			}
+		}
+		var1.pos = var42;
+		var3.pos = var31;
+		var4.pos = var34;
+		var5.pos = var37;
+		var6.pos = var35;
+		var7.pos = var40;
+		var8.pos = var39;
+		for (int var72 = 0; var72 < var10; var72++) {
+			this.faceColour[var72] = (short) var1.g2();
+			if (var12 == 1) {
+				this.field2679[var72] = var3.g1b();
+			}
+			if (hasPriorities == 255) {
+				this.facePriority[var72] = var4.g1b();
+			}
+			if (var14 == 1) {
+				this.faceAlpha[var72] = var5.g1b();
+			}
+			if (var15 == 1) {
+				this.faceLabel[var72] = var6.g1();
+			}
+			if (var16 == 1) {
+				this.field2705[var72] = (short) (var7.g2() - 1);
+			}
+			if (this.field2682 != null && this.field2705[var72] != -1) {
+				this.field2682[var72] = (byte) (var8.g1() - 1);
+			}
+		}
+		var1.pos = var33;
+		var3.pos = var30;
+		int var73 = 0;
+		int var74 = 0;
+		int var75 = 0;
+		int var76 = 0;
+		for (int var77 = 0; var77 < var10; var77++) {
+			int var78 = var3.g1();
+			if (var78 == 1) {
+				var73 = var1.gsmarts() + var76;
+				var74 = var1.gsmarts() + var73;
+				var75 = var1.gsmarts() + var74;
+				var76 = var75;
+				this.faceVertexA[var77] = var73;
+				this.faceVertexB[var77] = var74;
+				this.faceVertexC[var77] = var75;
+			}
+			if (var78 == 2) {
+				var74 = var75;
+				var75 = var1.gsmarts() + var76;
+				var76 = var75;
+				this.faceVertexA[var77] = var73;
+				this.faceVertexB[var77] = var74;
+				this.faceVertexC[var77] = var75;
+			}
+			if (var78 == 3) {
+				var73 = var75;
+				var75 = var1.gsmarts() + var76;
+				var76 = var75;
+				this.faceVertexA[var77] = var73;
+				this.faceVertexB[var77] = var74;
+				this.faceVertexC[var77] = var75;
+			}
+			if (var78 == 4) {
+				int var81 = var73;
+				var73 = var74;
+				var74 = var81;
+				var75 = var1.gsmarts() + var76;
+				var76 = var75;
+				this.faceVertexA[var77] = var73;
+				this.faceVertexB[var77] = var81;
+				this.faceVertexC[var77] = var75;
+			}
+		}
+		var1.pos = var50;
+		var3.pos = var52;
+		var4.pos = var54;
+		var5.pos = var56;
+		var6.pos = var58;
+		var7.pos = var60;
+		for (int var82 = 0; var82 < var11; var82++) {
+			int var83 = this.field2687[var82] & 0xFF;
+			if (var83 == 0) {
+				this.faceTextureP[var82] = (short) var1.g2();
+				this.faceTextureM[var82] = (short) var1.g2();
+				this.faceTextureN[var82] = (short) var1.g2();
+			}
+			if (var83 == 1) {
+				this.faceTextureP[var82] = (short) var3.g2();
+				this.faceTextureM[var82] = (short) var3.g2();
+				this.faceTextureN[var82] = (short) var3.g2();
+				this.field2691[var82] = (short) var4.g2();
+				this.field2692[var82] = (short) var4.g2();
+				this.field2693[var82] = (short) var4.g2();
+				this.field2694[var82] = (short) var5.g2();
+				this.field2697[var82] = var6.g1b();
+				this.field2695[var82] = (short) var7.g2();
+			}
+			if (var83 == 2) {
+				this.faceTextureP[var82] = (short) var3.g2();
+				this.faceTextureM[var82] = (short) var3.g2();
+				this.faceTextureN[var82] = (short) var3.g2();
+				this.field2691[var82] = (short) var4.g2();
+				this.field2692[var82] = (short) var4.g2();
+				this.field2693[var82] = (short) var4.g2();
+				this.field2694[var82] = (short) var5.g2();
+				this.field2697[var82] = var6.g1b();
+				this.field2695[var82] = (short) var7.g2();
+				this.field2696[var82] = (short) var7.g2();
+			}
+			if (var83 == 3) {
+				this.faceTextureP[var82] = (short) var3.g2();
+				this.faceTextureM[var82] = (short) var3.g2();
+				this.faceTextureN[var82] = (short) var3.g2();
+				this.field2691[var82] = (short) var4.g2();
+				this.field2692[var82] = (short) var4.g2();
+				this.field2693[var82] = (short) var4.g2();
+				this.field2694[var82] = (short) var5.g2();
+				this.field2697[var82] = var6.g1b();
+				this.field2695[var82] = (short) var7.g2();
+			}
+		}
+		var1.pos = var62;
+		int var84 = var1.g1();
+		if (var84 != 0) {
+			new Unused10();
+			var1.g2();
+			var1.g2();
+			var1.g2();
+			var1.g4();
+		}
+	}
+
+	@ObfuscatedName("fw.t([B)V")
+	public void loadOb2(byte[] src) {
+		boolean var2 = false;
+		boolean var3 = false;
+
+		Packet trailer = new Packet(src);
+		trailer.pos = src.length - 18;
+
+		int vertexCount = trailer.g2();
+		int faceCount = trailer.g2();
+		int faceTextureCount = trailer.g1();
+
+		int hasFaceInfo = trailer.g1();
+
+		int priority = trailer.g1();
+		int hasFaceAlpha = trailer.g1();
+		int hasFaceLabels = trailer.g1();
+		int hasVertexLabels = trailer.g1();
+
+		int dataLengthX = trailer.g2();
+		int dataLengthY = trailer.g2();
+		int dataLengthZ = trailer.g2();
+		int dataLengthFaceIndex = trailer.g2();
+
+		int pos = 0;
+
+		// vertexOrderOffset
+		pos += vertexCount;
+
+		// faceIndexOrderOffset
+		pos += faceCount;
+
+		int facePriorityOffset = pos;
+		if (priority == 255) {
+			pos += faceCount;
+		}
+
+		int faceLabelOffset = pos;
+		if (hasFaceLabels == 1) {
+			pos += faceCount;
+		}
+
+		int faceInfoOffset = pos;
+		if (hasFaceInfo == 1) {
+			pos += faceCount;
+		}
+
+		int vertexLabelOffset = pos;
+		if (hasVertexLabels == 1) {
+			pos += vertexCount;
+		}
+
+		int faceAlphaOffset = pos;
+		if (hasFaceAlpha == 1) {
+			pos += faceCount;
+		}
+
+		// faceIndexOffset
+		pos += dataLengthFaceIndex;
+
+		// faceColourOffset
+		pos += faceCount * 2;
+
+		// faceTextureAxisOffset
+		pos += faceTextureCount * 6;
+
+		// vertexXOffset
+		pos += dataLengthX;
+
+		// vertexYOffset
+		pos += dataLengthY;
+
+		// vertexZOffset
+		pos += dataLengthZ;
+
+		this.vertexCount = vertexCount;
+		this.faceCount = faceCount;
+		this.faceTextureCount = faceTextureCount;
+
+		this.vertexX = new int[vertexCount];
+		this.vertexY = new int[vertexCount];
+		this.vertexZ = new int[vertexCount];
+
+		this.faceVertexA = new int[faceCount];
+		this.faceVertexB = new int[faceCount];
+		this.faceVertexC = new int[faceCount];
+
+		if (faceTextureCount > 0) {
+			this.field2687 = new byte[faceTextureCount];
+			this.faceTextureP = new short[faceTextureCount];
+			this.faceTextureM = new short[faceTextureCount];
+			this.faceTextureN = new short[faceTextureCount];
+		}
+
+		if (hasVertexLabels == 1) {
+			this.vertexLabel = new int[vertexCount];
+		}
+
+		if (hasFaceInfo == 1) {
+			this.field2679 = new byte[faceCount];
+			this.field2682 = new byte[faceCount];
+			this.field2705 = new short[faceCount];
+		}
+
+		if (priority == 255) {
+			this.facePriority = new byte[faceCount];
+		} else {
+			this.priority = (byte) priority;
+		}
+
+		if (hasFaceAlpha == 1) {
+			this.faceAlpha = new byte[faceCount];
+		}
+
+		if (hasFaceLabels == 1) {
+			this.faceLabel = new int[faceCount];
+		}
+
+		this.faceColour = new short[faceCount];
+
+		Packet point1 = new Packet(src);
+		point1.pos = pos;
+
+		Packet point2 = new Packet(src);
+		point2.pos = pos;
+
+		Packet point3 = new Packet(src);
+		point3.pos = pos;
+
+		Packet point4 = new Packet(src);
+		point4.pos = pos;
+
+		Packet point5 = new Packet(src);
+		point5.pos = vertexLabelOffset;
+
+		int dx = 0;
+		int dy = 0;
+		int dz = 0;
+		for (int v = 0; v < vertexCount; v++) {
+			int order = point1.g1();
+
+			int x = 0;
+			if ((order & 0x1) != 0) {
+				x = point2.gsmarts();
+			}
+
+			int y = 0;
+			if ((order & 0x2) != 0) {
+				y = point3.gsmarts();
+			}
+
+			int z = 0;
+			if ((order & 0x4) != 0) {
+				z = point4.gsmarts();
+			}
+
+			this.vertexX[v] = dx + x;
+			this.vertexY[v] = dy + y;
+			this.vertexZ[v] = dz + z;
+
+			dx = this.vertexX[v];
+			dy = this.vertexY[v];
+			dz = this.vertexZ[v];
+
+			if (hasVertexLabels == 1) {
+				this.vertexLabel[v] = point5.g1();
+			}
+		}
+
+		Packet face1 = new Packet(src);
+		face1.pos = pos;
+
+		Packet face2 = new Packet(src);
+		face2.pos = faceInfoOffset;
+
+		Packet face3 = new Packet(src);
+		face3.pos = facePriorityOffset;
+
+		Packet face4 = new Packet(src);
+		face4.pos = faceAlphaOffset;
+
+		Packet face5 = new Packet(src);
+		face5.pos = faceLabelOffset;
+
+		for (int f = 0; f < faceCount; f++) {
+			this.faceColour[f] = (short) face1.g2();
+
+			if (hasFaceInfo == 1) {
+				int var52 = face2.g1();
+				if ((var52 & 0x1) == 1) {
+					this.field2679[f] = 1;
+					var2 = true;
+				} else {
+					this.field2679[f] = 0;
+				}
+				if ((var52 & 0x2) == 2) {
+					this.field2682[f] = (byte) (var52 >> 2);
+					this.field2705[f] = this.faceColour[f];
+					this.faceColour[f] = 127;
+					if (this.field2705[f] != -1) {
+						var3 = true;
+					}
+				} else {
+					this.field2682[f] = -1;
+					this.field2705[f] = -1;
+				}
+			}
+
+			if (priority == 255) {
+				this.facePriority[f] = face3.g1b();
+			}
+
+			if (hasFaceAlpha == 1) {
+				this.faceAlpha[f] = face4.g1b();
+			}
+
+			if (hasFaceLabels == 1) {
+				this.faceLabel[f] = face5.g1();
+			}
+		}
+
+		Packet vertex1 = new Packet(src);
+		vertex1.pos = pos;
+
+		Packet vertex2 = new Packet(src);
+		vertex2.pos = pos;
+
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		int last = 0;
+		for (int f = 0; f < faceCount; f++) {
+			int order = vertex2.g1();
+
+			if (order == 1) {
+				a = vertex1.gsmarts() + last;
+				b = vertex1.gsmarts() + a;
+				c = vertex1.gsmarts() + b;
+				last = c;
+			} else if (order == 2) {
+				b = c;
+				c = vertex1.gsmarts() + last;
+				last = c;
+			} else if (order == 3) {
+				a = c;
+				c = vertex1.gsmarts() + last;
+				last = c;
+			} else if (order == 4) {
+				int tmp = a;
+				a = b;
+				b = tmp;
+				c = vertex1.gsmarts() + last;
+				last = c;
+			}
+
+			this.faceVertexA[f] = a;
+			this.faceVertexB[f] = b;
+			this.faceVertexC[f] = c;
+		}
+
+		Packet axis = new Packet(src);
+		axis.pos = pos;
+
+		for (int f = 0; f < faceTextureCount; f++) {
+			this.field2687[f] = 0;
+			this.faceTextureP[f] = (short) axis.g2();
+			this.faceTextureM[f] = (short) axis.g2();
+			this.faceTextureN[f] = (short) axis.g2();
+		}
+
+		if (this.field2682 != null) {
+			boolean var63 = false;
+			for (int var64 = 0; var64 < faceCount; var64++) {
+				int var65 = this.field2682[var64] & 0xFF;
+				if (var65 != 255) {
+					if ((this.faceTextureP[var65] & 0xFFFF) == this.faceVertexA[var64] && (this.faceTextureM[var65] & 0xFFFF) == this.faceVertexB[var64] && (this.faceTextureN[var65] & 0xFFFF) == this.faceVertexC[var64]) {
+						this.field2682[var64] = -1;
+					} else {
+						var63 = true;
+					}
+				}
+			}
+			if (!var63) {
+				this.field2682 = null;
+			}
+		}
+
+		if (!var3) {
+			this.field2705 = null;
+		}
+
+		if (!var2) {
+			this.field2679 = null;
+		}
+	}
+
+	public ModelUnlit(ModelUnlit[] arg0, int arg1) {
 		boolean var3 = false;
 		boolean var4 = false;
 		boolean var5 = false;
 		boolean var6 = false;
+		boolean var7 = false;
+		boolean var8 = false;
 		this.vertexCount = 0;
-		this.field2780 = 0;
-		this.field2738 = 0;
-		this.field2737 = -1;
-		for (int var7 = 0; var7 < count; var7++) {
-			ModelUnlit var8 = models[var7];
-			if (var8 != null) {
-				this.vertexCount += var8.vertexCount;
-				this.field2780 += var8.field2780;
-				this.field2738 += var8.field2738;
-				if (var8.facePriority == null) {
-					if (this.field2737 == -1) {
-						this.field2737 = var8.field2737;
+		this.faceCount = 0;
+		this.faceTextureCount = 0;
+		this.priority = -1;
+		for (int var9 = 0; var9 < arg1; var9++) {
+			ModelUnlit var10 = arg0[var9];
+			if (var10 != null) {
+				this.vertexCount += var10.vertexCount;
+				this.faceCount += var10.faceCount;
+				this.faceTextureCount += var10.faceTextureCount;
+				if (var10.facePriority == null) {
+					if (this.priority == -1) {
+						this.priority = var10.priority;
 					}
-					if (this.field2737 != var8.field2737) {
-						var3 = true;
+					if (this.priority != var10.priority) {
+						var4 = true;
 					}
 				} else {
-					var3 = true;
+					var4 = true;
 				}
-				var4 |= var8.faceAlpha != null;
-				var5 |= var8.field2718 != null;
-				var6 |= var8.field2735 != null;
+				var3 |= var10.field2679 != null;
+				var5 |= var10.faceAlpha != null;
+				var6 |= var10.faceLabel != null;
+				var7 |= var10.field2705 != null;
+				var8 |= var10.field2682 != null;
 			}
 		}
 		this.vertexX = new int[this.vertexCount];
 		this.vertexY = new int[this.vertexCount];
 		this.vertexZ = new int[this.vertexCount];
-		this.faceVertexA = new int[this.field2780];
-		this.faceVertexB = new int[this.field2780];
-		this.faceVertexC = new int[this.field2780];
-		this.faceColorA = new int[this.field2780];
-		this.faceColorB = new int[this.field2780];
-		this.faceColorC = new int[this.field2780];
+		this.vertexLabel = new int[this.vertexCount];
+		this.faceVertexA = new int[this.faceCount];
+		this.faceVertexB = new int[this.faceCount];
+		this.faceVertexC = new int[this.faceCount];
 		if (var3) {
-			this.facePriority = new byte[this.field2780];
+			this.field2679 = new byte[this.faceCount];
 		}
 		if (var4) {
-			this.faceAlpha = new byte[this.field2780];
+			this.facePriority = new byte[this.faceCount];
 		}
 		if (var5) {
-			this.field2718 = new short[this.field2780];
+			this.faceAlpha = new byte[this.faceCount];
 		}
 		if (var6) {
-			this.field2735 = new byte[this.field2780];
+			this.faceLabel = new int[this.faceCount];
 		}
-		if (this.field2738 > 0) {
-			this.field2739 = new int[this.field2738];
-			this.field2774 = new int[this.field2738];
-			this.field2765 = new int[this.field2738];
+		if (var7) {
+			this.field2705 = new short[this.faceCount];
+		}
+		if (var8) {
+			this.field2682 = new byte[this.faceCount];
+		}
+		this.faceColour = new short[this.faceCount];
+		if (this.faceTextureCount > 0) {
+			this.field2687 = new byte[this.faceTextureCount];
+			this.faceTextureP = new short[this.faceTextureCount];
+			this.faceTextureM = new short[this.faceTextureCount];
+			this.faceTextureN = new short[this.faceTextureCount];
+			this.field2691 = new short[this.faceTextureCount];
+			this.field2692 = new short[this.faceTextureCount];
+			this.field2693 = new short[this.faceTextureCount];
+			this.field2694 = new short[this.faceTextureCount];
+			this.field2697 = new byte[this.faceTextureCount];
+			this.field2695 = new short[this.faceTextureCount];
+			this.field2696 = new short[this.faceTextureCount];
 		}
 		this.vertexCount = 0;
-		this.field2780 = 0;
-		this.field2738 = 0;
-		for (int var9 = 0; var9 < count; var9++) {
-			ModelUnlit var10 = models[var9];
-			if (var10 != null) {
-				for (int var11 = 0; var11 < var10.field2780; var11++) {
-					this.faceVertexA[this.field2780] = var10.faceVertexA[var11] + this.vertexCount;
-					this.faceVertexB[this.field2780] = var10.faceVertexB[var11] + this.vertexCount;
-					this.faceVertexC[this.field2780] = var10.faceVertexC[var11] + this.vertexCount;
-					this.faceColorA[this.field2780] = var10.faceColorA[var11];
-					this.faceColorB[this.field2780] = var10.faceColorB[var11];
-					this.faceColorC[this.field2780] = var10.faceColorC[var11];
-					if (var3) {
-						if (var10.facePriority == null) {
-							this.facePriority[this.field2780] = var10.field2737;
+		this.faceCount = 0;
+		this.faceTextureCount = 0;
+		for (int var11 = 0; var11 < arg1; var11++) {
+			ModelUnlit var12 = arg0[var11];
+			if (var12 != null) {
+				for (int var13 = 0; var13 < var12.faceCount; var13++) {
+					if (var3 && var12.field2679 != null) {
+						this.field2679[this.faceCount] = var12.field2679[var13];
+					}
+					if (var4) {
+						if (var12.facePriority == null) {
+							this.facePriority[this.faceCount] = var12.priority;
 						} else {
-							this.facePriority[this.field2780] = var10.facePriority[var11];
+							this.facePriority[this.faceCount] = var12.facePriority[var13];
 						}
 					}
-					if (var4 && var10.faceAlpha != null) {
-						this.faceAlpha[this.field2780] = var10.faceAlpha[var11];
+					if (var5 && var12.faceAlpha != null) {
+						this.faceAlpha[this.faceCount] = var12.faceAlpha[var13];
 					}
-					if (var5) {
-						if (var10.field2718 == null) {
-							this.field2718[this.field2780] = -1;
+					if (var6 && var12.faceLabel != null) {
+						this.faceLabel[this.faceCount] = var12.faceLabel[var13];
+					}
+					if (var7) {
+						if (var12.field2705 == null) {
+							this.field2705[this.faceCount] = -1;
 						} else {
-							this.field2718[this.field2780] = var10.field2718[var11];
+							this.field2705[this.faceCount] = var12.field2705[var13];
 						}
 					}
-					if (var6) {
-						if (var10.field2735 == null || var10.field2735[var11] == -1) {
-							this.field2735[this.field2780] = -1;
+					if (var8) {
+						if (var12.field2682 == null || var12.field2682[var13] == -1) {
+							this.field2682[this.faceCount] = -1;
 						} else {
-							this.field2735[this.field2780] = (byte) (var10.field2735[var11] + this.field2738);
+							this.field2682[this.faceCount] = (byte) (var12.field2682[var13] + this.faceTextureCount);
 						}
 					}
-					this.field2780++;
+					this.faceColour[this.faceCount] = var12.faceColour[var13];
+					this.faceVertexA[this.faceCount] = this.method2947(var12, var12.faceVertexA[var13]);
+					this.faceVertexB[this.faceCount] = this.method2947(var12, var12.faceVertexB[var13]);
+					this.faceVertexC[this.faceCount] = this.method2947(var12, var12.faceVertexC[var13]);
+					this.faceCount++;
 				}
-				for (int var12 = 0; var12 < var10.field2738; var12++) {
-					this.field2739[this.field2738] = var10.field2739[var12] + this.vertexCount;
-					this.field2774[this.field2738] = var10.field2774[var12] + this.vertexCount;
-					this.field2765[this.field2738] = var10.field2765[var12] + this.vertexCount;
-					this.field2738++;
-				}
-				for (int var13 = 0; var13 < var10.vertexCount; var13++) {
-					this.vertexX[this.vertexCount] = var10.vertexX[var13];
-					this.vertexY[this.vertexCount] = var10.vertexY[var13];
-					this.vertexZ[this.vertexCount] = var10.vertexZ[var13];
-					this.vertexCount++;
+				for (int var14 = 0; var14 < var12.faceTextureCount; var14++) {
+					byte var15 = this.field2687[this.faceTextureCount] = var12.field2687[var14];
+					if (var15 == 0) {
+						this.faceTextureP[this.faceTextureCount] = (short) this.method2947(var12, var12.faceTextureP[var14]);
+						this.faceTextureM[this.faceTextureCount] = (short) this.method2947(var12, var12.faceTextureM[var14]);
+						this.faceTextureN[this.faceTextureCount] = (short) this.method2947(var12, var12.faceTextureN[var14]);
+					}
+					if (var15 >= 1 && var15 <= 3) {
+						this.faceTextureP[this.faceTextureCount] = var12.faceTextureP[var14];
+						this.faceTextureM[this.faceTextureCount] = var12.faceTextureM[var14];
+						this.faceTextureN[this.faceTextureCount] = var12.faceTextureN[var14];
+						this.field2691[this.faceTextureCount] = var12.field2691[var14];
+						this.field2692[this.faceTextureCount] = var12.field2692[var14];
+						this.field2693[this.faceTextureCount] = var12.field2693[var14];
+						this.field2694[this.faceTextureCount] = var12.field2694[var14];
+						this.field2697[this.faceTextureCount] = var12.field2697[var14];
+						this.field2695[this.faceTextureCount] = var12.field2695[var14];
+					}
+					if (var15 == 2) {
+						this.field2696[this.faceTextureCount] = var12.field2696[var14];
+					}
+					this.faceTextureCount++;
 				}
 			}
 		}
 	}
 
-	@ObfuscatedName("fo.b([[IIIIZI)Lfo;")
-	public ModelUnlit method3054(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
-		this.method3002();
-		int var7 = arg1 - this.field2747;
-		int var8 = this.field2747 + arg1;
-		int var9 = arg3 - this.field2747;
-		int var10 = this.field2747 + arg3;
+	@ObfuscatedName("fw.f(Lfw;I)I")
+	public final int method2947(ModelUnlit arg0, int arg1) {
+		int var3 = -1;
+		int var4 = arg0.vertexX[arg1];
+		int var5 = arg0.vertexY[arg1];
+		int var6 = arg0.vertexZ[arg1];
+		for (int var7 = 0; var7 < this.vertexCount; var7++) {
+			if (this.vertexX[var7] == var4 && this.vertexY[var7] == var5 && this.vertexZ[var7] == var6) {
+				var3 = var7;
+				break;
+			}
+		}
+		if (var3 == -1) {
+			this.vertexX[this.vertexCount] = var4;
+			this.vertexY[this.vertexCount] = var5;
+			this.vertexZ[this.vertexCount] = var6;
+			if (arg0.vertexLabel != null) {
+				this.vertexLabel[this.vertexCount] = arg0.vertexLabel[arg1];
+			}
+			var3 = this.vertexCount++;
+		}
+		return var3;
+	}
+
+	public ModelUnlit(ModelUnlit arg0, boolean arg1, boolean arg2, boolean arg3, boolean arg4) {
+		this.vertexCount = arg0.vertexCount;
+		this.faceCount = arg0.faceCount;
+		this.faceTextureCount = arg0.faceTextureCount;
+		if (arg1) {
+			this.vertexX = arg0.vertexX;
+			this.vertexY = arg0.vertexY;
+			this.vertexZ = arg0.vertexZ;
+		} else {
+			this.vertexX = new int[this.vertexCount];
+			this.vertexY = new int[this.vertexCount];
+			this.vertexZ = new int[this.vertexCount];
+			for (int var6 = 0; var6 < this.vertexCount; var6++) {
+				this.vertexX[var6] = arg0.vertexX[var6];
+				this.vertexY[var6] = arg0.vertexY[var6];
+				this.vertexZ[var6] = arg0.vertexZ[var6];
+			}
+		}
+		if (arg2) {
+			this.faceColour = arg0.faceColour;
+		} else {
+			this.faceColour = new short[this.faceCount];
+			for (int var7 = 0; var7 < this.faceCount; var7++) {
+				this.faceColour[var7] = arg0.faceColour[var7];
+			}
+		}
+		if (arg3 || arg0.field2705 == null) {
+			this.field2705 = arg0.field2705;
+		} else {
+			this.field2705 = new short[this.faceCount];
+			for (int var8 = 0; var8 < this.faceCount; var8++) {
+				this.field2705[var8] = arg0.field2705[var8];
+			}
+		}
+		if (arg4) {
+			this.faceAlpha = arg0.faceAlpha;
+		} else {
+			this.faceAlpha = new byte[this.faceCount];
+			if (arg0.faceAlpha == null) {
+				for (int var9 = 0; var9 < this.faceCount; var9++) {
+					this.faceAlpha[var9] = 0;
+				}
+			} else {
+				for (int var10 = 0; var10 < this.faceCount; var10++) {
+					this.faceAlpha[var10] = arg0.faceAlpha[var10];
+				}
+			}
+		}
+		this.faceVertexA = arg0.faceVertexA;
+		this.faceVertexB = arg0.faceVertexB;
+		this.faceVertexC = arg0.faceVertexC;
+		this.field2679 = arg0.field2679;
+		this.facePriority = arg0.facePriority;
+		this.field2682 = arg0.field2682;
+		this.priority = arg0.priority;
+		this.field2687 = arg0.field2687;
+		this.faceTextureP = arg0.faceTextureP;
+		this.faceTextureM = arg0.faceTextureM;
+		this.faceTextureN = arg0.faceTextureN;
+		this.field2691 = arg0.field2691;
+		this.field2692 = arg0.field2692;
+		this.field2693 = arg0.field2693;
+		this.field2694 = arg0.field2694;
+		this.field2697 = arg0.field2697;
+		this.field2695 = arg0.field2695;
+		this.field2696 = arg0.field2696;
+		this.vertexLabel = arg0.vertexLabel;
+		this.faceLabel = arg0.faceLabel;
+		this.field2700 = arg0.field2700;
+		this.field2701 = arg0.field2701;
+		this.vertexNormal = arg0.vertexNormal;
+		this.faceNormal = arg0.faceNormal;
+		this.field2685 = arg0.field2685;
+		this.field2708 = arg0.field2708;
+		this.field2706 = arg0.field2706;
+	}
+
+	@ObfuscatedName("fw.k()Lfw;")
+	public ModelUnlit method2982() {
+		ModelUnlit var1 = new ModelUnlit();
+		if (this.field2679 != null) {
+			var1.field2679 = new byte[this.faceCount];
+			for (int var2 = 0; var2 < this.faceCount; var2++) {
+				var1.field2679[var2] = this.field2679[var2];
+			}
+		}
+		var1.vertexCount = this.vertexCount;
+		var1.faceCount = this.faceCount;
+		var1.faceTextureCount = this.faceTextureCount;
+		var1.vertexX = this.vertexX;
+		var1.vertexY = this.vertexY;
+		var1.vertexZ = this.vertexZ;
+		var1.faceVertexA = this.faceVertexA;
+		var1.faceVertexB = this.faceVertexB;
+		var1.faceVertexC = this.faceVertexC;
+		var1.facePriority = this.facePriority;
+		var1.faceAlpha = this.faceAlpha;
+		var1.field2682 = this.field2682;
+		var1.faceColour = this.faceColour;
+		var1.field2705 = this.field2705;
+		var1.priority = this.priority;
+		var1.field2687 = this.field2687;
+		var1.faceTextureP = this.faceTextureP;
+		var1.faceTextureM = this.faceTextureM;
+		var1.faceTextureN = this.faceTextureN;
+		var1.field2691 = this.field2691;
+		var1.field2692 = this.field2692;
+		var1.field2693 = this.field2693;
+		var1.field2694 = this.field2694;
+		var1.field2697 = this.field2697;
+		var1.field2695 = this.field2695;
+		var1.field2696 = this.field2696;
+		var1.vertexLabel = this.vertexLabel;
+		var1.faceLabel = this.faceLabel;
+		var1.field2700 = this.field2700;
+		var1.field2701 = this.field2701;
+		var1.vertexNormal = this.vertexNormal;
+		var1.faceNormal = this.faceNormal;
+		var1.field2708 = this.field2708;
+		var1.field2706 = this.field2706;
+		return var1;
+	}
+
+	@ObfuscatedName("fw.o([[IIIIZI)Lfw;")
+	public ModelUnlit method2928(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
+		this.calculateBoundsAABB();
+		int var7 = this.minX + arg1;
+		int var8 = this.maxX + arg1;
+		int var9 = this.maxZ + arg3;
+		int var10 = this.minZ + arg3;
 		if (var7 < 0 || var8 + 128 >> 7 >= arg0.length || var9 < 0 || var10 + 128 >> 7 >= arg0[0].length) {
 			return this;
 		}
@@ -332,27 +1084,37 @@ public class ModelUnlit extends Entity {
 		if (arg4) {
 			var15 = new ModelUnlit();
 			var15.vertexCount = this.vertexCount;
-			var15.field2780 = this.field2780;
-			var15.field2738 = this.field2738;
+			var15.faceCount = this.faceCount;
+			var15.faceTextureCount = this.faceTextureCount;
 			var15.vertexX = this.vertexX;
 			var15.vertexZ = this.vertexZ;
 			var15.faceVertexA = this.faceVertexA;
 			var15.faceVertexB = this.faceVertexB;
 			var15.faceVertexC = this.faceVertexC;
-			var15.faceColorA = this.faceColorA;
-			var15.faceColorB = this.faceColorB;
-			var15.faceColorC = this.faceColorC;
+			var15.field2679 = this.field2679;
 			var15.facePriority = this.facePriority;
 			var15.faceAlpha = this.faceAlpha;
-			var15.field2735 = this.field2735;
-			var15.field2718 = this.field2718;
-			var15.field2737 = this.field2737;
-			var15.field2739 = this.field2739;
-			var15.field2774 = this.field2774;
-			var15.field2765 = this.field2765;
-			var15.field2742 = this.field2742;
-			var15.field2743 = this.field2743;
-			var15.picking = this.picking;
+			var15.field2682 = this.field2682;
+			var15.faceColour = this.faceColour;
+			var15.field2705 = this.field2705;
+			var15.priority = this.priority;
+			var15.field2687 = this.field2687;
+			var15.faceTextureP = this.faceTextureP;
+			var15.faceTextureM = this.faceTextureM;
+			var15.faceTextureN = this.faceTextureN;
+			var15.field2691 = this.field2691;
+			var15.field2692 = this.field2692;
+			var15.field2693 = this.field2693;
+			var15.field2694 = this.field2694;
+			var15.field2697 = this.field2697;
+			var15.field2695 = this.field2695;
+			var15.field2696 = this.field2696;
+			var15.vertexLabel = this.vertexLabel;
+			var15.faceLabel = this.faceLabel;
+			var15.field2700 = this.field2700;
+			var15.field2701 = this.field2701;
+			var15.field2708 = this.field2708;
+			var15.field2706 = this.field2706;
 			var15.vertexY = new int[var15.vertexCount];
 		} else {
 			var15 = this;
@@ -387,1043 +1149,545 @@ public class ModelUnlit extends Entity {
 				}
 			}
 		}
-		var15.field2745 = 0;
+		var15.method2986();
 		return var15;
 	}
 
-	@ObfuscatedName("fo.y(Z)Lfo;")
-	public ModelUnlit method2999(boolean arg0) {
-		if (!arg0 && field2770.length < this.field2780) {
-			field2770 = new byte[this.field2780 + 100];
-		}
-		return this.method3046(arg0, field2758, field2770);
-	}
-
-	@ObfuscatedName("fo.t(Z)Lfo;")
-	public ModelUnlit method3040(boolean arg0) {
-		if (!arg0 && field2725.length < this.field2780) {
-			field2725 = new byte[this.field2780 + 100];
-		}
-		return this.method3046(arg0, field2720, field2725);
-	}
-
-	@ObfuscatedName("fo.f(ZLfo;[B)Lfo;")
-	public ModelUnlit method3046(boolean copyAlpha, ModelUnlit model, byte[] arg2) {
-		model.vertexCount = this.vertexCount;
-		model.field2780 = this.field2780;
-		model.field2738 = this.field2738;
-		if (model.vertexX == null || model.vertexX.length < this.vertexCount) {
-			model.vertexX = new int[this.vertexCount + 100];
-			model.vertexY = new int[this.vertexCount + 100];
-			model.vertexZ = new int[this.vertexCount + 100];
-		}
-		for (int var4 = 0; var4 < this.vertexCount; var4++) {
-			model.vertexX[var4] = this.vertexX[var4];
-			model.vertexY[var4] = this.vertexY[var4];
-			model.vertexZ[var4] = this.vertexZ[var4];
-		}
-		if (copyAlpha) {
-			model.faceAlpha = this.faceAlpha;
-		} else {
-			model.faceAlpha = arg2;
-			if (this.faceAlpha == null) {
-				for (int var5 = 0; var5 < this.field2780; var5++) {
-					model.faceAlpha[var5] = 0;
-				}
-			} else {
-				for (int var6 = 0; var6 < this.field2780; var6++) {
-					model.faceAlpha[var6] = this.faceAlpha[var6];
+	@ObfuscatedName("fw.a()V")
+	public void method2929() {
+		int var10002;
+		if (this.vertexLabel != null) {
+			int[] var1 = new int[256];
+			int var2 = 0;
+			for (int var3 = 0; var3 < this.vertexCount; var3++) {
+				int var4 = this.vertexLabel[var3];
+				var10002 = var1[var4]++;
+				if (var4 > var2) {
+					var2 = var4;
 				}
 			}
+			this.field2700 = new int[var2 + 1][];
+			for (int var5 = 0; var5 <= var2; var5++) {
+				this.field2700[var5] = new int[var1[var5]];
+				var1[var5] = 0;
+			}
+			int var6 = 0;
+			while (var6 < this.vertexCount) {
+				int var7 = this.vertexLabel[var6];
+				this.field2700[var7][var1[var7]++] = var6++;
+			}
+			this.vertexLabel = null;
 		}
-
-		model.faceVertexA = this.faceVertexA;
-		model.faceVertexB = this.faceVertexB;
-		model.faceVertexC = this.faceVertexC;
-		model.faceColorA = this.faceColorA;
-		model.faceColorB = this.faceColorB;
-		model.faceColorC = this.faceColorC;
-		model.facePriority = this.facePriority;
-		model.field2735 = this.field2735;
-		model.field2718 = this.field2718;
-		model.field2737 = this.field2737;
-		model.field2739 = this.field2739;
-		model.field2774 = this.field2774;
-		model.field2765 = this.field2765;
-		model.field2742 = this.field2742;
-		model.field2743 = this.field2743;
-		model.picking = this.picking;
-		model.field2745 = 0;
-		return model;
-	}
-
-	@ObfuscatedName("fo.k()V")
-	public void method3002() {
-		if (this.field2745 == 1) {
+		if (this.faceLabel == null) {
 			return;
 		}
-		this.field2745 = 1;
-		this.minY = 0;
-		this.field2746 = 0;
-		this.field2747 = 0;
-		for (int var1 = 0; var1 < this.vertexCount; var1++) {
-			int var2 = this.vertexX[var1];
-			int var3 = this.vertexY[var1];
-			int var4 = this.vertexZ[var1];
-			if (-var3 > this.minY) {
-				this.minY = -var3;
-			}
-			if (var3 > this.field2746) {
-				this.field2746 = var3;
-			}
-			int var5 = var2 * var2 + var4 * var4;
-			if (var5 > this.field2747) {
-				this.field2747 = var5;
+		int[] var8 = new int[256];
+		int var9 = 0;
+		for (int var10 = 0; var10 < this.faceCount; var10++) {
+			int var11 = this.faceLabel[var10];
+			var10002 = var8[var11]++;
+			if (var11 > var9) {
+				var9 = var11;
 			}
 		}
-		this.field2747 = (int) (Math.sqrt((double) this.field2747) + 0.99D);
-		this.minDepth = (int) (Math.sqrt((double) (this.minY * this.minY + this.field2747 * this.field2747)) + 0.99D);
-		this.maxDepth = this.minDepth + (int) (Math.sqrt((double) (this.field2747 * this.field2747 + this.field2746 * this.field2746)) + 0.99D);
+		this.field2701 = new int[var9 + 1][];
+		for (int var12 = 0; var12 <= var9; var12++) {
+			this.field2701[var12] = new int[var8[var12]];
+			var8[var12] = 0;
+		}
+		int var13 = 0;
+		while (var13 < this.faceCount) {
+			int var14 = this.faceLabel[var13];
+			this.field2701[var14][var8[var14]++] = var13++;
+		}
+		this.faceLabel = null;
 	}
 
-	@ObfuscatedName("fo.o()V")
-	public void method3003() {
-		if (this.field2745 == 2) {
-			return;
-		}
-		this.field2745 = 2;
-		this.field2747 = 0;
-		for (int var1 = 0; var1 < this.vertexCount; var1++) {
-			int var2 = this.vertexX[var1];
-			int var3 = this.vertexY[var1];
-			int var4 = this.vertexZ[var1];
-			int var5 = var3 * var3 + var2 * var2 + var4 * var4;
-			if (var5 > this.field2747) {
-				this.field2747 = var5;
-			}
-		}
-		this.field2747 = (int) (Math.sqrt((double) this.field2747) + 0.99D);
-		this.minDepth = this.field2747;
-		this.maxDepth = this.field2747 + this.field2747;
-	}
-
-	@ObfuscatedName("fo.a()I")
-	public int method3004() {
-		this.method3002();
-		return this.field2747;
-	}
-
-	@ObfuscatedName("fo.h(Lfr;I)V")
-	public void method3005(AnimFrameSet arg0, int arg1) {
-		if (this.field2742 == null || arg1 == -1) {
-			return;
-		}
-		AnimFrame var3 = arg0.field2488[arg1];
-		AnimBase var4 = var3.base;
-		baseX = 0;
-		baseY = 0;
-		baseZ = 0;
-		for (int var5 = 0; var5 < var3.length; var5++) {
-			int var6 = var3.groups[var5];
-			this.method3007(var4.types[var6], var4.labels[var6], var3.x[var5], var3.y[var5], var3.z[var5]);
-		}
-		this.field2745 = 0;
-	}
-
-	@ObfuscatedName("fo.x(Lfr;ILfr;I[I)V")
-	public void method3006(AnimFrameSet arg0, int arg1, AnimFrameSet arg2, int arg3, int[] arg4) {
-		if (arg1 == -1) {
-			return;
-		}
-		if (arg4 == null || arg3 == -1) {
-			this.method3005(arg0, arg1);
-			return;
-		}
-		AnimFrame var6 = arg0.field2488[arg1];
-		AnimFrame var7 = arg2.field2488[arg3];
-		AnimBase var8 = var6.base;
-		baseX = 0;
-		baseY = 0;
-		baseZ = 0;
-		byte var9 = 0;
-		int var17 = var9 + 1;
-		int var10 = arg4[var9];
-		for (int var11 = 0; var11 < var6.length; var11++) {
-			int var12 = var6.groups[var11];
-			while (var12 > var10) {
-				var10 = arg4[var17++];
-			}
-			if (var10 != var12 || var8.types[var12] == 0) {
-				this.method3007(var8.types[var12], var8.labels[var12], var6.x[var11], var6.y[var11], var6.z[var11]);
-			}
-		}
-		baseX = 0;
-		baseY = 0;
-		baseZ = 0;
-		byte var13 = 0;
-		int var18 = var13 + 1;
-		int var14 = arg4[var13];
-		for (int var15 = 0; var15 < var7.length; var15++) {
-			int var16 = var7.groups[var15];
-			while (var16 > var14) {
-				var14 = arg4[var18++];
-			}
-			if (var14 == var16 || var8.types[var16] == 0) {
-				this.method3007(var8.types[var16], var8.labels[var16], var7.x[var15], var7.y[var15], var7.z[var15]);
-			}
-		}
-		this.field2745 = 0;
-	}
-
-	@ObfuscatedName("fo.p(I[IIII)V")
-	public void method3007(int arg0, int[] arg1, int arg2, int arg3, int arg4) {
-		int var6 = arg1.length;
-		if (arg0 == 0) {
-			int var7 = 0;
-			baseX = 0;
-			baseY = 0;
-			baseZ = 0;
-			for (int var8 = 0; var8 < var6; var8++) {
-				int var9 = arg1[var8];
-				if (var9 < this.field2742.length) {
-					int[] var10 = this.field2742[var9];
-					for (int var11 = 0; var11 < var10.length; var11++) {
-						int var12 = var10[var11];
-						baseX += this.vertexX[var12];
-						baseY += this.vertexY[var12];
-						baseZ += this.vertexZ[var12];
-						var7++;
-					}
-				}
-			}
-			if (var7 > 0) {
-				baseX = baseX / var7 + arg2;
-				baseY = baseY / var7 + arg3;
-				baseZ = baseZ / var7 + arg4;
-			} else {
-				baseX = arg2;
-				baseY = arg3;
-				baseZ = arg4;
-			}
-		} else if (arg0 == 1) {
-			for (int var13 = 0; var13 < var6; var13++) {
-				int var14 = arg1[var13];
-				if (var14 < this.field2742.length) {
-					int[] var15 = this.field2742[var14];
-					for (int var16 = 0; var16 < var15.length; var16++) {
-						int var17 = var15[var16];
-						this.vertexX[var17] += arg2;
-						this.vertexY[var17] += arg3;
-						this.vertexZ[var17] += arg4;
-					}
-				}
-			}
-		} else if (arg0 == 2) {
-			for (int var18 = 0; var18 < var6; var18++) {
-				int var19 = arg1[var18];
-				if (var19 < this.field2742.length) {
-					int[] var20 = this.field2742[var19];
-					for (int var21 = 0; var21 < var20.length; var21++) {
-						int var22 = var20[var21];
-						this.vertexX[var22] -= baseX;
-						this.vertexY[var22] -= baseY;
-						this.vertexZ[var22] -= baseZ;
-						int var23 = (arg2 & 0xFF) * 8;
-						int var24 = (arg3 & 0xFF) * 8;
-						int var25 = (arg4 & 0xFF) * 8;
-						if (var25 != 0) {
-							int var26 = sinTable[var25];
-							int var27 = cosTable[var25];
-							int var28 = this.vertexY[var22] * var26 + this.vertexX[var22] * var27 >> 16;
-							this.vertexY[var22] = this.vertexY[var22] * var27 - this.vertexX[var22] * var26 >> 16;
-							this.vertexX[var22] = var28;
-						}
-						if (var23 != 0) {
-							int var29 = sinTable[var23];
-							int var30 = cosTable[var23];
-							int var31 = this.vertexY[var22] * var30 - this.vertexZ[var22] * var29 >> 16;
-							this.vertexZ[var22] = this.vertexZ[var22] * var30 + this.vertexY[var22] * var29 >> 16;
-							this.vertexY[var22] = var31;
-						}
-						if (var24 != 0) {
-							int var32 = sinTable[var24];
-							int var33 = cosTable[var24];
-							int var34 = this.vertexZ[var22] * var32 + this.vertexX[var22] * var33 >> 16;
-							this.vertexZ[var22] = this.vertexZ[var22] * var33 - this.vertexX[var22] * var32 >> 16;
-							this.vertexX[var22] = var34;
-						}
-						this.vertexX[var22] += baseX;
-						this.vertexY[var22] += baseY;
-						this.vertexZ[var22] += baseZ;
-					}
-				}
-			}
-		} else if (arg0 == 3) {
-			for (int var35 = 0; var35 < var6; var35++) {
-				int var36 = arg1[var35];
-				if (var36 < this.field2742.length) {
-					int[] var37 = this.field2742[var36];
-					for (int var38 = 0; var38 < var37.length; var38++) {
-						int var39 = var37[var38];
-						this.vertexX[var39] -= baseX;
-						this.vertexY[var39] -= baseY;
-						this.vertexZ[var39] -= baseZ;
-						this.vertexX[var39] = this.vertexX[var39] * arg2 / 128;
-						this.vertexY[var39] = this.vertexY[var39] * arg3 / 128;
-						this.vertexZ[var39] = this.vertexZ[var39] * arg4 / 128;
-						this.vertexX[var39] += baseX;
-						this.vertexY[var39] += baseY;
-						this.vertexZ[var39] += baseZ;
-					}
-				}
-			}
-		} else if (arg0 == 5 && (this.field2743 != null && this.faceAlpha != null)) {
-			for (int var40 = 0; var40 < var6; var40++) {
-				int var41 = arg1[var40];
-				if (var41 < this.field2743.length) {
-					int[] var42 = this.field2743[var41];
-					for (int var43 = 0; var43 < var42.length; var43++) {
-						int var44 = var42[var43];
-						int var45 = (this.faceAlpha[var44] & 0xFF) + arg2 * 8;
-						if (var45 < 0) {
-							var45 = 0;
-						} else if (var45 > 255) {
-							var45 = 255;
-						}
-						this.faceAlpha[var44] = (byte) var45;
-					}
-				}
-			}
-		}
-	}
-
-	@ObfuscatedName("fo.ad()V")
-	public void method3008() {
+	@ObfuscatedName("fw.h()V")
+	public void method2930() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexX[var1];
 			this.vertexX[var1] = this.vertexZ[var1];
 			this.vertexZ[var1] = -var2;
 		}
-		this.field2745 = 0;
+		this.method2986();
 	}
 
-	@ObfuscatedName("fo.ac()V")
-	public void method3009() {
+	@ObfuscatedName("fw.x()V")
+	public void method2931() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			this.vertexX[var1] = -this.vertexX[var1];
 			this.vertexZ[var1] = -this.vertexZ[var1];
 		}
-		this.field2745 = 0;
+		this.method2986();
 	}
 
-	@ObfuscatedName("fo.aa()V")
-	public void method3010() {
+	@ObfuscatedName("fw.p()V")
+	public void method2923() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexZ[var1];
 			this.vertexZ[var1] = this.vertexX[var1];
 			this.vertexX[var1] = -var2;
 		}
-		this.field2745 = 0;
+		this.method2986();
 	}
 
-	@ObfuscatedName("fo.as(I)V")
-	public void method3011(int arg0) {
+	@ObfuscatedName("fw.ad(I)V")
+	public void method2933(int arg0) {
 		int var2 = sinTable[arg0];
 		int var3 = cosTable[arg0];
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
-			int var5 = this.vertexY[var4] * var3 - this.vertexZ[var4] * var2 >> 16;
-			this.vertexZ[var4] = this.vertexZ[var4] * var3 + this.vertexY[var4] * var2 >> 16;
-			this.vertexY[var4] = var5;
+			int var5 = this.vertexZ[var4] * var2 + this.vertexX[var4] * var3 >> 16;
+			this.vertexZ[var4] = this.vertexZ[var4] * var3 - this.vertexX[var4] * var2 >> 16;
+			this.vertexX[var4] = var5;
 		}
-		this.field2745 = 0;
+		this.method2986();
 	}
 
-	@ObfuscatedName("fo.am(III)V")
-	public void method3012(int arg0, int arg1, int arg2) {
+	@ObfuscatedName("fw.ac(III)V")
+	public void translate(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
 			this.vertexX[var4] += arg0;
 			this.vertexY[var4] += arg1;
 			this.vertexZ[var4] += arg2;
 		}
-		this.field2745 = 0;
+		this.method2986();
 	}
 
-	@ObfuscatedName("fo.ap(III)V")
+	@ObfuscatedName("fw.aa(SS)V")
+	public void recolour(short arg0, short arg1) {
+		for (int var3 = 0; var3 < this.faceCount; var3++) {
+			if (this.faceColour[var3] == arg0) {
+				this.faceColour[var3] = arg1;
+			}
+		}
+	}
+
+	@ObfuscatedName("fw.as(SS)V")
+	public void retexture(short arg0, short arg1) {
+		if (this.field2705 == null) {
+			return;
+		}
+		for (int var3 = 0; var3 < this.faceCount; var3++) {
+			if (this.field2705[var3] == arg0) {
+				this.field2705[var3] = arg1;
+			}
+		}
+	}
+
+	@ObfuscatedName("fw.am()V")
+	public void rotateY180() {
+		for (int var1 = 0; var1 < this.vertexCount; var1++) {
+			this.vertexZ[var1] = -this.vertexZ[var1];
+		}
+		for (int var2 = 0; var2 < this.faceCount; var2++) {
+			int var3 = this.faceVertexA[var2];
+			this.faceVertexA[var2] = this.faceVertexC[var2];
+			this.faceVertexC[var2] = var3;
+		}
+		this.method2986();
+	}
+
+	@ObfuscatedName("fw.ap(III)V")
 	public void scale(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
 			this.vertexX[var4] = this.vertexX[var4] * arg0 / 128;
 			this.vertexY[var4] = this.vertexY[var4] * arg1 / 128;
 			this.vertexZ[var4] = this.vertexZ[var4] * arg2 / 128;
 		}
-		this.field2745 = 0;
+		this.method2986();
 	}
 
-	@ObfuscatedName("fo.av(IIIIIII)V")
-	public final void method3014(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
-		tmpDepthFaceCount[0] = -1;
-		if (this.field2745 != 2 && this.field2745 != 1) {
-			this.method3003();
-		}
-		int var8 = Pix3D.centerX;
-		int var9 = Pix3D.centerY;
-		int var10 = sinTable[arg0];
-		int var11 = cosTable[arg0];
-		int var12 = sinTable[arg1];
-		int var13 = cosTable[arg1];
-		int var14 = sinTable[arg2];
-		int var15 = cosTable[arg2];
-		int var16 = sinTable[arg3];
-		int var17 = cosTable[arg3];
-		int var18 = arg5 * var16 + arg6 * var17 >> 16;
-		for (int var19 = 0; var19 < this.vertexCount; var19++) {
-			int var20 = this.vertexX[var19];
-			int var21 = this.vertexY[var19];
-			int var22 = this.vertexZ[var19];
-			if (arg2 != 0) {
-				int var23 = var14 * var21 + var15 * var20 >> 16;
-				var21 = var15 * var21 - var14 * var20 >> 16;
-				var20 = var23;
-			}
-			if (arg0 != 0) {
-				int var24 = var11 * var21 - var10 * var22 >> 16;
-				var22 = var10 * var21 + var11 * var22 >> 16;
-				var21 = var24;
-			}
-			if (arg1 != 0) {
-				int var25 = var12 * var22 + var13 * var20 >> 16;
-				var22 = var13 * var22 - var12 * var20 >> 16;
-				var20 = var25;
-			}
-			int var26 = arg4 + var20;
-			int var27 = arg5 + var21;
-			int var28 = arg6 + var22;
-			int var29 = var17 * var27 - var16 * var28 >> 16;
-			int var30 = var16 * var27 + var17 * var28 >> 16;
-			vertexScreenZ[var19] = var30 - var18;
-			vertexScreenX[var19] = (var26 << 9) / var30 + var8;
-			vertexScreenY[var19] = (var29 << 9) / var30 + var9;
-			if (this.field2738 > 0) {
-				vertexViewSpaceX[var19] = var26;
-				vertexViewSpaceY[var19] = var29;
-				vertexViewSpaceZ[var19] = var30;
-			}
-		}
-		try {
-			this.draw(false, false, 0);
-		} catch (Exception var33) {
-		}
-	}
-
-	@ObfuscatedName("fo.ak(IIIIIIII)V")
-	public final void method3020(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-		tmpDepthFaceCount[0] = -1;
-		if (this.field2745 != 2 && this.field2745 != 1) {
-			this.method3003();
-		}
-		int var9 = Pix3D.centerX;
-		int var10 = Pix3D.centerY;
-		int var11 = sinTable[arg0];
-		int var12 = cosTable[arg0];
-		int var13 = sinTable[arg1];
-		int var14 = cosTable[arg1];
-		int var15 = sinTable[arg2];
-		int var16 = cosTable[arg2];
-		int var17 = sinTable[arg3];
-		int var18 = cosTable[arg3];
-		int var19 = arg5 * var17 + arg6 * var18 >> 16;
-		for (int var20 = 0; var20 < this.vertexCount; var20++) {
-			int var21 = this.vertexX[var20];
-			int var22 = this.vertexY[var20];
-			int var23 = this.vertexZ[var20];
-			if (arg2 != 0) {
-				int var24 = var15 * var22 + var16 * var21 >> 16;
-				var22 = var16 * var22 - var15 * var21 >> 16;
-				var21 = var24;
-			}
-			if (arg0 != 0) {
-				int var25 = var12 * var22 - var11 * var23 >> 16;
-				var23 = var11 * var22 + var12 * var23 >> 16;
-				var22 = var25;
-			}
-			if (arg1 != 0) {
-				int var26 = var13 * var23 + var14 * var21 >> 16;
-				var23 = var14 * var23 - var13 * var21 >> 16;
-				var21 = var26;
-			}
-			int var27 = arg4 + var21;
-			int var28 = arg5 + var22;
-			int var29 = arg6 + var23;
-			int var30 = var18 * var28 - var17 * var29 >> 16;
-			int var31 = var17 * var28 + var18 * var29 >> 16;
-			vertexScreenZ[var20] = var31 - var19;
-			vertexScreenX[var20] = (var27 << 9) / arg7 + var9;
-			vertexScreenY[var20] = (var30 << 9) / arg7 + var10;
-			if (this.field2738 > 0) {
-				vertexViewSpaceX[var20] = var27;
-				vertexViewSpaceY[var20] = var30;
-				vertexViewSpaceZ[var20] = var31;
-			}
-		}
-		try {
-			this.draw(false, false, 0);
-		} catch (Exception var34) {
-		}
-	}
-
-	@ObfuscatedName("fo.z(IIIIIIIII)V")
-	public void draw(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int typecode) {
-		tmpDepthFaceCount[0] = -1;
-
-		if (this.field2745 != 1) {
-			this.method3002();
-		}
-
-		int var10 = arg4 * arg7 - arg3 * arg5 >> 16;
-		int var11 = arg1 * arg6 + arg2 * var10 >> 16;
-		int var12 = this.field2747 * arg2 >> 16;
-		int var13 = var11 + var12;
-		if (var13 <= 50 || var11 >= 3500) {
+	@ObfuscatedName("fw.av()V")
+	public void calculateNormals() {
+		if (this.vertexNormal != null) {
 			return;
 		}
 
-		int var14 = arg3 * arg7 + arg4 * arg5 >> 16;
-		int var15 = var14 - this.field2747 << 9;
-		if (var15 / var13 >= Pix3D.field2534) {
-			return;
+		this.vertexNormal = new VertexNormal[this.vertexCount];
+		for (int var1 = 0; var1 < this.vertexCount; var1++) {
+			this.vertexNormal[var1] = new VertexNormal();
 		}
 
-		int var16 = this.field2747 + var14 << 9;
-		if (var16 / var13 <= Pix3D.field2542) {
-			return;
-		}
+		for (int f = 0; f < this.faceCount; f++) {
+			int a = this.faceVertexA[f];
+			int b = this.faceVertexB[f];
+			int c = this.faceVertexC[f];
 
-		int var17 = arg2 * arg6 - arg1 * var10 >> 16;
-		int var18 = this.field2747 * arg1 >> 16;
-		int var19 = var17 + var18 << 9;
-		if (var19 / var13 <= Pix3D.field2535) {
-			return;
-		}
+			int dxAB = this.vertexX[b] - this.vertexX[a];
+			int dyAB = this.vertexY[b] - this.vertexY[a];
+			int dzAB = this.vertexZ[b] - this.vertexZ[a];
 
-		int var20 = (this.minY * arg2 >> 16) + var18;
-		int var21 = var17 - var20 << 9;
-		if (var21 / var13 >= Pix3D.field2537) {
-			return;
-		}
+			int dxAC = this.vertexX[c] - this.vertexX[a];
+			int dyAC = this.vertexY[c] - this.vertexY[a];
+			int dzAC = this.vertexZ[c] - this.vertexZ[a];
 
-		int var22 = (this.minY * arg1 >> 16) + var12;
-		boolean clipped = false;
-		boolean var24 = false;
-		if (var11 - var22 <= 50) {
-			var24 = true;
-		}
-
-		boolean var25 = var24 || this.field2738 > 0;
-		boolean picking = false;
-
-		if (typecode > 0 && mouseCheck) {
-			int var27 = var11 - var12;
-			if (var27 <= 50) {
-				var27 = 50;
+			int nx = dyAB * dzAC - dzAB * dyAC;
+			int ny = dzAB * dxAC - dxAB * dzAC;
+			int nz;
+			for (nz = dxAB * dyAC - dyAB * dxAC; nx > 8192 || ny > 8192 || nz > 8192 || nx < -8192 || ny < -8192 || nz < -8192; nz >>= 0x1) {
+				nx >>= 0x1;
+				ny >>= 0x1;
 			}
-			int var28;
-			int var29;
-			if (var14 > 0) {
-				var28 = var15 / var13;
-				var29 = var16 / var27;
+
+			int length = (int) Math.sqrt(nz * nz + nx * nx + ny * ny);
+			if (length <= 0) {
+				length = 1;
+			}
+
+			int var16 = nx * 256 / length;
+			int var17 = ny * 256 / length;
+			int var18 = nz * 256 / length;
+
+			byte var19;
+			if (this.field2679 == null) {
+				var19 = 0;
 			} else {
-				var29 = var16 / var13;
-				var28 = var15 / var27;
+				var19 = this.field2679[f];
 			}
-			int var30;
-			int var31;
-			if (var17 > 0) {
-				var30 = var21 / var13;
-				var31 = var19 / var27;
-			} else {
-				var31 = var19 / var13;
-				var30 = var21 / var27;
+
+			if (var19 == 0) {
+				VertexNormal n = this.vertexNormal[a];
+				n.x += var16;
+				n.y += var17;
+				n.z += var18;
+				n.w++;
+
+				n = this.vertexNormal[b];
+				n.x += var16;
+				n.y += var17;
+				n.z += var18;
+				n.w++;
+
+				n = this.vertexNormal[c];
+				n.x += var16;
+				n.y += var17;
+				n.z += var18;
+				n.w++;
+			} else if (var19 == 1) {
+				if (this.faceNormal == null) {
+					this.faceNormal = new FaceNormal[this.faceCount];
+				}
+
+				FaceNormal n = this.faceNormal[f] = new FaceNormal();
+				n.field552 = var16;
+				n.field551 = var17;
+				n.field550 = var18;
 			}
-			int var32 = mouseX - Pix3D.centerX;
-			int var33 = mouseY - Pix3D.centerY;
-			if (var32 > var28 && var32 < var29 && var33 > var30 && var33 < var31) {
-				if (this.picking) {
-					pickedEntityTypecode[pickedEntityCount++] = typecode;
+		}
+	}
+
+	@ObfuscatedName("fw.ak()V")
+	public void method2986() {
+		this.vertexNormal = null;
+		this.field2685 = null;
+		this.faceNormal = null;
+		this.boundsCalculated = false;
+	}
+
+	@ObfuscatedName("fw.az()V")
+	public void calculateBoundsAABB() {
+		if (this.boundsCalculated) {
+			return;
+		}
+
+		this.minY = 0;
+		this.radius = 0;
+		this.minX = 999999;
+		this.maxX = -999999;
+		this.minZ = -99999;
+		this.maxZ = 99999;
+
+		for (int v = 0; v < this.vertexCount; v++) {
+			int x = this.vertexX[v];
+			int y = this.vertexY[v];
+			int z = this.vertexZ[v];
+
+			if (x < this.minX) {
+				this.minX = x;
+			}
+
+			if (x > this.maxX) {
+				this.maxX = x;
+			}
+
+			if (z < this.maxZ) {
+				this.maxZ = z;
+			}
+
+			if (z > this.minZ) {
+				this.minZ = z;
+			}
+
+			if (-y > this.minY) {
+				this.minY = -y;
+			}
+
+			if (y > this.radius) {
+				this.radius = y;
+			}
+		}
+
+		this.boundsCalculated = true;
+	}
+
+	@ObfuscatedName("fw.an(Lfw;Lfw;IIIZ)V")
+	public static void mergeNormals(ModelUnlit arg0, ModelUnlit arg1, int arg2, int arg3, int arg4, boolean arg5) {
+		arg0.calculateBoundsAABB();
+		arg0.calculateNormals();
+		arg1.calculateBoundsAABB();
+		arg1.calculateNormals();
+
+		field2715++;
+		int var6 = 0;
+		int[] var7 = arg1.vertexX;
+		int var8 = arg1.vertexCount;
+		for (int var9 = 0; var9 < arg0.vertexCount; var9++) {
+			VertexNormal var10 = arg0.vertexNormal[var9];
+			if (var10.w == 0) {
+				continue;
+			}
+			int var11 = arg0.vertexY[var9] - arg3;
+			if (var11 <= arg1.radius) {
+				int var12 = arg0.vertexX[var9] - arg2;
+				if (var12 < arg1.minX || var12 > arg1.maxX) {
+					continue;
+				}
+				int var13 = arg0.vertexZ[var9] - arg4;
+				if (var13 < arg1.maxZ || var13 > arg1.minZ) {
+					continue;
+				}
+				for (int var14 = 0; var14 < var8; var14++) {
+					VertexNormal var15 = arg1.vertexNormal[var14];
+					if (var7[var14] != var12 || arg1.vertexZ[var14] != var13 || arg1.vertexY[var14] != var11 || var15.w == 0) {
+						continue;
+					}
+					if (arg0.field2685 == null) {
+						arg0.field2685 = new VertexNormal[arg0.vertexCount];
+					}
+					if (arg1.field2685 == null) {
+						arg1.field2685 = new VertexNormal[var8];
+					}
+					VertexNormal var16 = arg0.field2685[var9];
+					if (var16 == null) {
+						var16 = arg0.field2685[var9] = new VertexNormal(var10);
+					}
+					VertexNormal var17 = arg1.field2685[var14];
+					if (var17 == null) {
+						var17 = arg1.field2685[var14] = new VertexNormal(var15);
+					}
+					var16.x += var15.x;
+					var16.y += var15.y;
+					var16.z += var15.z;
+					var16.w += var15.w;
+					var17.x += var10.x;
+					var17.y += var10.y;
+					var17.z += var10.z;
+					var17.w += var10.w;
+					var6++;
+					field2683[var9] = field2715;
+					field2714[var14] = field2715;
+				}
+			}
+		}
+		if (var6 >= 3 && arg5) {
+			for (int var18 = 0; var18 < arg0.faceCount; var18++) {
+				if (field2683[arg0.faceVertexA[var18]] == field2715 && field2683[arg0.faceVertexB[var18]] == field2715 && field2683[arg0.faceVertexC[var18]] == field2715) {
+					if (arg0.field2679 == null) {
+						arg0.field2679 = new byte[arg0.faceCount];
+					}
+					arg0.field2679[var18] = 2;
+				}
+			}
+			for (int var19 = 0; var19 < arg1.faceCount; var19++) {
+				if (field2714[arg1.faceVertexA[var19]] == field2715 && field2714[arg1.faceVertexB[var19]] == field2715 && field2714[arg1.faceVertexC[var19]] == field2715) {
+					if (arg1.field2679 == null) {
+						arg1.field2679 = new byte[arg1.faceCount];
+					}
+					arg1.field2679[var19] = 2;
+				}
+			}
+		}
+	}
+
+	@ObfuscatedName("fw.ah(IIIII)Lfo;")
+	public final ModelLit calculateNormals(int arg0, int arg1, int arg2, int arg3, int arg4) {
+		this.calculateNormals();
+		int var6 = (int) Math.sqrt(arg4 * arg4 + arg2 * arg2 + arg3 * arg3);
+		int var7 = arg1 * var6 >> 8;
+		ModelLit var8 = new ModelLit();
+		var8.faceColorA = new int[this.faceCount];
+		var8.faceColorB = new int[this.faceCount];
+		var8.faceColorC = new int[this.faceCount];
+		if (this.faceTextureCount > 0 && this.field2682 != null) {
+			int[] var9 = new int[this.faceTextureCount];
+			for (int var10 = 0; var10 < this.faceCount; var10++) {
+				if (this.field2682[var10] != -1) {
+					var9[this.field2682[var10] & 0xFF]++;
+				}
+			}
+			var8.field2738 = 0;
+			for (int var11 = 0; var11 < this.faceTextureCount; var11++) {
+				if (var9[var11] > 0 && this.field2687[var11] == 0) {
+					var8.field2738++;
+				}
+			}
+			var8.field2739 = new int[var8.field2738];
+			var8.field2774 = new int[var8.field2738];
+			var8.field2765 = new int[var8.field2738];
+			int var12 = 0;
+			for (int var13 = 0; var13 < this.faceTextureCount; var13++) {
+				if (var9[var13] > 0 && this.field2687[var13] == 0) {
+					var8.field2739[var12] = this.faceTextureP[var13] & 0xFFFF;
+					var8.field2774[var12] = this.faceTextureM[var13] & 0xFFFF;
+					var8.field2765[var12] = this.faceTextureN[var13] & 0xFFFF;
+					var9[var13] = var12++;
 				} else {
-					picking = true;
+					var9[var13] = -1;
 				}
 			}
-		}
-
-		int var34 = Pix3D.centerX;
-		int var35 = Pix3D.centerY;
-
-		int var36 = 0;
-		int var37 = 0;
-		if (arg0 != 0) {
-			var36 = sinTable[arg0];
-			var37 = cosTable[arg0];
-		}
-
-		for (int var38 = 0; var38 < this.vertexCount; var38++) {
-			int var39 = this.vertexX[var38];
-			int var40 = this.vertexY[var38];
-			int var41 = this.vertexZ[var38];
-
-			if (arg0 != 0) {
-				int var42 = var36 * var41 + var37 * var39 >> 16;
-				var41 = var37 * var41 - var36 * var39 >> 16;
-				var39 = var42;
-			}
-
-			int var43 = arg5 + var39;
-			int var44 = arg6 + var40;
-			int var45 = arg7 + var41;
-			int var46 = arg3 * var45 + arg4 * var43 >> 16;
-			int var47 = arg4 * var45 - arg3 * var43 >> 16;
-			int var49 = arg2 * var44 - arg1 * var47 >> 16;
-			int var50 = arg1 * var44 + arg2 * var47 >> 16;
-			vertexScreenZ[var38] = var50 - var11;
-
-			if (var50 >= 50) {
-				vertexScreenX[var38] = (var46 << 9) / var50 + var34;
-				vertexScreenY[var38] = (var49 << 9) / var50 + var35;
-			} else {
-				vertexScreenX[var38] = -5000;
-				clipped = true;
-			}
-
-			if (var25) {
-				vertexViewSpaceX[var38] = var46;
-				vertexViewSpaceY[var38] = var49;
-				vertexViewSpaceZ[var38] = var50;
-			}
-		}
-
-		try {
-			this.draw(clipped, picking, typecode);
-		} catch (Exception var53) {
-		}
-	}
-
-	@ObfuscatedName("fo.az(ZZI)V")
-	public final void draw(boolean clipped, boolean picking, int typecode) {
-		if (this.maxDepth >= 1600) {
-			return;
-		}
-
-		for (int i = 0; i < this.maxDepth; i++) {
-			tmpDepthFaceCount[i] = 0;
-		}
-
-		for (int f = 0; f < this.field2780; f++) {
-			if (this.faceColorC[f] != -2) {
-				int var6 = this.faceVertexA[f];
-				int var7 = this.faceVertexB[f];
-				int var8 = this.faceVertexC[f];
-
-				int var9 = vertexScreenX[var6];
-				int var10 = vertexScreenX[var7];
-				int var11 = vertexScreenX[var8];
-
-				if (clipped && (var9 == -5000 || var10 == -5000 || var11 == -5000)) {
-					int var12 = vertexViewSpaceX[var6];
-					int var13 = vertexViewSpaceX[var7];
-					int var14 = vertexViewSpaceX[var8];
-
-					int var15 = vertexViewSpaceY[var6];
-					int var16 = vertexViewSpaceY[var7];
-					int var17 = vertexViewSpaceY[var8];
-
-					int var18 = vertexViewSpaceZ[var6];
-					int var19 = vertexViewSpaceZ[var7];
-					int var20 = vertexViewSpaceZ[var8];
-
-					int var21 = var12 - var13;
-					int var22 = var14 - var13;
-					int var23 = var15 - var16;
-					int var24 = var17 - var16;
-					int var25 = var18 - var19;
-					int var26 = var20 - var19;
-					int var27 = var23 * var26 - var24 * var25;
-					int var28 = var22 * var25 - var21 * var26;
-					int var29 = var21 * var24 - var22 * var23;
-					if (var19 * var29 + var13 * var27 + var16 * var28 > 0) {
-						faceNearClipped[f] = true;
-						int var30 = (vertexScreenZ[var6] + vertexScreenZ[var7] + vertexScreenZ[var8]) / 3 + this.minDepth;
-						tmpDepthFaces[var30][tmpDepthFaceCount[var30]++] = f;
-					}
+			var8.field2735 = new byte[this.faceCount];
+			for (int var14 = 0; var14 < this.faceCount; var14++) {
+				if (this.field2682[var14] == -1) {
+					var8.field2735[var14] = -1;
 				} else {
-					if (picking && this.pointWithinTriangle(mouseX, mouseY, vertexScreenY[var6], vertexScreenY[var7], vertexScreenY[var8], var9, var10, var11)) {
-						pickedEntityTypecode[pickedEntityCount++] = typecode;
-						picking = false;
-					}
-
-					if ((vertexScreenY[var8] - vertexScreenY[var7]) * (var9 - var10) - (vertexScreenY[var6] - vertexScreenY[var7]) * (var11 - var10) > 0) {
-						faceNearClipped[f] = false;
-
-						if (var9 >= 0 && var10 >= 0 && var11 >= 0 && var9 <= Pix3D.boundX && var10 <= Pix3D.boundX && var11 <= Pix3D.boundX) {
-							faceClippedX[f] = false;
-						} else {
-							faceClippedX[f] = true;
-						}
-
-						int var31 = (vertexScreenZ[var6] + vertexScreenZ[var7] + vertexScreenZ[var8]) / 3 + this.minDepth;
-						tmpDepthFaces[var31][tmpDepthFaceCount[var31]++] = f;
-					}
+					var8.field2735[var14] = (byte) var9[this.field2682[var14] & 0xFF];
 				}
 			}
 		}
-
-		if (this.facePriority == null) {
-			for (int depth = this.maxDepth - 1; depth >= 0; depth--) {
-				int count = tmpDepthFaceCount[depth];
-				if (count > 0) {
-					int[] faces = tmpDepthFaces[depth];
-					for (int f = 0; f < count; f++) {
-						this.drawFace(faces[f]);
-					}
-				}
+		for (int var15 = 0; var15 < this.faceCount; var15++) {
+			byte var16;
+			if (this.field2679 == null) {
+				var16 = 0;
+			} else {
+				var16 = this.field2679[var15];
 			}
-
-			return;
-		}
-
-		for (int priority = 0; priority < 12; priority++) {
-			tmpPriorityFaceCount[priority] = 0;
-			tmpPriorityDepthSum[priority] = 0;
-		}
-
-		for (int depth = this.maxDepth - 1; depth >= 0; depth--) {
-			int faceCount = tmpDepthFaceCount[depth];
-
-			if (faceCount > 0) {
-				int[] faces = tmpDepthFaces[depth];
-				for (int i = 0; i < faceCount; i++) {
-					int priorityDepth = faces[i];
-					byte priorityFace = this.facePriority[priorityDepth];
-					int priorityFaceCount = tmpPriorityFaceCount[priorityFace]++;
-
-					tmpPriorityFaces[priorityFace][priorityFaceCount] = priorityDepth;
-
-					if (priorityFace < 10) {
-						tmpPriorityDepthSum[priorityFace] += depth;
-					} else if (priorityFace == 10) {
-						tmpPriority10FaceDepth[priorityFaceCount] = depth;
+			byte var17;
+			if (this.faceAlpha == null) {
+				var17 = 0;
+			} else {
+				var17 = this.faceAlpha[var15];
+			}
+			short var18;
+			if (this.field2705 == null) {
+				var18 = -1;
+			} else {
+				var18 = this.field2705[var15];
+			}
+			if (var17 == -2) {
+				var16 = 3;
+			}
+			if (var17 == -1) {
+				var16 = 2;
+			}
+			if (var18 == -1) {
+				if (var16 == 0) {
+					int var19 = this.faceColour[var15] & 0xFFFF;
+					VertexNormal var20;
+					if (this.field2685 == null || this.field2685[this.faceVertexA[var15]] == null) {
+						var20 = this.vertexNormal[this.faceVertexA[var15]];
 					} else {
-						tmpPriority11FaceDepth[priorityFaceCount] = depth;
+						var20 = this.field2685[this.faceVertexA[var15]];
 					}
-				}
-			}
-		}
-
-		int var44 = 0;
-		if (tmpPriorityFaceCount[1] > 0 || tmpPriorityFaceCount[2] > 0) {
-			var44 = (tmpPriorityDepthSum[1] + tmpPriorityDepthSum[2]) / (tmpPriorityFaceCount[1] + tmpPriorityFaceCount[2]);
-		}
-
-		int var45 = 0;
-		if (tmpPriorityFaceCount[3] > 0 || tmpPriorityFaceCount[4] > 0) {
-			var45 = (tmpPriorityDepthSum[3] + tmpPriorityDepthSum[4]) / (tmpPriorityFaceCount[3] + tmpPriorityFaceCount[4]);
-		}
-
-		int var46 = 0;
-		if (tmpPriorityFaceCount[6] > 0 || tmpPriorityFaceCount[8] > 0) {
-			var46 = (tmpPriorityDepthSum[6] + tmpPriorityDepthSum[8]) / (tmpPriorityFaceCount[6] + tmpPriorityFaceCount[8]);
-		}
-
-		int var47 = 0;
-		int var48 = tmpPriorityFaceCount[10];
-		int[] var49 = tmpPriorityFaces[10];
-		int[] var50 = tmpPriority10FaceDepth;
-		if (var47 == var48) {
-			var47 = 0;
-			var48 = tmpPriorityFaceCount[11];
-			var49 = tmpPriorityFaces[11];
-			var50 = tmpPriority11FaceDepth;
-		}
-
-		int var51;
-		if (var47 < var48) {
-			var51 = var50[var47];
-		} else {
-			var51 = -1000;
-		}
-
-		for (int var52 = 0; var52 < 10; var52++) {
-			while (var52 == 0 && var51 > var44) {
-				this.drawFace(var49[var47++]);
-				if (var47 == var48 && tmpPriorityFaces[11] != var49) {
-					var47 = 0;
-					var48 = tmpPriorityFaceCount[11];
-					var49 = tmpPriorityFaces[11];
-					var50 = tmpPriority11FaceDepth;
-				}
-				if (var47 < var48) {
-					var51 = var50[var47];
+					int var21 = (var20.z * arg4 + var20.x * arg2 + var20.y * arg3) / (var20.w * var7) + arg0;
+					var8.faceColorA[var15] = method2943(var19, var21);
+					VertexNormal var22;
+					if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
+						var22 = this.vertexNormal[this.faceVertexB[var15]];
+					} else {
+						var22 = this.field2685[this.faceVertexB[var15]];
+					}
+					int var23 = (var22.z * arg4 + var22.x * arg2 + var22.y * arg3) / (var22.w * var7) + arg0;
+					var8.faceColorB[var15] = method2943(var19, var23);
+					VertexNormal var24;
+					if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
+						var24 = this.vertexNormal[this.faceVertexC[var15]];
+					} else {
+						var24 = this.field2685[this.faceVertexC[var15]];
+					}
+					int var25 = (var24.z * arg4 + var24.x * arg2 + var24.y * arg3) / (var24.w * var7) + arg0;
+					var8.faceColorC[var15] = method2943(var19, var25);
+				} else if (var16 == 1) {
+					FaceNormal var26 = this.faceNormal[var15];
+					int var27 = (var26.field550 * arg4 + var26.field552 * arg2 + var26.field551 * arg3) / (var7 / 2 + var7) + arg0;
+					var8.faceColorA[var15] = method2943(this.faceColour[var15] & 0xFFFF, var27);
+					var8.faceColorC[var15] = -1;
+				} else if (var16 == 3) {
+					var8.faceColorA[var15] = 128;
+					var8.faceColorC[var15] = -1;
 				} else {
-					var51 = -1000;
+					var8.faceColorC[var15] = -2;
 				}
-			}
-
-			while (var52 == 3 && var51 > var45) {
-				this.drawFace(var49[var47++]);
-				if (var47 == var48 && tmpPriorityFaces[11] != var49) {
-					var47 = 0;
-					var48 = tmpPriorityFaceCount[11];
-					var49 = tmpPriorityFaces[11];
-					var50 = tmpPriority11FaceDepth;
-				}
-				if (var47 < var48) {
-					var51 = var50[var47];
+			} else if (var16 == 0) {
+				VertexNormal var28;
+				if (this.field2685 == null || this.field2685[this.faceVertexA[var15]] == null) {
+					var28 = this.vertexNormal[this.faceVertexA[var15]];
 				} else {
-					var51 = -1000;
+					var28 = this.field2685[this.faceVertexA[var15]];
 				}
-			}
-
-			while (var52 == 5 && var51 > var46) {
-				this.drawFace(var49[var47++]);
-				if (var47 == var48 && tmpPriorityFaces[11] != var49) {
-					var47 = 0;
-					var48 = tmpPriorityFaceCount[11];
-					var49 = tmpPriorityFaces[11];
-					var50 = tmpPriority11FaceDepth;
-				}
-				if (var47 < var48) {
-					var51 = var50[var47];
+				int var29 = (var28.z * arg4 + var28.x * arg2 + var28.y * arg3) / (var28.w * var7) + arg0;
+				var8.faceColorA[var15] = method2939(var29);
+				VertexNormal var30;
+				if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
+					var30 = this.vertexNormal[this.faceVertexB[var15]];
 				} else {
-					var51 = -1000;
+					var30 = this.field2685[this.faceVertexB[var15]];
 				}
-			}
-
-			int var53 = tmpPriorityFaceCount[var52];
-			int[] var54 = tmpPriorityFaces[var52];
-			for (int var55 = 0; var55 < var53; var55++) {
-				this.drawFace(var54[var55]);
-			}
-		}
-
-		while (var51 != -1000) {
-			this.drawFace(var49[var47++]);
-			if (var47 == var48 && tmpPriorityFaces[11] != var49) {
-				var47 = 0;
-				var49 = tmpPriorityFaces[11];
-				var48 = tmpPriorityFaceCount[11];
-				var50 = tmpPriority11FaceDepth;
-			}
-			if (var47 < var48) {
-				var51 = var50[var47];
+				int var31 = (var30.z * arg4 + var30.x * arg2 + var30.y * arg3) / (var30.w * var7) + arg0;
+				var8.faceColorB[var15] = method2939(var31);
+				VertexNormal var32;
+				if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
+					var32 = this.vertexNormal[this.faceVertexC[var15]];
+				} else {
+					var32 = this.field2685[this.faceVertexC[var15]];
+				}
+				int var33 = (var32.z * arg4 + var32.x * arg2 + var32.y * arg3) / (var32.w * var7) + arg0;
+				var8.faceColorC[var15] = method2939(var33);
+			} else if (var16 == 1) {
+				FaceNormal var34 = this.faceNormal[var15];
+				int var35 = (var34.field550 * arg4 + var34.field552 * arg2 + var34.field551 * arg3) / (var7 / 2 + var7) + arg0;
+				var8.faceColorA[var15] = method2939(var35);
+				var8.faceColorC[var15] = -1;
 			} else {
-				var51 = -1000;
+				var8.faceColorC[var15] = -2;
 			}
 		}
+		this.method2929();
+		var8.vertexCount = this.vertexCount;
+		var8.vertexX = this.vertexX;
+		var8.vertexY = this.vertexY;
+		var8.vertexZ = this.vertexZ;
+		var8.field2780 = this.faceCount;
+		var8.faceVertexA = this.faceVertexA;
+		var8.faceVertexB = this.faceVertexB;
+		var8.faceVertexC = this.faceVertexC;
+		var8.facePriority = this.facePriority;
+		var8.faceAlpha = this.faceAlpha;
+		var8.field2737 = this.priority;
+		var8.field2742 = this.field2700;
+		var8.field2743 = this.field2701;
+		var8.field2718 = this.field2705;
+		return var8;
 	}
 
-	@ObfuscatedName("fo.an(I)V")
-	public final void drawFace(int face) {
-		if (faceNearClipped[face]) {
-			this.drawNearClippedFace(face);
-			return;
+	@ObfuscatedName("fw.ay(II)I")
+	public static final int method2943(int arg0, int arg1) {
+		int var2 = (arg0 & 0x7F) * arg1 >> 7;
+		if (var2 < 2) {
+			var2 = 2;
+		} else if (var2 > 126) {
+			var2 = 126;
 		}
-
-		int a = this.faceVertexA[face];
-		int b = this.faceVertexB[face];
-		int c = this.faceVertexC[face];
-
-		Pix3D.hclip = faceClippedX[face];
-
-		if (this.faceAlpha == null) {
-			Pix3D.trans = 0;
-		} else {
-			Pix3D.trans = this.faceAlpha[face] & 0xFF;
-		}
-
-		if (this.field2718 != null && this.field2718[face] != -1) {
-			int var6;
-			int var7;
-			int var8;
-			if (this.field2735 == null || this.field2735[face] == -1) {
-				var6 = a;
-				var7 = b;
-				var8 = c;
-			} else {
-				int var5 = this.field2735[face] & 0xFF;
-				var6 = this.field2739[var5];
-				var7 = this.field2774[var5];
-				var8 = this.field2765[var5];
-			}
-			if (this.faceColorC[face] == -1) {
-				Pix3D.method2769(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorA[face], this.faceColorA[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
-			} else {
-				Pix3D.method2769(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorB[face], this.faceColorC[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
-			}
-		} else if (this.faceColorC[face] == -1) {
-			Pix3D.method2767(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], palette[this.faceColorA[face]]);
-		} else {
-			Pix3D.gouraudTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorB[face], this.faceColorC[face]);
-		}
+		return (arg0 & 0xFF80) + var2;
 	}
 
-	@ObfuscatedName("fo.ah(I)V")
-	public final void drawNearClippedFace(int arg0) {
-		int var2 = Pix3D.centerX;
-		int var3 = Pix3D.centerY;
-		int elements = 0;
-		int var5 = this.faceVertexA[arg0];
-		int var6 = this.faceVertexB[arg0];
-		int var7 = this.faceVertexC[arg0];
-		int var8 = vertexViewSpaceZ[var5];
-		int var9 = vertexViewSpaceZ[var6];
-		int var10 = vertexViewSpaceZ[var7];
-		if (this.faceAlpha == null) {
-			Pix3D.trans = 0;
-		} else {
-			Pix3D.trans = this.faceAlpha[arg0] & 0xFF;
+	@ObfuscatedName("fw.al(I)I")
+	public static final int method2939(int arg0) {
+		if (arg0 < 2) {
+			arg0 = 2;
+		} else if (arg0 > 126) {
+			arg0 = 126;
 		}
-		if (var8 >= 50) {
-			clippedX[elements] = vertexScreenX[var5];
-			clippedY[elements] = vertexScreenY[var5];
-			clippedColor[elements++] = this.faceColorA[arg0];
-		} else {
-			int var11 = vertexViewSpaceX[var5];
-			int var12 = vertexViewSpaceY[var5];
-			int var13 = this.faceColorA[arg0];
-			if (var10 >= 50) {
-				int var14 = (50 - var8) * divTable2[var10 - var8];
-				clippedX[elements] = (((vertexViewSpaceX[var7] - var11) * var14 >> 16) + var11 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var7] - var12) * var14 >> 16) + var12 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorC[arg0] - var13) * var14 >> 16) + var13;
-			}
-			if (var9 >= 50) {
-				int var15 = (50 - var8) * divTable2[var9 - var8];
-				clippedX[elements] = (((vertexViewSpaceX[var6] - var11) * var15 >> 16) + var11 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var6] - var12) * var15 >> 16) + var12 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorB[arg0] - var13) * var15 >> 16) + var13;
-			}
-		}
-		if (var9 >= 50) {
-			clippedX[elements] = vertexScreenX[var6];
-			clippedY[elements] = vertexScreenY[var6];
-			clippedColor[elements++] = this.faceColorB[arg0];
-		} else {
-			int var16 = vertexViewSpaceX[var6];
-			int var17 = vertexViewSpaceY[var6];
-			int var18 = this.faceColorB[arg0];
-			if (var8 >= 50) {
-				int var19 = (50 - var9) * divTable2[var8 - var9];
-				clippedX[elements] = (((vertexViewSpaceX[var5] - var16) * var19 >> 16) + var16 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var5] - var17) * var19 >> 16) + var17 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorA[arg0] - var18) * var19 >> 16) + var18;
-			}
-			if (var10 >= 50) {
-				int var20 = (50 - var9) * divTable2[var10 - var9];
-				clippedX[elements] = (((vertexViewSpaceX[var7] - var16) * var20 >> 16) + var16 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var7] - var17) * var20 >> 16) + var17 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorC[arg0] - var18) * var20 >> 16) + var18;
-			}
-		}
-		if (var10 >= 50) {
-			clippedX[elements] = vertexScreenX[var7];
-			clippedY[elements] = vertexScreenY[var7];
-			clippedColor[elements++] = this.faceColorC[arg0];
-		} else {
-			int var21 = vertexViewSpaceX[var7];
-			int var22 = vertexViewSpaceY[var7];
-			int var23 = this.faceColorC[arg0];
-			if (var9 >= 50) {
-				int var24 = (50 - var10) * divTable2[var9 - var10];
-				clippedX[elements] = (((vertexViewSpaceX[var6] - var21) * var24 >> 16) + var21 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var6] - var22) * var24 >> 16) + var22 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorB[arg0] - var23) * var24 >> 16) + var23;
-			}
-			if (var8 >= 50) {
-				int var25 = (50 - var10) * divTable2[var8 - var10];
-				clippedX[elements] = (((vertexViewSpaceX[var5] - var21) * var25 >> 16) + var21 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var5] - var22) * var25 >> 16) + var22 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorA[arg0] - var23) * var25 >> 16) + var23;
-			}
-		}
-		int var26 = clippedX[0];
-		int var27 = clippedX[1];
-		int var28 = clippedX[2];
-		int var29 = clippedY[0];
-		int var30 = clippedY[1];
-		int var31 = clippedY[2];
-		Pix3D.hclip = false;
-		if (elements == 3) {
-			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX) {
-				Pix3D.hclip = true;
-			}
-			if (this.field2718 != null && this.field2718[arg0] != -1) {
-				int var33;
-				int var34;
-				int var35;
-				if (this.field2735 == null || this.field2735[arg0] == -1) {
-					var33 = var5;
-					var34 = var6;
-					var35 = var7;
-				} else {
-					int var32 = this.field2735[arg0] & 0xFF;
-					var33 = this.field2739[var32];
-					var34 = this.field2774[var32];
-					var35 = this.field2765[var32];
-				}
-				if (this.faceColorC[arg0] == -1) {
-					Pix3D.method2769(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
-				} else {
-					Pix3D.method2769(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
-				}
-			} else if (this.faceColorC[arg0] == -1) {
-				Pix3D.method2767(var29, var30, var31, var26, var27, var28, palette[this.faceColorA[arg0]]);
-			} else {
-				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
-			}
-		} else if (elements == 4) {
-			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX || clippedX[3] < 0 || clippedX[3] > Pix3D.boundX) {
-				Pix3D.hclip = true;
-			}
-			if (this.field2718 != null && this.field2718[arg0] != -1) {
-				int var37;
-				int var38;
-				int var39;
-				if (this.field2735 == null || this.field2735[arg0] == -1) {
-					var37 = var5;
-					var38 = var6;
-					var39 = var7;
-				} else {
-					int var36 = this.field2735[arg0] & 0xFF;
-					var37 = this.field2739[var36];
-					var38 = this.field2774[var36];
-					var39 = this.field2765[var36];
-				}
-				short var40 = this.field2718[arg0];
-				if (this.faceColorC[arg0] == -1) {
-					Pix3D.method2769(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-					Pix3D.method2769(var29, var31, clippedY[3], var26, var28, clippedX[3], this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-				} else {
-					Pix3D.method2769(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-					Pix3D.method2769(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-				}
-			} else if (this.faceColorC[arg0] == -1) {
-				int var41 = palette[this.faceColorA[arg0]];
-				Pix3D.method2767(var29, var30, var31, var26, var27, var28, var41);
-				Pix3D.method2767(var29, var31, clippedY[3], var26, var28, clippedX[3], var41);
-			} else {
-				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
-				Pix3D.gouraudTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3]);
-			}
-		}
-	}
-
-	@ObfuscatedName("fo.ay(IIIIIIII)Z")
-	public final boolean pointWithinTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-		if (arg1 < arg2 && arg1 < arg3 && arg1 < arg4) {
-			return false;
-		} else if (arg1 > arg2 && arg1 > arg3 && arg1 > arg4) {
-			return false;
-		} else if (arg0 < arg5 && arg0 < arg6 && arg0 < arg7) {
-			return false;
-		} else {
-			return arg0 <= arg5 || arg0 <= arg6 || arg0 <= arg7;
-		}
+		return arg0;
 	}
 }

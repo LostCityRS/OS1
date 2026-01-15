@@ -3,7 +3,7 @@ package jagex3.dash3d;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("ai")
-public class TileUnderlay {
+public class QuickGround {
 
 	@ObfuscatedName("ai.r")
 	public int southwestColour;
@@ -26,7 +26,7 @@ public class TileUnderlay {
 	@ObfuscatedName("ai.j")
 	public int field697;
 
-	public TileUnderlay(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, boolean arg6) {
+	public QuickGround(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, boolean arg6) {
 		this.southwestColour = arg0;
 		this.field692 = arg1;
 		this.northEastColour = arg2;

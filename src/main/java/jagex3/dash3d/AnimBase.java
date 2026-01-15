@@ -12,10 +12,10 @@ public class AnimBase extends Linkable {
 	public int field1724;
 
 	@ObfuscatedName("ez.c")
-	public int length;
+	public int size;
 
 	@ObfuscatedName("ez.n")
-	public int[] types;
+	public int[] type;
 
 	@ObfuscatedName("ez.j")
 	public int[][] labels;
@@ -24,19 +24,19 @@ public class AnimBase extends Linkable {
 		this.field1724 = arg0;
 
 		Packet buf = new Packet(src);
-		this.length = buf.g1();
-		this.types = new int[this.length];
-		this.labels = new int[this.length][];
+		this.size = buf.g1();
+		this.type = new int[this.size];
+		this.labels = new int[this.size][];
 
-		for (int i = 0; i < this.length; i++) {
-			this.types[i] = buf.g1();
+		for (int i = 0; i < this.size; i++) {
+			this.type[i] = buf.g1();
 		}
 
-		for (int i = 0; i < this.length; i++) {
+		for (int i = 0; i < this.size; i++) {
 			this.labels[i] = new int[buf.g1()];
 		}
 
-		for (int i = 0; i < this.length; i++) {
+		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.labels[i].length; j++) {
 				this.labels[i][j] = buf.g1();
 			}

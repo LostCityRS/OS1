@@ -216,7 +216,7 @@ public abstract class PixFont extends Pix2D {
 								try {
 									String var8 = var7.substring(4);
 									int var9 = StringUtil.method91(var8, 10, true);
-									var4 += modicons[var9].field2517;
+									var4 += modicons[var9].owi;
 									var3 = -1;
 								} catch (Exception var12) {
 								}
@@ -290,7 +290,7 @@ public abstract class PixFont extends Pix2D {
 						try {
 							String var17 = var16.substring(4);
 							int var18 = StringUtil.method91(var17, 10, true);
-							var4 += modicons[var18].field2517;
+							var4 += modicons[var18].owi;
 							var11 = 0;
 						} catch (Exception var22) {
 						}
@@ -601,8 +601,8 @@ public abstract class PixFont extends Pix2D {
 									String var10 = var9.substring(4);
 									int var11 = StringUtil.method91(var10, 10, true);
 									Pix8 var13 = modicons[var11];
-									var13.method2747(arg1, this.field2550 + var4 - var13.field2518);
-									arg1 += var13.field2517;
+									var13.plotSprite(arg1, this.field2550 + var4 - var13.ohi);
+									arg1 += var13.owi;
 									var6 = -1;
 								} catch (Exception var18) {
 								}
@@ -642,10 +642,10 @@ public abstract class PixFont extends Pix2D {
 					}
 					int var17 = this.field2554[var8];
 					if (field2555 != -1) {
-						method2594(arg1, (int) ((double) this.field2550 * 0.7D) + var4, var17, field2555);
+						hline(arg1, (int) ((double) this.field2550 * 0.7D) + var4, var17, field2555);
 					}
 					if (field2559 != -1) {
-						method2594(arg1, this.field2550 + var4 + 1, var17, field2559);
+						hline(arg1, this.field2550 + var4 + 1, var17, field2559);
 					}
 					arg1 += var17;
 					var6 = var8;
@@ -690,8 +690,8 @@ public abstract class PixFont extends Pix2D {
 									String var15 = var12.substring(4);
 									int var16 = StringUtil.method91(var15, 10, true);
 									Pix8 var18 = modicons[var16];
-									var18.method2747(arg1 + var13, this.field2550 + var6 - var18.field2518 + var14);
-									arg1 += var18.field2517;
+									var18.plotSprite(arg1 + var13, this.field2550 + var6 - var18.ohi + var14);
+									arg1 += var18.owi;
 									var8 = -1;
 								} catch (Exception var25) {
 								}
@@ -744,10 +744,10 @@ public abstract class PixFont extends Pix2D {
 					}
 					int var24 = this.field2554[var11];
 					if (field2555 != -1) {
-						method2594(arg1, (int) ((double) this.field2550 * 0.7D) + var6, var24, field2555);
+						hline(arg1, (int) ((double) this.field2550 * 0.7D) + var6, var24, field2555);
 					}
 					if (field2559 != -1) {
-						method2594(arg1, this.field2550 + var6, var24, field2559);
+						hline(arg1, this.field2550 + var6, var24, field2559);
 					}
 					arg1 += var24;
 					var8 = var11;
@@ -758,8 +758,8 @@ public abstract class PixFont extends Pix2D {
 
 	@ObfuscatedName("fs.ct([BIIIII)V")
 	public static void method2836(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-		int var6 = Pix2D.width2d * arg2 + arg1;
-		int var7 = Pix2D.width2d - arg3;
+		int var6 = Pix2D.width * arg2 + arg1;
+		int var7 = Pix2D.width - arg3;
 		int var8 = 0;
 		int var9 = 0;
 		if (arg2 < top) {
@@ -767,7 +767,7 @@ public abstract class PixFont extends Pix2D {
 			arg4 -= var10;
 			arg2 = top;
 			var9 += arg3 * var10;
-			var6 += Pix2D.width2d * var10;
+			var6 += Pix2D.width * var10;
 		}
 		if (arg2 + arg4 > bottom) {
 			arg4 -= arg2 + arg4 - bottom;
@@ -788,7 +788,7 @@ public abstract class PixFont extends Pix2D {
 			var7 += var12;
 		}
 		if (arg3 > 0 && arg4 > 0) {
-			method2834(Pix2D.data, arg0, arg5, var9, var6, arg3, arg4, var7, var8);
+			method2834(Pix2D.pixels, arg0, arg5, var9, var6, arg3, arg4, var7, var8);
 		}
 	}
 
@@ -833,8 +833,8 @@ public abstract class PixFont extends Pix2D {
 
 	@ObfuscatedName("fs.cy([BIIIIII)V")
 	public static void method2838(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
-		int var7 = Pix2D.width2d * arg2 + arg1;
-		int var8 = Pix2D.width2d - arg3;
+		int var7 = Pix2D.width * arg2 + arg1;
+		int var8 = Pix2D.width - arg3;
 		int var9 = 0;
 		int var10 = 0;
 		if (arg2 < top) {
@@ -842,7 +842,7 @@ public abstract class PixFont extends Pix2D {
 			arg4 -= var11;
 			arg2 = top;
 			var10 += arg3 * var11;
-			var7 += Pix2D.width2d * var11;
+			var7 += Pix2D.width * var11;
 		}
 		if (arg2 + arg4 > bottom) {
 			arg4 -= arg2 + arg4 - bottom;
@@ -863,7 +863,7 @@ public abstract class PixFont extends Pix2D {
 			var8 += var13;
 		}
 		if (arg3 > 0 && arg4 > 0) {
-			method2839(Pix2D.data, arg0, arg5, var10, var7, arg3, arg4, var8, var9, arg6);
+			method2839(Pix2D.pixels, arg0, arg5, var10, var7, arg3, arg4, var8, var9, arg6);
 		}
 	}
 

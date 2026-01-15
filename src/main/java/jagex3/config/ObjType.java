@@ -1,8 +1,8 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
+import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.Pix3D;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
@@ -327,7 +327,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.u(II)Lfw;")
-	public final ModelLit getInvModel(int count) {
+	public final ModelUnlit getInvModel(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -341,7 +341,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelLit model = ModelLit.tryGet(modelJs5, this.model, 0);
+		ModelUnlit model = ModelUnlit.tryGet(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -366,7 +366,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.v(IB)Lfo;")
-	public final ModelUnlit getModel(int count) {
+	public final ModelLit getModel(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -380,12 +380,12 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelUnlit cached = (ModelUnlit) modelCache.get(this.index);
+		ModelLit cached = (ModelLit) modelCache.get(this.index);
 		if (cached != null) {
 			return cached;
 		}
 
-		ModelLit model = ModelLit.tryGet(modelJs5, this.model, 0);
+		ModelUnlit model = ModelUnlit.tryGet(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -406,7 +406,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelUnlit litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
+		ModelLit litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 		litModel.picking = true;
 		modelCache.put(litModel, this.index);
 		return litModel;
@@ -431,9 +431,9 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eg.e(IIIIZI)Lfq;")
-	public static final Pix32 getIcon(int id, int count, int arg2, int arg3, boolean arg4) {
+	public static final Pix32 getIcon(int id, int count, int arg2, int arg3, boolean outlineRgb) {
 		long key = ((long) arg3 << 40) + ((long) arg2 << 38) + ((long) count << 16) + (long) id;
-		if (!arg4) {
+		if (!outlineRgb) {
 			Pix32 cached = (Pix32) iconCache.get(key);
 			if (cached != null) {
 				return cached;
@@ -454,7 +454,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelUnlit model = obj.getModel(1);
+		ModelLit model = obj.getModel(1);
 		if (model == null) {
 			return null;
 		}
@@ -467,30 +467,30 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		int[] data = Pix2D.data;
-		int width2d = Pix2D.width2d;
-		int height2d = Pix2D.height2d;
+		int[] data = Pix2D.pixels;
+		int width2d = Pix2D.width;
+		int height2d = Pix2D.height;
 		int[] var16 = new int[4];
-		Pix2D.method2587(var16);
+		Pix2D.saveClipping(var16);
 
 		Pix32 var17 = new Pix32(36, 32);
-		Pix2D.bind(var17.field2506, 36, 32);
-		Pix2D.method2589();
-		Pix3D.method2808();
-		Pix3D.method2784(16, 16);
+		Pix2D.setPixels(var17.data, 36, 32);
+		Pix2D.cls();
+		Pix3D.init();
+		Pix3D.initWH(16, 16);
 		Pix3D.jagged = false;
 
-		int scale = obj.zoom2d;
-		if (arg4) {
-			scale = (int) ((double) scale * 1.5D);
+		int zoom = obj.zoom2d;
+		if (outlineRgb) {
+			zoom = (int) ((double) zoom * 1.5D);
 		} else if (arg2 == 2) {
-			scale = (int) ((double) scale * 1.04D);
+			zoom = (int) ((double) zoom * 1.04D);
 		}
 
-		int var19 = Pix3D.sinTable[obj.xan2d] * scale >> 16;
-		int var20 = Pix3D.cosTable[obj.xan2d] * scale >> 16;
+		int var19 = Pix3D.sinTable[obj.xan2d] * zoom >> 16;
+		int var20 = Pix3D.cosTable[obj.xan2d] * zoom >> 16;
 		model.method3002();
-		model.method3014(0, obj.yan2d, obj.zan2d, obj.xan2d, obj.xof2d, obj.yof2d + model.minY / 2 + var19, obj.yof2d + var20);
+		model.objRender(0, obj.yan2d, obj.zan2d, obj.xan2d, obj.xof2d, obj.yof2d + model.minY / 2 + var19, obj.yof2d + var20);
 
 		if (arg2 >= 1) {
 			var17.method2714(0x000001);
@@ -504,23 +504,23 @@ public class ObjType extends DoublyLinkable {
 			var17.method2669(arg3);
 		}
 
-		Pix2D.bind(var17.field2506, 36, 32);
+		Pix2D.setPixels(var17.data, 36, 32);
 
 		if (obj.certtemplate != -1) {
 			certIcon.draw(0, 0);
 		}
 
-		if (!arg4 && (obj.stackable == 1 || count != 1) && count != -1) {
+		if (!outlineRgb && (obj.stackable == 1 || count != 1) && count != -1) {
 			font.drawString(formatObjCountTagged(count), 0, 9, 0xffff00, 1);
 		}
 
-		if (!arg4) {
+		if (!outlineRgb) {
 			iconCache.put(var17, key);
 		}
 
-		Pix2D.bind(data, width2d, height2d);
-		Pix2D.method2612(var16);
-		Pix3D.method2808();
+		Pix2D.setPixels(data, width2d, height2d);
+		Pix2D.loadClipping(var16);
+		Pix3D.init();
 		Pix3D.jagged = true;
 		return var17;
 	}
@@ -564,7 +564,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.t(ZI)Lfw;")
-	public final ModelLit getWornModel(boolean gender) {
+	public final ModelUnlit getWornModel(boolean gender) {
 		int wear1 = this.manwear;
 		int wear2 = this.manwear2;
 		int wear3 = this.manwear3;
@@ -578,16 +578,16 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelLit model = ModelLit.tryGet(modelJs5, wear1, 0);
+		ModelUnlit model = ModelUnlit.tryGet(modelJs5, wear1, 0);
 		if (wear2 != -1) {
-			ModelLit model2 = ModelLit.tryGet(modelJs5, wear2, 0);
+			ModelUnlit model2 = ModelUnlit.tryGet(modelJs5, wear2, 0);
 			if (wear3 == -1) {
-				ModelLit[] models = new ModelLit[] { model, model2 };
-				model = new ModelLit(models, 2);
+				ModelUnlit[] models = new ModelUnlit[] { model, model2 };
+				model = new ModelUnlit(models, 2);
 			} else {
-				ModelLit model3 = ModelLit.tryGet(modelJs5, wear3, 0);
-				ModelLit[] models = new ModelLit[] { model, model2, model3 };
-				model = new ModelLit(models, 3);
+				ModelUnlit model3 = ModelUnlit.tryGet(modelJs5, wear3, 0);
+				ModelUnlit[] models = new ModelUnlit[] { model, model2, model3 };
+				model = new ModelUnlit(models, 3);
 			}
 		}
 
@@ -634,7 +634,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fj.k(ZI)Lfw;")
-	public final ModelLit getHeadModel(boolean gender) {
+	public final ModelUnlit getHeadModel(boolean gender) {
 		int head1 = this.manhead;
 		int head2 = this.manhead2;
 		if (gender) {
@@ -646,11 +646,11 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelLit model = ModelLit.tryGet(modelJs5, head1, 0);
+		ModelUnlit model = ModelUnlit.tryGet(modelJs5, head1, 0);
 		if (head2 != -1) {
-			ModelLit model2 = ModelLit.tryGet(modelJs5, head2, 0);
-			ModelLit[] models = new ModelLit[] { model, model2 };
-			model = new ModelLit(models, 2);
+			ModelUnlit model2 = ModelUnlit.tryGet(modelJs5, head2, 0);
+			ModelUnlit[] models = new ModelUnlit[] { model, model2 };
+			model = new ModelUnlit(models, 2);
 		}
 
 		if (this.recol_s != null) {

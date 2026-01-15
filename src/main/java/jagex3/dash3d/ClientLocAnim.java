@@ -6,7 +6,7 @@ import jagex3.config.LocType;
 import jagex3.config.SeqType;
 
 @ObfuscatedName("ff")
-public class LocEntity extends Entity {
+public class ClientLocAnim extends ModelSource {
 
 	@ObfuscatedName("ff.j")
 	public int field2599;
@@ -35,7 +35,7 @@ public class LocEntity extends Entity {
 	@ObfuscatedName("ff.w")
 	public int animCycle;
 
-	public LocEntity(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, boolean arg7, Entity arg8) {
+	public ClientLocAnim(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, boolean arg7, ModelSource arg8) {
 		this.field2599 = arg0;
 		this.field2592 = arg1;
 		this.field2593 = arg2;
@@ -46,8 +46,8 @@ public class LocEntity extends Entity {
 			this.anim = SeqType.get(arg6);
 			this.animFrame = 0;
 			this.animCycle = Client.loopCycle - 1;
-			if (this.anim.replacemode == 0 && arg8 != null && arg8 instanceof LocEntity) {
-				LocEntity var10 = (LocEntity) arg8;
+			if (this.anim.replacemode == 0 && arg8 != null && arg8 instanceof ClientLocAnim) {
+				ClientLocAnim var10 = (ClientLocAnim) arg8;
 				if (this.anim == var10.anim) {
 					this.animFrame = var10.animFrame;
 					this.animCycle = var10.animCycle;
@@ -62,7 +62,7 @@ public class LocEntity extends Entity {
 	}
 
 	@ObfuscatedName("ff.g(I)Lfo;")
-	public final ModelUnlit getModel() {
+	public final ModelLit getTempModel() {
 		if (this.anim != null) {
 			int var1 = Client.loopCycle - this.animCycle;
 			if (var1 > 100 && this.anim.replayoff > 0) {
@@ -104,7 +104,7 @@ public class LocEntity extends Entity {
 		int var6 = (var3 + 1 >> 1) + this.field2595;
 		int var7 = (var4 >> 1) + this.field2596;
 		int var8 = (var4 + 1 >> 1) + this.field2596;
-		int[][] var9 = World.levelHeightmap[this.field2594];
+		int[][] var9 = ClientBuild.groundh[this.field2594];
 		int var10 = var9[var5][var7] + var9[var6][var7] + var9[var5][var8] + var9[var6][var8] >> 2;
 		int var11 = (this.field2595 << 7) + (var3 << 6);
 		int var12 = (this.field2596 << 7) + (var4 << 6);

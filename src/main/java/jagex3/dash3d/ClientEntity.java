@@ -3,9 +3,8 @@ package jagex3.dash3d;
 import deob.ObfuscatedName;
 import jagex3.config.SeqType;
 
-// jag::PathingEntity
 @ObfuscatedName("fz")
-public abstract class PathingEntity extends Entity {
+public abstract class ClientEntity extends ModelSource {
 
 	@ObfuscatedName("fz.j")
 	public int x;

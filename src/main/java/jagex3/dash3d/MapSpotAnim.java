@@ -5,7 +5,7 @@ import jagex3.config.SeqType;
 import jagex3.config.SpotAnimType;
 
 @ObfuscatedName("fn")
-public class SpotAnimEntity extends Entity {
+public class MapSpotAnim extends ModelSource {
 
 	@ObfuscatedName("fn.j")
 	public int field2608;
@@ -37,7 +37,7 @@ public class SpotAnimEntity extends Entity {
 	@ObfuscatedName("fn.e")
 	public boolean seqComplete = false;
 
-	public SpotAnimEntity(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public MapSpotAnim(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		this.field2608 = arg0;
 		this.level = arg1;
 		this.field2610 = arg2;
@@ -70,9 +70,9 @@ public class SpotAnimEntity extends Entity {
 	}
 
 	@ObfuscatedName("fn.g(I)Lfo;")
-	public final ModelUnlit getModel() {
+	public final ModelLit getTempModel() {
 		SpotAnimType var1 = SpotAnimType.get(this.field2608);
-		ModelUnlit var2;
+		ModelLit var2;
 		if (this.seqComplete) {
 			var2 = var1.method2455(-1);
 		} else {

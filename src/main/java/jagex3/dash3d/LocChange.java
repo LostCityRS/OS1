@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 
 @ObfuscatedName("dn")
-public class LocSpawned extends Linkable {
+public class LocChange extends Linkable {
 
 	@ObfuscatedName("dn.m")
 	public int level;
@@ -13,32 +13,32 @@ public class LocSpawned extends Linkable {
 	public int layer;
 
 	@ObfuscatedName("dn.n")
-	public int localX;
+	public int x;
 
 	@ObfuscatedName("dn.j")
-	public int localZ;
+	public int z;
 
 	@ObfuscatedName("dn.z")
-	public int previousType;
+	public int oldType;
 
 	@ObfuscatedName("dn.g")
-	public int previousRotation;
+	public int oldAngle;
 
 	@ObfuscatedName("dn.q")
-	public int previousShape;
+	public int oldShape;
 
 	@ObfuscatedName("dn.i")
-	public int type;
+	public int newType;
 
 	@ObfuscatedName("dn.s")
-	public int rotation;
+	public int newAngle;
 
 	@ObfuscatedName("dn.u")
-	public int shape;
+	public int newShape;
 
 	@ObfuscatedName("dn.v")
-	public int delay = 0;
+	public int startTime = 0;
 
 	@ObfuscatedName("dn.w")
-	public int duration = -1;
+	public int endTime = -1;
 }

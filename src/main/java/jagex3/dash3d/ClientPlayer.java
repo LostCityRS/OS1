@@ -8,9 +8,8 @@ import jagex3.config.SeqType;
 import jagex3.config.SpotAnimType;
 import jagex3.io.Packet;
 
-// ClientPlayer?
 @ObfuscatedName("fi")
-public class PlayerEntity extends PathingEntity {
+public class ClientPlayer extends ClientEntity {
 
 	@ObfuscatedName("fi.bu")
 	public String name;
@@ -49,7 +48,7 @@ public class PlayerEntity extends PathingEntity {
 	public int locOffsetZ;
 
 	@ObfuscatedName("fi.bb")
-	public ModelUnlit locModel;
+	public ModelLit locModel;
 
 	@ObfuscatedName("fi.bd")
 	public int minTileX;
@@ -147,24 +146,24 @@ public class PlayerEntity extends PathingEntity {
 	}
 
 	@ObfuscatedName("fi.g(I)Lfo;")
-	public final ModelUnlit getModel() {
+	public final ModelLit getTempModel() {
 		if (this.field2786 == null) {
 			return null;
 		}
 		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.get(this.primarySeqId) : null;
 		SeqType var2 = this.secondarySeqId == -1 || this.lowMemory || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.get(this.secondarySeqId);
-		ModelUnlit var3 = this.field2786.method1174(var1, this.primarySeqFrame, var2, this.field2641);
+		ModelLit var3 = this.field2786.method1174(var1, this.primarySeqFrame, var2, this.field2641);
 		if (var3 == null) {
 			return null;
 		}
 		var3.method3002();
 		this.field2626 = var3.minY;
 		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
-			ModelUnlit var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
+			ModelLit var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
 			if (var4 != null) {
 				var4.method3012(0, -this.field2629, 0);
-				ModelUnlit[] var5 = new ModelUnlit[] { var3, var4 };
-				var3 = new ModelUnlit(var5, 2);
+				ModelLit[] var5 = new ModelLit[] { var3, var4 };
+				var3 = new ModelLit(var5, 2);
 			}
 		}
 		if (!this.lowMemory && this.locModel != null) {
@@ -172,7 +171,7 @@ public class PlayerEntity extends PathingEntity {
 				this.locModel = null;
 			}
 			if (Client.loopCycle >= this.locStartCycle && Client.loopCycle < this.locEndCycle) {
-				ModelUnlit var6 = this.locModel;
+				ModelLit var6 = this.locModel;
 				var6.method3012(this.locOffsetX - this.x, this.locOffsetY - this.y, this.locOffsetZ - this.z);
 				if (this.dstYaw == 512) {
 					var6.method3008();
@@ -184,8 +183,8 @@ public class PlayerEntity extends PathingEntity {
 				} else if (this.dstYaw == 1536) {
 					var6.method3008();
 				}
-				ModelUnlit[] var7 = new ModelUnlit[] { var3, var6 };
-				var3 = new ModelUnlit(var7, 2);
+				ModelLit[] var7 = new ModelLit[] { var3, var6 };
+				var3 = new ModelLit(var7, 2);
 				if (this.dstYaw == 512) {
 					var6.method3008();
 				} else if (this.dstYaw == 1024) {

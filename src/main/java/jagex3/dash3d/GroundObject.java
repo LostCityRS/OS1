@@ -16,13 +16,13 @@ public class GroundObject {
 	public int field682;
 
 	@ObfuscatedName("ax.m")
-	public Entity bottomObj;
+	public ModelSource bottomObj;
 
 	@ObfuscatedName("ax.c")
-	public Entity topObj;
+	public ModelSource topObj;
 
 	@ObfuscatedName("ax.n")
-	public Entity middleObj;
+	public ModelSource middleObj;
 
 	@ObfuscatedName("ax.j")
 	public int field688;
