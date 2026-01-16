@@ -1626,22 +1626,22 @@ public class World {
 			return;
 		}
 
-		int px0 = (var21 << 9) / z0 + Pix3D.projectionX;
-		int py0 = (var24 << 9) / z0 + Pix3D.projectionY;
-		int pz0 = (var27 << 9) / z1 + Pix3D.projectionX;
+		int px0 = (var21 << 9) / z0 + Pix3D.originX;
+		int py0 = (var24 << 9) / z0 + Pix3D.originY;
+		int pz0 = (var27 << 9) / z1 + Pix3D.originX;
 
-		int px1 = (var30 << 9) / z1 + Pix3D.projectionY;
-		int py1 = (var33 << 9) / z2 + Pix3D.projectionX;
-		int pz1 = (var36 << 9) / z2 + Pix3D.projectionY;
+		int px1 = (var30 << 9) / z1 + Pix3D.originY;
+		int py1 = (var33 << 9) / z2 + Pix3D.originX;
+		int pz1 = (var36 << 9) / z2 + Pix3D.originY;
 
-		int px3 = (var39 << 9) / z3 + Pix3D.projectionX;
-		int py3 = (var42 << 9) / z3 + Pix3D.projectionY;
+		int px3 = (var39 << 9) / z3 + Pix3D.originX;
+		int py3 = (var42 << 9) / z3 + Pix3D.originY;
 
 		Pix3D.trans = 0;
 
 		if ((px1 - py3) * (py1 - px3) - (pz0 - px3) * (pz1 - py3) > 0) {
 			Pix3D.hclip = false;
-			if (py1 < 0 || px3 < 0 || pz0 < 0 || py1 > Pix3D.boundX || px3 > Pix3D.boundX || pz0 > Pix3D.boundX) {
+			if (py1 < 0 || px3 < 0 || pz0 < 0 || py1 > Pix3D.sizeX || px3 > Pix3D.sizeX || pz0 > Pix3D.sizeX) {
 				Pix3D.hclip = true;
 			}
 
@@ -1666,7 +1666,7 @@ public class World {
 
 		if ((px0 - pz0) * (py3 - px1) - (py0 - px1) * (px3 - pz0) > 0) {
 			Pix3D.hclip = false;
-			if (px0 < 0 || pz0 < 0 || px3 < 0 || px0 > Pix3D.boundX || pz0 > Pix3D.boundX || px3 > Pix3D.boundX) {
+			if (px0 < 0 || pz0 < 0 || px3 < 0 || px0 > Pix3D.sizeX || pz0 > Pix3D.sizeX || px3 > Pix3D.sizeX) {
 				Pix3D.hclip = true;
 			}
 
@@ -1712,8 +1712,8 @@ public class World {
 				Ground.drawTextureVertexZ[i] = z;
 			}
 
-			Ground.drawVertexX[i] = (x << 9) / z + Pix3D.projectionX;
-			Ground.drawVertexY[i] = (y << 9) / z + Pix3D.projectionY;
+			Ground.drawVertexX[i] = (x << 9) / z + Pix3D.originX;
+			Ground.drawVertexY[i] = (y << 9) / z + Pix3D.originY;
 		}
 
 		Pix3D.trans = 0;
@@ -1734,7 +1734,7 @@ public class World {
 
 			if ((xA - xB) * (yC - yB) - (xC - xB) * (yA - yB) > 0) {
 				Pix3D.hclip = false;
-				if (xA < 0 || xB < 0 || xC < 0 || xA > Pix3D.boundX || xB > Pix3D.boundX || xC > Pix3D.boundX) {
+				if (xA < 0 || xB < 0 || xC < 0 || xA > Pix3D.sizeX || xB > Pix3D.sizeX || xC > Pix3D.sizeX) {
 					Pix3D.hclip = true;
 				}
 

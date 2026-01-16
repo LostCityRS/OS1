@@ -87,27 +87,27 @@ public class Pix8 extends Pix2D {
 		int var8 = this.wi;
 		int var9 = Pix2D.width - var8;
 		int var10 = 0;
-		if (var4 < top) {
-			int var11 = top - var4;
+		if (var4 < clipMinY) {
+			int var11 = clipMinY - var4;
 			var7 -= var11;
-			var4 = top;
+			var4 = clipMinY;
 			var6 += var8 * var11;
 			var5 += Pix2D.width * var11;
 		}
-		if (var4 + var7 > bottom) {
-			var7 -= var4 + var7 - bottom;
+		if (var4 + var7 > clipMaxY) {
+			var7 -= var4 + var7 - clipMaxY;
 		}
-		if (var3 < left) {
-			int var12 = left - var3;
+		if (var3 < clipMinX) {
+			int var12 = clipMinX - var3;
 			var8 -= var12;
-			var3 = left;
+			var3 = clipMinX;
 			var6 += var12;
 			var5 += var12;
 			var10 += var12;
 			var9 += var12;
 		}
-		if (var3 + var8 > right) {
-			int var13 = var3 + var8 - right;
+		if (var3 + var8 > clipMaxX) {
+			int var13 = var3 + var8 - clipMaxX;
 			var8 -= var13;
 			var10 += var13;
 			var9 += var13;

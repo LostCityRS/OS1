@@ -476,9 +476,9 @@ public class ObjType extends DoublyLinkable {
 		Pix32 var17 = new Pix32(36, 32);
 		Pix2D.setPixels(var17.data, 36, 32);
 		Pix2D.cls();
-		Pix3D.init();
-		Pix3D.initWH(16, 16);
-		Pix3D.jagged = false;
+		Pix3D.setRenderClipping();
+		Pix3D.setOrigin(16, 16);
+		Pix3D.lowDetail = false;
 
 		int zoom = obj.zoom2d;
 		if (outlineRgb) {
@@ -519,9 +519,9 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		Pix2D.setPixels(data, width2d, height2d);
-		Pix2D.loadClipping(var16);
-		Pix3D.init();
-		Pix3D.jagged = true;
+		Pix2D.restoreClipping(var16);
+		Pix3D.setRenderClipping();
+		Pix3D.lowDetail = true;
 		return var17;
 	}
 

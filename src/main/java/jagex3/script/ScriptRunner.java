@@ -2737,7 +2737,7 @@ public class ScriptRunner {
 			return;
 		}
 
-		IfType[] all = IfType.components[id];
+		IfType[] all = IfType.list[id];
 		for (int i = 0; i < all.length; i++) {
 			IfType com = all[i];
 

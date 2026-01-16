@@ -88,7 +88,7 @@ public class WorldTextureProvider implements TextureProvider {
 	}
 
 	@ObfuscatedName("bi.m(II)Z")
-	public boolean isLowDetail(int textureId) {
+	public boolean isLowMem(int textureId) {
 		return this.resolution == 64;
 	}
 

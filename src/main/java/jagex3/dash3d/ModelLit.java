@@ -763,8 +763,8 @@ public class ModelLit extends ModelSource {
 		if (this.field2745 != 2 && this.field2745 != 1) {
 			this.method3003();
 		}
-		int var8 = Pix3D.projectionX;
-		int var9 = Pix3D.projectionY;
+		int var8 = Pix3D.originX;
+		int var9 = Pix3D.originY;
 		int var10 = sinTable[arg0];
 		int var11 = cosTable[arg0];
 		int var12 = sinTable[arg1];
@@ -819,8 +819,8 @@ public class ModelLit extends ModelSource {
 		if (this.field2745 != 2 && this.field2745 != 1) {
 			this.method3003();
 		}
-		int var9 = Pix3D.projectionX;
-		int var10 = Pix3D.projectionY;
+		int var9 = Pix3D.originX;
+		int var10 = Pix3D.originY;
 		int var11 = sinTable[arg0];
 		int var12 = cosTable[arg0];
 		int var13 = sinTable[arg1];
@@ -887,25 +887,25 @@ public class ModelLit extends ModelSource {
 
 		int var14 = arg3 * arg7 + arg4 * arg5 >> 16;
 		int var15 = var14 - this.field2747 << 9;
-		if (var15 / var13 >= Pix3D.field2534) {
+		if (var15 / var13 >= Pix3D.maxX) {
 			return;
 		}
 
 		int var16 = this.field2747 + var14 << 9;
-		if (var16 / var13 <= Pix3D.field2542) {
+		if (var16 / var13 <= Pix3D.minX) {
 			return;
 		}
 
 		int var17 = arg2 * arg6 - arg1 * var10 >> 16;
 		int var18 = this.field2747 * arg1 >> 16;
 		int var19 = var17 + var18 << 9;
-		if (var19 / var13 <= Pix3D.field2535) {
+		if (var19 / var13 <= Pix3D.minY) {
 			return;
 		}
 
 		int var20 = (this.minY * arg2 >> 16) + var18;
 		int var21 = var17 - var20 << 9;
-		if (var21 / var13 >= Pix3D.field2537) {
+		if (var21 / var13 >= Pix3D.maxY) {
 			return;
 		}
 
@@ -942,8 +942,8 @@ public class ModelLit extends ModelSource {
 				var31 = var19 / var13;
 				var30 = var21 / var27;
 			}
-			int var32 = mouseX - Pix3D.projectionX;
-			int var33 = mouseY - Pix3D.projectionY;
+			int var32 = mouseX - Pix3D.originX;
+			int var33 = mouseY - Pix3D.originY;
 			if (var32 > var28 && var32 < var29 && var33 > var30 && var33 < var31) {
 				if (this.useAABBMouseCheck) {
 					pickedEntityTypecode[pickedCount++] = typecode;
@@ -953,8 +953,8 @@ public class ModelLit extends ModelSource {
 			}
 		}
 
-		int var34 = Pix3D.projectionX;
-		int var35 = Pix3D.projectionY;
+		int var34 = Pix3D.originX;
+		int var35 = Pix3D.originY;
 
 		int var36 = 0;
 		int var37 = 0;
@@ -1060,7 +1060,7 @@ public class ModelLit extends ModelSource {
 					if ((vertexScreenY[var8] - vertexScreenY[var7]) * (var9 - var10) - (vertexScreenY[var6] - vertexScreenY[var7]) * (var11 - var10) > 0) {
 						faceNearClipped[f] = false;
 
-						if (var9 >= 0 && var10 >= 0 && var11 >= 0 && var9 <= Pix3D.boundX && var10 <= Pix3D.boundX && var11 <= Pix3D.boundX) {
+						if (var9 >= 0 && var10 >= 0 && var11 >= 0 && var9 <= Pix3D.sizeX && var10 <= Pix3D.sizeX && var11 <= Pix3D.sizeX) {
 							faceClippedX[f] = false;
 						} else {
 							faceClippedX[f] = true;
@@ -1251,12 +1251,12 @@ public class ModelLit extends ModelSource {
 				var8 = this.field2765[var5];
 			}
 			if (this.faceColorC[face] == -1) {
-				Pix3D.method2769(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorA[face], this.faceColorA[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
+				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorA[face], this.faceColorA[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
 			} else {
-				Pix3D.method2769(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorB[face], this.faceColorC[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
+				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorB[face], this.faceColorC[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
 			}
 		} else if (this.faceColorC[face] == -1) {
-			Pix3D.method2767(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], palette[this.faceColorA[face]]);
+			Pix3D.flatTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], palette[this.faceColorA[face]]);
 		} else {
 			Pix3D.gouraudTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorB[face], this.faceColorC[face]);
 		}
@@ -1264,8 +1264,8 @@ public class ModelLit extends ModelSource {
 
 	@ObfuscatedName("fo.ah(I)V")
 	public final void drawNearClippedFace(int arg0) {
-		int var2 = Pix3D.projectionX;
-		int var3 = Pix3D.projectionY;
+		int var2 = Pix3D.originX;
+		int var3 = Pix3D.originY;
 		int elements = 0;
 		int var5 = this.faceVertexA[arg0];
 		int var6 = this.faceVertexB[arg0];
@@ -1349,7 +1349,7 @@ public class ModelLit extends ModelSource {
 		int var31 = clippedY[2];
 		Pix3D.hclip = false;
 		if (elements == 3) {
-			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX) {
+			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.sizeX || var27 > Pix3D.sizeX || var28 > Pix3D.sizeX) {
 				Pix3D.hclip = true;
 			}
 			if (this.field2718 != null && this.field2718[arg0] != -1) {
@@ -1367,17 +1367,17 @@ public class ModelLit extends ModelSource {
 					var35 = this.field2765[var32];
 				}
 				if (this.faceColorC[arg0] == -1) {
-					Pix3D.method2769(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
+					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
 				} else {
-					Pix3D.method2769(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
+					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
 				}
 			} else if (this.faceColorC[arg0] == -1) {
-				Pix3D.method2767(var29, var30, var31, var26, var27, var28, palette[this.faceColorA[arg0]]);
+				Pix3D.flatTriangle(var29, var30, var31, var26, var27, var28, palette[this.faceColorA[arg0]]);
 			} else {
 				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
 			}
 		} else if (elements == 4) {
-			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.boundX || var27 > Pix3D.boundX || var28 > Pix3D.boundX || clippedX[3] < 0 || clippedX[3] > Pix3D.boundX) {
+			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.sizeX || var27 > Pix3D.sizeX || var28 > Pix3D.sizeX || clippedX[3] < 0 || clippedX[3] > Pix3D.sizeX) {
 				Pix3D.hclip = true;
 			}
 			if (this.field2718 != null && this.field2718[arg0] != -1) {
@@ -1396,16 +1396,16 @@ public class ModelLit extends ModelSource {
 				}
 				short var40 = this.field2718[arg0];
 				if (this.faceColorC[arg0] == -1) {
-					Pix3D.method2769(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-					Pix3D.method2769(var29, var31, clippedY[3], var26, var28, clippedX[3], this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.textureTriangleAffine(var29, var31, clippedY[3], var26, var28, clippedX[3], this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
 				} else {
-					Pix3D.method2769(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-					Pix3D.method2769(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.textureTriangleAffine(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
 				}
 			} else if (this.faceColorC[arg0] == -1) {
 				int var41 = palette[this.faceColorA[arg0]];
-				Pix3D.method2767(var29, var30, var31, var26, var27, var28, var41);
-				Pix3D.method2767(var29, var31, clippedY[3], var26, var28, clippedX[3], var41);
+				Pix3D.flatTriangle(var29, var30, var31, var26, var27, var28, var41);
+				Pix3D.flatTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], var41);
 			} else {
 				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
 				Pix3D.gouraudTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3]);

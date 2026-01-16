@@ -13,7 +13,7 @@ public interface TextureProvider {
 	boolean isOpaque(int textureId);
 
 	@ObfuscatedName("aw.m(II)Z")
-	boolean isLowDetail(int textureId);
+	boolean isLowMem(int textureId);
 
 	@ObfuscatedName("aw.r(II)[I")
 	int[] getTexels(int textureId);

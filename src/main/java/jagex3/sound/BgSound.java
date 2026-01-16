@@ -11,7 +11,7 @@ import jagex3.datastruct.Linkable;
 public class BgSound extends Linkable {
 
 	@ObfuscatedName("de.m")
-	public static LinkList sounds = new LinkList();
+	public static LinkList soundlist = new LinkList();
 
 	@ObfuscatedName("de.c")
 	public int level;
@@ -55,17 +55,19 @@ public class BgSound extends Linkable {
 	@ObfuscatedName("de.y")
 	public LocType multiloc;
 
+	// jag::oldscape::bgsound::RecalculateMultilocs
 	@ObfuscatedName("az.c(B)V")
-	public static void computeAllProperties() {
-		for (BgSound var0 = (BgSound) sounds.head(); var0 != null; var0 = (BgSound) sounds.next()) {
+	public static void recalculateMultilocs() {
+		for (BgSound var0 = (BgSound) soundlist.head(); var0 != null; var0 = (BgSound) soundlist.next()) {
 			if (var0.multiloc != null) {
-				var0.computeProperties();
+				var0.recalcSound();
 			}
 		}
 	}
 
+	// jag::oldscape::bgsound::RecalcSound
 	@ObfuscatedName("de.n(I)V")
-	public void computeProperties() {
+	public void recalcSound() {
 		int sound = this.sound;
 
 		LocType loc = this.multiloc.getMultiLoc();
@@ -110,9 +112,9 @@ public class BgSound extends Linkable {
 		bg.random = arg3.bgsound_random;
 		if (arg3.multiloc != null) {
 			bg.multiloc = arg3;
-			bg.computeProperties();
+			bg.recalcSound();
 		}
-		sounds.push(bg);
+		soundlist.push(bg);
 		if (bg.random != null) {
 			bg.field1613 = bg.mindelay + (int) (Math.random() * (double) (bg.maxdelay - bg.mindelay));
 		}
@@ -120,7 +122,7 @@ public class BgSound extends Linkable {
 
 	@ObfuscatedName("ex.z(IIIII)V")
 	public static void method2297(int arg0, int arg1, int arg2, int arg3) {
-		for (BgSound var4 = (BgSound) sounds.head(); var4 != null; var4 = (BgSound) sounds.next()) {
+		for (BgSound var4 = (BgSound) soundlist.head(); var4 != null; var4 = (BgSound) soundlist.next()) {
 			if (var4.sound != -1 || var4.random != null) {
 				int var5 = 0;
 				if (arg1 > var4.maxX) {
@@ -133,7 +135,7 @@ public class BgSound extends Linkable {
 				} else if (arg2 < var4.minZ) {
 					var5 += var4.minZ - arg2;
 				}
-				if (var5 - 64 > var4.range || Client.field2174 == 0 || var4.level != arg0) {
+				if (var5 - 64 > var4.range || Client.ambientVolume == 0 || var4.level != arg0) {
 					if (var4.field1603 != null) {
 						Client.soundMixer.stopStream(var4.field1603);
 						var4.field1603 = null;
@@ -147,7 +149,7 @@ public class BgSound extends Linkable {
 					if (var5 < 0) {
 						var5 = 0;
 					}
-					int var6 = Client.field2174 * (var4.range - var5) / var4.range;
+					int var6 = Client.ambientVolume * (var4.range - var5) / var4.range;
 					if (var4.field1603 != null) {
 						var4.field1603.method2090(var6);
 					} else if (var4.sound >= 0) {

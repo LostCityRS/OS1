@@ -19,8 +19,9 @@ import jagex3.jstring.Text;
 @ObfuscatedName("eg")
 public class IfType extends Linkable {
 
+	// jag::oldscape::rs2lib::IfType::m_list
 	@ObfuscatedName("av.m")
-	public static IfType[][] components;
+	public static IfType[][] list;
 
 	@ObfuscatedName("df.c")
 	public static boolean[] field1508;
@@ -409,7 +410,7 @@ public class IfType extends Linkable {
 		field1776 = arg1;
 		field1564 = arg2;
 		field1800 = arg3;
-		components = new IfType[field1806.getGroupCount()][];
+		list = new IfType[field1806.getGroupCount()][];
 		field1508 = new boolean[field1806.getGroupCount()];
 	}
 
@@ -417,13 +418,13 @@ public class IfType extends Linkable {
 	public static IfType get(int arg0) {
 		int var1 = arg0 >> 16;
 		int var2 = arg0 & 0xFFFF;
-		if (components[var1] == null || components[var1][var2] == null) {
+		if (list[var1] == null || list[var1][var2] == null) {
 			boolean var3 = openInterface(var1);
 			if (!var3) {
 				return null;
 			}
 		}
-		return components[var1][var2];
+		return list[var1][var2];
 	}
 
 	@ObfuscatedName("bd.j(IIB)Leg;")
@@ -448,22 +449,22 @@ public class IfType extends Linkable {
 				field1508[arg0] = true;
 				return true;
 			}
-			if (components[arg0] == null) {
-				components[arg0] = new IfType[var1];
+			if (list[arg0] == null) {
+				list[arg0] = new IfType[var1];
 			}
 			for (int var2 = 0; var2 < var1; var2++) {
-				if (components[arg0][var2] == null) {
+				if (list[arg0][var2] == null) {
 					byte[] var3 = field1806.getFile(arg0, var2);
 					if (var3 != null) {
-						components[arg0][var2] = new IfType();
-						components[arg0][var2].parentlayer = (arg0 << 16) + var2;
+						list[arg0][var2] = new IfType();
+						list[arg0][var2].parentlayer = (arg0 << 16) + var2;
 						if (var3[0] == -1) {
-							components[arg0][var2].decodeIf3(new Packet(var3));
+							list[arg0][var2].decodeIf3(new Packet(var3));
 						} else {
-							components[arg0][var2].decodeIf1(new Packet(var3));
+							list[arg0][var2].decodeIf1(new Packet(var3));
 						}
 
-						System.out.println(arg0 + ":" + var2 + " " + components[arg0][var2].renderwidth + "x" + components[arg0][var2].renderheight + " x:" + components[arg0][var2].renderx + " y:" + components[arg0][var2].rendery);
+						System.out.println(arg0 + ":" + var2 + " " + list[arg0][var2].renderwidth + "x" + list[arg0][var2].renderheight + " x:" + list[arg0][var2].renderx + " y:" + list[arg0][var2].rendery);
 					}
 				}
 			}

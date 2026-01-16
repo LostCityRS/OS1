@@ -19,27 +19,27 @@ public class SoftwareFont extends PixFont {
 		int var8 = Pix2D.width - arg3;
 		int var9 = 0;
 		int var10 = 0;
-		if (arg2 < top) {
-			int var11 = top - arg2;
+		if (arg2 < clipMinY) {
+			int var11 = clipMinY - arg2;
 			arg4 -= var11;
-			arg2 = top;
+			arg2 = clipMinY;
 			var10 += arg3 * var11;
 			var7 += Pix2D.width * var11;
 		}
-		if (arg2 + arg4 > bottom) {
-			arg4 -= arg2 + arg4 - bottom;
+		if (arg2 + arg4 > clipMaxY) {
+			arg4 -= arg2 + arg4 - clipMaxY;
 		}
-		if (arg1 < left) {
-			int var12 = left - arg1;
+		if (arg1 < clipMinX) {
+			int var12 = clipMinX - arg1;
 			arg3 -= var12;
-			arg1 = left;
+			arg1 = clipMinX;
 			var10 += var12;
 			var7 += var12;
 			var9 += var12;
 			var8 += var12;
 		}
-		if (arg1 + arg3 > right) {
-			int var13 = arg1 + arg3 - right;
+		if (arg1 + arg3 > clipMaxX) {
+			int var13 = arg1 + arg3 - clipMaxX;
 			arg3 -= var13;
 			var9 += var13;
 			var8 += var13;
@@ -55,27 +55,27 @@ public class SoftwareFont extends PixFont {
 		int var9 = Pix2D.width - arg3;
 		int var10 = 0;
 		int var11 = 0;
-		if (arg2 < top) {
-			int var12 = top - arg2;
+		if (arg2 < clipMinY) {
+			int var12 = clipMinY - arg2;
 			arg4 -= var12;
-			arg2 = top;
+			arg2 = clipMinY;
 			var11 += arg3 * var12;
 			var8 += Pix2D.width * var12;
 		}
-		if (arg2 + arg4 > bottom) {
-			arg4 -= arg2 + arg4 - bottom;
+		if (arg2 + arg4 > clipMaxY) {
+			arg4 -= arg2 + arg4 - clipMaxY;
 		}
-		if (arg1 < left) {
-			int var13 = left - arg1;
+		if (arg1 < clipMinX) {
+			int var13 = clipMinX - arg1;
 			arg3 -= var13;
-			arg1 = left;
+			arg1 = clipMinX;
 			var11 += var13;
 			var8 += var13;
 			var10 += var13;
 			var9 += var13;
 		}
-		if (arg1 + arg3 > right) {
-			int var14 = arg1 + arg3 - right;
+		if (arg1 + arg3 > clipMaxX) {
+			int var14 = arg1 + arg3 - clipMaxX;
 			arg3 -= var14;
 			var10 += var14;
 			var9 += var14;

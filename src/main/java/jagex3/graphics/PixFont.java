@@ -762,27 +762,27 @@ public abstract class PixFont extends Pix2D {
 		int var7 = Pix2D.width - arg3;
 		int var8 = 0;
 		int var9 = 0;
-		if (arg2 < top) {
-			int var10 = top - arg2;
+		if (arg2 < clipMinY) {
+			int var10 = clipMinY - arg2;
 			arg4 -= var10;
-			arg2 = top;
+			arg2 = clipMinY;
 			var9 += arg3 * var10;
 			var6 += Pix2D.width * var10;
 		}
-		if (arg2 + arg4 > bottom) {
-			arg4 -= arg2 + arg4 - bottom;
+		if (arg2 + arg4 > clipMaxY) {
+			arg4 -= arg2 + arg4 - clipMaxY;
 		}
-		if (arg1 < left) {
-			int var11 = left - arg1;
+		if (arg1 < clipMinX) {
+			int var11 = clipMinX - arg1;
 			arg3 -= var11;
-			arg1 = left;
+			arg1 = clipMinX;
 			var9 += var11;
 			var6 += var11;
 			var8 += var11;
 			var7 += var11;
 		}
-		if (arg1 + arg3 > right) {
-			int var12 = arg1 + arg3 - right;
+		if (arg1 + arg3 > clipMaxX) {
+			int var12 = arg1 + arg3 - clipMaxX;
 			arg3 -= var12;
 			var8 += var12;
 			var7 += var12;
@@ -837,27 +837,27 @@ public abstract class PixFont extends Pix2D {
 		int var8 = Pix2D.width - arg3;
 		int var9 = 0;
 		int var10 = 0;
-		if (arg2 < top) {
-			int var11 = top - arg2;
+		if (arg2 < clipMinY) {
+			int var11 = clipMinY - arg2;
 			arg4 -= var11;
-			arg2 = top;
+			arg2 = clipMinY;
 			var10 += arg3 * var11;
 			var7 += Pix2D.width * var11;
 		}
-		if (arg2 + arg4 > bottom) {
-			arg4 -= arg2 + arg4 - bottom;
+		if (arg2 + arg4 > clipMaxY) {
+			arg4 -= arg2 + arg4 - clipMaxY;
 		}
-		if (arg1 < left) {
-			int var12 = left - arg1;
+		if (arg1 < clipMinX) {
+			int var12 = clipMinX - arg1;
 			arg3 -= var12;
-			arg1 = left;
+			arg1 = clipMinX;
 			var10 += var12;
 			var7 += var12;
 			var9 += var12;
 			var8 += var12;
 		}
-		if (arg1 + arg3 > right) {
-			int var13 = arg1 + arg3 - right;
+		if (arg1 + arg3 > clipMaxX) {
+			int var13 = arg1 + arg3 - clipMaxX;
 			arg3 -= var13;
 			var9 += var13;
 			var8 += var13;

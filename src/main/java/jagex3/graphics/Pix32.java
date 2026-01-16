@@ -237,27 +237,27 @@ public class Pix32 extends Pix2D {
 		int var8 = this.wi;
 		int var9 = Pix2D.width - var8;
 		int var10 = 0;
-		if (var4 < top) {
-			int var11 = top - var4;
+		if (var4 < clipMinY) {
+			int var11 = clipMinY - var4;
 			var7 -= var11;
-			var4 = top;
+			var4 = clipMinY;
 			var6 += var8 * var11;
 			var5 += Pix2D.width * var11;
 		}
-		if (var4 + var7 > bottom) {
-			var7 -= var4 + var7 - bottom;
+		if (var4 + var7 > clipMaxY) {
+			var7 -= var4 + var7 - clipMaxY;
 		}
-		if (var3 < left) {
-			int var12 = left - var3;
+		if (var3 < clipMinX) {
+			int var12 = clipMinX - var3;
 			var8 -= var12;
-			var3 = left;
+			var3 = clipMinX;
 			var6 += var12;
 			var5 += var12;
 			var10 += var12;
 			var9 += var12;
 		}
-		if (var3 + var8 > right) {
-			int var13 = var3 + var8 - right;
+		if (var3 + var8 > clipMaxX) {
+			int var13 = var3 + var8 - clipMaxX;
 			var8 -= var13;
 			var10 += var13;
 			var9 += var13;
@@ -296,27 +296,27 @@ public class Pix32 extends Pix2D {
 		int var8 = this.wi;
 		int var9 = Pix2D.width - var8;
 		int var10 = 0;
-		if (var4 < top) {
-			int var11 = top - var4;
+		if (var4 < clipMinY) {
+			int var11 = clipMinY - var4;
 			var7 -= var11;
-			var4 = top;
+			var4 = clipMinY;
 			var6 += var8 * var11;
 			var5 += Pix2D.width * var11;
 		}
-		if (var4 + var7 > bottom) {
-			var7 -= var4 + var7 - bottom;
+		if (var4 + var7 > clipMaxY) {
+			var7 -= var4 + var7 - clipMaxY;
 		}
-		if (var3 < left) {
-			int var12 = left - var3;
+		if (var3 < clipMinX) {
+			int var12 = clipMinX - var3;
 			var8 -= var12;
-			var3 = left;
+			var3 = clipMinX;
 			var6 += var12;
 			var5 += var12;
 			var10 += var12;
 			var9 += var12;
 		}
-		if (var3 + var8 > right) {
-			int var13 = var3 + var8 - right;
+		if (var3 + var8 > clipMaxX) {
+			int var13 = var3 + var8 - clipMaxX;
 			var8 -= var13;
 			var10 += var13;
 			var9 += var13;
@@ -401,22 +401,22 @@ public class Pix32 extends Pix2D {
 		}
 		int var15 = Pix2D.width * arg1 + arg0;
 		int var16 = Pix2D.width - arg2;
-		if (arg1 + arg3 > bottom) {
-			arg3 -= arg1 + arg3 - bottom;
+		if (arg1 + arg3 > clipMaxY) {
+			arg3 -= arg1 + arg3 - clipMaxY;
 		}
-		if (arg1 < top) {
-			int var17 = top - arg1;
+		if (arg1 < clipMinY) {
+			int var17 = clipMinY - arg1;
 			arg3 -= var17;
 			var15 += Pix2D.width * var17;
 			var8 += var12 * var17;
 		}
-		if (arg0 + arg2 > right) {
-			int var18 = arg0 + arg2 - right;
+		if (arg0 + arg2 > clipMaxX) {
+			int var18 = arg0 + arg2 - clipMaxX;
 			arg2 -= var18;
 			var16 += var18;
 		}
-		if (arg0 < left) {
-			int var19 = left - arg0;
+		if (arg0 < clipMinX) {
+			int var19 = clipMinX - arg0;
 			arg2 -= var19;
 			var15 += var19;
 			var7 += var11 * var19;
@@ -459,27 +459,27 @@ public class Pix32 extends Pix2D {
 		int var10 = this.wi;
 		int var11 = Pix2D.width - var10;
 		int var12 = 0;
-		if (var6 < top) {
-			int var13 = top - var6;
+		if (var6 < clipMinY) {
+			int var13 = clipMinY - var6;
 			var9 -= var13;
-			var6 = top;
+			var6 = clipMinY;
 			var8 += var10 * var13;
 			var7 += Pix2D.width * var13;
 		}
-		if (var6 + var9 > bottom) {
-			var9 -= var6 + var9 - bottom;
+		if (var6 + var9 > clipMaxY) {
+			var9 -= var6 + var9 - clipMaxY;
 		}
-		if (var5 < left) {
-			int var14 = left - var5;
+		if (var5 < clipMinX) {
+			int var14 = clipMinX - var5;
 			var10 -= var14;
-			var5 = left;
+			var5 = clipMinX;
 			var8 += var14;
 			var7 += var14;
 			var12 += var14;
 			var11 += var14;
 		}
-		if (var5 + var10 > right) {
-			int var15 = var5 + var10 - right;
+		if (var5 + var10 > clipMaxX) {
+			int var15 = var5 + var10 - clipMaxX;
 			var10 -= var15;
 			var12 += var15;
 			var11 += var15;
@@ -521,27 +521,27 @@ public class Pix32 extends Pix2D {
 		int var9 = this.wi;
 		int var10 = Pix2D.width - var9;
 		int var11 = 0;
-		if (var5 < top) {
-			int var12 = top - var5;
+		if (var5 < clipMinY) {
+			int var12 = clipMinY - var5;
 			var8 -= var12;
-			var5 = top;
+			var5 = clipMinY;
 			var7 += var9 * var12;
 			var6 += Pix2D.width * var12;
 		}
-		if (var5 + var8 > bottom) {
-			var8 -= var5 + var8 - bottom;
+		if (var5 + var8 > clipMaxY) {
+			var8 -= var5 + var8 - clipMaxY;
 		}
-		if (var4 < left) {
-			int var13 = left - var4;
+		if (var4 < clipMinX) {
+			int var13 = clipMinX - var4;
 			var9 -= var13;
-			var4 = left;
+			var4 = clipMinX;
 			var7 += var13;
 			var6 += var13;
 			var11 += var13;
 			var10 += var13;
 		}
-		if (var4 + var9 > right) {
-			int var14 = var4 + var9 - right;
+		if (var4 + var9 > clipMaxX) {
+			int var14 = var4 + var9 - clipMaxX;
 			var9 -= var14;
 			var11 += var14;
 			var10 += var14;
@@ -600,22 +600,22 @@ public class Pix32 extends Pix2D {
 		}
 		int var16 = Pix2D.width * arg1 + arg0;
 		int var17 = Pix2D.width - arg2;
-		if (arg1 + arg3 > bottom) {
-			arg3 -= arg1 + arg3 - bottom;
+		if (arg1 + arg3 > clipMaxY) {
+			arg3 -= arg1 + arg3 - clipMaxY;
 		}
-		if (arg1 < top) {
-			int var18 = top - arg1;
+		if (arg1 < clipMinY) {
+			int var18 = clipMinY - arg1;
 			arg3 -= var18;
 			var16 += Pix2D.width * var18;
 			var9 += var13 * var18;
 		}
-		if (arg0 + arg2 > right) {
-			int var19 = arg0 + arg2 - right;
+		if (arg0 + arg2 > clipMaxX) {
+			int var19 = arg0 + arg2 - clipMaxX;
 			arg2 -= var19;
 			var17 += var19;
 		}
-		if (arg0 < left) {
-			int var20 = left - arg0;
+		if (arg0 < clipMinX) {
+			int var20 = clipMinX - arg0;
 			arg2 -= var20;
 			var16 += var20;
 			var8 += var12 * var20;
@@ -787,17 +787,17 @@ public class Pix32 extends Pix2D {
 		int var34 = var30 + 15 >> 4;
 		int var35 = var31 >> 4;
 		int var36 = var32 + 15 >> 4;
-		if (var33 < left) {
-			var33 = left;
+		if (var33 < clipMinX) {
+			var33 = clipMinX;
 		}
-		if (var34 > right) {
-			var34 = right;
+		if (var34 > clipMaxX) {
+			var34 = clipMaxX;
 		}
-		if (var35 < top) {
-			var35 = top;
+		if (var35 < clipMinY) {
+			var35 = clipMinY;
 		}
-		if (var36 > bottom) {
-			var36 = bottom;
+		if (var36 > clipMaxY) {
+			var36 = clipMaxY;
 		}
 		int var37 = var33 - var34;
 		if (var37 >= 0) {
@@ -1163,7 +1163,7 @@ public class Pix32 extends Pix2D {
 
 	@ObfuscatedName("fq.cy(Lft;II)V")
 	public void method2694(Pix8 arg0, int arg1, int arg2) {
-		if (right - left != arg0.wi || bottom - top != arg0.hi) {
+		if (clipMaxX - clipMinX != arg0.wi || clipMaxY - clipMinY != arg0.hi) {
 			throw new IllegalStateException();
 		}
 		int var4 = this.yof + arg1;
@@ -1174,33 +1174,33 @@ public class Pix32 extends Pix2D {
 		int var9 = this.wi;
 		int var10 = Pix2D.width - var9;
 		int var11 = 0;
-		if (var5 < top) {
-			int var12 = top - var5;
+		if (var5 < clipMinY) {
+			int var12 = clipMinY - var5;
 			var8 -= var12;
-			var5 = top;
+			var5 = clipMinY;
 			var7 += var9 * var12;
 			var6 += Pix2D.width * var12;
 		}
-		if (var5 + var8 > bottom) {
-			var8 -= var5 + var8 - bottom;
+		if (var5 + var8 > clipMaxY) {
+			var8 -= var5 + var8 - clipMaxY;
 		}
-		if (var4 < left) {
-			int var13 = left - var4;
+		if (var4 < clipMinX) {
+			int var13 = clipMinX - var4;
 			var9 -= var13;
-			var4 = left;
+			var4 = clipMinX;
 			var7 += var13;
 			var6 += var13;
 			var11 += var13;
 			var10 += var13;
 		}
-		if (var4 + var9 > right) {
-			int var14 = var4 + var9 - right;
+		if (var4 + var9 > clipMaxX) {
+			int var14 = var4 + var9 - clipMaxX;
 			var9 -= var14;
 			var11 += var14;
 			var10 += var14;
 		}
 		if (var9 > 0 && var8 > 0) {
-			int var15 = (var5 - top) * arg0.wi + (var4 - left);
+			int var15 = (var5 - clipMinY) * arg0.wi + (var4 - clipMinX);
 			int var16 = arg0.wi - var9;
 			method2688(Pix2D.pixels, this.data, 0, var7, var6, var15, var9, var8, var10, var11, var16, arg0.data);
 		}
