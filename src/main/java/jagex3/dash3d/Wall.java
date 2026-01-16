@@ -28,8 +28,8 @@ public class Wall {
 	public ModelSource modelB;
 
 	@ObfuscatedName("at.z")
-	public int bitset = 0;
+	public int typecode = 0;
 
 	@ObfuscatedName("at.g")
-	public int info = 0;
+	public int typecode2 = 0;
 }

@@ -427,7 +427,7 @@ public class IfType extends Linkable {
 	}
 
 	@ObfuscatedName("bd.j(IIB)Leg;")
-	public static IfType method947(int arg0, int arg1) {
+	public static IfType get(int arg0, int arg1) {
 		IfType var2 = get(arg0);
 		if (arg1 == -1) {
 			return var2;

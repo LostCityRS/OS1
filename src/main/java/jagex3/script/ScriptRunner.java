@@ -3,7 +3,7 @@ package jagex3.script;
 import deob.ObfuscatedName;
 import jagex3.client.Client;
 import jagex3.client.JagException;
-import jagex3.client.VarProvider;
+import jagex3.client.VarCache;
 import jagex3.client.chat.ChatFilterPrivacy;
 import jagex3.client.ui.ClientInvCache;
 import jagex3.client.ui.IfType;
@@ -151,14 +151,14 @@ public class ScriptRunner {
 					if (opcode == 1) {
 						// push_varp
 						int var16 = intOperands[pc];
-						intStack[isp++] = VarProvider.varps[var16];
+						intStack[isp++] = VarCache.var[var16];
 						continue;
 					}
 					if (opcode == 2) {
 						// pop_varp
 						int var17 = intOperands[pc];
 						isp--;
-						VarProvider.varps[var17] = intStack[isp];
+						VarCache.var[var17] = intStack[isp];
 						continue;
 					}
 					if (opcode == 3) {
@@ -222,7 +222,7 @@ public class ScriptRunner {
 						// push_varbit
 						int var19 = intOperands[pc];
 
-						intStack[isp++] = VarProvider.getVarbit(var19);
+						intStack[isp++] = VarCache.getVarbit(var19);
 						continue;
 					}
 					if (opcode == 27) {
@@ -236,13 +236,13 @@ public class ScriptRunner {
 						int var23 = var22.basevar;
 						int var24 = var22.startbit;
 						int var25 = var22.endbit;
-						int var26 = VarProvider.BITMASK[var25 - var24];
+						int var26 = VarCache.mask[var25 - var24];
 						if (var21 < 0 || var21 > var26) {
 							var21 = 0;
 						}
 
 						int var27 = var26 << var24;
-						VarProvider.varps[var23] = VarProvider.varps[var23] & ~var27 | var21 << var24 & var27;
+						VarCache.var[var23] = VarCache.var[var23] & ~var27 | var21 << var24 & var27;
 						continue;
 					}
 					if (opcode == 31) {
@@ -502,7 +502,7 @@ public class ScriptRunner {
 						int var58 = intStack[isp];
 						int var59 = intStack[isp + 1];
 
-						IfType var60 = IfType.method947(var58, var59);
+						IfType var60 = IfType.get(var58, var59);
 						if (var60 != null && var59 != -1) {
 							intStack[isp++] = 1;
 
@@ -848,7 +848,7 @@ public class ScriptRunner {
 						int var72 = intStack[isp];
 						int var73 = intStack[isp + 1];
 
-						var70.draggable = IfType.method947(var72, var73);
+						var70.draggable = IfType.get(var72, var73);
 						continue;
 					}
 					if (opcode == 1302) {
@@ -1340,6 +1340,7 @@ public class ScriptRunner {
 							var97 = var98;
 						}
 
+						// RESUME_P_COUNTDIALOG
 						Client.out.p1Enc(27);
 						Client.out.p4(var97);
 						continue;
@@ -1349,6 +1350,7 @@ public class ScriptRunner {
 						ssp--;
 						String var99 = stringStack[ssp];
 
+						// RESUME_P_NAMEDIALOG
 						Client.out.p1Enc(223);
 						Client.out.p1(var99.length() + 1);
 						Client.out.pjstr(var99);
@@ -1359,6 +1361,7 @@ public class ScriptRunner {
 						ssp--;
 						String var100 = stringStack[ssp];
 
+						// RESUME_P_STRINGDIALOG
 						Client.out.p1Enc(127);
 						Client.out.p1(var100.length() + 1);
 						Client.out.pjstr(var100);
@@ -1372,7 +1375,7 @@ public class ScriptRunner {
 						ssp--;
 						String var102 = stringStack[ssp];
 
-						Client.method558(var101, var102);
+						Client.opPlayer(var101, var102);
 						continue;
 					}
 					if (opcode == 3108) {
@@ -1712,7 +1715,7 @@ public class ScriptRunner {
 						isp--;
 						int var165 = intStack[isp];
 
-						Client.imethod44(var164, var165);
+						Client.clanSetRank(var164, var165);
 						continue;
 					}
 					if (opcode == 3605) {
@@ -1720,7 +1723,7 @@ public class ScriptRunner {
 						ssp--;
 						String var166 = stringStack[ssp];
 
-						Client.method1103(var166);
+						Client.addFriend(var166);
 						continue;
 					}
 					if (opcode == 3606) {
@@ -1728,7 +1731,7 @@ public class ScriptRunner {
 						ssp--;
 						String var167 = stringStack[ssp];
 
-						Client.method560(var167);
+						Client.delFriend(var167);
 						continue;
 					}
 					if (opcode == 3607) {
@@ -1736,7 +1739,7 @@ public class ScriptRunner {
 						ssp--;
 						String var168 = stringStack[ssp];
 
-						Client.method315(var168, false);
+						Client.addIgnore(var168, false);
 						continue;
 					}
 					if (opcode == 3608) {
@@ -1744,7 +1747,7 @@ public class ScriptRunner {
 						ssp--;
 						String var169 = stringStack[ssp];
 
-						Client.imethod43(var169);
+						Client.delIgnore(var169);
 						continue;
 					}
 					if (opcode == 3609) {

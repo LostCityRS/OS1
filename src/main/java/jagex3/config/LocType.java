@@ -1,7 +1,7 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.client.VarProvider;
+import jagex3.client.VarCache;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelSource;
 import jagex3.dash3d.ModelUnlit;
@@ -624,9 +624,9 @@ public class LocType extends DoublyLinkable {
 	public final LocType getMultiLoc() {
 		int var1 = -1;
 		if (this.multivarbit != -1) {
-			var1 = VarProvider.getVarbit(this.multivarbit);
+			var1 = VarCache.getVarbit(this.multivarbit);
 		} else if (this.multivarp != -1) {
-			var1 = VarProvider.varps[this.multivarp];
+			var1 = VarCache.var[this.multivarp];
 		}
 		return var1 < 0 || var1 >= this.multiloc.length || this.multiloc[var1] == -1 ? null : get(this.multiloc[var1]);
 	}

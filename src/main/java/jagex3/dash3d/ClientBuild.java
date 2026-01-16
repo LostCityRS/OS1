@@ -641,7 +641,7 @@ public class ClientBuild {
 			arg6.addDecor(arg0, arg1, arg2, var17, var31, null, WSHAPE0[arg4], 0, 0, 0, var20, var21);
 		} else if (arg5 == 5) {
 			int var32 = 16;
-			int var33 = arg6.getWallBitset(arg0, arg1, arg2);
+			int var33 = arg6.wallType(arg0, arg1, arg2);
 			if (var33 != 0) {
 				var32 = LocType.get(var33 >> 14 & 0x7FFF).wallwidth;
 			}
@@ -654,7 +654,7 @@ public class ClientBuild {
 			arg6.addDecor(arg0, arg1, arg2, var17, var34, null, WSHAPE0[arg4], 0, DECORXOF[arg4] * var32, DECORZOF[arg4] * var32, var20, var21);
 		} else if (arg5 == 6) {
 			int var35 = 8;
-			int var36 = arg6.getWallBitset(arg0, arg1, arg2);
+			int var36 = arg6.wallType(arg0, arg1, arg2);
 			if (var36 != 0) {
 				var35 = LocType.get(var36 >> 14 & 0x7FFF).wallwidth / 2;
 			}
@@ -676,7 +676,7 @@ public class ClientBuild {
 			arg6.addDecor(arg0, arg1, arg2, var17, var39, null, 256, var38, 0, 0, var20, var21);
 		} else if (arg5 == 8) {
 			int var40 = 8;
-			int var41 = arg6.getWallBitset(arg0, arg1, arg2);
+			int var41 = arg6.wallType(arg0, arg1, arg2);
 			if (var41 != 0) {
 				var40 = LocType.get(var41 >> 14 & 0x7FFF).wallwidth / 2;
 			}
@@ -1337,7 +1337,7 @@ public class ClientBuild {
 			arg7.addDecor(arg0, arg2, arg3, var17, var31, null, WSHAPE0[arg5], 0, 0, 0, var20, var21);
 		} else if (arg6 == 5) {
 			int var32 = 16;
-			int var33 = arg7.getWallBitset(arg0, arg2, arg3);
+			int var33 = arg7.wallType(arg0, arg2, arg3);
 			if (var33 != 0) {
 				var32 = LocType.get(var33 >> 14 & 0x7FFF).wallwidth;
 			}
@@ -1350,7 +1350,7 @@ public class ClientBuild {
 			arg7.addDecor(arg0, arg2, arg3, var17, var34, null, WSHAPE0[arg5], 0, DECORXOF[arg5] * var32, DECORZOF[arg5] * var32, var20, var21);
 		} else if (arg6 == 6) {
 			int var35 = 8;
-			int var36 = arg7.getWallBitset(arg0, arg2, arg3);
+			int var36 = arg7.wallType(arg0, arg2, arg3);
 			if (var36 != 0) {
 				var35 = LocType.get(var36 >> 14 & 0x7FFF).wallwidth / 2;
 			}
@@ -1372,7 +1372,7 @@ public class ClientBuild {
 			arg7.addDecor(arg0, arg2, arg3, var17, var39, null, 256, var38, 0, 0, var20, var21);
 		} else if (arg6 == 8) {
 			int var40 = 8;
-			int var41 = arg7.getWallBitset(arg0, arg2, arg3);
+			int var41 = arg7.wallType(arg0, arg2, arg3);
 			if (var41 != 0) {
 				var40 = LocType.get(var41 >> 14 & 0x7FFF).wallwidth / 2;
 			}

@@ -362,8 +362,8 @@ public class World {
 			return;
 		}
 		Wall var11 = new Wall();
-		var11.bitset = arg8;
-		var11.info = arg9;
+		var11.typecode = arg8;
+		var11.typecode2 = arg9;
 		var11.x = arg1 * 128 + 64;
 		var11.z = arg2 * 128 + 64;
 		var11.y = arg3;
@@ -640,9 +640,9 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.ad(III)I")
-	public int getWallBitset(int arg0, int arg1, int arg2) {
+	public int wallType(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
-		return var4 == null || var4.wall == null ? 0 : var4.wall.bitset;
+		return var4 == null || var4.wall == null ? 0 : var4.wall.typecode;
 	}
 
 	@ObfuscatedName("aq.ac(III)I")
@@ -652,7 +652,7 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.aa(III)I")
-	public int getLocBitset(int arg0, int arg1, int arg2) {
+	public int sceneType(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		if (var4 == null) {
 			return 0;
@@ -667,18 +667,18 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.as(III)I")
-	public int getGroundDecorBitset(int arg0, int arg1, int arg2) {
+	public int gdType(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		return var4 == null || var4.groundDecor == null ? 0 : var4.groundDecor.typecode;
 	}
 
 	@ObfuscatedName("aq.am(IIII)I")
-	public int getInfo(int arg0, int arg1, int arg2, int arg3) {
+	public int typecode2(int arg0, int arg1, int arg2, int arg3) {
 		Square var5 = this.levelTiles[arg0][arg1][arg2];
 		if (var5 == null) {
 			return -1;
-		} else if (var5.wall != null && var5.wall.bitset == arg3) {
-			return var5.wall.info & 0xFF;
+		} else if (var5.wall != null && var5.wall.typecode == arg3) {
+			return var5.wall.typecode2 & 0xFF;
 		} else if (var5.decor != null && var5.decor.typecode == arg3) {
 			return var5.decor.typecode2 & 0xFF;
 		} else if (var5.groundDecor != null && var5.groundDecor.typecode == arg3) {
@@ -1209,7 +1209,7 @@ public class World {
 												}
 												Wall var15 = var14.wall;
 												if (var15 != null) {
-													var15.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var15.x - cx, var15.y - cy, var15.z - cz, var15.bitset);
+													var15.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var15.x - cx, var15.y - cy, var15.z - cz, var15.typecode);
 												}
 												for (int var16 = 0; var16 < var14.spriteCount; var16++) {
 													Sprite var17 = var14.sprites[var16];
@@ -1269,10 +1269,10 @@ public class World {
 													var3.inverseBlockLocSpans = 9 - var3.blockLocSpans;
 												}
 												if ((var21.typeA & var20) != 0 && !this.wallVisible(var7, var4, var5, var21.typeA)) {
-													var21.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var21.x - cx, var21.y - cy, var21.z - cz, var21.bitset);
+													var21.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var21.x - cx, var21.y - cy, var21.z - cz, var21.typecode);
 												}
 												if ((var21.typeB & var20) != 0 && !this.wallVisible(var7, var4, var5, var21.typeB)) {
-													var21.modelB.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var21.x - cx, var21.y - cy, var21.z - cz, var21.bitset);
+													var21.modelB.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var21.x - cx, var21.y - cy, var21.z - cz, var21.typecode);
 												}
 											}
 											if (var22 != null && !this.visible(var7, var4, var5, var22.model.minY)) {
@@ -1360,7 +1360,7 @@ public class World {
 											if (var36) {
 												Wall var38 = var3.wall;
 												if (!this.wallVisible(var7, var4, var5, var38.typeA)) {
-													var38.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var38.x - cx, var38.y - cy, var38.z - cz, var38.bitset);
+													var38.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var38.x - cx, var38.y - cy, var38.z - cz, var38.typecode);
 												}
 												var3.checkLocSpans = 0;
 											}
@@ -1534,10 +1534,10 @@ public class World {
 				Wall var76 = var3.wall;
 				if (var76 != null) {
 					if ((var76.typeB & var3.backWallTypes) != 0 && !this.wallVisible(var7, var4, var5, var76.typeB)) {
-						var76.modelB.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var76.x - cx, var76.y - cy, var76.z - cz, var76.bitset);
+						var76.modelB.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var76.x - cx, var76.y - cy, var76.z - cz, var76.typecode);
 					}
 					if ((var76.typeA & var3.backWallTypes) != 0 && !this.wallVisible(var7, var4, var5, var76.typeA)) {
-						var76.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var76.x - cx, var76.y - cy, var76.z - cz, var76.bitset);
+						var76.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var76.x - cx, var76.y - cy, var76.z - cz, var76.typecode);
 					}
 				}
 			}

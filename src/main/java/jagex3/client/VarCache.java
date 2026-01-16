@@ -4,29 +4,29 @@ import deob.ObfuscatedName;
 import jagex3.config.VarBitType;
 
 @ObfuscatedName("cm")
-public class VarProvider {
+public class VarCache {
 
 	@ObfuscatedName("cm.r")
-	public static int[] BITMASK = new int[32];
+	public static int[] mask = new int[32];
 
 	@ObfuscatedName("cm.d")
-	public static int[] varCache;
+	public static int[] varServ;
 
 	@ObfuscatedName("cm.l")
-	public static int[] varps;
+	public static int[] var;
 
 	static {
 		int acc = 2;
 		for (int b = 0; b < 32; b++) {
-			BITMASK[b] = acc - 1;
+			mask[b] = acc - 1;
 			acc += acc;
 		}
 
-		varCache = new int[2000];
-		varps = new int[2000];
+		varServ = new int[2000];
+		var = new int[2000];
 	}
 
-	public VarProvider() throws Throwable {
+	public VarCache() throws Throwable {
 		throw new Error();
 	}
 
@@ -36,7 +36,7 @@ public class VarProvider {
 		int basevar = varbit.basevar;
 		int startbit = varbit.startbit;
 		int endbit = varbit.endbit;
-		int mask = BITMASK[endbit - startbit];
-		return varps[basevar] >> startbit & mask;
+		int mask = VarCache.mask[endbit - startbit];
+		return var[basevar] >> startbit & mask;
 	}
 }

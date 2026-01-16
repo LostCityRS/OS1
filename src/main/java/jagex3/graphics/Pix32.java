@@ -512,7 +512,7 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.cu(III)V")
-	public void method2676(int arg0, int arg1, int arg2) {
+	public void transPlotSprite(int arg0, int arg1, int arg2) {
 		int var4 = this.yof + arg0;
 		int var5 = this.xof + arg1;
 		int var6 = Pix2D.width * var5 + var4;

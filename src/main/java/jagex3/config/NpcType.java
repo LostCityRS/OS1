@@ -1,7 +1,7 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.client.VarProvider;
+import jagex3.client.VarCache;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
 import jagex3.datastruct.DoublyLinkable;
@@ -378,9 +378,9 @@ public class NpcType extends DoublyLinkable {
 	public final NpcType getMultiNpc() {
 		int value = -1;
 		if (this.multivarbit != -1) {
-			value = VarProvider.getVarbit(this.multivarbit);
+			value = VarCache.getVarbit(this.multivarbit);
 		} else if (this.multivarp != -1) {
-			value = VarProvider.varps[this.multivarp];
+			value = VarCache.var[this.multivarp];
 		}
 
 		if (value < 0 || value >= this.multinpc.length || this.multinpc[value] == -1) {
@@ -398,9 +398,9 @@ public class NpcType extends DoublyLinkable {
 
 		int value = -1;
 		if (this.multivarbit != -1) {
-			value = VarProvider.getVarbit(this.multivarbit);
+			value = VarCache.getVarbit(this.multivarbit);
 		} else if (this.multivarp != -1) {
-			value = VarProvider.varps[this.multivarp];
+			value = VarCache.var[this.multivarp];
 		}
 
 		return value >= 0 && value < this.multinpc.length && this.multinpc[value] != -1;

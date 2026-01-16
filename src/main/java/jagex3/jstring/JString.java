@@ -58,7 +58,7 @@ public class JString {
 	}
 
 	@ObfuscatedName("bg.l(J)Ljava/lang/String;")
-	public static String method782(long arg0) {
+	public static String fromBase37Upper(long arg0) {
 		if (arg0 <= 0L || arg0 >= 6582952005840035281L) {
 			return null;
 		} else if (arg0 % 37L == 0L) {
@@ -101,7 +101,7 @@ public class JString {
 	}
 
 	public static String imethod1(String arg0) {
-		String var1 = JString.method782(JString.toBase37(arg0));
+		String var1 = JString.fromBase37Upper(JString.toBase37(arg0));
 		if (var1 == null) {
 			var1 = "";
 		}
