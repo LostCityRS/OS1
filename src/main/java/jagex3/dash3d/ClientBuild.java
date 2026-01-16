@@ -84,8 +84,9 @@ public class ClientBuild {
 		throw new Error();
 	}
 
+	// jag::oldscape::ClientBuild::Quit
 	@ObfuscatedName("bk.r(I)V")
-	public static void unload() {
+	public static void quit() {
 		floort1 = null;
 		floort2 = null;
 		floors = null;
@@ -334,7 +335,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("ag.z([BIIIIIIILaq;[Lck;I)V")
-	public static void method563(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, World arg8, CollisionMap[] arg9) {
+	public static void loadLocationsRegion(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, World arg8, CollisionMap[] arg9) {
 		Packet var10 = new Packet(arg0);
 		int var11 = -1;
 		while (true) {
@@ -390,7 +391,7 @@ public class ClientBuild {
 			} else {
 				var8 = arg0 - 1;
 			}
-			if (Client.field2128 != var8) {
+			if (Client.sceneState != var8) {
 				return;
 			}
 		}
@@ -813,7 +814,7 @@ public class ClientBuild {
 								} else {
 									var37 = var6 - 1;
 								}
-								if (Client.field2128 != var37) {
+								if (Client.sceneState != var37) {
 									continue;
 								}
 							}
@@ -1404,5 +1405,31 @@ public class ClientBuild {
 		ligtot = new int[104];
 		comtot = new int[104];
 		tot = new int[104];
+	}
+
+	// jag::oldscape::ClientBuild::AutoGroundRegion
+	public static void autoGroundRegion(int var47, int var48, int var49) {
+		for (int var50 = 0; var50 < 8; var50++) {
+			for (int var51 = 0; var51 < 8; var51++) {
+				groundh[var47][var48 + var50][var49 + var51] = 0;
+			}
+		}
+		if (var48 > 0) {
+			for (int var52 = 1; var52 < 8; var52++) {
+				groundh[var47][var48][var49 + var52] = groundh[var47][var48 - 1][var49 + var52];
+			}
+		}
+		if (var49 > 0) {
+			for (int var53 = 1; var53 < 8; var53++) {
+				groundh[var47][var48 + var53][var49] = groundh[var47][var48 + var53][var49 - 1];
+			}
+		}
+		if (var48 > 0 && groundh[var47][var48 - 1][var49] != 0) {
+			groundh[var47][var48][var49] = groundh[var47][var48 - 1][var49];
+		} else if (var49 > 0 && groundh[var47][var48][var49 - 1] != 0) {
+			groundh[var47][var48][var49] = groundh[var47][var48][var49 - 1];
+		} else if (var48 > 0 && var49 > 0 && groundh[var47][var48 - 1][var49 - 1] != 0) {
+			groundh[var47][var48][var49] = groundh[var47][var48 - 1][var49 - 1];
+		}
 	}
 }

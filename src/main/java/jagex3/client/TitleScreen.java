@@ -8,9 +8,9 @@ import jagex3.graphics.*;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Loader;
 import jagex3.js5.Js5Net;
+import jagex3.jstring.StringConstants;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.Text;
-import jagex3.jstring.StringConstants;
 import jagex3.midi.MidiManager;
 
 import java.awt.*;

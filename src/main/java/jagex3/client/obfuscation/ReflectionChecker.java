@@ -134,4 +134,66 @@ public class ReflectionChecker {
 			return Class.forName(desc);
 		}
 	}
+
+    public static void addCheck(PacketBit var235, int var236) {
+        ReflectionCheck var237 = new ReflectionCheck();
+        var237.size = var235.g1();
+        var237.id = var235.g4();
+        var237.type = new int[var237.size];
+        var237.error = new int[var237.size];
+        var237.field = new Field[var237.size];
+        var237.fieldValue = new int[var237.size];
+        var237.method = new Method[var237.size];
+        var237.methodArgs = new byte[var237.size][][];
+        for (int var238 = 0; var238 < var237.size; var238++) {
+            try {
+                int var239 = var235.g1();
+                if (var239 == 0 || var239 == 1 || var239 == 2) {
+                    String var240 = new String(var235.gjstr());
+                    String var241 = new String(var235.gjstr());
+                    int var242 = 0;
+                    if (var239 == 1) {
+                        var242 = var235.g4();
+                    }
+                    var237.type[var238] = var239;
+                    var237.fieldValue[var238] = var242;
+                    var237.field[var238] = findClass(var240).getDeclaredField(var241);
+                } else if (var239 == 3 || var239 == 4) {
+                    String var243 = new String(var235.gjstr());
+                    String var244 = new String(var235.gjstr());
+                    int var245 = var235.g1();
+                    String[] var246 = new String[var245];
+                    for (int var247 = 0; var247 < var245; var247++) {
+                        var246[var247] = new String(var235.gjstr());
+                    }
+                    byte[][] var248 = new byte[var245][];
+                    if (var239 == 3) {
+                        for (int var249 = 0; var249 < var245; var249++) {
+                            int var250 = var235.g4();
+                            var248[var249] = new byte[var250];
+                            var235.gdata(var248[var249], 0, var250);
+                        }
+                    }
+                    var237.type[var238] = var239;
+                    Class[] var251 = new Class[var245];
+                    for (int var252 = 0; var252 < var245; var252++) {
+                        var251[var252] = findClass(var246[var252]);
+                    }
+                    var237.method[var238] = findClass(var243).getDeclaredMethod(var244, var251);
+                    var237.methodArgs[var238] = var248;
+                }
+            } catch (ClassNotFoundException var520) {
+                var237.error[var238] = -1;
+            } catch (SecurityException var521) {
+                var237.error[var238] = -2;
+            } catch (NullPointerException var522) {
+                var237.error[var238] = -3;
+            } catch (Exception var523) {
+                var237.error[var238] = -4;
+            } catch (Throwable var524) {
+                var237.error[var238] = -5;
+            }
+        }
+        checks.push(var237);
+    }
 }

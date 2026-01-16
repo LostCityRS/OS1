@@ -201,8 +201,9 @@ public abstract class Js5 {
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5::UpdateCacheHint
 	@ObfuscatedName("ch.d(IB)V")
-	public void download(int arg0) {
+	public void updateCacheHint(int arg0) {
 	}
 
 	@ObfuscatedName("ch.l(III)[B")
@@ -473,12 +474,13 @@ public abstract class Js5 {
 		return this.download(var5, var6);
 	}
 
+	// jag::oldscape::jagex3::Js5::UpdateCacheHint
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
-	public void download(String arg0) {
+	public void updateCacheHint(String arg0) {
 		String var2 = arg0.toLowerCase();
 		int var3 = this.groupNameHashTable.get(StringUtil.hashCode(var2));
 		if (var3 >= 0) {
-			this.download(var3);
+			this.updateCacheHint(var3);
 		}
 	}
 

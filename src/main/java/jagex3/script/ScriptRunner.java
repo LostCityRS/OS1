@@ -17,9 +17,9 @@ import jagex3.graphics.PixFont;
 import jagex3.graphics.SoftwareFont;
 import jagex3.io.Packet;
 import jagex3.jstring.JString;
+import jagex3.jstring.StringConstants;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.Text;
-import jagex3.jstring.StringConstants;
 import jagex3.wordenc.Huffman;
 
 import java.util.Calendar;
@@ -1489,8 +1489,8 @@ public class ScriptRunner {
 					if (opcode == 3308) {
 						// coord
 						int var135 = Client.minusedlevel;
-						int var136 = (Client.localPlayer.x >> 7) + Client.sceneBaseTileX;
-						int var137 = (Client.localPlayer.z >> 7) + Client.sceneBaseTileZ;
+						int var136 = (Client.localPlayer.x >> 7) + Client.mapBuildBaseX;
+						int var137 = (Client.localPlayer.z >> 7) + Client.mapBuildBaseZ;
 
 						intStack[isp++] = (var135 << 28) + (var136 << 14) + var137;
 						continue;

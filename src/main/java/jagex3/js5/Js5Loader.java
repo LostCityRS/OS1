@@ -79,7 +79,7 @@ public class Js5Loader extends Js5 {
 	}
 
 	@ObfuscatedName("dq.d(IB)V")
-	public void download(int arg0) {
+	public void updateCacheHint(int arg0) {
 		Js5Net.prioritizeRequest(this.archive, arg0);
 	}
 

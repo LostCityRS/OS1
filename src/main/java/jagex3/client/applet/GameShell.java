@@ -6,8 +6,8 @@ import jagex3.client.Client;
 import jagex3.client.JagException;
 import jagex3.client.TaskHandler;
 import jagex3.datastruct.*;
-import jagex3.graphics.JavaSafePixMap;
 import jagex3.graphics.JavaPixMap;
+import jagex3.graphics.JavaSafePixMap;
 import jagex3.graphics.PixMap;
 import jagex3.jstring.StringUtil;
 
@@ -354,15 +354,19 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		this.method1373();
 	}
 
+	// jag::oldscape::javapal::GameShell::DoneSlowUpdate
 	@ObfuscatedName("bk.v(B)V")
 	public static void doneSlowUpdate() {
 		field1100.method381();
-		for (int var0 = 0; var0 < 32; var0++) {
-			drawTime[var0] = 0L;
+
+		for (int i = 0; i < 32; i++) {
+			drawTime[i] = 0L;
 		}
-		for (int var1 = 0; var1 < 32; var1++) {
-			updateTime[var1] = 0L;
+
+		for (int i = 0; i < 32; i++) {
+			updateTime[i] = 0L;
 		}
+
 		updateCount = 0;
 	}
 
