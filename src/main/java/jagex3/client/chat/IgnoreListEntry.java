@@ -6,8 +6,8 @@ import deob.ObfuscatedName;
 public class IgnoreListEntry {
 
 	@ObfuscatedName("m.r")
-	public String field40;
+	public String name;
 
 	@ObfuscatedName("m.d")
-	public String field39;
+	public String displayName;
 }

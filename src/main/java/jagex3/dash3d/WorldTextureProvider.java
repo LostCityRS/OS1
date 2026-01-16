@@ -104,7 +104,7 @@ public class WorldTextureProvider implements TextureProvider {
 	}
 
 	@ObfuscatedName("bi.w(II)V")
-	public void method751(int arg0) {
+	public void runAnims(int arg0) {
 		for (int var2 = 0; var2 < this.field719.length; var2++) {
 			Texture var3 = this.field719[var2];
 			if (var3 != null && var3.field1692 != 0 && var3.field1689) {

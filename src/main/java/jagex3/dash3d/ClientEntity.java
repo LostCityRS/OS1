@@ -58,22 +58,22 @@ public abstract class ClientEntity extends ModelSource {
 	public int field2670 = 0;
 
 	@ObfuscatedName("fz.x")
-	public int[] field2631 = new int[4];
+	public int[] damageValues = new int[4];
 
 	@ObfuscatedName("fz.p")
-	public int[] field2632 = new int[4];
+	public int[] damageTypes = new int[4];
 
 	@ObfuscatedName("fz.ad")
-	public int[] field2633 = new int[4];
+	public int[] damageCycles = new int[4];
 
 	@ObfuscatedName("fz.ac")
-	public int field2635 = -1000;
+	public int combatCycle = -1000;
 
 	@ObfuscatedName("fz.aa")
-	public int field2613;
+	public int health;
 
 	@ObfuscatedName("fz.as")
-	public int field2636;
+	public int totalHealth;
 
 	@ObfuscatedName("fz.am")
 	public int targetId = -1;
@@ -148,7 +148,7 @@ public abstract class ClientEntity extends ModelSource {
 	public int cycle = 0;
 
 	@ObfuscatedName("fz.bs")
-	public int field2626 = 200;
+	public int height = 200;
 
 	@ObfuscatedName("fz.bk")
 	public int dstYaw;
@@ -264,17 +264,17 @@ public abstract class ClientEntity extends ModelSource {
 	}
 
 	@ObfuscatedName("fz.f(I)Z")
-	public boolean isVisible() {
+	public boolean isReady() {
 		return false;
 	}
 
 	@ObfuscatedName("fz.k(IIIB)V")
 	public final void method2911(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < 4; var4++) {
-			if (this.field2633[var4] <= arg2) {
-				this.field2631[var4] = arg0;
-				this.field2632[var4] = arg1;
-				this.field2633[var4] = arg2 + 70;
+			if (this.damageCycles[var4] <= arg2) {
+				this.damageValues[var4] = arg0;
+				this.damageTypes[var4] = arg1;
+				this.damageCycles[var4] = arg2 + 70;
 				return;
 			}
 		}

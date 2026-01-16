@@ -464,7 +464,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("dj.b(I)V")
 	public abstract void mainredraw();
 
-	public static void imethod1(int var3, String var4, Color var5) {
+	public static void drawProgress(int var3, String var4, Color var5) {
 		try {
 			Graphics var6 = GameShell.canvas.getGraphics();
 			if (GameShell.field1159 == null) {

@@ -510,7 +510,7 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.w()V")
-	public void clearTemporaryLocs() {
+	public void removeSprites() {
 		for (int var1 = 0; var1 < this.temporaryLocCount; var1++) {
 			Sprite var2 = this.temporaryLocs[var1];
 			this.removeLoc(var2);
@@ -967,7 +967,7 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.al(IIIIII)V")
-	public void draw(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public void renderAll(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg0 < 0) {
 			arg0 = 0;
 		} else if (arg0 >= this.maxTileX * 128) {

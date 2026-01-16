@@ -14,7 +14,7 @@ import jagex3.graphics.SoftwareFont;
 import jagex3.graphics.SpriteDataProvider;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.jstring.Locale;
+import jagex3.jstring.Text;
 
 @ObfuscatedName("eg")
 public class IfType extends Linkable {
@@ -356,7 +356,7 @@ public class IfType extends Linkable {
 	public String targetText = "";
 
 	@ObfuscatedName("eg.dp")
-	public String option = Locale.BUTTON_OK;
+	public String option = Text.OK;
 
 	@ObfuscatedName("eg.dm")
 	public int[] invSlotObjId;
@@ -697,13 +697,13 @@ public class IfType extends Linkable {
 
 			if (this.option.length() == 0) {
 				if (this.buttonType == 1) {
-					this.option = Locale.BUTTON_OK;
+					this.option = Text.OK;
 				} else if (this.buttonType == 4) {
-					this.option = Locale.BUTTON_SELECT;
+					this.option = Text.SELECT;
 				} else if (this.buttonType == 5) {
-					this.option = Locale.BUTTON_SELECT;
+					this.option = Text.SELECT;
 				} else if (this.buttonType == 6) {
-					this.option = Locale.BUTTON_CONTINUE;
+					this.option = Text.CONTINUE;
 				}
 			}
 		}

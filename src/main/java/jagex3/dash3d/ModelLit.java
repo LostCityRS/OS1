@@ -166,7 +166,7 @@ public class ModelLit extends ModelSource {
 
 	// jag::oldscape::dash3d::MousePickingHelper::m_mouseCheck
 	@ObfuscatedName("fo.by")
-	public static boolean mouseCheck = false;
+	public static boolean checkHover = false;
 
 	// jag::oldscape::dash3d::MousePickingHelper::m_mouseX
 	@ObfuscatedName("fo.bx")
@@ -178,7 +178,7 @@ public class ModelLit extends ModelSource {
 
 	// jag::oldscape::dash3d::MousePickingHelper::m_pickedEntityCount
 	@ObfuscatedName("fo.bu")
-	public static int pickedEntityCount = 0;
+	public static int pickedCount = 0;
 
 	// jag::oldscape::dash3d::MousePickingHelper::m_pickedEntityTypecode
 	@ObfuscatedName("fo.bo")
@@ -919,7 +919,7 @@ public class ModelLit extends ModelSource {
 		boolean var25 = var24 || this.field2738 > 0;
 		boolean picking = false;
 
-		if (typecode > 0 && mouseCheck) {
+		if (typecode > 0 && checkHover) {
 			int var27 = var11 - var12;
 			if (var27 <= 50) {
 				var27 = 50;
@@ -946,7 +946,7 @@ public class ModelLit extends ModelSource {
 			int var33 = mouseY - Pix3D.projectionY;
 			if (var32 > var28 && var32 < var29 && var33 > var30 && var33 < var31) {
 				if (this.picking) {
-					pickedEntityTypecode[pickedEntityCount++] = typecode;
+					pickedEntityTypecode[pickedCount++] = typecode;
 				} else {
 					picking = true;
 				}
@@ -1053,7 +1053,7 @@ public class ModelLit extends ModelSource {
 					}
 				} else {
 					if (picking && this.pointWithinTriangle(mouseX, mouseY, vertexScreenY[var6], vertexScreenY[var7], vertexScreenY[var8], var9, var10, var11)) {
-						pickedEntityTypecode[pickedEntityCount++] = typecode;
+						pickedEntityTypecode[pickedCount++] = typecode;
 						picking = false;
 					}
 

@@ -8,7 +8,7 @@ import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.jstring.Locale;
+import jagex3.jstring.Text;
 
 @ObfuscatedName("em")
 public class NpcType extends DoublyLinkable {
@@ -187,7 +187,7 @@ public class NpcType extends DoublyLinkable {
 			this.walkanim_l = buf.g2();
 		} else if (code >= 30 && code < 35) {
 			this.op[code - 30] = buf.gjstr();
-			if (this.op[code - 30].equalsIgnoreCase(Locale.hidden)) {
+			if (this.op[code - 30].equalsIgnoreCase(Text.HIDDEN)) {
 				this.op[code - 30] = null;
 			}
 		} else if (code == 40) {

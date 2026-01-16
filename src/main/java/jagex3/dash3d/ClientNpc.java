@@ -23,7 +23,7 @@ public class ClientNpc extends ClientEntity {
 			return null;
 		}
 		var3.method3002();
-		this.field2626 = var3.minY;
+		this.height = var3.minY;
 		if (this.spotanimId != -1 && this.spotanimFrame != -1) {
 			ModelLit var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
 			if (var4 != null) {
@@ -39,7 +39,7 @@ public class ClientNpc extends ClientEntity {
 	}
 
 	@ObfuscatedName("ge.f(I)Z")
-	public final boolean isVisible() {
+	public final boolean isReady() {
 		return this.type != null;
 	}
 }

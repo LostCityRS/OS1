@@ -18,10 +18,10 @@ public class ClientPlayer extends ClientEntity {
 	public PlayerModel field2786;
 
 	@ObfuscatedName("fi.bq")
-	public int field2787 = -1;
+	public int headiconPk = -1;
 
 	@ObfuscatedName("fi.bj")
-	public int field2800 = -1;
+	public int headiconPrayer = -1;
 
 	@ObfuscatedName("fi.bz")
 	public int combatLevel = 0;
@@ -72,8 +72,8 @@ public class ClientPlayer extends ClientEntity {
 	public final void read(Packet arg0) {
 		arg0.pos = 0;
 		int var2 = arg0.g1();
-		this.field2787 = arg0.g1b();
-		this.field2800 = arg0.g1b();
+		this.headiconPk = arg0.g1b();
+		this.headiconPrayer = arg0.g1b();
 		int var3 = -1;
 		this.field2803 = 0;
 		int[] var4 = new int[12];
@@ -157,7 +157,7 @@ public class ClientPlayer extends ClientEntity {
 			return null;
 		}
 		var3.method3002();
-		this.field2626 = var3.minY;
+		this.height = var3.minY;
 		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
 			ModelLit var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
 			if (var4 != null) {
@@ -203,7 +203,7 @@ public class ClientPlayer extends ClientEntity {
 	}
 
 	@ObfuscatedName("fi.f(I)Z")
-	public final boolean isVisible() {
+	public final boolean isReady() {
 		return this.field2786 != null;
 	}
 }

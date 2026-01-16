@@ -6,7 +6,7 @@ import deob.ObfuscatedName;
 public class FriendListEntry {
 
 	@ObfuscatedName("q.r")
-	public String field173;
+	public String name;
 
 	@ObfuscatedName("q.d")
 	public String field177;

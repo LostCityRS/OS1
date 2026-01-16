@@ -287,7 +287,7 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.cj(II)V")
-	public void draw(int arg0, int arg1) {
+	public void plotSprite(int arg0, int arg1) {
 		int var3 = this.yof + arg0;
 		int var4 = this.xof + arg1;
 		int var5 = Pix2D.width * var4 + var3;
@@ -448,7 +448,7 @@ public class Pix32 extends Pix2D {
 	@ObfuscatedName("fq.co(IIII)V")
 	public void method2699(int arg0, int arg1, int arg2, int arg3) {
 		if (arg2 == 256) {
-			this.draw(arg0, arg1);
+			this.plotSprite(arg0, arg1);
 			return;
 		}
 		int var5 = this.yof + arg0;
