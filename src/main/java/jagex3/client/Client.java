@@ -771,7 +771,7 @@ public class Client extends GameShell {
 	public static String targetVerb = null;
 
 	@ObfuscatedName("client.kg")
-	public static String spellCaption = null;
+	public static String targetOp = null;
 
 	@ObfuscatedName("client.ki")
 	public static int toplevelinterface = -1;
@@ -843,7 +843,7 @@ public class Client extends GameShell {
 	public static boolean dragAlive = false;
 
 	@ObfuscatedName("ak.kt")
-	public static int activeSpellFlags; // todo
+	public static int targetMask; // todo
 
 	@ObfuscatedName("client.lg")
 	public static int interfaceUpdateNum = 1;
@@ -5096,7 +5096,7 @@ public class Client extends GameShell {
 				targetModeActive = true;
 				targetCom = c;
 				targetSub = b;
-				activeSpellFlags = var34;
+				targetMask = var34;
 				componentUpdated(var35);
 
 				objSelected = 0;
@@ -5117,9 +5117,9 @@ public class Client extends GameShell {
 				}
 
 				if (var33.v3) {
-					spellCaption = var33.opbase + TextUtil.colTag(16777215);
+					targetOp = var33.opbase + TextUtil.colTag(16777215);
 				} else {
-					spellCaption = TextUtil.colTag(65280) + var33.targetText + TextUtil.colTag(16777215);
+					targetOp = TextUtil.colTag(65280) + var33.targetText + TextUtil.colTag(16777215);
 				}
 			}
 
@@ -5687,8 +5687,8 @@ public class Client extends GameShell {
 				}
 			}
 			addMenuOption(Text.EXAMINE, TextUtil.colTag(16776960) + var4, 1003, arg1, arg2, arg3);
-		} else if ((activeSpellFlags & 0x2) == 2) {
-			addMenuOption(targetVerb, spellCaption + " " + TextUtil.arrow + " " + TextUtil.colTag(16776960) + var4, 8, arg1, arg2, arg3);
+		} else if ((targetMask & 0x2) == 2) {
+			addMenuOption(targetVerb, targetOp + " " + TextUtil.arrow + " " + TextUtil.colTag(16776960) + var4, 8, arg1, arg2, arg3);
 		}
 	}
 
@@ -5752,8 +5752,8 @@ public class Client extends GameShell {
 					addMenuOption(playerOp[var10], TextUtil.colTag(16777215) + var9, var13, arg1, arg2, arg3);
 				}
 			}
-		} else if ((activeSpellFlags & 0x8) == 8) {
-			addMenuOption(targetVerb, spellCaption + " " + TextUtil.arrow + " " + TextUtil.colTag(16777215) + var9, 15, arg1, arg2, arg3);
+		} else if ((targetMask & 0x8) == 8) {
+			addMenuOption(targetVerb, targetOp + " " + TextUtil.arrow + " " + TextUtil.colTag(16777215) + var9, 15, arg1, arg2, arg3);
 		}
 		for (int var14 = 0; var14 < menuNumEntries; var14++) {
 			if (menuAction[var14] == 23) {
@@ -10349,7 +10349,7 @@ public class Client extends GameShell {
 		if (objSelected == 1 && menuNumEntries < 2) {
 			var26 = Text.USE + Text.MINISEPARATOR + field2078 + " " + TextUtil.arrow;
 		} else if (targetModeActive && menuNumEntries < 2) {
-			var26 = targetVerb + Text.MINISEPARATOR + spellCaption + " " + TextUtil.arrow;
+			var26 = targetVerb + Text.MINISEPARATOR + targetOp + " " + TextUtil.arrow;
 		} else {
 			var26 = method1239(menuNumEntries - 1);
 		}
@@ -10937,8 +10937,8 @@ public class Client extends GameShell {
 									int var141 = getActive(var10);
 									boolean var142 = (var141 >> 30 & 0x1) != 0;
 									if (var142) {
-										if ((activeSpellFlags & 0x10) == 16) {
-											addMenuOption(targetVerb, spellCaption + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var138.name, 32, var138.index, var133, var10.parentlayer);
+										if ((targetMask & 0x10) == 16) {
+											addMenuOption(targetVerb, targetOp + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var138.name, 32, var138.index, var133, var10.parentlayer);
 										}
 										break label1831;
 									}
@@ -11027,8 +11027,8 @@ public class Client extends GameShell {
 			if (targetModeActive) {
 				int var157 = getActive(var10);
 				boolean var158 = (var157 >> 21 & 0x1) != 0;
-				if (var158 && (activeSpellFlags & 0x20) == 32) {
-					addMenuOption(targetVerb, spellCaption + " " + TextUtil.arrow + " " + var10.opbase, 58, 0, var10.subid, var10.parentlayer);
+				if (var158 && (targetMask & 0x20) == 32) {
+					addMenuOption(targetVerb, targetOp + " " + TextUtil.arrow + " " + var10.opbase, 58, 0, var10.subid, var10.parentlayer);
 				}
 			} else {
 				for (int var159 = 9; var159 >= 5; var159--) {
@@ -11454,8 +11454,8 @@ public class Client extends GameShell {
 						}
 					}
 					addMenuOption(Text.EXAMINE, TextUtil.colTag(65535) + var107.name, 1002, var107.id << 14, var103, var104);
-				} else if ((activeSpellFlags & 0x4) == 4) {
-					addMenuOption(targetVerb, spellCaption + " " + TextUtil.arrow + " " + TextUtil.colTag(65535) + var107.name, 2, var102, var103, var104);
+				} else if ((targetMask & 0x4) == 4) {
+					addMenuOption(targetVerb, targetOp + " " + TextUtil.arrow + " " + TextUtil.colTag(65535) + var107.name, 2, var102, var103, var104);
 				}
 			}
 			if (var105 == 1) {
@@ -11532,8 +11532,8 @@ public class Client extends GameShell {
 							}
 						}
 						addMenuOption(Text.EXAMINE, TextUtil.colTag(16748608) + var123.name, 1004, var122.id, var103, var104);
-					} else if ((activeSpellFlags & 0x1) == 1) {
-						addMenuOption(targetVerb, spellCaption + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var123.name, 17, var122.id, var103, var104);
+					} else if ((targetMask & 0x1) == 1) {
+						addMenuOption(targetVerb, targetOp + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var123.name, 17, var122.id, var103, var104);
 					}
 				}
 			}
