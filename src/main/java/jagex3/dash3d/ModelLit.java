@@ -66,7 +66,7 @@ public class ModelLit extends ModelSource {
 	public byte field2737 = 0;
 
 	@ObfuscatedName("fo.ad")
-	public int field2738 = 0;
+	public int faceTextureCount = 0;
 
 	@ObfuscatedName("fo.ac")
 	public int[] field2739;
@@ -93,7 +93,7 @@ public class ModelLit extends ModelSource {
 	public int field2746;
 
 	@ObfuscatedName("fo.an")
-	public int field2747;
+	public int radius;
 
 	@ObfuscatedName("fo.ah")
 	public int maxDepth;
@@ -206,14 +206,14 @@ public class ModelLit extends ModelSource {
 		boolean var6 = false;
 		this.vertexCount = 0;
 		this.field2780 = 0;
-		this.field2738 = 0;
+		this.faceTextureCount = 0;
 		this.field2737 = -1;
 		for (int var7 = 0; var7 < count; var7++) {
 			ModelLit var8 = models[var7];
 			if (var8 != null) {
 				this.vertexCount += var8.vertexCount;
 				this.field2780 += var8.field2780;
-				this.field2738 += var8.field2738;
+				this.faceTextureCount += var8.faceTextureCount;
 				if (var8.facePriority == null) {
 					if (this.field2737 == -1) {
 						this.field2737 = var8.field2737;
@@ -250,14 +250,14 @@ public class ModelLit extends ModelSource {
 		if (var6) {
 			this.field2735 = new byte[this.field2780];
 		}
-		if (this.field2738 > 0) {
-			this.field2739 = new int[this.field2738];
-			this.field2774 = new int[this.field2738];
-			this.field2765 = new int[this.field2738];
+		if (this.faceTextureCount > 0) {
+			this.field2739 = new int[this.faceTextureCount];
+			this.field2774 = new int[this.faceTextureCount];
+			this.field2765 = new int[this.faceTextureCount];
 		}
 		this.vertexCount = 0;
 		this.field2780 = 0;
-		this.field2738 = 0;
+		this.faceTextureCount = 0;
 		for (int var9 = 0; var9 < count; var9++) {
 			ModelLit var10 = models[var9];
 			if (var10 != null) {
@@ -289,16 +289,16 @@ public class ModelLit extends ModelSource {
 						if (var10.field2735 == null || var10.field2735[var11] == -1) {
 							this.field2735[this.field2780] = -1;
 						} else {
-							this.field2735[this.field2780] = (byte) (var10.field2735[var11] + this.field2738);
+							this.field2735[this.field2780] = (byte) (var10.field2735[var11] + this.faceTextureCount);
 						}
 					}
 					this.field2780++;
 				}
-				for (int var12 = 0; var12 < var10.field2738; var12++) {
-					this.field2739[this.field2738] = var10.field2739[var12] + this.vertexCount;
-					this.field2774[this.field2738] = var10.field2774[var12] + this.vertexCount;
-					this.field2765[this.field2738] = var10.field2765[var12] + this.vertexCount;
-					this.field2738++;
+				for (int var12 = 0; var12 < var10.faceTextureCount; var12++) {
+					this.field2739[this.faceTextureCount] = var10.field2739[var12] + this.vertexCount;
+					this.field2774[this.faceTextureCount] = var10.field2774[var12] + this.vertexCount;
+					this.field2765[this.faceTextureCount] = var10.field2765[var12] + this.vertexCount;
+					this.faceTextureCount++;
 				}
 				for (int var13 = 0; var13 < var10.vertexCount; var13++) {
 					this.vertexX[this.vertexCount] = var10.vertexX[var13];
@@ -313,10 +313,10 @@ public class ModelLit extends ModelSource {
 	@ObfuscatedName("fo.b([[IIIIZI)Lfo;")
 	public ModelLit method3054(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
 		this.method3002();
-		int var7 = arg1 - this.field2747;
-		int var8 = this.field2747 + arg1;
-		int var9 = arg3 - this.field2747;
-		int var10 = this.field2747 + arg3;
+		int var7 = arg1 - this.radius;
+		int var8 = this.radius + arg1;
+		int var9 = arg3 - this.radius;
+		int var10 = this.radius + arg3;
 		if (var7 < 0 || var8 + 128 >> 7 >= arg0.length || var9 < 0 || var10 + 128 >> 7 >= arg0[0].length) {
 			return this;
 		}
@@ -332,7 +332,7 @@ public class ModelLit extends ModelSource {
 			var15 = new ModelLit();
 			var15.vertexCount = this.vertexCount;
 			var15.field2780 = this.field2780;
-			var15.field2738 = this.field2738;
+			var15.faceTextureCount = this.faceTextureCount;
 			var15.vertexX = this.vertexX;
 			var15.vertexZ = this.vertexZ;
 			var15.faceVertexA = this.faceVertexA;
@@ -410,7 +410,7 @@ public class ModelLit extends ModelSource {
 	public ModelLit method3046(boolean copyAlpha, ModelLit model, byte[] arg2) {
 		model.vertexCount = this.vertexCount;
 		model.field2780 = this.field2780;
-		model.field2738 = this.field2738;
+		model.faceTextureCount = this.faceTextureCount;
 		if (model.vertexX == null || model.vertexX.length < this.vertexCount) {
 			model.vertexX = new int[this.vertexCount + 100];
 			model.vertexY = new int[this.vertexCount + 100];
@@ -464,7 +464,7 @@ public class ModelLit extends ModelSource {
 		this.field2745 = 1;
 		this.minY = 0;
 		this.field2746 = 0;
-		this.field2747 = 0;
+		this.radius = 0;
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexX[var1];
 			int var3 = this.vertexY[var1];
@@ -476,13 +476,13 @@ public class ModelLit extends ModelSource {
 				this.field2746 = var3;
 			}
 			int var5 = var2 * var2 + var4 * var4;
-			if (var5 > this.field2747) {
-				this.field2747 = var5;
+			if (var5 > this.radius) {
+				this.radius = var5;
 			}
 		}
-		this.field2747 = (int) (Math.sqrt((double) this.field2747) + 0.99D);
-		this.minDepth = (int) (Math.sqrt((double) (this.minY * this.minY + this.field2747 * this.field2747)) + 0.99D);
-		this.maxDepth = this.minDepth + (int) (Math.sqrt((double) (this.field2747 * this.field2747 + this.field2746 * this.field2746)) + 0.99D);
+		this.radius = (int) (Math.sqrt((double) this.radius) + 0.99D);
+		this.minDepth = (int) (Math.sqrt((double) (this.minY * this.minY + this.radius * this.radius)) + 0.99D);
+		this.maxDepth = this.minDepth + (int) (Math.sqrt((double) (this.radius * this.radius + this.field2746 * this.field2746)) + 0.99D);
 	}
 
 	@ObfuscatedName("fo.o()V")
@@ -491,25 +491,25 @@ public class ModelLit extends ModelSource {
 			return;
 		}
 		this.field2745 = 2;
-		this.field2747 = 0;
+		this.radius = 0;
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexX[var1];
 			int var3 = this.vertexY[var1];
 			int var4 = this.vertexZ[var1];
 			int var5 = var3 * var3 + var2 * var2 + var4 * var4;
-			if (var5 > this.field2747) {
-				this.field2747 = var5;
+			if (var5 > this.radius) {
+				this.radius = var5;
 			}
 		}
-		this.field2747 = (int) (Math.sqrt((double) this.field2747) + 0.99D);
-		this.minDepth = this.field2747;
-		this.maxDepth = this.field2747 + this.field2747;
+		this.radius = (int) (Math.sqrt((double) this.radius) + 0.99D);
+		this.minDepth = this.radius;
+		this.maxDepth = this.radius + this.radius;
 	}
 
 	@ObfuscatedName("fo.a()I")
 	public int method3004() {
 		this.method3002();
-		return this.field2747;
+		return this.radius;
 	}
 
 	@ObfuscatedName("fo.h(Lfr;I)V")
@@ -757,6 +757,7 @@ public class ModelLit extends ModelSource {
 		this.field2745 = 0;
 	}
 
+	// jag::oldscape::dash3d::SoftwareModelLitRenderer::ObjRender
 	@ObfuscatedName("fo.av(IIIIIII)V")
 	public final void objRender(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		tmpDepthFaceCount[0] = -1;
@@ -801,14 +802,14 @@ public class ModelLit extends ModelSource {
 			vertexScreenZ[var19] = var30 - var18;
 			vertexScreenX[var19] = (var26 << 9) / var30 + var8;
 			vertexScreenY[var19] = (var29 << 9) / var30 + var9;
-			if (this.field2738 > 0) {
+			if (this.faceTextureCount > 0) {
 				vertexViewSpaceX[var19] = var26;
 				vertexViewSpaceY[var19] = var29;
 				vertexViewSpaceZ[var19] = var30;
 			}
 		}
 		try {
-			this.draw(false, false, 0);
+			this.render2(false, false, 0);
 		} catch (Exception var33) {
 		}
 	}
@@ -857,18 +858,19 @@ public class ModelLit extends ModelSource {
 			vertexScreenZ[var20] = var31 - var19;
 			vertexScreenX[var20] = (var27 << 9) / arg7 + var9;
 			vertexScreenY[var20] = (var30 << 9) / arg7 + var10;
-			if (this.field2738 > 0) {
+			if (this.faceTextureCount > 0) {
 				vertexViewSpaceX[var20] = var27;
 				vertexViewSpaceY[var20] = var30;
 				vertexViewSpaceZ[var20] = var31;
 			}
 		}
 		try {
-			this.draw(false, false, 0);
+			this.render2(false, false, 0);
 		} catch (Exception var34) {
 		}
 	}
 
+	// jag::oldscape::dash3d::SoftwareModelLitRenderer::WorldRender
 	@ObfuscatedName("fo.z(IIIIIIIII)V")
 	public void worldRender(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int typecode) {
 		tmpDepthFaceCount[0] = -1;
@@ -879,25 +881,27 @@ public class ModelLit extends ModelSource {
 
 		int var10 = arg4 * arg7 - arg3 * arg5 >> 16;
 		int var11 = arg1 * arg6 + arg2 * var10 >> 16;
-		int var12 = this.field2747 * arg2 >> 16;
+		int var12 = this.radius * arg2 >> 16;
+
 		int var13 = var11 + var12;
 		if (var13 <= 50 || var11 >= 3500) {
 			return;
 		}
 
 		int var14 = arg3 * arg7 + arg4 * arg5 >> 16;
-		int var15 = var14 - this.field2747 << 9;
+		int var15 = var14 - this.radius << 9;
 		if (var15 / var13 >= Pix3D.maxX) {
 			return;
 		}
 
-		int var16 = this.field2747 + var14 << 9;
+		int var16 = this.radius + var14 << 9;
 		if (var16 / var13 <= Pix3D.minX) {
 			return;
 		}
 
 		int var17 = arg2 * arg6 - arg1 * var10 >> 16;
-		int var18 = this.field2747 * arg1 >> 16;
+		int var18 = this.radius * arg1 >> 16;
+
 		int var19 = var17 + var18 << 9;
 		if (var19 / var13 <= Pix3D.minY) {
 			return;
@@ -910,13 +914,14 @@ public class ModelLit extends ModelSource {
 		}
 
 		int var22 = (this.minY * arg1 >> 16) + var12;
+
+		boolean clipped2 = false;
 		boolean clipped = false;
-		boolean var24 = false;
 		if (var11 - var22 <= 50) {
-			var24 = true;
+			clipped = true;
 		}
 
-		boolean var25 = var24 || this.field2738 > 0;
+		boolean textured = clipped || this.faceTextureCount > 0;
 		boolean picking = false;
 
 		if (typecode > 0 && checkHover) {
@@ -988,10 +993,10 @@ public class ModelLit extends ModelSource {
 				vertexScreenY[var38] = (var49 << 9) / var50 + var35;
 			} else {
 				vertexScreenX[var38] = -5000;
-				clipped = true;
+				clipped2 = true;
 			}
 
-			if (var25) {
+			if (textured) {
 				vertexViewSpaceX[var38] = var46;
 				vertexViewSpaceY[var38] = var49;
 				vertexViewSpaceZ[var38] = var50;
@@ -999,13 +1004,14 @@ public class ModelLit extends ModelSource {
 		}
 
 		try {
-			this.draw(clipped, picking, typecode);
+			this.render2(clipped2, picking, typecode);
 		} catch (Exception var53) {
 		}
 	}
 
+	// jag::oldscape::dash3d::SoftwareModelLitRenderer::Render2
 	@ObfuscatedName("fo.az(ZZI)V")
-	public final void draw(boolean clipped, boolean picking, int typecode) {
+	public final void render2(boolean clipped, boolean picking, int typecode) {
 		if (this.maxDepth >= 1600) {
 			return;
 		}
@@ -1052,7 +1058,7 @@ public class ModelLit extends ModelSource {
 						tmpDepthFaces[var30][tmpDepthFaceCount[var30]++] = f;
 					}
 				} else {
-					if (picking && this.pointWithinTriangle(mouseX, mouseY, vertexScreenY[var6], vertexScreenY[var7], vertexScreenY[var8], var9, var10, var11)) {
+					if (picking && this.isMouseRoughlyInsideTriangle(mouseX, mouseY, vertexScreenY[var6], vertexScreenY[var7], vertexScreenY[var8], var9, var10, var11)) {
 						pickedEntityTypecode[pickedCount++] = typecode;
 						picking = false;
 					}
@@ -1079,7 +1085,7 @@ public class ModelLit extends ModelSource {
 				if (count > 0) {
 					int[] faces = tmpDepthFaces[depth];
 					for (int f = 0; f < count; f++) {
-						this.drawFace(faces[f]);
+						this.render3(faces[f]);
 					}
 				}
 			}
@@ -1150,7 +1156,7 @@ public class ModelLit extends ModelSource {
 
 		for (int var52 = 0; var52 < 10; var52++) {
 			while (var52 == 0 && var51 > var44) {
-				this.drawFace(var49[var47++]);
+				this.render3(var49[var47++]);
 				if (var47 == var48 && tmpPriorityFaces[11] != var49) {
 					var47 = 0;
 					var48 = tmpPriorityFaceCount[11];
@@ -1165,7 +1171,7 @@ public class ModelLit extends ModelSource {
 			}
 
 			while (var52 == 3 && var51 > var45) {
-				this.drawFace(var49[var47++]);
+				this.render3(var49[var47++]);
 				if (var47 == var48 && tmpPriorityFaces[11] != var49) {
 					var47 = 0;
 					var48 = tmpPriorityFaceCount[11];
@@ -1180,7 +1186,7 @@ public class ModelLit extends ModelSource {
 			}
 
 			while (var52 == 5 && var51 > var46) {
-				this.drawFace(var49[var47++]);
+				this.render3(var49[var47++]);
 				if (var47 == var48 && tmpPriorityFaces[11] != var49) {
 					var47 = 0;
 					var48 = tmpPriorityFaceCount[11];
@@ -1197,12 +1203,12 @@ public class ModelLit extends ModelSource {
 			int var53 = tmpPriorityFaceCount[var52];
 			int[] var54 = tmpPriorityFaces[var52];
 			for (int var55 = 0; var55 < var53; var55++) {
-				this.drawFace(var54[var55]);
+				this.render3(var54[var55]);
 			}
 		}
 
 		while (var51 != -1000) {
-			this.drawFace(var49[var47++]);
+			this.render3(var49[var47++]);
 			if (var47 == var48 && tmpPriorityFaces[11] != var49) {
 				var47 = 0;
 				var49 = tmpPriorityFaces[11];
@@ -1217,10 +1223,11 @@ public class ModelLit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::SoftwareModelLitRenderer::Render3
 	@ObfuscatedName("fo.an(I)V")
-	public final void drawFace(int face) {
+	public final void render3(int face) {
 		if (faceNearClipped[face]) {
-			this.drawNearClippedFace(face);
+			this.render3ZClip(face);
 			return;
 		}
 
@@ -1262,8 +1269,9 @@ public class ModelLit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::SoftwareModelLitRenderer::Render3ZClip
 	@ObfuscatedName("fo.ah(I)V")
-	public final void drawNearClippedFace(int arg0) {
+	public final void render3ZClip(int arg0) {
 		int var2 = Pix3D.originX;
 		int var3 = Pix3D.originY;
 		int elements = 0;
@@ -1413,8 +1421,9 @@ public class ModelLit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::MousePickingHelper::IsMouseRoughlyInsideTriangle
 	@ObfuscatedName("fo.ay(IIIIIIII)Z")
-	public final boolean pointWithinTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public final boolean isMouseRoughlyInsideTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		if (arg1 < arg2 && arg1 < arg3 && arg1 < arg4) {
 			return false;
 		} else if (arg1 > arg2 && arg1 > arg3 && arg1 > arg4) {

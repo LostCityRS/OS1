@@ -1202,10 +1202,10 @@ public class World {
 												Square var14 = var3.linkedSquare;
 												if (var14.quickGround == null) {
 													if (var14.ground != null && !this.tileVisible(0, var4, var5)) {
-														this.drawTileOverlay(var14.ground, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
+														this.drawGround(var14.ground, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
 													}
 												} else if (!this.tileVisible(0, var4, var5)) {
-													this.drawTileUnderlay(var14.quickGround, 0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
+													this.drawQuickGround(var14.quickGround, 0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
 												}
 												Wall var15 = var14.wall;
 												if (var15 != null) {
@@ -1222,12 +1222,12 @@ public class World {
 											if (var3.quickGround == null) {
 												if (var3.ground != null && !this.tileVisible(var7, var4, var5)) {
 													var18 = true;
-													this.drawTileOverlay(var3.ground, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
+													this.drawGround(var3.ground, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
 												}
 											} else if (!this.tileVisible(var7, var4, var5)) {
 												var18 = true;
 												if (var3.quickGround.colourNE != 12345678 || takingInput && var6 <= clickLevel) {
-													this.drawTileUnderlay(var3.quickGround, var7, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
+													this.drawQuickGround(var3.quickGround, var7, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
 												}
 											}
 											int var19 = 0;
@@ -1575,7 +1575,7 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.ao(Lai;IIIIIII)V")
-	public void drawTileUnderlay(QuickGround underlay, int level, int arg2, int arg3, int arg4, int arg5, int tileX, int tileZ) {
+	public void drawQuickGround(QuickGround underlay, int level, int arg2, int arg3, int arg4, int arg5, int tileX, int tileZ) {
 		int var9;
 		int var10 = var9 = (tileX << 7) - cx;
 		int var11;
@@ -1689,7 +1689,7 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.ag(Lar;IIIIII)V")
-	public void drawTileOverlay(Ground overlay, int sinEyePitch, int cosEyePitch, int sinEyeYaw, int cosEyeYaw, int arg5, int arg6) {
+	public void drawGround(Ground overlay, int sinEyePitch, int cosEyePitch, int sinEyeYaw, int cosEyeYaw, int arg5, int arg6) {
 		int vertexCount = overlay.vertexX.length;
 
 		for (int i = 0; i < vertexCount; i++) {

@@ -240,8 +240,9 @@ public class Pix3D extends Pix2D {
 		return (var15 << 16) + (var16 << 8) + var17;
 	}
 
+	// jag::oldscape::dash3d::Pix3D::SetHClip
 	@ObfuscatedName("fx.bd(III)V")
-	public static void method2764(int arg0, int arg1, int arg2) {
+	public static void setHClip(int arg0, int arg1, int arg2) {
 		hclip = arg0 < 0 || arg0 > sizeX || arg1 < 0 || arg1 > sizeX || arg2 < 0 || arg2 > sizeX;
 	}
 

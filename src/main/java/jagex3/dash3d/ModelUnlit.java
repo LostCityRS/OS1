@@ -1526,15 +1526,15 @@ public class ModelUnlit extends ModelSource {
 					var9[this.field2682[var10] & 0xFF]++;
 				}
 			}
-			var8.field2738 = 0;
+			var8.faceTextureCount = 0;
 			for (int var11 = 0; var11 < this.faceTextureCount; var11++) {
 				if (var9[var11] > 0 && this.field2687[var11] == 0) {
-					var8.field2738++;
+					var8.faceTextureCount++;
 				}
 			}
-			var8.field2739 = new int[var8.field2738];
-			var8.field2774 = new int[var8.field2738];
-			var8.field2765 = new int[var8.field2738];
+			var8.field2739 = new int[var8.faceTextureCount];
+			var8.field2774 = new int[var8.faceTextureCount];
+			var8.field2765 = new int[var8.faceTextureCount];
 			int var12 = 0;
 			for (int var13 = 0; var13 < this.faceTextureCount; var13++) {
 				if (var9[var13] > 0 && this.field2687[var13] == 0) {

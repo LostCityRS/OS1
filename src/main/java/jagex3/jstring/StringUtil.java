@@ -11,7 +11,7 @@ public class StringUtil {
 	}
 
 	@ObfuscatedName("ek.r(IB)Ljava/lang/String;")
-	public static String method1846(int arg0) {
+	public static String formatIPv4(int arg0) {
 		return (arg0 >> 24 & 0xFF) + "." + (arg0 >> 16 & 0xFF) + "." + (arg0 >> 8 & 0xFF) + "." + (arg0 & 0xFF);
 	}
 

@@ -511,7 +511,7 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		if (!outlineRgb && (obj.stackable == 1 || count != 1) && count != -1) {
-			font.drawString(formatObjCountTagged(count), 0, 9, 0xffff00, 1);
+			font.drawString(invNumber(count), 0, 9, 0xffff00, 1);
 		}
 
 		if (!outlineRgb) {
@@ -525,8 +525,9 @@ public class ObjType extends DoublyLinkable {
 		return var17;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::InvNumber
 	@ObfuscatedName("bb.b(II)Ljava/lang/String;")
-	public static String formatObjCountTagged(int cost) {
+	public static String invNumber(int cost) {
 		if (cost < 100000) {
 			return "<col=ffff00>" + cost + "</col>";
 		} else if (cost < 10000000) {
