@@ -25,15 +25,15 @@ public class ClientNpc extends ClientEntity {
 		var3.method3002();
 		this.height = var3.minY;
 		if (this.spotanimId != -1 && this.spotanimFrame != -1) {
-			ModelLit var4 = SpotAnimType.get(this.spotanimId).method2455(this.spotanimFrame);
+			ModelLit var4 = SpotAnimType.get(this.spotanimId).animate(this.spotanimFrame);
 			if (var4 != null) {
-				var4.method3012(0, -this.field2629, 0);
+				var4.translate(0, -this.field2629, 0);
 				ModelLit[] var5 = new ModelLit[] { var3, var4 };
 				var3 = new ModelLit(var5, 2);
 			}
 		}
 		if (this.type.size == 1) {
-			var3.picking = true;
+			var3.useAABBMouseCheck = true;
 		}
 		return var3;
 	}

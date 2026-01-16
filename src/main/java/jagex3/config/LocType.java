@@ -2,9 +2,9 @@ package jagex3.config;
 
 import deob.ObfuscatedName;
 import jagex3.client.VarProvider;
+import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelSource;
 import jagex3.dash3d.ModelUnlit;
-import jagex3.dash3d.ModelLit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
@@ -27,10 +27,10 @@ public class LocType extends DoublyLinkable {
 	public static LruCache cache = new LruCache(64);
 
 	@ObfuscatedName("ey.q")
-	public static LruCache modelCacheStatic = new LruCache(500);
+	public static LruCache mc1 = new LruCache(500);
 
 	@ObfuscatedName("ey.i")
-	public static LruCache field2306 = new LruCache(30);
+	public static LruCache mc2 = new LruCache(30);
 
 	@ObfuscatedName("ey.s")
 	public static LruCache field2307 = new LruCache(30);
@@ -168,7 +168,7 @@ public class LocType extends DoublyLinkable {
 	public int[] bgsound_random;
 
 	@ObfuscatedName("av.z(Lch;Lch;ZI)V")
-	public static void init(Js5Index config, Js5Index model, boolean lowmem) {
+	public static void unpack(Js5Index config, Js5Index model, boolean lowmem) {
 		configJs5 = config;
 		modelJs5 = model;
 		lowMemory = lowmem;
@@ -426,7 +426,7 @@ public class LocType extends DoublyLinkable {
 		} else {
 			var7 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
-		ModelSource var9 = (ModelSource) field2306.get(var7);
+		ModelSource var9 = (ModelSource) mc2.get(var7);
 		if (var9 == null) {
 			ModelUnlit var10 = this.getModel(arg0, arg1);
 			if (var10 == null) {
@@ -440,7 +440,7 @@ public class LocType extends DoublyLinkable {
 			} else {
 				var9 = var10.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 			}
-			field2306.put(var9, var7);
+			mc2.put(var9, var7);
 		}
 		if (this.sharelight) {
 			var9 = ((ModelUnlit) var9).method2982();
@@ -479,7 +479,7 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.b(II[[IIIILeo;IB)Lfo;")
-	public final ModelLit method2376(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5, SeqType arg6, int arg7) {
+	public final ModelLit getModel(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5, SeqType arg6, int arg7) {
 		long var9;
 		if (this.shapes == null) {
 			var9 = (this.id << 10) + arg1;
@@ -530,7 +530,7 @@ public class LocType extends DoublyLinkable {
 				if (var4) {
 					var7 += 65536;
 				}
-				var3 = (ModelUnlit) modelCacheStatic.get((long) var7);
+				var3 = (ModelUnlit) mc1.get((long) var7);
 				if (var3 == null) {
 					var3 = ModelUnlit.tryGet(modelJs5, var7 & 0xFFFF, 0);
 					if (var3 == null) {
@@ -539,7 +539,7 @@ public class LocType extends DoublyLinkable {
 					if (var4) {
 						var3.rotateY180();
 					}
-					modelCacheStatic.put(var3, (long) var7);
+					mc1.put(var3, (long) var7);
 				}
 				if (var5 > 1) {
 					temp[var6] = var3;
@@ -564,7 +564,7 @@ public class LocType extends DoublyLinkable {
 			if (var11) {
 				var10 += 65536;
 			}
-			var3 = (ModelUnlit) modelCacheStatic.get((long) var10);
+			var3 = (ModelUnlit) mc1.get((long) var10);
 			if (var3 == null) {
 				var3 = ModelUnlit.tryGet(modelJs5, var10 & 0xFFFF, 0);
 				if (var3 == null) {
@@ -573,7 +573,7 @@ public class LocType extends DoublyLinkable {
 				if (var11) {
 					var3.rotateY180();
 				}
-				modelCacheStatic.put(var3, (long) var10);
+				mc1.put(var3, (long) var10);
 			}
 		}
 		boolean var12;
@@ -634,8 +634,8 @@ public class LocType extends DoublyLinkable {
 	@ObfuscatedName("ba.f(I)V")
 	public static void unload() {
 		cache.clear();
-		modelCacheStatic.clear();
-		field2306.clear();
+		mc1.clear();
+		mc2.clear();
 		field2307.clear();
 	}
 

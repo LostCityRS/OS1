@@ -2,7 +2,7 @@ package jagex3.sound;
 
 import deob.ObfuscatedName;
 import jagex3.client.JagException;
-import jagex3.client.SignLink;
+import jagex3.client.TaskHandler;
 import jagex3.datastruct.PreciseSleep;
 
 import java.awt.event.ActionEvent;
@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 public class AudioThread implements Runnable {
 
 	@ObfuscatedName("f.r")
-	public SignLink field290;
+	public TaskHandler field290;
 
 	@ObfuscatedName("f.d")
 	public volatile AudioChannel[] field293 = new AudioChannel[2];
@@ -33,14 +33,14 @@ public class AudioThread implements Runnable {
 					}
 				}
 				PreciseSleep.sleep(10L);
-				SignLink var3 = this.field290;
+				TaskHandler var3 = this.field290;
 				Object var4 = null;
-				if (var3.field381 != null) {
-					for (int var5 = 0; var5 < 50 && var3.field381.peekEvent() != null; var5++) {
+				if (var3.eventQueue != null) {
+					for (int var5 = 0; var5 < 50 && var3.eventQueue.peekEvent() != null; var5++) {
 						PreciseSleep.sleep(1L);
 					}
 					if (var4 != null) {
-						var3.field381.postEvent(new ActionEvent(var4, 1001, "dummy"));
+						var3.eventQueue.postEvent(new ActionEvent(var4, 1001, "dummy"));
 					}
 				}
 			}

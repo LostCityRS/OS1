@@ -39,7 +39,7 @@ public class SeqType extends DoublyLinkable {
 	public int[] sound;
 
 	@ObfuscatedName("eo.w")
-	public int replayoff = -1;
+	public int loops = -1;
 
 	@ObfuscatedName("eo.e")
 	public int[] walkmerge;
@@ -51,13 +51,13 @@ public class SeqType extends DoublyLinkable {
 	public int priority = 5;
 
 	@ObfuscatedName("eo.t")
-	public int righthand = -1;
+	public int replaceheldleft = -1;
 
 	@ObfuscatedName("eo.f")
-	public int lefthand = -1;
+	public int replaceheldright = -1;
 
 	@ObfuscatedName("eo.k")
-	public int replaycount = 99;
+	public int maxloops = 99;
 
 	@ObfuscatedName("eo.o")
 	public int preanim_move = -1;
@@ -66,10 +66,10 @@ public class SeqType extends DoublyLinkable {
 	public int postanim_move = -1;
 
 	@ObfuscatedName("eo.h")
-	public int replacemode = 2;
+	public int duplicatebehavior = 2;
 
 	@ObfuscatedName("ai.z(Lch;Lch;Lch;I)V")
-	public static void init(Js5Index arg0, Js5Index arg1, Js5Index arg2) {
+	public static void unpack(Js5Index arg0, Js5Index arg1, Js5Index arg2) {
 		field1517 = arg0;
 		field556 = arg1;
 		field2361 = arg2;
@@ -118,7 +118,7 @@ public class SeqType extends DoublyLinkable {
 				this.frames[var6] += arg0.g2() << 16;
 			}
 		} else if (arg1 == 2) {
-			this.replayoff = arg0.g2();
+			this.loops = arg0.g2();
 		} else if (arg1 == 3) {
 			int var7 = arg0.g1();
 			this.walkmerge = new int[var7 + 1];
@@ -131,17 +131,17 @@ public class SeqType extends DoublyLinkable {
 		} else if (arg1 == 5) {
 			this.priority = arg0.g1();
 		} else if (arg1 == 6) {
-			this.righthand = arg0.g2();
+			this.replaceheldleft = arg0.g2();
 		} else if (arg1 == 7) {
-			this.lefthand = arg0.g2();
+			this.replaceheldright = arg0.g2();
 		} else if (arg1 == 8) {
-			this.replaycount = arg0.g1();
+			this.maxloops = arg0.g1();
 		} else if (arg1 == 9) {
 			this.preanim_move = arg0.g1();
 		} else if (arg1 == 10) {
 			this.postanim_move = arg0.g1();
 		} else if (arg1 == 11) {
-			this.replacemode = arg0.g1();
+			this.duplicatebehavior = arg0.g1();
 		} else if (arg1 == 12) {
 			int var9 = arg0.g1();
 			this.field2365 = new int[var9];
@@ -169,13 +169,12 @@ public class SeqType extends DoublyLinkable {
 				this.preanim_move = 2;
 			}
 		}
-		if (this.postanim_move != -1) {
-			return;
-		}
-		if (this.walkmerge == null) {
-			this.postanim_move = 0;
-		} else {
-			this.postanim_move = 2;
+		if (this.postanim_move == -1) {
+			if (this.walkmerge == null) {
+				this.postanim_move = 0;
+			} else {
+				this.postanim_move = 2;
+			}
 		}
 	}
 
@@ -208,11 +207,11 @@ public class SeqType extends DoublyLinkable {
 		} else if (var8 == 2) {
 			var7.method3009();
 		} else if (var8 == 3) {
-			var7.method3008();
+			var7.rotate90();
 		}
 		var7.method3005(var5, var6);
 		if (var8 == 1) {
-			var7.method3008();
+			var7.rotate90();
 		} else if (var8 == 2) {
 			var7.method3009();
 		} else if (var8 == 3) {

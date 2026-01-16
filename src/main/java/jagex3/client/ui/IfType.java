@@ -4,14 +4,14 @@ import deob.ObfuscatedName;
 import jagex3.config.NpcType;
 import jagex3.config.ObjType;
 import jagex3.config.SeqType;
-import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.ModelLit;
+import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.PlayerModel;
 import jagex3.datastruct.Linkable;
 import jagex3.datastruct.LruCache;
 import jagex3.graphics.Pix32;
+import jagex3.graphics.PixLoader;
 import jagex3.graphics.SoftwareFont;
-import jagex3.graphics.SpriteDataProvider;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
 import jagex3.jstring.Text;
@@ -404,7 +404,7 @@ public class IfType extends Linkable {
 	public int field1899 = -1;
 
 	@ObfuscatedName("ay.c(Lch;Lch;Lch;Lch;I)V")
-	public static void init(Js5Index arg0, Js5Index arg1, Js5Index arg2, Js5Index arg3) {
+	public static void unpack(Js5Index arg0, Js5Index arg1, Js5Index arg2, Js5Index arg3) {
 		field1806 = arg0;
 		field1776 = arg1;
 		field1564 = arg2;
@@ -900,8 +900,8 @@ public class IfType extends Linkable {
 		}
 		Js5Index var6 = field1564;
 		Pix32 var7;
-		if (SpriteDataProvider.method905(var6, var2, 0)) {
-			var7 = SpriteDataProvider.method759();
+		if (PixLoader.method905(var6, var2, 0)) {
+			var7 = PixLoader.method759();
 		} else {
 			var7 = null;
 		}
@@ -945,8 +945,8 @@ public class IfType extends Linkable {
 		Js5Index var3 = field1800;
 		int var4 = this.font;
 		SoftwareFont var5;
-		if (SpriteDataProvider.method905(var2, var4, 0)) {
-			var5 = SpriteDataProvider.method260(var3.getFile(var4, 0));
+		if (PixLoader.method905(var2, var4, 0)) {
+			var5 = PixLoader.method260(var3.getFile(var4, 0));
 		} else {
 			var5 = null;
 		}
@@ -974,8 +974,8 @@ public class IfType extends Linkable {
 		}
 		Js5Index var4 = field1564;
 		Pix32 var5;
-		if (SpriteDataProvider.method905(var4, var2, 0)) {
-			var5 = SpriteDataProvider.method759();
+		if (PixLoader.method905(var4, var2, 0)) {
+			var5 = PixLoader.method759();
 		} else {
 			var5 = null;
 		}

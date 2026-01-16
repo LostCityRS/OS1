@@ -1370,9 +1370,9 @@ public class ModelUnlit extends ModelSource {
 				}
 
 				FaceNormal n = this.faceNormal[f] = new FaceNormal();
-				n.field552 = var16;
-				n.field551 = var17;
-				n.field550 = var18;
+				n.x = var16;
+				n.y = var17;
+				n.z = var18;
 			}
 		}
 	}
@@ -1609,7 +1609,7 @@ public class ModelUnlit extends ModelSource {
 					var8.faceColorC[var15] = method2943(var19, var25);
 				} else if (var16 == 1) {
 					FaceNormal var26 = this.faceNormal[var15];
-					int var27 = (var26.field550 * arg4 + var26.field552 * arg2 + var26.field551 * arg3) / (var7 / 2 + var7) + arg0;
+					int var27 = (var26.z * arg4 + var26.x * arg2 + var26.y * arg3) / (var7 / 2 + var7) + arg0;
 					var8.faceColorA[var15] = method2943(this.faceColour[var15] & 0xFFFF, var27);
 					var8.faceColorC[var15] = -1;
 				} else if (var16 == 3) {
@@ -1645,7 +1645,7 @@ public class ModelUnlit extends ModelSource {
 				var8.faceColorC[var15] = method2939(var33);
 			} else if (var16 == 1) {
 				FaceNormal var34 = this.faceNormal[var15];
-				int var35 = (var34.field550 * arg4 + var34.field552 * arg2 + var34.field551 * arg3) / (var7 / 2 + var7) + arg0;
+				int var35 = (var34.z * arg4 + var34.x * arg2 + var34.y * arg3) / (var7 / 2 + var7) + arg0;
 				var8.faceColorA[var15] = method2939(var35);
 				var8.faceColorC[var15] = -1;
 			} else {

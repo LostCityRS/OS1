@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import deob.Settings;
 import jagex3.client.Client;
 import jagex3.client.JagException;
-import jagex3.client.SignLink;
+import jagex3.client.TaskHandler;
 import jagex3.datastruct.*;
 import jagex3.graphics.AwtPixMap;
 import jagex3.graphics.BufferedPixMap;
@@ -20,7 +20,7 @@ import java.net.URL;
 public abstract class GameShell extends Applet implements Runnable, FocusListener, WindowListener {
 
 	@ObfuscatedName("dj.r")
-	public static SignLink signlink;
+	public static TaskHandler taskHandler;
 
 	@ObfuscatedName("dj.d")
 	public static GameShell shell = null;
@@ -134,10 +134,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			canvasHei = arg1;
 			JagException.revision = arg2;
 			JagException.applet = this;
-			if (signlink == null) {
-				signlink = new SignLink();
+			if (taskHandler == null) {
+				taskHandler = new TaskHandler();
 			}
-			signlink.startThread(this, 1);
+			taskHandler.threadreq(this, 1);
 		} catch (Exception var5) {
 			JagException.report(null, var5);
 			this.error("crash");
@@ -203,10 +203,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	public void run() {
 		try {
-			if (SignLink.javaVendor != null) {
-				String var1 = SignLink.javaVendor.toLowerCase();
+			if (TaskHandler.javaVendor != null) {
+				String var1 = TaskHandler.javaVendor.toLowerCase();
 				if (var1.indexOf("sun") != -1 || var1.indexOf("apple") != -1) {
-					String var2 = SignLink.javaVersion;
+					String var2 = TaskHandler.javaVersion;
 					if (var2.equals("1.1") || var2.startsWith("1.1.") || var2.equals("1.2") || var2.startsWith("1.2.") || var2.equals("1.3") || var2.startsWith("1.3.") || var2.equals("1.4") || var2.startsWith("1.4.") || var2.equals("1.5") || var2.startsWith("1.5.") || var2.equals("1.6.0")) {
 						this.error("wrongjava");
 						return;
@@ -258,7 +258,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			field1100 = var15;
 			label99:
 			while (true) {
-				SignLink var18;
+				TaskHandler var18;
 				Canvas var19;
 				do {
 					if (killtime != 0L && MonotonicTime.currentTime() >= killtime) {
@@ -269,14 +269,14 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 						this.mainloopwrapper();
 					}
 					this.mainredrawwrapper();
-					var18 = signlink;
+					var18 = taskHandler;
 					var19 = canvas;
-				} while (var18.field381 == null);
-				for (int var20 = 0; var20 < 50 && var18.field381.peekEvent() != null; var20++) {
+				} while (var18.eventQueue == null);
+				for (int var20 = 0; var20 < 50 && var18.eventQueue.peekEvent() != null; var20++) {
 					PreciseSleep.sleep(1L);
 				}
 				if (var19 != null) {
-					var18.field381.postEvent(new ActionEvent(var19, 1001, "dummy"));
+					var18.eventQueue.postEvent(new ActionEvent(var19, 1001, "dummy"));
 				}
 			}
 		} catch (Exception var24) {
@@ -345,9 +345,9 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			} catch (Throwable var6) {
 			}
 		}
-		if (signlink != null) {
+		if (taskHandler != null) {
 			try {
-				signlink.method436();
+				taskHandler.close();
 			} catch (Exception var5) {
 			}
 		}
@@ -395,7 +395,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			return;
 		}
 		fullredraw = true;
-		if (SignLink.javaVersion != null && SignLink.javaVersion.startsWith("1.5") && MonotonicTime.currentTime() - lastCanvasReplace > 1000L) {
+		if (TaskHandler.javaVersion != null && TaskHandler.javaVersion.startsWith("1.5") && MonotonicTime.currentTime() - lastCanvasReplace > 1000L) {
 			Rectangle var2 = arg0.getClipBounds();
 			if (var2 == null || var2.width >= canvasWid && var2.height >= canvasHei) {
 				canvasReplaceRecommended = true;
@@ -512,7 +512,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		}
 	}
 
-	public static void imethod2() {
+	public static void reset() {
 		Client.progressBar = null;
 		GameShell.field1159 = null;
 		GameShell.field2489 = null;

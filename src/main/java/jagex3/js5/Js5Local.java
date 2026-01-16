@@ -121,7 +121,7 @@ public class Js5Local extends Js5Index {
 				Object var16 = Js5RemoteThread.field1207;
 				synchronized (Js5RemoteThread.field1207) {
 					if (Js5RemoteThread.field1205 == 0) {
-						GameShell.signlink.startThread(new Js5RemoteThread(), 5);
+						GameShell.taskHandler.threadreq(new Js5RemoteThread(), 5);
 					}
 					Js5RemoteThread.field1205 = 600;
 				}
@@ -150,7 +150,7 @@ public class Js5Local extends Js5Index {
 			Object var10 = Js5RemoteThread.field1207;
 			synchronized (Js5RemoteThread.field1207) {
 				if (Js5RemoteThread.field1205 == 0) {
-					GameShell.signlink.startThread(new Js5RemoteThread(), 5);
+					GameShell.taskHandler.threadreq(new Js5RemoteThread(), 5);
 				}
 				Js5RemoteThread.field1205 = 600;
 			}
@@ -242,7 +242,7 @@ public class Js5Local extends Js5Index {
 				Object var8 = Js5RemoteThread.field1207;
 				synchronized (Js5RemoteThread.field1207) {
 					if (Js5RemoteThread.field1205 == 0) {
-						GameShell.signlink.startThread(new Js5RemoteThread(), 5);
+						GameShell.taskHandler.threadreq(new Js5RemoteThread(), 5);
 					}
 					Js5RemoteThread.field1205 = 600;
 				}
@@ -264,7 +264,7 @@ public class Js5Local extends Js5Index {
 	}
 
 	@ObfuscatedName("dq.be(I)I")
-	public int method1470() {
+	public int getIndexLoadProgress() {
 		int var1 = 0;
 		int var2 = 0;
 		for (int var3 = 0; var3 < this.packed.length; var3++) {

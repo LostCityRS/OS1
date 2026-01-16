@@ -19,19 +19,19 @@ public class FluType extends DoublyLinkable {
 	public int rgb = 0;
 
 	@ObfuscatedName("ec.g")
-	public int field2357;
+	public int chroma;
 
 	@ObfuscatedName("ec.q")
-	public int field2356;
+	public int hue;
 
 	@ObfuscatedName("ec.i")
-	public int field2359;
+	public int saturation;
 
 	@ObfuscatedName("ec.s")
-	public int field2360;
+	public int luminance;
 
 	@ObfuscatedName("u.z(Lch;I)V")
-	public static void init(Js5Index config) {
+	public static void unpack(Js5Index config) {
 		configJs5 = config;
 	}
 
@@ -55,7 +55,7 @@ public class FluType extends DoublyLinkable {
 
 	@ObfuscatedName("ec.q(I)V")
 	public void postDecode() {
-		this.method2401(this.rgb);
+		this.getHsl(this.rgb);
 	}
 
 	@ObfuscatedName("ec.i(Lev;II)V")
@@ -78,7 +78,7 @@ public class FluType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ec.u(IB)V")
-	public void method2401(int arg0) {
+	public void getHsl(int arg0) {
 		double var2 = (double) (arg0 >> 16 & 0xFF) / 256.0D;
 		double var4 = (double) (arg0 >> 8 & 0xFF) / 256.0D;
 		double var6 = (double) (arg0 & 0xFF) / 256.0D;
@@ -115,27 +115,27 @@ public class FluType extends DoublyLinkable {
 			}
 		}
 		double var18 = var12 / 6.0D;
-		this.field2356 = (int) (var14 * 256.0D);
-		this.field2359 = (int) (var16 * 256.0D);
-		if (this.field2356 < 0) {
-			this.field2356 = 0;
-		} else if (this.field2356 > 255) {
-			this.field2356 = 255;
+		this.hue = (int) (var14 * 256.0D);
+		this.saturation = (int) (var16 * 256.0D);
+		if (this.hue < 0) {
+			this.hue = 0;
+		} else if (this.hue > 255) {
+			this.hue = 255;
 		}
-		if (this.field2359 < 0) {
-			this.field2359 = 0;
-		} else if (this.field2359 > 255) {
-			this.field2359 = 255;
+		if (this.saturation < 0) {
+			this.saturation = 0;
+		} else if (this.saturation > 255) {
+			this.saturation = 255;
 		}
 		if (var16 > 0.5D) {
-			this.field2360 = (int) ((1.0D - var16) * var14 * 512.0D);
+			this.luminance = (int) ((1.0D - var16) * var14 * 512.0D);
 		} else {
-			this.field2360 = (int) (var14 * var16 * 512.0D);
+			this.luminance = (int) (var14 * var16 * 512.0D);
 		}
-		if (this.field2360 < 1) {
-			this.field2360 = 1;
+		if (this.luminance < 1) {
+			this.luminance = 1;
 		}
-		this.field2357 = (int) ((double) this.field2360 * var18);
+		this.chroma = (int) ((double) this.luminance * var18);
 	}
 
 	@ObfuscatedName("fg.v(I)V")

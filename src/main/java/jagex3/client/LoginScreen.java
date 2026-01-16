@@ -5,12 +5,11 @@ import jagex3.client.applet.GameShell;
 import jagex3.client.applet.JavaKeyboardProvider;
 import jagex3.client.applet.JavaMouseProvider;
 import jagex3.graphics.*;
-import jagex3.io.ClientStream;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Local;
 import jagex3.js5.Js5Remote;
-import jagex3.jstring.Text;
 import jagex3.jstring.StringUtil;
+import jagex3.jstring.Text;
 import jagex3.jstring.TextUtil;
 import jagex3.midi.MidiPlayer;
 
@@ -20,8 +19,8 @@ import java.net.URL;
 @ObfuscatedName("g")
 public class LoginScreen {
 
-	@ObfuscatedName("g.r")
-	public static ClientStream clientStream;
+	@ObfuscatedName("df.r")
+	public static boolean opened;
 
 	@ObfuscatedName("g.d")
 	public static Pix8 field137;
@@ -171,8 +170,8 @@ public class LoginScreen {
 	}
 
 	@ObfuscatedName("bx.d(I)V")
-	public static void method831() {
-		if (!Js5Remote.field1507) {
+	public static void close() {
+		if (!opened) {
 			return;
 		}
 		field137 = null;
@@ -195,6 +194,7 @@ public class LoginScreen {
 		field527 = null;
 		field144 = null;
 		field9 = null;
+		// todo: inlined midiplayer method?
 		MidiPlayer.field1117 = 1;
 		MidiPlayer.field1118 = null;
 		MidiPlayer.field349 = -1;
@@ -203,7 +203,7 @@ public class LoginScreen {
 		MidiPlayer.field1625 = false;
 		MidiPlayer.field1152 = 2;
 		Js5Remote.sendLoginLogoutPacket(true);
-		Js5Remote.field1507 = false;
+		opened = false;
 	}
 
 	@ObfuscatedName("r.l(Ldj;I)V")
@@ -223,11 +223,11 @@ public class LoginScreen {
 				MidiPlayer.method1125(var1, var2, var3, 255, false);
 			}
 		}
-		if (Client.gameState == 5) {
+		if (Client.state == 5) {
 			return;
 		}
 		field147++;
-		if (Client.gameState != 10) {
+		if (Client.state != 10) {
 			return;
 		}
 		if (Client.lang == 0) {
@@ -287,7 +287,7 @@ public class LoginScreen {
 					return;
 				}
 				showMessage(Text.CONNECTING1, Text.CONNECTING2, Text.CONNECTING3);
-				Client.method729(20);
+				Client.setMainState(20);
 				return;
 			}
 			short var17 = 462;
@@ -332,7 +332,7 @@ public class LoginScreen {
 							break;
 						}
 						showMessage(Text.CONNECTING1, Text.CONNECTING2, Text.CONNECTING3);
-						Client.method729(20);
+						Client.setMainState(20);
 						break;
 					}
 					if (var21 && password.length() < 20) {
@@ -350,12 +350,12 @@ public class LoginScreen {
 	}
 
 	@ObfuscatedName("bg.m(Lfm;Lfm;I)V")
-	public static void method784(SoftwareFont arg0, SoftwareFont arg1) {
+	public static void draw(SoftwareFont arg0, SoftwareFont arg1) {
 		if (field160) {
 			method1500(arg0, arg1);
 			return;
 		}
-		if (Client.gameState == 0 || Client.gameState == 5) {
+		if (Client.state == 0 || Client.state == 5) {
 			byte var2 = 20;
 			arg0.centreString(Text.LOADING_TITLE, 382, 245 - var2, 16777215, -1);
 			int var3 = 253 - var2;
@@ -365,7 +365,7 @@ public class LoginScreen {
 			Pix2D.fillRect(progress * 3 + 232, var3 + 2, 300 - progress * 3, 30, 0);
 			arg0.centreString(message, 382, 276 - var2, 16777215, -1);
 		}
-		if (Client.gameState == 20) {
+		if (Client.state == 20) {
 			field137.plotSprite(382 - field137.wi / 2, 271 - field137.hi / 2);
 			short var4 = 211;
 			arg0.centreString(line1Message, 382, var4, 16776960, 0);
@@ -388,7 +388,7 @@ public class LoginScreen {
 			arg0.drawString(var8 + var10, 274, var89, 16777215, 0);
 			var89 += 15;
 		}
-		if (Client.gameState == 10) {
+		if (Client.state == 10) {
 			field137.plotSprite(202, 171);
 			if (field151 == 0) {
 				short var11 = 251;
@@ -430,15 +430,15 @@ public class LoginScreen {
 				field153.plotSprite(var24 - 73, var23 - 20);
 				arg0.centreString(Text.CANCEL, var24, var23 + 5, 16777215, 0);
 			} else if (field151 == 3) {
-				arg0.centreString(Text.field1079, 382, 211, 16776960, 0);
+				arg0.centreString(Text.NEWUSER1, 382, 211, 16776960, 0);
 				short var25 = 236;
-				arg0.centreString(Text.field992, 382, var25, 16777215, 0);
+				arg0.centreString(Text.NEWUSER2, 382, var25, 16777215, 0);
 				int var98 = var25 + 15;
-				arg0.centreString(Text.field1081, 382, var98, 16777215, 0);
+				arg0.centreString(Text.NEWUSER3, 382, var98, 16777215, 0);
 				int var99 = var98 + 15;
-				arg0.centreString(Text.field1082, 382, var99, 16777215, 0);
+				arg0.centreString(Text.NEWUSER4, 382, var99, 16777215, 0);
 				int var100 = var99 + 15;
-				arg0.centreString(Text.field1084, 382, var100, 16777215, 0);
+				arg0.centreString(Text.NEWUSER5, 382, var100, 16777215, 0);
 				int var101 = var100 + 15;
 				short var26 = 382;
 				short var27 = 321;
@@ -625,9 +625,9 @@ public class LoginScreen {
 			var71 = 765 - var74 - var73 + var75;
 		}
 		field132[field142 ? 1 : 0].plotSprite(725, 463);
-		if (Client.gameState > 5 && Client.lang == 0) {
+		if (Client.state > 5 && Client.lang == 0) {
 			if (field215 == null) {
-				field215 = SpriteDataProvider.method457(Client.spriteJs5, "sl_button", "");
+				field215 = PixLoader.makePix8(Client.spriteJs5, "sl_button", "");
 			} else {
 				byte var82 = 5;
 				short var83 = 463;
@@ -703,16 +703,16 @@ public class LoginScreen {
 	@ObfuscatedName("de.z(Lfm;Lfm;I)V")
 	public static void method1500(SoftwareFont arg0, SoftwareFont arg1) {
 		if (field1530 == null) {
-			field1530 = SpriteDataProvider.method830(Client.spriteJs5, "sl_back", "");
+			field1530 = PixLoader.makePix32Array(Client.spriteJs5, "sl_back", "");
 		}
 		if (field2612 == null) {
-			field2612 = SpriteDataProvider.method541(Client.spriteJs5, "sl_flags", "");
+			field2612 = PixLoader.makePix8Array(Client.spriteJs5, "sl_flags", "");
 		}
 		if (field681 == null) {
-			field681 = SpriteDataProvider.method541(Client.spriteJs5, "sl_arrows", "");
+			field681 = PixLoader.makePix8Array(Client.spriteJs5, "sl_arrows", "");
 		}
 		if (field811 == null) {
-			field811 = SpriteDataProvider.method541(Client.spriteJs5, "sl_stars", "");
+			field811 = PixLoader.makePix8Array(Client.spriteJs5, "sl_stars", "");
 		}
 		Pix2D.fillRect(0, 23, 765, 480, 0);
 		Pix2D.method2592(0, 0, 125, 23, 12425273, 9135624);
@@ -902,11 +902,11 @@ public class LoginScreen {
 		}
 		WorldEntry var5 = worlds[field168];
 		if (Client.members == var5.members) {
-			Client.field52 = var5.host;
+			Client.loginHost = var5.host;
 			Client.worldid = var5.id;
-			Client.field1641 = Client.modewhere == 0 ? 43594 : var5.id + 40000;
-			Client.field13 = Client.modewhere == 0 ? 443 : var5.id + 50000;
-			Client.field1204 = Client.field1641;
+			Client.loginGamePort = Client.modewhere == 0 ? 43594 : var5.id + 40000;
+			Client.loginJs5Port = Client.modewhere == 0 ? 443 : var5.id + 50000;
+			Client.loginPort = Client.loginGamePort;
 			field160 = false;
 			field146.method2667(0, 0);
 			field348.method2667(382, 0);
@@ -928,7 +928,7 @@ public class LoginScreen {
 	public static void method377() {
 		try {
 			if (field35 == null) {
-				field35 = new WorldList(GameShell.signlink, new URL(worldlistUrl));
+				field35 = new WorldList(GameShell.taskHandler, new URL(worldlistUrl));
 			} else {
 				byte[] src = field35.getWorldList();
 				if (src == null) {
@@ -1074,19 +1074,19 @@ public class LoginScreen {
 		method747(arg0, var6 + 1, arg2, arg3, arg4);
 	}
 
-	public static void imethod9(Canvas var1, Js5Local var2, Js5Local var3) {
-		if (Js5Remote.field1507) {
+	public static void open(Canvas var1, Js5Local var2, Js5Local var3) {
+		if (opened) {
 			return;
 		}
 		Pix2D.cls();
 		byte[] var4 = var2.getFile("title.jpg", "");
 		field146 = new Pix32(var4, var1);
 		field348 = field146.method2719();
-		field131 = SpriteDataProvider.method457(var3, "logo", "");
-		field137 = SpriteDataProvider.method457(var3, "titlebox", "");
-		field153 = SpriteDataProvider.method457(var3, "titlebutton", "");
-		field165 = SpriteDataProvider.method541(var3, "runes", "");
-		field132 = SpriteDataProvider.method541(var3, "title_mute", "");
+		field131 = PixLoader.makePix8(var3, "logo", "");
+		field137 = PixLoader.makePix8(var3, "titlebox", "");
+		field153 = PixLoader.makePix8(var3, "titlebutton", "");
+		field165 = PixLoader.makePix8Array(var3, "runes", "");
+		field132 = PixLoader.makePix8Array(var3, "title_mute", "");
 		field827 = new int[256];
 		for (int var5 = 0; var5 < 64; var5++) {
 			field827[var5] = var5 * 262144;
@@ -1147,7 +1147,7 @@ public class LoginScreen {
 			MidiPlayer.imethod1(Client.midiSongJs5);
 		}
 		Js5Remote.sendLoginLogoutPacket(false);
-		Js5Remote.field1507 = true;
+		opened = true;
 		field146.method2667(0, 0);
 		field348.method2667(382, 0);
 		field131.plotSprite(382 - field131.wi / 2, 18);

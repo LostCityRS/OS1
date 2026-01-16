@@ -7,11 +7,11 @@ import deob.ObfuscatedName;
 public class FaceNormal {
 
 	@ObfuscatedName("ag.r")
-	public int field552;
+	public int x;
 
 	@ObfuscatedName("ag.d")
-	public int field551;
+	public int y;
 
 	@ObfuscatedName("ag.l")
-	public int field550;
+	public int z;
 }

@@ -17,8 +17,8 @@ import jagex3.graphics.PixFont;
 import jagex3.graphics.SoftwareFont;
 import jagex3.io.Packet;
 import jagex3.jstring.JString;
-import jagex3.jstring.Text;
 import jagex3.jstring.StringUtil;
+import jagex3.jstring.Text;
 import jagex3.jstring.TextUtil;
 import jagex3.wordfilter.WordPack;
 
@@ -814,7 +814,7 @@ public class ScriptRunner {
 						// if/cc_setplayerhead_self
 						var66.modelType = 3;
 
-						var66.model = Client.localPlayer.field2786.method1176();
+						var66.model = Client.localPlayer.model.method1176();
 						continue;
 					}
 				} else if ((opcode >= 1300 && opcode < 1400) || (opcode >= 2300 && opcode < 2400)) {
@@ -1558,7 +1558,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 3317) {
 						// reboottimer
-						intStack[isp++] = Client.systemUpdateTimer;
+						intStack[isp++] = Client.rebootTimer;
 						continue;
 					}
 					if (opcode == 3318) {
@@ -2117,7 +2117,7 @@ public class ScriptRunner {
 						String var242 = stringStack[ssp];
 						String var243 = stringStack[ssp + 1];
 
-						if (Client.localPlayer.field2786 != null && Client.localPlayer.field2786.field1222) {
+						if (Client.localPlayer.model != null && Client.localPlayer.model.field1222) {
 							stringStack[ssp++] = var243;
 							continue;
 						}

@@ -3,7 +3,7 @@ package jagex3.dash3d;
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 import jagex3.graphics.Pix8;
-import jagex3.graphics.SpriteDataProvider;
+import jagex3.graphics.PixLoader;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
 
@@ -85,7 +85,7 @@ public class Texture extends Linkable {
 		int var6 = arg1 * arg1;
 		this.field1694 = new int[var6];
 		for (int var7 = 0; var7 < this.field1696.length; var7++) {
-			Pix8 var8 = SpriteDataProvider.method127(arg2, this.field1696[var7]);
+			Pix8 var8 = PixLoader.method127(arg2, this.field1696[var7]);
 			var8.trim();
 			byte[] var9 = var8.data;
 			int[] var10 = var8.bpal;

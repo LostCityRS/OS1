@@ -136,12 +136,12 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.ba(Law;)V")
-	public static final void setTextureProvider(TextureProvider arg0) {
+	public static final void setTextures(TextureProvider arg0) {
 		textureProvider = arg0;
 	}
 
 	@ObfuscatedName("fx.bc(D)V")
-	public static final void setBrightness(double arg0) {
+	public static final void initColourTable(double arg0) {
 		initColourTable(arg0, 0, 512);
 	}
 

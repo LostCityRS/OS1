@@ -47,7 +47,7 @@ public class IdkType extends DoublyLinkable {
 	public boolean disable = false;
 
 	@ObfuscatedName("ct.z(Lch;Lch;I)V")
-	public static void init(Js5Index config, Js5Index model) {
+	public static void unpack(Js5Index config, Js5Index model) {
 		configJs5 = config;
 		modelJs5 = model;
 

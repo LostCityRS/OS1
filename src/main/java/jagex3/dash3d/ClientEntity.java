@@ -25,10 +25,10 @@ public abstract class ClientEntity extends ModelSource {
 	public int readyanim = -1;
 
 	@ObfuscatedName("fz.u")
-	public int seqTurnIdBase = -1; // todo
+	public int turnleftanim = -1;
 
 	@ObfuscatedName("fz.v")
-	public int seqTurnId = -1; // todo
+	public int turnrightanim = -1;
 
 	@ObfuscatedName("fz.w")
 	public int walkanim = -1;
@@ -160,59 +160,59 @@ public abstract class ClientEntity extends ModelSource {
 	public int turnSpeed = 32;
 
 	@ObfuscatedName("fz.bl")
-	public int pathLength = 0;
+	public int routeLength = 0;
 
 	@ObfuscatedName("fz.bt")
-	public int[] pathTileX = new int[10];
+	public int[] routeX = new int[10];
 
 	@ObfuscatedName("fz.bw")
-	public int[] pathTileZ = new int[10];
+	public int[] routeZ = new int[10];
 
 	@ObfuscatedName("fz.by")
-	public boolean[] pathRunning = new boolean[10];
+	public boolean[] routeRun = new boolean[10];
 
 	@ObfuscatedName("fz.bx")
-	public int seqTrigger = 0;
+	public int seqDelayMove = 0;
 
 	@ObfuscatedName("fz.bf")
-	public int seqPathLength = 0;
+	public int preanimRouteLength = 0;
 
 	@ObfuscatedName("fz.b(IIZB)V")
-	public final void move(int arg0, int arg1, boolean arg2) {
+	public final void teleport(int arg0, int arg1, boolean arg2) {
 		if (this.primarySeqId != -1 && SeqType.get(this.primarySeqId).postanim_move == 1) {
 			this.primarySeqId = -1;
 		}
 		if (!arg2) {
-			int var4 = arg0 - this.pathTileX[0];
-			int var5 = arg1 - this.pathTileZ[0];
+			int var4 = arg0 - this.routeX[0];
+			int var5 = arg1 - this.routeZ[0];
 			if (var4 >= -8 && var4 <= 8 && var5 >= -8 && var5 <= 8) {
-				if (this.pathLength < 9) {
-					this.pathLength++;
+				if (this.routeLength < 9) {
+					this.routeLength++;
 				}
-				for (int var6 = this.pathLength; var6 > 0; var6--) {
-					this.pathTileX[var6] = this.pathTileX[var6 - 1];
-					this.pathTileZ[var6] = this.pathTileZ[var6 - 1];
-					this.pathRunning[var6] = this.pathRunning[var6 - 1];
+				for (int var6 = this.routeLength; var6 > 0; var6--) {
+					this.routeX[var6] = this.routeX[var6 - 1];
+					this.routeZ[var6] = this.routeZ[var6 - 1];
+					this.routeRun[var6] = this.routeRun[var6 - 1];
 				}
-				this.pathTileX[0] = arg0;
-				this.pathTileZ[0] = arg1;
-				this.pathRunning[0] = false;
+				this.routeX[0] = arg0;
+				this.routeZ[0] = arg1;
+				this.routeRun[0] = false;
 				return;
 			}
 		}
-		this.pathLength = 0;
-		this.seqPathLength = 0;
-		this.seqTrigger = 0;
-		this.pathTileX[0] = arg0;
-		this.pathTileZ[0] = arg1;
-		this.x = this.pathTileX[0] * 128 + this.size * 64;
-		this.z = this.pathTileZ[0] * 128 + this.size * 64;
+		this.routeLength = 0;
+		this.preanimRouteLength = 0;
+		this.seqDelayMove = 0;
+		this.routeX[0] = arg0;
+		this.routeZ[0] = arg1;
+		this.x = this.routeX[0] * 128 + this.size * 64;
+		this.z = this.routeZ[0] * 128 + this.size * 64;
 	}
 
 	@ObfuscatedName("fz.y(IZI)V")
-	public final void step(int arg0, boolean arg1) {
-		int var3 = this.pathTileX[0];
-		int var4 = this.pathTileZ[0];
+	public final void moveCode(int arg0, boolean arg1) {
+		int var3 = this.routeX[0];
+		int var4 = this.routeZ[0];
 		if (arg0 == 0) {
 			var3--;
 			var4++;
@@ -244,23 +244,23 @@ public abstract class ClientEntity extends ModelSource {
 		if (this.primarySeqId != -1 && SeqType.get(this.primarySeqId).postanim_move == 1) {
 			this.primarySeqId = -1;
 		}
-		if (this.pathLength < 9) {
-			this.pathLength++;
+		if (this.routeLength < 9) {
+			this.routeLength++;
 		}
-		for (int var5 = this.pathLength; var5 > 0; var5--) {
-			this.pathTileX[var5] = this.pathTileX[var5 - 1];
-			this.pathTileZ[var5] = this.pathTileZ[var5 - 1];
-			this.pathRunning[var5] = this.pathRunning[var5 - 1];
+		for (int var5 = this.routeLength; var5 > 0; var5--) {
+			this.routeX[var5] = this.routeX[var5 - 1];
+			this.routeZ[var5] = this.routeZ[var5 - 1];
+			this.routeRun[var5] = this.routeRun[var5 - 1];
 		}
-		this.pathTileX[0] = var3;
-		this.pathTileZ[0] = var4;
-		this.pathRunning[0] = arg1;
+		this.routeX[0] = var3;
+		this.routeZ[0] = var4;
+		this.routeRun[0] = arg1;
 	}
 
 	@ObfuscatedName("fz.t(I)V")
-	public final void resetPath() {
-		this.pathLength = 0;
-		this.seqPathLength = 0;
+	public final void abortRoute() {
+		this.routeLength = 0;
+		this.preanimRouteLength = 0;
 	}
 
 	@ObfuscatedName("fz.f(I)Z")
@@ -269,7 +269,7 @@ public abstract class ClientEntity extends ModelSource {
 	}
 
 	@ObfuscatedName("fz.k(IIIB)V")
-	public final void method2911(int arg0, int arg1, int arg2) {
+	public final void addHitmark(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < 4; var4++) {
 			if (this.damageCycles[var4] <= arg2) {
 				this.damageValues[var4] = arg0;

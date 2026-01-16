@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.client.SignLink;
+import jagex3.client.TaskHandler;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class SignLinkAudioChannel extends AudioChannel {
 	@ObfuscatedName("dv.aa")
 	public int field1551;
 
-	public SignLinkAudioChannel(SignLink arg0, int arg1) {
+	public SignLinkAudioChannel(TaskHandler arg0, int arg1) {
 		field1552 = arg0.method440();
 		this.field1551 = arg1;
 	}

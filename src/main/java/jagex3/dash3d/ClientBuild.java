@@ -277,7 +277,7 @@ public class ClientBuild {
 						LocType var16 = LocType.get(var5);
 						if (var13 != 22 || !Client.lowMemory || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
 							if (!var16.isDownloaded()) {
-								Client.field1974++;
+								Client.locModelLoadCount++;
 								var3 = false;
 							}
 							var8 = true;
@@ -757,10 +757,10 @@ public class ClientBuild {
 						int var24 = floort1[var6][var23][var22] & 0xFF;
 						if (var24 > 0) {
 							FluType var25 = FluType.get(var24 - 1);
-							huetot[var22] += var25.field2357;
-							sattot[var22] += var25.field2356;
-							ligtot[var22] += var25.field2359;
-							comtot[var22] += var25.field2360;
+							huetot[var22] += var25.chroma;
+							sattot[var22] += var25.hue;
+							ligtot[var22] += var25.saturation;
+							comtot[var22] += var25.luminance;
 							var10002 = tot[var22]++;
 						}
 					}
@@ -769,10 +769,10 @@ public class ClientBuild {
 						int var27 = floort1[var6][var26][var22] & 0xFF;
 						if (var27 > 0) {
 							FluType var28 = FluType.get(var27 - 1);
-							huetot[var22] -= var28.field2357;
-							sattot[var22] -= var28.field2356;
-							ligtot[var22] -= var28.field2359;
-							comtot[var22] -= var28.field2360;
+							huetot[var22] -= var28.chroma;
+							sattot[var22] -= var28.hue;
+							ligtot[var22] -= var28.saturation;
+							comtot[var22] -= var28.luminance;
 							var10002 = tot[var22]--;
 						}
 					}
@@ -880,29 +880,29 @@ public class ClientBuild {
 										var60 = -1;
 										var61 = -2;
 									} else {
-										var62 = getTable(var59.field2409, var59.field2413, var59.field2405);
-										int var63 = hueOff + var59.field2409 & 0xFF;
-										int var64 = ligOff + var59.field2405;
+										var62 = getTable(var59.hue, var59.saturation, var59.luminance);
+										int var63 = hueOff + var59.hue & 0xFF;
+										int var64 = ligOff + var59.luminance;
 										if (var64 < 0) {
 											var64 = 0;
 										} else if (var64 > 255) {
 											var64 = 255;
 										}
-										var61 = getTable(var63, var59.field2413, var64);
+										var61 = getTable(var63, var59.saturation, var64);
 									}
 									int var65 = 0;
 									if (var61 != -2) {
 										var65 = Pix3D.palette[getOCol(var61, 96)];
 									}
-									if (var59.averageRgb != -1) {
-										int var66 = hueOff + var59.field2410 & 0xFF;
-										int var67 = ligOff + var59.field2415;
+									if (var59.mapcolour != -1) {
+										int var66 = hueOff + var59.mapHue & 0xFF;
+										int var67 = ligOff + var59.mapLuminance;
 										if (var67 < 0) {
 											var67 = 0;
 										} else if (var67 > 255) {
 											var67 = 255;
 										}
-										int var68 = getTable(var66, var59.field2412, var67);
+										int var68 = getTable(var66, var59.mapSaturation, var67);
 										var65 = Pix3D.palette[getOCol(var68, 96)];
 									}
 									arg0.setTile(var6, var21, var34, var57, var58, var60, var40, var41, var42, var43, getUCol(var48, var44), getUCol(var48, var45), getUCol(var48, var46), getUCol(var48, var47), getOCol(var62, var44), getOCol(var62, var45), getOCol(var62, var46), getOCol(var62, var47), var56, var65);

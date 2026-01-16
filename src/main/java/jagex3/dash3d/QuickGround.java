@@ -6,33 +6,33 @@ import deob.ObfuscatedName;
 public class QuickGround {
 
 	@ObfuscatedName("ai.r")
-	public int southwestColour;
+	public int colourSW;
 
 	@ObfuscatedName("ai.d")
-	public int field692;
+	public int colourSE;
 
 	@ObfuscatedName("ai.l")
-	public int northEastColour;
+	public int colourNE;
 
 	@ObfuscatedName("ai.m")
-	public int field694;
+	public int colourNW;
 
 	@ObfuscatedName("ai.c")
-	public int textureId;
+	public int texture;
 
 	@ObfuscatedName("ai.n")
 	public boolean flat = true;
 
 	@ObfuscatedName("ai.j")
-	public int field697;
+	public int minimapRgb;
 
 	public QuickGround(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, boolean arg6) {
-		this.southwestColour = arg0;
-		this.field692 = arg1;
-		this.northEastColour = arg2;
-		this.field694 = arg3;
-		this.textureId = arg4;
-		this.field697 = arg5;
+		this.colourSW = arg0;
+		this.colourSE = arg1;
+		this.colourNE = arg2;
+		this.colourNW = arg3;
+		this.texture = arg4;
+		this.minimapRgb = arg5;
 		this.flat = arg6;
 	}
 }

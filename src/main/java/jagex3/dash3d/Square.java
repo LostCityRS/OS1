@@ -16,13 +16,13 @@ public class Square extends Linkable {
 	public int z;
 
 	@ObfuscatedName("es.j")
-	public int occludeLevel;
+	public int originalLevel;
 
 	@ObfuscatedName("es.z")
-	public QuickGround underlay;
+	public QuickGround quickGround;
 
 	@ObfuscatedName("es.g")
-	public Ground overlay;
+	public Ground ground;
 
 	@ObfuscatedName("es.q")
 	public Wall wall;
@@ -34,31 +34,31 @@ public class Square extends Linkable {
 	public GroundDecor groundDecor;
 
 	@ObfuscatedName("es.u")
-	public GroundObject objStack;
+	public GroundObject groundObject;
 
 	@ObfuscatedName("es.v")
-	public int locCount;
+	public int spriteCount;
 
 	@ObfuscatedName("es.w")
-	public Sprite[] locs = new Sprite[5];
+	public Sprite[] sprites = new Sprite[5];
 
 	@ObfuscatedName("es.e")
-	public int[] locSpan = new int[5];
+	public int[] spriteSpan = new int[5];
 
 	@ObfuscatedName("es.b")
-	public int locSpans = 0;
+	public int spriteSpans = 0;
 
 	@ObfuscatedName("es.y")
 	public int drawLevel;
 
 	@ObfuscatedName("es.t")
-	public boolean visible;
+	public boolean drawFront;
 
 	@ObfuscatedName("es.f")
-	public boolean update;
+	public boolean drawBack;
 
 	@ObfuscatedName("es.k")
-	public boolean containsLocs;
+	public boolean drawSprites;
 
 	@ObfuscatedName("es.o")
 	public int checkLocSpans;
@@ -73,10 +73,10 @@ public class Square extends Linkable {
 	public int backWallTypes;
 
 	@ObfuscatedName("es.p")
-	public Square bridge;
+	public Square linkedSquare;
 
 	public Square(int arg0, int arg1, int arg2) {
-		this.occludeLevel = this.level = arg0;
+		this.originalLevel = this.level = arg0;
 		this.x = arg1;
 		this.z = arg2;
 	}

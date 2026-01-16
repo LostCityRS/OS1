@@ -1,8 +1,8 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.ModelLit;
+import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.Pix3D;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
@@ -407,7 +407,7 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		ModelLit litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
-		litModel.picking = true;
+		litModel.useAABBMouseCheck = true;
 		modelCache.put(litModel, this.index);
 		return litModel;
 	}
@@ -672,7 +672,7 @@ public class ObjType extends DoublyLinkable {
 		iconCache.clear();
 	}
 
-	public static void init(Js5Local var32, Js5Local var33, boolean var34, SoftwareFont var35) {
+	public static void unpack(Js5Local var32, Js5Local var33, boolean var34, SoftwareFont var35) {
 		configJs5 = var32;
 		modelJs5 = var33;
 		membersWorld = var34;

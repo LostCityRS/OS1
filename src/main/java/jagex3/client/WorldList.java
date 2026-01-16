@@ -36,8 +36,8 @@ public class WorldList {
 	@ObfuscatedName("i.z")
 	public long timeout;
 
-	public WorldList(SignLink sign, URL url) {
-		this.req = sign.method445(url);
+	public WorldList(TaskHandler sign, URL url) {
+		this.req = sign.urlreq(url);
 		this.stage = 0;
 		this.timeout = MonotonicTime.currentTime() + 30000L;
 	}
@@ -49,12 +49,12 @@ public class WorldList {
 		}
 
 		if (this.stage == 0) {
-			if (this.req.field507 == 2) {
+			if (this.req.status == 2) {
 				throw new IOException();
 			}
 
-			if (this.req.field507 == 1) {
-				this.stream = (DataInputStream) this.req.field511;
+			if (this.req.status == 1) {
+				this.stream = (DataInputStream) this.req.result;
 				this.stage = 1;
 			}
 		}

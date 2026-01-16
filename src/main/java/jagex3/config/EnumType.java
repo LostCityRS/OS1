@@ -102,7 +102,7 @@ public class EnumType extends DoublyLinkable {
 		}
 	}
 
-	public static void init(Js5Local config) {
+	public static void unpack(Js5Local config) {
 		configJs5 = config;
 	}
 }

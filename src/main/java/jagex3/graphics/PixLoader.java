@@ -5,7 +5,7 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
 
 @ObfuscatedName("al")
-public class SpriteDataProvider {
+public class PixLoader {
 
 	@ObfuscatedName("al.r")
 	public static int field528;
@@ -34,12 +34,12 @@ public class SpriteDataProvider {
 	@ObfuscatedName("bp.g")
 	public static byte[][] field863;
 
-	public SpriteDataProvider() throws Throwable {
+	public PixLoader() throws Throwable {
 		throw new Error();
 	}
 
 	@ObfuscatedName("al.r(Lch;Ljava/lang/String;Ljava/lang/String;B)[Lft;")
-	public static Pix8[] method541(Js5Index arg0, String arg1, String arg2) {
+	public static Pix8[] makePix8Array(Js5Index arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
 		Pix8[] var5;
@@ -70,7 +70,7 @@ public class SpriteDataProvider {
 	}
 
 	@ObfuscatedName("ak.d(Lch;Ljava/lang/String;Ljava/lang/String;I)Lft;")
-	public static Pix8 method457(Js5Index arg0, String arg1, String arg2) {
+	public static Pix8 makePix8(Js5Index arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
 		Pix8 var5;
@@ -83,7 +83,7 @@ public class SpriteDataProvider {
 	}
 
 	@ObfuscatedName("bx.l(Lch;Ljava/lang/String;Ljava/lang/String;I)[Lfq;")
-	public static Pix32[] method830(Js5Index arg0, String arg1, String arg2) {
+	public static Pix32[] makePix32Array(Js5Index arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
 		Pix32[] var5;
@@ -118,7 +118,7 @@ public class SpriteDataProvider {
 	}
 
 	@ObfuscatedName("r.m(Lch;Ljava/lang/String;Ljava/lang/String;I)Lfq;")
-	public static Pix32 method4(Js5Index arg0, String arg1, String arg2) {
+	public static Pix32 makePix32(Js5Index arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
 		Pix32 var5;
@@ -131,7 +131,7 @@ public class SpriteDataProvider {
 	}
 
 	@ObfuscatedName("bw.c(Lch;Lch;Ljava/lang/String;Ljava/lang/String;I)Lfm;")
-	public static SoftwareFont method817(Js5Index arg0, Js5Index arg1, String arg2, String arg3) {
+	public static SoftwareFont makeFont(Js5Index arg0, Js5Index arg1, String arg2, String arg3) {
 		int var4 = arg0.getGroupId(arg2);
 		int var5 = arg0.getFileId(var4, arg3);
 		SoftwareFont var6;

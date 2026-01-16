@@ -25,25 +25,25 @@ public class FloType extends DoublyLinkable {
 	public boolean occlude = true;
 
 	@ObfuscatedName("fb.i")
-	public int averageRgb = -1;
+	public int mapcolour = -1;
 
 	@ObfuscatedName("fb.s")
-	public int field2409;
+	public int hue;
 
 	@ObfuscatedName("fb.u")
-	public int field2413;
+	public int saturation;
 
 	@ObfuscatedName("fb.v")
-	public int field2405;
+	public int luminance;
 
 	@ObfuscatedName("fb.w")
-	public int field2410;
+	public int mapHue;
 
 	@ObfuscatedName("fb.e")
-	public int field2412;
+	public int mapSaturation;
 
 	@ObfuscatedName("fb.b")
-	public int field2415;
+	public int mapLuminance;
 
 	@ObfuscatedName("cj.z(II)Lfb;")
 	public static FloType get(int id) {
@@ -65,14 +65,14 @@ public class FloType extends DoublyLinkable {
 
 	@ObfuscatedName("fb.g(B)V")
 	public void postDecode() {
-		if (this.averageRgb != -1) {
-			this.method2488(this.averageRgb);
-			this.field2410 = this.field2409;
-			this.field2412 = this.field2413;
-			this.field2415 = this.field2405;
+		if (this.mapcolour != -1) {
+			this.getHsl(this.mapcolour);
+			this.mapHue = this.hue;
+			this.mapSaturation = this.saturation;
+			this.mapLuminance = this.luminance;
 		}
 
-		this.method2488(this.rgb);
+		this.getHsl(this.rgb);
 	}
 
 	@ObfuscatedName("fb.q(Lev;IB)V")
@@ -96,13 +96,13 @@ public class FloType extends DoublyLinkable {
 		} else if (code == 5) {
 			this.occlude = false;
 		} else if (code == 7) {
-			this.averageRgb = buf.g3();
+			this.mapcolour = buf.g3();
 		} else if (code == 8) {
 		}
 	}
 
 	@ObfuscatedName("fb.s(II)V")
-	public void method2488(int arg0) {
+	public void getHsl(int arg0) {
 		double var2 = (double) (arg0 >> 16 & 0xFF) / 256.0D;
 		double var4 = (double) (arg0 >> 8 & 0xFF) / 256.0D;
 		double var6 = (double) (arg0 & 0xFF) / 256.0D;
@@ -139,22 +139,22 @@ public class FloType extends DoublyLinkable {
 			}
 		}
 		double var18 = var12 / 6.0D;
-		this.field2409 = (int) (var18 * 256.0D);
-		this.field2413 = (int) (var14 * 256.0D);
-		this.field2405 = (int) (var16 * 256.0D);
-		if (this.field2413 < 0) {
-			this.field2413 = 0;
-		} else if (this.field2413 > 255) {
-			this.field2413 = 255;
+		this.hue = (int) (var18 * 256.0D);
+		this.saturation = (int) (var14 * 256.0D);
+		this.luminance = (int) (var16 * 256.0D);
+		if (this.saturation < 0) {
+			this.saturation = 0;
+		} else if (this.saturation > 255) {
+			this.saturation = 255;
 		}
-		if (this.field2405 < 0) {
-			this.field2405 = 0;
-		} else if (this.field2405 > 255) {
-			this.field2405 = 255;
+		if (this.luminance < 0) {
+			this.luminance = 0;
+		} else if (this.luminance > 255) {
+			this.luminance = 255;
 		}
 	}
 
-	public static void init(Js5Index config) {
+	public static void unpack(Js5Index config) {
 		configJs5 = config;
 	}
 

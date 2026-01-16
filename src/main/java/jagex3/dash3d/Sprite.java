@@ -25,26 +25,26 @@ public class Sprite {
 	public ModelSource model;
 
 	@ObfuscatedName("au.j")
-	public int minSceneTileX;
+	public int minTileX;
 
 	@ObfuscatedName("au.z")
-	public int maxSceneTileX;
+	public int maxTileX;
 
 	@ObfuscatedName("au.g")
-	public int minSceneTileZ;
+	public int minTileZ;
 
 	@ObfuscatedName("au.q")
-	public int maxSceneTileZ;
+	public int maxTileZ;
 
 	@ObfuscatedName("au.i")
-	public int field668;
+	public int distance;
 
 	@ObfuscatedName("au.s")
 	public int cycle;
 
 	@ObfuscatedName("au.u")
-	public int bitset = 0;
+	public int typecode = 0;
 
 	@ObfuscatedName("au.v")
-	public int info = 0;
+	public int typecode2 = 0;
 }

@@ -30,16 +30,16 @@ public class PlayerModel {
 	public long field1227;
 
 	@ObfuscatedName("c.j")
-	public static short[] field51;
+	public static short[] recol1s;
 
 	@ObfuscatedName("bw.z")
-	public static short[][] field800;
+	public static short[][] recol1d;
 
 	@ObfuscatedName("ct.g")
-	public static short[] field1224;
+	public static short[] recol2s;
 
 	@ObfuscatedName("ct.q")
-	public static short[][] field1229;
+	public static short[][] recol2d;
 
 	@ObfuscatedName("ct.i")
 	public static final int[] field1230 = new int[] { 8, 11, 4, 6, 9, 7, 10 };
@@ -102,13 +102,13 @@ public class PlayerModel {
 		int var3 = this.field1223[arg0];
 		if (arg1) {
 			var3++;
-			if (var3 >= field800[arg0].length) {
+			if (var3 >= recol1d[arg0].length) {
 				var3 = 0;
 			}
 		} else {
 			var3--;
 			if (var3 < 0) {
-				var3 = field800[arg0].length - 1;
+				var3 = recol1d[arg0].length - 1;
 			}
 		}
 		this.field1223[arg0] = var3;
@@ -178,18 +178,18 @@ public class PlayerModel {
 		}
 		long var5 = this.field1226;
 		int[] var7 = this.field1228;
-		if (arg0 != null && (arg0.righthand >= 0 || arg0.lefthand >= 0)) {
+		if (arg0 != null && (arg0.replaceheldleft >= 0 || arg0.replaceheldright >= 0)) {
 			var7 = new int[12];
 			for (int var8 = 0; var8 < 12; var8++) {
 				var7[var8] = this.field1228[var8];
 			}
-			if (arg0.righthand >= 0) {
-				var5 += arg0.righthand - this.field1228[5] << 40;
-				var7[5] = arg0.righthand;
+			if (arg0.replaceheldleft >= 0) {
+				var5 += arg0.replaceheldleft - this.field1228[5] << 40;
+				var7[5] = arg0.replaceheldleft;
 			}
-			if (arg0.lefthand >= 0) {
-				var5 += arg0.lefthand - this.field1228[3] << 48;
-				var7[3] = arg0.lefthand;
+			if (arg0.replaceheldright >= 0) {
+				var5 += arg0.replaceheldright - this.field1228[3] << 48;
+				var7[3] = arg0.replaceheldright;
 			}
 		}
 		ModelLit var9 = (ModelLit) field1231.get(var5);
@@ -232,11 +232,11 @@ public class PlayerModel {
 				}
 				ModelUnlit var19 = new ModelUnlit(var13, var14);
 				for (int var20 = 0; var20 < 5; var20++) {
-					if (this.field1223[var20] < field800[var20].length) {
-						var19.recolour(field51[var20], field800[var20][this.field1223[var20]]);
+					if (this.field1223[var20] < recol1d[var20].length) {
+						var19.recolour(recol1s[var20], recol1d[var20][this.field1223[var20]]);
 					}
-					if (this.field1223[var20] < field1229[var20].length) {
-						var19.recolour(field1224[var20], field1229[var20][this.field1223[var20]]);
+					if (this.field1223[var20] < recol2d[var20].length) {
+						var19.recolour(recol2s[var20], recol2d[var20][this.field1223[var20]]);
 					}
 				}
 				var9 = var19.calculateNormals(64, 850, -30, -50, -30);
@@ -295,11 +295,11 @@ public class PlayerModel {
 		}
 		ModelUnlit var10 = new ModelUnlit(var4, var5);
 		for (int var11 = 0; var11 < 5; var11++) {
-			if (this.field1223[var11] < field800[var11].length) {
-				var10.recolour(field51[var11], field800[var11][this.field1223[var11]]);
+			if (this.field1223[var11] < recol1d[var11].length) {
+				var10.recolour(recol1s[var11], recol1d[var11][this.field1223[var11]]);
 			}
-			if (this.field1223[var11] < field1229[var11].length) {
-				var10.recolour(field1224[var11], field1229[var11][this.field1223[var11]]);
+			if (this.field1223[var11] < recol2d[var11].length) {
+				var10.recolour(recol2s[var11], recol2d[var11][this.field1223[var11]]);
 			}
 		}
 		return var10;

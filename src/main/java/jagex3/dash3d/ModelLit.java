@@ -84,7 +84,7 @@ public class ModelLit extends ModelSource {
 	public int[][] field2743;
 
 	@ObfuscatedName("fo.av")
-	public boolean picking = false;
+	public boolean useAABBMouseCheck = false;
 
 	@ObfuscatedName("fo.ak")
 	public int field2745;
@@ -351,7 +351,7 @@ public class ModelLit extends ModelSource {
 			var15.field2765 = this.field2765;
 			var15.field2742 = this.field2742;
 			var15.field2743 = this.field2743;
-			var15.picking = this.picking;
+			var15.useAABBMouseCheck = this.useAABBMouseCheck;
 			var15.vertexY = new int[var15.vertexCount];
 		} else {
 			var15 = this;
@@ -451,7 +451,7 @@ public class ModelLit extends ModelSource {
 		model.field2765 = this.field2765;
 		model.field2742 = this.field2742;
 		model.field2743 = this.field2743;
-		model.picking = this.picking;
+		model.useAABBMouseCheck = this.useAABBMouseCheck;
 		model.field2745 = 0;
 		return model;
 	}
@@ -697,7 +697,7 @@ public class ModelLit extends ModelSource {
 	}
 
 	@ObfuscatedName("fo.ad()V")
-	public void method3008() {
+	public void rotate90() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexX[var1];
 			this.vertexX[var1] = this.vertexZ[var1];
@@ -726,7 +726,7 @@ public class ModelLit extends ModelSource {
 	}
 
 	@ObfuscatedName("fo.as(I)V")
-	public void method3011(int arg0) {
+	public void rotateXAxis(int arg0) {
 		int var2 = sinTable[arg0];
 		int var3 = cosTable[arg0];
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
@@ -738,7 +738,7 @@ public class ModelLit extends ModelSource {
 	}
 
 	@ObfuscatedName("fo.am(III)V")
-	public void method3012(int arg0, int arg1, int arg2) {
+	public void translate(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
 			this.vertexX[var4] += arg0;
 			this.vertexY[var4] += arg1;
@@ -945,7 +945,7 @@ public class ModelLit extends ModelSource {
 			int var32 = mouseX - Pix3D.projectionX;
 			int var33 = mouseY - Pix3D.projectionY;
 			if (var32 > var28 && var32 < var29 && var33 > var30 && var33 < var31) {
-				if (this.picking) {
+				if (this.useAABBMouseCheck) {
 					pickedEntityTypecode[pickedCount++] = typecode;
 				} else {
 					picking = true;

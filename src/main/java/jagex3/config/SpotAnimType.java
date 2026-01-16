@@ -1,8 +1,8 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.ModelLit;
+import jagex3.dash3d.ModelUnlit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
@@ -123,7 +123,7 @@ public class SpotAnimType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eu.i(IS)Lfo;")
-	public final ModelLit method2455(int arg0) {
+	public final ModelLit animate(int arg0) {
 		ModelLit var2 = (ModelLit) field2392.get((long) this.field2382);
 		if (var2 == null) {
 			ModelUnlit var3 = ModelUnlit.tryGet(modelJs5, this.model, 0);
@@ -154,22 +154,22 @@ public class SpotAnimType extends DoublyLinkable {
 		}
 		if (this.angle != 0) {
 			if (this.angle == 90) {
-				var6.method3008();
+				var6.rotate90();
 			}
 			if (this.angle == 180) {
-				var6.method3008();
-				var6.method3008();
+				var6.rotate90();
+				var6.rotate90();
 			}
 			if (this.angle == 270) {
-				var6.method3008();
-				var6.method3008();
-				var6.method3008();
+				var6.rotate90();
+				var6.rotate90();
+				var6.rotate90();
 			}
 		}
 		return var6;
 	}
 
-	public static void init(Js5Local var36, Js5Local var37) {
+	public static void unpack(Js5Local var36, Js5Local var37) {
 		configJs5 = var36;
 		modelJs5 = var37;
 	}

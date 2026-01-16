@@ -8,10 +8,10 @@ import jagex3.config.SpotAnimType;
 public class MapSpotAnim extends ModelSource {
 
 	@ObfuscatedName("fn.j")
-	public int field2608;
+	public int type;
 
 	@ObfuscatedName("fn.z")
-	public int field2611;
+	public int y;
 
 	@ObfuscatedName("fn.g")
 	public int startCycle;
@@ -20,50 +20,50 @@ public class MapSpotAnim extends ModelSource {
 	public int level;
 
 	@ObfuscatedName("fn.i")
-	public int field2610;
+	public int x;
 
 	@ObfuscatedName("fn.s")
-	public int field2606;
+	public int z;
 
 	@ObfuscatedName("fn.u")
-	public SeqType field2607;
+	public SeqType anim;
 
 	@ObfuscatedName("fn.v")
-	public int field2609 = 0;
+	public int animFrame = 0;
 
 	@ObfuscatedName("fn.w")
-	public int field2602 = 0;
+	public int animCycle = 0;
 
 	@ObfuscatedName("fn.e")
-	public boolean seqComplete = false;
+	public boolean animComplete = false;
 
 	public MapSpotAnim(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
-		this.field2608 = arg0;
+		this.type = arg0;
 		this.level = arg1;
-		this.field2610 = arg2;
-		this.field2606 = arg3;
-		this.field2611 = arg4;
+		this.x = arg2;
+		this.z = arg3;
+		this.y = arg4;
 		this.startCycle = arg5 + arg6;
-		int var8 = SpotAnimType.get(this.field2608).anim;
+		int var8 = SpotAnimType.get(this.type).anim;
 		if (var8 == -1) {
-			this.seqComplete = true;
+			this.animComplete = true;
 		} else {
-			this.seqComplete = false;
-			this.field2607 = SeqType.get(var8);
+			this.animComplete = false;
+			this.anim = SeqType.get(var8);
 		}
 	}
 
 	@ObfuscatedName("fn.b(II)V")
 	public final void update(int arg0) {
-		if (this.seqComplete) {
+		if (this.animComplete) {
 			return;
 		}
-		this.field2602 += arg0;
-		while (this.field2602 > this.field2607.delay[this.field2609]) {
-			this.field2602 -= this.field2607.delay[this.field2609];
-			this.field2609++;
-			if (this.field2609 >= this.field2607.frames.length) {
-				this.seqComplete = true;
+		this.animCycle += arg0;
+		while (this.animCycle > this.anim.delay[this.animFrame]) {
+			this.animCycle -= this.anim.delay[this.animFrame];
+			this.animFrame++;
+			if (this.animFrame >= this.anim.frames.length) {
+				this.animComplete = true;
 				break;
 			}
 		}
@@ -71,12 +71,12 @@ public class MapSpotAnim extends ModelSource {
 
 	@ObfuscatedName("fn.g(I)Lfo;")
 	public final ModelLit getTempModel() {
-		SpotAnimType var1 = SpotAnimType.get(this.field2608);
+		SpotAnimType var1 = SpotAnimType.get(this.type);
 		ModelLit var2;
-		if (this.seqComplete) {
-			var2 = var1.method2455(-1);
+		if (this.animComplete) {
+			var2 = var1.animate(-1);
 		} else {
-			var2 = var1.method2455(this.field2609);
+			var2 = var1.animate(this.animFrame);
 		}
 		return var2 == null ? null : var2;
 	}

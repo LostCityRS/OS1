@@ -1,7 +1,6 @@
 package jagex3.js5;
 
 import deob.ObfuscatedName;
-import jagex3.client.LoginScreen;
 import jagex3.datastruct.DoublyLinkList;
 import jagex3.datastruct.HashTable;
 import jagex3.datastruct.MonotonicTime;
@@ -14,8 +13,8 @@ import java.util.zip.CRC32;
 @ObfuscatedName("cu")
 public class Js5Remote {
 
-	@ObfuscatedName("df.r")
-	public static boolean field1507;
+	@ObfuscatedName("g.r")
+	public static ClientStream stream;
 
 	@ObfuscatedName("cu.d")
 	public static int timeoutMs = 0;
@@ -98,7 +97,7 @@ public class Js5Remote {
 		timeoutMs += timeDelta;
 		if (prefetchQueueSize == 0 && urgentQueueSize == 0 && pendingPrefetchQueueSize == 0 && pendingUrgentQueueSize == 0) {
 			return true;
-		} else if (LoginScreen.clientStream == null) {
+		} else if (stream == null) {
 			return false;
 		} else {
 			try {
@@ -110,7 +109,7 @@ public class Js5Remote {
 					Packet packet = new Packet(4);
 					packet.p1(1);
 					packet.p3((int) pendingUrgentRequest.nodeId);
-					LoginScreen.clientStream.write(packet.data, 0, 4);
+					stream.write(packet.data, 0, 4);
 					urgentQueue.put(pendingUrgentRequest, pendingUrgentRequest.nodeId);
 					pendingUrgentQueueSize--;
 					urgentQueueSize++;
@@ -120,14 +119,14 @@ public class Js5Remote {
 					Packet packet = new Packet(4);
 					packet.p1(0);
 					packet.p3((int) pendingPrefetchRequest.nodeId);
-					LoginScreen.clientStream.write(packet.data, 0, 4);
+					stream.write(packet.data, 0, 4);
 					pendingPrefetchRequest.unlink2();
 					prefetchQueue.put(pendingPrefetchRequest, pendingPrefetchRequest.nodeId);
 					pendingPrefetchQueueSize--;
 					prefetchQueueSize++;
 				}
 				for (int i = 0; i < 100; i++) {
-					int availableBytes = LoginScreen.clientStream.available();
+					int availableBytes = stream.available();
 					if (availableBytes < 0) {
 						throw new IOException();
 					}
@@ -146,7 +145,7 @@ public class Js5Remote {
 						if (readableBytes > availableBytes) {
 							readableBytes = availableBytes;
 						}
-						LoginScreen.clientStream.read(incomingTransferHeader.data, incomingTransferHeader.pos, readableBytes);
+						stream.read(incomingTransferHeader.data, incomingTransferHeader.pos, readableBytes);
 						if (xorKey != 0) {
 							for (int j = 0; j < readableBytes; j++) {
 								incomingTransferHeader.data[incomingTransferHeader.pos + j] ^= xorKey;
@@ -197,7 +196,7 @@ public class Js5Remote {
 						if (chunkRemainingBytes > availableBytes) {
 							chunkRemainingBytes = availableBytes;
 						}
-						LoginScreen.clientStream.read(incomingGroupBuffer.data, incomingGroupBuffer.pos, chunkRemainingBytes);
+						stream.read(incomingGroupBuffer.data, incomingGroupBuffer.pos, chunkRemainingBytes);
 						if (xorKey != 0) {
 							for (int j = 0; j < chunkRemainingBytes; j++) {
 								incomingGroupBuffer.data[incomingGroupBuffer.pos + j] ^= xorKey;
@@ -223,11 +222,11 @@ public class Js5Remote {
 								int crc = (int) crc32.getValue();
 								if (incomingRequest.expectedCrc != crc) {
 									try {
-										LoginScreen.clientStream.close();
+										stream.close();
 									} catch (Exception ignored) {
 									}
 									crcErrorCount++;
-									LoginScreen.clientStream = null;
+									stream = null;
 									xorKey = (byte) (Math.random() * 255.0D + 1.0D);
 									return false;
 								}
@@ -255,11 +254,11 @@ public class Js5Remote {
 				return true;
 			} catch (IOException e) {
 				try {
-					LoginScreen.clientStream.close();
+					stream.close();
 				} catch (Exception ignored) {
 				}
 				ioErrorCount++;
-				LoginScreen.clientStream = null;
+				stream = null;
 				return false;
 			}
 		}
@@ -267,34 +266,34 @@ public class Js5Remote {
 
 	@ObfuscatedName("p.d(ZI)V")
 	public static void sendLoginLogoutPacket(boolean loggedIn) {
-		if (LoginScreen.clientStream == null) {
+		if (stream == null) {
 			return;
 		}
 		try {
 			Packet packet = new Packet(4);
 			packet.p1(loggedIn ? 2 : 3);
 			packet.p3(0);
-			LoginScreen.clientStream.write(packet.data, 0, 4);
+			stream.write(packet.data, 0, 4);
 		} catch (IOException e) {
 			try {
-				LoginScreen.clientStream.close();
+				stream.close();
 			} catch (Exception ignored) {
 			}
 			ioErrorCount++;
-			LoginScreen.clientStream = null;
+			stream = null;
 		}
 	}
 
 	@ObfuscatedName("q.l(Lam;ZB)V")
 	public static void init(ClientStream stream, boolean loggedId) {
-		if (LoginScreen.clientStream != null) {
+		if (stream != null) {
 			try {
-				LoginScreen.clientStream.close();
+				stream.close();
 			} catch (Exception ignored) {
 			}
-			LoginScreen.clientStream = null;
+			stream = null;
 		}
-		LoginScreen.clientStream = stream;
+		stream = stream;
 		sendLoginLogoutPacket(loggedId);
 		incomingTransferHeader.pos = 0;
 		incomingRequest = null;
@@ -312,14 +311,14 @@ public class Js5Remote {
 								packet.p1(4);
 								packet.p1(xorKey);
 								packet.p2(0);
-								LoginScreen.clientStream.write(packet.data, 0, 4);
+								stream.write(packet.data, 0, 4);
 							} catch (IOException e) {
 								try {
-									LoginScreen.clientStream.close();
+									stream.close();
 								} catch (Exception ignored) {
 								}
 								ioErrorCount++;
-								LoginScreen.clientStream = null;
+								stream = null;
 							}
 						}
 						timeoutMs = 0;

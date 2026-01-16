@@ -2,8 +2,8 @@ package jagex3.config;
 
 import deob.ObfuscatedName;
 import jagex3.client.VarProvider;
-import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.ModelLit;
+import jagex3.dash3d.ModelUnlit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
@@ -44,10 +44,10 @@ public class NpcType extends DoublyLinkable {
 	public int readyanim = -1;
 
 	@ObfuscatedName("em.e")
-	public int field2287 = -1;
+	public int turnleftanim = -1;
 
 	@ObfuscatedName("em.b")
-	public int field2278 = -1;
+	public int turnrightanim = -1;
 
 	@ObfuscatedName("em.y")
 	public int walkanim = -1;
@@ -119,7 +119,7 @@ public class NpcType extends DoublyLinkable {
 	public boolean walksmoothing = true;
 
 	@ObfuscatedName("by.z(Lch;Lch;B)V")
-	public static void init(Js5Index config, Js5Index model) {
+	public static void unpack(Js5Index config, Js5Index model) {
 		configJs5 = config;
 		modelJs5 = model;
 	}
@@ -177,9 +177,9 @@ public class NpcType extends DoublyLinkable {
 		} else if (code == 14) {
 			this.walkanim = buf.g2();
 		} else if (code == 15) {
-			this.field2287 = buf.g2();
+			this.turnleftanim = buf.g2();
 		} else if (code == 16) {
-			this.field2278 = buf.g2();
+			this.turnrightanim = buf.g2();
 		} else if (code == 17) {
 			this.walkanim = buf.g2();
 			this.walkanim_b = buf.g2();

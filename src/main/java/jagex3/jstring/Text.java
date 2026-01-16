@@ -647,19 +647,19 @@ public class Text {
 	public static String CANCEL = "Cancel";
 
 	@ObfuscatedName("ba.hr")
-	public static String field1079 = "How to Play";
+	public static String NEWUSER1 = "How to Play";
 
 	@ObfuscatedName("ba.hm")
-	public static String field992 = "To play Old School RuneScape, you will";
+	public static String NEWUSER2 = "To play Old School RuneScape, you will";
 
 	@ObfuscatedName("ba.hu")
-	public static String field1081 = "need to be a current RuneScape member,";
+	public static String NEWUSER3 = "need to be a current RuneScape member,";
 
 	@ObfuscatedName("ba.hl")
-	public static String field1082 = "and have voted 'Yes' on the poll on the";
+	public static String NEWUSER4 = "and have voted 'Yes' on the poll on the";
 
 	@ObfuscatedName("ba.hj")
-	public static String field1084 = "RuneScape home page.";
+	public static String NEWUSER5 = "RuneScape home page.";
 
 	@ObfuscatedName("ba.hn")
 	public static String SELECTAWORLD = "Select a world";

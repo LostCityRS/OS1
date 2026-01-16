@@ -89,7 +89,7 @@ public class JagException extends RuntimeException {
 			if (applet == null) {
 				return;
 			}
-			URL var26 = new URL(applet.getCodeBase(), "clienterror.ws?c=" + revision + "&u=" + username + "&v1=" + SignLink.javaVendor + "&v2=" + SignLink.javaVersion + "&e=" + var25);
+			URL var26 = new URL(applet.getCodeBase(), "clienterror.ws?c=" + revision + "&u=" + username + "&v1=" + TaskHandler.javaVendor + "&v2=" + TaskHandler.javaVersion + "&e=" + var25);
 			DataInputStream var27 = new DataInputStream(var26.openStream());
 			var27.read();
 			var27.close();

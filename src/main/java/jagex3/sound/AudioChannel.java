@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.client.SignLink;
+import jagex3.client.TaskHandler;
 import jagex3.datastruct.ArrayUtil;
 import jagex3.datastruct.MonotonicTime;
 import jagex3.datastruct.PreciseSleep;
@@ -82,7 +82,7 @@ public class AudioChannel {
 	}
 
 	@ObfuscatedName("cm.d(Lak;Ljava/awt/Component;III)Ly;")
-	public static final AudioChannel method1132(SignLink arg0, Component arg1, int arg2, int arg3) {
+	public static final AudioChannel method1132(TaskHandler arg0, Component arg1, int arg2, int arg3) {
 		if (field241 == 0) {
 			throw new IllegalStateException();
 		} else if (arg2 >= 0 && arg2 < 2) {
@@ -102,7 +102,7 @@ public class AudioChannel {
 				if (field239 > 0 && field238 == null) {
 					field238 = new AudioThread();
 					field238.field290 = arg0;
-					arg0.startThread(field238, field239);
+					arg0.threadreq(field238, field239);
 				}
 				if (field238 != null) {
 					if (field238.field293[arg2] != null) {
@@ -122,7 +122,7 @@ public class AudioChannel {
 					if (field239 > 0 && field238 == null) {
 						field238 = new AudioThread();
 						field238.field290 = arg0;
-						arg0.startThread(field238, field239);
+						arg0.threadreq(field238, field239);
 					}
 					if (field238 != null) {
 						if (field238.field293[arg2] != null) {

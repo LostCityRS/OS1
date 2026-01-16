@@ -54,7 +54,7 @@ public class InvType extends DoublyLinkable {
 		return inv;
 	}
 
-	public static void init(Js5Local config) {
+	public static void unpack(Js5Local config) {
 		configJs5 = config;
 	}
 }
