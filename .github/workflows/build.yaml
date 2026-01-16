@@ -15,17 +15,19 @@ jobs:
         java-version: 8
 
     - uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.14'
 
-    - name: Build client
+    - name: Build
       run: gradle build
 
-    - name: Obfuscate client
+    - name: Obfuscate
       run: gradle proguard
 
-    - name: Upload build
+    - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        name: os1
+        name: client
         path: |
           build/libs/*
 
