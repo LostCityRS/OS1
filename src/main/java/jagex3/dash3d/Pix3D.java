@@ -85,12 +85,12 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.bm()V")
-	public static final void init() {
+	public static void init() {
 		initWH(left, top, right, bottom);
 	}
 
 	@ObfuscatedName("fx.bn(IIII)V")
-	public static final void initWH(int arg0, int arg1, int arg2, int arg3) {
+	public static void initWH(int arg0, int arg1, int arg2, int arg3) {
 		boundX = arg2 - arg0;
 		field2532 = arg3 - arg1;
 		method2758();
@@ -113,7 +113,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.be()V")
-	public static final void method2758() {
+	public static void method2758() {
 		projectionX = boundX / 2;
 		projectionY = field2532 / 2;
 		field2542 = -projectionX;
@@ -123,7 +123,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.bp(II)V")
-	public static final void initWH(int arg0, int arg1) {
+	public static void initWH(int arg0, int arg1) {
 		int var2 = scanline[0];
 		int var3 = var2 / Pix2D.width;
 		int var4 = var2 - Pix2D.width * var3;
@@ -136,17 +136,17 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.ba(Law;)V")
-	public static final void setTextures(TextureProvider arg0) {
+	public static void setTextures(TextureProvider arg0) {
 		textureProvider = arg0;
 	}
 
 	@ObfuscatedName("fx.bc(D)V")
-	public static final void initColourTable(double arg0) {
+	public static void initColourTable(double arg0) {
 		initColourTable(arg0, 0, 512);
 	}
 
 	@ObfuscatedName("fx.br(DII)V")
-	public static final void initColourTable(double arg0, int arg1, int arg2) {
+	public static void initColourTable(double arg0, int arg1, int arg2) {
 		double var4 = arg0 + (Math.random() * 0.03D - 0.015D);
 		int var6 = arg1 * 128;
 		for (int var7 = arg1; var7 < arg2; var7++) {
@@ -234,7 +234,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.cr(IIIIIIIII)V")
-	public static final void gouraudTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static void gouraudTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		int var9 = arg4 - arg3;
 		int var10 = arg1 - arg0;
 		int var11 = arg5 - arg3;
@@ -690,7 +690,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.cs([IIIIIIII)V")
-	public static final void gouraudRaster(int[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public static void gouraudRaster(int[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		if (hclip) {
 			if (arg5 > boundX) {
 				arg5 = boundX;
@@ -782,7 +782,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.cj(IIIIIII)V")
-	public static final void method2767(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public static void method2767(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		int var7 = 0;
 		if (arg0 != arg1) {
 			var7 = (arg4 - arg3 << 16) / (arg1 - arg0);
@@ -1187,7 +1187,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.cl([IIIIII)V")
-	public static final void method2768(int[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public static void method2768(int[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (hclip) {
 			if (arg5 > boundX) {
 				arg5 = boundX;
@@ -1267,7 +1267,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.cp(IIIIIIIIIIIIIIIIIII)V")
-	public static final void method2769(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
+	public static void method2769(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
 		int[] var19 = textureProvider.getTexels(arg18);
 		if (var19 == null) {
 			int var20 = textureProvider.getAverageRgb(arg18);
@@ -1836,7 +1836,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.ca([I[IIIIIIIIIIIIII)V")
-	public static final void method2755(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
+	public static void method2755(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
 		if (hclip) {
 			if (arg6 > boundX) {
 				arg6 = boundX;
@@ -2243,7 +2243,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.co(IIIIIIIIIIIIIIIIIII)V")
-	public static final void textureTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
+	public static void textureTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
 		int[] var19 = textureProvider.getTexels(arg18);
 		if (var19 == null) {
 			int var20 = textureProvider.getAverageRgb(arg18);
@@ -2812,7 +2812,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.ch([I[IIIIIIIIIIIIII)V")
-	public static final void textureRaster(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
+	public static void textureRaster(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
 		if (hclip) {
 			if (arg6 > boundX) {
 				arg6 = boundX;
@@ -3118,7 +3118,7 @@ public class Pix3D extends Pix2D {
 	}
 
 	@ObfuscatedName("fx.cu(II)I")
-	public static final int method2773(int arg0, int arg1) {
+	public static int method2773(int arg0, int arg1) {
 		int var2 = (arg0 & 0x7F) * arg1 >> 7;
 		if (var2 < 2) {
 			var2 = 2;

@@ -483,7 +483,7 @@ public abstract class Js5 {
 	}
 
 	@ObfuscatedName("c.a([BI)[B")
-	public static final byte[] decompress(byte[] arg0) {
+	public static byte[] decompress(byte[] arg0) {
 		Packet var1 = new Packet(arg0);
 		int var2 = var1.g1();
 		int var3 = var1.g4();

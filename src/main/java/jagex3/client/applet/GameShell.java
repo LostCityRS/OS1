@@ -355,7 +355,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	}
 
 	@ObfuscatedName("bk.v(B)V")
-	public static final void doneSlowUpdate() {
+	public static void doneSlowUpdate() {
 		field1100.method381();
 		for (int var0 = 0; var0 < 32; var0++) {
 			drawTime[var0] = 0L;

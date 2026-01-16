@@ -10,7 +10,7 @@ public class PreciseSleep {
 	}
 
 	@ObfuscatedName("cl.r(J)V")
-	public static final void sleep(long arg0) {
+	public static void sleep(long arg0) {
 		if (arg0 <= 0L) {
 			return;
 		}
@@ -23,7 +23,7 @@ public class PreciseSleep {
 	}
 
 	@ObfuscatedName("dr.d(J)V")
-	public static final void threadSleep(long arg0) {
+	public static void threadSleep(long arg0) {
 		try {
 			Thread.sleep(arg0);
 		} catch (InterruptedException var3) {

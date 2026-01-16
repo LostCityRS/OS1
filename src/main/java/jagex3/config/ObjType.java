@@ -431,7 +431,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eg.e(IIIIZI)Lfq;")
-	public static final Pix32 getIcon(int id, int count, int arg2, int arg3, boolean outlineRgb) {
+	public static Pix32 getIcon(int id, int count, int arg2, int arg3, boolean outlineRgb) {
 		long key = ((long) arg3 << 40) + ((long) arg2 << 38) + ((long) count << 16) + (long) id;
 		if (!outlineRgb) {
 			Pix32 cached = (Pix32) iconCache.get(key);
@@ -526,7 +526,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("bb.b(II)Ljava/lang/String;")
-	public static final String formatObjCountTagged(int cost) {
+	public static String formatObjCountTagged(int cost) {
 		if (cost < 100000) {
 			return "<col=ffff00>" + cost + "</col>";
 		} else if (cost < 10000000) {

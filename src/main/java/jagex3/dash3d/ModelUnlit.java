@@ -1671,7 +1671,7 @@ public class ModelUnlit extends ModelSource {
 	}
 
 	@ObfuscatedName("fw.ay(II)I")
-	public static final int method2943(int arg0, int arg1) {
+	public static int method2943(int arg0, int arg1) {
 		int var2 = (arg0 & 0x7F) * arg1 >> 7;
 		if (var2 < 2) {
 			var2 = 2;
@@ -1682,7 +1682,7 @@ public class ModelUnlit extends ModelSource {
 	}
 
 	@ObfuscatedName("fw.al(I)I")
-	public static final int method2939(int arg0) {
+	public static int method2939(int arg0) {
 		if (arg0 < 2) {
 			arg0 = 2;
 		} else if (arg0 > 126) {

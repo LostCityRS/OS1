@@ -735,10 +735,10 @@ public class Client extends GameShell {
 	public static int field2076 = 50;
 
 	@ObfuscatedName("client.jo")
-	public static int objSelected = 0;
+	public static int useMode = 0;
 
 	@ObfuscatedName("client.jh")
-	public static boolean targetModeActive = false;
+	public static boolean targetMode = false;
 
 	@ObfuscatedName("client.jw")
 	public static int targetSub = -1;
@@ -1901,7 +1901,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ex.dg(I)V")
-	public static final void loginPoll() {
+	public static void loginPoll() {
 		try {
 			if (loginStep == 0) {
 				if (loginStream != null) {
@@ -2145,8 +2145,8 @@ public class Client extends GameShell {
 		}
 		chatHistoryLength = 0;
 
-		objSelected = 0;
-		targetModeActive = false;
+		useMode = 0;
+		targetMode = false;
 
 		waveCount = 0;
 
@@ -2327,7 +2327,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dq.dz(B)V")
-	public static final void logout() {
+	public static void logout() {
 		if (loginStream != null) {
 			loginStream.close();
 			loginStream = null;
@@ -2346,7 +2346,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("bh.da(B)V")
-	public static final void unload() {
+	public static void unload() {
 		FloType.unload();
 		FluType.unload();
 		IdkType.unload();
@@ -2376,7 +2376,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("da.dj(I)V")
-	public static final void flushAudio() {
+	public static void flushAudio() {
 		if (soundPcmPlayer != null) {
 			soundPcmPlayer.cycle();
 		}
@@ -2419,7 +2419,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::minimap::Minimap::GlMinimap
 	@ObfuscatedName("p.dh(III)V")
-	public static final void minimapLoop(int offsetX, int offsetY) {
+	public static void minimapLoop(int offsetX, int offsetY) {
 		if (minimapState != 0 && minimapState != 3) {
 			return;
 		}
@@ -2469,7 +2469,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dm.dc(B)V")
-	public static final void timeoutChat() {
+	public static void timeoutChat() {
 		for (int var0 = -1; var0 < playerCount; var0++) {
 			int var1;
 			if (var0 == -1) {
@@ -2498,7 +2498,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("eh.dp(Ljava/lang/String;S)V")
-	public static final void doCheat(String message) {
+	public static void doCheat(String message) {
 		if (staffmodlevel >= 2) {
 			if (message.equalsIgnoreCase("::gc")) {
 				System.gc();
@@ -2528,7 +2528,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ez.dm(B)V")
-	public static final void cinemaCamera() {
+	public static void cinemaCamera() {
 		int var0 = cutsceneSrcLocalTileX * 128 + 64;
 		int var1 = cutsceneSrcLocalTileZ * 128 + 64;
 		int var2 = getAvH(var0, var1, minusedlevel) - cutsceneSrcHeight;
@@ -2623,7 +2623,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("eg.di(B)V")
-	public static final void movePlayers() {
+	public static void movePlayers() {
 		for (int var0 = -1; var0 < playerCount; var0++) {
 			int var1;
 			if (var0 == -1) {
@@ -2639,7 +2639,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("l.db(I)V")
-	public static final void moveNpcs() {
+	public static void moveNpcs() {
 		for (int var0 = 0; var0 < npcCount; var0++) {
 			int var1 = npcIds[var0];
 			ClientNpc var2 = npcs[var1];
@@ -2650,7 +2650,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("be.dq(Lfz;IB)V")
-	public static final void moveEntity(ClientEntity entity, int arg1) {
+	public static void moveEntity(ClientEntity entity, int arg1) {
 		if (entity.exactMoveEnd > loopCycle) {
 			// todo: inlined method (exactMove1?)
 			int var2 = entity.exactMoveEnd - loopCycle;
@@ -2702,7 +2702,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ap.dr(Lfz;I)V")
-	public static final void exactMove2(ClientEntity entity) {
+	public static void exactMove2(ClientEntity entity) {
 		if (loopCycle == entity.exactMoveStart || entity.primarySeqId == -1 || entity.primarySeqDelay != 0 || entity.primarySeqCycle + 1 > SeqType.get(entity.primarySeqId).delay[entity.primarySeqFrame]) {
 			int var1 = entity.exactMoveStart - entity.exactMoveEnd;
 			int var2 = loopCycle - entity.exactMoveEnd;
@@ -2730,7 +2730,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("eu.du(Lfz;B)V")
-	public static final void routeMove(ClientEntity entity) {
+	public static void routeMove(ClientEntity entity) {
 		entity.secondarySeqId = entity.readyanim;
 		if (entity.routeLength == 0) {
 			entity.animDelayMove = 0;
@@ -2861,7 +2861,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dk.dy(Lfz;I)V")
-	public static final void entityFace(ClientEntity entity) {
+	public static void entityFace(ClientEntity entity) {
 		if (entity.turnSpeed == 0) {
 			return;
 		}
@@ -2937,7 +2937,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("p.de(Lfz;I)V")
-	public static final void entityAnim(ClientEntity entity) {
+	public static void entityAnim(ClientEntity entity) {
 		entity.needsForwardDrawPadding = false;
 		if (entity.secondarySeqId != -1) {
 			SeqType var1 = SeqType.get(entity.secondarySeqId);
@@ -3042,7 +3042,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ej.dl(Ljava/lang/String;ZI)V")
-	public static final void drawLoadingMessage(String arg0, boolean arg1) {
+	public static void drawLoadingMessage(String arg0, boolean arg1) {
 		byte var2 = 4;
 		int var3 = var2 + 6;
 		int var4 = var2 + 6;
@@ -3073,7 +3073,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dl.dn(ZI)V")
-	public static final void addPlayers(boolean local) {
+	public static void addPlayers(boolean local) {
 		if (localPlayer.x >> 7 == minimapFlagX && localPlayer.z >> 7 == minimapFlagZ) {
 			minimapFlagX = 0;
 		}
@@ -3121,7 +3121,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dw.do(ZB)V")
-	public static final void addNpcs(boolean arg0) {
+	public static void addNpcs(boolean arg0) {
 		for (int var1 = 0; var1 < npcCount; var1++) {
 			ClientNpc var2 = npcs[npcIds[var1]];
 			int var3 = (npcIds[var1] << 14) + 0x20000000;
@@ -3147,7 +3147,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("r.dx(I)V")
-	public static final void addProjectiles() {
+	public static void addProjectiles() {
 		for (ClientProj proj = (ClientProj) projectiles.head(); proj != null; proj = (ClientProj) projectiles.next()) {
 			if (minusedlevel != proj.level || loopCycle > proj.t2) {
 				proj.unlink();
@@ -3183,7 +3183,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("bf.dt(I)V")
-	public static final void addMapAnim() {
+	public static void addMapAnim() {
 		for (MapSpotAnim var0 = (MapSpotAnim) spotanims.head(); var0 != null; var0 = (MapSpotAnim) spotanims.next()) {
 			if (minusedlevel != var0.level || var0.animComplete) {
 				var0.unlink();
@@ -3200,7 +3200,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("df.eb(III)V")
-	public static final void coordArrow(int arg0, int arg1) {
+	public static void coordArrow(int arg0, int arg1) {
 		if (hintType == 2) {
 			getOverlayPos((hintTileX - sceneBaseTileX << 7) + hintOffsetX, (hintTileZ - sceneBaseTileZ << 7) + hintOffsetZ, hintHeight * 2);
 
@@ -3211,7 +3211,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ek.er(IIIII)V")
-	public static final void otherOverlays(int arg0, int arg1, int arg2, int arg3) {
+	public static void otherOverlays(int arg0, int arg1, int arg2, int arg3) {
 		if (crossMode == 1) {
 			cross[crossCycle / 100].plotSprite(crossX - 8, crossY - 8);
 		}
@@ -3251,12 +3251,12 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("bd.es(Lfz;IB)V")
-	public static final void getOverlayPos(ClientEntity arg0, int arg1) {
+	public static void getOverlayPos(ClientEntity arg0, int arg1) {
 		getOverlayPos(arg0.x, arg0.z, arg1);
 	}
 
 	@ObfuscatedName("cl.ez(IIII)V")
-	public static final void getOverlayPos(int arg0, int arg1, int arg2) {
+	public static void getOverlayPos(int arg0, int arg1, int arg2) {
 		if (arg0 < 128 || arg1 < 128 || arg0 > 13056 || arg1 > 13056) {
 			projectX = -1;
 			projectY = -1;
@@ -3284,7 +3284,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("bw.ev(IIII)I")
-	public static final int getAvH(int arg0, int arg1, int arg2) {
+	public static int getAvH(int arg0, int arg1, int arg2) {
 		int var3 = arg0 >> 7;
 		int var4 = arg1 >> 7;
 		if (var3 < 0 || var4 < 0 || var3 > 103 || var4 > 103) {
@@ -3302,7 +3302,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cy.ei(ZI)V")
-	public static final void method1235(boolean arg0) {
+	public static void method1235(boolean arg0) {
 		field1978 = arg0;
 		if (!field1978) {
 			int var1 = in.g2();
@@ -3406,7 +3406,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("as.ef(IIIIII)V")
-	public static final void method390(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public static void method390(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		if (field1473 == arg0 && mapBuildCenterZoneZ == arg1 && (field2128 == arg2 || !lowMemory)) {
 			return;
 		}
@@ -3499,7 +3499,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::PreventTimeout
 	@ObfuscatedName("at.ej(ZB)V")
-	public static final void preventTimeout(boolean arg0) {
+	public static void preventTimeout(boolean arg0) {
 		flushAudio();
 
 		noTimeoutCycle++;
@@ -3526,7 +3526,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::minimap::Minimap::DrawDetail
 	@ObfuscatedName("bs.eh(IIIIII)V")
-	public static final void drawDetail(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public static void drawDetail(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		int var5 = world.wallType(arg0, arg1, arg2);
 		if (var5 != 0) {
 			int var6 = world.typecode2(arg0, arg1, arg2, var5);
@@ -3659,7 +3659,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cz.eg(IIII)Z")
-	public static final boolean interactWithLoc(int arg0, int arg1, int arg2) {
+	public static boolean interactWithLoc(int arg0, int arg1, int arg2) {
 		int var3 = arg2 >> 14 & 0x7FFF;
 		int var4 = world.typecode2(minusedlevel, arg0, arg1, arg2);
 		if (var4 == -1) {
@@ -3700,7 +3700,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("eh.el(IIIIZIIIIIIS)Z")
-	public static final boolean tryMove(int arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
+	public static boolean tryMove(int arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
 		for (int var11 = 0; var11 < 104; var11++) {
 			for (int var12 = 0; var12 < 104; var12++) {
 				field2041[var11][var12] = 0;
@@ -3908,7 +3908,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ai.en(I)V")
-	public static final void readZonePacket() {
+	public static void readZonePacket() {
 		if (ptype == 245) {
 			// LOC_MERGE
 			int var0 = in.g2();
@@ -4190,7 +4190,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ap.ew(IIIIIIIIII)V")
-	public static final void appendLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static void appendLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		LocChange var9 = null;
 		for (LocChange var10 = (LocChange) locChanges.head(); var10 != null; var10 = (LocChange) locChanges.next()) {
 			if (var10.level == arg0 && var10.x == arg1 && var10.z == arg2 && var10.layer == arg3) {
@@ -4215,7 +4215,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dc.ek(Ldn;I)V")
-	public static final void storeLoc(LocChange arg0) {
+	public static void storeLoc(LocChange arg0) {
 		int var1 = 0;
 		int var2 = -1;
 		int var3 = 0;
@@ -4244,7 +4244,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("f.eq(IIIIIIII)V")
-	public static final void addLoc(int arg0, int layer, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public static void addLoc(int arg0, int layer, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		if (arg2 < 1 || arg3 < 1 || arg2 > 102 || arg3 > 102) {
 			return;
 		}
@@ -4310,7 +4310,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dr.et(III)V")
-	public static final void showObject(int arg0, int arg1) {
+	public static void showObject(int arg0, int arg1) {
 		LinkList var2 = objStacks[minusedlevel][arg0][arg1];
 		if (var2 == null) {
 			world.removeObjStacks(minusedlevel, arg0, arg1);
@@ -4351,7 +4351,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ej.ee(I)V")
-	public static final void getPlayerPos() {
+	public static void getPlayerPos() {
 		entityRemovalCount = 0;
 		entityUpdateCount = 0;
 		getPlayerPosLocal();
@@ -4375,7 +4375,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dm.ed(I)V")
-	public static final void getNpcPosNewVis() {
+	public static void getNpcPosNewVis() {
 		while (in.bitsLeft(psize) >= 27) {
 			int var0 = in.gBit(15);
 			if (var0 == 32767) {
@@ -4427,7 +4427,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ag.ex(B)V")
-	public static final void getNpcPosExtended() {
+	public static void getNpcPosExtended() {
 		for (int var0 = 0; var0 < entityUpdateCount; var0++) {
 			int var1 = entityUpdateIds[var0];
 			ClientNpc var2 = npcs[var1];
@@ -4518,7 +4518,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("bs.ea(IIIII)V")
-	public static final void method765(int arg0, int arg1, int arg2, int arg3) {
+	public static void method765(int arg0, int arg1, int arg2, int arg3) {
 		for (int var4 = 0; var4 < componentDrawCount; var4++) {
 			if (componentDrawWidth[var4] + componentDrawX[var4] > arg0 && componentDrawX[var4] < arg0 + arg2 && componentDrawHeight[var4] + componentDrawY[var4] > arg1 && componentDrawY[var4] < arg1 + arg3) {
 				componentRedrawRequested1[var4] = true;
@@ -4527,7 +4527,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("bk.ep(B)V")
-	public static final void openMenu() {
+	public static void openMenu() {
 		int var0 = fontBold12.stringWid(Text.CHOOSEOPTION);
 		for (int var1 = 0; var1 < menuNumEntries; var1++) {
 			int var2 = fontBold12.stringWid(method1239(var1));
@@ -4559,7 +4559,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("br.em(II)Z")
-	public static final boolean isAddFriendOption(int arg0) {
+	public static boolean isAddFriendOption(int arg0) {
 		if (arg0 < 0) {
 			return false;
 		}
@@ -4572,7 +4572,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::DoAction
 	@ObfuscatedName("m.ey(II)V")
-	public static final void doAction(int arg0) {
+	public static void doAction(int arg0) {
 		if (arg0 < 0) {
 			return;
 		}
@@ -5093,13 +5093,13 @@ public class Client extends GameShell {
 					req.onop = var35.ontargetenter;
 					ScriptRunner.executeScript(req);
 				}
-				targetModeActive = true;
+				targetMode = true;
 				targetCom = c;
 				targetSub = b;
 				targetMask = var34;
 				componentUpdated(var35);
 
-				objSelected = 0;
+				useMode = 0;
 
 				// todo: inlined method (getComponentTargetVerb?)
 				String var37;
@@ -5263,7 +5263,7 @@ public class Client extends GameShell {
 			minimenuLeaveTargetMode();
 
 			IfType var45 = IfType.get(c);
-			objSelected = 1;
+			useMode = 1;
 			field557 = b;
 			field502 = c;
 			field555 = a;
@@ -5417,12 +5417,12 @@ public class Client extends GameShell {
 			selectedItem = b;
 		}
 
-		if (objSelected != 0) {
-			objSelected = 0;
+		if (useMode != 0) {
+			useMode = 0;
 			componentUpdated(IfType.get(field502));
 		}
 
-		if (targetModeActive) {
+		if (targetMode) {
 			minimenuLeaveTargetMode();
 		}
 
@@ -5475,7 +5475,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("ba.eo(B)V")
 	public static void minimenuLeaveTargetMode() {
-		if (!targetModeActive) {
+		if (!targetMode) {
 			return;
 		}
 
@@ -5487,7 +5487,7 @@ public class Client extends GameShell {
 			ScriptRunner.executeScript(req);
 		}
 
-		targetModeActive = false;
+		targetMode = false;
 		componentUpdated(var0);
 	}
 
@@ -5573,7 +5573,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("d.fd(Ljava/lang/String;Ljava/lang/String;IIIII)V")
-	public static final void addMenuOption(String option, String subject, int action, int a, int b, int c) {
+	public static void addMenuOption(String option, String subject, int action, int a, int b, int c) {
 		if (menuVisible || menuNumEntries >= 500) {
 			return;
 		}
@@ -5592,7 +5592,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("z.fc(Lem;IIII)V")
-	public static final void method64(NpcType arg0, int arg1, int arg2, int arg3) {
+	public static void method64(NpcType arg0, int arg1, int arg2, int arg3) {
 		if (menuNumEntries >= 400) {
 			return;
 		}
@@ -5629,9 +5629,9 @@ public class Client extends GameShell {
 			}
 			var4 = var4 + var9 + " " + TextUtil.openParen + Text.LEVEL + arg0.vislevel + TextUtil.closeParen;
 		}
-		if (objSelected == 1) {
+		if (useMode == 1) {
 			addMenuOption(Text.USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16776960) + var4, 7, arg1, arg2, arg3);
-		} else if (!targetModeActive) {
+		} else if (!targetMode) {
 			String[] var10 = arg0.op;
 			if (field2001) {
 				var10 = method726(var10);
@@ -5693,7 +5693,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cr.fe(Lfi;IIII)V")
-	public static final void method950(ClientPlayer arg0, int arg1, int arg2, int arg3) {
+	public static void method950(ClientPlayer arg0, int arg1, int arg2, int arg3) {
 		if (localPlayer == arg0 || menuNumEntries >= 400) {
 			return;
 		}
@@ -5727,9 +5727,9 @@ public class Client extends GameShell {
 		} else {
 			var9 = arg0.name + " " + TextUtil.openParen + Text.SKILL + arg0.skillLevel + TextUtil.closeParen;
 		}
-		if (objSelected == 1) {
+		if (useMode == 1) {
 			addMenuOption(Text.USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16777215) + var9, 14, arg1, arg2, arg3);
-		} else if (!targetModeActive) {
+		} else if (!targetMode) {
 			for (int var10 = 7; var10 >= 0; var10--) {
 				if (playerOp[var10] != null) {
 					short var11 = 0;
@@ -5764,7 +5764,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("fg.fj(IIIIIIIII)V")
-	public static final void drawInterface(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public static void drawInterface(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		if (IfType.openInterface(arg0)) {
 			field1516 = null;
 			method92(IfType.components[arg0], -1, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
@@ -5782,7 +5782,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("g.fv([Leg;IIIIIIIIB)V")
-	public static final void method92(IfType[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static void method92(IfType[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		Pix2D.setClipping(arg2, arg3, arg4, arg5);
 		Pix3D.init();
 		for (int var9 = 0; var9 < arg0.length; var9++) {
@@ -5950,7 +5950,7 @@ public class Client extends GameShell {
 							int var178 = var10.linkObjType[var171] - 1;
 							if (var174 + 32 > arg2 && var174 < arg4 && var175 + 32 > arg3 && var175 < arg5 || objDragInterface == var10 && hoveredSlot == var171) {
 								Pix32 var179;
-								if (objSelected == 1 && field557 == var171 && field502 == var10.parentlayer) {
+								if (useMode == 1 && field557 == var171 && field502 == var10.parentlayer) {
 									var179 = ObjType.getIcon(var178, var10.linkObjCount[var171], 2, 0, false);
 								} else {
 									var179 = ObjType.getIcon(var178, var10.linkObjCount[var171], 1, 3153952, false);
@@ -6342,7 +6342,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("dy.fr(IB)Ljava/lang/String;")
-	public static final String formatObjCountTagged(int cost) {
+	public static String formatObjCountTagged(int cost) {
 		String value = Integer.toString(cost);
 		for (int i = value.length() - 3; i > 0; i -= 3) {
 			value = value.substring(0, i) + TextUtil.comma + value.substring(i);
@@ -6357,7 +6357,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("q.fl(Leg;IIIIIII)V")
-	public static final void method97(IfType arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public static void method97(IfType arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		if (field2003) {
 			field2004 = 32;
 		} else {
@@ -6394,12 +6394,12 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ck.fk(II)Ljava/lang/String;")
-	public static final String getIntString(int arg0) {
+	public static String getIntString(int arg0) {
 		return arg0 < 999999999 ? Integer.toString(arg0) : "*";
 	}
 
 	@ObfuscatedName("n.fa(Leg;I)Z")
-	public static final boolean executeInterfaceScript(IfType arg0) {
+	public static boolean executeInterfaceScript(IfType arg0) {
 		if (arg0.scriptComparator == null) {
 			return false;
 		}
@@ -6426,7 +6426,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ba.fq(Leg;IB)I")
-	public static final int executeClientscript1(IfType arg0, int arg1) {
+	public static int executeClientscript1(IfType arg0, int arg1) {
 		if (arg0.scripts == null || arg1 >= arg0.scripts.length) {
 			return -2;
 		}
@@ -6555,7 +6555,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::LoopInterface
 	@ObfuscatedName("cz.ft(IIIIIIIS)V")
-	public static final void loopInterface(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public static void loopInterface(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		if (IfType.openInterface(arg0)) {
 			loopLayer(IfType.components[arg0], -1, arg1, arg2, arg3, arg4, arg5, arg6);
 		}
@@ -6563,7 +6563,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::LoopLayer
 	@ObfuscatedName("eg.fx([Leg;IIIIIIIB)V")
-	public static final void loopLayer(IfType[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public static void loopLayer(IfType[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		for (int var8 = 0; var8 < arg0.length; var8++) {
 			IfType var9 = arg0[var8];
 			if (
@@ -6926,14 +6926,14 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ai.fs(III)V")
-	public static final void runInterfaceHooks(int arg0, int arg1) {
+	public static void runInterfaceHooks(int arg0, int arg1) {
 		if (IfType.openInterface(arg0)) {
 			runInterfaceHooks(IfType.components[arg0], arg1);
 		}
 	}
 
 	@ObfuscatedName("ao.fh([Leg;IB)V")
-	public static final void runInterfaceHooks(IfType[] arg0, int arg1) {
+	public static void runInterfaceHooks(IfType[] arg0, int arg1) {
 		for (int var2 = 0; var2 < arg0.length; var2++) {
 			IfType var3 = arg0[var2];
 			if (var3 == null) {
@@ -6976,7 +6976,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::DragTryPickup
 	@ObfuscatedName("ch.ff(Leg;IIB)V")
-	public static final void dragTryPickup(IfType arg0, int arg1, int arg2) {
+	public static void dragTryPickup(IfType arg0, int arg1, int arg2) {
 		if (dragComponent != null || menuVisible || (arg0 == null || getDragLayer(arg0) == null)) {
 			return;
 		}
@@ -7054,7 +7054,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ai.fw([Ljava/lang/String;B)[Ljava/lang/String;")
-	public static final String[] method726(String[] arg0) {
+	public static String[] method726(String[] arg0) {
 		String[] var1 = new String[5];
 		for (int var2 = 0; var2 < 5; var2++) {
 			var1[var2] = var2 + ": ";
@@ -7067,7 +7067,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::IfAnimReset
 	@ObfuscatedName("n.fo(II)V")
-	public static final void ifAnimReset(int arg0) {
+	public static void ifAnimReset(int arg0) {
 		if (!IfType.openInterface(arg0)) {
 			return;
 		}
@@ -7083,7 +7083,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cz.fm([Leg;IB)V")
-	public static final void updateInterfaceAnimation(IfType[] all, int layer) {
+	public static void updateInterfaceAnimation(IfType[] all, int layer) {
 		for (int var2 = 0; var2 < all.length; var2++) {
 			IfType com = all[var2];
 			if (com == null || com.layerid != layer || (com.v3 && getComponentHide(com))) {
@@ -7154,7 +7154,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("bv.fi(II)V")
-	public static final void onVarPlayerChanged(int arg0) {
+	public static void onVarPlayerChanged(int arg0) {
 		redrawIf1();
 		BgSound.computeAllProperties();
 
@@ -7241,7 +7241,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cy.ge(Leg;I)V")
-	public static final void updateComponentContent(IfType arg0) {
+	public static void updateComponentContent(IfType arg0) {
 		int var1 = arg0.clientCode;
 		if (var1 == 324) {
 			if (genderButton1 == -1) {
@@ -7278,7 +7278,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("cz.gq(IIIB)Ldy;")
-	public static final SubInterface openSubInterface(int arg0, int arg1, int arg2) {
+	public static SubInterface openSubInterface(int arg0, int arg1, int arg2) {
 		SubInterface sub = new SubInterface();
 		sub.id = arg1;
 		sub.type = arg2;
@@ -7309,7 +7309,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("am.gr(Ldy;ZI)V")
-	public static final void method408(SubInterface arg0, boolean arg1) {
+	public static void method408(SubInterface arg0, boolean arg1) {
 		int var2 = arg0.id;
 		int var3 = (int) arg0.key;
 
@@ -7355,7 +7355,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::ClientButton
 	@ObfuscatedName("es.gd(Leg;B)Z")
-	public static final boolean clientButton(IfType com) {
+	public static boolean clientButton(IfType com) {
 		int clientCode = com.clientCode;
 
 		if (clientCode == 205) {
@@ -7385,7 +7385,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::minimap::Minimap::Draw
 	@ObfuscatedName("ba.gh(IIII)V")
-	public static final void minimapDraw(int arg0, int arg1, int arg2) {
+	public static void minimapDraw(int arg0, int arg1, int arg2) {
 		flushAudio();
 		Pix2D.setClipping(arg0, arg1, mapback.wi + arg0, mapback.hi + arg1);
 		if (minimapState == 2 || minimapState == 5) {
@@ -7488,7 +7488,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ak.gm(IIIILfq;B)V")
-	public static final void method458(int arg0, int arg1, int arg2, int arg3, Pix32 arg4) {
+	public static void method458(int arg0, int arg1, int arg2, int arg3, Pix32 arg4) {
 		int var5 = arg2 * arg2 + arg3 * arg3;
 		if (var5 <= 4225 || var5 >= 90000) {
 			method94(arg0, arg1, arg2, arg3, arg4);
@@ -7508,7 +7508,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("g.gw(IIIILfq;I)V")
-	public static final void method94(int arg0, int arg1, int arg2, int arg3, Pix32 arg4) {
+	public static void method94(int arg0, int arg1, int arg2, int arg3, Pix32 arg4) {
 		if (arg4 == null) {
 			return;
 		}
@@ -7531,12 +7531,12 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ao.gn(ILjava/lang/String;Ljava/lang/String;I)V")
-	public static final void addMessage(int type, String sender, String message) {
+	public static void addMessage(int type, String sender, String message) {
 		addMessage(type, sender, message, null);
 	}
 
 	@ObfuscatedName("br.gj(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V")
-	public static final void addMessage(int type, String sender, String message, String arg3) {
+	public static void addMessage(int type, String sender, String message, String arg3) {
 		for (int i = 99; i > 0; i--) {
 			messageType[i] = messageType[i - 1];
 			messageSender[i] = messageSender[i - 1];
@@ -7588,7 +7588,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ch.gl(Ljava/lang/String;I)V")
-	public static final void addFriend(String arg0) {
+	public static void addFriend(String arg0) {
 		if (arg0 == null) {
 			return;
 		}
@@ -7641,7 +7641,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("a.gz(Ljava/lang/String;ZS)V")
-	public static final void addIgnore(String arg0, boolean arg1) {
+	public static void addIgnore(String arg0, boolean arg1) {
 		if (arg0 == null) {
 			return;
 		}
@@ -7694,7 +7694,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ao.gp(Ljava/lang/String;B)V")
-	public static final void delFriend(String arg0) {
+	public static void delFriend(String arg0) {
 		if (arg0 == null) {
 			return;
 		}
@@ -7730,7 +7730,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("af.gf(Ljava/lang/String;I)V")
-	public static final void clanJoinChat(String arg0) {
+	public static void clanJoinChat(String arg0) {
 		if (!arg0.equals("")) {
 			out.p1Enc(185);
 			out.p1(Packet.pjstrlen(arg0));
@@ -7739,7 +7739,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("aa.gv(I)V")
-	public static final void clanLeaveChat() {
+	public static void clanLeaveChat() {
 		out.p1Enc(185);
 		out.p1(0);
 	}
@@ -10342,13 +10342,13 @@ public class Client extends GameShell {
 	}
 
 	public static void imethod27(int var24, int var25) {
-		if (menuNumEntries < 2 && objSelected == 0 && !targetModeActive) {
+		if (menuNumEntries < 2 && useMode == 0 && !targetMode) {
 			return;
 		}
 		String var26;
-		if (objSelected == 1 && menuNumEntries < 2) {
+		if (useMode == 1 && menuNumEntries < 2) {
 			var26 = Text.USE + Text.MINISEPARATOR + field2078 + " " + TextUtil.arrow;
-		} else if (targetModeActive && menuNumEntries < 2) {
+		} else if (targetMode && menuNumEntries < 2) {
 			var26 = targetVerb + Text.MINISEPARATOR + targetOp + " " + TextUtil.arrow;
 		} else {
 			var26 = method1239(menuNumEntries - 1);
@@ -10881,7 +10881,7 @@ public class Client extends GameShell {
 		if (var10.buttonType == 1) {
 			addMenuOption(var10.option, "", 24, 0, 0, var10.parentlayer);
 		}
-		if (var10.buttonType == 2 && !targetModeActive) {
+		if (var10.buttonType == 2 && !targetMode) {
 			String var131;
 			if (ServerActive.targetMask(getActive(var10)) == 0) {
 				var131 = null;
@@ -10923,7 +10923,7 @@ public class Client extends GameShell {
 							label1831:
 							{
 								ObjType var138 = ObjType.get(var10.linkObjType[var133] - 1);
-								if (objSelected == 1) {
+								if (useMode == 1) {
 									int var139 = getActive(var10);
 									boolean var140 = (var139 >> 30 & 0x1) != 0;
 									if (var140) {
@@ -10933,7 +10933,7 @@ public class Client extends GameShell {
 										break label1831;
 									}
 								}
-								if (targetModeActive) {
+								if (targetMode) {
 									int var141 = getActive(var10);
 									boolean var142 = (var141 >> 30 & 0x1) != 0;
 									if (var142) {
@@ -11024,7 +11024,7 @@ public class Client extends GameShell {
 			}
 		}
 		if (var10.v3) {
-			if (targetModeActive) {
+			if (targetMode) {
 				int var157 = getActive(var10);
 				boolean var158 = (var157 >> 21 & 0x1) != 0;
 				if (var158 && (targetMask & 0x20) == 32) {
@@ -11401,7 +11401,7 @@ public class Client extends GameShell {
 	}
 
 	public static void imethod41(int var12, int var13, int var72, int var73) {
-		if (objSelected == 0 && !targetModeActive) {
+		if (useMode == 0 && !targetMode) {
 			addMenuOption(Text.WALKHERE, "", 23, 0, var72 - var12, var73 - var13);
 		}
 		int var100 = -1;
@@ -11423,9 +11423,9 @@ public class Client extends GameShell {
 				if (var107 == null) {
 					continue;
 				}
-				if (objSelected == 1) {
+				if (useMode == 1) {
 					addMenuOption(Text.USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(65535) + var107.name, 1, var102, var103, var104);
-				} else if (!targetModeActive) {
+				} else if (!targetMode) {
 					String[] var108 = var107.op;
 					if (field2001) {
 						var108 = method726(var108);
@@ -11501,9 +11501,9 @@ public class Client extends GameShell {
 				}
 				for (ClientObj var122 = (ClientObj) var121.tail(); var122 != null; var122 = (ClientObj) var121.prev()) {
 					ObjType var123 = ObjType.get(var122.id);
-					if (objSelected == 1) {
+					if (useMode == 1) {
 						addMenuOption(Text.USE, field2078 + " " + TextUtil.arrow + " " + TextUtil.colTag(16748608) + var123.name, 16, var122.id, var103, var104);
-					} else if (!targetModeActive) {
+					} else if (!targetMode) {
 						String[] var124 = var123.op;
 						if (field2001) {
 							var124 = method726(var124);

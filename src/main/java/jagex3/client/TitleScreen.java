@@ -659,7 +659,7 @@ public class TitleScreen {
 	}
 
 	@ObfuscatedName("br.n(Lft;B)V")
-	public static final void method920(Pix8 arg0) {
+	public static void method920(Pix8 arg0) {
 		short var1 = 256;
 		for (int var2 = 0; var2 < field489.length; var2++) {
 			field489[var2] = 0;
@@ -696,7 +696,7 @@ public class TitleScreen {
 	}
 
 	@ObfuscatedName("eh.j(IIII)I")
-	public static final int method1792(int arg0, int arg1, int arg2) {
+	public static int method1792(int arg0, int arg1, int arg2) {
 		int var3 = 256 - arg2;
 		return ((arg0 & 0xFF00FF) * var3 + (arg1 & 0xFF00FF) * arg2 & 0xFF00FF00) + ((arg0 & 0xFF00) * var3 + (arg1 & 0xFF00) * arg2 & 0xFF0000) >> 8;
 	}

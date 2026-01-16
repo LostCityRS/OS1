@@ -16,7 +16,7 @@ public class NamespaceUtil {
 	}
 
 	@ObfuscatedName("au.r(CI)Z")
-	public static final boolean method723(char arg0) {
+	public static boolean method723(char arg0) {
 		if (Character.isISOControl(arg0)) {
 			return false;
 		}

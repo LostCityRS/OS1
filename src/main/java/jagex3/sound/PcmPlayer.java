@@ -73,7 +73,7 @@ public class PcmPlayer {
 	public PcmStream[] field261 = new PcmStream[8];
 
 	@ObfuscatedName("bx.r(IZII)V")
-	public static final void init(int arg0, boolean arg1, int arg2) {
+	public static void init(int arg0, boolean arg1, int arg2) {
 		if (arg0 < 8000 || arg0 > 48000) {
 			throw new IllegalArgumentException();
 		}
@@ -83,7 +83,7 @@ public class PcmPlayer {
 	}
 
 	@ObfuscatedName("cm.d(Lak;Ljava/awt/Component;III)Ly;")
-	public static final PcmPlayer getPlayer(TaskHandler taskHandler, Component arg1, int arg2, int arg3) {
+	public static PcmPlayer getPlayer(TaskHandler taskHandler, Component arg1, int arg2, int arg3) {
 		if (frequency == 0) {
 			throw new IllegalStateException();
 		} else if (arg2 >= 0 && arg2 < 2) {
@@ -374,7 +374,7 @@ public class PcmPlayer {
 	}
 
 	@ObfuscatedName("bw.q(Ldx;I)V")
-	public static final void method815(PcmStream arg0) {
+	public static void method815(PcmStream arg0) {
 		arg0.active = false;
 		if (arg0.sound != null) {
 			arg0.sound.position = 0;

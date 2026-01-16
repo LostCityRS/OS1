@@ -1760,7 +1760,7 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.ar(II)I")
-	public static final int mulLightness(int arg0, int arg1) {
+	public static int mulLightness(int arg0, int arg1) {
 		int var2 = (arg0 & 0x7F) * arg1 >> 7;
 		if (var2 < 2) {
 			var2 = 2;

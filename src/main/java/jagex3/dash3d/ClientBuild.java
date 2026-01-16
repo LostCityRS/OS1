@@ -101,7 +101,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("dy.d(IIIIB)V")
-	public static final void fadeAdjacent(int arg0, int arg1, int arg2, int arg3) {
+	public static void fadeAdjacent(int arg0, int arg1, int arg2, int arg3) {
 		for (int var4 = arg1; var4 <= arg1 + arg3; var4++) {
 			for (int var5 = arg0; var5 <= arg0 + arg2; var5++) {
 				if (var5 >= 0 && var5 < 104 && var4 >= 0 && var4 < 104) {
@@ -124,7 +124,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("aa.l([BIIII[Lck;I)V")
-	public static final void loadGround(byte[] arg0, int arg1, int arg2, int arg3, int arg4, CollisionMap[] arg5) {
+	public static void loadGround(byte[] arg0, int arg1, int arg2, int arg3, int arg4, CollisionMap[] arg5) {
 		for (int var6 = 0; var6 < 4; var6++) {
 			for (int var7 = 0; var7 < 64; var7++) {
 				for (int var8 = 0; var8 < 64; var8++) {
@@ -145,7 +145,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("aa.m([BIIIIIII[Lck;B)V")
-	public static final void loadGroundRegion(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, CollisionMap[] arg8) {
+	public static void loadGroundRegion(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, CollisionMap[] arg8) {
 		for (int var9 = 0; var9 < 8; var9++) {
 			for (int var10 = 0; var10 < 8; var10++) {
 				if (arg2 + var9 > 0 && arg2 + var9 < 103 && arg3 + var10 > 0 && arg3 + var10 < 103) {
@@ -195,7 +195,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("dz.c(Lev;IIIIIII)V")
-	public static final void loadGroundSquare(Packet arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public static void loadGroundSquare(Packet arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		if (arg2 < 0 || arg2 >= 104 || arg3 < 0 || arg3 >= 104) {
 			while (true) {
 				int var9 = arg0.g1();
@@ -248,7 +248,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("as.n([BIII)Z")
-	public static final boolean checkLocations(byte[] arg0, int arg1, int arg2) {
+	public static boolean checkLocations(byte[] arg0, int arg1, int arg2) {
 		boolean var3 = true;
 		Packet var4 = new Packet(arg0);
 		int var5 = -1;
@@ -294,7 +294,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("dk.j([BIILaq;[Lck;I)V")
-	public static final void loadLocations(byte[] arg0, int arg1, int arg2, World arg3, CollisionMap[] arg4) {
+	public static void loadLocations(byte[] arg0, int arg1, int arg2, World arg3, CollisionMap[] arg4) {
 		Packet var5 = new Packet(arg0);
 		int var6 = -1;
 		while (true) {
@@ -334,7 +334,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("ag.z([BIIIIIIILaq;[Lck;I)V")
-	public static final void method563(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, World arg8, CollisionMap[] arg9) {
+	public static void method563(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, World arg8, CollisionMap[] arg9) {
 		Packet var10 = new Packet(arg0);
 		int var11 = -1;
 		while (true) {
@@ -377,7 +377,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("bi.g(IIIIIILaq;Lck;I)V")
-	public static final void addLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, World arg6, CollisionMap arg7) {
+	public static void addLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, World arg6, CollisionMap arg7) {
 		if (Client.lowMemory && (mapl[0][arg1][arg2] & 0x2) == 0) {
 			if ((mapl[arg0][arg1][arg2] & 0x10) != 0) {
 				return;
@@ -695,7 +695,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("fp.q(Laq;[Lck;I)V")
-	public static final void finishBuild(World arg0, CollisionMap[] arg1) {
+	public static void finishBuild(World arg0, CollisionMap[] arg1) {
 		for (int var2 = 0; var2 < 4; var2++) {
 			for (int var3 = 0; var3 < 104; var3++) {
 				for (int var4 = 0; var4 < 104; var4++) {
@@ -1081,7 +1081,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("fb.i(IIB)I")
-	public static final int perlinNoise(int arg0, int arg1) {
+	public static int perlinNoise(int arg0, int arg1) {
 		int var2 = interpolatedNoise(arg0 + 45365, arg1 + 91923, 4) - 128 + (interpolatedNoise(arg0 + 10294, arg1 + 37821, 2) - 128 >> 1) + (interpolatedNoise(arg0, arg1, 1) - 128 >> 2);
 		int var3 = (int) ((double) var2 * 0.3D) + 35;
 		if (var3 < 10) {
@@ -1093,7 +1093,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("dn.s(IIIB)I")
-	public static final int interpolatedNoise(int arg0, int arg1, int arg2) {
+	public static int interpolatedNoise(int arg0, int arg1, int arg2) {
 		int var3 = arg0 / arg2;
 		int var4 = arg0 & arg2 - 1;
 		int var5 = arg1 / arg2;
@@ -1111,7 +1111,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("cw.u(III)I")
-	public static final int smoothNoise(int arg0, int arg1) {
+	public static int smoothNoise(int arg0, int arg1) {
 		int var2 = noise(arg0 - 1, arg1 - 1) + noise(arg0 + 1, arg1 - 1) + noise(arg0 - 1, arg1 + 1) + noise(arg0 + 1, arg1 + 1);
 		int var3 = noise(arg0 - 1, arg1) + noise(arg0 + 1, arg1) + noise(arg0, arg1 - 1) + noise(arg0, arg1 + 1);
 		int var4 = noise(arg0, arg1);
@@ -1119,7 +1119,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("ef.v(III)I")
-	public static final int noise(int arg0, int arg1) {
+	public static int noise(int arg0, int arg1) {
 		int var2 = arg1 * 57 + arg0;
 		int var3 = var2 << 13 ^ var2;
 		int var4 = (var3 * var3 * 15731 + 789221) * var3 + 1376312589 & Integer.MAX_VALUE;
@@ -1127,7 +1127,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("ch.w(IIB)I")
-	public static final int getUCol(int arg0, int arg1) {
+	public static int getUCol(int arg0, int arg1) {
 		if (arg0 == -1) {
 			return 12345678;
 		}
@@ -1141,7 +1141,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("eg.e(III)I")
-	public static final int getOCol(int arg0, int arg1) {
+	public static int getOCol(int arg0, int arg1) {
 		if (arg0 == -2) {
 			return 12345678;
 		} else if (arg0 == -1) {
@@ -1163,7 +1163,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("aa.b(IIII)I")
-	public static final int getTable(int arg0, int arg1, int arg2) {
+	public static int getTable(int arg0, int arg1, int arg2) {
 		if (arg2 > 179) {
 			arg1 /= 2;
 		}
@@ -1180,7 +1180,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("bk.y(III)Z")
-	public static final boolean isLocDownloaded(int arg0, int arg1) {
+	public static boolean isLocDownloaded(int arg0, int arg1) {
 		LocType var2 = LocType.get(arg0);
 		if (arg1 == 11) {
 			arg1 = 10;
@@ -1192,7 +1192,7 @@ public class ClientBuild {
 	}
 
 	@ObfuscatedName("bc.t(IIIIIIILaq;Lck;I)V")
-	public static final void addLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, World arg7, CollisionMap arg8) {
+	public static void addLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, World arg7, CollisionMap arg8) {
 		LocType var9 = LocType.get(arg4);
 		int var10;
 		int var11;
