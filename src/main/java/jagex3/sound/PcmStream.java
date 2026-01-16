@@ -3,32 +3,33 @@ package jagex3.sound;
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 
+// jag::oldscape::sound::PCMStream
 @ObfuscatedName("dx")
 public abstract class PcmStream extends Linkable {
 
 	@ObfuscatedName("dx.m")
-	public PcmStream field1645;
+	public PcmStream stream;
 
 	@ObfuscatedName("dx.c")
 	public int field1646;
 
 	@ObfuscatedName("dx.n")
-	public Sound field1644;
+	public PcmStreamable sound;
 
 	@ObfuscatedName("dx.j")
-	public volatile boolean field1643 = true;
+	public volatile boolean active = true;
 
 	@ObfuscatedName("dx.c()I")
-	public int method1514() {
+	public int priority() {
 		return 255;
 	}
 
 	@ObfuscatedName("dx.g([III)V")
-	public final void method1529(int[] arg0, int arg1, int arg2) {
-		if (this.field1643) {
-			this.method1520(arg0, arg1, arg2);
+	public final void maybeMix(int[] arg0, int arg1, int arg2) {
+		if (this.active) {
+			this.doMix(arg0, arg1, arg2);
 		} else {
-			this.method1521(arg2);
+			this.pretendToMix(arg2);
 		}
 	}
 
@@ -42,8 +43,8 @@ public abstract class PcmStream extends Linkable {
 	public abstract int method1518();
 
 	@ObfuscatedName("dx.q([III)V")
-	public abstract void method1520(int[] arg0, int arg1, int arg2);
+	public abstract void doMix(int[] arg0, int arg1, int arg2);
 
 	@ObfuscatedName("dx.i(I)V")
-	public abstract void method1521(int arg0);
+	public abstract void pretendToMix(int arg0);
 }

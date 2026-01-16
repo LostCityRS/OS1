@@ -3,9 +3,10 @@ package jagex3.sound;
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 
+// jag::oldscape::sound::PCMStreamable
 @ObfuscatedName("do")
-public abstract class Sound extends Linkable {
+public abstract class PcmStreamable extends Linkable {
 
 	@ObfuscatedName("do.m")
-	public int field1642;
+	public int position;
 }

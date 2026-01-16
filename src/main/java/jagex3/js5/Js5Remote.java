@@ -105,7 +105,7 @@ public class Js5Remote {
 					throw new IOException();
 				}
 				while (urgentQueueSize < 20 && pendingUrgentQueueSize > 0) {
-					Js5RemoteRequest pendingUrgentRequest = (Js5RemoteRequest) pendingUrgentQueue.method1284();
+					Js5RemoteRequest pendingUrgentRequest = (Js5RemoteRequest) pendingUrgentQueue.first();
 					Packet packet = new Packet(4);
 					packet.p1(1);
 					packet.p3((int) pendingUrgentRequest.nodeId);
@@ -300,10 +300,10 @@ public class Js5Remote {
 		incomingGroupBuffer = null;
 		incomingChunkPos = 0;
 		while (true) {
-			Js5RemoteRequest request = (Js5RemoteRequest) urgentQueue.method1284();
+			Js5RemoteRequest request = (Js5RemoteRequest) urgentQueue.first();
 			if (request == null) {
 				while (true) {
-					Js5RemoteRequest prefetchRequest = (Js5RemoteRequest) prefetchQueue.method1284();
+					Js5RemoteRequest prefetchRequest = (Js5RemoteRequest) prefetchQueue.first();
 					if (prefetchRequest == null) {
 						if (xorKey != 0) {
 							try {

@@ -4,43 +4,44 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.sound.PcmSound;
-import jagex3.sound.SoundBank;
+import jagex3.sound.Wave;
+import jagex3.sound.WaveCache;
 
+// jag::oldscape::midi2::Patch
 @ObfuscatedName("ef")
-public class MidiInstrument extends Linkable {
+public class Patch extends Linkable {
 
 	@ObfuscatedName("ef.m")
-	public int field1736;
+	public int volume;
 
 	@ObfuscatedName("ef.c")
-	public PcmSound[] field1738 = new PcmSound[128];
+	public Wave[] noteSound = new Wave[128];
 
 	@ObfuscatedName("ef.n")
-	public short[] field1743 = new short[128];
+	public short[] notePitch = new short[128];
 
 	@ObfuscatedName("ef.j")
-	public byte[] field1737 = new byte[128];
+	public byte[] noteVolume = new byte[128];
 
 	@ObfuscatedName("ef.z")
-	public byte[] field1740 = new byte[128];
+	public byte[] notePan = new byte[128];
 
 	@ObfuscatedName("ef.g")
-	public MidiSound[] field1741 = new MidiSound[128];
+	public EnvelopeSet[] noteEnvelope = new EnvelopeSet[128];
 
 	@ObfuscatedName("ef.q")
-	public byte[] field1742 = new byte[128];
+	public byte[] noteSecondaryNote = new byte[128];
 
 	@ObfuscatedName("ef.i")
 	public int[] field1739 = new int[128];
 
 	@ObfuscatedName("l.c(Lch;II)Lef;")
-	public static MidiInstrument method49(Js5Index arg0, int arg1) {
+	public static Patch method49(Js5Index arg0, int arg1) {
 		byte[] var2 = arg0.fetchFile(arg1);
-		return var2 == null ? null : new MidiInstrument(var2);
+		return var2 == null ? null : new Patch(var2);
 	}
 
-	public MidiInstrument(byte[] arg0) {
+	public Patch(byte[] arg0) {
 		Packet var2 = new Packet(arg0);
 		int var3;
 		for (var3 = 0; var2.data[var2.pos + var3] != 0; var3++) {
@@ -94,17 +95,17 @@ public class MidiInstrument extends Linkable {
 		} else {
 			var16 = var11;
 		}
-		MidiSound[] var19 = new MidiSound[var16];
+		EnvelopeSet[] var19 = new EnvelopeSet[var16];
 		for (int var20 = 0; var20 < var19.length; var20++) {
-			MidiSound var21 = var19[var20] = new MidiSound();
+			EnvelopeSet var21 = var19[var20] = new EnvelopeSet();
 			int var22 = var2.g1();
 			if (var22 > 0) {
-				var21.field1129 = new byte[var22 * 2];
+				var21.attackVolume = new byte[var22 * 2];
 			}
 			int var23 = var2.g1();
 			if (var23 > 0) {
-				var21.field1125 = new byte[var23 * 2 + 2];
-				var21.field1125[1] = 64;
+				var21.releaseVolume = new byte[var23 * 2 + 2];
+				var21.releaseVolume[1] = 64;
 			}
 		}
 		int var24 = var2.g1();
@@ -123,12 +124,12 @@ public class MidiInstrument extends Linkable {
 		int var31 = 0;
 		for (int var32 = 0; var32 < 128; var32++) {
 			var31 += var2.g1();
-			this.field1743[var32] = (short) var31;
+			this.notePitch[var32] = (short) var31;
 		}
 		int var33 = 0;
 		for (int var34 = 0; var34 < 128; var34++) {
 			var33 += var2.g1();
-			this.field1743[var34] = (short) (this.field1743[var34] + (var33 << 8));
+			this.notePitch[var34] = (short) (this.notePitch[var34] + (var33 << 8));
 		}
 		int var35 = 0;
 		int var36 = 0;
@@ -140,9 +141,9 @@ public class MidiInstrument extends Linkable {
 				} else {
 					var35 = -1;
 				}
-				var37 = var2.gVarInt();
+				var37 = var2.gMidiVarLen();
 			}
-			this.field1743[var38] = (short) (this.field1743[var38] + ((var37 - 1 & 0x2) << 14));
+			this.notePitch[var38] = (short) (this.notePitch[var38] + ((var37 - 1 & 0x2) << 14));
 			this.field1739[var38] = var37;
 			var35--;
 		}
@@ -159,7 +160,7 @@ public class MidiInstrument extends Linkable {
 					}
 					var41 = var2.data[var6++] - 1;
 				}
-				this.field1742[var42] = (byte) var41;
+				this.noteSecondaryNote[var42] = (byte) var41;
 				var39--;
 			}
 		}
@@ -176,13 +177,13 @@ public class MidiInstrument extends Linkable {
 					}
 					var45 = var2.data[var10++] + 16 << 2;
 				}
-				this.field1740[var46] = (byte) var45;
+				this.notePan[var46] = (byte) var45;
 				var43--;
 			}
 		}
 		int var47 = 0;
 		int var48 = 0;
-		MidiSound var49 = null;
+		EnvelopeSet var49 = null;
 		for (int var50 = 0; var50 < 128; var50++) {
 			if (this.field1739[var50] != 0) {
 				if (var47 == 0) {
@@ -193,7 +194,7 @@ public class MidiInstrument extends Linkable {
 						var47 = -1;
 					}
 				}
-				this.field1741[var50] = var49;
+				this.noteEnvelope[var50] = var49;
 				var47--;
 			}
 		}
@@ -211,20 +212,20 @@ public class MidiInstrument extends Linkable {
 					var53 = var2.g1() + 1;
 				}
 			}
-			this.field1737[var54] = (byte) var53;
+			this.noteVolume[var54] = (byte) var53;
 			var51--;
 		}
-		this.field1736 = var2.g1() + 1;
+		this.volume = var2.g1() + 1;
 		for (int var55 = 0; var55 < var16; var55++) {
-			MidiSound var56 = var19[var55];
-			if (var56.field1129 != null) {
-				for (int var57 = 1; var57 < var56.field1129.length; var57 += 2) {
-					var56.field1129[var57] = var2.g1b();
+			EnvelopeSet var56 = var19[var55];
+			if (var56.attackVolume != null) {
+				for (int var57 = 1; var57 < var56.attackVolume.length; var57 += 2) {
+					var56.attackVolume[var57] = var2.g1b();
 				}
 			}
-			if (var56.field1125 != null) {
-				for (int var58 = 3; var58 < var56.field1125.length - 2; var58 += 2) {
-					var56.field1125[var58] = var2.g1b();
+			if (var56.releaseVolume != null) {
+				for (int var58 = 3; var58 < var56.releaseVolume.length - 2; var58 += 2) {
+					var56.releaseVolume[var58] = var2.g1b();
 				}
 			}
 		}
@@ -239,22 +240,22 @@ public class MidiInstrument extends Linkable {
 			}
 		}
 		for (int var61 = 0; var61 < var16; var61++) {
-			MidiSound var62 = var19[var61];
-			if (var62.field1125 != null) {
+			EnvelopeSet var62 = var19[var61];
+			if (var62.releaseVolume != null) {
 				int var63 = 0;
-				for (int var64 = 2; var64 < var62.field1125.length; var64 += 2) {
+				for (int var64 = 2; var64 < var62.releaseVolume.length; var64 += 2) {
 					var63 = var63 + 1 + var2.g1();
-					var62.field1125[var64] = (byte) var63;
+					var62.releaseVolume[var64] = (byte) var63;
 				}
 			}
 		}
 		for (int var65 = 0; var65 < var16; var65++) {
-			MidiSound var66 = var19[var65];
-			if (var66.field1129 != null) {
+			EnvelopeSet var66 = var19[var65];
+			if (var66.attackVolume != null) {
 				int var67 = 0;
-				for (int var68 = 2; var68 < var66.field1129.length; var68 += 2) {
+				for (int var68 = 2; var68 < var66.attackVolume.length; var68 += 2) {
 					var67 = var67 + 1 + var2.g1();
-					var66.field1129[var68] = (byte) var67;
+					var66.attackVolume[var68] = (byte) var67;
 				}
 			}
 		}
@@ -268,7 +269,7 @@ public class MidiInstrument extends Linkable {
 			byte var71 = var25[0];
 			byte var72 = var25[1];
 			for (int var73 = 0; var73 < var71; var73++) {
-				this.field1737[var73] = (byte) (this.field1737[var73] * var72 + 32 >> 6);
+				this.noteVolume[var73] = (byte) (this.noteVolume[var73] * var72 + 32 >> 6);
 			}
 			for (int var74 = 2; var74 < var25.length; var74 += 2) {
 				byte var75 = var25[var74];
@@ -278,14 +279,14 @@ public class MidiInstrument extends Linkable {
 					int var79 = var75 - var71;
 					int var80 = var77 >>> 31;
 					int var81 = (var77 + var80) / var79 - var80;
-					this.field1737[var78] = (byte) (this.field1737[var78] * var81 + 32 >> 6);
+					this.noteVolume[var78] = (byte) (this.noteVolume[var78] * var81 + 32 >> 6);
 					var77 += var76 - var72;
 				}
 				var71 = var75;
 				var72 = var76;
 			}
 			for (int var83 = var71; var83 < 128; var83++) {
-				this.field1737[var83] = (byte) (this.field1737[var83] * var72 + 32 >> 6);
+				this.noteVolume[var83] = (byte) (this.noteVolume[var83] * var72 + 32 >> 6);
 			}
 			Object var84 = null;
 		}
@@ -299,14 +300,14 @@ public class MidiInstrument extends Linkable {
 			byte var87 = var27[0];
 			int var88 = var27[1] << 1;
 			for (int var89 = 0; var89 < var87; var89++) {
-				int var90 = (this.field1740[var89] & 0xFF) + var88;
+				int var90 = (this.notePan[var89] & 0xFF) + var88;
 				if (var90 < 0) {
 					var90 = 0;
 				}
 				if (var90 > 128) {
 					var90 = 128;
 				}
-				this.field1740[var89] = (byte) var90;
+				this.notePan[var89] = (byte) var90;
 			}
 			for (int var91 = 2; var91 < var27.length; var91 += 2) {
 				byte var92 = var27[var91];
@@ -316,68 +317,68 @@ public class MidiInstrument extends Linkable {
 					int var96 = var92 - var87;
 					int var97 = var94 >>> 31;
 					int var98 = (var94 + var97) / var96 - var97;
-					int var100 = (this.field1740[var95] & 0xFF) + var98;
+					int var100 = (this.notePan[var95] & 0xFF) + var98;
 					if (var100 < 0) {
 						var100 = 0;
 					}
 					if (var100 > 128) {
 						var100 = 128;
 					}
-					this.field1740[var95] = (byte) var100;
+					this.notePan[var95] = (byte) var100;
 					var94 += var93 - var88;
 				}
 				var87 = var92;
 				var88 = var93;
 			}
 			for (int var101 = var87; var101 < 128; var101++) {
-				int var102 = (this.field1740[var101] & 0xFF) + var88;
+				int var102 = (this.notePan[var101] & 0xFF) + var88;
 				if (var102 < 0) {
 					var102 = 0;
 				}
 				if (var102 > 128) {
 					var102 = 128;
 				}
-				this.field1740[var101] = (byte) var102;
+				this.notePan[var101] = (byte) var102;
 			}
 			Object var103 = null;
 		}
 		for (int var104 = 0; var104 < var16; var104++) {
-			var19[var104].field1126 = var2.g1();
+			var19[var104].decayVolume = var2.g1();
 		}
 		for (int var105 = 0; var105 < var16; var105++) {
-			MidiSound var106 = var19[var105];
-			if (var106.field1129 != null) {
-				var106.field1127 = var2.g1();
+			EnvelopeSet var106 = var19[var105];
+			if (var106.attackVolume != null) {
+				var106.attackSpeed = var2.g1();
 			}
-			if (var106.field1125 != null) {
-				var106.field1128 = var2.g1();
+			if (var106.releaseVolume != null) {
+				var106.releaseSpeed = var2.g1();
 			}
-			if (var106.field1126 > 0) {
-				var106.field1132 = var2.g1();
+			if (var106.decayVolume > 0) {
+				var106.decaySpeed = var2.g1();
 			}
 		}
 		for (int var107 = 0; var107 < var16; var107++) {
-			var19[var107].field1131 = var2.g1();
+			var19[var107].vibratoFrequency = var2.g1();
 		}
 		for (int var108 = 0; var108 < var16; var108++) {
-			MidiSound var109 = var19[var108];
-			if (var109.field1131 > 0) {
-				var109.field1130 = var2.g1();
+			EnvelopeSet var109 = var19[var108];
+			if (var109.vibratoFrequency > 0) {
+				var109.vibratoAmplitude = var2.g1();
 			}
 		}
 		for (int var110 = 0; var110 < var16; var110++) {
-			MidiSound var111 = var19[var110];
-			if (var111.field1130 > 0) {
-				var111.field1124 = var2.g1();
+			EnvelopeSet var111 = var19[var110];
+			if (var111.vibratoAmplitude > 0) {
+				var111.vibratoRampTime = var2.g1();
 			}
 		}
 	}
 
 	@ObfuscatedName("ef.n(La;[B[II)Z")
-	public boolean method1784(SoundBank arg0, byte[] arg1, int[] arg2) {
+	public boolean method1784(WaveCache arg0, byte[] arg1, int[] arg2) {
 		boolean var4 = true;
 		int var5 = 0;
-		PcmSound var6 = null;
+		Wave var6 = null;
 		for (int var7 = 0; var7 < 128; var7++) {
 			if (arg1 == null || arg1[var7] != 0) {
 				int var8 = this.field1739[var7];
@@ -385,16 +386,16 @@ public class MidiInstrument extends Linkable {
 					if (var5 != var8) {
 						var5 = var8--;
 						if ((var8 & 0x1) == 0) {
-							var6 = arg0.method305(var8 >> 2, arg2);
+							var6 = arg0.getJagFx(var8 >> 2, arg2);
 						} else {
-							var6 = arg0.method309(var8 >> 2, arg2);
+							var6 = arg0.getJagVorbis(var8 >> 2, arg2);
 						}
 						if (var6 == null) {
 							var4 = false;
 						}
 					}
 					if (var6 != null) {
-						this.field1738[var7] = var6;
+						this.noteSound[var7] = var6;
 						this.field1739[var7] = 0;
 					}
 				}

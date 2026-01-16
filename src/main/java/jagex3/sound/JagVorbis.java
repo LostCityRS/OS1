@@ -1,14 +1,14 @@
-package jagex3.midi;
+package jagex3.sound;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.IntUtil;
 import jagex3.datastruct.Linkable;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.sound.PcmSound;
 
+// jag::oldscape::sound::JagVorbis
 @ObfuscatedName("dt")
-public class VorbisSound extends Linkable {
+public class JagVorbis extends Linkable {
 
 	@ObfuscatedName("dt.m")
 	public byte[][] field1674;
@@ -44,16 +44,16 @@ public class VorbisSound extends Linkable {
 	public static int field1657;
 
 	@ObfuscatedName("dt.w")
-	public static VorbisCookbook[] codebooks;
+	public static CodeBook[] codebooks;
 
 	@ObfuscatedName("dt.e")
-	public static VorbisFloor[] floor_config;
+	public static Floor[] floor_config;
 
 	@ObfuscatedName("dt.b")
-	public static VorbisResidue[] residue_config;
+	public static Residue[] residue_config;
 
 	@ObfuscatedName("dt.y")
-	public static VorbisMapping[] mapping_config;
+	public static Mapping[] mapping_config;
 
 	@ObfuscatedName("dt.t")
 	public static boolean[] blockflag;
@@ -244,9 +244,9 @@ public class VorbisSound extends Linkable {
 		}
 
 		int codebook_count = read_bits(8) + 1;
-		codebooks = new VorbisCookbook[codebook_count];
+		codebooks = new CodeBook[codebook_count];
 		for (int i = 0; i < codebook_count; i++) {
-			codebooks[i] = new VorbisCookbook();
+			codebooks[i] = new CodeBook();
 		}
 
 		// time domain transfers
@@ -256,21 +256,21 @@ public class VorbisSound extends Linkable {
 		}
 
 		int floor_count = read_bits(6) + 1;
-		floor_config = new VorbisFloor[floor_count];
+		floor_config = new Floor[floor_count];
 		for (int i = 0; i < floor_count; i++) {
-			floor_config[i] = new VorbisFloor();
+			floor_config[i] = new Floor();
 		}
 
 		int residue_count = read_bits(6) + 1;
-		residue_config = new VorbisResidue[residue_count];
+		residue_config = new Residue[residue_count];
 		for (int i = 0; i < residue_count; i++) {
-			residue_config[i] = new VorbisResidue();
+			residue_config[i] = new Residue();
 		}
 
 		int mapping_count = read_bits(6) + 1;
-		mapping_config = new VorbisMapping[mapping_count];
+		mapping_config = new Mapping[mapping_count];
 		for (int i = 0; i < mapping_count; i++) {
-			mapping_config[i] = new VorbisMapping();
+			mapping_config[i] = new Mapping();
 		}
 
 		int mode_count = read_bits(6) + 1;
@@ -322,13 +322,13 @@ public class VorbisSound extends Linkable {
 			var12 = var4;
 			var13 = var4 >> 1;
 		}
-		VorbisMapping var14 = mapping_config[mapping[var2]];
+		Mapping var14 = mapping_config[mapping[var2]];
 		int var15 = var14.mux;
 		int var16 = var14.submap_floor[var15];
 		boolean var17 = !floor_config[var16].method187();
 		boolean var18 = var17;
 		for (int var19 = 0; var19 < var14.submaps; var19++) {
-			VorbisResidue var20 = residue_config[var14.submap_residue[var19]];
+			Residue var20 = residue_config[var14.submap_residue[var19]];
 			float[] var21 = field1649;
 			var20.method317(var21, var4 >> 1, var18);
 		}
@@ -505,22 +505,22 @@ public class VorbisSound extends Linkable {
 	}
 
 	@ObfuscatedName("dt.u(Lch;II)Ldt;")
-	public static VorbisSound method1543(Js5Index arg0, int arg1, int arg2) {
+	public static JagVorbis decode(Js5Index arg0, int arg1, int arg2) {
 		if (method1542(arg0)) {
 			byte[] var3 = arg0.getFile(arg1, arg2);
-			return var3 == null ? null : new VorbisSound(var3);
+			return var3 == null ? null : new JagVorbis(var3);
 		} else {
 			arg0.download(arg1, arg2);
 			return null;
 		}
 	}
 
-	public VorbisSound(byte[] arg0) {
+	public JagVorbis(byte[] arg0) {
 		this.method1535(arg0);
 	}
 
 	@ObfuscatedName("dt.v([I)Leq;")
-	public PcmSound method1539(int[] arg0) {
+	public Wave method1539(int[] arg0) {
 		if (arg0 != null && arg0[0] <= 0) {
 			return null;
 		}
@@ -559,6 +559,6 @@ public class VorbisSound extends Linkable {
 		this.field1665 = null;
 		byte[] var7 = this.field1660;
 		this.field1660 = null;
-		return new PcmSound(this.field1648, var7, this.field1676, this.field1677, this.field1652);
+		return new Wave(this.field1648, var7, this.field1676, this.field1677, this.field1652);
 	}
 }

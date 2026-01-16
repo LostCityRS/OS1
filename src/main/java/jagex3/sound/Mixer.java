@@ -4,11 +4,12 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.LinkList;
 import jagex3.datastruct.Linkable;
 
+// jag::oldscape::sound::Mixer
 @ObfuscatedName("ee")
-public class MixerPcmStream extends PcmStream {
+public class Mixer extends PcmStream {
 
 	@ObfuscatedName("ee.z")
-	public LinkList field2223 = new LinkList();
+	public LinkList streams = new LinkList();
 
 	@ObfuscatedName("ee.g")
 	public LinkList field2221 = new LinkList();
@@ -20,12 +21,12 @@ public class MixerPcmStream extends PcmStream {
 	public int field2220 = -1;
 
 	@ObfuscatedName("ee.p(Ldx;)V")
-	public final synchronized void method2174(PcmStream arg0) {
-		this.field2223.addHead(arg0);
+	public final synchronized void playStream(PcmStream arg0) {
+		this.streams.addHead(arg0);
 	}
 
 	@ObfuscatedName("ee.ad(Ldx;)V")
-	public final synchronized void method2175(PcmStream arg0) {
+	public final synchronized void stopStream(PcmStream arg0) {
 		arg0.unlink();
 	}
 
@@ -64,12 +65,12 @@ public class MixerPcmStream extends PcmStream {
 
 	@ObfuscatedName("ee.n()Ldx;")
 	public PcmStream method1516() {
-		return (PcmStream) this.field2223.head();
+		return (PcmStream) this.streams.head();
 	}
 
 	@ObfuscatedName("ee.j()Ldx;")
 	public PcmStream method1517() {
-		return (PcmStream) this.field2223.next();
+		return (PcmStream) this.streams.next();
 	}
 
 	@ObfuscatedName("ee.z()I")
@@ -78,19 +79,19 @@ public class MixerPcmStream extends PcmStream {
 	}
 
 	@ObfuscatedName("ee.q([III)V")
-	public final synchronized void method1520(int[] arg0, int arg1, int arg2) {
+	public final synchronized void doMix(int[] arg0, int arg1, int arg2) {
 		do {
 			if (this.field2220 < 0) {
-				this.method2181(arg0, arg1, arg2);
+				this.playStreams(arg0, arg1, arg2);
 				return;
 			}
 			if (this.field2222 + arg2 < this.field2220) {
 				this.field2222 += arg2;
-				this.method2181(arg0, arg1, arg2);
+				this.playStreams(arg0, arg1, arg2);
 				return;
 			}
 			int var4 = this.field2220 - this.field2222;
-			this.method2181(arg0, arg1, var4);
+			this.playStreams(arg0, arg1, var4);
 			arg1 += var4;
 			arg2 -= var4;
 			this.field2222 += var4;
@@ -110,14 +111,14 @@ public class MixerPcmStream extends PcmStream {
 	}
 
 	@ObfuscatedName("ee.am([III)V")
-	public void method2181(int[] arg0, int arg1, int arg2) {
-		for (PcmStream var4 = (PcmStream) this.field2223.head(); var4 != null; var4 = (PcmStream) this.field2223.next()) {
-			var4.method1529(arg0, arg1, arg2);
+	public void playStreams(int[] arg0, int arg1, int arg2) {
+		for (PcmStream var4 = (PcmStream) this.streams.head(); var4 != null; var4 = (PcmStream) this.streams.next()) {
+			var4.maybeMix(arg0, arg1, arg2);
 		}
 	}
 
 	@ObfuscatedName("ee.i(I)V")
-	public final synchronized void method1521(int arg0) {
+	public final synchronized void pretendToMix(int arg0) {
 		do {
 			if (this.field2220 < 0) {
 				this.method2180(arg0);
@@ -149,8 +150,8 @@ public class MixerPcmStream extends PcmStream {
 
 	@ObfuscatedName("ee.ap(I)V")
 	public void method2180(int arg0) {
-		for (PcmStream var2 = (PcmStream) this.field2223.head(); var2 != null; var2 = (PcmStream) this.field2223.next()) {
-			var2.method1521(arg0);
+		for (PcmStream var2 = (PcmStream) this.streams.head(); var2 != null; var2 = (PcmStream) this.streams.next()) {
+			var2.pretendToMix(arg0);
 		}
 	}
 }

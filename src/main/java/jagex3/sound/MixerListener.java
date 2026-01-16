@@ -3,6 +3,7 @@ package jagex3.sound;
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 
+// todo: real name
 @ObfuscatedName("eb")
 public abstract class MixerListener extends Linkable {
 
@@ -14,7 +15,7 @@ public abstract class MixerListener extends Linkable {
 	}
 
 	@ObfuscatedName("eb.n(Lee;)I")
-	public abstract int method1565(MixerPcmStream arg0);
+	public abstract int method1565(Mixer arg0);
 
 	@ObfuscatedName("eb.c()V")
 	public abstract void method1569();

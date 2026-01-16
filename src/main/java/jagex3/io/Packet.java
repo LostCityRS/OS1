@@ -101,7 +101,7 @@ public class Packet extends Linkable {
 	public void pUTF8(CharSequence arg0) {
 		int var2 = Utf8.method1581(arg0);
 		this.data[++this.pos - 1] = 0;
-		this.pVarInt(var2);
+		this.pMidiVarLen(var2);
 		this.pos += Utf8.method1142(this.data, this.pos, arg0);
 	}
 
@@ -143,7 +143,7 @@ public class Packet extends Linkable {
 	}
 
 	@ObfuscatedName("ev.y(II)V")
-	public void pVarInt(int arg0) {
+	public void pMidiVarLen(int arg0) {
 		if ((arg0 & 0xFFFFFF80) != 0) {
 			if ((arg0 & 0xFFFFC000) != 0) {
 				if ((arg0 & 0xFFE00000) != 0) {
@@ -242,7 +242,7 @@ public class Packet extends Linkable {
 		if (var1 != 0) {
 			throw new IllegalStateException("");
 		}
-		int var2 = this.gVarInt();
+		int var2 = this.gMidiVarLen();
 		if (this.pos + var2 > this.data.length) {
 			throw new IllegalStateException("");
 		}
@@ -325,7 +325,7 @@ public class Packet extends Linkable {
 	}
 
 	@ObfuscatedName("ev.ak(B)I")
-	public int gVarInt() {
+	public int gMidiVarLen() {
 		byte var1 = this.data[++this.pos - 1];
 		int var2 = 0;
 		while (var1 < 0) {

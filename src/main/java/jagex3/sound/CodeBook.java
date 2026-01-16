@@ -1,10 +1,11 @@
-package jagex3.midi;
+package jagex3.sound;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.IntUtil;
 
+// jag::oldscape::sound::CodeBook
 @ObfuscatedName("x")
-public class VorbisCookbook {
+public class CodeBook {
 
 	@ObfuscatedName("x.r")
 	public int dimensions;
@@ -51,19 +52,19 @@ public class VorbisCookbook {
 		}
 	}
 
-	public VorbisCookbook() {
-		VorbisSound.read_bits(24);
-		this.dimensions = VorbisSound.read_bits(16);
-		this.entries = VorbisSound.read_bits(24);
+	public CodeBook() {
+		JagVorbis.read_bits(24);
+		this.dimensions = JagVorbis.read_bits(16);
+		this.entries = JagVorbis.read_bits(24);
 		this.lengths = new int[this.entries];
-		boolean ordered = VorbisSound.read_bool() != 0;
+		boolean ordered = JagVorbis.read_bool() != 0;
 
 		if (ordered) {
 			int current_entry = 0;
-			int current_length = VorbisSound.read_bits(5) + 1;
+			int current_length = JagVorbis.read_bits(5) + 1;
 
 			while (current_entry < this.entries) {
-				int n = VorbisSound.read_bits(IntUtil.ilog(this.entries - current_entry));
+				int n = JagVorbis.read_bits(IntUtil.ilog(this.entries - current_entry));
 
 				for (int i = 0; i < n; i++) {
 					this.lengths[current_entry++] = current_length;
@@ -72,25 +73,25 @@ public class VorbisCookbook {
 				current_length++;
 			}
 		} else {
-			boolean present = VorbisSound.read_bool() != 0;
+			boolean present = JagVorbis.read_bool() != 0;
 
 			for (int i = 0; i < this.entries; i++) {
-				if (present && VorbisSound.read_bool() == 0) {
+				if (present && JagVorbis.read_bool() == 0) {
 					this.lengths[i] = 0;
 				} else {
-					this.lengths[i] = VorbisSound.read_bits(5) + 1;
+					this.lengths[i] = JagVorbis.read_bits(5) + 1;
 				}
 			}
 		}
 
 		this.method319();
 
-		int lookup_type = VorbisSound.read_bits(4);
+		int lookup_type = JagVorbis.read_bits(4);
 		if (lookup_type > 0) {
-			float minimum_value = VorbisSound.float32_unpack(VorbisSound.read_bits(32));
-			float delta_value = VorbisSound.float32_unpack(VorbisSound.read_bits(32));
-			int value_bits = VorbisSound.read_bits(4) + 1;
-			boolean sequence_p = VorbisSound.read_bool() != 0;
+			float minimum_value = JagVorbis.float32_unpack(JagVorbis.read_bits(32));
+			float delta_value = JagVorbis.float32_unpack(JagVorbis.read_bits(32));
+			int value_bits = JagVorbis.read_bits(4) + 1;
+			boolean sequence_p = JagVorbis.read_bool() != 0;
 
 			int lookup_values;
 			if (lookup_type == 1) {
@@ -101,7 +102,7 @@ public class VorbisCookbook {
 
 			this.field326 = new int[lookup_values];
 			for (int var14 = 0; var14 < lookup_values; var14++) {
-				this.field326[var14] = VorbisSound.read_bits(value_bits);
+				this.field326[var14] = JagVorbis.read_bits(value_bits);
 			}
 
 			this.field328 = new float[this.entries][this.dimensions];
@@ -210,7 +211,7 @@ public class VorbisCookbook {
 	@ObfuscatedName("x.l()I")
 	public int method320() {
 		int var1;
-		for (var1 = 0; this.field323[var1] >= 0; var1 = VorbisSound.read_bool() == 0 ? var1 + 1 : this.field323[var1]) {
+		for (var1 = 0; this.field323[var1] >= 0; var1 = JagVorbis.read_bool() == 0 ? var1 + 1 : this.field323[var1]) {
 		}
 		return ~this.field323[var1];
 	}

@@ -74,13 +74,13 @@ public class HashTable {
 	}
 
 	@ObfuscatedName("cf.m()Ldg;")
-	public Linkable method1284() {
+	public Linkable first() {
 		this.field1499 = 0;
-		return this.method1280();
+		return this.next();
 	}
 
 	@ObfuscatedName("cf.c()Ldg;")
-	public Linkable method1280() {
+	public Linkable next() {
 		if (this.field1499 > 0 && this.buckets[this.field1499 - 1] != this.field1495) {
 			Linkable var1 = this.field1495;
 			this.field1495 = var1.next;

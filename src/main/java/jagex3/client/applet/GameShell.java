@@ -38,7 +38,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public boolean alreadyerrored = false;
 
 	@ObfuscatedName("dj.j")
-	public static int field1537;
+	public static int updateCount;
 
 	@ObfuscatedName("dj.z")
 	public static int field1538 = 20;
@@ -53,13 +53,13 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static Timer field1100;
 
 	@ObfuscatedName("dj.u")
-	public static long[] field1534 = new long[32];
+	public static long[] drawTime = new long[32];
 
 	@ObfuscatedName("bm.v")
 	public static int field833;
 
 	@ObfuscatedName("dj.w")
-	public static long[] field1543 = new long[32];
+	public static long[] updateTime = new long[32];
 
 	@ObfuscatedName("cv.e")
 	public static int field1218;
@@ -264,8 +264,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 					if (killtime != 0L && MonotonicTime.currentTime() >= killtime) {
 						break label99;
 					}
-					field1537 = field1100.method380(field1538, field1539);
-					for (int var17 = 0; var17 < field1537; var17++) {
+					updateCount = field1100.method380(field1538, field1539);
+					for (int var17 = 0; var17 < updateCount; var17++) {
 						this.mainloopwrapper();
 					}
 					this.mainredrawwrapper();
@@ -289,8 +289,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("dj.i(I)V")
 	public void mainloopwrapper() {
 		long var1 = MonotonicTime.currentTime();
-		long var3 = field1543[field1218];
-		field1543[field1218] = var1;
+		long var3 = updateTime[field1218];
+		updateTime[field1218] = var1;
 		field1218 = field1218 + 1 & 0x1F;
 		if (var3 != 0L && var1 > var3) {
 		}
@@ -303,8 +303,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("dj.s(I)V")
 	public void mainredrawwrapper() {
 		long var1 = MonotonicTime.currentTime();
-		long var3 = field1534[field833];
-		field1534[field833] = var1;
+		long var3 = drawTime[field833];
+		drawTime[field833] = var1;
 		field833 = field833 + 1 & 0x1F;
 		if (var3 != 0L && var1 > var3) {
 			int var5 = (int) (var1 - var3);
@@ -355,15 +355,15 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	}
 
 	@ObfuscatedName("bk.v(B)V")
-	public static final void method770() {
+	public static final void doneSlowUpdate() {
 		field1100.method381();
 		for (int var0 = 0; var0 < 32; var0++) {
-			field1534[var0] = 0L;
+			drawTime[var0] = 0L;
 		}
 		for (int var1 = 0; var1 < 32; var1++) {
-			field1543[var1] = 0L;
+			updateTime[var1] = 0L;
 		}
-		field1537 = 0;
+		updateCount = 0;
 	}
 
 	public void start() {

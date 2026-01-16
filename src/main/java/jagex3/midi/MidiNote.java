@@ -2,80 +2,81 @@ package jagex3.midi;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
-import jagex3.sound.PcmSound;
-import jagex3.sound.SoundPcmStream;
+import jagex3.sound.Wave;
+import jagex3.sound.WaveStream;
 
+// jag::oldscape::midi2::MidiNote
 @ObfuscatedName("ej")
 public class MidiNote extends Linkable {
 
 	@ObfuscatedName("ej.m")
-	public int field1760;
+	public int channel;
 
 	@ObfuscatedName("ej.c")
-	public MidiInstrument field1746;
+	public Patch patch;
 
 	@ObfuscatedName("ej.n")
-	public PcmSound field1759;
+	public Wave sound;
 
 	@ObfuscatedName("ej.j")
-	public MidiSound field1757;
+	public EnvelopeSet envelope;
 
 	@ObfuscatedName("ej.z")
-	public int field1749;
+	public int secondaryNote;
 
 	@ObfuscatedName("ej.g")
-	public int field1750;
+	public int key;
 
 	@ObfuscatedName("ej.q")
-	public int field1751;
+	public int volume;
 
 	@ObfuscatedName("ej.i")
-	public int field1747;
+	public int pan;
 
 	@ObfuscatedName("ej.s")
-	public int field1753;
+	public int pitch;
 
 	@ObfuscatedName("ej.u")
-	public int field1754;
+	public int portamentoDelta;
 
 	@ObfuscatedName("ej.v")
-	public int field1755;
+	public int portamentoAmount;
 
 	@ObfuscatedName("ej.w")
-	public int field1756;
+	public int decayProgress;
 
 	@ObfuscatedName("ej.e")
-	public int field1752;
+	public int attackProgress;
 
 	@ObfuscatedName("ej.b")
-	public int field1758;
+	public int attackEnvelopeProgress;
 
 	@ObfuscatedName("ej.y")
-	public int field1745;
+	public int releaseProgress;
 
 	@ObfuscatedName("ej.t")
-	public int field1748;
+	public int releaseEnvelopeProgress;
 
 	@ObfuscatedName("ej.f")
-	public int field1761;
+	public int vibratoRampProgress;
 
 	@ObfuscatedName("ej.k")
-	public int field1762;
+	public int vibratoProgress;
 
 	@ObfuscatedName("ej.o")
-	public SoundPcmStream field1763;
+	public WaveStream stream;
 
 	@ObfuscatedName("ej.a")
-	public int field1764;
+	public int volumeChangeDuration;
 
 	@ObfuscatedName("ej.x")
 	public int field1766;
 
 	@ObfuscatedName("ej.c(B)V")
-	public void method1787() {
-		this.field1746 = null;
-		this.field1759 = null;
-		this.field1757 = null;
-		this.field1763 = null;
+	public void dropData() {
+		this.patch = null;
+		this.sound = null;
+		this.envelope = null;
+		this.stream = null;
 	}
 }

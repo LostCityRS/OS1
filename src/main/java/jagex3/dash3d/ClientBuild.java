@@ -6,7 +6,7 @@ import jagex3.config.FloType;
 import jagex3.config.FluType;
 import jagex3.config.LocType;
 import jagex3.io.Packet;
-import jagex3.sound.PositionedSound;
+import jagex3.sound.BgSound;
 
 @ObfuscatedName("l")
 public class ClientBuild {
@@ -438,7 +438,7 @@ public class ClientBuild {
 			var21 += 256;
 		}
 		if (var9.hasSound()) {
-			PositionedSound.method763(arg0, arg1, arg2, var9, arg4);
+			BgSound.method763(arg0, arg1, arg2, var9, arg4);
 		}
 		if (arg5 == 22) {
 			if (!Client.lowMemory || var9.active != 0 || var9.blockwalk == 1 || var9.forcedecor) {

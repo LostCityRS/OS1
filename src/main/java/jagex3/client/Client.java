@@ -19,8 +19,8 @@ import jagex3.js5.Js5LocalRequest;
 import jagex3.js5.Js5Remote;
 import jagex3.js5.Js5RemoteThread;
 import jagex3.jstring.*;
-import jagex3.midi.MidiPcmStream;
 import jagex3.midi.MidiPlayer;
+import jagex3.midi.MidiManager;
 import jagex3.script.ClientScript;
 import jagex3.script.HookReq;
 import jagex3.script.ScriptRunner;
@@ -164,7 +164,7 @@ public class Client extends GameShell {
 	public static Js5Local interfaceJs5;
 
 	@ObfuscatedName("df.bb")
-	public static Js5Local synthSoundJs5;
+	public static Js5Local soundFxJs5;
 
 	@ObfuscatedName("ck.bd")
 	public static Js5Local mapJs5;
@@ -194,10 +194,10 @@ public class Client extends GameShell {
 	public static Js5Local fontMetricJs5;
 
 	@ObfuscatedName("ey.cu")
-	public static Js5Local vorbisJs5;
+	public static Js5Local musicSamplesJs5;
 
 	@ObfuscatedName("z.cc")
-	public static Js5Local midiInstrumentJs5;
+	public static Js5Local musicPatchesJs5;
 
 	@ObfuscatedName("client.cm")
 	public static int js5Errors = 0;
@@ -1061,7 +1061,7 @@ public class Client extends GameShell {
 	public static int[] field2180 = new int[50];
 
 	@ObfuscatedName("client.ok")
-	public static Wave[] field2181 = new Wave[50];
+	public static JagFx[] field2181 = new JagFx[50];
 
 	@ObfuscatedName("client.oa")
 	public static boolean cinemaCam = false;
@@ -1082,7 +1082,7 @@ public class Client extends GameShell {
 	public static int cutsceneDstLocalTileX; // todo
 
 	@ObfuscatedName("cq.oc")
-	public static MixerPcmStream field1460; // todo
+	public static Mixer soundMixer; // todo
 
 	@ObfuscatedName("cq.ob")
 	public static int cutsceneDstHeight; // todo
@@ -1094,10 +1094,10 @@ public class Client extends GameShell {
 	public static int cutsceneRotateSpeed; // todo
 
 	@ObfuscatedName("ev.od")
-	public static PcmResampler field1733; // todo
+	public static Decimator soundDecimator; // todo
 
 	@ObfuscatedName("l.on")
-	public static AudioChannel field38; // todo
+	public static PcmPlayer midiPcmPlayer; // todo
 
 	@ObfuscatedName("be.ox")
 	public static int cutsceneSrcLocalTileX; // todo
@@ -1112,7 +1112,7 @@ public class Client extends GameShell {
 	public static int cutsceneMoveSpeed; // todo
 
 	@ObfuscatedName("dr.oi")
-	public static AudioChannel field1585; // todo
+	public static PcmPlayer soundPcmPlayer; // todo
 
 	@ObfuscatedName("client.pk")
 	public static int[] camShakeRan = new int[5];
@@ -1243,7 +1243,7 @@ public class Client extends GameShell {
 						}
 						break;
 					case 9:
-						LoginScreen.worldlistUrl = var5;
+						TitleScreen.worldlistUrl = var5;
 						break;
 				}
 			}
@@ -1279,42 +1279,45 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.e(B)V")
 	public final void mainloop() {
 		loopCycle++;
+
 		this.method1849();
 		imethod1();
-		MidiPlayer.method825();
+		MidiManager.method825();
 		method1351();
 		JavaKeyboardProvider.imethod4();
 		JavaMouseProvider.imethod3();
+
 		if (field484 != null) {
 			int var10 = field484.method362();
 			field2122 = var10;
 		}
+
 		if (state == 0) {
-			method780();
-			GameShell.method770();
+			mainload();
+			GameShell.doneSlowUpdate();
 		} else if (state == 5) {
-			LoginScreen.method3(this);
-			method780();
-			GameShell.method770();
+			TitleScreen.loop(this);
+			mainload();
+			GameShell.doneSlowUpdate();
 		} else if (state == 10) {
-			LoginScreen.method3(this);
+			TitleScreen.loop(this);
 		} else if (state == 20) {
-			LoginScreen.method3(this);
-			titleScreenLoop();
+			TitleScreen.loop(this);
+			loginPoll();
 		} else if (state == 25) {
 			imethod4();
 		} else if (state == 30) {
 			gameLoop();
 		} else if (state == 40) {
-			titleScreenLoop();
+			loginPoll();
 		}
 	}
 
 	@ObfuscatedName("client.b(I)V")
 	public final void mainredraw() {
-		boolean var1 = MidiPlayer.method511();
-		if (var1 && field2189 && field38 != null) {
-			field38.method208();
+		boolean var1 = MidiManager.method511();
+		if (var1 && field2189 && midiPcmPlayer != null) {
+			midiPcmPlayer.play();
 		}
 		if (canvasReplaceRecommended) {
 			JavaKeyboardProvider.method1143(GameShell.canvas);
@@ -1330,13 +1333,13 @@ public class Client extends GameShell {
 			}
 		}
 		if (state == 0) {
-			GameShell.drawProgress(LoginScreen.progress, LoginScreen.message, null);
+			GameShell.drawProgress(TitleScreen.loadPos, TitleScreen.loadString, null);
 		} else if (state == 5) {
-			LoginScreen.draw(fontBold12, fontPlain11);
+			TitleScreen.draw(fontBold12, fontPlain11);
 		} else if (state == 10) {
-			LoginScreen.draw(fontBold12, fontPlain11);
+			TitleScreen.draw(fontBold12, fontPlain11);
 		} else if (state == 20) {
-			LoginScreen.draw(fontBold12, fontPlain11);
+			TitleScreen.draw(fontBold12, fontPlain11);
 		} else if (state == 25) {
 			if (mapLoadingStage == 1) {
 				if (mapLoadCount > mapLoadPrevCount) {
@@ -1398,11 +1401,11 @@ public class Client extends GameShell {
 		JavaKeyboardProvider.method1502();
 		JavaMouseProvider.imethod2();
 		field484 = null;
-		if (field38 != null) {
-			field38.method248();
+		if (midiPcmPlayer != null) {
+			midiPcmPlayer.shutdown();
 		}
-		if (field1585 != null) {
-			field1585.method248();
+		if (soundPcmPlayer != null) {
+			soundPcmPlayer.shutdown();
 		}
 		if (Js5Remote.stream != null) {
 			Js5Remote.stream.close();
@@ -1436,9 +1439,9 @@ public class Client extends GameShell {
 			locModelLoadPrevCount = 1;
 		}
 		if (newState == 5 || newState == 10 || newState == 20) {
-			LoginScreen.open(GameShell.canvas, binaryJs5, spriteJs5);
+			TitleScreen.open(GameShell.canvas, binaryJs5, spriteJs5);
 		} else {
-			LoginScreen.close();
+			TitleScreen.close();
 		}
 		state = newState;
 	}
@@ -1552,7 +1555,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("bv.cg(B)V")
-	public static void method780() {
+	public static void mainload() {
 		if (loadingStep == 0) {
 			world = new World(4, 104, 104, ClientBuild.groundh);
 			for (int level = 0; level < 4; level++) {
@@ -1560,8 +1563,8 @@ public class Client extends GameShell {
 			}
 			minimap = new Pix32(512, 512);
 
-			LoginScreen.message = Text.MAINLOAD0;
-			LoginScreen.progress = 5;
+			TitleScreen.loadString = Text.MAINLOAD0;
+			TitleScreen.loadPos = 5;
 			loadingStep = 20;
 		} else if (loadingStep == 20) {
 			int[] var1 = new int[9];
@@ -1573,73 +1576,75 @@ public class Client extends GameShell {
 			}
 			World.init(var1, 500, 800, 512, 334);
 
-			LoginScreen.message = Text.MAINLOAD20;
-			LoginScreen.progress = 10;
+			TitleScreen.loadString = Text.MAINLOAD20;
+			TitleScreen.loadPos = 10;
 			loadingStep = 30;
 		} else if (loadingStep == 30) {
-			animFrameJs5 = createJs5(0, false, true, true);
-			animBaseJs5 = createJs5(1, false, true, true);
-			configJs5 = createJs5(2, true, false, true);
-			interfaceJs5 = createJs5(3, false, true, true);
-			synthSoundJs5 = createJs5(4, false, true, true);
-			mapJs5 = createJs5(5, true, true, true);
-			midiSongJs5 = createJs5(6, true, true, false);
-			modelJs5 = createJs5(7, false, true, true);
-			spriteJs5 = createJs5(8, false, true, true);
-			textureJs5 = createJs5(9, false, true, true);
-			binaryJs5 = createJs5(10, false, true, true);
-			midiJingleJs5 = createJs5(11, false, true, true);
-			clientScriptJs5 = createJs5(12, false, true, true);
-			fontMetricJs5 = createJs5(13, true, false, true);
-			vorbisJs5 = createJs5(14, false, true, false);
-			midiInstrumentJs5 = createJs5(15, false, true, true);
+			animFrameJs5 = openJs5(0, false, true, true);
+			animBaseJs5 = openJs5(1, false, true, true);
+			configJs5 = openJs5(2, true, false, true);
+			interfaceJs5 = openJs5(3, false, true, true);
+			soundFxJs5 = openJs5(4, false, true, true);
+			mapJs5 = openJs5(5, true, true, true);
+			midiSongJs5 = openJs5(6, true, true, false);
+			modelJs5 = openJs5(7, false, true, true);
+			spriteJs5 = openJs5(8, false, true, true);
+			textureJs5 = openJs5(9, false, true, true);
+			binaryJs5 = openJs5(10, false, true, true);
+			midiJingleJs5 = openJs5(11, false, true, true);
+			clientScriptJs5 = openJs5(12, false, true, true);
+			fontMetricJs5 = openJs5(13, true, false, true);
+			musicSamplesJs5 = openJs5(14, false, true, false);
+			musicPatchesJs5 = openJs5(15, false, true, true);
 
-			LoginScreen.message = Text.MAINLOAD30;
-			LoginScreen.progress = 20;
+			TitleScreen.loadString = Text.MAINLOAD30;
+			TitleScreen.loadPos = 20;
 			loadingStep = 40;
 		} else if (loadingStep == 40) {
 			byte var6 = 0;
-			int var7 = var6 + animFrameJs5.method1483() * 4 / 100;
-			int var8 = var7 + animBaseJs5.method1483() * 4 / 100;
-			int var9 = var8 + configJs5.method1483() * 2 / 100;
-			int var10 = var9 + interfaceJs5.method1483() * 2 / 100;
-			int var11 = var10 + synthSoundJs5.method1483() * 6 / 100;
-			int var12 = var11 + mapJs5.method1483() * 4 / 100;
-			int var13 = var12 + midiSongJs5.method1483() * 2 / 100;
-			int var14 = var13 + modelJs5.method1483() * 60 / 100;
-			int var15 = var14 + spriteJs5.method1483() * 2 / 100;
-			int var16 = var15 + textureJs5.method1483() * 2 / 100;
-			int var17 = var16 + binaryJs5.method1483() * 2 / 100;
-			int var18 = var17 + midiJingleJs5.method1483() * 2 / 100;
-			int var19 = var18 + clientScriptJs5.method1483() * 2 / 100;
-			int var20 = var19 + fontMetricJs5.method1483() * 2 / 100;
-			int var21 = var20 + vorbisJs5.method1483() * 2 / 100;
-			int var22 = var21 + midiInstrumentJs5.method1483() * 2 / 100;
+			int var7 = var6 + animFrameJs5.getIndexPercentage() * 4 / 100;
+			int var8 = var7 + animBaseJs5.getIndexPercentage() * 4 / 100;
+			int var9 = var8 + configJs5.getIndexPercentage() * 2 / 100;
+			int var10 = var9 + interfaceJs5.getIndexPercentage() * 2 / 100;
+			int var11 = var10 + soundFxJs5.getIndexPercentage() * 6 / 100;
+			int var12 = var11 + mapJs5.getIndexPercentage() * 4 / 100;
+			int var13 = var12 + midiSongJs5.getIndexPercentage() * 2 / 100;
+			int var14 = var13 + modelJs5.getIndexPercentage() * 60 / 100;
+			int var15 = var14 + spriteJs5.getIndexPercentage() * 2 / 100;
+			int var16 = var15 + textureJs5.getIndexPercentage() * 2 / 100;
+			int var17 = var16 + binaryJs5.getIndexPercentage() * 2 / 100;
+			int var18 = var17 + midiJingleJs5.getIndexPercentage() * 2 / 100;
+			int var19 = var18 + clientScriptJs5.getIndexPercentage() * 2 / 100;
+			int var20 = var19 + fontMetricJs5.getIndexPercentage() * 2 / 100;
+			int var21 = var20 + musicSamplesJs5.getIndexPercentage() * 2 / 100;
+			int var22 = var21 + musicPatchesJs5.getIndexPercentage() * 2 / 100;
 
 			if (var22 != 100) {
 				if (var22 != 0) {
-					LoginScreen.message = Text.MAINLOAD40 + var22 + "%";
+					TitleScreen.loadString = Text.MAINLOAD40 + var22 + "%";
 				}
-				LoginScreen.progress = 30;
+				TitleScreen.loadPos = 30;
 			} else {
-				LoginScreen.message = Text.MAINLOAD40B;
-				LoginScreen.progress = 30;
+				TitleScreen.loadString = Text.MAINLOAD40B;
+				TitleScreen.loadPos = 30;
 				loadingStep = 45;
 			}
 		} else if (loadingStep == 45) {
-			AudioChannel.method832(22050, !lowMemory, 2);
-			MidiPcmStream var23 = new MidiPcmStream();
-			var23.method2201(9, 128);
-			field38 = AudioChannel.method1132(GameShell.taskHandler, GameShell.canvas, 0, 22050);
-			field38.method240(var23);
-			MidiPlayer.method1511(midiInstrumentJs5, vorbisJs5, synthSoundJs5, var23);
-			field1585 = AudioChannel.method1132(GameShell.taskHandler, GameShell.canvas, 1, 2048);
-			field1460 = new MixerPcmStream();
-			field1585.method240(field1460);
-			field1733 = new PcmResampler(22050, AudioChannel.field241);
+			PcmPlayer.init(22050, !lowMemory, 2);
 
-			LoginScreen.message = Text.MAINLOAD45;
-			LoginScreen.progress = 35;
+			MidiPlayer midiPlayer = new MidiPlayer();
+			midiPlayer.setChannelDefaultPatch(9, 128);
+			midiPcmPlayer = PcmPlayer.getPlayer(GameShell.taskHandler, GameShell.canvas, 0, 22050);
+			midiPcmPlayer.playStream(midiPlayer);
+			MidiManager.init(musicPatchesJs5, musicSamplesJs5, soundFxJs5, midiPlayer);
+
+			soundPcmPlayer = PcmPlayer.getPlayer(GameShell.taskHandler, GameShell.canvas, 1, 2048);
+			soundMixer = new Mixer();
+			soundPcmPlayer.playStream(soundMixer);
+			soundDecimator = new Decimator(22050, PcmPlayer.frequency);
+
+			TitleScreen.loadString = Text.MAINLOAD45;
+			TitleScreen.loadPos = 35;
 			loadingStep = 50;
 		} else if (loadingStep == 50) {
 			int var24 = 0;
@@ -1660,30 +1665,30 @@ public class Client extends GameShell {
 			}
 
 			if (var24 < 3) {
-				LoginScreen.message = Text.MAINLOAD50 + var24 * 100 / 3 + "%";
-				LoginScreen.progress = 40;
+				TitleScreen.loadString = Text.MAINLOAD50 + var24 * 100 / 3 + "%";
+				TitleScreen.loadPos = 40;
 			} else {
-				LoginScreen.message = Text.MAINLOAD50B;
-				LoginScreen.progress = 40;
+				TitleScreen.loadString = Text.MAINLOAD50B;
+				TitleScreen.loadPos = 40;
 				loadingStep = 60;
 			}
 		} else if (loadingStep == 60) {
 			int var27 = imethod48(binaryJs5, spriteJs5);
-			int var30 = LoginScreen.method162();
+			int var30 = TitleScreen.method162();
 
 			if (var27 < var30) {
-				LoginScreen.message = Text.MAINLOAD60 + var27 * 100 / var30 + "%";
-				LoginScreen.progress = 50;
+				TitleScreen.loadString = Text.MAINLOAD60 + var27 * 100 / var30 + "%";
+				TitleScreen.loadPos = 50;
 			} else {
-				LoginScreen.message = Text.MAINLOAD60B;
-				LoginScreen.progress = 50;
+				TitleScreen.loadString = Text.MAINLOAD60B;
+				TitleScreen.loadPos = 50;
 				setMainState(5);
 				loadingStep = 70;
 			}
 		} else if (loadingStep == 70) {
 			if (!configJs5.fetchAll()) {
-				LoginScreen.message = Text.MAINLOAD70 + configJs5.getIndexLoadProgress() + "%";
-				LoginScreen.progress = 60;
+				TitleScreen.loadString = Text.MAINLOAD70 + configJs5.getIndexLoadProgress() + "%";
+				TitleScreen.loadPos = 60;
 			} else {
 				FloType.unpack(configJs5);
 				FluType.unpack(configJs5);
@@ -1699,8 +1704,8 @@ public class Client extends GameShell {
 				InvType.unpack(configJs5);
 				EnumType.unpack(configJs5);
 
-				LoginScreen.message = Text.MAINLOAD70B;
-				LoginScreen.progress = 60;
+				TitleScreen.loadString = Text.MAINLOAD70B;
+				TitleScreen.loadPos = 60;
 				loadingStep = 80;
 			}
 		} else if (loadingStep == 80) {
@@ -1791,8 +1796,8 @@ public class Client extends GameShell {
 			}
 
 			if (count < 14) {
-				LoginScreen.message = Text.MAINLOAD80 + count * 100 / 14 + "%";
-				LoginScreen.progress = 70;
+				TitleScreen.loadString = Text.MAINLOAD80 + count * 100 / 14 + "%";
+				TitleScreen.loadPos = 70;
 			} else {
 				PixFont.modicons = modIcons;
 
@@ -1811,55 +1816,55 @@ public class Client extends GameShell {
 
 				prepareMinimap();
 
-				LoginScreen.message = Text.MAINLOAD80B;
-				LoginScreen.progress = 70;
+				TitleScreen.loadString = Text.MAINLOAD80B;
+				TitleScreen.loadPos = 70;
 				loadingStep = 90;
 			}
 		} else if (loadingStep == 90) {
 			if (!textureJs5.fetchAll()) {
-				LoginScreen.message = Text.MAINLOAD90 + textureJs5.getIndexLoadProgress() + "%";
-				LoginScreen.progress = 90;
+				TitleScreen.loadString = Text.MAINLOAD90 + textureJs5.getIndexLoadProgress() + "%";
+				TitleScreen.loadPos = 90;
 			} else {
 				WorldTextureProvider provider = new WorldTextureProvider(textureJs5, spriteJs5, 20, 0.8D, lowMemory ? 64 : 128);
 				Pix3D.setTextures(provider);
 				Pix3D.initColourTable(0.8D);
 
-				LoginScreen.message = Text.MAINLOAD90B;
-				LoginScreen.progress = 90;
+				TitleScreen.loadString = Text.MAINLOAD90B;
+				TitleScreen.loadPos = 90;
 				loadingStep = 110;
 			}
 		} else if (loadingStep == 110) {
 			mouseTracking = new MouseTracking();
 			GameShell.taskHandler.threadreq(mouseTracking, 10);
 
-			LoginScreen.message = Text.MAINLOAD110;
-			LoginScreen.progress = 94;
+			TitleScreen.loadString = Text.MAINLOAD110;
+			TitleScreen.loadPos = 94;
 			loadingStep = 120;
 		} else if (loadingStep == 120) {
 			if (!binaryJs5.download("huffman", "")) {
-				LoginScreen.message = Text.MAINLOAD120 + "%";
-				LoginScreen.progress = 96;
+				TitleScreen.loadString = Text.MAINLOAD120 + "%";
+				TitleScreen.loadPos = 96;
 			} else {
 				Huffman var56 = new Huffman(binaryJs5.getFile("huffman", ""));
 				WordPack.method816(var56);
 
-				LoginScreen.message = Text.MAINLOAD120B;
-				LoginScreen.progress = 96;
+				TitleScreen.loadString = Text.MAINLOAD120B;
+				TitleScreen.loadPos = 96;
 				loadingStep = 130;
 			}
 		} else if (loadingStep == 130) {
 			if (!interfaceJs5.fetchAll()) {
-				LoginScreen.message = Text.MAINLOAD130 + interfaceJs5.getIndexLoadProgress() * 4 / 5 + "%";
-				LoginScreen.progress = 100;
+				TitleScreen.loadString = Text.MAINLOAD130 + interfaceJs5.getIndexLoadProgress() * 4 / 5 + "%";
+				TitleScreen.loadPos = 100;
 			} else if (!clientScriptJs5.fetchAll()) {
-				LoginScreen.message = Text.MAINLOAD130 + (clientScriptJs5.getIndexLoadProgress() / 6 + 80) + "%";
-				LoginScreen.progress = 100;
+				TitleScreen.loadString = Text.MAINLOAD130 + (clientScriptJs5.getIndexLoadProgress() / 6 + 80) + "%";
+				TitleScreen.loadPos = 100;
 			} else if (!fontMetricJs5.fetchAll()) {
-				LoginScreen.message = Text.MAINLOAD130 + (fontMetricJs5.getIndexLoadProgress() / 20 + 96) + "%";
-				LoginScreen.progress = 100;
+				TitleScreen.loadString = Text.MAINLOAD130 + (fontMetricJs5.getIndexLoadProgress() / 20 + 96) + "%";
+				TitleScreen.loadPos = 100;
 			} else {
-				LoginScreen.message = Text.MAINLOAD130B;
-				LoginScreen.progress = 100;
+				TitleScreen.loadString = Text.MAINLOAD130B;
+				TitleScreen.loadPos = 100;
 				loadingStep = 140;
 			}
 		} else if (loadingStep == 140) {
@@ -1868,7 +1873,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("u.dd(IZZZB)Ldq;")
-	public static Js5Local createJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
+	public static Js5Local openJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
 		FileStream stream = null;
 		if (SignLinkCacheFolder.cacheDat != null) {
 			stream = new FileStream(archive, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.cacheIndex[archive], 1000000);
@@ -1877,7 +1882,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ex.dg(I)V")
-	public static final void titleScreenLoop() {
+	public static final void loginPoll() {
 		try {
 			if (loginStep == 0) {
 				if (loginStream != null) {
@@ -1910,18 +1915,18 @@ public class Client extends GameShell {
 				loginStep = 3;
 			}
 			if (loginStep == 3) {
-				if (field38 != null) {
-					field38.method207();
+				if (midiPcmPlayer != null) {
+					midiPcmPlayer.method207();
 				}
-				if (field1585 != null) {
-					field1585.method207();
+				if (soundPcmPlayer != null) {
+					soundPcmPlayer.method207();
 				}
 				int var0 = loginStream.read();
-				if (field38 != null) {
-					field38.method207();
+				if (midiPcmPlayer != null) {
+					midiPcmPlayer.method207();
 				}
-				if (field1585 != null) {
-					field1585.method207();
+				if (soundPcmPlayer != null) {
+					soundPcmPlayer.method207();
 				}
 				if (var0 != 0) {
 					method838(var0);
@@ -1945,7 +1950,7 @@ public class Client extends GameShell {
 				out.p4(seed[2]);
 				out.p4(seed[3]);
 				out.p8(0L);
-				out.pjstr(LoginScreen.password);
+				out.pjstr(TitleScreen.password);
 				out.rsaenc(PublicKeys.LOGIN_RSAN, PublicKeys.LOGIN_RSAE);
 
 				login.pos = 0;
@@ -1961,14 +1966,14 @@ public class Client extends GameShell {
 				login.pdata(out.data, 0, out.pos);
 
 				int xteaStart = login.pos;
-				login.pjstr(LoginScreen.username);
+				login.pjstr(TitleScreen.username);
 				login.p1(lowMemory ? 1 : 0);
 				SignLinkCacheFolder.pUid(login); // 24 bytes
 				login.p4(animFrameJs5.crc);
 				login.p4(animBaseJs5.crc);
 				login.p4(configJs5.crc);
 				login.p4(interfaceJs5.crc);
-				login.p4(synthSoundJs5.crc);
+				login.p4(soundFxJs5.crc);
 				login.p4(mapJs5.crc);
 				login.p4(midiSongJs5.crc);
 				login.p4(modelJs5.crc);
@@ -1978,8 +1983,8 @@ public class Client extends GameShell {
 				login.p4(midiJingleJs5.crc);
 				login.p4(clientScriptJs5.crc);
 				login.p4(fontMetricJs5.crc);
-				login.p4(vorbisJs5.crc);
-				login.p4(midiInstrumentJs5.crc);
+				login.p4(musicSamplesJs5.crc);
+				login.p4(musicPatchesJs5.crc);
 				login.tinyenc(seed, xteaStart, login.pos);
 
 				login.psize2(login.pos - start);
@@ -2016,7 +2021,7 @@ public class Client extends GameShell {
 			}
 			if (loginStep == 8) {
 				loginWaitingTime = 0;
-				LoginScreen.showMessage(Text.LOGINHOP_A, Text.LOGINHOP_B, field1950 / 60 + Text.LOGINHOP_C);
+				TitleScreen.showMessage(Text.LOGINHOP_A, Text.LOGINHOP_B, field1950 / 60 + Text.LOGINHOP_C);
 				if (--field1950 <= 0) {
 					loginStep = 0;
 				}
@@ -2169,7 +2174,7 @@ public class Client extends GameShell {
 				}
 			}
 		}
-		for (SubInterface var12 = (SubInterface) field1918.method1284(); var12 != null; var12 = (SubInterface) field1918.method1280()) {
+		for (SubInterface var12 = (SubInterface) field1918.first(); var12 != null; var12 = (SubInterface) field1918.next()) {
 			method408(var12, true);
 		}
 		toplevelinterface = -1;
@@ -2195,69 +2200,69 @@ public class Client extends GameShell {
 	@ObfuscatedName("bf.dk(II)V")
 	public static void method838(int response) {
 		if (response == -3) {
-			LoginScreen.showMessage(Text.LOGINM3_A, Text.LOGINM3_B, Text.LOGINM3_C);
+			TitleScreen.showMessage(Text.LOGINM3_A, Text.LOGINM3_B, Text.LOGINM3_C);
 		} else if (response == -2) {
-			LoginScreen.showMessage(Text.LOGINM2_A, Text.LOGINM2_B, Text.LOGINM2_C);
+			TitleScreen.showMessage(Text.LOGINM2_A, Text.LOGINM2_B, Text.LOGINM2_C);
 		} else if (response == -1) {
-			LoginScreen.showMessage(Text.LOGINM1_A, Text.LOGINM1_B, Text.LOGINM1_C);
+			TitleScreen.showMessage(Text.LOGINM1_A, Text.LOGINM1_B, Text.LOGINM1_C);
 		} else if (response == 3) {
-			LoginScreen.showMessage(Text.LOGIN3_A, Text.LOGIN3_B, Text.LOGIN3_C);
+			TitleScreen.showMessage(Text.LOGIN3_A, Text.LOGIN3_B, Text.LOGIN3_C);
 		} else if (response == 4) {
-			LoginScreen.showMessage(Text.LOGIN4_A, Text.LOGIN4_B, Text.LOGIN4_C);
+			TitleScreen.showMessage(Text.LOGIN4_A, Text.LOGIN4_B, Text.LOGIN4_C);
 		} else if (response == 5) {
-			LoginScreen.showMessage(Text.LOGIN5_A, Text.LOGIN5_B, Text.LOGIN5_C);
+			TitleScreen.showMessage(Text.LOGIN5_A, Text.LOGIN5_B, Text.LOGIN5_C);
 		} else if (response == 6) {
-			LoginScreen.showMessage(Text.LOGIN6_A, Text.LOGIN6_B, Text.LOGIN6_C);
+			TitleScreen.showMessage(Text.LOGIN6_A, Text.LOGIN6_B, Text.LOGIN6_C);
 		} else if (response == 7) {
-			LoginScreen.showMessage(Text.LOGIN7_A, Text.LOGIN7_B, Text.LOGIN7_C);
+			TitleScreen.showMessage(Text.LOGIN7_A, Text.LOGIN7_B, Text.LOGIN7_C);
 		} else if (response == 8) {
-			LoginScreen.showMessage(Text.LOGIN8_A, Text.LOGIN8_B, Text.LOGIN8_C);
+			TitleScreen.showMessage(Text.LOGIN8_A, Text.LOGIN8_B, Text.LOGIN8_C);
 		} else if (response == 9) {
-			LoginScreen.showMessage(Text.LOGIN9_A, Text.LOGIN9_B, Text.LOGIN9_C);
+			TitleScreen.showMessage(Text.LOGIN9_A, Text.LOGIN9_B, Text.LOGIN9_C);
 		} else if (response == 10) {
-			LoginScreen.showMessage(Text.LOGIN10_A, Text.LOGIN10_B, Text.LOGIN10_C);
+			TitleScreen.showMessage(Text.LOGIN10_A, Text.LOGIN10_B, Text.LOGIN10_C);
 		} else if (response == 11) {
-			LoginScreen.showMessage(Text.LOGIN11_A, Text.LOGIN11_B, Text.LOGIN11_C);
+			TitleScreen.showMessage(Text.LOGIN11_A, Text.LOGIN11_B, Text.LOGIN11_C);
 		} else if (response == 12) {
-			LoginScreen.showMessage(Text.LOGIN12_A, Text.LOGIN12_B, Text.LOGIN12_C);
+			TitleScreen.showMessage(Text.LOGIN12_A, Text.LOGIN12_B, Text.LOGIN12_C);
 		} else if (response == 13) {
-			LoginScreen.showMessage(Text.LOGIN13_A, Text.LOGIN13_B, Text.LOGIN13_C);
+			TitleScreen.showMessage(Text.LOGIN13_A, Text.LOGIN13_B, Text.LOGIN13_C);
 		} else if (response == 14) {
-			LoginScreen.showMessage(Text.LOGIN14_A, Text.LOGIN14_B, Text.LOGIN14_C);
+			TitleScreen.showMessage(Text.LOGIN14_A, Text.LOGIN14_B, Text.LOGIN14_C);
 		} else if (response == 16) {
-			LoginScreen.showMessage(Text.LOGIN16_A, Text.LOGIN16_B, Text.LOGIN16_C);
+			TitleScreen.showMessage(Text.LOGIN16_A, Text.LOGIN16_B, Text.LOGIN16_C);
 		} else if (response == 17) {
-			LoginScreen.showMessage(Text.LOGIN17_A, Text.LOGIN17_B, Text.LOGIN17_C);
+			TitleScreen.showMessage(Text.LOGIN17_A, Text.LOGIN17_B, Text.LOGIN17_C);
 		} else if (response == 18) {
-			LoginScreen.showMessage(Text.LOGIN18_A, Text.LOGIN18_B, Text.LOGIN18_C);
+			TitleScreen.showMessage(Text.LOGIN18_A, Text.LOGIN18_B, Text.LOGIN18_C);
 		} else if (response == 19) {
-			LoginScreen.showMessage(Text.LOGIN19_A, Text.LOGIN19_B, Text.LOGIN19_C);
+			TitleScreen.showMessage(Text.LOGIN19_A, Text.LOGIN19_B, Text.LOGIN19_C);
 		} else if (response == 20) {
-			LoginScreen.showMessage(Text.LOGIN20_A, Text.LOGIN20_B, Text.LOGIN20_C);
+			TitleScreen.showMessage(Text.LOGIN20_A, Text.LOGIN20_B, Text.LOGIN20_C);
 		} else if (response == 22) {
-			LoginScreen.showMessage(Text.LOGIN22_A, Text.LOGIN22_B, Text.LOGIN22_C);
+			TitleScreen.showMessage(Text.LOGIN22_A, Text.LOGIN22_B, Text.LOGIN22_C);
 		} else if (response == 23) {
-			LoginScreen.showMessage(Text.LOGIN23_A, Text.LOGIN23_B, Text.LOGIN23_C);
+			TitleScreen.showMessage(Text.LOGIN23_A, Text.LOGIN23_B, Text.LOGIN23_C);
 		} else if (response == 24) {
-			LoginScreen.showMessage(Text.LOGIN24_A, Text.LOGIN24_B, Text.LOGIN24_C);
+			TitleScreen.showMessage(Text.LOGIN24_A, Text.LOGIN24_B, Text.LOGIN24_C);
 		} else if (response == 25) {
-			LoginScreen.showMessage(Text.LOGIN25_A, Text.LOGIN25_B, Text.LOGIN25_C);
+			TitleScreen.showMessage(Text.LOGIN25_A, Text.LOGIN25_B, Text.LOGIN25_C);
 		} else if (response == 26) {
-			LoginScreen.showMessage(Text.LOGIN26_A, Text.LOGIN26_B, Text.LOGIN26_C);
+			TitleScreen.showMessage(Text.LOGIN26_A, Text.LOGIN26_B, Text.LOGIN26_C);
 		} else if (response == 27) {
-			LoginScreen.showMessage(Text.LOGIN27_A, Text.LOGIN27_B, Text.LOGIN27_C);
+			TitleScreen.showMessage(Text.LOGIN27_A, Text.LOGIN27_B, Text.LOGIN27_C);
 		} else if (response == 31) {
-			LoginScreen.showMessage(Text.LOGIN31_A, Text.LOGIN31_B, Text.LOGIN31_C);
+			TitleScreen.showMessage(Text.LOGIN31_A, Text.LOGIN31_B, Text.LOGIN31_C);
 		} else if (response == 32) {
-			LoginScreen.showMessage(Text.LOGIN32_A, Text.LOGIN32_B, Text.LOGIN32_C);
+			TitleScreen.showMessage(Text.LOGIN32_A, Text.LOGIN32_B, Text.LOGIN32_C);
 		} else if (response == 37) {
-			LoginScreen.showMessage(Text.LOGIN37_A, Text.LOGIN37_B, Text.LOGIN37_C);
+			TitleScreen.showMessage(Text.LOGIN37_A, Text.LOGIN37_B, Text.LOGIN37_C);
 		} else if (response == 38) {
-			LoginScreen.showMessage(Text.LOGIN38_A, Text.LOGIN38_B, Text.LOGIN38_C);
+			TitleScreen.showMessage(Text.LOGIN38_A, Text.LOGIN38_B, Text.LOGIN38_C);
 		} else if (response == 55) {
-			LoginScreen.showMessage(Text.LOGIN55_A, Text.LOGIN55_B, Text.LOGIN55_C);
+			TitleScreen.showMessage(Text.LOGIN55_A, Text.LOGIN55_B, Text.LOGIN55_C);
 		} else {
-			LoginScreen.showMessage(Text.LOGINMIS_A, Text.LOGINMIS_B, Text.LOGINMIS_C);
+			TitleScreen.showMessage(Text.LOGINMIS_A, Text.LOGINMIS_B, Text.LOGINMIS_C);
 		}
 		setMainState(10);
 	}
@@ -2274,7 +2279,7 @@ public class Client extends GameShell {
 			levelCollisionMap[var0].reset();
 		}
 		System.gc();
-		MidiPlayer.imethod2();
+		MidiManager.imethod2();
 		field2170 = -1;
 		field2189 = false;
 		imethod6();
@@ -2300,7 +2305,7 @@ public class Client extends GameShell {
 		animFrameJs5.discardAll();
 		animBaseJs5.discardAll();
 		interfaceJs5.discardAll();
-		synthSoundJs5.discardAll();
+		soundFxJs5.discardAll();
 		mapJs5.discardAll();
 		midiSongJs5.discardAll();
 		modelJs5.discardAll();
@@ -2313,11 +2318,11 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("da.dj(I)V")
 	public static final void method1351() {
-		if (field1585 != null) {
-			field1585.method235();
+		if (soundPcmPlayer != null) {
+			soundPcmPlayer.cycle();
 		}
-		if (field38 != null) {
-			field38.method235();
+		if (midiPcmPlayer != null) {
+			midiPcmPlayer.cycle();
 		}
 	}
 
@@ -2346,9 +2351,9 @@ public class Client extends GameShell {
 	@ObfuscatedName("ck.ds(IB)V")
 	public static void method1232(int arg0) {
 		if (arg0 == -1 && !field2189) {
-			MidiPlayer.method917();
+			MidiManager.method917();
 		} else if (arg0 != -1 && field2170 != arg0 && midiVolume != 0 && !field2189) {
-			MidiPlayer.method95(2, midiSongJs5, arg0, 0, midiVolume, false);
+			MidiManager.method95(2, midiSongJs5, arg0, 0, midiVolume, false);
 		}
 		field2170 = arg0;
 	}
@@ -4802,7 +4807,7 @@ public class Client extends GameShell {
 		}
 		if (action == 26) {
 			out.pisaac1(129);
-			for (SubInterface var25 = (SubInterface) field1918.method1284(); var25 != null; var25 = (SubInterface) field1918.method1280()) {
+			for (SubInterface var25 = (SubInterface) field1918.first(); var25 != null; var25 = (SubInterface) field1918.next()) {
 				if (var25.field1597 == 0 || var25.field1597 == 3) {
 					method408(var25, true);
 				}
@@ -6672,7 +6677,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("g.fn(B)V")
 	public static void method93() {
-		for (SubInterface var0 = (SubInterface) field1918.method1284(); var0 != null; var0 = (SubInterface) field1918.method1280()) {
+		for (SubInterface var0 = (SubInterface) field1918.first(); var0 != null; var0 = (SubInterface) field1918.next()) {
 			int var1 = var0.field1598;
 			if (IfType.openInterface(var1)) {
 				boolean var2 = true;
@@ -6811,7 +6816,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("bv.fi(II)V")
 	public static final void updateVarp(int arg0) {
 		method93();
-		PositionedSound.method478();
+		BgSound.method478();
 
 		int clientcode = VarPlayerType.get(arg0).clientcode;
 		if (clientcode == 0) {
@@ -6851,13 +6856,13 @@ public class Client extends GameShell {
 
 			if (midiVolume != volume) {
 				if (midiVolume == 0 && field2170 != -1) {
-					MidiPlayer.method1125(midiSongJs5, field2170, 0, volume, false);
+					MidiManager.method1125(midiSongJs5, field2170, 0, volume, false);
 					field2189 = false;
 				} else if (volume == 0) {
-					MidiPlayer.method917();
+					MidiManager.method917();
 					field2189 = false;
 				} else {
-					MidiPlayer.method105(volume);
+					MidiManager.method105(volume);
 				}
 
 				midiVolume = volume;
@@ -7384,7 +7389,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("s.gt(II)V")
 	public static void method109(int arg0) {
-		for (ServerKeyProperties var1 = (ServerKeyProperties) field2061.method1284(); var1 != null; var1 = (ServerKeyProperties) field2061.method1280()) {
+		for (ServerKeyProperties var1 = (ServerKeyProperties) field2061.first(); var1 != null; var1 = (ServerKeyProperties) field2061.next()) {
 			if ((long) arg0 == (var1.nodeId >> 48 & 0xFFFFL)) {
 				var1.unlink();
 			}
@@ -7652,21 +7657,21 @@ public class Client extends GameShell {
 		method1351();
 		ClientBuild.unload();
 		out.pisaac1(197);
-		GameShell.method770();
+		GameShell.doneSlowUpdate();
 	}
 
 	public static void imethod6() {
-		for (PositionedSound var23 = (PositionedSound) PositionedSound.field1612.head(); var23 != null; var23 = (PositionedSound) PositionedSound.field1612.next()) {
+		for (BgSound var23 = (BgSound) BgSound.sounds.head(); var23 != null; var23 = (BgSound) BgSound.sounds.next()) {
 			if (var23.field1603 != null) {
-				field1460.method2175(var23.field1603);
+				soundMixer.stopStream(var23.field1603);
 				var23.field1603 = null;
 			}
 			if (var23.field1614 != null) {
-				field1460.method2175(var23.field1614);
+				soundMixer.stopStream(var23.field1614);
 				var23.field1614 = null;
 			}
 		}
-		PositionedSound.field1612.clear();
+		BgSound.sounds.clear();
 	}
 
 	public static void imethod7(int var47, int var48, int var49) {
@@ -8637,7 +8642,7 @@ public class Client extends GameShell {
 					}
 					var185.field1599 = true;
 				}
-				for (SubInterface var186 = (SubInterface) field1918.method1284(); var186 != null; var186 = (SubInterface) field1918.method1280()) {
+				for (SubInterface var186 = (SubInterface) field1918.first(); var186 != null; var186 = (SubInterface) field1918.next()) {
 					if (var186.field1599) {
 						var186.field1599 = false;
 					} else {
@@ -9399,7 +9404,7 @@ public class Client extends GameShell {
 				}
 				int var360 = in.g3_alt2();
 				if (midiVolume != 0 && var359 != -1) {
-					MidiPlayer.method1125(midiJingleJs5, var359, 0, midiVolume, false);
+					MidiManager.method1125(midiJingleJs5, var359, 0, midiVolume, false);
 					field2189 = true;
 				}
 				ptype = -1;
@@ -9894,7 +9899,7 @@ public class Client extends GameShell {
 				}
 			}
 		}
-		PositionedSound.method2297(minusedlevel, localPlayer.x, localPlayer.z, worldUpdateNum);
+		BgSound.method2297(minusedlevel, localPlayer.x, localPlayer.z, worldUpdateNum);
 		worldUpdateNum = 0;
 	}
 
@@ -10098,10 +10103,10 @@ public class Client extends GameShell {
 		for (int var424 = 0; var424 < waveCount; var424++) {
 			var10002 = waveDelay[var424]--;
 			if (waveDelay[var424] >= -10) {
-				Wave var426 = field2181[var424];
+				JagFx var426 = field2181[var424];
 				if (var426 == null) {
-					Wave var528 = null;
-					var426 = Wave.generate(synthSoundJs5, field2177[var424], 0);
+					JagFx var528 = null;
+					var426 = JagFx.generate(soundFxJs5, field2177[var424], 0);
 					if (var426 == null) {
 						continue;
 					}
@@ -10135,10 +10140,10 @@ public class Client extends GameShell {
 						var433 = field2174 * (var427 - var432) / var427;
 					}
 					if (var433 > 0) {
-						PcmSound var434 = var426.method291().method2050(field1733);
-						SoundPcmStream var435 = SoundPcmStream.method2144(var434, 100, var433);
-						var435.method2061(field2006[var424] - 1);
-						field1460.method2174(var435);
+						Wave var434 = var426.toWave().decimate(soundDecimator);
+						WaveStream var435 = WaveStream.method2144(var434, 100, var433);
+						var435.setLoopCount(field2006[var424] - 1);
+						soundMixer.playStream(var435);
 					}
 					waveDelay[var424] = -100;
 				}
@@ -10154,9 +10159,9 @@ public class Client extends GameShell {
 				var424--;
 			}
 		}
-		if (field2189 && !MidiPlayer.method2456()) {
+		if (field2189 && !MidiManager.method2456()) {
 			if (midiVolume != 0 && field2170 != -1) {
-				MidiPlayer.method1125(midiSongJs5, field2170, 0, midiVolume, false);
+				MidiManager.method1125(midiSongJs5, field2170, 0, midiVolume, false);
 			}
 			field2189 = false;
 		}
@@ -11200,7 +11205,7 @@ public class Client extends GameShell {
 
 	public static void imethod45(int var113, int var114) {
 		if (midiVolume != 0 && var113 != -1) {
-			MidiPlayer.method1125(midiJingleJs5, var113, 0, midiVolume, false);
+			MidiManager.method1125(midiJingleJs5, var113, 0, midiVolume, false);
 			field2189 = true;
 		}
 	}
@@ -11218,7 +11223,7 @@ public class Client extends GameShell {
 
 	public static void imethod47() {
 		out.pisaac1(129);
-		for (SubInterface var95 = (SubInterface) field1918.method1284(); var95 != null; var95 = (SubInterface) field1918.method1280()) {
+		for (SubInterface var95 = (SubInterface) field1918.first(); var95 != null; var95 = (SubInterface) field1918.next()) {
 			if (var95.field1597 == 0 || var95.field1597 == 3) {
 				method408(var95, true);
 			}

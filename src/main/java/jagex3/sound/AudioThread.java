@@ -11,29 +11,29 @@ import java.awt.event.ActionEvent;
 public class AudioThread implements Runnable {
 
 	@ObfuscatedName("f.r")
-	public TaskHandler field290;
+	public TaskHandler taskHandler;
 
 	@ObfuscatedName("f.d")
-	public volatile AudioChannel[] field293 = new AudioChannel[2];
+	public volatile PcmPlayer[] players = new PcmPlayer[2];
 
 	@ObfuscatedName("f.l")
-	public volatile boolean field292 = false;
+	public volatile boolean shutdown = false;
 
 	@ObfuscatedName("f.m")
-	public volatile boolean field291 = false;
+	public volatile boolean running = false;
 
 	public void run() {
-		this.field291 = true;
+		this.running = true;
 		try {
-			while (!this.field292) {
+			while (!this.shutdown) {
 				for (int var1 = 0; var1 < 2; var1++) {
-					AudioChannel var2 = this.field293[var1];
+					PcmPlayer var2 = this.players[var1];
 					if (var2 != null) {
-						var2.method235();
+						var2.cycle();
 					}
 				}
 				PreciseSleep.sleep(10L);
-				TaskHandler var3 = this.field290;
+				TaskHandler var3 = this.taskHandler;
 				Object var4 = null;
 				if (var3.eventQueue != null) {
 					for (int var5 = 0; var5 < 50 && var3.eventQueue.peekEvent() != null; var5++) {
@@ -47,7 +47,7 @@ public class AudioThread implements Runnable {
 		} catch (Exception var10) {
 			JagException.report(null, (Throwable) var10);
 		} finally {
-			this.field291 = false;
+			this.running = false;
 		}
 	}
 }

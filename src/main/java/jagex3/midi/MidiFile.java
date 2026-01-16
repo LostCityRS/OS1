@@ -1,4 +1,4 @@
-package jagex3.sound;
+package jagex3.midi;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.ByteArrayNode;
@@ -6,24 +6,24 @@ import jagex3.datastruct.HashTable;
 import jagex3.datastruct.Linkable;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Index;
-import jagex3.midi.MidiDecoder;
 
+// jag::oldscape::midi2::MidiFile
 @ObfuscatedName("ei")
-public class Song extends Linkable {
+public class MidiFile extends Linkable {
 
 	@ObfuscatedName("ei.m")
-	public HashTable field1734;
+	public HashTable patches;
 
 	@ObfuscatedName("ei.c")
-	public byte[] field1735;
+	public byte[] midi;
 
 	@ObfuscatedName("ei.c(Lch;II)Lei;")
-	public static Song method1775(Js5Index arg0, int arg1, int arg2) {
+	public static MidiFile decode(Js5Index arg0, int arg1, int arg2) {
 		byte[] var3 = arg0.getFile(arg1, arg2);
-		return var3 == null ? null : new Song(new Packet(var3));
+		return var3 == null ? null : new MidiFile(new Packet(var3));
 	}
 
-	public Song(Packet arg0) {
+	public MidiFile(Packet arg0) {
 		arg0.pos = arg0.data.length - 3;
 		int var2 = arg0.g1();
 		int var3 = arg0.g2();
@@ -75,7 +75,7 @@ public class Song extends Linkable {
 		int var19 = arg0.pos;
 		int var20 = var2 + var5 + var6 + var7 + var8 + var9 + var10 + var11 + var12;
 		for (int var21 = 0; var21 < var20; var21++) {
-			arg0.gVarInt();
+			arg0.gMidiVarLen();
 		}
 		int var22 = arg0.pos - var19 + var18;
 		int var23 = arg0.pos;
@@ -165,9 +165,9 @@ public class Song extends Linkable {
 		arg0.pos += var33;
 		int var59 = arg0.pos;
 		arg0.pos += var5 * 3;
-		this.field1735 = new byte[var22];
-		Packet var60 = new Packet(this.field1735);
-		var60.p4(1297377380);
+		this.midi = new byte[var22];
+		Packet var60 = new Packet(this.midi);
+		var60.p4(0x4d546864);
 		var60.p4(6);
 		var60.p2(var2 > 1 ? 1 : 0);
 		var60.p2(var2);
@@ -190,8 +190,8 @@ public class Song extends Linkable {
 			int var72 = -1;
 			while (true) {
 				while (true) {
-					int var73 = arg0.gVarInt();
-					var60.pVarInt(var73);
+					int var73 = arg0.gMidiVarLen();
+					var60.pMidiVarLen(var73);
 					int var74 = arg0.data[var38++] & 0xFF;
 					boolean var75 = var72 != var74;
 					var72 = var74 & 0xF;
@@ -306,32 +306,32 @@ public class Song extends Linkable {
 
 	@ObfuscatedName("ei.n()V")
 	public void method1773() {
-		if (this.field1734 != null) {
+		if (this.patches != null) {
 			return;
 		}
-		this.field1734 = new HashTable(16);
+		this.patches = new HashTable(16);
 		int[] var1 = new int[16];
 		int[] var2 = new int[16];
 		var2[9] = 128;
 		var1[9] = 128;
-		MidiDecoder var4 = new MidiDecoder(this.field1735);
-		int var5 = var4.method956();
+		MidiParser var4 = new MidiParser(this.midi);
+		int var5 = var4.getTrackCount();
 		for (int var6 = 0; var6 < var5; var6++) {
-			var4.method957(var6);
-			var4.method960(var6);
-			var4.method958(var6);
+			var4.enterTrack(var6);
+			var4.readDelay(var6);
+			var4.leaveTrack(var6);
 		}
 		label52:
 		do {
 			while (true) {
-				int var7 = var4.method987();
-				int var8 = var4.field1135[var7];
-				while (var4.field1135[var7] == var8) {
-					var4.method957(var7);
-					int var9 = var4.method967(var7);
+				int var7 = var4.getNextTrackToPlay();
+				int var8 = var4.trackCurrentTick[var7];
+				while (var4.trackCurrentTick[var7] == var8) {
+					var4.enterTrack(var7);
+					int var9 = var4.readMessage(var7);
 					if (var9 == 1) {
-						var4.method959();
-						var4.method958(var7);
+						var4.stopTrack();
+						var4.leaveTrack(var7);
 						continue label52;
 					}
 					int var10 = var9 & 0xF0;
@@ -357,23 +357,23 @@ public class Song extends Linkable {
 						int var18 = var9 >> 16 & 0x7F;
 						if (var18 > 0) {
 							int var19 = var2[var16];
-							ByteArrayNode var20 = (ByteArrayNode) this.field1734.get((long) var19);
+							ByteArrayNode var20 = (ByteArrayNode) this.patches.get((long) var19);
 							if (var20 == null) {
 								var20 = new ByteArrayNode(new byte[128]);
-								this.field1734.put(var20, (long) var19);
+								this.patches.put(var20, (long) var19);
 							}
 							var20.data[var17] = 1;
 						}
 					}
-					var4.method960(var7);
-					var4.method958(var7);
+					var4.readDelay(var7);
+					var4.leaveTrack(var7);
 				}
 			}
-		} while (!var4.method966());
+		} while (!var4.isFinished());
 	}
 
 	@ObfuscatedName("ei.j()V")
 	public void method1774() {
-		this.field1734 = null;
+		this.patches = null;
 	}
 }

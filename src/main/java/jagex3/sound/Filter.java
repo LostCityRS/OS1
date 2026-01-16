@@ -3,6 +3,7 @@ package jagex3.sound;
 import deob.ObfuscatedName;
 import jagex3.io.Packet;
 
+// jag::oldscape::sound::Filter
 @ObfuscatedName("ad")
 public class Filter {
 

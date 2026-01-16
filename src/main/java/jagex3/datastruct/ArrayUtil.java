@@ -10,7 +10,7 @@ public class ArrayUtil {
 	}
 
 	@ObfuscatedName("bj.q([III)V")
-	public static void method883(int[] arg0, int arg1, int arg2) {
+	public static void clear(int[] arg0, int arg1, int arg2) {
 		int var3 = arg1 + arg2 - 7;
 		while (arg1 < var3) {
 			arg0[arg1++] = 0;

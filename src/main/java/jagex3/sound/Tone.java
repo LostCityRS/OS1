@@ -6,6 +6,7 @@ import jagex3.io.Packet;
 
 import java.util.Random;
 
+// jag::oldscape::sound::Tone
 @ObfuscatedName("t")
 public class Tone {
 
@@ -103,7 +104,7 @@ public class Tone {
 
 	@ObfuscatedName("t.r(II)[I")
 	public final int[] method269(int arg0, int arg1) {
-		ArrayUtil.method883(field270, 0, arg0);
+		ArrayUtil.clear(field270, 0, arg0);
 		if (arg1 < 10) {
 			return field270;
 		}

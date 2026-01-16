@@ -11,13 +11,13 @@ import jagex3.js5.Js5Remote;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.Text;
 import jagex3.jstring.TextUtil;
-import jagex3.midi.MidiPlayer;
+import jagex3.midi.MidiManager;
 
 import java.awt.*;
 import java.net.URL;
 
 @ObfuscatedName("g")
-public class LoginScreen {
+public class TitleScreen {
 
 	@ObfuscatedName("df.r")
 	public static boolean opened;
@@ -92,10 +92,10 @@ public class LoginScreen {
 	public static int field148 = 0;
 
 	@ObfuscatedName("g.as")
-	public static int progress = 10;
+	public static int loadPos = 10;
 
 	@ObfuscatedName("g.am")
-	public static String message = "";
+	public static String loadString = "";
 
 	@ObfuscatedName("g.ap")
 	public static int field151 = 0;
@@ -160,7 +160,7 @@ public class LoginScreen {
 	@ObfuscatedName("g.bk")
 	public static int field168 = -1;
 
-	public LoginScreen() throws Throwable {
+	public TitleScreen() throws Throwable {
 		throw new Error();
 	}
 
@@ -195,32 +195,32 @@ public class LoginScreen {
 		field144 = null;
 		field9 = null;
 		// todo: inlined midiplayer method?
-		MidiPlayer.field1117 = 1;
-		MidiPlayer.field1118 = null;
-		MidiPlayer.field349 = -1;
-		MidiPlayer.field1121 = -1;
-		MidiPlayer.field1120 = 0;
-		MidiPlayer.field1625 = false;
-		MidiPlayer.field1152 = 2;
+		MidiManager.field1117 = 1;
+		MidiManager.field1118 = null;
+		MidiManager.field349 = -1;
+		MidiManager.field1121 = -1;
+		MidiManager.field1120 = 0;
+		MidiManager.field1625 = false;
+		MidiManager.field1152 = 2;
 		Js5Remote.sendLoginLogoutPacket(true);
 		opened = false;
 	}
 
 	@ObfuscatedName("r.l(Ldj;I)V")
-	public static void method3(GameShell arg0) {
+	public static void loop(GameShell app) {
 		if (field160) {
-			method1134(arg0);
+			method1134(app);
 			return;
 		}
 		if (JavaMouseProvider.mouseClickButton == 1 && JavaMouseProvider.mouseClickX >= 715 && JavaMouseProvider.mouseClickY >= 453) {
 			field142 = !field142;
 			if (field142) {
-				MidiPlayer.method917();
+				MidiManager.method917();
 			} else {
 				Js5Local var1 = Client.midiSongJs5;
 				int var2 = var1.getGroupId("scape main");
 				int var3 = var1.getFileId(var2, "");
-				MidiPlayer.method1125(var1, var2, var3, 255, false);
+				MidiManager.method1125(var1, var2, var3, 255, false);
 			}
 		}
 		if (Client.state == 5) {
@@ -361,9 +361,9 @@ public class LoginScreen {
 			int var3 = 253 - var2;
 			Pix2D.drawRect(230, var3, 304, 34, 9179409);
 			Pix2D.drawRect(231, var3 + 1, 302, 32, 0);
-			Pix2D.fillRect(232, var3 + 2, progress * 3, 30, 9179409);
-			Pix2D.fillRect(progress * 3 + 232, var3 + 2, 300 - progress * 3, 30, 0);
-			arg0.centreString(message, 382, 276 - var2, 16777215, -1);
+			Pix2D.fillRect(232, var3 + 2, loadPos * 3, 30, 9179409);
+			Pix2D.fillRect(loadPos * 3 + 232, var3 + 2, 300 - loadPos * 3, 30, 0);
+			arg0.centreString(loadString, 382, 276 - var2, 16777215, -1);
 		}
 		if (Client.state == 20) {
 			field137.plotSprite(382 - field137.wi / 2, 271 - field137.hi / 2);
@@ -1142,9 +1142,9 @@ public class LoginScreen {
 			field142 = false;
 		}
 		if (field142) {
-			MidiPlayer.imethod2();
+			MidiManager.imethod2();
 		} else {
-			MidiPlayer.imethod1(Client.midiSongJs5);
+			MidiManager.imethod1(Client.midiSongJs5);
 		}
 		Js5Remote.sendLoginLogoutPacket(false);
 		opened = true;

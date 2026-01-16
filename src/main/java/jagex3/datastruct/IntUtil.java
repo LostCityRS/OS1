@@ -25,7 +25,7 @@ public class IntUtil {
 	}
 
 	@ObfuscatedName("eg.d(IB)I")
-	public static int method1838(int arg0) {
+	public static int bitCount(int arg0) {
 		int var1 = (arg0 >>> 1 & 0x55555555) + (arg0 & 0x55555555);
 		int var2 = (var1 >>> 2 & 0x33333333) + (var1 & 0x33333333);
 		int var3 = (var2 >>> 4) + var2 & 0xF0F0F0F;

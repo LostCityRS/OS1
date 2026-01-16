@@ -1,10 +1,11 @@
-package jagex3.midi;
+package jagex3.sound;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.IntUtil;
 
+// jag::oldscape::sound::Floor
 @ObfuscatedName("e")
-public class VorbisFloor {
+public class Floor {
 
 	@ObfuscatedName("e.r")
 	public static final int[] field219 = new int[] { 256, 128, 86, 64 };
@@ -210,18 +211,18 @@ public class VorbisFloor {
 		this.method194(var3 + 1, arg1);
 	}
 
-	public VorbisFloor() {
-		int floor_types = VorbisSound.read_bits(16);
+	public Floor() {
+		int floor_types = JagVorbis.read_bits(16);
 		if (floor_types != 1) {
 			throw new RuntimeException();
 		}
 
-		int partitions = VorbisSound.read_bits(5);
+		int partitions = JagVorbis.read_bits(5);
 		int max_class = 0;
 		this.partition_class_list = new int[partitions];
 
 		for (int i = 0; i < partitions; i++) {
-			int value = VorbisSound.read_bits(4);
+			int value = JagVorbis.read_bits(4);
 			this.partition_class_list[i] = value;
 
 			if (value >= max_class) {
@@ -235,11 +236,11 @@ public class VorbisFloor {
 		this.subclass_books = new int[max_class][];
 
 		for (int i = 0; i < max_class; i++) {
-			this.class_dimensions[i] = VorbisSound.read_bits(3) + 1;
-			int subs = this.class_subclasses[i] = VorbisSound.read_bits(2);
+			this.class_dimensions[i] = JagVorbis.read_bits(3) + 1;
+			int subs = this.class_subclasses[i] = JagVorbis.read_bits(2);
 
 			if (subs != 0) {
-				this.class_masterbooks[i] = VorbisSound.read_bits(8);
+				this.class_masterbooks[i] = JagVorbis.read_bits(8);
 			}
 
 			int subclass_count = 0x1 << subs;
@@ -247,12 +248,12 @@ public class VorbisFloor {
 			this.subclass_books[i] = subclass;
 
 			for (int j = 0; j < subclass_count; j++) {
-				subclass[j] = VorbisSound.read_bits(8) - 1;
+				subclass[j] = JagVorbis.read_bits(8) - 1;
 			}
 		}
 
-		this.floor1_multiplier = VorbisSound.read_bits(2) + 1;
-		int rangebits = VorbisSound.read_bits(4);
+		this.floor1_multiplier = JagVorbis.read_bits(2) + 1;
+		int rangebits = JagVorbis.read_bits(4);
 
 		int values = 2;
 		for (int i = 0; i < partitions; i++) {
@@ -268,7 +269,7 @@ public class VorbisFloor {
 			int partition = this.partition_class_list[i];
 
 			for (int j = 0; j < this.class_dimensions[partition]; j++) {
-				this.Xlist[values++] = VorbisSound.read_bits(rangebits);
+				this.Xlist[values++] = JagVorbis.read_bits(rangebits);
 			}
 		}
 
@@ -281,7 +282,7 @@ public class VorbisFloor {
 
 	@ObfuscatedName("e.n()Z")
 	public boolean method187() {
-		boolean var1 = VorbisSound.read_bool() != 0;
+		boolean var1 = JagVorbis.read_bool() != 0;
 		if (!var1) {
 			return false;
 		}
@@ -291,8 +292,8 @@ public class VorbisFloor {
 		}
 		int var4 = field219[this.floor1_multiplier - 1];
 		int var5 = IntUtil.ilog(var4 - 1);
-		post[0] = VorbisSound.read_bits(var5);
-		post[1] = VorbisSound.read_bits(var5);
+		post[0] = JagVorbis.read_bits(var5);
+		post[1] = JagVorbis.read_bits(var5);
 		int var6 = 2;
 		for (int var7 = 0; var7 < this.partition_class_list.length; var7++) {
 			int var8 = this.partition_class_list[var7];
@@ -301,12 +302,12 @@ public class VorbisFloor {
 			int var11 = (0x1 << var10) - 1;
 			int var12 = 0;
 			if (var10 > 0) {
-				var12 = VorbisSound.codebooks[this.class_masterbooks[var8]].method320();
+				var12 = JagVorbis.codebooks[this.class_masterbooks[var8]].method320();
 			}
 			for (int var13 = 0; var13 < var9; var13++) {
 				int var14 = this.subclass_books[var8][var12 & var11];
 				var12 >>>= var10;
-				post[var6++] = var14 >= 0 ? VorbisSound.codebooks[var14].method320() : 0;
+				post[var6++] = var14 >= 0 ? JagVorbis.codebooks[var14].method320() : 0;
 			}
 		}
 		return true;

@@ -63,7 +63,7 @@ public class Js5Local extends Js5Index {
 	}
 
 	@ObfuscatedName("dq.bo(B)I")
-	public int method1483() {
+	public int getIndexPercentage() {
 		if (this.field1575) {
 			return 100;
 		} else if (this.packed == null) {

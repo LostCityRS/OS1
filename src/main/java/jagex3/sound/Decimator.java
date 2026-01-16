@@ -3,8 +3,9 @@ package jagex3.sound;
 import deob.ObfuscatedName;
 import jagex3.datastruct.IntUtil;
 
+// jag::oldscape::sound::Decimator
 @ObfuscatedName("p")
-public class PcmResampler {
+public class Decimator {
 
 	@ObfuscatedName("p.m")
 	public int field329;
@@ -15,7 +16,7 @@ public class PcmResampler {
 	@ObfuscatedName("p.n")
 	public int[][] field334;
 
-	public PcmResampler(int arg0, int arg1) {
+	public Decimator(int arg0, int arg1) {
 		if (arg0 != arg1) {
 			int var3 = IntUtil.method430(arg0, arg1);
 			int var4 = arg0 / var3;
@@ -50,7 +51,7 @@ public class PcmResampler {
 	}
 
 	@ObfuscatedName("p.r([BI)[B")
-	public byte[] method340(byte[] arg0) {
+	public byte[] decimate(byte[] arg0) {
 		if (this.field334 != null) {
 			int var2 = (int) ((long) this.field331 * (long) arg0.length / (long) this.field329) + 14;
 			int[] var3 = new int[var2];
@@ -83,7 +84,7 @@ public class PcmResampler {
 	}
 
 	@ObfuscatedName("p.d(IS)I")
-	public int method333(int arg0) {
+	public int transmitFreq(int arg0) {
 		if (this.field334 != null) {
 			arg0 = (int) ((long) this.field331 * (long) arg0 / (long) this.field329);
 		}
@@ -91,7 +92,7 @@ public class PcmResampler {
 	}
 
 	@ObfuscatedName("p.l(II)I")
-	public int method334(int arg0) {
+	public int transmitPos(int arg0) {
 		if (this.field334 != null) {
 			arg0 = (int) ((long) this.field331 * (long) arg0 / (long) this.field329) + 6;
 		}
