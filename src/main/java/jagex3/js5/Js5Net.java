@@ -87,7 +87,7 @@ public class Js5Net {
 	}
 
 	@ObfuscatedName("by.r(B)Z")
-	public static boolean tick() {
+	public static boolean loop() {
 		long currentTimeMs = MonotonicTime.currentTime();
 		int timeDelta = (int) (currentTimeMs - lastTickMs);
 		lastTickMs = currentTimeMs;

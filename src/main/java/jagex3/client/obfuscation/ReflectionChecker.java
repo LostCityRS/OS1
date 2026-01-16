@@ -27,7 +27,7 @@ public class ReflectionChecker {
 				return;
 			}
 
-			buf.pisaac1(opcode);
+			buf.p1Enc(opcode);
 			buf.p1(0);
 			int start = buf.pos;
 

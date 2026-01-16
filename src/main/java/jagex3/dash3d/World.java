@@ -100,10 +100,10 @@ public class World {
 	public static int mouseY = 0;
 
 	@ObfuscatedName("aq.ah")
-	public static int clickTileX = -1;
+	public static int groundX = -1;
 
 	@ObfuscatedName("aq.ay")
-	public static int clickTileZ = -1;
+	public static int groundZ = -1;
 
 	@ObfuscatedName("aq.ao")
 	public static int levelCount = 4;
@@ -962,8 +962,8 @@ public class World {
 		clickLevel = arg0;
 		mouseX = arg1;
 		mouseY = arg2;
-		clickTileX = -1;
-		clickTileZ = -1;
+		groundX = -1;
+		groundZ = -1;
 	}
 
 	@ObfuscatedName("aq.al(IIIIII)V")
@@ -1646,8 +1646,8 @@ public class World {
 			}
 
 			if (takingInput && this.pointInsideTriangle(mouseX, mouseY, pz1, py3, px1, py1, px3, pz0)) {
-				clickTileX = tileX;
-				clickTileZ = tileZ;
+				groundX = tileX;
+				groundZ = tileZ;
 			}
 
 			if (underlay.texture == -1) {
@@ -1671,8 +1671,8 @@ public class World {
 			}
 
 			if (takingInput && this.pointInsideTriangle(mouseX, mouseY, py0, px1, py3, px0, pz0, px3)) {
-				clickTileX = tileX;
-				clickTileZ = tileZ;
+				groundX = tileX;
+				groundZ = tileZ;
 			}
 
 			if (underlay.texture == -1) {
@@ -1739,8 +1739,8 @@ public class World {
 				}
 
 				if (takingInput && this.pointInsideTriangle(mouseX, mouseY, yA, yB, yC, xA, xB, xC)) {
-					clickTileX = arg5;
-					clickTileZ = arg6;
+					groundX = arg5;
+					groundZ = arg6;
 				}
 
 				if (overlay.faceTexture == null || overlay.faceTexture[var20] == -1) {

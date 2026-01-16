@@ -124,25 +124,25 @@ public abstract class ClientEntity extends ModelSource {
 	public int field2629;
 
 	@ObfuscatedName("fz.au")
-	public int forceMoveStartSceneTileX;
+	public int exactStartX;
 
 	@ObfuscatedName("fz.ax")
 	public int forceMoveEndSceneTileX;
 
 	@ObfuscatedName("fz.ai")
-	public int forceMoveStartSceneTileZ;
+	public int exactStartZ;
 
 	@ObfuscatedName("fz.aj")
 	public int forceMoveEndSceneTileZ;
 
 	@ObfuscatedName("fz.aw")
-	public int forceMoveEndCycle;
+	public int exactMoveEnd;
 
 	@ObfuscatedName("fz.af")
-	public int forceMoveStartCycle;
+	public int exactMoveStart;
 
 	@ObfuscatedName("fz.bh")
-	public int forceMoveFaceDirection;
+	public int exactMoveFacing;
 
 	@ObfuscatedName("fz.bi")
 	public int cycle = 0;
@@ -172,7 +172,7 @@ public abstract class ClientEntity extends ModelSource {
 	public boolean[] routeRun = new boolean[10];
 
 	@ObfuscatedName("fz.bx")
-	public int seqDelayMove = 0;
+	public int animDelayMove = 0;
 
 	@ObfuscatedName("fz.bf")
 	public int preanimRouteLength = 0;
@@ -202,7 +202,7 @@ public abstract class ClientEntity extends ModelSource {
 		}
 		this.routeLength = 0;
 		this.preanimRouteLength = 0;
-		this.seqDelayMove = 0;
+		this.animDelayMove = 0;
 		this.routeX[0] = arg0;
 		this.routeZ[0] = arg1;
 		this.x = this.routeX[0] * 128 + this.size * 64;

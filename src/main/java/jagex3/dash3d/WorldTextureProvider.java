@@ -47,7 +47,7 @@ public class WorldTextureProvider implements TextureProvider {
 	}
 
 	@ObfuscatedName("bi.u(D)V")
-	public void method757(double arg0) {
+	public void setBrightness(double arg0) {
 		this.brightness = arg0;
 		this.method749();
 	}

@@ -229,7 +229,7 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 		}
 	}
 
-	public static int imethod3() {
+	public static int getIdleCycles() {
 		// todo: 468 incremented this, osrs 1 does not? idle timer has also changed
 		return idleCycles;
 	}

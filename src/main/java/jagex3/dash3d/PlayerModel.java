@@ -18,7 +18,7 @@ public class PlayerModel {
 	public int[] field1223;
 
 	@ObfuscatedName("ct.l")
-	public boolean field1222;
+	public boolean gender;
 
 	@ObfuscatedName("ct.m")
 	public int field1225;
@@ -63,14 +63,14 @@ public class PlayerModel {
 		}
 		this.field1228 = arg0;
 		this.field1223 = arg1;
-		this.field1222 = arg2;
+		this.gender = arg2;
 		this.field1225 = arg3;
 		this.method1173();
 	}
 
 	@ObfuscatedName("ct.d(IZI)V")
-	public void method1169(int arg0, boolean arg1) {
-		if (arg0 == 1 && this.field1222) {
+	public void idkChangePart(int arg0, boolean arg1) {
+		if (arg0 == 1 && this.gender) {
 			return;
 		}
 		int var3 = this.field1228[field1230[arg0]];
@@ -92,13 +92,13 @@ public class PlayerModel {
 				}
 			}
 			var4 = IdkType.get(var3);
-		} while (var4 == null || var4.disable || var4.type != (this.field1222 ? 7 : 0) + arg0);
+		} while (var4 == null || var4.disable || var4.type != (this.gender ? 7 : 0) + arg0);
 		this.field1228[field1230[arg0]] = var3 + 256;
 		this.method1173();
 	}
 
 	@ObfuscatedName("ct.l(IZI)V")
-	public void method1170(int arg0, boolean arg1) {
+	public void idkChangeColour(int arg0, boolean arg1) {
 		int var3 = this.field1223[arg0];
 		if (arg1) {
 			var3++;
@@ -116,15 +116,15 @@ public class PlayerModel {
 	}
 
 	@ObfuscatedName("ct.m(ZI)V")
-	public void method1171(boolean arg0) {
-		if (this.field1222 != arg0) {
+	public void idkChangeGender(boolean arg0) {
+		if (this.gender != arg0) {
 			this.method1168(null, this.field1223, arg0, -1);
 		}
 	}
 
 	@ObfuscatedName("ct.c(Lev;I)V")
-	public void method1172(Packet arg0) {
-		arg0.p1(this.field1222 ? 1 : 0);
+	public void idkSaveDesign(Packet arg0) {
+		arg0.p1(this.gender ? 1 : 0);
 		for (int var2 = 0; var2 < 7; var2++) {
 			int var3 = this.field1228[field1230[var2]];
 			if (var3 == 0) {
@@ -163,7 +163,7 @@ public class PlayerModel {
 			this.field1226 += this.field1223[var6];
 		}
 		this.field1226 <<= 0x1;
-		this.field1226 += this.field1222 ? 1 : 0;
+		this.field1226 += this.gender ? 1 : 0;
 		this.field1228[5] = var3;
 		this.field1228[9] = var4;
 		if (var1 != 0L && this.field1226 != var1) {
@@ -200,7 +200,7 @@ public class PlayerModel {
 				if (var12 >= 256 && var12 < 512 && !IdkType.get(var12 - 256).isDownloaded()) {
 					var10 = true;
 				}
-				if (var12 >= 512 && !ObjType.get(var12 - 512).downloadWornModel(this.field1222)) {
+				if (var12 >= 512 && !ObjType.get(var12 - 512).downloadWornModel(this.gender)) {
 					var10 = true;
 				}
 			}
@@ -224,7 +224,7 @@ public class PlayerModel {
 						}
 					}
 					if (var16 >= 512) {
-						ModelUnlit var18 = ObjType.get(var16 - 512).getWornModel(this.field1222);
+						ModelUnlit var18 = ObjType.get(var16 - 512).getWornModel(this.gender);
 						if (var18 != null) {
 							var13[var14++] = var18;
 						}
@@ -269,7 +269,7 @@ public class PlayerModel {
 			if (var3 >= 256 && var3 < 512 && !IdkType.get(var3 - 256).isHeadDownloaded()) {
 				var1 = true;
 			}
-			if (var3 >= 512 && !ObjType.get(var3 - 512).downloadHeadModel(this.field1222)) {
+			if (var3 >= 512 && !ObjType.get(var3 - 512).downloadHeadModel(this.gender)) {
 				var1 = true;
 			}
 		}
@@ -287,7 +287,7 @@ public class PlayerModel {
 				}
 			}
 			if (var7 >= 512) {
-				ModelUnlit var9 = ObjType.get(var7 - 512).getHeadModel(this.field1222);
+				ModelUnlit var9 = ObjType.get(var7 - 512).getHeadModel(this.gender);
 				if (var9 != null) {
 					var4[var5++] = var9;
 				}

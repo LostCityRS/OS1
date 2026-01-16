@@ -56,7 +56,7 @@ public class BgSound extends Linkable {
 	public LocType multiloc;
 
 	@ObfuscatedName("az.c(B)V")
-	public static void method478() {
+	public static void computeAllProperties() {
 		for (BgSound var0 = (BgSound) sounds.head(); var0 != null; var0 = (BgSound) sounds.next()) {
 			if (var0.multiloc != null) {
 				var0.computeProperties();

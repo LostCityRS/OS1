@@ -24,8 +24,9 @@ public class PacketBit extends Packet {
 		this.random = new Isaac(arg0);
 	}
 
+	// jag::PacketT::p1Isaac
 	@ObfuscatedName("ea.gt(II)V")
-	public void pisaac1(int arg0) {
+	public void p1Enc(int arg0) {
 		if (Settings.NO_ISAAC) {
 			this.data[++this.pos - 1] = (byte) arg0;
 		} else {
@@ -33,8 +34,9 @@ public class PacketBit extends Packet {
 		}
 	}
 
+	// jag::oldscape::PacketJ::g1Enc
 	@ObfuscatedName("ea.gg(B)I")
-	public int gisaac1() {
+	public int g1Enc() {
 		if (Settings.NO_ISAAC) {
 			return this.data[++this.pos - 1] & 0xFF;
 		} else {
@@ -42,11 +44,13 @@ public class PacketBit extends Packet {
 		}
 	}
 
+	// jag::oldscape::core::SuperPacket::GBitStart
 	@ObfuscatedName("ea.gy(S)V")
-	public void accessBits() {
+	public void gBitStart() {
 		this.bitPos = this.pos * 8;
 	}
 
+	// jag::PacketT::Bit::gBit
 	@ObfuscatedName("ea.gu(II)I")
 	public int gBit(int arg0) {
 		int var2 = this.bitPos >> 3;
@@ -67,13 +71,15 @@ public class PacketBit extends Packet {
 		return var5;
 	}
 
+	// jag::oldscape::core::SuperPacket::GBitEnd
 	@ObfuscatedName("ea.gb(I)V")
-	public void accessBytes() {
+	public void gBitEnd() {
 		this.pos = (this.bitPos + 7) / 8;
 	}
 
+	// jag::PacketT::Bit::bitsLeft
 	@ObfuscatedName("ea.gs(II)I")
-	public int bitsAvailable(int arg0) {
+	public int bitsLeft(int arg0) {
 		return arg0 * 8 - this.bitPos;
 	}
 }

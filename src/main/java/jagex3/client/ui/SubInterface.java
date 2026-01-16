@@ -8,10 +8,10 @@ import jagex3.datastruct.Linkable;
 public class SubInterface extends Linkable {
 
 	@ObfuscatedName("dy.m")
-	public int field1598;
+	public int id;
 
 	@ObfuscatedName("dy.c")
-	public int field1597;
+	public int type;
 
 	@ObfuscatedName("dy.n")
 	public boolean field1599 = false;

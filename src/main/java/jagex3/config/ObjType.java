@@ -493,11 +493,11 @@ public class ObjType extends DoublyLinkable {
 		model.objRender(0, obj.yan2d, obj.zan2d, obj.xan2d, obj.xof2d, obj.yof2d + model.minY / 2 + var19, obj.yof2d + var20);
 
 		if (arg2 >= 1) {
-			var17.method2714(0x000001);
+			var17.shadow(0x000001);
 		}
 
 		if (arg2 >= 2) {
-			var17.method2714(0xffffff);
+			var17.shadow(0xffffff);
 		}
 
 		if (arg3 != 0) {
@@ -668,7 +668,7 @@ public class ObjType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("da.o(S)V")
-	public static void clear() {
+	public static void clearCache() {
 		iconCache.clear();
 	}
 

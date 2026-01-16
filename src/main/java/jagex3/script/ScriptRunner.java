@@ -7,7 +7,7 @@ import jagex3.client.VarProvider;
 import jagex3.client.chat.ChatFilterPrivacy;
 import jagex3.client.ui.ClientInvCache;
 import jagex3.client.ui.IfType;
-import jagex3.client.ui.ServerKeyEvents;
+import jagex3.client.ui.ServerActive;
 import jagex3.client.ui.SubInterface;
 import jagex3.config.EnumType;
 import jagex3.config.InvType;
@@ -69,8 +69,9 @@ public class ScriptRunner {
 		throw new Error();
 	}
 
+	// jag::oldscape::ScriptRunner::ExecuteScript
 	@ObfuscatedName("bv.r(Ldu;B)V")
-	public static void runHook(HookReq req) {
+	public static void executeScript(HookReq req) {
 		Object[] onop = req.onop;
 		int id = (Integer) onop[0];
 
@@ -466,7 +467,7 @@ public class ScriptRunner {
 						var54.type = var49;
 						var54.layerid = var54.parentlayer = var51.parentlayer;
 						var54.subid = var50;
-						var54.if3 = true;
+						var54.v3 = true;
 						var51.subcomponents[var50] = var54;
 						if (secondary) {
 							activeComponent2 = var54;
@@ -474,7 +475,7 @@ public class ScriptRunner {
 							activeComponent = var54;
 						}
 
-						Client.requestRedrawComponent(var51);
+						Client.componentUpdated(var51);
 						continue;
 					}
 					if (opcode == 101) {
@@ -483,7 +484,7 @@ public class ScriptRunner {
 						IfType var56 = IfType.get(var55.parentlayer);
 
 						var56.subcomponents[var55.subid] = null;
-						Client.requestRedrawComponent(var56);
+						Client.componentUpdated(var56);
 						continue;
 					}
 					if (opcode == 102) {
@@ -492,7 +493,7 @@ public class ScriptRunner {
 						IfType var57 = IfType.get(intStack[isp]);
 
 						var57.subcomponents = null;
-						Client.requestRedrawComponent(var57);
+						Client.componentUpdated(var57);
 						continue;
 					}
 					if (opcode == 200) {
@@ -530,19 +531,19 @@ public class ScriptRunner {
 					if (opcode == 1000) {
 						// if/cc_setposition
 						isp -= 2;
-						var61.x = intStack[isp];
-						var61.y = intStack[isp + 1];
+						var61.renderx = intStack[isp];
+						var61.rendery = intStack[isp + 1];
 
-						Client.requestRedrawComponent(var61);
+						Client.componentUpdated(var61);
 						continue;
 					}
 					if (opcode == 1001) {
 						// if/cc_setsize
 						isp -= 2;
-						var61.width = intStack[isp];
-						var61.height = intStack[isp + 1];
+						var61.renderwidth = intStack[isp];
+						var61.renderheight = intStack[isp + 1];
 
-						Client.requestRedrawComponent(var61);
+						Client.componentUpdated(var61);
 						continue;
 					}
 					if (opcode == 1003) {
@@ -553,7 +554,7 @@ public class ScriptRunner {
 						if (var61.hide != var62) {
 							var61.hide = var62;
 
-							Client.requestRedrawComponent(var61);
+							Client.componentUpdated(var61);
 						}
 						continue;
 					}
@@ -572,22 +573,22 @@ public class ScriptRunner {
 						isp -= 2;
 
 						var63.scrollX = intStack[isp];
-						if (var63.scrollX > var63.scrollWidth - var63.width) {
-							var63.scrollX = var63.scrollWidth - var63.width;
+						if (var63.scrollX > var63.scrollWidth - var63.renderwidth) {
+							var63.scrollX = var63.scrollWidth - var63.renderwidth;
 						}
 						if (var63.scrollX < 0) {
 							var63.scrollX = 0;
 						}
 
 						var63.scrollY = intStack[isp + 1];
-						if (var63.scrollY > var63.scrollHeight - var63.height) {
-							var63.scrollY = var63.scrollHeight - var63.height;
+						if (var63.scrollY > var63.scrollHeight - var63.renderheight) {
+							var63.scrollY = var63.scrollHeight - var63.renderheight;
 						}
 						if (var63.scrollY < 0) {
 							var63.scrollY = 0;
 						}
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1101) {
@@ -595,7 +596,7 @@ public class ScriptRunner {
 						isp--;
 						var63.colour = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1102) {
@@ -603,7 +604,7 @@ public class ScriptRunner {
 						isp--;
 						var63.fill = intStack[isp] == 1;
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1103) {
@@ -611,7 +612,7 @@ public class ScriptRunner {
 						isp--;
 						var63.trans = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1104) {
@@ -619,7 +620,7 @@ public class ScriptRunner {
 						isp--;
 						var63.lineWidth = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1105) {
@@ -627,7 +628,7 @@ public class ScriptRunner {
 						isp--;
 						var63.graphic = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1106) {
@@ -635,7 +636,7 @@ public class ScriptRunner {
 						isp--;
 						var63.angle2d = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1107) {
@@ -643,7 +644,7 @@ public class ScriptRunner {
 						isp--;
 						var63.tiling = intStack[isp] == 1;
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1108) {
@@ -651,9 +652,9 @@ public class ScriptRunner {
 						var63.modelType = 1;
 
 						isp--;
-						var63.model = intStack[isp];
+						var63.modelId = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1109) {
@@ -661,12 +662,12 @@ public class ScriptRunner {
 						isp -= 6;
 						var63.xof = intStack[isp];
 						var63.yof = intStack[isp + 1];
-						var63.xan = intStack[isp + 2];
-						var63.yan = intStack[isp + 3];
+						var63.modelXan = intStack[isp + 2];
+						var63.modelYan = intStack[isp + 3];
 						var63.zan = intStack[isp + 4];
-						var63.zoom = intStack[isp + 5];
+						var63.modelZoom = intStack[isp + 5];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1110) {
@@ -674,12 +675,12 @@ public class ScriptRunner {
 						isp--;
 						int var64 = intStack[isp];
 
-						if (var63.anim != var64) {
-							var63.anim = var64;
-							var63.seqFrame = 0;
-							var63.seqCycle = 0;
+						if (var63.modelAnim != var64) {
+							var63.modelAnim = var64;
+							var63.animFrame = 0;
+							var63.animCycle = 0;
 
-							Client.requestRedrawComponent(var63);
+							Client.componentUpdated(var63);
 						}
 						continue;
 					}
@@ -688,7 +689,7 @@ public class ScriptRunner {
 						isp--;
 						var63.modelOrthographic = intStack[isp] == 1;
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1112) {
@@ -699,7 +700,7 @@ public class ScriptRunner {
 						if (!var65.equals(var63.text)) {
 							var63.text = var65;
 
-							Client.requestRedrawComponent(var63);
+							Client.componentUpdated(var63);
 						}
 						continue;
 					}
@@ -708,7 +709,7 @@ public class ScriptRunner {
 						isp--;
 						var63.font = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1114) {
@@ -718,7 +719,7 @@ public class ScriptRunner {
 						var63.field1834 = intStack[isp + 1];
 						var63.field1832 = intStack[isp + 2];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1115) {
@@ -726,7 +727,7 @@ public class ScriptRunner {
 						isp--;
 						var63.shadowed = intStack[isp] == 1;
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1116) {
@@ -734,15 +735,15 @@ public class ScriptRunner {
 						isp--;
 						var63.outline = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1117) {
 						// if/cc_setgraphicshadow
 						isp--;
-						var63.graphicShadow = intStack[isp];
+						var63.graphicshadow = intStack[isp];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1118) {
@@ -750,7 +751,7 @@ public class ScriptRunner {
 						isp--;
 						var63.vflip = intStack[isp] == 1;
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1119) {
@@ -758,7 +759,7 @@ public class ScriptRunner {
 						isp--;
 						var63.hflip = intStack[isp] == 1;
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 					if (opcode == 1120) {
@@ -767,7 +768,7 @@ public class ScriptRunner {
 						var63.scrollWidth = intStack[isp];
 						var63.scrollHeight = intStack[isp + 1];
 
-						Client.requestRedrawComponent(var63);
+						Client.componentUpdated(var63);
 						continue;
 					}
 				} else if (opcode >= 1200 && opcode < 1300 || !(opcode < 2200 || opcode >= 2300)) {
@@ -780,7 +781,7 @@ public class ScriptRunner {
 						var66 = secondary ? activeComponent2 : activeComponent;
 					}
 
-					Client.requestRedrawComponent(var66);
+					Client.componentUpdated(var66);
 
 					if (opcode == 1200) {
 						// if/cc_setobject
@@ -791,14 +792,14 @@ public class ScriptRunner {
 						var66.field1791 = var67;
 						var66.field1888 = var68;
 						ObjType var69 = ObjType.get(var67);
-						var66.xan = var69.xan2d;
-						var66.yan = var69.yan2d;
+						var66.modelXan = var69.xan2d;
+						var66.modelYan = var69.yan2d;
 						var66.zan = var69.zan2d;
 						var66.xof = var69.xof2d;
 						var66.yof = var69.yof2d;
-						var66.zoom = var69.zoom2d;
-						if (var66.width > 0) {
-							var66.zoom = var66.zoom * 32 / var66.width;
+						var66.modelZoom = var69.zoom2d;
+						if (var66.renderwidth > 0) {
+							var66.modelZoom = var66.modelZoom * 32 / var66.renderwidth;
 						}
 						continue;
 					}
@@ -807,14 +808,14 @@ public class ScriptRunner {
 						var66.modelType = 2;
 
 						isp--;
-						var66.model = intStack[isp];
+						var66.modelId = intStack[isp];
 						continue;
 					}
 					if (opcode == 1202) {
 						// if/cc_setplayerhead_self
 						var66.modelType = 3;
 
-						var66.model = Client.localPlayer.model.method1176();
+						var66.modelId = Client.localPlayer.model.method1176();
 						continue;
 					}
 				} else if ((opcode >= 1300 && opcode < 1400) || (opcode >= 2300 && opcode < 2400)) {
@@ -847,31 +848,31 @@ public class ScriptRunner {
 						int var72 = intStack[isp];
 						int var73 = intStack[isp + 1];
 
-						var70.field1845 = IfType.method947(var72, var73);
+						var70.draggable = IfType.method947(var72, var73);
 						continue;
 					}
 					if (opcode == 1302) {
 						// if/cc_setdraggablebehavior
 						isp--;
-						var70.field1858 = intStack[isp] == 1;
+						var70.draggablebehavior = intStack[isp] == 1;
 						continue;
 					}
 					if (opcode == 1303) {
 						// if/cc_setdragdeadzone
 						isp--;
-						var70.field1846 = intStack[isp];
+						var70.dragdeadzone = intStack[isp];
 						continue;
 					}
 					if (opcode == 1304) {
 						// if/cc_setdragdeadtime
 						isp--;
-						var70.field1887 = intStack[isp];
+						var70.dragdeadtime = intStack[isp];
 						continue;
 					}
 					if (opcode == 1305) {
 						// if/cc_setopbase
 						ssp--;
-						var70.field1795 = stringStack[ssp];
+						var70.opbase = stringStack[ssp];
 						continue;
 					}
 					if (opcode == 1306) {
@@ -882,7 +883,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 1307) {
 						// if/cc_clearops
-						var70.field1844 = null;
+						var70.ops = null;
 						continue;
 					}
 				} else if (opcode >= 1400 && opcode < 1500 || opcode >= 2400 && opcode < 2500) {
@@ -932,74 +933,74 @@ public class ScriptRunner {
 
 					if (opcode == 1400) {
 						// if/cc_setonclick
-						var74.field1852 = var78;
+						var74.onclick = var78;
 					}
 					if (opcode == 1401) {
 						// if/cc_setonhold
-						var74.field1855 = var78;
+						var74.onhold = var78;
 					}
 					if (opcode == 1402) {
 						// if/cc_setonrelease
-						var74.field1851 = var78;
+						var74.onrelease = var78;
 					}
 					if (opcode == 1403) {
 						// if/cc_setonmouseover
-						var74.field1856 = var78;
+						var74.onmouseover = var78;
 					}
 					if (opcode == 1404) {
 						// if/cc_setonmouseleave
-						var74.field1838 = var78;
+						var74.onmouseleave = var78;
 					}
 					if (opcode == 1405) {
 						// if/cc_setondrag
-						var74.field1781 = var78;
+						var74.ondrag = var78;
 					}
 					if (opcode == 1406) {
 						// if/cc_setontargetleave
-						var74.field1836 = var78;
+						var74.ontargetleave = var78;
 					}
 					if (opcode == 1407) {
 						// if/cc_setonvartransmit
-						var74.field1839 = var78;
-						var74.field1889 = var76;
+						var74.onvartransmit = var78;
+						var74.onvartransmitlist = var76;
 					}
 					if (opcode == 1408) {
 						// if/cc_setontimer
-						var74.field1869 = var78;
+						var74.ontimer = var78;
 					}
 					if (opcode == 1409) {
 						// if/cc_setonop
-						var74.field1847 = var78;
+						var74.onop = var78;
 					}
 					if (opcode == 1410) {
 						// if/cc_setondragcomplete
-						var74.field1860 = var78;
+						var74.ondragcomplete = var78;
 					}
 					if (opcode == 1411) {
 						// if/cc_setonclickrepeat
-						var74.field1853 = var78;
+						var74.onclickrepeat = var78;
 					}
 					if (opcode == 1412) {
 						// if/cc_setonmouserepeat
-						var74.field1857 = var78;
+						var74.onmouserepeat = var78;
 					}
 					if (opcode == 1414) {
 						// if/cc_setoninvtransmit
-						var74.field1865 = var78;
-						var74.field1866 = var76;
+						var74.oninvtransmit = var78;
+						var74.oninvtransmitlist = var76;
 					}
 					if (opcode == 1415) {
 						// if/cc_setonstattransmit
-						var74.field1867 = var78;
-						var74.field1868 = var76;
+						var74.onstattransmit = var78;
+						var74.onstattransmitlist = var76;
 					}
 					if (opcode == 1416) {
 						// if/cc_setontargetenter
-						var74.field1861 = var78;
+						var74.ontargetenter = var78;
 					}
 					if (opcode == 1417) {
 						// if/cc_setonscrollwheel
-						var74.field1831 = var78;
+						var74.onscrollwheel = var78;
 					}
 					if (opcode == 1418) {
 						// if/cc_setonchattransmit
@@ -1023,34 +1024,34 @@ public class ScriptRunner {
 					}
 					if (opcode == 1423) {
 						// if/cc_setondialogabort
-						var74.field1819 = var78;
+						var74.ondialogabort = var78;
 					}
 					if (opcode == 1424) {
 						// if/cc_setonsubchange
-						var74.field1878 = var78;
+						var74.onsubchange = var78;
 					}
-					var74.field1813 = true;
+					var74.hashook = true;
 					continue;
 				} else if (opcode < 1600) {
 					IfType var81 = secondary ? activeComponent2 : activeComponent;
 					if (opcode == 1500) {
 						// cc_x
-						intStack[isp++] = var81.x;
+						intStack[isp++] = var81.renderx;
 						continue;
 					}
 					if (opcode == 1501) {
 						// cc_y
-						intStack[isp++] = var81.y;
+						intStack[isp++] = var81.rendery;
 						continue;
 					}
 					if (opcode == 1502) {
 						// cc_getwidth
-						intStack[isp++] = var81.width;
+						intStack[isp++] = var81.renderwidth;
 						continue;
 					}
 					if (opcode == 1503) {
 						// cc_getheight
-						intStack[isp++] = var81.height;
+						intStack[isp++] = var81.renderheight;
 						continue;
 					}
 					if (opcode == 1504) {
@@ -1092,12 +1093,12 @@ public class ScriptRunner {
 					}
 					if (opcode == 1605) {
 						// cc_getmodelzoom
-						intStack[isp++] = var82.zoom;
+						intStack[isp++] = var82.modelZoom;
 						continue;
 					}
 					if (opcode == 1606) {
 						// cc_getmodelangle_x
-						intStack[isp++] = var82.xan;
+						intStack[isp++] = var82.modelXan;
 						continue;
 					}
 					if (opcode == 1607) {
@@ -1107,7 +1108,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 1608) {
 						// cc_getmodelangle_y
-						intStack[isp++] = var82.yan;
+						intStack[isp++] = var82.modelYan;
 						continue;
 					}
 				} else if (opcode < 1800) {
@@ -1135,7 +1136,7 @@ public class ScriptRunner {
 					IfType var84 = secondary ? activeComponent2 : activeComponent;
 					if (opcode == 1800) {
 						// cc_gettargetmask
-						intStack[isp++] = ServerKeyEvents.getTargetMask(Client.method1512(var84));
+						intStack[isp++] = ServerActive.targetMask(Client.getActive(var84));
 						continue;
 					}
 					if (opcode == 1801) {
@@ -1144,8 +1145,8 @@ public class ScriptRunner {
 						int var85 = intStack[isp];
 
 						int var368 = var85 - 1;
-						if (var84.field1844 != null && var368 < var84.field1844.length && var84.field1844[var368] != null) {
-							stringStack[ssp++] = var84.field1844[var368];
+						if (var84.ops != null && var368 < var84.ops.length && var84.ops[var368] != null) {
+							stringStack[ssp++] = var84.ops[var368];
 							continue;
 						}
 
@@ -1154,10 +1155,10 @@ public class ScriptRunner {
 					}
 					if (opcode == 1802) {
 						// cc_getopbase
-						if (var84.field1795 == null) {
+						if (var84.opbase == null) {
 							stringStack[ssp++] = "";
 						} else {
-							stringStack[ssp++] = var84.field1795;
+							stringStack[ssp++] = var84.opbase;
 						}
 						continue;
 					}
@@ -1166,22 +1167,22 @@ public class ScriptRunner {
 					IfType var86 = IfType.get(intStack[isp]);
 					if (opcode == 2500) {
 						// if_getx
-						intStack[isp++] = var86.x;
+						intStack[isp++] = var86.renderx;
 						continue;
 					}
 					if (opcode == 2501) {
 						// if_gety
-						intStack[isp++] = var86.y;
+						intStack[isp++] = var86.rendery;
 						continue;
 					}
 					if (opcode == 2502) {
 						// if_getwidth
-						intStack[isp++] = var86.width;
+						intStack[isp++] = var86.renderwidth;
 						continue;
 					}
 					if (opcode == 2503) {
 						// if_getheight
-						intStack[isp++] = var86.height;
+						intStack[isp++] = var86.renderheight;
 						continue;
 					}
 					if (opcode == 2504) {
@@ -1224,12 +1225,12 @@ public class ScriptRunner {
 					}
 					if (opcode == 2605) {
 						// if_getmodelzoom
-						intStack[isp++] = var87.zoom;
+						intStack[isp++] = var87.modelZoom;
 						continue;
 					}
 					if (opcode == 2606) {
 						// if_getmodelangle_x
-						intStack[isp++] = var87.xan;
+						intStack[isp++] = var87.modelXan;
 						continue;
 					}
 					if (opcode == 2607) {
@@ -1239,7 +1240,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 2608) {
 						// if_getmodelangle_y
-						intStack[isp++] = var87.yan;
+						intStack[isp++] = var87.modelYan;
 						continue;
 					}
 				} else if (opcode < 2800) {
@@ -1268,7 +1269,7 @@ public class ScriptRunner {
 						isp--;
 						int var90 = intStack[isp];
 
-						SubInterface var91 = (SubInterface) Client.field1918.get(var90);
+						SubInterface var91 = (SubInterface) Client.subinterfaces.get(var90);
 						if (var91 == null) {
 							intStack[isp++] = 0;
 						} else {
@@ -1281,7 +1282,7 @@ public class ScriptRunner {
 					IfType var92 = IfType.get(intStack[isp]);
 					if (opcode == 2800) {
 						// if_gettargetmask
-						intStack[isp++] = ServerKeyEvents.getTargetMask(Client.method1512(var92));
+						intStack[isp++] = ServerActive.targetMask(Client.getActive(var92));
 						continue;
 					}
 					if (opcode == 2801) {
@@ -1290,8 +1291,8 @@ public class ScriptRunner {
 						int var93 = intStack[isp];
 
 						int var369 = var93 - 1;
-						if (var92.field1844 != null && var369 < var92.field1844.length && var92.field1844[var369] != null) {
-							stringStack[ssp++] = var92.field1844[var369];
+						if (var92.ops != null && var369 < var92.ops.length && var92.ops[var369] != null) {
+							stringStack[ssp++] = var92.ops[var369];
 							continue;
 						}
 
@@ -1300,10 +1301,10 @@ public class ScriptRunner {
 					}
 					if (opcode == 2802) {
 						// if_getopbase
-						if (var92.field1795 == null) {
+						if (var92.opbase == null) {
 							stringStack[ssp++] = "";
 						} else {
-							stringStack[ssp++] = var92.field1795;
+							stringStack[ssp++] = var92.opbase;
 						}
 						continue;
 					}
@@ -1325,7 +1326,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 3103) {
 						// if_close
-						Client.imethod47();
+						Client.closeModal();
 						continue;
 					}
 					if (opcode == 3104) {
@@ -1339,7 +1340,7 @@ public class ScriptRunner {
 							var97 = var98;
 						}
 
-						Client.out.pisaac1(27);
+						Client.out.p1Enc(27);
 						Client.out.p4(var97);
 						continue;
 					}
@@ -1348,7 +1349,7 @@ public class ScriptRunner {
 						ssp--;
 						String var99 = stringStack[ssp];
 
-						Client.out.pisaac1(223);
+						Client.out.p1Enc(223);
 						Client.out.p1(var99.length() + 1);
 						Client.out.pjstr(var99);
 						continue;
@@ -1358,7 +1359,7 @@ public class ScriptRunner {
 						ssp--;
 						String var100 = stringStack[ssp];
 
-						Client.out.pisaac1(127);
+						Client.out.p1Enc(127);
 						Client.out.p1(var100.length() + 1);
 						Client.out.pjstr(var100);
 						continue;
@@ -1382,7 +1383,7 @@ public class ScriptRunner {
 						int var105 = intStack[isp + 2];
 
 						IfType var106 = IfType.get(var105);
-						Client.method1102(var106, var103, var104);
+						Client.dragTryPickup(var106, var103, var104);
 						continue;
 					}
 					if (opcode == 3109) {
@@ -1392,7 +1393,7 @@ public class ScriptRunner {
 						int var108 = intStack[isp + 1];
 
 						IfType var109 = secondary ? activeComponent2 : activeComponent;
-						Client.method1102(var109, var107, var108);
+						Client.dragTryPickup(var109, var107, var108);
 						continue;
 					}
 				} else if (opcode < 3300) {
@@ -1578,7 +1579,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 3323) {
 						// playermod
-						if (Client.field2091) {
+						if (Client.playermod) {
 							intStack[isp++] = 1;
 						} else {
 							intStack[isp++] = 0;
@@ -1655,9 +1656,9 @@ public class ScriptRunner {
 				} else if (opcode < 3700) {
 					if (opcode == 3600) {
 						// friend_count
-						if (Client.field2171 == 0) {
+						if (Client.friendListStatus == 0) {
 							intStack[isp++] = -2;
-						} else if (Client.field2171 == 1) {
+						} else if (Client.friendListStatus == 1) {
 							intStack[isp++] = -1;
 						} else {
 							intStack[isp++] = Client.friendCount;
@@ -1669,7 +1670,7 @@ public class ScriptRunner {
 						isp--;
 
 						int var161 = intStack[isp];
-						if (Client.field2171 == 2 && var161 < Client.friendCount) {
+						if (Client.friendListStatus == 2 && var161 < Client.friendCount) {
 							stringStack[ssp++] = Client.friendList[var161].name;
 							continue;
 						}
@@ -1682,7 +1683,7 @@ public class ScriptRunner {
 						isp--;
 
 						int var162 = intStack[isp];
-						if (Client.field2171 == 2 && var162 < Client.friendCount) {
+						if (Client.friendListStatus == 2 && var162 < Client.friendCount) {
 							intStack[isp++] = Client.friendList[var162].field174;
 							continue;
 						}
@@ -1695,7 +1696,7 @@ public class ScriptRunner {
 						isp--;
 						int var163 = intStack[isp];
 
-						if (Client.field2171 == 2 && var163 < Client.friendCount) {
+						if (Client.friendListStatus == 2 && var163 < Client.friendCount) {
 							intStack[isp++] = Client.friendList[var163].field175;
 							continue;
 						}
@@ -1848,7 +1849,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 3621) {
 						// ignore_count
-						if (Client.field2171 == 0) {
+						if (Client.friendListStatus == 0) {
 							intStack[isp++] = -1;
 						} else {
 							intStack[isp++] = Client.ignoreCount;
@@ -1860,7 +1861,7 @@ public class ScriptRunner {
 						isp--;
 						int var188 = intStack[isp];
 
-						if (Client.field2171 != 0 && var188 < Client.ignoreCount) {
+						if (Client.friendListStatus != 0 && var188 < Client.ignoreCount) {
 							stringStack[ssp++] = Client.ignoreList[var188].name;
 							continue;
 						}
@@ -2117,7 +2118,7 @@ public class ScriptRunner {
 						String var242 = stringStack[ssp];
 						String var243 = stringStack[ssp + 1];
 
-						if (Client.localPlayer.model != null && Client.localPlayer.model.field1222) {
+						if (Client.localPlayer.model != null && Client.localPlayer.model.gender) {
 							stringStack[ssp++] = var243;
 							continue;
 						}
@@ -2396,7 +2397,7 @@ public class ScriptRunner {
 						}
 						Client.tradeChatFilter = intStack[isp + 2];
 
-						Client.out.pisaac1(167);
+						Client.out.p1Enc(167);
 						Client.out.p1(Client.publicChatFilter);
 						Client.out.p1(Client.privateChatFilter.index);
 						Client.out.p1(Client.tradeChatFilter);
@@ -2411,7 +2412,7 @@ public class ScriptRunner {
 						int var343 = intStack[isp];
 						int var344 = intStack[isp + 1];
 
-						Client.out.pisaac1(96);
+						Client.out.p1Enc(96);
 						Client.out.p1(Packet.pjstrlen(var342) + 2);
 						Client.out.pjstr(var342);
 						Client.out.p1(var343 - 1);
@@ -2581,7 +2582,7 @@ public class ScriptRunner {
 							}
 
 							// MESSAGE_PUBLIC
-							Client.out.pisaac1(205);
+							Client.out.p1Enc(205);
 							Client.out.p1(0);
 							int start = Client.out.pos;
 
@@ -2600,7 +2601,7 @@ public class ScriptRunner {
 						String var356 = stringStack[ssp + 1];
 
 						// MESSAGE_PRIVATE
-						Client.out.pisaac1(211);
+						Client.out.p1Enc(211);
 						Client.out.p2(0);
 						int var357 = Client.out.pos;
 
@@ -2733,7 +2734,7 @@ public class ScriptRunner {
 			return;
 		}
 
-		IfType[] all = IfType.interfaces[id];
+		IfType[] all = IfType.components[id];
 		for (int i = 0; i < all.length; i++) {
 			IfType com = all[i];
 
@@ -2741,7 +2742,7 @@ public class ScriptRunner {
 				HookReq req = new HookReq();
 				req.component = com;
 				req.onop = com.onload;
-				runHook(req);
+				executeScript(req);
 			}
 		}
 	}

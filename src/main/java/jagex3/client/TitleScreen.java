@@ -101,13 +101,13 @@ public class TitleScreen {
 	public static int field151 = 0;
 
 	@ObfuscatedName("g.av")
-	public static String line1Message = "";
+	public static String loginMes1 = "";
 
 	@ObfuscatedName("g.ak")
-	public static String line2Message = "";
+	public static String loginMes2 = "";
 
 	@ObfuscatedName("g.az")
-	public static String line3Message = "";
+	public static String loginMes3 = "";
 
 	@ObfuscatedName("g.an")
 	public static String username = "";
@@ -257,9 +257,9 @@ public class TitleScreen {
 			}
 			short var13 = 462;
 			if (var8 == 1 && var9 >= var13 - 75 && var9 <= var13 + 75 && var10 >= var12 - 20 && var10 <= var12 + 20) {
-				line1Message = Text.PLEASELOGIN1;
-				line2Message = Text.PLEASELOGIN2;
-				line3Message = Text.PLEASELOGIN3;
+				loginMes1 = Text.PLEASELOGIN1;
+				loginMes2 = Text.PLEASELOGIN2;
+				loginMes3 = Text.PLEASELOGIN3;
 				field151 = 2;
 				field150 = 0;
 			}
@@ -279,14 +279,14 @@ public class TitleScreen {
 			if (var8 == 1 && var9 >= var15 - 75 && var9 <= var15 + 75 && var10 >= var16 - 20 && var10 <= var16 + 20) {
 				username = username.trim();
 				if (username.length() == 0) {
-					showMessage(Text.field978, Text.field979, Text.field980);
+					loginMes(Text.field978, Text.field979, Text.field980);
 					return;
 				}
 				if (password.length() == 0) {
-					showMessage(Text.field981, Text.field982, Text.field983);
+					loginMes(Text.field981, Text.field982, Text.field983);
 					return;
 				}
-				showMessage(Text.CONNECTING1, Text.CONNECTING2, Text.CONNECTING3);
+				loginMes(Text.CONNECTING1, Text.CONNECTING2, Text.CONNECTING3);
 				Client.setMainState(20);
 				return;
 			}
@@ -324,14 +324,14 @@ public class TitleScreen {
 					if (Client.modewhere == 2 && JavaKeyboardProvider.field114 == 84) {
 						username = username.trim();
 						if (username.length() == 0) {
-							showMessage(Text.field978, Text.field979, Text.field980);
+							loginMes(Text.field978, Text.field979, Text.field980);
 							break;
 						}
 						if (password.length() == 0) {
-							showMessage(Text.field981, Text.field982, Text.field983);
+							loginMes(Text.field981, Text.field982, Text.field983);
 							break;
 						}
-						showMessage(Text.CONNECTING1, Text.CONNECTING2, Text.CONNECTING3);
+						loginMes(Text.CONNECTING1, Text.CONNECTING2, Text.CONNECTING3);
 						Client.setMainState(20);
 						break;
 					}
@@ -368,11 +368,11 @@ public class TitleScreen {
 		if (Client.state == 20) {
 			field137.plotSprite(382 - field137.wi / 2, 271 - field137.hi / 2);
 			short var4 = 211;
-			arg0.centreString(line1Message, 382, var4, 16776960, 0);
+			arg0.centreString(loginMes1, 382, var4, 16776960, 0);
 			int var89 = var4 + 15;
-			arg0.centreString(line2Message, 382, var89, 16776960, 0);
+			arg0.centreString(loginMes2, 382, var89, 16776960, 0);
 			int var90 = var89 + 15;
-			arg0.centreString(line3Message, 382, var90, 16776960, 0);
+			arg0.centreString(loginMes3, 382, var90, 16776960, 0);
 			int var91 = var90 + 15;
 			int var92 = var91 + 10;
 			arg0.drawString(Text.USERNAMEPROMPT, 272, var92, 16777215, 0);
@@ -403,11 +403,11 @@ public class TitleScreen {
 				arg0.method2824(Text.EXISTINGUSER, var14 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 			} else if (field151 == 2) {
 				short var15 = 211;
-				arg0.centreString(line1Message, 382, var15, 16776960, 0);
+				arg0.centreString(loginMes1, 382, var15, 16776960, 0);
 				int var94 = var15 + 15;
-				arg0.centreString(line2Message, 382, var94, 16776960, 0);
+				arg0.centreString(loginMes2, 382, var94, 16776960, 0);
 				int var95 = var94 + 15;
-				arg0.centreString(line3Message, 382, var95, 16776960, 0);
+				arg0.centreString(loginMes3, 382, var95, 16776960, 0);
 				int var96 = var95 + 15;
 				int var97 = var96 + 10;
 				arg0.drawString(Text.USERNAMEPROMPT, 272, var97, 16777215, 0);
@@ -650,11 +650,12 @@ public class TitleScreen {
 		}
 	}
 
+	// jag::oldscape::TitleScreen::LoginMes
 	@ObfuscatedName("em.c(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V")
-	public static void showMessage(String line1, String line2, String line3) {
-		line1Message = line1;
-		line2Message = line2;
-		line3Message = line3;
+	public static void loginMes(String line1, String line2, String line3) {
+		loginMes1 = line1;
+		loginMes2 = line2;
+		loginMes3 = line3;
 	}
 
 	@ObfuscatedName("br.n(Lft;B)V")

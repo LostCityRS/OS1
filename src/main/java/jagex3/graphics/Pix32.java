@@ -130,7 +130,7 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.ba(I)V")
-	public void method2725(int arg0) {
+	public void pad(int arg0) {
 		if (this.wi == this.owi && this.ohi == this.hi) {
 			return;
 		}
@@ -166,7 +166,7 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.bc()V")
-	public void method2666() {
+	public void hflip() {
 		int[] var1 = new int[this.wi * this.hi];
 		int var2 = 0;
 		for (int var3 = 0; var3 < this.hi; var3++) {
@@ -179,7 +179,7 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.br()V")
-	public void method2711() {
+	public void vflip() {
 		int[] var1 = new int[this.wi * this.hi];
 		int var2 = 0;
 		for (int var3 = this.hi - 1; var3 >= 0; var3--) {
@@ -192,7 +192,7 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.bb(I)V")
-	public void method2714(int arg0) {
+	public void shadow(int arg0) {
 		int[] var2 = new int[this.wi * this.hi];
 		int var3 = 0;
 		for (int var4 = 0; var4 < this.hi; var4++) {
