@@ -646,7 +646,7 @@ public class World {
 	}
 
 	@ObfuscatedName("aq.ac(III)I")
-	public int getDecorBitset(int arg0, int arg1, int arg2) {
+	public int decorType(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		return var4 == null || var4.decor == null ? 0 : var4.decor.typecode;
 	}

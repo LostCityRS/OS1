@@ -127,13 +127,13 @@ public abstract class ClientEntity extends ModelSource {
 	public int exactStartX;
 
 	@ObfuscatedName("fz.ax")
-	public int forceMoveEndSceneTileX;
+	public int exactEndX;
 
 	@ObfuscatedName("fz.ai")
 	public int exactStartZ;
 
 	@ObfuscatedName("fz.aj")
-	public int forceMoveEndSceneTileZ;
+	public int exactEndZ;
 
 	@ObfuscatedName("fz.aw")
 	public int exactMoveEnd;

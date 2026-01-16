@@ -10,7 +10,7 @@ import jagex3.js5.Js5Loader;
 import jagex3.js5.Js5Net;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.Text;
-import jagex3.jstring.TextUtil;
+import jagex3.jstring.StringConstants;
 import jagex3.midi.MidiManager;
 
 import java.awt.*;
@@ -397,10 +397,10 @@ public class TitleScreen {
 				short var12 = 302;
 				short var13 = 291;
 				field153.plotSprite(var12 - 73, var13 - 20);
-				arg0.method2824(Text.NEWUSER, var12 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
+				arg0.drawStringMultiline(Text.NEWUSER, var12 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 				short var14 = 462;
 				field153.plotSprite(var14 - 73, var13 - 20);
-				arg0.method2824(Text.EXISTINGUSER, var14 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
+				arg0.drawStringMultiline(Text.EXISTINGUSER, var14 - 73, var13 - 20, 144, 40, 16777215, 0, 1, 1, 0);
 			} else if (field151 == 2) {
 				short var15 = 211;
 				arg0.centreString(loginMes1, 382, var15, 16776960, 0);
@@ -415,12 +415,12 @@ public class TitleScreen {
 				String var17;
 				for (var17 = username; arg0.stringWid(var17) > var16; var17 = var17.substring(1)) {
 				}
-				arg0.drawString(PixFont.method2844(var17) + (field150 == 0 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 312, var97, 16777215, 0);
+				arg0.drawString(PixFont.method2844(var17) + (field150 == 0 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 312, var97, 16777215, 0);
 				var94 = var97 + 15;
 				String var19 = Text.PASSWORDPROMPT;
 				String var20 = password;
 				String var21 = StringUtil.method946('*', var20.length());
-				arg0.drawString(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? TextUtil.colTag(16776960) + TextUtil.pipe : ""), 274, var94, 16777215, 0);
+				arg0.drawString(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 274, var94, 16777215, 0);
 				var94 += 15;
 				short var22 = 302;
 				short var23 = 321;

@@ -19,7 +19,7 @@ import jagex3.io.Packet;
 import jagex3.jstring.JString;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.Text;
-import jagex3.jstring.TextUtil;
+import jagex3.jstring.StringConstants;
 import jagex3.wordenc.Huffman;
 
 import java.util.Calendar;
@@ -1314,14 +1314,14 @@ public class ScriptRunner {
 						ssp--;
 						String var94 = stringStack[ssp];
 
-						Client.addMessage(0, "", var94);
+						Client.addChat(0, "", var94);
 						continue;
 					}
 					if (opcode == 3101) {
 						// anim
 						isp -= 2;
 
-						Client.method1040(Client.localPlayer, intStack[isp], intStack[isp + 1]);
+						Client.triggerPlayerAnim(Client.localPlayer, intStack[isp], intStack[isp + 1]);
 						continue;
 					}
 					if (opcode == 3103) {
@@ -1755,7 +1755,7 @@ public class ScriptRunner {
 						ssp--;
 						String var177 = stringStack[ssp];
 
-						if (var177.startsWith(TextUtil.imgTag(0)) || var177.startsWith(TextUtil.imgTag(1))) {
+						if (var177.startsWith(StringConstants.TAG_IMG(0)) || var177.startsWith(StringConstants.TAG_IMG(1))) {
 							var177 = var177.substring(7);
 						}
 
@@ -1877,7 +1877,7 @@ public class ScriptRunner {
 						ssp--;
 						String var189 = stringStack[ssp];
 
-						if (var189.startsWith(TextUtil.imgTag(0)) || var189.startsWith(TextUtil.imgTag(1))) {
+						if (var189.startsWith(StringConstants.TAG_IMG(0)) || var189.startsWith(StringConstants.TAG_IMG(1))) {
 							var189 = var189.substring(7);
 						}
 
@@ -2701,7 +2701,7 @@ public class ScriptRunner {
 				}
 
 				if (Client.modewhere == 0) {
-					Client.addMessage(0, "", "Clientscript error in: " + script.name);
+					Client.addChat(0, "", "Clientscript error in: " + script.name);
 				}
 
 				JagException.report("CS2 - scr:" + script.key + " op:" + lastOp + builder.toString(), ex);
@@ -2723,7 +2723,7 @@ public class ScriptRunner {
 				/* end custom code */
 
 				if (Client.modewhere == 0) {
-					Client.addMessage(0, "", "Clientscript error - check log for details");
+					Client.addChat(0, "", "Clientscript error - check log for details");
 				}
 
 				JagException.report("CS2 - scr:" + script.key + " op:" + lastOp + builder.toString(), ex);

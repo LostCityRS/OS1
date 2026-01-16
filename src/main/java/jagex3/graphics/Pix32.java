@@ -1162,7 +1162,7 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.cy(Lft;II)V")
-	public void method2694(Pix8 arg0, int arg1, int arg2) {
+	public void scanlinePlotSprite(Pix8 arg0, int arg1, int arg2) {
 		if (clipMaxX - clipMinX != arg0.wi || clipMaxY - clipMinY != arg0.hi) {
 			throw new IllegalStateException();
 		}
