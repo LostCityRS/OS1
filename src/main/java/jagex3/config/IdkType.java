@@ -5,16 +5,16 @@ import jagex3.dash3d.ModelUnlit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 @ObfuscatedName("fd")
 public class IdkType extends DoublyLinkable {
 
 	@ObfuscatedName("fd.n")
-	public static Js5Index configJs5;
+	public static Js5 configJs5;
 
 	@ObfuscatedName("fd.j")
-	public static Js5Index modelJs5;
+	public static Js5 modelJs5;
 
 	@ObfuscatedName("dl.z")
 	public static int count;
@@ -47,7 +47,7 @@ public class IdkType extends DoublyLinkable {
 	public boolean disable = false;
 
 	@ObfuscatedName("ct.z(Lch;Lch;I)V")
-	public static void unpack(Js5Index config, Js5Index model) {
+	public static void unpack(Js5 config, Js5 model) {
 		configJs5 = config;
 		modelJs5 = model;
 

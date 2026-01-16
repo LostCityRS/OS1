@@ -5,7 +5,7 @@ import jagex3.datastruct.ByteArrayNode;
 import jagex3.datastruct.HashTable;
 import jagex3.datastruct.Linkable;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 // jag::oldscape::midi2::MidiFile
 @ObfuscatedName("ei")
@@ -18,7 +18,7 @@ public class MidiFile extends Linkable {
 	public byte[] midi;
 
 	@ObfuscatedName("ei.c(Lch;II)Lei;")
-	public static MidiFile decode(Js5Index arg0, int arg1, int arg2) {
+	public static MidiFile decode(Js5 arg0, int arg1, int arg2) {
 		byte[] var3 = arg0.getFile(arg1, arg2);
 		return var3 == null ? null : new MidiFile(new Packet(var3));
 	}

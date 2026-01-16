@@ -9,9 +9,9 @@ import jagex3.io.GZip;
 import jagex3.io.Packet;
 import jagex3.jstring.StringUtil;
 
-// jag::Js5Index
+// jag::oldscape::jagex3::Js5
 @ObfuscatedName("ch")
-public abstract class Js5Index {
+public abstract class Js5 {
 
 	@ObfuscatedName("ch.r")
 	public int size;
@@ -64,13 +64,13 @@ public abstract class Js5Index {
 	@ObfuscatedName("ch.b")
 	public static int maxsize = 0;
 
-	public Js5Index(boolean discardPacked, boolean discardUnpacked) {
+	public Js5(boolean discardPacked, boolean discardUnpacked) {
 		this.discardPacked = discardPacked;
 		this.discardUnpacked = discardUnpacked;
 	}
 
 	@ObfuscatedName("ch.r([BI)V")
-	public void decode(byte[] src) {
+	public void decodeIndex(byte[] src) {
 		// todo: move to Packet.getcrc
 		int var2 = src.length;
 		int var3 = -1;

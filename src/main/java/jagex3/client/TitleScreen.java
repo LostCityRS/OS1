@@ -6,8 +6,8 @@ import jagex3.client.applet.JavaKeyboardProvider;
 import jagex3.client.applet.JavaMouseProvider;
 import jagex3.graphics.*;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Local;
-import jagex3.js5.Js5Remote;
+import jagex3.js5.Js5Loader;
+import jagex3.js5.Js5Net;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.Text;
 import jagex3.jstring.TextUtil;
@@ -202,7 +202,7 @@ public class TitleScreen {
 		MidiManager.field1120 = 0;
 		MidiManager.field1625 = false;
 		MidiManager.field1152 = 2;
-		Js5Remote.sendLoginLogoutPacket(true);
+		Js5Net.sendLoginLogoutPacket(true);
 		opened = false;
 	}
 
@@ -217,7 +217,7 @@ public class TitleScreen {
 			if (field142) {
 				MidiManager.method917();
 			} else {
-				Js5Local var1 = Client.midiSongJs5;
+				Js5Loader var1 = Client.midiSongJs5;
 				int var2 = var1.getGroupId("scape main");
 				int var3 = var1.getFileId(var2, "");
 				MidiManager.method1125(var1, var2, var3, 255, false);
@@ -1074,7 +1074,7 @@ public class TitleScreen {
 		method747(arg0, var6 + 1, arg2, arg3, arg4);
 	}
 
-	public static void open(Canvas var1, Js5Local var2, Js5Local var3) {
+	public static void open(Canvas var1, Js5Loader var2, Js5Loader var3) {
 		if (opened) {
 			return;
 		}
@@ -1146,7 +1146,7 @@ public class TitleScreen {
 		} else {
 			MidiManager.imethod1(Client.midiSongJs5);
 		}
-		Js5Remote.sendLoginLogoutPacket(false);
+		Js5Net.sendLoginLogoutPacket(false);
 		opened = true;
 		field146.method2667(0, 0);
 		field348.method2667(382, 0);

@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.IntUtil;
 import jagex3.datastruct.Linkable;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 // jag::oldscape::sound::JagVorbis
 @ObfuscatedName("dt")
@@ -492,7 +492,7 @@ public class JagVorbis extends Linkable {
 	}
 
 	@ObfuscatedName("dt.s(Lch;)Z")
-	public static boolean method1542(Js5Index arg0) {
+	public static boolean method1542(Js5 arg0) {
 		if (!field1664) {
 			byte[] var1 = arg0.getFile(0, 0);
 			if (var1 == null) {
@@ -505,7 +505,7 @@ public class JagVorbis extends Linkable {
 	}
 
 	@ObfuscatedName("dt.u(Lch;II)Ldt;")
-	public static JagVorbis decode(Js5Index arg0, int arg1, int arg2) {
+	public static JagVorbis decode(Js5 arg0, int arg1, int arg2) {
 		if (method1542(arg0)) {
 			byte[] var3 = arg0.getFile(arg1, arg2);
 			return var3 == null ? null : new JagVorbis(var3);

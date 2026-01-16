@@ -3,7 +3,7 @@ package jagex3.dash3d;
 import deob.ObfuscatedName;
 import jagex3.datastruct.LinkList;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 @ObfuscatedName("bi")
 public class WorldTextureProvider implements TextureProvider {
@@ -27,9 +27,9 @@ public class WorldTextureProvider implements TextureProvider {
 	public int resolution = 128;
 
 	@ObfuscatedName("bi.j")
-	public Js5Index spriteJs5;
+	public Js5 spriteJs5;
 
-	public WorldTextureProvider(Js5Index textureJs5, Js5Index sprite, int arg2, double brightness, int resolution) {
+	public WorldTextureProvider(Js5 textureJs5, Js5 sprite, int arg2, double brightness, int resolution) {
 		this.spriteJs5 = sprite;
 		this.field717 = arg2;
 		this.field718 = this.field717;

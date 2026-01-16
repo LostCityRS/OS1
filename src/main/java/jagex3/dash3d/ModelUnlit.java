@@ -2,7 +2,7 @@ package jagex3.dash3d;
 
 import deob.ObfuscatedName;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 @ObfuscatedName("fw")
 public class ModelUnlit extends ModelSource {
@@ -152,7 +152,7 @@ public class ModelUnlit extends ModelSource {
 	}
 
 	@ObfuscatedName("fw.b(Lch;II)Lfw;")
-	public static ModelUnlit tryGet(Js5Index arg0, int arg1, int arg2) {
+	public static ModelUnlit tryGet(Js5 arg0, int arg1, int arg2) {
 		byte[] var3 = arg0.getFile(arg1, arg2);
 		return var3 == null ? null : new ModelUnlit(var3);
 	}

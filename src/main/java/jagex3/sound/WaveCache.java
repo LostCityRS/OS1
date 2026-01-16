@@ -2,17 +2,17 @@ package jagex3.sound;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.HashTable;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 // jag::oldscape::sound::WaveCache
 @ObfuscatedName("a")
 public class WaveCache {
 
 	@ObfuscatedName("a.r")
-	public Js5Index synthArchive;
+	public Js5 synthArchive;
 
 	@ObfuscatedName("a.d")
-	public Js5Index vorbisArchive;
+	public Js5 vorbisArchive;
 
 	@ObfuscatedName("a.l")
 	public HashTable vorbisCache = new HashTable(256);
@@ -20,7 +20,7 @@ public class WaveCache {
 	@ObfuscatedName("a.m")
 	public HashTable waveCache = new HashTable(256);
 
-	public WaveCache(Js5Index arg0, Js5Index arg1) {
+	public WaveCache(Js5 arg0, Js5 arg1) {
 		this.synthArchive = arg0;
 		this.vorbisArchive = arg1;
 	}

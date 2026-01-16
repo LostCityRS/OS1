@@ -6,19 +6,19 @@ import jagex3.dash3d.ModelLit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 @ObfuscatedName("eo")
 public class SeqType extends DoublyLinkable {
 
 	@ObfuscatedName("dz.n")
-	public static Js5Index field1517;
+	public static Js5 field1517;
 
 	@ObfuscatedName("ag.j")
-	public static Js5Index field556;
+	public static Js5 field556;
 
 	@ObfuscatedName("eo.z")
-	public static Js5Index field2361;
+	public static Js5 field2361;
 
 	@ObfuscatedName("eo.g")
 	public static LruCache field2362 = new LruCache(64);
@@ -69,7 +69,7 @@ public class SeqType extends DoublyLinkable {
 	public int duplicatebehavior = 2;
 
 	@ObfuscatedName("ai.z(Lch;Lch;Lch;I)V")
-	public static void unpack(Js5Index arg0, Js5Index arg1, Js5Index arg2) {
+	public static void unpack(Js5 arg0, Js5 arg1, Js5 arg2) {
 		field1517 = arg0;
 		field556 = arg1;
 		field2361 = arg2;
@@ -289,8 +289,8 @@ public class SeqType extends DoublyLinkable {
 		if (var1 != null) {
 			return var1;
 		}
-		Js5Index var2 = field556;
-		Js5Index var3 = field2361;
+		Js5 var2 = field556;
+		Js5 var3 = field2361;
 		boolean var4 = true;
 		int[] var5 = var2.getFileIds(arg0);
 		for (int var6 = 0; var6 < var5.length; var6++) {

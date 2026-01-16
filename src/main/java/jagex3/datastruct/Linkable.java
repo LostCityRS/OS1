@@ -6,7 +6,7 @@ import deob.ObfuscatedName;
 public class Linkable {
 
 	@ObfuscatedName("dg.r")
-	public long nodeId;
+	public long key;
 
 	@ObfuscatedName("dg.d")
 	public Linkable next;

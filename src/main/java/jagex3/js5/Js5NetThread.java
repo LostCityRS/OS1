@@ -6,11 +6,12 @@ import jagex3.datastruct.LinkList;
 import jagex3.datastruct.PreciseSleep;
 import jagex3.io.FileStream;
 
+// jag::oldscape::jagex3::Js5NetThread
 @ObfuscatedName("cc")
-public class Js5RemoteThread implements Runnable {
+public class Js5NetThread implements Runnable {
 
 	@ObfuscatedName("cc.r")
-	public static LinkList field1208 = new LinkList();
+	public static LinkList requestQueue = new LinkList();
 
 	@ObfuscatedName("cc.d")
 	public static LinkList field1206 = new LinkList();
@@ -22,13 +23,13 @@ public class Js5RemoteThread implements Runnable {
 	public static Object field1207 = new Object();
 
 	@ObfuscatedName("cu.m(ILap;Ldq;I)V")
-	public static void method1122(int arg0, FileStream arg1, Js5Local arg2) {
+	public static void method1122(int arg0, FileStream arg1, Js5Loader arg2) {
 		byte[] var3 = null;
-		LinkList var4 = field1208;
-		synchronized (field1208) {
-			for (Js5LocalRequest var5 = (Js5LocalRequest) field1208.head(); var5 != null; var5 = (Js5LocalRequest) field1208.next()) {
-				if ((long) arg0 == var5.nodeId && var5.field1770 == arg1 && var5.field1772 == 0) {
-					var3 = var5.field1771;
+		LinkList var4 = requestQueue;
+		synchronized (requestQueue) {
+			for (Js5WorkerRequest var5 = (Js5WorkerRequest) requestQueue.head(); var5 != null; var5 = (Js5WorkerRequest) requestQueue.next()) {
+				if ((long) arg0 == var5.key && var5.fs == arg1 && var5.type == 0) {
+					var3 = var5.data;
 					break;
 				}
 			}
@@ -44,10 +45,10 @@ public class Js5RemoteThread implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				LinkList var1 = field1208;
-				Js5LocalRequest var2;
-				synchronized (field1208) {
-					var2 = (Js5LocalRequest) field1208.head();
+				LinkList var1 = requestQueue;
+				Js5WorkerRequest var2;
+				synchronized (requestQueue) {
+					var2 = (Js5WorkerRequest) requestQueue.head();
 				}
 				if (var2 == null) {
 					PreciseSleep.sleep(100L);
@@ -61,16 +62,16 @@ public class Js5RemoteThread implements Runnable {
 						field1205--;
 					}
 				} else {
-					if (var2.field1772 == 0) {
-						var2.field1770.write((int) var2.nodeId, var2.field1771, var2.field1771.length);
-						LinkList var4 = field1208;
-						synchronized (field1208) {
+					if (var2.type == 0) {
+						var2.fs.write((int) var2.key, var2.data, var2.data.length);
+						LinkList var4 = requestQueue;
+						synchronized (requestQueue) {
 							var2.unlink();
 						}
-					} else if (var2.field1772 == 1) {
-						var2.field1771 = var2.field1770.read((int) var2.nodeId);
-						LinkList var6 = field1208;
-						synchronized (field1208) {
+					} else if (var2.type == 1) {
+						var2.data = var2.fs.read((int) var2.key);
+						LinkList var6 = requestQueue;
+						synchronized (requestQueue) {
 							field1206.push(var2);
 						}
 					}

@@ -7,17 +7,17 @@ import jagex3.dash3d.ModelUnlit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 import jagex3.jstring.Text;
 
 @ObfuscatedName("em")
 public class NpcType extends DoublyLinkable {
 
 	@ObfuscatedName("em.n")
-	public static Js5Index configJs5;
+	public static Js5 configJs5;
 
 	@ObfuscatedName("dy.j")
-	public static Js5Index modelJs5;
+	public static Js5 modelJs5;
 
 	@ObfuscatedName("em.z")
 	public static LruCache configCache = new LruCache(64);
@@ -119,7 +119,7 @@ public class NpcType extends DoublyLinkable {
 	public boolean walksmoothing = true;
 
 	@ObfuscatedName("by.z(Lch;Lch;B)V")
-	public static void unpack(Js5Index config, Js5Index model) {
+	public static void unpack(Js5 config, Js5 model) {
 		configJs5 = config;
 		modelJs5 = model;
 	}

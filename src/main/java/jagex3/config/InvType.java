@@ -4,14 +4,14 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Local;
+import jagex3.js5.Js5;
+import jagex3.js5.Js5Loader;
 
 @ObfuscatedName("fp")
 public class InvType extends DoublyLinkable {
 
 	@ObfuscatedName("fp.n")
-	public static Js5Index configJs5;
+	public static Js5 configJs5;
 
 	@ObfuscatedName("fp.j")
 	public static LruCache cache = new LruCache(64);
@@ -54,7 +54,7 @@ public class InvType extends DoublyLinkable {
 		return inv;
 	}
 
-	public static void unpack(Js5Local config) {
+	public static void unpack(Js5Loader config) {
 		configJs5 = config;
 	}
 }

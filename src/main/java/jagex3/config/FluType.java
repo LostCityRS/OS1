@@ -4,13 +4,13 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 @ObfuscatedName("ec")
 public class FluType extends DoublyLinkable {
 
 	@ObfuscatedName("ec.n")
-	public static Js5Index configJs5;
+	public static Js5 configJs5;
 
 	@ObfuscatedName("ec.j")
 	public static LruCache cache = new LruCache(64);
@@ -31,7 +31,7 @@ public class FluType extends DoublyLinkable {
 	public int luminance;
 
 	@ObfuscatedName("u.z(Lch;I)V")
-	public static void unpack(Js5Index config) {
+	public static void unpack(Js5 config) {
 		configJs5 = config;
 	}
 

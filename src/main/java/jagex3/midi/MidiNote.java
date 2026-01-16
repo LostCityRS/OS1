@@ -25,7 +25,7 @@ public class MidiNote extends Linkable {
 	public int secondaryNote;
 
 	@ObfuscatedName("ej.g")
-	public int key;
+	public int noteKey;
 
 	@ObfuscatedName("ej.q")
 	public int volume;

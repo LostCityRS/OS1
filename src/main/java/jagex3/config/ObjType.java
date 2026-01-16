@@ -10,18 +10,18 @@ import jagex3.graphics.Pix2D;
 import jagex3.graphics.Pix32;
 import jagex3.graphics.SoftwareFont;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Local;
+import jagex3.js5.Js5;
+import jagex3.js5.Js5Loader;
 import jagex3.jstring.Text;
 
 @ObfuscatedName("fj")
 public class ObjType extends DoublyLinkable {
 
 	@ObfuscatedName("fj.n")
-	public static Js5Index configJs5;
+	public static Js5 configJs5;
 
 	@ObfuscatedName("bb.j")
-	public static Js5Index modelJs5;
+	public static Js5 modelJs5;
 
 	@ObfuscatedName("cq.z")
 	public static boolean membersWorld;
@@ -672,7 +672,7 @@ public class ObjType extends DoublyLinkable {
 		iconCache.clear();
 	}
 
-	public static void unpack(Js5Local var32, Js5Local var33, boolean var34, SoftwareFont var35) {
+	public static void unpack(Js5Loader var32, Js5Loader var33, boolean var34, SoftwareFont var35) {
 		configJs5 = var32;
 		modelJs5 = var33;
 		membersWorld = var34;

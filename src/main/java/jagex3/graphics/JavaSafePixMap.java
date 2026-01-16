@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.*;
 
 @ObfuscatedName("dm")
-public class AwtPixMap extends PixMap implements ImageProducer, ImageObserver {
+public class JavaSafePixMap extends PixMap implements ImageProducer, ImageObserver {
 
 	@ObfuscatedName("dm.c")
 	public ColorModel colorModel;

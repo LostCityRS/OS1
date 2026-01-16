@@ -232,7 +232,7 @@ public class Cp1252 {
 	}
 
 	@ObfuscatedName("ey.n([BIIB)Ljava/lang/String;")
-	public static String method2397(byte[] arg0, int arg1, int arg2) {
+	public static String decode(byte[] arg0, int arg1, int arg2) {
 		char[] var3 = new char[arg2];
 		int var4 = 0;
 		for (int var5 = 0; var5 < arg2; var5++) {

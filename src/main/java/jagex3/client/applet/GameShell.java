@@ -6,8 +6,8 @@ import jagex3.client.Client;
 import jagex3.client.JagException;
 import jagex3.client.TaskHandler;
 import jagex3.datastruct.*;
-import jagex3.graphics.AwtPixMap;
-import jagex3.graphics.BufferedPixMap;
+import jagex3.graphics.JavaSafePixMap;
+import jagex3.graphics.JavaPixMap;
 import jagex3.graphics.PixMap;
 import jagex3.jstring.StringUtil;
 
@@ -239,11 +239,11 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			Canvas var10 = canvas;
 			PixMap var12;
 			try {
-				BufferedPixMap var11 = new BufferedPixMap();
+				JavaPixMap var11 = new JavaPixMap();
 				var11.create(var8, var9, var10);
 				var12 = var11;
 			} catch (Throwable var23) {
-				AwtPixMap var14 = new AwtPixMap();
+				JavaSafePixMap var14 = new JavaSafePixMap();
 				var14.create(var8, var9, var10);
 				var12 = var14;
 			}

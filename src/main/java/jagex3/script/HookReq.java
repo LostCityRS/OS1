@@ -27,7 +27,7 @@ public class HookReq extends Linkable {
 	public IfType drop;
 
 	@ObfuscatedName("du.q")
-	public int key;
+	public int keyCode;
 
 	@ObfuscatedName("du.i")
 	public int keyChar;

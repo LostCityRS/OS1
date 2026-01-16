@@ -3,7 +3,7 @@ package jagex3.midi;
 import deob.ObfuscatedName;
 import jagex3.datastruct.ByteArrayNode;
 import jagex3.datastruct.HashTable;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 import jagex3.sound.*;
 
 // jag::oldscape::midi2::MidiPlayer
@@ -106,7 +106,7 @@ public class MidiPlayer extends PcmStream {
 	}
 
 	@ObfuscatedName("ed.ac(Lei;Lch;La;IB)Z")
-	public synchronized boolean method2196(MidiFile arg0, Js5Index arg1, WaveCache arg2, int arg3) {
+	public synchronized boolean method2196(MidiFile arg0, Js5 arg1, WaveCache arg2, int arg3) {
 		arg0.method1773();
 		boolean var5 = true;
 		int[] var6 = null;
@@ -114,7 +114,7 @@ public class MidiPlayer extends PcmStream {
 			var6 = new int[] { arg3 };
 		}
 		for (ByteArrayNode var7 = (ByteArrayNode) arg0.patches.first(); var7 != null; var7 = (ByteArrayNode) arg0.patches.next()) {
-			int var8 = (int) var7.nodeId;
+			int var8 = (int) var7.key;
 			Patch var9 = (Patch) this.patches.get((long) var8);
 			if (var9 == null) {
 				var9 = Patch.method49(arg1, var8);
@@ -204,13 +204,13 @@ public class MidiPlayer extends PcmStream {
 		if ((this.channelEffects[arg0] & 0x2) != 0) {
 			for (MidiNote var4 = (MidiNote) this.patchStream.queue.tail(); var4 != null; var4 = (MidiNote) this.patchStream.queue.prev()) {
 				if (var4.channel == arg0 && var4.releaseProgress < 0) {
-					this.channelNotes[arg0][var4.key] = null;
+					this.channelNotes[arg0][var4.noteKey] = null;
 					this.channelNotes[arg0][arg1] = var4;
 					int var5 = (var4.portamentoAmount * var4.portamentoDelta >> 12) + var4.pitch;
-					var4.pitch += arg1 - var4.key << 8;
+					var4.pitch += arg1 - var4.noteKey << 8;
 					var4.portamentoDelta = var5 - var4.pitch;
 					var4.portamentoAmount = 4096;
-					var4.key = arg1;
+					var4.noteKey = arg1;
 					return;
 				}
 			}
@@ -229,7 +229,7 @@ public class MidiPlayer extends PcmStream {
 		var8.sound = var7;
 		var8.envelope = var6.noteEnvelope[arg1];
 		var8.secondaryNote = var6.noteSecondaryNote[arg1];
-		var8.key = arg1;
+		var8.noteKey = arg1;
 		var8.volume = var6.volume * arg2 * arg2 * var6.noteVolume[arg1] + 1024 >> 11;
 		var8.pan = var6.notePan[arg1] & 0xFF;
 		var8.pitch = (arg1 << 8) - (var6.notePitch[arg1] & 0x7FFF);
@@ -250,7 +250,7 @@ public class MidiPlayer extends PcmStream {
 		if (var8.secondaryNote >= 0) {
 			MidiNote var9 = this.channelSecondaryNotes[arg0][var8.secondaryNote];
 			if (var9 != null && var9.releaseProgress < 0) {
-				this.channelNotes[arg0][var9.key] = null;
+				this.channelNotes[arg0][var9.noteKey] = null;
 				var9.releaseProgress = 0;
 			}
 			this.channelSecondaryNotes[arg0][var8.secondaryNote] = var8;
@@ -321,7 +321,7 @@ public class MidiPlayer extends PcmStream {
 					var2.dropData();
 				}
 				if (var2.releaseProgress < 0) {
-					this.channelNotes[var2.channel][var2.key] = null;
+					this.channelNotes[var2.channel][var2.noteKey] = null;
 				}
 				var2.unlink();
 			}
@@ -355,7 +355,7 @@ public class MidiPlayer extends PcmStream {
 	public void controlAllNotesOff(int arg0) {
 		for (MidiNote var2 = (MidiNote) this.patchStream.queue.head(); var2 != null; var2 = (MidiNote) this.patchStream.queue.next()) {
 			if ((arg0 < 0 || var2.channel == arg0) && var2.releaseProgress < 0) {
-				this.channelNotes[var2.channel][var2.key] = null;
+				this.channelNotes[var2.channel][var2.noteKey] = null;
 				var2.releaseProgress = 0;
 			}
 		}
@@ -379,7 +379,7 @@ public class MidiPlayer extends PcmStream {
 			return;
 		}
 		for (MidiNote var2 = (MidiNote) this.patchStream.queue.head(); var2 != null; var2 = (MidiNote) this.patchStream.queue.next()) {
-			if (var2.channel == arg0 && this.channelNotes[arg0][var2.key] == null && var2.releaseProgress < 0) {
+			if (var2.channel == arg0 && this.channelNotes[arg0][var2.noteKey] == null && var2.releaseProgress < 0) {
 				var2.releaseProgress = 0;
 			}
 		}
@@ -743,7 +743,7 @@ public class MidiPlayer extends PcmStream {
 		boolean var8 = false;
 		arg0.vibratoRampProgress++;
 		arg0.vibratoProgress += var7.vibratoFrequency;
-		double var9 = (double) ((arg0.key - 60 << 8) + (arg0.portamentoAmount * arg0.portamentoDelta >> 12)) * 5.086263020833333E-6D;
+		double var9 = (double) ((arg0.noteKey - 60 << 8) + (arg0.portamentoAmount * arg0.portamentoDelta >> 12)) * 5.086263020833333E-6D;
 		if (var7.decayVolume > 0) {
 			if (var7.decaySpeed > 0) {
 				arg0.decayProgress += (int) (Math.pow(2.0D, (double) var7.decaySpeed * var9) * 128.0D + 0.5D);

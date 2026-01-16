@@ -7,7 +7,7 @@ import java.awt.image.*;
 import java.util.Hashtable;
 
 @ObfuscatedName("di")
-public class BufferedPixMap extends PixMap {
+public class JavaPixMap extends PixMap {
 
 	@ObfuscatedName("di.c")
 	public Component component;

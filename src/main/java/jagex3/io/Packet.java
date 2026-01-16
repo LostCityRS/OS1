@@ -220,7 +220,7 @@ public class Packet extends Linkable {
 		while (this.data[++this.pos - 1] != 0) {
 		}
 		int var2 = this.pos - var1 - 1;
-		return var2 == 0 ? "" : Cp1252.method2397(this.data, var1, var2);
+		return var2 == 0 ? "" : Cp1252.decode(this.data, var1, var2);
 	}
 
 	@ObfuscatedName("ev.ac(B)Ljava/lang/String;")
@@ -233,7 +233,7 @@ public class Packet extends Linkable {
 		while (this.data[++this.pos - 1] != 0) {
 		}
 		int var3 = this.pos - var2 - 1;
-		return var3 == 0 ? "" : Cp1252.method2397(this.data, var2, var3);
+		return var3 == 0 ? "" : Cp1252.decode(this.data, var2, var3);
 	}
 
 	@ObfuscatedName("ev.aa(I)Ljava/lang/String;")

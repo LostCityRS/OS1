@@ -2,8 +2,8 @@ package jagex3.midi;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.LinkList;
-import jagex3.sound.PcmPlayer;
 import jagex3.sound.Mixer;
+import jagex3.sound.PcmPlayer;
 import jagex3.sound.PcmStream;
 import jagex3.sound.WaveStream;
 
@@ -117,10 +117,10 @@ public class MidiMixer extends PcmStream {
 					arg0.stream = WaveStream.create(arg0.sound, var10.getPitch(), var10.getVolume(), var10.getPan());
 				} else {
 					arg0.stream = WaveStream.create(arg0.sound, var10.getPitch(), 0, var10.getPan());
-					this.midiPlayer.method2205(arg0, arg0.patch.notePitch[arg0.key] < 0);
+					this.midiPlayer.method2205(arg0, arg0.patch.notePitch[arg0.noteKey] < 0);
 					arg0.stream.changeVolumeSmooth(var8, var10.getVolume());
 				}
-				if (arg0.patch.notePitch[arg0.key] < 0) {
+				if (arg0.patch.notePitch[arg0.noteKey] < 0) {
 					arg0.stream.setLoopCount(-1);
 				}
 				var10.fadeOut(var8);
@@ -144,9 +144,9 @@ public class MidiMixer extends PcmStream {
 					arg0.stream = WaveStream.create(arg0.sound, arg0.stream.getPitch(), arg0.stream.getVolume(), arg0.stream.getPan());
 				} else {
 					arg0.stream = WaveStream.create(arg0.sound, arg0.stream.getPitch(), 0, arg0.stream.getPan());
-					this.midiPlayer.method2205(arg0, arg0.patch.notePitch[arg0.key] < 0);
+					this.midiPlayer.method2205(arg0, arg0.patch.notePitch[arg0.noteKey] < 0);
 				}
-				if (arg0.patch.notePitch[arg0.key] < 0) {
+				if (arg0.patch.notePitch[arg0.noteKey] < 0) {
 					arg0.stream.setLoopCount(-1);
 				}
 				arg1 = arg0.field1766 / var3;

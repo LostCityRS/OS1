@@ -6,17 +6,17 @@ import jagex3.dash3d.ModelUnlit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Local;
+import jagex3.js5.Js5;
+import jagex3.js5.Js5Loader;
 
 @ObfuscatedName("eu")
 public class SpotAnimType extends DoublyLinkable {
 
 	@ObfuscatedName("eu.n")
-	public static Js5Index configJs5;
+	public static Js5 configJs5;
 
 	@ObfuscatedName("eu.j")
-	public static Js5Index modelJs5;
+	public static Js5 modelJs5;
 
 	@ObfuscatedName("eu.z")
 	public static LruCache field2379 = new LruCache(64);
@@ -169,7 +169,7 @@ public class SpotAnimType extends DoublyLinkable {
 		return var6;
 	}
 
-	public static void unpack(Js5Local var36, Js5Local var37) {
+	public static void unpack(Js5Loader var36, Js5Loader var37) {
 		configJs5 = var36;
 		modelJs5 = var37;
 	}

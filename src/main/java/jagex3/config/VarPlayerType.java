@@ -4,13 +4,13 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 @ObfuscatedName("fg")
 public class VarPlayerType extends DoublyLinkable {
 
 	@ObfuscatedName("al.n")
-	public static Js5Index field537;
+	public static Js5 field537;
 
 	@ObfuscatedName("ey.j")
 	public static int field2352;
@@ -22,7 +22,7 @@ public class VarPlayerType extends DoublyLinkable {
 	public int clientcode = 0;
 
 	@ObfuscatedName("cy.z(Lch;I)V")
-	public static void unpack(Js5Index arg0) {
+	public static void unpack(Js5 arg0) {
 		field537 = arg0;
 		field2352 = field537.getFileCount(16);
 	}

@@ -8,7 +8,7 @@ import jagex3.dash3d.ModelUnlit;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 import jagex3.jstring.Text;
 
 @ObfuscatedName("ey")
@@ -18,10 +18,10 @@ public class LocType extends DoublyLinkable {
 	public static boolean lowMemory = false;
 
 	@ObfuscatedName("j.j")
-	public static Js5Index configJs5;
+	public static Js5 configJs5;
 
 	@ObfuscatedName("ey.z")
-	public static Js5Index modelJs5;
+	public static Js5 modelJs5;
 
 	@ObfuscatedName("ey.g")
 	public static LruCache cache = new LruCache(64);
@@ -168,7 +168,7 @@ public class LocType extends DoublyLinkable {
 	public int[] bgsound_random;
 
 	@ObfuscatedName("av.z(Lch;Lch;ZI)V")
-	public static void unpack(Js5Index config, Js5Index model, boolean lowmem) {
+	public static void unpack(Js5 config, Js5 model, boolean lowmem) {
 		configJs5 = config;
 		modelJs5 = model;
 		lowMemory = lowmem;

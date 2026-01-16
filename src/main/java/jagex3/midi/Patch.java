@@ -3,7 +3,7 @@ package jagex3.midi;
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 import jagex3.sound.Wave;
 import jagex3.sound.WaveCache;
 
@@ -36,7 +36,7 @@ public class Patch extends Linkable {
 	public int[] field1739 = new int[128];
 
 	@ObfuscatedName("l.c(Lch;II)Lef;")
-	public static Patch method49(Js5Index arg0, int arg1) {
+	public static Patch method49(Js5 arg0, int arg1) {
 		byte[] var2 = arg0.fetchFile(arg1);
 		return var2 == null ? null : new Patch(var2);
 	}

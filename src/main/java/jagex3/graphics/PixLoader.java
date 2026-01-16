@@ -2,7 +2,7 @@ package jagex3.graphics;
 
 import deob.ObfuscatedName;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 @ObfuscatedName("al")
 public class PixLoader {
@@ -39,7 +39,7 @@ public class PixLoader {
 	}
 
 	@ObfuscatedName("al.r(Lch;Ljava/lang/String;Ljava/lang/String;B)[Lft;")
-	public static Pix8[] makePix8Array(Js5Index arg0, String arg1, String arg2) {
+	public static Pix8[] makePix8Array(Js5 arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
 		Pix8[] var5;
@@ -70,7 +70,7 @@ public class PixLoader {
 	}
 
 	@ObfuscatedName("ak.d(Lch;Ljava/lang/String;Ljava/lang/String;I)Lft;")
-	public static Pix8 makePix8(Js5Index arg0, String arg1, String arg2) {
+	public static Pix8 makePix8(Js5 arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
 		Pix8 var5;
@@ -83,7 +83,7 @@ public class PixLoader {
 	}
 
 	@ObfuscatedName("bx.l(Lch;Ljava/lang/String;Ljava/lang/String;I)[Lfq;")
-	public static Pix32[] makePix32Array(Js5Index arg0, String arg1, String arg2) {
+	public static Pix32[] makePix32Array(Js5 arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
 		Pix32[] var5;
@@ -118,7 +118,7 @@ public class PixLoader {
 	}
 
 	@ObfuscatedName("r.m(Lch;Ljava/lang/String;Ljava/lang/String;I)Lfq;")
-	public static Pix32 makePix32(Js5Index arg0, String arg1, String arg2) {
+	public static Pix32 makePix32(Js5 arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
 		Pix32 var5;
@@ -131,7 +131,7 @@ public class PixLoader {
 	}
 
 	@ObfuscatedName("bw.c(Lch;Lch;Ljava/lang/String;Ljava/lang/String;I)Lfm;")
-	public static SoftwareFont makeFont(Js5Index arg0, Js5Index arg1, String arg2, String arg3) {
+	public static SoftwareFont makeFont(Js5 arg0, Js5 arg1, String arg2, String arg3) {
 		int var4 = arg0.getGroupId(arg2);
 		int var5 = arg0.getFileId(var4, arg3);
 		SoftwareFont var6;
@@ -144,7 +144,7 @@ public class PixLoader {
 	}
 
 	@ObfuscatedName("u.n(Lch;II)Lft;")
-	public static Pix8 method127(Js5Index arg0, int arg1) {
+	public static Pix8 method127(Js5 arg0, int arg1) {
 		return method728(arg0, arg1) ? method556() : null;
 	}
 
@@ -208,7 +208,7 @@ public class PixLoader {
 	}
 
 	@ObfuscatedName("bn.q(Lch;III)Z")
-	public static boolean method905(Js5Index arg0, int arg1, int arg2) {
+	public static boolean method905(Js5 arg0, int arg1, int arg2) {
 		byte[] var3 = arg0.getFile(arg1, arg2);
 		if (var3 == null) {
 			return false;
@@ -219,7 +219,7 @@ public class PixLoader {
 	}
 
 	@ObfuscatedName("ai.i(Lch;II)Z")
-	public static boolean method728(Js5Index arg0, int arg1) {
+	public static boolean method728(Js5 arg0, int arg1) {
 		byte[] var2 = arg0.fetchFile(arg1);
 		if (var2 == null) {
 			return false;

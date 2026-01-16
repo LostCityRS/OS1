@@ -13,7 +13,7 @@ import jagex3.graphics.Pix32;
 import jagex3.graphics.PixLoader;
 import jagex3.graphics.SoftwareFont;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 import jagex3.jstring.Text;
 
 @ObfuscatedName("eg")
@@ -26,16 +26,16 @@ public class IfType extends Linkable {
 	public static boolean[] field1508;
 
 	@ObfuscatedName("eg.n")
-	public static Js5Index field1806;
+	public static Js5 field1806;
 
 	@ObfuscatedName("eg.j")
-	public static Js5Index field1776;
+	public static Js5 field1776;
 
 	@ObfuscatedName("dc.z")
-	public static Js5Index field1564;
+	public static Js5 field1564;
 
 	@ObfuscatedName("eg.g")
-	public static Js5Index field1800;
+	public static Js5 field1800;
 
 	@ObfuscatedName("eg.q")
 	public static LruCache field1778 = new LruCache(200);
@@ -404,7 +404,7 @@ public class IfType extends Linkable {
 	public int field1899 = -1;
 
 	@ObfuscatedName("ay.c(Lch;Lch;Lch;Lch;I)V")
-	public static void unpack(Js5Index arg0, Js5Index arg1, Js5Index arg2, Js5Index arg3) {
+	public static void unpack(Js5 arg0, Js5 arg1, Js5 arg2, Js5 arg3) {
 		field1806 = arg0;
 		field1776 = arg1;
 		field1564 = arg2;
@@ -898,7 +898,7 @@ public class IfType extends Linkable {
 		if (var5 != null) {
 			return var5;
 		}
-		Js5Index var6 = field1564;
+		Js5 var6 = field1564;
 		Pix32 var7;
 		if (PixLoader.method905(var6, var2, 0)) {
 			var7 = PixLoader.method759();
@@ -941,8 +941,8 @@ public class IfType extends Linkable {
 		if (var1 != null) {
 			return var1;
 		}
-		Js5Index var2 = field1564;
-		Js5Index var3 = field1800;
+		Js5 var2 = field1564;
+		Js5 var3 = field1800;
 		int var4 = this.font;
 		SoftwareFont var5;
 		if (PixLoader.method905(var2, var4, 0)) {
@@ -972,7 +972,7 @@ public class IfType extends Linkable {
 		if (var3 != null) {
 			return var3;
 		}
-		Js5Index var4 = field1564;
+		Js5 var4 = field1564;
 		Pix32 var5;
 		if (PixLoader.method905(var4, var2, 0)) {
 			var5 = PixLoader.method759();

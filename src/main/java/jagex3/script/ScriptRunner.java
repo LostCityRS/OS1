@@ -20,7 +20,7 @@ import jagex3.jstring.JString;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.Text;
 import jagex3.jstring.TextUtil;
-import jagex3.wordfilter.WordPack;
+import jagex3.wordenc.Huffman;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -113,7 +113,7 @@ public class ScriptRunner {
 					} else if (op == 0x80000007) {
 						op = req.drop == null ? -1 : req.drop.subid;
 					} else if (op == 0x80000008) {
-						op = req.key;
+						op = req.keyCode;
 					} else if (op == 0x80000009) {
 						op = req.keyChar;
 					}
@@ -2587,7 +2587,7 @@ public class ScriptRunner {
 
 							Client.out.p1(color);
 							Client.out.p1(effect);
-							WordPack.method911(Client.out, message);
+							Huffman.method911(Client.out, message);
 
 							Client.out.psize1(Client.out.pos - start);
 						}
@@ -2605,7 +2605,7 @@ public class ScriptRunner {
 						int var357 = Client.out.pos;
 
 						Client.out.pjstr(var355);
-						WordPack.method911(Client.out, var356);
+						Huffman.method911(Client.out, var356);
 
 						Client.out.psize2(Client.out.pos - var357);
 						continue;
@@ -2700,14 +2700,14 @@ public class ScriptRunner {
 					Client.addMessage(0, "", "Clientscript error in: " + script.name);
 				}
 
-				JagException.report("CS2 - scr:" + script.nodeId + " op:" + lastOp + builder.toString(), ex);
+				JagException.report("CS2 - scr:" + script.key + " op:" + lastOp + builder.toString(), ex);
 			} else {
 				// since this is the usual codepath, and we're already deviating, might as well add in frame info
 				/* start custom code */
 				StringBuilder builder = new StringBuilder(30);
 				if (Client.modewhere != 0) {
 					for (int i = fp - 1; i >= 0; i--) {
-						builder.append("\n- via:").append(frames[i].script.nodeId);
+						builder.append("\n- via:").append(frames[i].script.key);
 					}
 
 					if (lastOp == 40) {
@@ -2722,7 +2722,7 @@ public class ScriptRunner {
 					Client.addMessage(0, "", "Clientscript error - check log for details");
 				}
 
-				JagException.report("CS2 - scr:" + script.nodeId + " op:" + lastOp + builder.toString(), ex);
+				JagException.report("CS2 - scr:" + script.key + " op:" + lastOp + builder.toString(), ex);
 			}
 		}
 	}

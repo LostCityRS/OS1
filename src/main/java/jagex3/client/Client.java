@@ -14,18 +14,19 @@ import jagex3.io.*;
 import jagex3.javconfig.JavConfigParameter;
 import jagex3.javconfig.ModeGame;
 import jagex3.javconfig.ModeWhat;
-import jagex3.js5.Js5Local;
-import jagex3.js5.Js5LocalRequest;
-import jagex3.js5.Js5Remote;
-import jagex3.js5.Js5RemoteThread;
+import jagex3.js5.Js5Loader;
+import jagex3.js5.Js5WorkerRequest;
+import jagex3.js5.Js5Net;
+import jagex3.js5.Js5NetThread;
 import jagex3.jstring.*;
-import jagex3.midi.MidiPlayer;
 import jagex3.midi.MidiManager;
+import jagex3.midi.MidiPlayer;
 import jagex3.script.ClientScript;
 import jagex3.script.HookReq;
 import jagex3.script.ScriptRunner;
 import jagex3.sound.*;
-import jagex3.wordfilter.WordPack;
+import jagex3.wordenc.Huffman;
+import jagex3.wordenc.WordPack;
 
 import java.awt.*;
 import java.io.IOException;
@@ -152,52 +153,52 @@ public class Client extends GameShell {
 	public static long field1943;
 
 	@ObfuscatedName("bb.bp")
-	public static Js5Local animFrameJs5;
+	public static Js5Loader animFrameJs5;
 
 	@ObfuscatedName("es.ba")
-	public static Js5Local animBaseJs5;
+	public static Js5Loader animBaseJs5;
 
 	@ObfuscatedName("cc.bc")
-	public static Js5Local configJs5;
+	public static Js5Loader configJs5;
 
 	@ObfuscatedName("bd.br")
-	public static Js5Local interfaceJs5;
+	public static Js5Loader interfaceJs5;
 
 	@ObfuscatedName("df.bb")
-	public static Js5Local soundFxJs5;
+	public static Js5Loader soundFxJs5;
 
 	@ObfuscatedName("ck.bd")
-	public static Js5Local mapJs5;
+	public static Js5Loader mapJs5;
 
 	@ObfuscatedName("bb.cr")
-	public static Js5Local midiSongJs5;
+	public static Js5Loader midiSongJs5;
 
 	@ObfuscatedName("aa.cs")
-	public static Js5Local modelJs5;
+	public static Js5Loader modelJs5;
 
 	@ObfuscatedName("client.cj")
-	public static Js5Local spriteJs5;
+	public static Js5Loader spriteJs5;
 
 	@ObfuscatedName("client.cl")
-	public static Js5Local textureJs5;
+	public static Js5Loader textureJs5;
 
 	@ObfuscatedName("ab.cp")
-	public static Js5Local binaryJs5;
+	public static Js5Loader binaryJs5;
 
 	@ObfuscatedName("dz.ca")
-	public static Js5Local midiJingleJs5;
+	public static Js5Loader midiJingleJs5;
 
 	@ObfuscatedName("ct.co")
-	public static Js5Local clientScriptJs5;
+	public static Js5Loader clientScriptJs5;
 
 	@ObfuscatedName("cj.ch")
-	public static Js5Local fontMetricJs5;
+	public static Js5Loader fontMetricJs5;
 
 	@ObfuscatedName("ey.cu")
-	public static Js5Local musicSamplesJs5;
+	public static Js5Loader musicSamplesJs5;
 
 	@ObfuscatedName("z.cc")
-	public static Js5Local musicPatchesJs5;
+	public static Js5Loader musicPatchesJs5;
 
 	@ObfuscatedName("client.cm")
 	public static int js5Errors = 0;
@@ -1407,10 +1408,10 @@ public class Client extends GameShell {
 		if (soundPcmPlayer != null) {
 			soundPcmPlayer.shutdown();
 		}
-		if (Js5Remote.stream != null) {
-			Js5Remote.stream.close();
+		if (Js5Net.stream != null) {
+			Js5Net.stream.close();
 		}
-		Js5RemoteThread.method781();
+		Js5NetThread.method781();
 		SignLinkCacheFolder.method1141();
 	}
 
@@ -1449,7 +1450,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.ci(I)V")
 	public void method1849() {
 		if (state != 1000) {
-			boolean var1 = Js5Remote.tick();
+			boolean var1 = Js5Net.tick();
 			if (!var1) {
 				this.method1850();
 			}
@@ -1458,19 +1459,19 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.cb(I)V")
 	public void method1850() {
-		if (Js5Remote.crcErrorCount >= 4) {
+		if (Js5Net.crcErrorCount >= 4) {
 			this.error("js5crc");
 			state = 1000;
 			return;
 		}
-		if (Js5Remote.ioErrorCount >= 4) {
+		if (Js5Net.ioErrorCount >= 4) {
 			if (state <= 5) {
 				this.error("js5io");
 				state = 1000;
 				return;
 			}
 			js5ConnectCooldown = 3000;
-			Js5Remote.ioErrorCount = 3;
+			Js5Net.ioErrorCount = 3;
 		}
 		if (--js5ConnectCooldown + 1 > 0) {
 			return;
@@ -1512,7 +1513,7 @@ public class Client extends GameShell {
 				}
 			}
 			if (js5ConnectState == 4) {
-				Js5Remote.init(js5Stream, state > 20);
+				Js5Net.init(js5Stream, state > 20);
 				js5SocketTask = null;
 				js5Stream = null;
 				js5ConnectState = 0;
@@ -1845,8 +1846,8 @@ public class Client extends GameShell {
 				TitleScreen.loadString = Text.MAINLOAD120 + "%";
 				TitleScreen.loadPos = 96;
 			} else {
-				Huffman var56 = new Huffman(binaryJs5.getFile("huffman", ""));
-				WordPack.method816(var56);
+				WordPack var56 = new WordPack(binaryJs5.getFile("huffman", ""));
+				Huffman.method816(var56);
 
 				TitleScreen.loadString = Text.MAINLOAD120B;
 				TitleScreen.loadPos = 96;
@@ -1873,12 +1874,12 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("u.dd(IZZZB)Ldq;")
-	public static Js5Local openJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
+	public static Js5Loader openJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
 		FileStream stream = null;
 		if (SignLinkCacheFolder.cacheDat != null) {
 			stream = new FileStream(archive, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.cacheIndex[archive], 1000000);
 		}
-		return new Js5Local(stream, masterIndex, archive, arg1, arg2, arg3);
+		return new Js5Loader(stream, masterIndex, archive, arg1, arg2, arg3);
 	}
 
 	@ObfuscatedName("ex.dg(I)V")
@@ -6579,7 +6580,7 @@ public class Client extends GameShell {
 							for (int var58 = 0; var58 < field2151; var58++) {
 								HookReq var59 = new HookReq();
 								var59.component = var9;
-								var59.key = field2153[var58];
+								var59.keyCode = field2153[var58];
 								var59.keyChar = field2152[var58];
 								var59.onop = var9.field1873;
 								hookRequests.push(var59);
@@ -6689,7 +6690,7 @@ public class Client extends GameShell {
 					}
 				}
 				if (!var2) {
-					int var5 = (int) var0.nodeId;
+					int var5 = (int) var0.key;
 					IfType var6 = IfType.get(var5);
 					if (var6 != null) {
 						requestRedrawComponent(var6);
@@ -6964,7 +6965,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("am.gr(Ldy;ZI)V")
 	public static final void method408(SubInterface arg0, boolean arg1) {
 		int var2 = arg0.field1598;
-		int var3 = (int) arg0.nodeId;
+		int var3 = (int) arg0.key;
 		arg0.unlink();
 		if (arg1 && var2 != -1 && IfType.field1508[var2]) {
 			IfType.field1806.discardFiles(var2);
@@ -7390,7 +7391,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("s.gt(II)V")
 	public static void method109(int arg0) {
 		for (ServerKeyProperties var1 = (ServerKeyProperties) field2061.first(); var1 != null; var1 = (ServerKeyProperties) field2061.next()) {
-			if ((long) arg0 == (var1.nodeId >> 48 & 0xFFFFL)) {
+			if ((long) arg0 == (var1.key >> 48 & 0xFFFFL)) {
 				var1.unlink();
 			}
 		}
@@ -7443,15 +7444,15 @@ public class Client extends GameShell {
 
 	public static void imethod1() {
 		while (true) {
-			LinkList var1 = Js5RemoteThread.field1208;
-			Js5LocalRequest var2;
+			LinkList var1 = Js5NetThread.requestQueue;
+			Js5WorkerRequest var2;
 			synchronized (var1) {
-				var2 = (Js5LocalRequest) Js5RemoteThread.field1206.pop();
+				var2 = (Js5WorkerRequest) Js5NetThread.field1206.pop();
 			}
 			if (var2 == null) {
 				return;
 			}
-			var2.field1773.method1468(var2.field1770, (int) var2.nodeId, var2.field1771, false);
+			var2.field1773.method1468(var2.fs, (int) var2.key, var2.data, false);
 		}
 	}
 
@@ -9599,8 +9600,8 @@ public class Client extends GameShell {
 				var85 = 32767;
 			}
 			byte[] var86 = new byte[var85];
-			var84.pos += WordPack.huffman.method818(var84.data, var84.pos, var86, 0, var85);
-			return Cp1252.method2397(var86, 0, var85);
+			var84.pos += Huffman.wordPack.decompress(var84.data, var84.pos, var86, 0, var85);
+			return Cp1252.decode(var86, 0, var85);
 		} catch (Exception var515) {
 			return "Cabbage";
 		}
@@ -9761,7 +9762,7 @@ public class Client extends GameShell {
 					field2016.pos = 0;
 					in.gdata(field2016.data, 0, var30);
 					field2016.pos = 0;
-					String var33 = PixFont.method2844(StringUtil.method54(WordPack.method1035(field2016)));
+					String var33 = PixFont.method2844(StringUtil.method54(Huffman.method1035(field2016)));
 					var26.chat = var33.trim();
 					var26.field2652 = var28 >> 8;
 					var26.field2670 = var28 & 0xFF;
@@ -10473,7 +10474,7 @@ public class Client extends GameShell {
 		camZ = var67;
 		camPitch = var68;
 		camYaw = var69;
-		if (field1921 && Js5Remote.urgentQueueSize() == 0) {
+		if (field1921 && Js5Net.urgentQueueSize() == 0) {
 			field1921 = false;
 		}
 		if (field1921) {
@@ -11234,7 +11235,7 @@ public class Client extends GameShell {
 		}
 	}
 
-	public static int imethod48(Js5Local var25, Js5Local var26) {
+	public static int imethod48(Js5Loader var25, Js5Loader var26) {
 		int var27 = 0;
 		if (var25.download("title.jpg", "")) {
 			var27++;

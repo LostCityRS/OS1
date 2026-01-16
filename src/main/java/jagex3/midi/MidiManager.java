@@ -1,8 +1,8 @@
 package jagex3.midi;
 
 import deob.ObfuscatedName;
-import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Local;
+import jagex3.js5.Js5;
+import jagex3.js5.Js5Loader;
 import jagex3.sound.WaveCache;
 
 // jag::oldscape::midi2::MidiManager
@@ -11,15 +11,15 @@ public class MidiManager {
 
 	// jag::oldscape::midi2::MidiManager::m_pPatches
 	@ObfuscatedName("bd.r")
-	public static Js5Index patches;
+	public static Js5 patches;
 
 	// jag::oldscape::midi2::MidiManager::m_pVorbis
 	@ObfuscatedName("bd.d")
-	public static Js5Index vorbis;
+	public static Js5 vorbis;
 
 	// jag::oldscape::midi2::MidiManager::m_pJagFX
 	@ObfuscatedName("bd.l")
-	public static Js5Index jagFX;
+	public static Js5 jagFX;
 
 	@ObfuscatedName("bd.m")
 	public static MidiPlayer midiPlayer;
@@ -28,7 +28,7 @@ public class MidiManager {
 	public static int field1117 = 0;
 
 	@ObfuscatedName("bd.n")
-	public static Js5Index field1118;
+	public static Js5 field1118;
 
 	@ObfuscatedName("aa.j")
 	public static int field349;
@@ -56,7 +56,7 @@ public class MidiManager {
 	}
 
 	@ObfuscatedName("dl.r(Lch;Lch;Lch;Led;B)Z")
-	public static boolean init(Js5Index arg0, Js5Index arg1, Js5Index arg2, MidiPlayer arg3) {
+	public static boolean init(Js5 arg0, Js5 arg1, Js5 arg2, MidiPlayer arg3) {
 		patches = arg0;
 		vorbis = arg1;
 		jagFX = arg2;
@@ -65,7 +65,7 @@ public class MidiManager {
 	}
 
 	@ObfuscatedName("cu.d(Lch;IIIZI)V")
-	public static void method1125(Js5Index arg0, int arg1, int arg2, int arg3, boolean arg4) {
+	public static void method1125(Js5 arg0, int arg1, int arg2, int arg3, boolean arg4) {
 		field1117 = 1;
 		field1118 = arg0;
 		field349 = arg1;
@@ -92,7 +92,7 @@ public class MidiManager {
 	}
 
 	@ObfuscatedName("q.c(ILch;IIIZI)V")
-	public static void method95(int arg0, Js5Index arg1, int arg2, int arg3, int arg4, boolean arg5) {
+	public static void method95(int arg0, Js5 arg1, int arg2, int arg3, int arg4, boolean arg5) {
 		field1117 = 1;
 		field1118 = arg1;
 		field349 = arg2;
@@ -175,7 +175,7 @@ public class MidiManager {
 		return false;
 	}
 
-	public static void imethod1(Js5Local var17) {
+	public static void imethod1(Js5Loader var17) {
 		int var18 = var17.getGroupId("scape main");
 		int var19 = var17.getFileId(var18, "");
 		method95(2, var17, var18, var19, 255, false);

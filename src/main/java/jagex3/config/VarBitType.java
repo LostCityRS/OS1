@@ -4,14 +4,14 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.DoublyLinkable;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
-import jagex3.js5.Js5Local;
+import jagex3.js5.Js5;
+import jagex3.js5.Js5Loader;
 
 @ObfuscatedName("fc")
 public class VarBitType extends DoublyLinkable {
 
 	@ObfuscatedName("fc.n")
-	public static Js5Index configJs5;
+	public static Js5 configJs5;
 
 	@ObfuscatedName("fc.j")
 	public static LruCache field2417 = new LruCache(64);
@@ -60,7 +60,7 @@ public class VarBitType extends DoublyLinkable {
 		}
 	}
 
-	public static void unpack(Js5Local var38) {
+	public static void unpack(Js5Loader var38) {
 		configJs5 = var38;
 	}
 

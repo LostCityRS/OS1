@@ -5,7 +5,7 @@ import jagex3.datastruct.Linkable;
 import jagex3.graphics.Pix8;
 import jagex3.graphics.PixLoader;
 import jagex3.io.Packet;
-import jagex3.js5.Js5Index;
+import jagex3.js5.Js5;
 
 @ObfuscatedName("er")
 public class Texture extends Linkable {
@@ -76,7 +76,7 @@ public class Texture extends Linkable {
 	}
 
 	@ObfuscatedName("er.c(DILch;)Z")
-	public boolean method1571(double arg0, int arg1, Js5Index arg2) {
+	public boolean method1571(double arg0, int arg1, Js5 arg2) {
 		for (int var5 = 0; var5 < this.field1696.length; var5++) {
 			if (arg2.fetchFileNoDiscard(this.field1696[var5]) == null) {
 				return false;
