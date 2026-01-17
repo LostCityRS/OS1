@@ -90,177 +90,214 @@ public class Js5Net {
 	public static boolean loop() {
 		long currentTimeMs = MonotonicTime.currentTime();
 		int timeDelta = (int) (currentTimeMs - lastTickMs);
+
 		lastTickMs = currentTimeMs;
+
 		if (timeDelta > 200) {
 			timeDelta = 200;
 		}
+
 		timeoutMs += timeDelta;
+
 		if (prefetchQueueSize == 0 && urgentQueueSize == 0 && pendingPrefetchQueueSize == 0 && pendingUrgentQueueSize == 0) {
 			return true;
-		} else if (stream == null) {
+		}
+
+		if (stream == null) {
 			return false;
-		} else {
-			try {
-				if (timeoutMs > 30000) {
+		}
+
+		try {
+			if (timeoutMs > 30000) {
+				throw new IOException();
+			}
+
+			while (urgentQueueSize < 20 && pendingUrgentQueueSize > 0) {
+				Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.first();
+				Packet packet = new Packet(4);
+				packet.p1(1);
+				packet.p3((int) pendingUrgentRequest.key);
+				stream.write(packet.data, 0, 4);
+				urgentQueue.put(pendingUrgentRequest, pendingUrgentRequest.key);
+				pendingUrgentQueueSize--;
+				urgentQueueSize++;
+			}
+
+			while (prefetchQueueSize < 20 && pendingPrefetchQueueSize > 0) {
+				Js5NetRequest pendingPrefetchRequest = (Js5NetRequest) requestQueue.head();
+				Packet packet = new Packet(4);
+				packet.p1(0);
+				packet.p3((int) pendingPrefetchRequest.key);
+				stream.write(packet.data, 0, 4);
+				pendingPrefetchRequest.unlink2();
+				prefetchQueue.put(pendingPrefetchRequest, pendingPrefetchRequest.key);
+				pendingPrefetchQueueSize--;
+				prefetchQueueSize++;
+			}
+
+			for (int i = 0; i < 100; i++) {
+				int availableBytes = stream.available();
+				if (availableBytes < 0) {
 					throw new IOException();
 				}
-				while (urgentQueueSize < 20 && pendingUrgentQueueSize > 0) {
-					Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.first();
-					Packet packet = new Packet(4);
-					packet.p1(1);
-					packet.p3((int) pendingUrgentRequest.key);
-					stream.write(packet.data, 0, 4);
-					urgentQueue.put(pendingUrgentRequest, pendingUrgentRequest.key);
-					pendingUrgentQueueSize--;
-					urgentQueueSize++;
+
+				if (availableBytes == 0) {
+					break;
 				}
-				while (prefetchQueueSize < 20 && pendingPrefetchQueueSize > 0) {
-					Js5NetRequest pendingPrefetchRequest = (Js5NetRequest) requestQueue.head();
-					Packet packet = new Packet(4);
-					packet.p1(0);
-					packet.p3((int) pendingPrefetchRequest.key);
-					stream.write(packet.data, 0, 4);
-					pendingPrefetchRequest.unlink2();
-					prefetchQueue.put(pendingPrefetchRequest, pendingPrefetchRequest.key);
-					pendingPrefetchQueueSize--;
-					prefetchQueueSize++;
+
+				timeoutMs = 0;
+
+				byte headerSize = 0;
+				if (incomingRequest == null) {
+					headerSize = 8;
+				} else if (incomingChunkPos == 0) {
+					headerSize = 1;
 				}
-				for (int i = 0; i < 100; i++) {
-					int availableBytes = stream.available();
-					if (availableBytes < 0) {
-						throw new IOException();
+
+				if (headerSize > 0) {
+					int readableBytes = headerSize - incomingTransferHeader.pos;
+					if (readableBytes > availableBytes) {
+						readableBytes = availableBytes;
 					}
-					if (availableBytes == 0) {
+
+					stream.read(incomingTransferHeader.data, incomingTransferHeader.pos, readableBytes);
+
+					if (xorKey != 0) {
+						for (int j = 0; j < readableBytes; j++) {
+							incomingTransferHeader.data[incomingTransferHeader.pos + j] ^= xorKey;
+						}
+					}
+
+					incomingTransferHeader.pos += readableBytes;
+					if (incomingTransferHeader.pos < headerSize) {
 						break;
 					}
-					timeoutMs = 0;
-					byte headerSize = 0;
+
 					if (incomingRequest == null) {
-						headerSize = 8;
+						incomingTransferHeader.pos = 0;
+						int archiveId = incomingTransferHeader.g1();
+						int groupId = incomingTransferHeader.g2();
+						int compressionType = incomingTransferHeader.g1();
+						int compressedSize = incomingTransferHeader.g4();
+						long key = ((long) archiveId << 16) + groupId;
+						Js5NetRequest request = (Js5NetRequest) urgentQueue.get(key);
+						incomingUrgentRequest = true;
+
+						if (request == null) {
+							request = (Js5NetRequest) prefetchQueue.get(key);
+							incomingUrgentRequest = false;
+						}
+
+						if (request == null) {
+							throw new IOException();
+						}
+
+						int groupHeaderSize = compressionType == 0 ? 5 : 9;
+						incomingRequest = request;
+						incomingGroupBuffer = new Packet(compressedSize + groupHeaderSize + incomingRequest.padding);
+						incomingGroupBuffer.p1(compressionType);
+						incomingGroupBuffer.p4(compressedSize);
+						incomingChunkPos = 8;
+						incomingTransferHeader.pos = 0;
 					} else if (incomingChunkPos == 0) {
-						headerSize = 1;
+						if (incomingTransferHeader.data[0] == -1) {
+							incomingChunkPos = 1;
+							incomingTransferHeader.pos = 0;
+						} else {
+							incomingRequest = null;
+						}
 					}
-					if (headerSize > 0) {
-						int readableBytes = headerSize - incomingTransferHeader.pos;
-						if (readableBytes > availableBytes) {
-							readableBytes = availableBytes;
+				} else {
+					int remainingBytes = incomingGroupBuffer.data.length - incomingRequest.padding;
+
+					int chunkRemainingBytes = 512 - incomingChunkPos;
+					if (chunkRemainingBytes > remainingBytes - incomingGroupBuffer.pos) {
+						chunkRemainingBytes = remainingBytes - incomingGroupBuffer.pos;
+					}
+
+					if (chunkRemainingBytes > availableBytes) {
+						chunkRemainingBytes = availableBytes;
+					}
+
+					stream.read(incomingGroupBuffer.data, incomingGroupBuffer.pos, chunkRemainingBytes);
+
+					if (xorKey != 0) {
+						for (int j = 0; j < chunkRemainingBytes; j++) {
+							incomingGroupBuffer.data[incomingGroupBuffer.pos + j] ^= xorKey;
 						}
-						stream.read(incomingTransferHeader.data, incomingTransferHeader.pos, readableBytes);
-						if (xorKey != 0) {
-							for (int j = 0; j < readableBytes; j++) {
-								incomingTransferHeader.data[incomingTransferHeader.pos + j] ^= xorKey;
+					}
+
+					incomingGroupBuffer.pos += chunkRemainingBytes;
+					incomingChunkPos += chunkRemainingBytes;
+
+					if (incomingGroupBuffer.pos == remainingBytes) {
+						if (incomingRequest.key == 0xff00ffL) {
+							masterIndexBuffer = incomingGroupBuffer;
+
+							for (int j = 0; j < 256; j++) {
+								Js5Loader provider = field1200[j];
+								if (provider == null) {
+									continue;
+								}
+
+								masterIndexBuffer.pos = j * 8 + 5;
+								int indexCrc = masterIndexBuffer.g4();
+								int indexVersion = masterIndexBuffer.g4();
+								provider.method1476(indexCrc, indexVersion);
 							}
+						} else {
+							crc32.reset();
+							crc32.update(incomingGroupBuffer.data, 0, remainingBytes);
+
+							int crc = (int) crc32.getValue();
+							if (incomingRequest.expectedCrc != crc) {
+								try {
+									stream.close();
+								} catch (Exception ignored) {
+								}
+
+								crcErrorCount++;
+								stream = null;
+								xorKey = (byte) (Math.random() * 255.0D + 1.0D);
+								return false;
+							}
+
+							crcErrorCount = 0;
+							ioErrorCount = 0;
+							incomingRequest.provider.write((int) (incomingRequest.key & 0xFFFFL), incomingGroupBuffer.data, (incomingRequest.key & 0xFF0000L) == 16711680L, incomingUrgentRequest);
 						}
-						incomingTransferHeader.pos += readableBytes;
-						if (incomingTransferHeader.pos < headerSize) {
+
+						incomingRequest.unlink();
+
+						if (incomingUrgentRequest) {
+							urgentQueueSize--;
+						} else {
+							prefetchQueueSize--;
+						}
+
+						incomingChunkPos = 0;
+						incomingRequest = null;
+						incomingGroupBuffer = null;
+					} else {
+						if (incomingChunkPos != 512) {
 							break;
 						}
-						if (incomingRequest == null) {
-							incomingTransferHeader.pos = 0;
-							int archiveId = incomingTransferHeader.g1();
-							int groupId = incomingTransferHeader.g2();
-							int compressionType = incomingTransferHeader.g1();
-							int compressedSize = incomingTransferHeader.g4();
-							long key = ((long) archiveId << 16) + groupId;
-							Js5NetRequest request = (Js5NetRequest) urgentQueue.get(key);
-							incomingUrgentRequest = true;
 
-							if (request == null) {
-								request = (Js5NetRequest) prefetchQueue.get(key);
-								incomingUrgentRequest = false;
-							}
-							if (request == null) {
-								throw new IOException();
-							}
-							int groupHeaderSize = compressionType == 0 ? 5 : 9;
-							incomingRequest = request;
-							incomingGroupBuffer = new Packet(compressedSize + groupHeaderSize + incomingRequest.padding);
-							incomingGroupBuffer.p1(compressionType);
-							incomingGroupBuffer.p4(compressedSize);
-							incomingChunkPos = 8;
-							incomingTransferHeader.pos = 0;
-						} else if (incomingChunkPos == 0) {
-							if (incomingTransferHeader.data[0] == -1) {
-								incomingChunkPos = 1;
-								incomingTransferHeader.pos = 0;
-							} else {
-								incomingRequest = null;
-							}
-						}
-					} else {
-						int remainingBytes = incomingGroupBuffer.data.length - incomingRequest.padding;
-						int chunkRemainingBytes = 512 - incomingChunkPos;
-						if (chunkRemainingBytes > remainingBytes - incomingGroupBuffer.pos) {
-							chunkRemainingBytes = remainingBytes - incomingGroupBuffer.pos;
-						}
-						if (chunkRemainingBytes > availableBytes) {
-							chunkRemainingBytes = availableBytes;
-						}
-						stream.read(incomingGroupBuffer.data, incomingGroupBuffer.pos, chunkRemainingBytes);
-						if (xorKey != 0) {
-							for (int j = 0; j < chunkRemainingBytes; j++) {
-								incomingGroupBuffer.data[incomingGroupBuffer.pos + j] ^= xorKey;
-							}
-						}
-						incomingGroupBuffer.pos += chunkRemainingBytes;
-						incomingChunkPos += chunkRemainingBytes;
-						if (incomingGroupBuffer.pos == remainingBytes) {
-							if (incomingRequest.key == 0xff00ffL) {
-								masterIndexBuffer = incomingGroupBuffer;
-								for (int j = 0; j < 256; j++) {
-									Js5Loader provider = field1200[j];
-									if (provider != null) {
-										masterIndexBuffer.pos = j * 8 + 5;
-										int indexCrc = masterIndexBuffer.g4();
-										int indexVersion = masterIndexBuffer.g4();
-										provider.method1476(indexCrc, indexVersion);
-									}
-								}
-							} else {
-								crc32.reset();
-								crc32.update(incomingGroupBuffer.data, 0, remainingBytes);
-								int crc = (int) crc32.getValue();
-								if (incomingRequest.expectedCrc != crc) {
-									try {
-										stream.close();
-									} catch (Exception ignored) {
-									}
-									crcErrorCount++;
-									stream = null;
-									xorKey = (byte) (Math.random() * 255.0D + 1.0D);
-									return false;
-								}
-								crcErrorCount = 0;
-								ioErrorCount = 0;
-								incomingRequest.provider.write((int) (incomingRequest.key & 0xFFFFL), incomingGroupBuffer.data, (incomingRequest.key & 0xFF0000L) == 16711680L, incomingUrgentRequest);
-							}
-							incomingRequest.unlink();
-							if (incomingUrgentRequest) {
-								urgentQueueSize--;
-							} else {
-								prefetchQueueSize--;
-							}
-							incomingChunkPos = 0;
-							incomingRequest = null;
-							incomingGroupBuffer = null;
-						} else {
-							if (incomingChunkPos != 512) {
-								break;
-							}
-							incomingChunkPos = 0;
-						}
+						incomingChunkPos = 0;
 					}
 				}
-				return true;
-			} catch (IOException e) {
-				try {
-					stream.close();
-				} catch (Exception ignored) {
-				}
-				ioErrorCount++;
-				stream = null;
-				return false;
 			}
+
+			return true;
+		} catch (IOException ex) {
+			try {
+				stream.close();
+			} catch (Exception ignore) {
+			}
+
+			ioErrorCount++;
+			stream = null;
+			return false;
 		}
 	}
 
@@ -269,6 +306,7 @@ public class Js5Net {
 		if (stream == null) {
 			return;
 		}
+
 		try {
 			Packet packet = new Packet(4);
 			packet.p1(loggedIn ? 2 : 3);
@@ -277,8 +315,9 @@ public class Js5Net {
 		} catch (IOException e) {
 			try {
 				stream.close();
-			} catch (Exception ignored) {
+			} catch (Exception ignore) {
 			}
+
 			ioErrorCount++;
 			stream = null;
 		}
@@ -289,22 +328,26 @@ public class Js5Net {
 		if (stream != null) {
 			try {
 				stream.close();
-			} catch (Exception ignored) {
+			} catch (Exception ignore) {
 			}
 			stream = null;
 		}
+
 		stream = s;
+
 		sendLoginLogoutPacket(loggedId);
+
 		incomingTransferHeader.pos = 0;
 		incomingRequest = null;
 		incomingGroupBuffer = null;
 		incomingChunkPos = 0;
+
 		while (true) {
 			Js5NetRequest request = (Js5NetRequest) urgentQueue.first();
 			if (request == null) {
 				while (true) {
-					Js5NetRequest prefetchRequest = (Js5NetRequest) prefetchQueue.first();
-					if (prefetchRequest == null) {
+					Js5NetRequest prefetch = (Js5NetRequest) prefetchQueue.first();
+					if (prefetch == null) {
 						if (xorKey != 0) {
 							try {
 								Packet packet = new Packet(4);
@@ -315,22 +358,26 @@ public class Js5Net {
 							} catch (IOException e) {
 								try {
 									stream.close();
-								} catch (Exception ignored) {
+								} catch (Exception ignore) {
 								}
+
 								ioErrorCount++;
 								stream = null;
 							}
 						}
+
 						timeoutMs = 0;
 						lastTickMs = MonotonicTime.currentTime();
 						return;
 					}
-					requestQueue.addHead(prefetchRequest);
-					pendingPrefetchQueue.put(prefetchRequest, prefetchRequest.key);
+
+					requestQueue.addHead(prefetch);
+					pendingPrefetchQueue.put(prefetch, prefetch.key);
 					pendingPrefetchQueueSize++;
 					prefetchQueueSize--;
 				}
 			}
+
 			pendingUrgentQueue.put(request, request.key);
 			pendingUrgentQueueSize++;
 			urgentQueueSize--;
@@ -340,14 +387,17 @@ public class Js5Net {
 	@ObfuscatedName("by.m(Ldq;IIIBZI)V")
 	public static void queueRequest(Js5Loader provider, int archiveId, int groupId, int expectedCrc, byte padding, boolean urgent) {
 		long key = ((long) archiveId << 16) + groupId;
+
 		Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.get(key);
 		if (pendingUrgentRequest != null) {
 			return;
 		}
+
 		Js5NetRequest urgentRequest = (Js5NetRequest) urgentQueue.get(key);
 		if (urgentRequest != null) {
 			return;
 		}
+
 		Js5NetRequest pendingPrefetchQueue = (Js5NetRequest) Js5Net.pendingPrefetchQueue.get(key);
 		if (pendingPrefetchQueue == null) {
 			if (!urgent) {
@@ -356,10 +406,12 @@ public class Js5Net {
 					return;
 				}
 			}
+
 			Js5NetRequest request = new Js5NetRequest();
 			request.provider = provider;
 			request.expectedCrc = expectedCrc;
 			request.padding = padding;
+
 			if (urgent) {
 				pendingUrgentQueue.put(request, key);
 				pendingUrgentQueueSize++;
@@ -376,6 +428,7 @@ public class Js5Net {
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5Loader::UpdateCacheHint
 	@ObfuscatedName("ab.c(IIS)V")
 	public static void updateCacheHint(int archiveId, int groupId) {
 		long key = ((long) archiveId << 16) + groupId;

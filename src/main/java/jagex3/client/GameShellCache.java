@@ -1,7 +1,7 @@
 package jagex3.client;
 
 import deob.ObfuscatedName;
-import jagex3.io.BufferedFile;
+import jagex3.io.BufferedRandomAccessFile;
 import jagex3.io.CacheUtil;
 import jagex3.io.FileOnDisk;
 import jagex3.io.Packet;
@@ -23,16 +23,16 @@ public class GameShellCache {
 	public static int archiveCount;
 
 	@ObfuscatedName("ay.i")
-	public static BufferedFile uidDat = null;
+	public static BufferedRandomAccessFile uidDat = null;
 
 	@ObfuscatedName("ay.s")
-	public static BufferedFile cacheDat = null;
+	public static BufferedRandomAccessFile cacheDat = null;
 
 	@ObfuscatedName("ay.u")
-	public static BufferedFile masterIndex = null;
+	public static BufferedRandomAccessFile masterIndex = null;
 
 	@ObfuscatedName("av.v")
-	public static BufferedFile[] cacheIndex;
+	public static BufferedRandomAccessFile[] cacheIndex;
 
 	@ObfuscatedName("ap.w")
 	public static int historicCacheId;
@@ -207,14 +207,14 @@ public class GameShellCache {
 		try {
 			File var0 = new File(homeDir, "random.dat");
 			if (var0.exists()) {
-				uidDat = new BufferedFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
+				uidDat = new BufferedRandomAccessFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
 			} else {
 				label34:
 				for (int var1 = 0; var1 < historicCacheDirectories.length; var1++) {
 					for (int var2 = 0; var2 < historicCacheLocations.length; var2++) {
 						File var3 = new File(historicCacheLocations[var2] + historicCacheDirectories[var1] + File.separatorChar + "random.dat");
 						if (var3.exists()) {
-							uidDat = new BufferedFile(new FileOnDisk(var3, "rw", 25L), 24, 0);
+							uidDat = new BufferedRandomAccessFile(new FileOnDisk(var3, "rw", 25L), 24, 0);
 							break label34;
 						}
 					}
@@ -227,7 +227,7 @@ public class GameShellCache {
 				var4.write(var5);
 				var4.seek(0L);
 				var4.close();
-				uidDat = new BufferedFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
+				uidDat = new BufferedRandomAccessFile(new FileOnDisk(var0, "rw", 25L), 24, 0);
 			}
 		} catch (IOException var7) {
 		}
@@ -352,11 +352,11 @@ public class GameShellCache {
 			}
 			CacheUtil.method61(cacheDirectory);
 			openUID();
-			cacheDat = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.dat2"), "rw", 1048576000L), 5200, 0);
-			masterIndex = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx255"), "rw", 1048576L), 6000, 0);
-			cacheIndex = new BufferedFile[archiveCount];
+			cacheDat = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.dat2"), "rw", 1048576000L), 5200, 0);
+			masterIndex = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx255"), "rw", 1048576L), 6000, 0);
+			cacheIndex = new BufferedRandomAccessFile[archiveCount];
 			for (int i = 0; i < archiveCount; i++) {
-				cacheIndex[i] = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx" + i), "rw", 1048576L), 6000, 0);
+				cacheIndex[i] = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx" + i), "rw", 1048576L), 6000, 0);
 			}
 		} catch (Exception ex) {
 			JagException.report(null, ex);

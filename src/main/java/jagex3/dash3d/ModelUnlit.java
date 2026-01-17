@@ -469,7 +469,7 @@ public class ModelUnlit extends ModelSource {
 		var1.pos = var62;
 		int var84 = var1.g1();
 		if (var84 != 0) {
-			new Unused10();
+			new UnusedAJ();
 			var1.g2();
 			var1.g2();
 			var1.g2();

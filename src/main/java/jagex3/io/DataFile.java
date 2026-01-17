@@ -5,17 +5,18 @@ import deob.ObfuscatedName;
 import java.io.EOFException;
 import java.io.IOException;
 
+// jag::oldscape::jagex3::Js5LocalCache::DataFile
 @ObfuscatedName("ap")
-public class FileStream {
+public class DataFile {
 
 	@ObfuscatedName("ap.r")
 	public static byte[] temp = new byte[520];
 
 	@ObfuscatedName("ap.d")
-	public BufferedFile idx = null;
+	public BufferedRandomAccessFile idx = null;
 
 	@ObfuscatedName("ap.l")
-	public BufferedFile dat = null;
+	public BufferedRandomAccessFile dat = null;
 
 	@ObfuscatedName("ap.m")
 	public int archive;
@@ -23,17 +24,18 @@ public class FileStream {
 	@ObfuscatedName("ap.c")
 	public int maxFileSize = 65000;
 
-	public FileStream(int arg0, BufferedFile arg1, BufferedFile arg2, int arg3) {
+	public DataFile(int arg0, BufferedRandomAccessFile arg1, BufferedRandomAccessFile arg2, int arg3) {
 		this.archive = arg0;
 		this.dat = arg1;
 		this.idx = arg2;
 		this.maxFileSize = arg3;
 	}
 
+	// jag::oldscape::jagex3::Js5LocalCache::DataFile::ReadFromFile
 	@ObfuscatedName("ap.r(II)[B")
-	public byte[] read(int arg0) {
-		BufferedFile var2 = this.dat;
-		synchronized (this.dat) {
+	public byte[] readFromFile(int arg0) {
+		BufferedRandomAccessFile var2 = this.dat;
+		synchronized (var2) {
 			Object var10000;
 			try {
 				if (this.idx.length() < (long) (arg0 * 6 + 6)) {
@@ -62,11 +64,13 @@ public class FileStream {
 						if (var8 > 512) {
 							var8 = 512;
 						}
+						// jag::oldscape::jagex3::Js5LocalCache::DataFile::ReadBlockHeader
 						this.dat.read(temp, 0, var8 + 8);
 						int var9 = ((temp[0] & 0xFF) << 8) + (temp[1] & 0xFF);
 						int var10 = ((temp[2] & 0xFF) << 8) + (temp[3] & 0xFF);
 						int var11 = (temp[6] & 0xFF) + ((temp[4] & 0xFF) << 16) + ((temp[5] & 0xFF) << 8);
 						int var12 = temp[7] & 0xFF;
+						// jag::oldscape::jagex3::Js5LocalCache::DataFile::BlockHeader::Matches
 						if (arg0 != var9 || var7 != var10 || this.archive != var12) {
 							var10000 = null;
 							return (byte[]) var10000;
@@ -92,25 +96,27 @@ public class FileStream {
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5LocalCache::DataFile::WriteToFile
 	@ObfuscatedName("ap.d(I[BII)Z")
-	public boolean write(int arg0, byte[] arg1, int arg2) {
-		BufferedFile var4 = this.dat;
-		synchronized (this.dat) {
+	public boolean writeToFile(int arg0, byte[] arg1, int arg2) {
+		BufferedRandomAccessFile var4 = this.dat;
+		synchronized (var4) {
 			if (arg2 < 0 || arg2 > this.maxFileSize) {
 				throw new IllegalArgumentException();
 			}
-			boolean var5 = this.write(arg0, arg1, arg2, true);
+			boolean var5 = this.writeToFile(arg0, arg1, arg2, true);
 			if (!var5) {
-				var5 = this.write(arg0, arg1, arg2, false);
+				var5 = this.writeToFile(arg0, arg1, arg2, false);
 			}
 			return var5;
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5LocalCache::DataFile::WriteToFile
 	@ObfuscatedName("ap.l(I[BIZI)Z")
-	public boolean write(int arg0, byte[] arg1, int arg2, boolean arg3) {
-		BufferedFile var5 = this.dat;
-		synchronized (this.dat) {
+	public boolean writeToFile(int arg0, byte[] arg1, int arg2, boolean arg3) {
+		BufferedRandomAccessFile var5 = this.dat;
+		synchronized (var5) {
 			try {
 				int var6;
 				boolean var10000;

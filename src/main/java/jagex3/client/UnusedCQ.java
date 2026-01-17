@@ -3,9 +3,9 @@ package jagex3.client;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("cq")
-public class Unused8 {
+public class UnusedCQ {
 
-	public Unused8() throws Throwable {
+	public UnusedCQ() throws Throwable {
 		throw new Error();
 	}
 }

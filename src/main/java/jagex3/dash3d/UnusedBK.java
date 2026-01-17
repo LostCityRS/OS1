@@ -5,13 +5,13 @@ import deob.ObfuscatedName;
 import java.util.HashMap;
 
 @ObfuscatedName("bk")
-public class Unused3 {
+public class UnusedBK {
 
 	static {
 		new HashMap();
 	}
 
-	public Unused3() throws Throwable {
+	public UnusedBK() throws Throwable {
 		throw new Error();
 	}
 }

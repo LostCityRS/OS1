@@ -3,9 +3,9 @@ package jagex3.client;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("bn")
-public class Unused5 {
+public class UnusedBN {
 
-	public Unused5() throws Throwable {
+	public UnusedBN() throws Throwable {
 		throw new Error();
 	}
 }

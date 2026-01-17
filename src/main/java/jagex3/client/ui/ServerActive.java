@@ -1,13 +1,17 @@
 package jagex3.client.ui;
 
 import deob.ObfuscatedName;
+import jagex3.datastruct.Linkable;
 
 // jag::oldscape::rs2lib::ServerActive
-@ObfuscatedName("cv")
-public class ServerActive {
+@ObfuscatedName("el")
+public class ServerActive extends Linkable {
 
-	public ServerActive() throws Throwable {
-		throw new Error();
+	@ObfuscatedName("el.m")
+	public int events;
+
+	public ServerActive(int events) {
+		this.events = events;
 	}
 
 	// jag::oldscape::rs2lib::ServerActive::PauseButton

@@ -3,9 +3,9 @@ package jagex3.client;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("n")
-public class Unused1 {
+public class UnusedN {
 
-	public Unused1() throws Throwable {
+	public UnusedN() throws Throwable {
 		throw new Error();
 	}
 }

@@ -5,8 +5,9 @@ import deob.ObfuscatedName;
 import java.io.EOFException;
 import java.io.IOException;
 
+// jag::oldscape::jagex3::Js5LocalCache::BufferedRandomAccessFile
 @ObfuscatedName("v")
-public class BufferedFile {
+public class BufferedRandomAccessFile {
 
 	@ObfuscatedName("v.r")
 	public FileOnDisk field204;
@@ -41,7 +42,7 @@ public class BufferedFile {
 	@ObfuscatedName("v.i")
 	public long field206;
 
-	public BufferedFile(FileOnDisk arg0, int arg1, int arg2) throws IOException {
+	public BufferedRandomAccessFile(FileOnDisk arg0, int arg1, int arg2) throws IOException {
 		this.field204 = arg0;
 		this.field213 = this.field211 = arg0.length();
 		this.field208 = new byte[arg1];

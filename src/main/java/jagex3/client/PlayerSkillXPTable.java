@@ -2,8 +2,9 @@ package jagex3.client;
 
 import deob.ObfuscatedName;
 
+// jag::game::PlayerSkillXPTable
 @ObfuscatedName("bm")
-public class PlayerStats {
+public class PlayerSkillXPTable {
 
 	@ObfuscatedName("bm.d")
 	public static final boolean[] enabled = new boolean[] { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false };
@@ -21,7 +22,7 @@ public class PlayerStats {
 		}
 	}
 
-	public PlayerStats() throws Throwable {
+	public PlayerSkillXPTable() throws Throwable {
 		throw new Error();
 	}
 }

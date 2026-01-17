@@ -10,7 +10,7 @@ import jagex3.dash3d.*;
 import jagex3.datastruct.*;
 import jagex3.graphics.*;
 import jagex3.io.ClientStream;
-import jagex3.io.FileStream;
+import jagex3.io.DataFile;
 import jagex3.io.Packet;
 import jagex3.io.PacketBit;
 import jagex3.javconfig.JavConfigParameter;
@@ -1152,7 +1152,7 @@ public class Client extends GameShell {
 	public static int genderButton2 = -1;
 
 	@ObfuscatedName("r.pa")
-	public static FileStream masterIndex;
+	public static DataFile masterIndex;
 
 	@ObfuscatedName("client.f(I)V")
 	public final void reset() {
@@ -1272,7 +1272,7 @@ public class Client extends GameShell {
 		if (field484 != null) {
 			field484.method360(GameShell.canvas);
 		}
-		masterIndex = new FileStream(255, GameShellCache.cacheDat, GameShellCache.masterIndex, 500000);
+		masterIndex = new DataFile(255, GameShellCache.cacheDat, GameShellCache.masterIndex, 500000);
 		if (modewhere != 0) {
 			showFps = true;
 		}
@@ -1898,9 +1898,9 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::OpenJs5
 	@ObfuscatedName("u.dd(IZZZB)Ldq;")
 	public static Js5Loader openJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
-		FileStream stream = null;
+		DataFile stream = null;
 		if (GameShellCache.cacheDat != null) {
-			stream = new FileStream(archive, GameShellCache.cacheDat, GameShellCache.cacheIndex[archive], 1000000);
+			stream = new DataFile(archive, GameShellCache.cacheDat, GameShellCache.cacheIndex[archive], 1000000);
 		}
 		return new Js5Loader(stream, masterIndex, archive, arg1, arg2, arg3);
 	}
@@ -2233,7 +2233,7 @@ public class Client extends GameShell {
 		}
 
 		for (SubInterface var12 = (SubInterface) subinterfaces.first(); var12 != null; var12 = (SubInterface) subinterfaces.next()) {
-			method408(var12, true);
+			closeSubInterface(var12, true);
 		}
 
 		toplevelinterface = -1;
@@ -6967,14 +6967,14 @@ public class Client extends GameShell {
 				} else if (opcode == 5) {
 					register = VarCache.var[script[pc++]];
 				} else if (opcode == 6) {
-					register = PlayerStats.levelExperience[skillBaseLevel[script[pc++]] - 1];
+					register = PlayerSkillXPTable.levelExperience[skillBaseLevel[script[pc++]] - 1];
 				} else if (opcode == 7) {
 					register = VarCache.var[script[pc++]] * 100 / 46875;
 				} else if (opcode == 8) {
 					register = localPlayer.combatLevel;
 				} else if (opcode == 9) {
 					for (int var14 = 0; var14 < 25; var14++) {
-						if (PlayerStats.enabled[var14]) {
+						if (PlayerSkillXPTable.enabled[var14]) {
 							register += skillBaseLevel[var14];
 						}
 					}
@@ -7805,12 +7805,13 @@ public class Client extends GameShell {
 		return sub;
 	}
 
+	// jag::oldscape::Client::CloseSubinterface
 	@ObfuscatedName("am.gr(Ldy;ZI)V")
-	public static void method408(SubInterface arg0, boolean arg1) {
-		int var2 = arg0.id;
-		int var3 = (int) arg0.key;
+	public static void closeSubInterface(SubInterface sub, boolean arg1) {
+		int var2 = sub.id;
+		int var3 = (int) sub.key;
 
-		arg0.unlink();
+		sub.unlink();
 
 		if (arg1 && var2 != -1 && IfType.open[var2]) {
 			IfType.interfaces.discardFiles(var2);
@@ -7834,11 +7835,11 @@ public class Client extends GameShell {
 			}
 		}
 
-		method109(var2);
+		purgeServerActive(var2);
 
-		IfType var6 = IfType.get(var3);
-		if (var6 != null) {
-			componentUpdated(var6);
+		IfType com = IfType.get(var3);
+		if (com != null) {
+			componentUpdated(com);
 		}
 
 		isMenuOpen = false;
@@ -8244,20 +8245,21 @@ public class Client extends GameShell {
 		out.p1(0);
 	}
 
+	// jag::oldscape::Client::PurgeServerActive
 	@ObfuscatedName("s.gt(II)V")
-	public static void method109(int arg0) {
-		for (ServerKeyProperties var1 = (ServerKeyProperties) serverActive.first(); var1 != null; var1 = (ServerKeyProperties) serverActive.next()) {
-			if ((long) arg0 == (var1.key >> 48 & 0xFFFFL)) {
-				var1.unlink();
+	public static void purgeServerActive(int comId) {
+		for (ServerActive active = (ServerActive) serverActive.first(); active != null; active = (ServerActive) serverActive.next()) {
+			if ((long) comId == (active.key >> 48 & 0xFFFFL)) {
+				active.unlink();
 			}
 		}
 	}
 
 	// jag::oldscape::Client::GetActive
 	@ObfuscatedName("dn.gg(Leg;B)I")
-	public static int getActive(IfType arg0) {
-		ServerKeyProperties var1 = (ServerKeyProperties) serverActive.get(((long) arg0.parentlayer << 32) + (long) arg0.subid);
-		return var1 == null ? arg0.events : var1.events;
+	public static int getActive(IfType com) {
+		ServerActive active = (ServerActive) serverActive.get(((long) com.parentlayer << 32) + (long) com.subid);
+		return active == null ? com.events : active.events;
 	}
 
 	// jag::oldscape::Client::Hide
@@ -9123,7 +9125,7 @@ public class Client extends GameShell {
 				int var92 = in.g4();
 				SubInterface var93 = (SubInterface) subinterfaces.get((long) var92);
 				if (var93 != null) {
-					method408(var93, true);
+					closeSubInterface(var93, true);
 				}
 				if (resumedPauseButton != null) {
 					componentUpdated(resumedPauseButton);
@@ -9290,7 +9292,7 @@ public class Client extends GameShell {
 				int var135 = in.g4_alt1();
 				SubInterface var136 = (SubInterface) subinterfaces.get((long) var135);
 				if (var136 != null) {
-					method408(var136, var136.id != var134);
+					closeSubInterface(var136, var136.id != var134);
 				}
 				openSubInterface(var135, var134, var133);
 				ptype = -1;
@@ -9417,7 +9419,7 @@ public class Client extends GameShell {
 					if (var167 != null) {
 						var167.unlink();
 					}
-					serverActive.put(new ServerKeyProperties(var160), var165);
+					serverActive.put(new ServerActive(var160), var165);
 				}
 				ptype = -1;
 				return true;
@@ -9511,7 +9513,7 @@ public class Client extends GameShell {
 					int var184 = in.g1();
 					SubInterface var185 = (SubInterface) subinterfaces.get((long) var182);
 					if (var185 != null && var185.id != var183) {
-						method408(var185, true);
+						closeSubInterface(var185, true);
 						var185 = null;
 					}
 					if (var185 == null) {
@@ -9523,7 +9525,7 @@ public class Client extends GameShell {
 					if (var186.field1599) {
 						var186.field1599 = false;
 					} else {
-						method408(var186, true);
+						closeSubInterface(var186, true);
 					}
 				}
 				serverActive = new HashTable(512);
@@ -9534,7 +9536,7 @@ public class Client extends GameShell {
 					int var190 = in.g4();
 					for (int var191 = var188; var191 <= var189; var191++) {
 						long var192 = ((long) var187 << 32) + (long) var191;
-						serverActive.put(new ServerKeyProperties(var190), var192);
+						serverActive.put(new ServerActive(var190), var192);
 					}
 				}
 				ptype = -1;
@@ -9637,7 +9639,7 @@ public class Client extends GameShell {
 				skillLevel[var210] = var209;
 				skillBaseLevel[var210] = 1;
 				for (int var212 = 0; var212 < 98; var212++) {
-					if (var211 >= PlayerStats.levelExperience[var212]) {
+					if (var211 >= PlayerSkillXPTable.levelExperience[var212]) {
 						skillBaseLevel[var210] = var212 + 2;
 					}
 				}
@@ -11781,7 +11783,7 @@ public class Client extends GameShell {
 
 		for (SubInterface sub = (SubInterface) subinterfaces.first(); sub != null; sub = (SubInterface) subinterfaces.next()) {
 			if (sub.type == 0 || sub.type == 3) {
-				method408(sub, true);
+				closeSubInterface(sub, true);
 			}
 		}
 

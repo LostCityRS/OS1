@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.client.applet.GameShell;
 import jagex3.datastruct.ByteArrayCopier;
 import jagex3.datastruct.LinkList;
-import jagex3.io.FileStream;
+import jagex3.io.DataFile;
 import jagex3.io.Packet;
 
 import java.util.zip.CRC32;
@@ -14,10 +14,10 @@ import java.util.zip.CRC32;
 public class Js5Loader extends Js5 {
 
 	@ObfuscatedName("dq.f")
-	public FileStream fileStream;
+	public DataFile dataFile;
 
 	@ObfuscatedName("dq.k")
-	public FileStream indexFileStream;
+	public DataFile indexDataFile;
 
 	@ObfuscatedName("dq.o")
 	public int archive;
@@ -43,11 +43,11 @@ public class Js5Loader extends Js5 {
 	@ObfuscatedName("dq.aa")
 	public int field1581 = -1;
 
-	public Js5Loader(FileStream arg0, FileStream arg1, int archive, boolean discardPacked, boolean discardUnpacked, boolean arg5) {
+	public Js5Loader(DataFile arg0, DataFile arg1, int archive, boolean discardPacked, boolean discardUnpacked, boolean arg5) {
 		super(discardPacked, discardUnpacked);
 
-		this.fileStream = arg0;
-		this.indexFileStream = arg1;
+		this.dataFile = arg0;
+		this.indexDataFile = arg1;
 		this.archive = archive;
 		this.field1576 = arg5;
 
@@ -78,17 +78,18 @@ public class Js5Loader extends Js5 {
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5Loader::UpdateCacheHint
 	@ObfuscatedName("dq.d(IB)V")
-	public void updateCacheHint(int hint) {
-		Js5Net.updateCacheHint(this.archive, hint);
+	public void updateCacheHint(int groupId) {
+		Js5Net.updateCacheHint(this.archive, groupId);
 	}
 
 	@ObfuscatedName("dq.i(IB)V")
 	public void requestGroupDownload2(int groupId) {
-		if (this.fileStream == null || this.loadedGroups == null || !this.loadedGroups[groupId]) {
+		if (this.dataFile == null || this.loadedGroups == null || !this.loadedGroups[groupId]) {
 			Js5Net.queueRequest(this, this.archive, groupId, this.groupChecksums[groupId], (byte) 2, true);
 		} else {
-			Js5NetThread.queueRequest(groupId, this.fileStream, this);
+			Js5NetThread.requestGroup(groupId, this.dataFile, this);
 		}
 	}
 
@@ -96,10 +97,10 @@ public class Js5Loader extends Js5 {
 	public void method1476(int arg0, int arg1) {
 		this.indexCrc = arg0;
 		this.indexVersion = arg1;
-		if (this.indexFileStream == null) {
+		if (this.indexDataFile == null) {
 			Js5Net.queueRequest(this, 255, this.archive, this.indexCrc, (byte) 0, true);
 		} else {
-			Js5NetThread.queueRequest(this.archive, this.indexFileStream, this);
+			Js5NetThread.requestGroup(this.archive, this.indexDataFile, this);
 		}
 	}
 
@@ -108,9 +109,9 @@ public class Js5Loader extends Js5 {
 		if (!arg2) {
 			arg1[arg1.length - 2] = (byte) (this.groupVersions[arg0] >> 8);
 			arg1[arg1.length - 1] = (byte) this.groupVersions[arg0];
-			if (this.fileStream != null) {
+			if (this.dataFile != null) {
 				// todo: inlined method?
-				FileStream var12 = this.fileStream;
+				DataFile var12 = this.dataFile;
 				Js5WorkerRequest var13 = new Js5WorkerRequest();
 				var13.type = 0;
 				var13.key = arg0;
@@ -137,9 +138,9 @@ public class Js5Loader extends Js5 {
 		if (this.loadStatus) {
 			throw new RuntimeException();
 		}
-		if (this.indexFileStream != null) {
+		if (this.indexDataFile != null) {
 			int var5 = this.archive;
-			FileStream var6 = this.indexFileStream;
+			DataFile var6 = this.indexDataFile;
 			Js5WorkerRequest var7 = new Js5WorkerRequest();
 			var7.type = 0;
 			var7.key = var5;
@@ -162,12 +163,12 @@ public class Js5Loader extends Js5 {
 	}
 
 	@ObfuscatedName("dq.bz(Lap;I[BZI)V")
-	public void method1468(FileStream arg0, int arg1, byte[] arg2, boolean arg3) {
-		if (this.indexFileStream != arg0) {
+	public void method1468(DataFile arg0, int arg1, byte[] src, boolean arg3) {
+		if (this.indexDataFile != arg0) {
 			if (!arg3 && this.field1581 == arg1) {
 				this.loadStatus = true;
 			}
-			if (arg2 == null || arg2.length <= 2) {
+			if (src == null || src.length <= 2) {
 				this.loadedGroups[arg1] = false;
 				if (this.field1576 || arg3) {
 					Js5Net.queueRequest(this, this.archive, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
@@ -175,9 +176,9 @@ public class Js5Loader extends Js5 {
 				return;
 			}
 			crc32.reset();
-			crc32.update(arg2, 0, arg2.length - 2);
+			crc32.update(src, 0, src.length - 2);
 			int var9 = (int) crc32.getValue();
-			int var10 = ((arg2[arg2.length - 2] & 0xFF) << 8) + (arg2[arg2.length - 1] & 0xFF);
+			int var10 = ((src[src.length - 2] & 0xFF) << 8) + (src[src.length - 1] & 0xFF);
 			if (this.groupChecksums[arg1] != var9 || this.groupVersions[arg1] != var10) {
 				this.loadedGroups[arg1] = false;
 				if (this.field1576 || arg3) {
@@ -187,34 +188,42 @@ public class Js5Loader extends Js5 {
 			}
 			this.loadedGroups[arg1] = true;
 			if (arg3) {
-				this.packed[arg1] = ByteArrayCopier.method1131(arg2, false);
+				this.packed[arg1] = ByteArrayCopier.method1131(src, false);
 			}
 			return;
 		}
+
 		if (this.loadStatus) {
 			throw new RuntimeException();
 		}
-		if (arg2 == null) {
+
+		if (src == null) {
 			Js5Net.queueRequest(this, 255, this.archive, this.indexCrc, (byte) 0, true);
 			return;
 		}
+
 		crc32.reset();
-		crc32.update(arg2, 0, arg2.length);
-		int var5 = (int) crc32.getValue();
-		Packet var6 = new Packet(Js5.getUncompressedPacket(arg2));
-		int var7 = var6.g1();
-		if (var7 != 5 && var7 != 6) {
-			throw new RuntimeException("");
+		crc32.update(src, 0, src.length);
+
+		int crc = (int) crc32.getValue();
+		Packet buf = new Packet(Js5.getUncompressedPacket(src));
+
+		int protocol = buf.g1();
+		if (protocol != 5 && protocol != 6) {
+			throw new RuntimeException("Incorrect JS5 protocol number: " + protocol);
 		}
-		int var8 = 0;
-		if (var7 >= 6) {
-			var8 = var6.g4();
+
+		int version = 0;
+		if (protocol >= 6) {
+			version = buf.g4();
 		}
-		if (this.indexCrc != var5 || this.indexVersion != var8) {
+
+		if (this.indexCrc != crc || this.indexVersion != version) {
 			Js5Net.queueRequest(this, 255, this.archive, this.indexCrc, (byte) 0, true);
 			return;
 		}
-		this.decodeIndex(arg2);
+
+		this.decodeIndex(src);
 		this.loadAllLocal();
 	}
 
@@ -224,14 +233,14 @@ public class Js5Loader extends Js5 {
 		for (int var1 = 0; var1 < this.loadedGroups.length; var1++) {
 			this.loadedGroups[var1] = false;
 		}
-		if (this.fileStream == null) {
+		if (this.dataFile == null) {
 			this.loadStatus = true;
 			return;
 		}
 		this.field1581 = -1;
 		for (int var2 = 0; var2 < this.loadedGroups.length; var2++) {
 			if (this.groupSizes[var2] > 0) {
-				FileStream var3 = this.fileStream;
+				DataFile var3 = this.dataFile;
 				Js5WorkerRequest var5 = new Js5WorkerRequest();
 				var5.type = 1;
 				var5.key = var2;

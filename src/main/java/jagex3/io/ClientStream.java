@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+// jag::ClientStream
 @ObfuscatedName("am")
 public class ClientStream implements Runnable {
 
