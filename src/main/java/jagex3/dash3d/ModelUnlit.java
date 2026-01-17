@@ -503,10 +503,10 @@ public class ModelUnlit extends ModelSource {
 
 		int pos = 0;
 
-		// vertexOrderOffset
+		int vertexOrderOffset = pos;
 		pos += vertexCount;
 
-		// faceIndexOrderOffset
+		int faceIndexOrderOffset = pos;
 		pos += faceCount;
 
 		int facePriorityOffset = pos;
@@ -534,22 +534,22 @@ public class ModelUnlit extends ModelSource {
 			pos += faceCount;
 		}
 
-		// faceIndexOffset
+		int faceIndexOffset = pos;
 		pos += dataLengthFaceIndex;
 
-		// faceColourOffset
+		int faceColourOffset = pos;
 		pos += faceCount * 2;
 
-		// faceTextureAxisOffset
+		int faceTextureAxisOffset = pos;
 		pos += faceTextureCount * 6;
 
-		// vertexXOffset
+		int vertexXOffset = pos;
 		pos += dataLengthX;
 
-		// vertexYOffset
+		int vertexYOffset = pos;
 		pos += dataLengthY;
 
-		// vertexZOffset
+		int vertexZOffset = pos;
 		pos += dataLengthZ;
 
 		this.vertexCount = vertexCount;
@@ -598,16 +598,16 @@ public class ModelUnlit extends ModelSource {
 		this.faceColour = new short[faceCount];
 
 		Packet point1 = new Packet(src);
-		point1.pos = pos;
+		point1.pos = vertexOrderOffset;
 
 		Packet point2 = new Packet(src);
-		point2.pos = pos;
+		point2.pos = vertexXOffset;
 
 		Packet point3 = new Packet(src);
-		point3.pos = pos;
+		point3.pos = vertexYOffset;
 
 		Packet point4 = new Packet(src);
-		point4.pos = pos;
+		point4.pos = vertexZOffset;
 
 		Packet point5 = new Packet(src);
 		point5.pos = vertexLabelOffset;
@@ -647,7 +647,7 @@ public class ModelUnlit extends ModelSource {
 		}
 
 		Packet face1 = new Packet(src);
-		face1.pos = pos;
+		face1.pos = faceColourOffset;
 
 		Packet face2 = new Packet(src);
 		face2.pos = faceInfoOffset;
@@ -699,10 +699,10 @@ public class ModelUnlit extends ModelSource {
 		}
 
 		Packet vertex1 = new Packet(src);
-		vertex1.pos = pos;
+		vertex1.pos = faceIndexOffset;
 
 		Packet vertex2 = new Packet(src);
-		vertex2.pos = pos;
+		vertex2.pos = faceIndexOrderOffset;
 
 		int a = 0;
 		int b = 0;
@@ -738,7 +738,7 @@ public class ModelUnlit extends ModelSource {
 		}
 
 		Packet axis = new Packet(src);
-		axis.pos = pos;
+		axis.pos = faceTextureAxisOffset;
 
 		for (int f = 0; f < faceTextureCount; f++) {
 			this.field2687[f] = 0;
