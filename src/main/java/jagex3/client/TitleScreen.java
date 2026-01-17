@@ -215,7 +215,7 @@ public class TitleScreen {
 		if (JavaMouseProvider.mouseClickButton == 1 && JavaMouseProvider.mouseClickX >= 715 && JavaMouseProvider.mouseClickY >= 453) {
 			field142 = !field142;
 			if (field142) {
-				MidiManager.method917();
+				MidiManager.stop();
 			} else {
 				Js5Loader var1 = Client.midiSongJs5;
 				int var2 = var1.getGroupId("scape main");
@@ -1143,7 +1143,7 @@ public class TitleScreen {
 			field142 = false;
 		}
 		if (field142) {
-			MidiManager.imethod2();
+			MidiManager.stop2();
 		} else {
 			MidiManager.imethod1(Client.midiSongJs5);
 		}

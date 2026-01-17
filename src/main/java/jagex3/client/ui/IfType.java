@@ -463,8 +463,6 @@ public class IfType extends Linkable {
 						} else {
 							list[arg0][var2].decodeIf1(new Packet(var3));
 						}
-
-						System.out.println(arg0 + ":" + var2 + " " + list[arg0][var2].renderwidth + "x" + list[arg0][var2].renderheight + " x:" + list[arg0][var2].renderx + " y:" + list[arg0][var2].rendery);
 					}
 				}
 			}

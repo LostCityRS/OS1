@@ -1404,21 +1404,21 @@ public class ScriptRunner {
 						// sound_synth
 						isp -= 3;
 
-						Client.imethod46(intStack[isp], intStack[isp + 1], intStack[isp + 2]);
+						Client.playSynth(intStack[isp], intStack[isp + 1], intStack[isp + 2]);
 						continue;
 					}
 					if (opcode == 3201) {
 						// sound_song
 						isp--;
 
-						Client.method1232(intStack[isp]);
+						Client.playSongs(intStack[isp]);
 						continue;
 					}
 					if (opcode == 3202) {
 						// sound_jingle
 						isp -= 2;
 
-						Client.imethod45(intStack[isp], intStack[isp + 1]);
+						Client.playJingle(intStack[isp], intStack[isp + 1]);
 						continue;
 					}
 				} else if (opcode < 3400) {

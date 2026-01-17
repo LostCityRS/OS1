@@ -41,16 +41,16 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static int updateCount;
 
 	@ObfuscatedName("dj.z")
-	public static int field1538 = 20;
+	public static int deltime = 20;
 
 	@ObfuscatedName("dj.g")
-	public static int field1539 = 1;
+	public static int mindel = 1;
 
 	@ObfuscatedName("dj.q")
 	public static int fps = 0;
 
 	@ObfuscatedName("bc.i")
-	public static Timer field1100;
+	public static Timer timer;
 
 	@ObfuscatedName("dj.u")
 	public static long[] drawTime = new long[32];
@@ -71,10 +71,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static int canvasHei;
 
 	@ObfuscatedName("ca.f")
-	public static Font field1159;
+	public static Font progressFont;
 
 	@ObfuscatedName("fr.k")
-	public static FontMetrics field2489;
+	public static FontMetrics progressFontMetrics;
 
 	@ObfuscatedName("dj.o")
 	public static PixMap drawArea;
@@ -103,7 +103,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("z.ap")
 	public static boolean focus;
 
-	public final void initApplication(int width, int height, int revision) {
+	// com.jagex.game.runetek6.client.GameShell3.startApplication
+	public final void startApplication(int width, int height, int revision) {
 		frame = new Frame();
 		frame.setTitle("Jagex");
 		frame.setResizable(false);
@@ -117,33 +118,39 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		this.init();
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.startCommon
 	@ObfuscatedName("dj.z(IIIB)V")
-	public final void method1354(int arg0, int arg1, int arg2) {
+	public final void startCommon(int arg0, int arg1, int arg2) {
 		try {
 			if (shell != null) {
 				field1533++;
+
 				if (field1533 >= 3) {
 					this.error("alreadyloaded");
 					return;
 				}
+
 				this.getAppletContext().showDocument(this.getDocumentBase(), "_self");
 				return;
 			}
+
 			shell = this;
 			canvasWid = arg0;
 			canvasHei = arg1;
 			JagException.revision = arg2;
 			JagException.applet = this;
+
 			if (taskHandler == null) {
 				taskHandler = new TaskHandler();
 			}
 			taskHandler.threadreq(this, 1);
-		} catch (Exception var5) {
-			JagException.report(null, var5);
+		} catch (Exception ex) {
+			JagException.report(null, ex);
 			this.error("crash");
 		}
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.addcanvas
 	@ObfuscatedName("dj.g(I)V")
 	public final synchronized void addcanvas() {
 		Container var1;
@@ -160,11 +167,11 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		var1.add(canvas);
 		canvas.setSize(canvasWid, canvasHei);
 		canvas.setVisible(true);
-		if (frame == null) {
-			canvas.setLocation(0, 0);
-		} else {
+		if (frame != null) {
 			Insets var2 = frame.getInsets();
 			canvas.setLocation(var2.left, var2.top);
+		} else {
+			canvas.setLocation(0, 0);
 		}
 		canvas.addFocusListener(this);
 		canvas.requestFocus();
@@ -173,6 +180,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		lastCanvasReplace = MonotonicTime.currentTime();
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.checkhost
 	@ObfuscatedName("dj.q(I)Z")
 	public final boolean checkhost() {
 		if (Settings.NO_HOST_CHECK) {
@@ -201,26 +209,31 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		}
 	}
 
+	@Override
 	public void run() {
 		try {
 			if (TaskHandler.javaVendor != null) {
-				String var1 = TaskHandler.javaVendor.toLowerCase();
-				if (var1.indexOf("sun") != -1 || var1.indexOf("apple") != -1) {
-					String var2 = TaskHandler.javaVersion;
-					if (var2.equals("1.1") || var2.startsWith("1.1.") || var2.equals("1.2") || var2.startsWith("1.2.") || var2.equals("1.3") || var2.startsWith("1.3.") || var2.equals("1.4") || var2.startsWith("1.4.") || var2.equals("1.5") || var2.startsWith("1.5.") || var2.equals("1.6.0")) {
+				String vendor = TaskHandler.javaVendor.toLowerCase();
+
+				if (vendor.indexOf("sun") != -1 || vendor.indexOf("apple") != -1) {
+					String version = TaskHandler.javaVersion;
+
+					if (version.equals("1.1") || version.startsWith("1.1.") || version.equals("1.2") || version.startsWith("1.2.") || version.equals("1.3") || version.startsWith("1.3.") || version.equals("1.4") || version.startsWith("1.4.") || version.equals("1.5") || version.startsWith("1.5.") || version.equals("1.6.0")) {
 						this.error("wrongjava");
 						return;
 					}
-					if (var2.startsWith("1.6.0_")) {
+
+					if (version.startsWith("1.6.0_")) {
 						int var3;
-						for (var3 = 6; var3 < var2.length(); var3++) {
-							char var4 = var2.charAt(var3);
+						for (var3 = 6; var3 < version.length(); var3++) {
+							char var4 = version.charAt(var3);
 							boolean var5 = var4 >= '0' && var4 <= '9';
 							if (!var5) {
 								break;
 							}
 						}
-						String var6 = var2.substring(6, var3);
+
+						String var6 = version.substring(6, var3);
 						if (StringUtil.method62(var6)) {
 							int var7 = StringUtil.method91(var6, 10, true);
 							if (var7 < 10) {
@@ -229,87 +242,90 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 							}
 						}
 					}
-					field1539 = 5;
+
+					mindel = 5;
 				}
 			}
+
 			this.setFocusCycleRoot(true);
 			this.addcanvas();
-			int var8 = canvasWid;
-			int var9 = canvasHei;
-			Canvas var10 = canvas;
-			PixMap var12;
+
+			int wid = canvasWid;
+			int hei = canvasHei;
+			Canvas target = canvas;
+			PixMap newDrawArea;
 			try {
-				JavaPixMap var11 = new JavaPixMap();
-				var11.create(var8, var9, var10);
-				var12 = var11;
+				JavaPixMap pix = new JavaPixMap();
+				pix.create(wid, hei, target);
+				newDrawArea = pix;
 			} catch (Throwable var23) {
-				JavaSafePixMap var14 = new JavaSafePixMap();
-				var14.create(var8, var9, var10);
-				var12 = var14;
+				JavaSafePixMap pix = new JavaSafePixMap();
+				pix.create(wid, hei, target);
+				newDrawArea = pix;
 			}
-			drawArea = var12;
+			drawArea = newDrawArea;
+
 			this.maininit();
-			Timer var15;
+
+			Timer newTimer;
 			try {
-				var15 = new NanoTimer();
-			} catch (Throwable var22) {
-				var15 = new MillisTimer();
+				newTimer = new NanoTimer();
+			} catch (Throwable ex) {
+				newTimer = new MillisTimer();
 			}
-			field1100 = var15;
-			label99:
-			while (true) {
-				TaskHandler var18;
-				Canvas var19;
-				do {
-					if (killtime != 0L && MonotonicTime.currentTime() >= killtime) {
-						break label99;
-					}
-					updateCount = field1100.method380(field1538, field1539);
-					for (int var17 = 0; var17 < updateCount; var17++) {
-						this.mainloopwrapper();
-					}
-					this.mainredrawwrapper();
-					var18 = taskHandler;
-					var19 = canvas;
-				} while (var18.eventQueue == null);
-				for (int var20 = 0; var20 < 50 && var18.eventQueue.peekEvent() != null; var20++) {
-					PreciseSleep.sleep(1L);
+			timer = newTimer;
+
+			while (killtime == 0L || MonotonicTime.currentTime() < killtime) {
+				updateCount = timer.method380(deltime, mindel);
+
+				for (int i = 0; i < updateCount; i++) {
+					this.mainloopwrapper();
 				}
-				if (var19 != null) {
-					var18.eventQueue.postEvent(new ActionEvent(var19, 1001, "dummy"));
-				}
+
+				this.mainredrawwrapper();
+
+				TaskHandler.flushEvents(taskHandler, canvas);
 			}
-		} catch (Exception var24) {
-			JagException.report(null, (Throwable) var24);
+		} catch (Exception ex) {
+			JagException.report(null, ex);
 			this.error("crash");
 		}
+
 		this.shutdown();
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.mainloopwrapper
 	@ObfuscatedName("dj.i(I)V")
 	public void mainloopwrapper() {
 		long var1 = MonotonicTime.currentTime();
 		long var3 = updateTime[field1218];
 		updateTime[field1218] = var1;
 		field1218 = field1218 + 1 & 0x1F;
+
 		if (var3 != 0L && var1 > var3) {
+			// lps
 		}
+
 		synchronized (this) {
 			focus = focus_in;
 		}
+
 		this.mainloop();
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.mainredrawwrapper
 	@ObfuscatedName("dj.s(I)V")
 	public void mainredrawwrapper() {
 		long var1 = MonotonicTime.currentTime();
 		long var3 = drawTime[field833];
 		drawTime[field833] = var1;
 		field833 = field833 + 1 & 0x1F;
+
 		if (var3 != 0L && var1 > var3) {
 			int var5 = (int) (var1 - var3);
 			fps = ((var5 >> 1) + 32000) / var5;
 		}
+
 		if (++field1547 - 1 > 50) {
 			field1547 -= 50;
 			fullredraw = true;
@@ -322,42 +338,50 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 				canvas.setLocation(var6.left, var6.top);
 			}
 		}
+
 		this.mainredraw();
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.shutdown
 	@ObfuscatedName("dj.u(I)V")
 	public final synchronized void shutdown() {
 		if (alreadyshutdown) {
 			return;
 		}
+
 		alreadyshutdown = true;
+
 		try {
 			canvas.removeFocusListener(this);
-		} catch (Exception var8) {
+		} catch (Exception ignore) {
 		}
+
 		try {
 			this.mainquit();
-		} catch (Exception var7) {
+		} catch (Exception ignore) {
 		}
+
 		if (frame != null) {
 			try {
 				System.exit(0);
-			} catch (Throwable var6) {
+			} catch (Throwable ignore) {
 			}
 		}
+
 		if (taskHandler != null) {
 			try {
 				taskHandler.close();
-			} catch (Exception var5) {
+			} catch (Exception ignore) {
 			}
 		}
-		this.method1373();
+
+		this.reset();
 	}
 
-	// jag::oldscape::javapal::GameShell::DoneSlowUpdate
+	// com.jagex.game.runetek6.client.GameShell3.doneslowupdate
 	@ObfuscatedName("bk.v(B)V")
-	public static void doneSlowUpdate() {
-		field1100.method381();
+	public static void doneslowupdate() {
+		timer.method381();
 
 		for (int i = 0; i < 32; i++) {
 			drawTime[i] = 0L;
@@ -370,84 +394,109 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		updateCount = 0;
 	}
 
+	@Override
 	public void start() {
-		if (shell == this && !alreadyshutdown) {
-			killtime = 0L;
-		}
-	}
-
-	public void stop() {
-		if (shell == this && !alreadyshutdown) {
-			killtime = MonotonicTime.currentTime() + 4000L;
-		}
-	}
-
-	public void destroy() {
-		if (shell == this && !alreadyshutdown) {
-			killtime = MonotonicTime.currentTime();
-			PreciseSleep.sleep(5000L);
-			this.shutdown();
-		}
-	}
-
-	public final void update(Graphics arg0) {
-		this.paint(arg0);
-	}
-
-	public final synchronized void paint(Graphics arg0) {
 		if (shell != this || alreadyshutdown) {
 			return;
 		}
+
+		killtime = 0L;
+	}
+
+	@Override
+	public void stop() {
+		if (shell != this || alreadyshutdown) {
+			return;
+		}
+
+		killtime = MonotonicTime.currentTime() + 4000L;
+	}
+
+	@Override
+	public void destroy() {
+		if (shell != this || alreadyshutdown) {
+			return;
+		}
+
+		killtime = MonotonicTime.currentTime();
+		PreciseSleep.sleep(5000L);
+		this.shutdown();
+	}
+
+	@Override
+	public final void update(Graphics g) {
+		this.paint(g);
+	}
+
+	@Override
+	public final synchronized void paint(Graphics g) {
+		if (shell != this || alreadyshutdown) {
+			return;
+		}
+
 		fullredraw = true;
+
 		if (TaskHandler.javaVersion != null && TaskHandler.javaVersion.startsWith("1.5") && MonotonicTime.currentTime() - lastCanvasReplace > 1000L) {
-			Rectangle var2 = arg0.getClipBounds();
-			if (var2 == null || var2.width >= canvasWid && var2.height >= canvasHei) {
+			Rectangle bounds = g.getClipBounds();
+			if (bounds == null || bounds.width >= canvasWid && bounds.height >= canvasHei) {
 				canvasReplaceRecommended = true;
 			}
 		}
 	}
 
-	public final void focusGained(FocusEvent arg0) {
+	@Override
+	public final void focusGained(FocusEvent e) {
 		focus_in = true;
 		fullredraw = true;
 	}
 
-	public final void focusLost(FocusEvent arg0) {
+	@Override
+	public final void focusLost(FocusEvent e) {
 		focus_in = false;
 	}
 
-	public final void windowActivated(WindowEvent arg0) {
+	@Override
+	public final void windowActivated(WindowEvent e) {
 	}
 
-	public final void windowClosed(WindowEvent arg0) {
+	@Override
+	public final void windowClosed(WindowEvent e) {
 	}
 
-	public final void windowClosing(WindowEvent arg0) {
+	@Override
+	public final void windowClosing(WindowEvent e) {
 		this.destroy();
 	}
 
-	public final void windowDeactivated(WindowEvent arg0) {
+	@Override
+	public final void windowDeactivated(WindowEvent e) {
 	}
 
-	public final void windowDeiconified(WindowEvent arg0) {
+	@Override
+	public final void windowDeiconified(WindowEvent e) {
 	}
 
-	public final void windowIconified(WindowEvent arg0) {
+	@Override
+	public final void windowIconified(WindowEvent e) {
 	}
 
-	public final void windowOpened(WindowEvent arg0) {
+	@Override
+	public final void windowOpened(WindowEvent e) {
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.error
 	@ObfuscatedName("dj.t(Ljava/lang/String;I)V")
-	public void error(String arg0) {
+	public void error(String err) {
 		if (this.alreadyerrored) {
 			return;
 		}
+
 		this.alreadyerrored = true;
-		System.out.println("error_game_" + arg0);
+		System.out.println("error_game_" + err);
+
 		try {
-			this.getAppletContext().showDocument(new URL(this.getCodeBase(), "error_game_" + arg0 + ".ws"), "_self");
-		} catch (Exception var3) {
+			this.getAppletContext().showDocument(new URL(this.getCodeBase(), "error_game_" + err + ".ws"), "_self");
+		} catch (Exception ignore) {
 		}
 	}
 
@@ -461,64 +510,65 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public abstract void mainloop();
 
 	@ObfuscatedName("dj.f(I)V")
-	public abstract void method1373();
-
-	public abstract void init();
+	public abstract void reset();
 
 	@ObfuscatedName("dj.b(I)V")
 	public abstract void mainredraw();
 
-	public static void drawProgress(int var3, String var4, Color var5) {
+	@Override
+	public abstract void init();
+
+	public static void drawProgress(int progress, String message, Color color) {
 		try {
-			Graphics var6 = GameShell.canvas.getGraphics();
-			if (GameShell.field1159 == null) {
-				GameShell.field1159 = new Font("Helvetica", Font.BOLD, 13);
-				GameShell.field2489 = GameShell.canvas.getFontMetrics(GameShell.field1159);
+			Graphics g = canvas.getGraphics();
+			if (progressFont == null) {
+				progressFont = new Font("Helvetica", Font.BOLD, 13);
+				progressFontMetrics = canvas.getFontMetrics(progressFont);
 			}
 			if (fullredraw) {
 				fullredraw = false;
-				var6.setColor(Color.black);
-				var6.fillRect(0, 0, GameShell.canvasWid, GameShell.canvasHei);
+				g.setColor(Color.black);
+				g.fillRect(0, 0, canvasWid, canvasHei);
 			}
-			if (var5 == null) {
-				var5 = new Color(140, 17, 17);
+			if (color == null) {
+				color = new Color(140, 17, 17);
 			}
 			try {
 				if (Client.progressBar == null) {
-					Client.progressBar = GameShell.canvas.createImage(304, 34);
+					Client.progressBar = canvas.createImage(304, 34);
 				}
-				Graphics var7 = Client.progressBar.getGraphics();
-				var7.setColor(var5);
-				var7.drawRect(0, 0, 303, 33);
-				var7.fillRect(2, 2, var3 * 3, 30);
-				var7.setColor(Color.black);
-				var7.drawRect(1, 1, 301, 31);
-				var7.fillRect(var3 * 3 + 2, 2, 300 - var3 * 3, 30);
-				var7.setFont(GameShell.field1159);
-				var7.setColor(Color.white);
-				var7.drawString(var4, (304 - GameShell.field2489.stringWidth(var4)) / 2, 22);
-				var6.drawImage(Client.progressBar, GameShell.canvasWid / 2 - 152, GameShell.canvasHei / 2 - 18, null);
-			} catch (Exception var49) {
-				int var9 = GameShell.canvasWid / 2 - 152;
-				int var10 = GameShell.canvasHei / 2 - 18;
-				var6.setColor(var5);
-				var6.drawRect(var9, var10, 303, 33);
-				var6.fillRect(var9 + 2, var10 + 2, var3 * 3, 30);
-				var6.setColor(Color.black);
-				var6.drawRect(var9 + 1, var10 + 1, 301, 31);
-				var6.fillRect(var3 * 3 + var9 + 2, var10 + 2, 300 - var3 * 3, 30);
-				var6.setFont(GameShell.field1159);
-				var6.setColor(Color.white);
-				var6.drawString(var4, var9 + (304 - GameShell.field2489.stringWidth(var4)) / 2, var10 + 22);
+				Graphics bar = Client.progressBar.getGraphics();
+				bar.setColor(color);
+				bar.drawRect(0, 0, 303, 33);
+				bar.fillRect(2, 2, progress * 3, 30);
+				bar.setColor(Color.black);
+				bar.drawRect(1, 1, 301, 31);
+				bar.fillRect(progress * 3 + 2, 2, 300 - progress * 3, 30);
+				bar.setFont(progressFont);
+				bar.setColor(Color.white);
+				bar.drawString(message, (304 - progressFontMetrics.stringWidth(message)) / 2, 22);
+				g.drawImage(Client.progressBar, canvasWid / 2 - 152, canvasHei / 2 - 18, null);
+			} catch (Exception ex) {
+				int var9 = canvasWid / 2 - 152;
+				int var10 = canvasHei / 2 - 18;
+				g.setColor(color);
+				g.drawRect(var9, var10, 303, 33);
+				g.fillRect(var9 + 2, var10 + 2, progress * 3, 30);
+				g.setColor(Color.black);
+				g.drawRect(var9 + 1, var10 + 1, 301, 31);
+				g.fillRect(progress * 3 + var9 + 2, var10 + 2, 300 - progress * 3, 30);
+				g.setFont(progressFont);
+				g.setColor(Color.white);
+				g.drawString(message, var9 + (304 - progressFontMetrics.stringWidth(message)) / 2, var10 + 22);
 			}
-		} catch (Exception var50) {
-			GameShell.canvas.repaint();
+		} catch (Exception ex) {
+			canvas.repaint();
 		}
 	}
 
-	public static void reset() {
+	public static void resetProgress() {
 		Client.progressBar = null;
-		GameShell.field1159 = null;
-		GameShell.field2489 = null;
+		progressFont = null;
+		progressFontMetrics = null;
 	}
 }

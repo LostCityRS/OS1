@@ -84,15 +84,17 @@ public class MidiManager {
 		}
 	}
 
+	// jag::oldscape::midi2::MidiManager::Stop
 	@ObfuscatedName("bc.m(B)V")
-	public static void method917() {
+	public static void stop() {
 		midiPlayer.stop();
 		field1117 = 1;
 		field1118 = null;
 	}
 
+	// jag::oldscape::midi2::MidiManager::Play
 	@ObfuscatedName("q.c(ILch;IIIZI)V")
-	public static void method95(int arg0, Js5 arg1, int arg2, int arg3, int arg4, boolean arg5) {
+	public static void play(int arg0, Js5 arg1, int arg2, int arg3, int arg4, boolean arg5) {
 		field1117 = 1;
 		field1118 = arg1;
 		field349 = arg2;
@@ -178,10 +180,11 @@ public class MidiManager {
 	public static void imethod1(Js5Loader var17) {
 		int var18 = var17.getGroupId("scape main");
 		int var19 = var17.getFileId(var18, "");
-		method95(2, var17, var18, var19, 255, false);
+		play(2, var17, var18, var19, 255, false);
 	}
 
-	public static void imethod2() {
+	// jag::oldscape::midi2::MidiManager::Stop
+	public static void stop2() {
 		field1117 = 1;
 		field1118 = null;
 		field349 = -1;

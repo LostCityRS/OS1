@@ -33,19 +33,10 @@ public class AudioThread implements Runnable {
 					}
 				}
 				PreciseSleep.sleep(10L);
-				TaskHandler var3 = this.taskHandler;
-				Object var4 = null;
-				if (var3.eventQueue != null) {
-					for (int var5 = 0; var5 < 50 && var3.eventQueue.peekEvent() != null; var5++) {
-						PreciseSleep.sleep(1L);
-					}
-					if (var4 != null) {
-						var3.eventQueue.postEvent(new ActionEvent(var4, 1001, "dummy"));
-					}
-				}
+				TaskHandler.flushEvents(taskHandler, null);
 			}
-		} catch (Exception var10) {
-			JagException.report(null, (Throwable) var10);
+		} catch (Exception ex) {
+			JagException.report(null, ex);
 		} finally {
 			this.running = false;
 		}

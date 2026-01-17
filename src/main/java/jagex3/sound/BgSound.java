@@ -65,6 +65,21 @@ public class BgSound extends Linkable {
 		}
 	}
 
+	// jag::oldscape::bgsound::Reset
+	public static void reset() {
+		for (BgSound var23 = (BgSound) soundlist.head(); var23 != null; var23 = (BgSound) soundlist.next()) {
+			if (var23.field1603 != null) {
+				Client.soundMixer.stopStream(var23.field1603);
+				var23.field1603 = null;
+			}
+			if (var23.field1614 != null) {
+				Client.soundMixer.stopStream(var23.field1614);
+				var23.field1614 = null;
+			}
+		}
+		soundlist.clear();
+	}
+
 	// jag::oldscape::bgsound::RecalcSound
 	@ObfuscatedName("de.n(I)V")
 	public void recalcSound() {
@@ -153,10 +168,10 @@ public class BgSound extends Linkable {
 					if (var4.field1603 != null) {
 						var4.field1603.method2090(var6);
 					} else if (var4.sound >= 0) {
-						JagFx var7 = JagFx.generate(Client.soundFxJs5, var4.sound, 0);
+						JagFx var7 = JagFx.load(Client.soundFxJs5, var4.sound, 0);
 						if (var7 != null) {
 							Wave var8 = var7.toWave().decimate(Client.soundDecimator);
-							WaveStream var9 = WaveStream.method2144(var8, 100, var6);
+							WaveStream var9 = WaveStream.newRatePercent(var8, 100, var6);
 							var9.setLoopCount(-1);
 							Client.soundMixer.playStream(var9);
 							var4.field1603 = var9;
@@ -169,10 +184,10 @@ public class BgSound extends Linkable {
 						}
 					} else if (var4.random != null && (var4.field1613 -= arg3) <= 0) {
 						int var10 = (int) (Math.random() * (double) var4.random.length);
-						JagFx var11 = JagFx.generate(Client.soundFxJs5, var4.random[var10], 0);
+						JagFx var11 = JagFx.load(Client.soundFxJs5, var4.random[var10], 0);
 						if (var11 != null) {
 							Wave var12 = var11.toWave().decimate(Client.soundDecimator);
-							WaveStream var13 = WaveStream.method2144(var12, 100, var6);
+							WaveStream var13 = WaveStream.newRatePercent(var12, 100, var6);
 							var13.setLoopCount(0);
 							Client.soundMixer.playStream(var13);
 							var4.field1614 = var13;

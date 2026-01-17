@@ -181,11 +181,12 @@ public class World {
 		this.levelTiles = new Square[level][x][z];
 		this.levelTileOcclusionCycles = new int[level][x + 1][z + 1];
 		this.groundh = heightmap;
-		this.reset();
+		this.resetMap();
 	}
 
+	// jag::oldscape::dash3d::world::ResetMap
 	@ObfuscatedName("aq.r()V")
-	public void reset() {
+	public void resetMap() {
 		for (int level = 0; level < this.maxLevel; level++) {
 			for (int x = 0; x < this.maxTileX; x++) {
 				for (int z = 0; z < this.maxTileZ; z++) {
@@ -212,6 +213,7 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::FillBaseLevel
 	@ObfuscatedName("aq.d(I)V")
 	public void fillBaseLevel(int level) {
 		this.minLevel = level;

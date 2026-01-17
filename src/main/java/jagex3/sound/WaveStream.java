@@ -97,8 +97,9 @@ public class WaveStream extends PcmStream {
 		this.computeChannelVolumes();
 	}
 
+	// jag::oldscape::sound::WaveStream::NewRatePercent
 	@ObfuscatedName("et.ac(Leq;II)Let;")
-	public static WaveStream method2144(Wave arg0, int arg1, int arg2) {
+	public static WaveStream newRatePercent(Wave arg0, int arg1, int arg2) {
 		return arg0.samples == null || arg0.samples.length == 0 ? null : new WaveStream(arg0, (int) ((long) arg0.samplingFrequency * 256L * (long) arg1 / (long) (PcmPlayer.frequency * 100)), arg2 << 6);
 	}
 
@@ -114,6 +115,7 @@ public class WaveStream extends PcmStream {
 		this.volumeStereoRight = panRight(this.volume, this.pan);
 	}
 
+	// jag::oldscape::sound::WaveStream::SetLoopCount
 	@ObfuscatedName("et.am(I)V")
 	public synchronized void setLoopCount(int arg0) {
 		this.loopCount = arg0;

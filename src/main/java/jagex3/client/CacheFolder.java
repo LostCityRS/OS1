@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 @ObfuscatedName("ay")
-public class SignLinkCacheFolder {
+public class CacheFolder {
 
 	@ObfuscatedName("ay.m")
 	public static File cacheLocator;
@@ -52,7 +52,7 @@ public class SignLinkCacheFolder {
 	@ObfuscatedName("ez.o")
 	public static String homeDir;
 
-	public SignLinkCacheFolder() throws Throwable {
+	public CacheFolder() throws Throwable {
 		throw new Error();
 	}
 

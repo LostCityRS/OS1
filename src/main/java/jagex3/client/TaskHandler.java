@@ -1,9 +1,11 @@
 package jagex3.client;
 
 import deob.ObfuscatedName;
+import jagex3.datastruct.PreciseSleep;
 import jagex3.sound.AudioSource;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.DataInputStream;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -135,6 +137,7 @@ public class TaskHandler implements Runnable {
 
 	@ObfuscatedName("ak.n(Ljava/lang/String;IB)Lah;")
 	public final PrivilegedRequest socketreq(String arg0, int arg1) {
+		System.out.println("socketreq " + arg0 + ":" + arg1);
 		return this.newRequest(1, arg1, 0, arg0);
 	}
 
@@ -156,5 +159,19 @@ public class TaskHandler implements Runnable {
 	@ObfuscatedName("ak.q(I)Lw;")
 	public final AudioSource method440() {
 		return this.field376;
+	}
+
+	public static void flushEvents(TaskHandler handler, Object source) {
+		if (handler.eventQueue == null) {
+			return;
+		}
+
+		for (int i = 0; i < 50 && handler.eventQueue.peekEvent() != null; i++) {
+			PreciseSleep.sleep(1L);
+		}
+
+		if (source != null) {
+			handler.eventQueue.postEvent(new ActionEvent(source, 1001, "dummy"));
+		}
 	}
 }

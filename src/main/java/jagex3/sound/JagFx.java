@@ -17,10 +17,11 @@ public class JagFx {
 	@ObfuscatedName("o.m")
 	public int field309;
 
+	// jag::oldscape::sound::JagFX::Load
 	@ObfuscatedName("o.r(Lch;II)Lo;")
-	public static JagFx generate(Js5 arg0, int arg1, int arg2) {
-		byte[] var3 = arg0.getFile(arg1, arg2);
-		return var3 == null ? null : new JagFx(new Packet(var3));
+	public static JagFx load(Js5 arg0, int arg1, int arg2) {
+		byte[] src = arg0.getFile(arg1, arg2);
+		return src == null ? null : new JagFx(new Packet(src));
 	}
 
 	public JagFx(Packet arg0) {
@@ -36,14 +37,16 @@ public class JagFx {
 		this.field309 = arg0.g2();
 	}
 
+	// jag::oldscape::sound::JagFX::ToWave
 	@ObfuscatedName("o.d()Leq;")
 	public Wave toWave() {
-		byte[] var1 = this.method293();
+		byte[] var1 = this.makeSound();
 		return new Wave(22050, var1, this.field308 * 22050 / 1000, this.field309 * 22050 / 1000);
 	}
 
+	// jag::oldscape::sound::JagFX::OptimiseStart
 	@ObfuscatedName("o.l()I")
-	public final int method292() {
+	public final int optimiseStart() {
 		int var1 = 9999999;
 		for (int var2 = 0; var2 < 10; var2++) {
 			if (this.field307[var2] != null && this.field307[var2].field280 / 20 < var1) {
@@ -68,8 +71,9 @@ public class JagFx {
 		return var1;
 	}
 
+	// jag::oldscape::sound::JagFX::MakeSound
 	@ObfuscatedName("o.m()[B")
-	public final byte[] method293() {
+	public final byte[] makeSound() {
 		int var1 = 0;
 		for (int var2 = 0; var2 < 10; var2++) {
 			if (this.field307[var2] != null && this.field307[var2].field280 + this.field307[var2].field279 > var1) {

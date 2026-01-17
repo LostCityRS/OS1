@@ -36,7 +36,7 @@ public class WaveCache {
 		if (var8 != null) {
 			return var8;
 		} else if (arg2 == null || arg2[0] > 0) {
-			JagFx var9 = JagFx.generate(this.synthArchive, arg0, arg1);
+			JagFx var9 = JagFx.load(this.synthArchive, arg0, arg1);
 			if (var9 == null) {
 				return null;
 			}

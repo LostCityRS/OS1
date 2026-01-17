@@ -1020,7 +1020,7 @@ public class Client extends GameShell {
 	public static int midiVolume = 255;
 
 	@ObfuscatedName("client.nn")
-	public static int field2170 = -1;
+	public static int previousSong = -1;
 
 	@ObfuscatedName("client.nq")
 	public static boolean field2189 = false;
@@ -1050,19 +1050,19 @@ public class Client extends GameShell {
 	public static int waveCount = 0;
 
 	@ObfuscatedName("client.oe")
-	public static int[] field2177 = new int[50];
+	public static int[] waveSoundIds = new int[50];
 
 	@ObfuscatedName("client.of")
-	public static int[] field2006 = new int[50];
+	public static int[] waveLoops = new int[50];
 
 	@ObfuscatedName("client.ov")
 	public static int[] waveDelay = new int[50];
 
 	@ObfuscatedName("client.oo")
-	public static int[] field2180 = new int[50];
+	public static int[] waveAmbient = new int[50];
 
 	@ObfuscatedName("client.ok")
-	public static JagFx[] field2181 = new JagFx[50];
+	public static JagFx[] waveSounds = new JagFx[50];
 
 	@ObfuscatedName("client.oa")
 	public static boolean cinemaCam = false;
@@ -1155,12 +1155,12 @@ public class Client extends GameShell {
 	public static FileStream masterIndex;
 
 	@ObfuscatedName("client.f(I)V")
-	public final void method1373() {
+	public final void reset() {
 	}
 
 	public static void main(String[] args) {
 		Client app = new Client();
-		app.initApplication(765, 503, 1);
+		app.startApplication(765, 503, 1);
 	}
 
 	@Override
@@ -1196,6 +1196,7 @@ public class Client extends GameShell {
 		return null;
 	}
 
+	@Override
 	public final void init() {
 		if (!this.checkhost()) {
 			return;
@@ -1251,8 +1252,8 @@ public class Client extends GameShell {
 		}
 		setHighMemory();
 		loginHost = this.getCodeBase().getHost();
-		SignLinkCacheFolder.imethod1(modewhat.name, 0);
-		this.method1354(765, 503, 1);
+		CacheFolder.imethod1(modewhat.name, 0);
+		this.startCommon(765, 503, 1);
 	}
 
 	@ObfuscatedName("client.w(I)V")
@@ -1271,7 +1272,7 @@ public class Client extends GameShell {
 		if (field484 != null) {
 			field484.method360(GameShell.canvas);
 		}
-		masterIndex = new FileStream(255, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.masterIndex, 500000);
+		masterIndex = new FileStream(255, CacheFolder.cacheDat, CacheFolder.masterIndex, 500000);
 		if (modewhere != 0) {
 			showFps = true;
 		}
@@ -1297,11 +1298,11 @@ public class Client extends GameShell {
 
 		if (state == 0) {
 			mainload();
-			GameShell.doneSlowUpdate();
+			GameShell.doneslowupdate();
 		} else if (state == 5) {
 			TitleScreen.loop(this);
 			mainload();
-			GameShell.doneSlowUpdate();
+			GameShell.doneslowupdate();
 		} else if (state == 10) {
 			TitleScreen.loop(this);
 		} else if (state == 20) {
@@ -1414,7 +1415,7 @@ public class Client extends GameShell {
 			Js5Net.stream.close();
 		}
 		Js5NetThread.method781();
-		SignLinkCacheFolder.method1141();
+		CacheFolder.method1141();
 	}
 
 	// jag::oldscape::Client::SetMainState
@@ -1425,7 +1426,7 @@ public class Client extends GameShell {
 		}
 
 		if (state == 0) {
-			GameShell.reset();
+			GameShell.resetProgress();
 		}
 
 		if (newState == 20 || newState == 40) {
@@ -1517,9 +1518,9 @@ public class Client extends GameShell {
 
 			if (js5ConnectState == 3) {
 				if (state <= 5 || js5Stream.available() > 0) {
-					int var2 = js5Stream.read();
-					if (var2 != 0) {
-						this.js5error(var2);
+					int response = js5Stream.read();
+					if (response != 0) {
+						this.js5error(response);
 						return;
 					}
 
@@ -1898,8 +1899,8 @@ public class Client extends GameShell {
 	@ObfuscatedName("u.dd(IZZZB)Ldq;")
 	public static Js5Loader openJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
 		FileStream stream = null;
-		if (SignLinkCacheFolder.cacheDat != null) {
-			stream = new FileStream(archive, SignLinkCacheFolder.cacheDat, SignLinkCacheFolder.cacheIndex[archive], 1000000);
+		if (CacheFolder.cacheDat != null) {
+			stream = new FileStream(archive, CacheFolder.cacheDat, CacheFolder.cacheIndex[archive], 1000000);
 		}
 		return new Js5Loader(stream, masterIndex, archive, arg1, arg2, arg3);
 	}
@@ -1997,7 +1998,7 @@ public class Client extends GameShell {
 				int xteaStart = login.pos;
 				login.pjstr(TitleScreen.username);
 				login.p1(lowMemory ? 1 : 0);
-				SignLinkCacheFolder.pUid(login); // 24 bytes
+				CacheFolder.pUid(login); // 24 bytes
 				login.p4(animFrameJs5.crc);
 				login.p4(animBaseJs5.crc);
 				login.p4(configJs5.crc);
@@ -2339,21 +2340,24 @@ public class Client extends GameShell {
 			loginStream.close();
 			loginStream = null;
 		}
-		unload();
-		world.reset();
-		for (int var0 = 0; var0 < 4; var0++) {
-			levelCollisionMap[var0].reset();
+
+		clearCaches();
+		world.resetMap();
+
+		for (int i = 0; i < 4; i++) {
+			levelCollisionMap[i].reset();
 		}
+
 		System.gc();
-		MidiManager.imethod2();
-		field2170 = -1;
+		MidiManager.stop2();
+		previousSong = -1;
 		field2189 = false;
-		imethod6();
+		BgSound.reset();
 		setMainState(10);
 	}
 
 	@ObfuscatedName("bh.da(B)V")
-	public static void unload() {
+	public static void clearCaches() {
 		FloType.unload();
 		FluType.unload();
 		IdkType.unload();
@@ -2392,36 +2396,44 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::TriggerSeqSound
 	@ObfuscatedName("de.dv(Leo;IIII)V")
-	public static void method1499(SeqType arg0, int arg1, int arg2, int arg3) {
+	public static void triggerSeqSound(SeqType arg0, int arg1, int arg2, int arg3) {
 		if (waveCount >= 50 || ambientVolume == 0 || (arg0.sound == null || arg1 >= arg0.sound.length)) {
 			return;
 		}
+
 		int var4 = arg0.sound[arg1];
 		if (var4 == 0) {
 			return;
 		}
+
 		int var5 = var4 >> 8;
 		int var6 = var4 >> 4 & 0x7;
 		int var7 = var4 & 0xF;
-		field2177[waveCount] = var5;
-		field2006[waveCount] = var6;
+
+		waveSoundIds[waveCount] = var5;
+		waveLoops[waveCount] = var6;
 		waveDelay[waveCount] = 0;
-		field2181[waveCount] = null;
+		waveSounds[waveCount] = null;
+
 		int var8 = (arg2 - 64) / 128;
 		int var9 = (arg3 - 64) / 128;
-		field2180[waveCount] = (var8 << 16) + (var9 << 8) + var7;
+		waveAmbient[waveCount] = (var8 << 16) + (var9 << 8) + var7;
+
 		waveCount++;
 	}
 
+	// jag::oldscape::Client::PlaySongs
 	@ObfuscatedName("ck.ds(IB)V")
-	public static void method1232(int arg0) {
-		if (arg0 == -1 && !field2189) {
-			MidiManager.method917();
-		} else if (arg0 != -1 && field2170 != arg0 && midiVolume != 0 && !field2189) {
-			MidiManager.method95(2, midiSongJs5, arg0, 0, midiVolume, false);
+	public static void playSongs(int id) {
+		if (id == -1 && !field2189) {
+			MidiManager.stop();
+		} else if (id != -1 && previousSong != id && midiVolume != 0 && !field2189) {
+			MidiManager.play(2, midiSongJs5, id, 0, midiVolume, false);
 		}
-		field2170 = arg0;
+
+		previousSong = id;
 	}
 
 	// jag::oldscape::minimap::Minimap::GlMinimap
@@ -2956,28 +2968,33 @@ public class Client extends GameShell {
 	@ObfuscatedName("p.de(Lfz;I)V")
 	public static void entityAnim(ClientEntity entity) {
 		entity.needsForwardDrawPadding = false;
+
 		if (entity.secondarySeqId != -1) {
 			SeqType var1 = SeqType.get(entity.secondarySeqId);
 			if (var1 == null || var1.frames == null) {
 				entity.secondarySeqId = -1;
 			} else {
 				entity.field2662++;
+
 				if (entity.field2641 < var1.frames.length && entity.field2662 > var1.delay[entity.field2641]) {
 					entity.field2662 = 1;
 					entity.field2641++;
-					method1499(var1, entity.field2641, entity.x, entity.z);
+					triggerSeqSound(var1, entity.field2641, entity.x, entity.z);
 				}
+
 				if (entity.field2641 >= var1.frames.length) {
 					entity.field2662 = 0;
 					entity.field2641 = 0;
-					method1499(var1, entity.field2641, entity.x, entity.z);
+					triggerSeqSound(var1, entity.field2641, entity.x, entity.z);
 				}
 			}
 		}
+
 		if (entity.spotanimId != -1 && loopCycle >= entity.spotanimLastCycle) {
 			if (entity.spotanimFrame < 0) {
 				entity.spotanimFrame = 0;
 			}
+
 			int spotAnim = SpotAnimType.get(entity.spotanimId).anim;
 			if (spotAnim == -1) {
 				entity.spotanimId = -1;
@@ -2987,17 +3004,20 @@ public class Client extends GameShell {
 					entity.spotanimId = -1;
 				} else {
 					entity.spotanimCycle++;
+
 					if (entity.spotanimFrame < spotSeq.frames.length && entity.spotanimCycle > spotSeq.delay[entity.spotanimFrame]) {
 						entity.spotanimCycle = 1;
 						entity.spotanimFrame++;
-						method1499(spotSeq, entity.spotanimFrame, entity.x, entity.z);
+						triggerSeqSound(spotSeq, entity.spotanimFrame, entity.x, entity.z);
 					}
+
 					if (entity.spotanimFrame >= spotSeq.frames.length && (entity.spotanimFrame < 0 || entity.spotanimFrame >= spotSeq.frames.length)) {
 						entity.spotanimId = -1;
 					}
 				}
 			}
 		}
+
 		if (entity.primarySeqId != -1 && entity.primarySeqDelay <= 1) {
 			SeqType seq = SeqType.get(entity.primarySeqId);
 			if (seq.preanim_move == 1 && entity.preanimRouteLength > 0 && entity.exactMoveEnd <= loopCycle && entity.exactMoveStart < loopCycle) {
@@ -3005,31 +3025,37 @@ public class Client extends GameShell {
 				return;
 			}
 		}
+
 		if (entity.primarySeqId != -1 && entity.primarySeqDelay == 0) {
 			SeqType seq = SeqType.get(entity.primarySeqId);
 			if (seq == null || seq.frames == null) {
 				entity.primarySeqId = -1;
 			} else {
 				entity.primarySeqCycle++;
+
 				if (entity.primarySeqFrame < seq.frames.length && entity.primarySeqCycle > seq.delay[entity.primarySeqFrame]) {
 					entity.primarySeqCycle = 1;
 					entity.primarySeqFrame++;
-					method1499(seq, entity.primarySeqFrame, entity.x, entity.z);
+					triggerSeqSound(seq, entity.primarySeqFrame, entity.x, entity.z);
 				}
+
 				if (entity.primarySeqFrame >= seq.frames.length) {
 					entity.primarySeqFrame -= seq.loops;
 					entity.field2647++;
+
 					if (entity.field2647 >= seq.maxloops) {
 						entity.primarySeqId = -1;
 					} else if (entity.primarySeqFrame >= 0 && entity.primarySeqFrame < seq.frames.length) {
-						method1499(seq, entity.primarySeqFrame, entity.x, entity.z);
+						triggerSeqSound(seq, entity.primarySeqFrame, entity.x, entity.z);
 					} else {
 						entity.primarySeqId = -1;
 					}
 				}
+
 				entity.needsForwardDrawPadding = seq.stretches;
 			}
 		}
+
 		if (entity.primarySeqDelay > 0) {
 			entity.primarySeqDelay--;
 		}
@@ -4059,11 +4085,11 @@ public class Client extends GameShell {
 			if (var37 >= 0 && var38 >= 0 && var37 < 104 && var38 < 104) {
 				int var44 = var41 + 1;
 				if (localPlayer.routeX[0] >= var37 - var44 && localPlayer.routeX[0] <= var37 + var44 && localPlayer.routeZ[0] >= var38 - var44 && localPlayer.routeZ[0] <= var38 + var44 && ambientVolume != 0 && var42 > 0 && waveCount < 50) {
-					field2177[waveCount] = var39;
-					field2006[waveCount] = var42;
+					waveSoundIds[waveCount] = var39;
+					waveLoops[waveCount] = var42;
 					waveDelay[waveCount] = var43;
-					field2181[waveCount] = null;
-					field2180[waveCount] = (var37 << 16) + (var38 << 8) + var41;
+					waveSounds[waveCount] = null;
+					waveAmbient[waveCount] = (var37 << 16) + (var38 << 8) + var41;
 					waveCount++;
 				}
 			}
@@ -7662,11 +7688,11 @@ public class Client extends GameShell {
 			}
 
 			if (midiVolume != volume) {
-				if (midiVolume == 0 && field2170 != -1) {
-					MidiManager.method1125(midiSongJs5, field2170, 0, volume, false);
+				if (midiVolume == 0 && previousSong != -1) {
+					MidiManager.method1125(midiSongJs5, previousSong, 0, volume, false);
 					field2189 = false;
 				} else if (volume == 0) {
-					MidiManager.method917();
+					MidiManager.stop();
 					field2189 = false;
 				} else {
 					MidiManager.method105(volume);
@@ -8345,10 +8371,10 @@ public class Client extends GameShell {
 		}
 
 		flushAudio();
-		unload();
+		clearCaches();
 
 		flushAudio();
-		world.reset();
+		world.resetMap();
 
 		flushAudio();
 		System.gc();
@@ -8369,7 +8395,7 @@ public class Client extends GameShell {
 		ClientBuild.load();
 
 		int maps = mapBuildGroundData.length;
-		imethod6();
+		BgSound.reset();
 
 		preventTimeout(true);
 
@@ -8473,7 +8499,7 @@ public class Client extends GameShell {
 		}
 
 		preventTimeout(true);
-		unload();
+		clearCaches();
 
 		flushAudio();
 		ClientBuild.finishBuild(world, levelCollisionMap);
@@ -8534,21 +8560,7 @@ public class Client extends GameShell {
 		// MAP_BUILD_COMPLETE
 		out.p1Enc(197);
 
-		GameShell.doneSlowUpdate();
-	}
-
-	public static void imethod6() {
-		for (BgSound var23 = (BgSound) BgSound.soundlist.head(); var23 != null; var23 = (BgSound) BgSound.soundlist.next()) {
-			if (var23.field1603 != null) {
-				soundMixer.stopStream(var23.field1603);
-				var23.field1603 = null;
-			}
-			if (var23.field1614 != null) {
-				soundMixer.stopStream(var23.field1614);
-				var23.field1614 = null;
-			}
-		}
-		BgSound.soundlist.clear();
+		GameShell.doneslowupdate();
 	}
 
 	// jag::oldscape::Client::LocChangePostBuildCorrect
@@ -9288,7 +9300,7 @@ public class Client extends GameShell {
 				// UPDATE_UID192 (?)
 				in.pos += 28;
 				if (in.checkcrc()) {
-					SignLinkCacheFolder.method2298(in, in.pos - 28);
+					CacheFolder.method2298(in, in.pos - 28);
 				}
 				ptype = -1;
 				return true;
@@ -10185,17 +10197,11 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 229) {
+				// SYNTH_SOUND
 				int var342 = in.g2();
 				int var343 = in.g1();
 				int var344 = in.g2();
-				if (waveVolume != 0 && var343 != 0 && waveCount < 50) {
-					field2177[waveCount] = var342;
-					field2006[waveCount] = var343;
-					waveDelay[waveCount] = var344;
-					field2181[waveCount] = null;
-					field2180[waveCount] = 0;
-					waveCount++;
-				}
+				playSynth(var342, var343, var344);
 				ptype = -1;
 				return true;
 			}
@@ -10254,24 +10260,23 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 211) {
+				// MIDI_SONG
 				int var358 = in.g2_alt1();
 				if (var358 == 65535) {
 					var358 = -1;
 				}
-				method1232(var358);
+				playSongs(var358);
 				ptype = -1;
 				return true;
 			}
 			if (ptype == 53) {
+				// MIDI_JINGLE
 				int var359 = in.g2_alt2();
 				if (var359 == 65535) {
 					var359 = -1;
 				}
 				int var360 = in.g3_alt2();
-				if (midiVolume != 0 && var359 != -1) {
-					MidiManager.method1125(midiJingleJs5, var359, 0, midiVolume, false);
-					field2189 = true;
-				}
+				playJingle(var359, var360);
 				ptype = -1;
 				return true;
 			}
@@ -10465,6 +10470,7 @@ public class Client extends GameShell {
 		fontBold12.method2828(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
 	}
 
+	// jag::oldscape::Client::GlCheckMinimap
 	public static void checkMinimap() {
 		if (lowMemory && sceneState != minusedlevel) {
 			startRebuild(mapBuildCenterZoneX, mapBuildCenterZoneZ, minusedlevel, localPlayer.routeX[0], localPlayer.routeZ[0]);
@@ -10550,6 +10556,7 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::LocChangeDoQueue
 	public static void locChangeDoQueue() {
 		for (LocChange var423 = (LocChange) locChanges.head(); var423 != null; var423 = (LocChange) locChanges.next()) {
 			if (var423.endTime > 0) {
@@ -10575,71 +10582,87 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::GlDoSoundsQueue
 	public static void soundsDoQueue() {
-		int var10002;
-		for (int var424 = 0; var424 < waveCount; var424++) {
-			var10002 = waveDelay[var424]--;
-			if (waveDelay[var424] >= -10) {
-				JagFx var426 = field2181[var424];
-				if (var426 == null) {
-					JagFx var528 = null;
-					var426 = JagFx.generate(soundFxJs5, field2177[var424], 0);
-					if (var426 == null) {
+		for (int i = 0; i < waveCount; i++) {
+			waveDelay[i]--;
+
+			if (waveDelay[i] >= -10) {
+				JagFx sound = waveSounds[i];
+
+				if (sound == null) {
+					sound = JagFx.load(soundFxJs5, waveSoundIds[i], 0);
+					if (sound == null) {
 						continue;
 					}
-					waveDelay[var424] += var426.method292();
-					field2181[var424] = var426;
+
+					waveDelay[i] += sound.optimiseStart();
+					waveSounds[i] = sound;
 				}
-				if (waveDelay[var424] < 0) {
-					int var433;
-					if (field2180[var424] == 0) {
-						var433 = waveVolume;
-					} else {
-						int var427 = (field2180[var424] & 0xFF) * 128;
-						int var428 = field2180[var424] >> 16 & 0xFF;
+
+				if (waveDelay[i] < 0) {
+					int finalVolume;
+					if (waveAmbient[i] != 0) {
+						// jag::oldscape::Client::GetFinalAmbientVolume
+						int var427 = (waveAmbient[i] & 0xFF) * 128;
+
+						int var428 = waveAmbient[i] >> 16 & 0xFF;
 						int var429 = var428 * 128 + 64 - localPlayer.x;
 						if (var429 < 0) {
 							var429 = -var429;
 						}
-						int var430 = field2180[var424] >> 8 & 0xFF;
+
+						int var430 = waveAmbient[i] >> 8 & 0xFF;
 						int var431 = var430 * 128 + 64 - localPlayer.z;
 						if (var431 < 0) {
 							var431 = -var431;
 						}
+
 						int var432 = var429 + var431 - 128;
 						if (var432 > var427) {
-							waveDelay[var424] = -100;
+							waveDelay[i] = -100;
 							continue;
 						}
+
 						if (var432 < 0) {
 							var432 = 0;
 						}
-						var433 = ambientVolume * (var427 - var432) / var427;
+
+						finalVolume = ambientVolume * (var427 - var432) / var427;
+					} else {
+						// jag::oldscape::Client::GetFinalWaveVolume
+						finalVolume = waveVolume;
 					}
-					if (var433 > 0) {
-						Wave var434 = var426.toWave().decimate(soundDecimator);
-						WaveStream var435 = WaveStream.method2144(var434, 100, var433);
-						var435.setLoopCount(field2006[var424] - 1);
-						soundMixer.playStream(var435);
+
+					if (finalVolume > 0) {
+						Wave wave = sound.toWave().decimate(soundDecimator);
+						WaveStream stream = WaveStream.newRatePercent(wave, 100, finalVolume);
+						stream.setLoopCount(waveLoops[i] - 1);
+						soundMixer.playStream(stream);
 					}
-					waveDelay[var424] = -100;
+
+					waveDelay[i] = -100;
 				}
 			} else {
 				waveCount--;
-				for (int var425 = var424; var425 < waveCount; var425++) {
-					field2177[var425] = field2177[var425 + 1];
-					field2181[var425] = field2181[var425 + 1];
-					field2006[var425] = field2006[var425 + 1];
-					waveDelay[var425] = waveDelay[var425 + 1];
-					field2180[var425] = field2180[var425 + 1];
+
+				for (int j = i; j < waveCount; j++) {
+					waveSoundIds[j] = waveSoundIds[j + 1];
+					waveSounds[j] = waveSounds[j + 1];
+					waveLoops[j] = waveLoops[j + 1];
+					waveDelay[j] = waveDelay[j + 1];
+					waveAmbient[j] = waveAmbient[j + 1];
 				}
-				var424--;
+
+				i--;
 			}
 		}
+
 		if (field2189 && !MidiManager.method2456()) {
-			if (midiVolume != 0 && field2170 != -1) {
-				MidiManager.method1125(midiSongJs5, field2170, 0, midiVolume, false);
+			if (midiVolume != 0 && previousSong != -1) {
+				MidiManager.method1125(midiSongJs5, previousSong, 0, midiVolume, false);
 			}
+
 			field2189 = false;
 		}
 	}
@@ -11670,11 +11693,13 @@ public class Client extends GameShell {
 	}
 
 	public static void clanKickUser(String var186) {
-		if (field1774 != null) {
-			out.p1Enc(245);
-			out.p1(Packet.pjstrlen(var186));
-			out.pjstr(var186);
+		if (field1774 == null) {
+			return;
 		}
+
+		out.p1Enc(245);
+		out.p1(Packet.pjstrlen(var186));
+		out.pjstr(var186);
 	}
 
 	public static void delIgnore(String var169) {
@@ -11725,22 +11750,28 @@ public class Client extends GameShell {
 		out.p1_alt1(var165);
 	}
 
-	public static void imethod45(int var113, int var114) {
-		if (midiVolume != 0 && var113 != -1) {
-			MidiManager.method1125(midiJingleJs5, var113, 0, midiVolume, false);
-			field2189 = true;
+	// jag::oldscape::Client::PlayJingle
+	public static void playJingle(int var113, int var114) {
+		if (midiVolume == 0 || var113 == -1) {
+			return;
 		}
+
+		MidiManager.method1125(midiJingleJs5, var113, 0, midiVolume, false);
+		field2189 = true;
 	}
 
-	public static void imethod46(int var110, int var111, int var112) {
-		if (waveVolume != 0 && var111 != 0 && waveCount < 50) {
-			field2177[waveCount] = var110;
-			field2006[waveCount] = var111;
-			waveDelay[waveCount] = var112;
-			field2181[waveCount] = null;
-			field2180[waveCount] = 0;
-			waveCount++;
+	// jag::oldscape::Client::PlaySynth
+	public static void playSynth(int sound, int loops, int delay) {
+		if (waveVolume == 0 || loops == 0 || waveCount >= 50) {
+			return;
 		}
+
+		waveSoundIds[waveCount] = sound;
+		waveLoops[waveCount] = loops;
+		waveDelay[waveCount] = delay;
+		waveSounds[waveCount] = null;
+		waveAmbient[waveCount] = 0;
+		waveCount++;
 	}
 
 	// jag::oldscape::Client::CloseModal
