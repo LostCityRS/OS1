@@ -220,7 +220,7 @@ public class PixLoader {
 
 	@ObfuscatedName("ai.i(Lch;II)Z")
 	public static boolean method728(Js5 arg0, int arg1) {
-		byte[] var2 = arg0.fetchFile(arg1);
+		byte[] var2 = arg0.getFile(arg1);
 		if (var2 == null) {
 			return false;
 		} else {

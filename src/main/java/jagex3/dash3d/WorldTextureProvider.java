@@ -36,10 +36,10 @@ public class WorldTextureProvider implements TextureProvider {
 		this.brightness = brightness;
 		this.resolution = resolution;
 
-		int[] files = textureJs5.getFileIds(0);
+		int[] files = textureJs5.getFileList(0);
 		int count = files.length;
 
-		this.field719 = new Texture[textureJs5.getFileCount(0)];
+		this.field719 = new Texture[textureJs5.getFileIdLimit(0)];
 		for (int i = 0; i < count; i++) {
 			Packet buf = new Packet(textureJs5.getFile(0, files[i]));
 			this.field719[files[i]] = new Texture(buf);

@@ -78,7 +78,7 @@ public class Texture extends Linkable {
 	@ObfuscatedName("er.c(DILch;)Z")
 	public boolean method1571(double arg0, int arg1, Js5 arg2) {
 		for (int var5 = 0; var5 < this.field1696.length; var5++) {
-			if (arg2.fetchFileNoDiscard(this.field1696[var5]) == null) {
+			if (arg2.peekFile(this.field1696[var5]) == null) {
 				return false;
 			}
 		}

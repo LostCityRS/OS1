@@ -389,7 +389,7 @@ public class LocType extends DoublyLinkable {
 		if (this.shapes != null) {
 			for (int var4 = 0; var4 < this.shapes.length; var4++) {
 				if (this.shapes[var4] == arg0) {
-					return modelJs5.download(this.models[var4] & 0xFFFF, 0);
+					return modelJs5.requestDownload(this.models[var4] & 0xFFFF, 0);
 				}
 			}
 			return true;
@@ -398,7 +398,7 @@ public class LocType extends DoublyLinkable {
 		} else if (arg0 == 10) {
 			boolean var2 = true;
 			for (int var3 = 0; var3 < this.models.length; var3++) {
-				var2 &= modelJs5.download(this.models[var3] & 0xFFFF, 0);
+				var2 &= modelJs5.requestDownload(this.models[var3] & 0xFFFF, 0);
 			}
 			return var2;
 		} else {
@@ -413,7 +413,7 @@ public class LocType extends DoublyLinkable {
 		}
 		boolean var1 = true;
 		for (int var2 = 0; var2 < this.models.length; var2++) {
-			var1 &= modelJs5.download(this.models[var2] & 0xFFFF, 0);
+			var1 &= modelJs5.requestDownload(this.models[var2] & 0xFFFF, 0);
 		}
 		return var1;
 	}

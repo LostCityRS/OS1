@@ -377,7 +377,7 @@ public class Js5Net {
 	}
 
 	@ObfuscatedName("ab.c(IIS)V")
-	public static void prioritizeRequest(int archiveId, int groupId) {
+	public static void updateCacheHint(int archiveId, int groupId) {
 		long key = ((long) archiveId << 16) + groupId;
 		Js5NetRequest request = (Js5NetRequest) pendingPrefetchQueue.get(key);
 		if (request != null) {

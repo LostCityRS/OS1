@@ -1252,7 +1252,7 @@ public class Client extends GameShell {
 		}
 		setHighMemory();
 		loginHost = this.getCodeBase().getHost();
-		CacheFolder.imethod1(modewhat.name, 0);
+		GameShellCache.imethod1(modewhat.name, 0);
 		this.startCommon(765, 503, 1);
 	}
 
@@ -1272,7 +1272,7 @@ public class Client extends GameShell {
 		if (field484 != null) {
 			field484.method360(GameShell.canvas);
 		}
-		masterIndex = new FileStream(255, CacheFolder.cacheDat, CacheFolder.masterIndex, 500000);
+		masterIndex = new FileStream(255, GameShellCache.cacheDat, GameShellCache.masterIndex, 500000);
 		if (modewhere != 0) {
 			showFps = true;
 		}
@@ -1415,7 +1415,7 @@ public class Client extends GameShell {
 			Js5Net.stream.close();
 		}
 		Js5NetThread.method781();
-		CacheFolder.method1141();
+		GameShellCache.method1141();
 	}
 
 	// jag::oldscape::Client::SetMainState
@@ -1709,7 +1709,7 @@ public class Client extends GameShell {
 				loadingStep = 70;
 			}
 		} else if (loadingStep == 70) {
-			if (!configJs5.fetchAll()) {
+			if (!configJs5.requestFullDownload()) {
 				TitleScreen.loadString = Text.MAINLOAD70 + configJs5.getIndexLoadProgress() + "%";
 				TitleScreen.loadPos = 60;
 			} else {
@@ -1844,7 +1844,7 @@ public class Client extends GameShell {
 				loadingStep = 90;
 			}
 		} else if (loadingStep == 90) {
-			if (!textureJs5.fetchAll()) {
+			if (!textureJs5.requestFullDownload()) {
 				TitleScreen.loadString = Text.MAINLOAD90 + textureJs5.getIndexLoadProgress() + "%";
 				TitleScreen.loadPos = 90;
 			} else {
@@ -1864,7 +1864,7 @@ public class Client extends GameShell {
 			TitleScreen.loadPos = 94;
 			loadingStep = 120;
 		} else if (loadingStep == 120) {
-			if (!binaryJs5.download("huffman", "")) {
+			if (!binaryJs5.requestDownload("huffman", "")) {
 				TitleScreen.loadString = Text.MAINLOAD120 + "%";
 				TitleScreen.loadPos = 96;
 			} else {
@@ -1876,13 +1876,13 @@ public class Client extends GameShell {
 				loadingStep = 130;
 			}
 		} else if (loadingStep == 130) {
-			if (!interfaceJs5.fetchAll()) {
+			if (!interfaceJs5.requestFullDownload()) {
 				TitleScreen.loadString = Text.MAINLOAD130 + interfaceJs5.getIndexLoadProgress() * 4 / 5 + "%";
 				TitleScreen.loadPos = 100;
-			} else if (!clientScriptJs5.fetchAll()) {
+			} else if (!clientScriptJs5.requestFullDownload()) {
 				TitleScreen.loadString = Text.MAINLOAD130 + (clientScriptJs5.getIndexLoadProgress() / 6 + 80) + "%";
 				TitleScreen.loadPos = 100;
-			} else if (!fontMetricJs5.fetchAll()) {
+			} else if (!fontMetricJs5.requestFullDownload()) {
 				TitleScreen.loadString = Text.MAINLOAD130 + (fontMetricJs5.getIndexLoadProgress() / 20 + 96) + "%";
 				TitleScreen.loadPos = 100;
 			} else {
@@ -1899,8 +1899,8 @@ public class Client extends GameShell {
 	@ObfuscatedName("u.dd(IZZZB)Ldq;")
 	public static Js5Loader openJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
 		FileStream stream = null;
-		if (CacheFolder.cacheDat != null) {
-			stream = new FileStream(archive, CacheFolder.cacheDat, CacheFolder.cacheIndex[archive], 1000000);
+		if (GameShellCache.cacheDat != null) {
+			stream = new FileStream(archive, GameShellCache.cacheDat, GameShellCache.cacheIndex[archive], 1000000);
 		}
 		return new Js5Loader(stream, masterIndex, archive, arg1, arg2, arg3);
 	}
@@ -1998,7 +1998,7 @@ public class Client extends GameShell {
 				int xteaStart = login.pos;
 				login.pjstr(TitleScreen.username);
 				login.p1(lowMemory ? 1 : 0);
-				CacheFolder.pUid(login); // 24 bytes
+				GameShellCache.pushUID192(login); // 24 bytes
 				login.p4(animFrameJs5.crc);
 				login.p4(animBaseJs5.crc);
 				login.p4(configJs5.crc);
@@ -2211,8 +2211,8 @@ public class Client extends GameShell {
 
 		if (toplevelinterface != -1) {
 			int var9 = toplevelinterface;
-			if (var9 != -1 && IfType.field1508[var9]) {
-				IfType.field1806.discardFiles(var9);
+			if (var9 != -1 && IfType.open[var9]) {
+				IfType.interfaces.discardFiles(var9);
 				if (IfType.list[var9] != null) {
 					boolean var10 = true;
 					for (int var11 = 0; var11 < IfType.list[var9].length; var11++) {
@@ -2227,7 +2227,7 @@ public class Client extends GameShell {
 					if (var10) {
 						IfType.list[var9] = null;
 					}
-					IfType.field1508[var9] = false;
+					IfType.open[var9] = false;
 				}
 			}
 		}
@@ -2372,18 +2372,18 @@ public class Client extends GameShell {
 		((WorldTextureProvider) Pix3D.textureProvider).method749();
 		ClientScript.cache.clear();
 
-		animFrameJs5.discardAll();
-		animBaseJs5.discardAll();
-		interfaceJs5.discardAll();
-		soundFxJs5.discardAll();
-		mapJs5.discardAll();
-		midiSongJs5.discardAll();
-		modelJs5.discardAll();
-		spriteJs5.discardAll();
-		textureJs5.discardAll();
-		binaryJs5.discardAll();
-		midiJingleJs5.discardAll();
-		clientScriptJs5.discardAll();
+		animFrameJs5.discardAllFiles();
+		animBaseJs5.discardAllFiles();
+		interfaceJs5.discardAllFiles();
+		soundFxJs5.discardAllFiles();
+		mapJs5.discardAllFiles();
+		midiSongJs5.discardAllFiles();
+		modelJs5.discardAllFiles();
+		spriteJs5.discardAllFiles();
+		textureJs5.discardAllFiles();
+		binaryJs5.discardAllFiles();
+		midiJingleJs5.discardAllFiles();
+		clientScriptJs5.discardAllFiles();
 	}
 
 	@ObfuscatedName("da.dj(I)V")
@@ -7812,8 +7812,8 @@ public class Client extends GameShell {
 
 		arg0.unlink();
 
-		if (arg1 && var2 != -1 && IfType.field1508[var2]) {
-			IfType.field1806.discardFiles(var2);
+		if (arg1 && var2 != -1 && IfType.open[var2]) {
+			IfType.interfaces.discardFiles(var2);
 
 			if (IfType.list[var2] != null) {
 				boolean var4 = true;
@@ -7830,7 +7830,7 @@ public class Client extends GameShell {
 					IfType.list[var2] = null;
 				}
 
-				IfType.field1508[var2] = false;
+				IfType.open[var2] = false;
 			}
 		}
 
@@ -8334,7 +8334,7 @@ public class Client extends GameShell {
 				}
 			}
 			if (mapBuildLocationFile[var12] != -1 && mapBuildLocationData[var12] == null) {
-				mapBuildLocationData[var12] = mapJs5.getFile(mapBuildLocationFile[var12], 0, mapKeys[var12]);
+				mapBuildLocationData[var12] = mapJs5.fetchFile(mapBuildLocationFile[var12], 0, mapKeys[var12]);
 				if (mapBuildLocationData[var12] == null) {
 					var11 = false;
 					mapLoadCount++;
@@ -9300,7 +9300,7 @@ public class Client extends GameShell {
 				// UPDATE_UID192 (?)
 				in.pos += 28;
 				if (in.checkcrc()) {
-					CacheFolder.method2298(in, in.pos - 28);
+					GameShellCache.storeUID192(in, in.pos - 28);
 				}
 				ptype = -1;
 				return true;
@@ -11793,29 +11793,29 @@ public class Client extends GameShell {
 
 	public static int imethod48(Js5Loader var25, Js5Loader var26) {
 		int var27 = 0;
-		if (var25.download("title.jpg", "")) {
+		if (var25.requestDownload("title.jpg", "")) {
 			var27++;
 		}
-		if (var26.download("logo", "")) {
+		if (var26.requestDownload("logo", "")) {
 			var27++;
 		}
-		if (var26.download("titlebox", "")) {
+		if (var26.requestDownload("titlebox", "")) {
 			var27++;
 		}
-		if (var26.download("titlebutton", "")) {
+		if (var26.requestDownload("titlebutton", "")) {
 			var27++;
 		}
-		if (var26.download("runes", "")) {
+		if (var26.requestDownload("runes", "")) {
 			var27++;
 		}
-		if (var26.download("title_mute", "")) {
+		if (var26.requestDownload("title_mute", "")) {
 			var27++;
 		}
-		var26.download("sl_back", "");
-		var26.download("sl_flags", "");
-		var26.download("sl_arrows", "");
-		var26.download("sl_stars", "");
-		var26.download("sl_button", "");
+		var26.requestDownload("sl_back", "");
+		var26.requestDownload("sl_flags", "");
+		var26.requestDownload("sl_arrows", "");
+		var26.requestDownload("sl_stars", "");
+		var26.requestDownload("sl_button", "");
 		return var27;
 	}
 

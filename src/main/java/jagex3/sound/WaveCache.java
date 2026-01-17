@@ -87,7 +87,7 @@ public class WaveCache {
 	public Wave getJagFx(int arg0, int[] arg1) {
 		if (this.synthArchive.getGroupCount() == 1) {
 			return this.getJagFx(0, arg0, arg1);
-		} else if (this.synthArchive.getFileCount(arg0) == 1) {
+		} else if (this.synthArchive.getFileIdLimit(arg0) == 1) {
 			return this.getJagFx(arg0, 0, arg1);
 		} else {
 			throw new RuntimeException();
@@ -98,7 +98,7 @@ public class WaveCache {
 	public Wave getJagVorbis(int arg0, int[] arg1) {
 		if (this.vorbisArchive.getGroupCount() == 1) {
 			return this.getJagVorbis(0, arg0, arg1);
-		} else if (this.vorbisArchive.getFileCount(arg0) == 1) {
+		} else if (this.vorbisArchive.getFileIdLimit(arg0) == 1) {
 			return this.getJagVorbis(arg0, 0, arg1);
 		} else {
 			throw new RuntimeException();

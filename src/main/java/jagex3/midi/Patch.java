@@ -37,7 +37,7 @@ public class Patch extends Linkable {
 
 	@ObfuscatedName("l.c(Lch;II)Lef;")
 	public static Patch method49(Js5 arg0, int arg1) {
-		byte[] var2 = arg0.fetchFile(arg1);
+		byte[] var2 = arg0.getFile(arg1);
 		return var2 == null ? null : new Patch(var2);
 	}
 

@@ -553,11 +553,11 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		boolean status = true;
-		if (!modelJs5.download(wear1, 0)) {
+		if (!modelJs5.requestDownload(wear1, 0)) {
 			status = false;
-		} else if (wear2 != -1 && !modelJs5.download(wear2, 0)) {
+		} else if (wear2 != -1 && !modelJs5.requestDownload(wear2, 0)) {
 			status = false;
-		} else if (wear3 != -1 && !modelJs5.download(wear3, 0)) {
+		} else if (wear3 != -1 && !modelJs5.requestDownload(wear3, 0)) {
 			status = false;
 		}
 
@@ -626,9 +626,9 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		boolean status = true;
-		if (!modelJs5.download(head1, 0)) {
+		if (!modelJs5.requestDownload(head1, 0)) {
 			status = false;
-		} else if (head2 != -1 && !modelJs5.download(head2, 0)) {
+		} else if (head2 != -1 && !modelJs5.requestDownload(head2, 0)) {
 			status = false;
 		}
 		return status;
@@ -677,7 +677,7 @@ public class ObjType extends DoublyLinkable {
 		configJs5 = var32;
 		modelJs5 = var33;
 		membersWorld = var34;
-		configJs5.getFileCount(10);
+		configJs5.getFileIdLimit(10);
 		font = var35;
 	}
 

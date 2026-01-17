@@ -24,7 +24,7 @@ public class VarPlayerType extends DoublyLinkable {
 	@ObfuscatedName("cy.z(Lch;I)V")
 	public static void unpack(Js5 arg0) {
 		field537 = arg0;
-		field2352 = field537.getFileCount(16);
+		field2352 = field537.getFileIdLimit(16);
 	}
 
 	@ObfuscatedName("ez.g(II)Lfg;")

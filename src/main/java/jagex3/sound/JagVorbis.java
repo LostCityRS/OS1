@@ -510,7 +510,7 @@ public class JagVorbis extends Linkable {
 			byte[] var3 = arg0.getFile(arg1, arg2);
 			return var3 == null ? null : new JagVorbis(var3);
 		} else {
-			arg0.download(arg1, arg2);
+			arg0.requestDownload(arg1, arg2);
 			return null;
 		}
 	}

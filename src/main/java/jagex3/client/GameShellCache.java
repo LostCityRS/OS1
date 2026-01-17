@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 @ObfuscatedName("ay")
-public class CacheFolder {
+public class GameShellCache {
 
 	@ObfuscatedName("ay.m")
 	public static File cacheLocator;
@@ -35,7 +35,7 @@ public class CacheFolder {
 	public static BufferedFile[] cacheIndex;
 
 	@ObfuscatedName("ap.w")
-	public static int field368;
+	public static int historicCacheId;
 
 	@ObfuscatedName("by.e")
 	public static String[] historicCacheLocations;
@@ -44,20 +44,21 @@ public class CacheFolder {
 	public static String[] historicCacheDirectories;
 
 	@ObfuscatedName("s.f")
-	public static String field199;
+	public static String osName;
 
 	@ObfuscatedName("f.k")
-	public static String field294;
+	public static String osNameRaw;
 
 	@ObfuscatedName("ez.o")
 	public static String homeDir;
 
-	public CacheFolder() throws Throwable {
+	public GameShellCache() throws Throwable {
 		throw new Error();
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.getCacheDirectory
 	@ObfuscatedName("i.r(Ljava/lang/String;Ljava/lang/String;II)Ljava/io/File;")
-	public static File method102(String arg0, String arg1, int arg2) {
+	public static File getCacheDirectory(String arg0, String arg1, int arg2) {
 		String var3 = arg2 == 0 ? "" : "" + arg2;
 		cacheLocator = new File(homeDir, "jagex_cl_" + arg0 + "_" + arg1 + var3 + ".dat");
 		String var4 = null;
@@ -108,6 +109,7 @@ public class CacheFolder {
 				File var14 = new File(var4, "test.dat");
 				boolean var17;
 				try {
+					// todo: inlined method (checkWritable?)
 					RandomAccessFile var15 = new RandomAccessFile(var14, "rw");
 					int var16 = var15.read();
 					var15.seek(0L);
@@ -133,6 +135,7 @@ public class CacheFolder {
 						File var22 = new File(var21, "test.dat");
 						boolean var25;
 						try {
+							// todo: inlined method (checkWritable?)
 							RandomAccessFile var23 = new RandomAccessFile(var22, "rw");
 							int var24 = var23.read();
 							var23.seek(0L);
@@ -180,6 +183,7 @@ public class CacheFolder {
 			File var36 = new File(var4);
 			Object var37 = null;
 			try {
+				// todo: inlined method (writeCacheLocator?)
 				FileOnDisk var38 = new FileOnDisk(cacheLocator, "rw", 10000L);
 				Packet var39 = new Packet(500);
 				var39.p1(3);
@@ -197,8 +201,9 @@ public class CacheFolder {
 		return new File(var4);
 	}
 
+	// com.jagex.game.runetek6.client.GameShell.openUID
 	@ObfuscatedName("cv.d(B)V")
-	public static void method1166() {
+	public static void openUID() {
 		try {
 			File var0 = new File(homeDir, "random.dat");
 			if (var0.exists()) {
@@ -228,8 +233,9 @@ public class CacheFolder {
 		}
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.pushUID192
 	@ObfuscatedName("l.l(Lev;I)V")
-	public static void pUid(Packet buf) {
+	public static void pushUID192(Packet buf) {
 		byte[] data = new byte[24];
 		try {
 			uidDat.seek(0L);
@@ -248,8 +254,9 @@ public class CacheFolder {
 		buf.pdata(data, 0, 24);
 	}
 
+	// com.jagex.game.runetek6.client.GameShell3.storeUID192
 	@ObfuscatedName("ex.m(Lev;II)V")
-	public static void method2298(Packet arg0, int arg1) {
+	public static void storeUID192(Packet arg0, int arg1) {
 		if (uidDat == null) {
 			return;
 		}
@@ -263,12 +270,12 @@ public class CacheFolder {
 	@ObfuscatedName("cw.c(I)V")
 	public static void method1141() {
 		try {
-			cacheDat.method137();
+			cacheDat.close();
 			for (int var0 = 0; var0 < archiveCount; var0++) {
-				cacheIndex[var0].method137();
+				cacheIndex[var0].close();
 			}
-			masterIndex.method137();
-			uidDat.method137();
+			masterIndex.close();
+			uidDat.close();
 		} catch (Exception var2) {
 		}
 	}
@@ -276,22 +283,22 @@ public class CacheFolder {
 	public static void imethod1(String var18, int var19) {
 		try {
 			archiveCount = 16;
-			field368 = var19;
+			historicCacheId = var19;
 			try {
-				field294 = System.getProperty("os.name");
-			} catch (Exception var37) {
-				field294 = "Unknown";
+				osNameRaw = System.getProperty("os.name");
+			} catch (Exception ex) {
+				osNameRaw = "Unknown";
 			}
-			field199 = field294.toLowerCase();
+			osName = osNameRaw.toLowerCase();
 			try {
 				homeDir = System.getProperty("user.home");
 				if (homeDir != null) {
 					homeDir = homeDir + "/";
 				}
-			} catch (Exception var36) {
+			} catch (Exception ignore) {
 			}
 			try {
-				if (field199.startsWith("win")) {
+				if (osName.startsWith("win")) {
 					if (homeDir == null) {
 						homeDir = System.getenv("USERPROFILE");
 					}
@@ -301,16 +308,16 @@ public class CacheFolder {
 				if (homeDir != null) {
 					homeDir = homeDir + "/";
 				}
-			} catch (Exception var35) {
+			} catch (Exception ignore) {
 			}
 			if (homeDir == null) {
 				homeDir = "~/";
 			}
 			historicCacheLocations = new String[] { "c:/rscache/", "/rscache/", "c:/windows/", "c:/winnt/", "c:/", homeDir, "/tmp/", "" };
-			historicCacheDirectories = new String[] { ".jagex_cache_" + field368, ".file_store_" + field368 };
+			historicCacheDirectories = new String[] { ".jagex_cache_" + historicCacheId, ".file_store_" + historicCacheId};
 			label130:
 			for (int var23 = 0; var23 < 4; var23++) {
-				cacheDirectory = method102("oldschool", var18, var23);
+				cacheDirectory = getCacheDirectory("oldschool", var18, var23);
 				if (!cacheDirectory.exists()) {
 					cacheDirectory.mkdirs();
 				}
@@ -344,15 +351,15 @@ public class CacheFolder {
 				}
 			}
 			CacheUtil.method61(cacheDirectory);
-			method1166();
+			openUID();
 			cacheDat = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.dat2"), "rw", 1048576000L), 5200, 0);
 			masterIndex = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx255"), "rw", 1048576L), 6000, 0);
 			cacheIndex = new BufferedFile[archiveCount];
-			for (int var32 = 0; var32 < archiveCount; var32++) {
-				cacheIndex[var32] = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx" + var32), "rw", 1048576L), 6000, 0);
+			for (int i = 0; i < archiveCount; i++) {
+				cacheIndex[i] = new BufferedFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx" + i), "rw", 1048576L), 6000, 0);
 			}
-		} catch (Exception var38) {
-			JagException.report(null, var38);
+		} catch (Exception ex) {
+			JagException.report(null, ex);
 		}
 	}
 }

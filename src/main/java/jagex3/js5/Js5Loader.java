@@ -79,16 +79,16 @@ public class Js5Loader extends Js5 {
 	}
 
 	@ObfuscatedName("dq.d(IB)V")
-	public void updateCacheHint(int arg0) {
-		Js5Net.prioritizeRequest(this.archive, arg0);
+	public void updateCacheHint(int hint) {
+		Js5Net.updateCacheHint(this.archive, hint);
 	}
 
 	@ObfuscatedName("dq.i(IB)V")
-	public void fetchGroup(int arg0) {
-		if (this.fileStream == null || this.loadedGroups == null || !this.loadedGroups[arg0]) {
-			Js5Net.queueRequest(this, this.archive, arg0, this.groupChecksums[arg0], (byte) 2, true);
+	public void requestGroupDownload2(int groupId) {
+		if (this.fileStream == null || this.loadedGroups == null || !this.loadedGroups[groupId]) {
+			Js5Net.queueRequest(this, this.archive, groupId, this.groupChecksums[groupId], (byte) 2, true);
 		} else {
-			Js5NetThread.method1122(arg0, this.fileStream, this);
+			Js5NetThread.queueRequest(groupId, this.fileStream, this);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class Js5Loader extends Js5 {
 		if (this.indexFileStream == null) {
 			Js5Net.queueRequest(this, 255, this.archive, this.indexCrc, (byte) 0, true);
 		} else {
-			Js5NetThread.method1122(this.archive, this.indexFileStream, this);
+			Js5NetThread.queueRequest(this.archive, this.indexFileStream, this);
 		}
 	}
 
@@ -201,7 +201,7 @@ public class Js5Loader extends Js5 {
 		crc32.reset();
 		crc32.update(arg2, 0, arg2.length);
 		int var5 = (int) crc32.getValue();
-		Packet var6 = new Packet(Js5.decompress(arg2));
+		Packet var6 = new Packet(Js5.getUncompressedPacket(arg2));
 		int var7 = var6.g1();
 		if (var7 != 5 && var7 != 6) {
 			throw new RuntimeException("");

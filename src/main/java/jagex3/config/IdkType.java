@@ -51,7 +51,7 @@ public class IdkType extends DoublyLinkable {
 		configJs5 = config;
 		modelJs5 = model;
 
-		count = configJs5.getFileCount(3);
+		count = configJs5.getFileIdLimit(3);
 	}
 
 	@ObfuscatedName("p.g(II)Lfd;")
@@ -123,14 +123,14 @@ public class IdkType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fd.s(I)Z")
-	public boolean isDownloaded() {
+	public boolean checkModel() {
 		if (this.models == null) {
 			return true;
 		}
 
 		boolean status = true;
 		for (int i = 0; i < this.models.length; i++) {
-			if (!modelJs5.download(this.models[i], 0)) {
+			if (!modelJs5.requestDownload(this.models[i], 0)) {
 				status = false;
 			}
 		}
@@ -172,10 +172,10 @@ public class IdkType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fd.v(B)Z")
-	public boolean isHeadDownloaded() {
+	public boolean checkHead() {
 		boolean status = true;
 		for (int i = 0; i < 5; i++) {
-			if (this.heads[i] != -1 && !modelJs5.download(this.heads[i], 0)) {
+			if (this.heads[i] != -1 && !modelJs5.requestDownload(this.heads[i], 0)) {
 				status = false;
 			}
 		}

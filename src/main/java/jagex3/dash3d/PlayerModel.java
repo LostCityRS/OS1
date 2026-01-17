@@ -197,7 +197,7 @@ public class PlayerModel {
 			boolean var10 = false;
 			for (int var11 = 0; var11 < 12; var11++) {
 				int var12 = var7[var11];
-				if (var12 >= 256 && var12 < 512 && !IdkType.get(var12 - 256).isDownloaded()) {
+				if (var12 >= 256 && var12 < 512 && !IdkType.get(var12 - 256).checkModel()) {
 					var10 = true;
 				}
 				if (var12 >= 512 && !ObjType.get(var12 - 512).downloadWornModel(this.gender)) {
@@ -266,7 +266,7 @@ public class PlayerModel {
 		boolean var1 = false;
 		for (int var2 = 0; var2 < 12; var2++) {
 			int var3 = this.field1228[var2];
-			if (var3 >= 256 && var3 < 512 && !IdkType.get(var3 - 256).isHeadDownloaded()) {
+			if (var3 >= 256 && var3 < 512 && !IdkType.get(var3 - 256).checkHead()) {
 				var1 = true;
 			}
 			if (var3 >= 512 && !ObjType.get(var3 - 512).downloadHeadModel(this.gender)) {

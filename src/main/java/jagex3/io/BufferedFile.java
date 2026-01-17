@@ -50,7 +50,7 @@ public class BufferedFile {
 	}
 
 	@ObfuscatedName("v.r(I)V")
-	public void method137() throws IOException {
+	public void close() throws IOException {
 		this.method138();
 		this.field204.close();
 	}

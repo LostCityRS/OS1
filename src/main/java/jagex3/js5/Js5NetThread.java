@@ -23,7 +23,7 @@ public class Js5NetThread implements Runnable {
 	public static Object field1207 = new Object();
 
 	@ObfuscatedName("cu.m(ILap;Ldq;I)V")
-	public static void method1122(int arg0, FileStream arg1, Js5Loader arg2) {
+	public static void queueRequest(int arg0, FileStream arg1, Js5Loader arg2) {
 		byte[] var3 = null;
 		LinkList var4 = requestQueue;
 		synchronized (requestQueue) {

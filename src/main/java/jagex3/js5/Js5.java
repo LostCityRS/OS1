@@ -10,6 +10,7 @@ import jagex3.io.Packet;
 import jagex3.jstring.StringUtil;
 
 // jag::oldscape::jagex3::Js5
+// com.jagex.js5.js5
 @ObfuscatedName("ch")
 public abstract class Js5 {
 
@@ -71,7 +72,7 @@ public abstract class Js5 {
 
 	@ObfuscatedName("ch.r([BI)V")
 	public void decodeIndex(byte[] src) {
-		// todo: move to Packet.getcrc
+		// todo: inlined method (getcrc)
 		int var2 = src.length;
 		int var3 = -1;
 		for (int var4 = 0; var4 < var2; var4++) {
@@ -80,7 +81,7 @@ public abstract class Js5 {
 		int var5 = ~var3;
 		this.crc = var5;
 
-		Packet buf = new Packet(decompress(src));
+		Packet buf = new Packet(getUncompressedPacket(src));
 		int protocol = buf.g1();
 		if (protocol < 5 || protocol > 7) {
 			throw new RuntimeException("Incorrect JS5 protocol number: " + protocol);
@@ -203,160 +204,191 @@ public abstract class Js5 {
 
 	// jag::oldscape::jagex3::Js5::UpdateCacheHint
 	@ObfuscatedName("ch.d(IB)V")
-	public void updateCacheHint(int arg0) {
+	public void updateCacheHint(int hint) {
 	}
 
+	// jag::oldscape::jagex3::Js5::GetFile
 	@ObfuscatedName("ch.l(III)[B")
-	public byte[] getFile(int arg0, int arg1) {
-		return this.getFile(arg0, arg1, null);
+	public byte[] getFile(int groupId, int fileId) {
+		return this.fetchFile(groupId, fileId, null);
 	}
 
+	// jag::oldscape::jagex3::Js5::FetchFile
 	@ObfuscatedName("ch.m(II[IS)[B")
-	public byte[] getFile(int arg0, int arg1, int[] arg2) {
-		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
+	public byte[] fetchFile(int groupId, int fileId, int[] keys) {
+		if (groupId < 0 || groupId >= this.unpacked.length || this.unpacked[groupId] == null || fileId < 0 || fileId >= this.unpacked[groupId].length) {
 			return null;
 		}
-		if (this.unpacked[arg0][arg1] == null) {
-			boolean var4 = this.unpackGroup(arg0, arg2);
+
+		if (this.unpacked[groupId][fileId] == null) {
+			boolean var4 = this.unpackGroupData(groupId, keys);
 			if (!var4) {
-				this.fetchGroup(arg0);
-				boolean var5 = this.unpackGroup(arg0, arg2);
+				this.requestGroupDownload2(groupId);
+
+				boolean var5 = this.unpackGroupData(groupId, keys);
 				if (!var5) {
 					return null;
 				}
 			}
 		}
-		byte[] var6 = ByteArrayCopier.method108(this.unpacked[arg0][arg1], false);
+
+		byte[] data = ByteArrayCopier.method108(this.unpacked[groupId][fileId], false);
 		if (this.discardUnpacked) {
-			this.unpacked[arg0][arg1] = null;
+			this.unpacked[groupId][fileId] = null;
 		}
-		return var6;
+		return data;
 	}
 
+	// jag::oldscape::jagex3::Js5::RequestDownload
 	@ObfuscatedName("ch.c(III)Z")
-	public boolean download(int arg0, int arg1) {
-		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
+	public boolean requestDownload(int groupId, int fileId) {
+		if (groupId < 0 || groupId >= this.unpacked.length || this.unpacked[groupId] == null || fileId < 0 || fileId >= this.unpacked[groupId].length) {
 			return false;
-		} else if (this.unpacked[arg0][arg1] != null) {
-			return true;
-		} else if (this.packed[arg0] == null) {
-			this.fetchGroup(arg0);
-			return this.packed[arg0] != null;
-		} else {
+		}
+
+		if (this.unpacked[groupId][fileId] != null) {
 			return true;
 		}
+
+		if (this.packed[groupId] != null) {
+			return true;
+		}
+
+		this.requestGroupDownload2(groupId);
+		return this.packed[groupId] != null;
 	}
 
+	// jag::oldscape::jagex3::Js5::RequestGroupDownload
 	@ObfuscatedName("ch.n(II)Z")
-	public boolean isGroupReady(int arg0) {
-		if (this.packed[arg0] == null) {
-			this.fetchGroup(arg0);
-			return this.packed[arg0] != null;
-		} else {
+	public boolean requestGroupDownload(int groupId) {
+		if (this.packed[groupId] != null) {
 			return true;
 		}
+
+		this.requestGroupDownload2(groupId);
+		return this.packed[groupId] != null;
 	}
 
+	// jag::oldscape::jagex3::Js5::RequestFullDownload
 	@ObfuscatedName("ch.j(B)Z")
-	public boolean fetchAll() {
-		boolean var1 = true;
-		for (int var2 = 0; var2 < this.groupIds.length; var2++) {
-			int var3 = this.groupIds[var2];
-			if (this.packed[var3] == null) {
-				this.fetchGroup(var3);
-				if (this.packed[var3] == null) {
-					var1 = false;
-				}
+	public boolean requestFullDownload() {
+		boolean done = true;
+		for (int i = 0; i < this.groupIds.length; i++) {
+			int groupId = this.groupIds[i];
+			if (this.packed[groupId] != null) {
+				continue;
+			}
+
+			this.requestGroupDownload2(groupId);
+
+			if (this.packed[groupId] == null) {
+				done = false;
 			}
 		}
-		return var1;
+		return done;
 	}
 
+	// jag::oldscape::jagex3::Js5::GetFile
 	@ObfuscatedName("ch.z(II)[B")
-	public byte[] fetchFile(int arg0) {
+	public byte[] getFile(int id) {
 		if (this.unpacked.length == 1) {
-			return this.getFile(0, arg0);
-		} else if (this.unpacked[arg0].length == 1) {
-			return this.getFile(arg0, 0);
+			return this.getFile(0, id);
+		} else if (this.unpacked[id].length == 1) {
+			return this.getFile(id, 0);
 		} else {
 			throw new RuntimeException();
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5::PeekFile
 	@ObfuscatedName("ch.g(III)[B")
-	public byte[] getFileNoDiscard(int arg0, int arg1) {
-		if (arg0 < 0 || arg0 >= this.unpacked.length || this.unpacked[arg0] == null || arg1 < 0 || arg1 >= this.unpacked[arg0].length) {
+	public byte[] peekFile(int groupId, int fileId) {
+		if (groupId < 0 || groupId >= this.unpacked.length || this.unpacked[groupId] == null || fileId < 0 || fileId >= this.unpacked[groupId].length) {
 			return null;
 		}
-		if (this.unpacked[arg0][arg1] == null) {
-			boolean var3 = this.unpackGroup(arg0, null);
+
+		if (this.unpacked[groupId][fileId] == null) {
+			boolean var3 = this.unpackGroupData(groupId, null);
 			if (!var3) {
-				this.fetchGroup(arg0);
-				boolean var4 = this.unpackGroup(arg0, null);
+				this.requestGroupDownload2(groupId);
+
+				boolean var4 = this.unpackGroupData(groupId, null);
 				if (!var4) {
 					return null;
 				}
 			}
 		}
-		return ByteArrayCopier.method108(this.unpacked[arg0][arg1], false);
+
+		return ByteArrayCopier.method108(this.unpacked[groupId][fileId], false);
 	}
 
+	// jag::oldscape::jagex3::Js5::PeekFile
 	@ObfuscatedName("ch.q(II)[B")
-	public byte[] fetchFileNoDiscard(int arg0) {
+	public byte[] peekFile(int id) {
 		if (this.unpacked.length == 1) {
-			return this.getFileNoDiscard(0, arg0);
-		} else if (this.unpacked[arg0].length == 1) {
-			return this.getFileNoDiscard(arg0, 0);
+			return this.peekFile(0, id);
+		} else if (this.unpacked[id].length == 1) {
+			return this.peekFile(id, 0);
 		} else {
 			throw new RuntimeException();
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5::RequestGroupDownload
 	@ObfuscatedName("ch.i(IB)V")
-	public void fetchGroup(int arg0) {
+	public void requestGroupDownload2(int groupId) {
 	}
 
+	// jag::oldscape::jagex3::Js5::GetFileList
 	@ObfuscatedName("ch.s(II)[I")
-	public int[] getFileIds(int arg0) {
-		return this.fileIds[arg0];
+	public int[] getFileList(int groupId) {
+		return this.fileIds[groupId];
 	}
 
+	// jag::oldscape::jagex3::Js5::GetFileIdLimit
 	@ObfuscatedName("ch.u(IS)I")
-	public int getFileCount(int arg0) {
-		return this.unpacked[arg0].length;
+	public int getFileIdLimit(int groupId) {
+		return this.unpacked[groupId].length;
 	}
 
+	// jag::oldscape::jagex3::Js5::GetGroupCount
 	@ObfuscatedName("ch.v(I)I")
 	public int getGroupCount() {
 		return this.unpacked.length;
 	}
 
+	// jag::oldscape::jagex3::Js5::DiscardFiles
 	@ObfuscatedName("ch.w(II)V")
-	public void discardFiles(int arg0) {
-		for (int var2 = 0; var2 < this.unpacked[arg0].length; var2++) {
-			this.unpacked[arg0][var2] = null;
+	public void discardFiles(int groupId) {
+		for (int fileId = 0; fileId < this.unpacked[groupId].length; fileId++) {
+			this.unpacked[groupId][fileId] = null;
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5::DiscardAllFiles
 	@ObfuscatedName("ch.e(I)V")
-	public void discardAll() {
-		for (int var1 = 0; var1 < this.unpacked.length; var1++) {
-			if (this.unpacked[var1] != null) {
-				for (int var2 = 0; var2 < this.unpacked[var1].length; var2++) {
-					this.unpacked[var1][var2] = null;
-				}
+	public void discardAllFiles() {
+		for (int groupId = 0; groupId < this.unpacked.length; groupId++) {
+			if (this.unpacked[groupId] == null) {
+				continue;
+			}
+
+			for (int fileId = 0; fileId < this.unpacked[groupId].length; fileId++) {
+				this.unpacked[groupId][fileId] = null;
 			}
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5::UnpackGroupData
 	@ObfuscatedName("ch.b(I[II)Z")
-	public boolean unpackGroup(int arg0, int[] arg1) {
-		if (this.packed[arg0] == null) {
+	public boolean unpackGroupData(int groupId, int[] key) {
+		if (this.packed[groupId] == null) {
 			return false;
 		}
-		int var3 = this.groupSizes[arg0];
-		int[] var4 = this.fileIds[arg0];
-		Object[] var5 = this.unpacked[arg0];
+
+		int var3 = this.groupSizes[groupId];
+		int[] var4 = this.fileIds[groupId];
+		Object[] var5 = this.unpacked[groupId];
 		boolean var6 = true;
 		for (int var7 = 0; var7 < var3; var7++) {
 			if (var5[var4[var7]] == null) {
@@ -364,40 +396,51 @@ public abstract class Js5 {
 				break;
 			}
 		}
+
 		if (var6) {
 			return true;
 		}
+
 		byte[] var8;
-		if (arg1 == null || arg1[0] == 0 && arg1[1] == 0 && arg1[2] == 0 && arg1[3] == 0) {
-			var8 = ByteArrayCopier.method108(this.packed[arg0], false);
+		if (key == null || key[0] == 0 && key[1] == 0 && key[2] == 0 && key[3] == 0) {
+			var8 = ByteArrayCopier.method108(this.packed[groupId], false);
 		} else {
-			var8 = ByteArrayCopier.method108(this.packed[arg0], true);
+			var8 = ByteArrayCopier.method108(this.packed[groupId], true);
 			Packet var9 = new Packet(var8);
-			var9.tinydec(arg1, 5, var9.data.length);
+			var9.tinydec(key, 5, var9.data.length);
 		}
+
 		byte[] var10;
 		try {
-			var10 = decompress(var8);
-		} catch (RuntimeException var43) {
-			String var13 = "" + (arg1 != null) + "," + arg0 + "," + var8.length + ",";
+			var10 = getUncompressedPacket(var8);
+		} catch (RuntimeException ex) {
+			String var13 = "" + (key != null) + "," + groupId + "," + var8.length + ",";
+
+			// todo: inlined method (getcrc)
 			int var14 = var8.length;
 			int var15 = -1;
 			for (int var16 = 0; var16 < var14; var16++) {
 				var15 = var15 >>> 8 ^ Packet.crctable[(var15 ^ var8[var16]) & 0xFF];
 			}
 			int var17 = ~var15;
+
 			String var21 = var13 + var17 + ",";
+
+			// todo: inlined method (getcrc)
 			int var22 = var8.length - 2;
 			int var23 = -1;
 			for (int var24 = 0; var24 < var22; var24++) {
 				var23 = var23 >>> 8 ^ Packet.crctable[(var23 ^ var8[var24]) & 0xFF];
 			}
 			int var25 = ~var23;
-			throw JagException.report((Throwable) var43, (String) (var21 + var25 + "," + this.groupChecksums[arg0] + "," + this.crc));
+
+			throw JagException.report(ex, var21 + var25 + "," + this.groupChecksums[groupId] + "," + this.crc);
 		}
+
 		if (this.discardPacked) {
-			this.packed[arg0] = null;
+			this.packed[groupId] = null;
 		}
+
 		if (var3 > 1) {
 			int var28 = var10.length;
 			int var44 = var28 - 1;
@@ -444,69 +487,79 @@ public abstract class Js5 {
 		return true;
 	}
 
+	// jag::oldscape::jagex3::Js5::GetGroupId
 	@ObfuscatedName("ch.y(Ljava/lang/String;I)I")
-	public int getGroupId(String arg0) {
-		String var2 = arg0.toLowerCase();
-		return this.groupNameHashTable.get(StringUtil.hashCode(var2));
+	public int getGroupId(String group) {
+		String lower = group.toLowerCase();
+		return this.groupNameHashTable.get(StringUtil.hashCode(lower));
 	}
 
+	// jag::oldscape::jagex3::Js5::GetFileId
+	// com.jagex.js5.js5.getfileid
 	@ObfuscatedName("ch.t(ILjava/lang/String;B)I")
-	public int getFileId(int arg0, String arg1) {
-		String var3 = arg1.toLowerCase();
-		return this.fileNameHashTables[arg0].get(StringUtil.hashCode(var3));
+	public int getFileId(int groupId, String file) {
+		String lower = file.toLowerCase();
+		return this.fileNameHashTables[groupId].get(StringUtil.hashCode(lower));
 	}
 
+	// jag::oldscape::jagex3::Js5::GetFile
 	@ObfuscatedName("ch.f(Ljava/lang/String;Ljava/lang/String;I)[B")
-	public byte[] getFile(String arg0, String arg1) {
-		String var3 = arg0.toLowerCase();
-		String var4 = arg1.toLowerCase();
-		int var5 = this.groupNameHashTable.get(StringUtil.hashCode(var3));
-		int var6 = this.fileNameHashTables[var5].get(StringUtil.hashCode(var4));
-		return this.getFile(var5, var6);
+	public byte[] getFile(String group, String file) {
+		String groupLower = group.toLowerCase();
+		String fileLower = file.toLowerCase();
+		int groupId = this.groupNameHashTable.get(StringUtil.hashCode(groupLower));
+		int fileId = this.fileNameHashTables[groupId].get(StringUtil.hashCode(fileLower));
+		return this.getFile(groupId, fileId);
 	}
 
+	// jag::oldscape::jagex3::Js5::RequestDownload
 	@ObfuscatedName("ch.k(Ljava/lang/String;Ljava/lang/String;B)Z")
-	public boolean download(String arg0, String arg1) {
-		String var3 = arg0.toLowerCase();
-		String var4 = arg1.toLowerCase();
-		int var5 = this.groupNameHashTable.get(StringUtil.hashCode(var3));
-		int var6 = this.fileNameHashTables[var5].get(StringUtil.hashCode(var4));
-		return this.download(var5, var6);
+	public boolean requestDownload(String group, String file) {
+		String groupLower = group.toLowerCase();
+		String fileLower = file.toLowerCase();
+		int groupId = this.groupNameHashTable.get(StringUtil.hashCode(groupLower));
+		int fileId = this.fileNameHashTables[groupId].get(StringUtil.hashCode(fileLower));
+		return this.requestDownload(groupId, fileId);
 	}
 
 	// jag::oldscape::jagex3::Js5::UpdateCacheHint
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
-	public void updateCacheHint(String arg0) {
-		String var2 = arg0.toLowerCase();
-		int var3 = this.groupNameHashTable.get(StringUtil.hashCode(var2));
-		if (var3 >= 0) {
-			this.updateCacheHint(var3);
+	public void updateCacheHint(String group) {
+		String lower = group.toLowerCase();
+		int groupId = this.groupNameHashTable.get(StringUtil.hashCode(lower));
+		if (groupId >= 0) {
+			this.updateCacheHint(groupId);
 		}
 	}
 
+	// jag::oldscape::jagex3::Js5::GetUncompressedPacket
 	@ObfuscatedName("c.a([BI)[B")
-	public static byte[] decompress(byte[] arg0) {
-		Packet var1 = new Packet(arg0);
-		int var2 = var1.g1();
-		int var3 = var1.g4();
-		if (var3 < 0 || maxsize != 0 && var3 > maxsize) {
+	public static byte[] getUncompressedPacket(byte[] src) {
+		Packet buf = new Packet(src);
+		int ctype = buf.g1();
+		int clen = buf.g4();
+
+		if (clen < 0 || maxsize != 0 && clen > maxsize) {
 			throw new RuntimeException();
-		} else if (var2 == 0) {
-			byte[] var4 = new byte[var3];
-			var1.gdata(var4, 0, var3);
-			return var4;
-		} else {
-			int var5 = var1.g4();
-			if (var5 < 0 || maxsize != 0 && var5 > maxsize) {
-				throw new RuntimeException();
-			}
-			byte[] var6 = new byte[var5];
-			if (var2 == 1) {
-				BZip2.decompress(var6, var5, arg0, var3, 9);
-			} else {
-				gzip.decompress(var1, var6);
-			}
-			return var6;
 		}
+
+		if (ctype == 0) {
+			byte[] data = new byte[clen];
+			buf.gdata(data, 0, clen);
+			return data;
+		}
+
+		int ulen = buf.g4();
+		if (ulen < 0 || maxsize != 0 && ulen > maxsize) {
+			throw new RuntimeException();
+		}
+
+		byte[] data = new byte[ulen];
+		if (ctype == 1) {
+			BZip2.decompress(data, ulen, src, clen, 9);
+		} else {
+			gzip.decompress(buf, data);
+		}
+		return data;
 	}
 }

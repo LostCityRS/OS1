@@ -292,14 +292,14 @@ public class SeqType extends DoublyLinkable {
 		Js5 var2 = field556;
 		Js5 var3 = field2361;
 		boolean var4 = true;
-		int[] var5 = var2.getFileIds(arg0);
+		int[] var5 = var2.getFileList(arg0);
 		for (int var6 = 0; var6 < var5.length; var6++) {
-			byte[] var7 = var2.getFileNoDiscard(arg0, var5[var6]);
+			byte[] var7 = var2.peekFile(arg0, var5[var6]);
 			if (var7 == null) {
 				var4 = false;
 			} else {
 				int var8 = (var7[0] & 0xFF) << 8 | var7[1] & 0xFF;
-				byte[] var9 = var3.getFileNoDiscard(var8, 0);
+				byte[] var9 = var3.peekFile(var8, 0);
 				if (var9 == null) {
 					var4 = false;
 				}

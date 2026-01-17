@@ -23,20 +23,22 @@ public class IfType extends Linkable {
 	@ObfuscatedName("av.m")
 	public static IfType[][] list;
 
+	// jag::oldscape::rs2lib::IfType::m_open
 	@ObfuscatedName("df.c")
-	public static boolean[] field1508;
+	public static boolean[] open;
 
+	// jag::oldscape::rs2lib::IfType::m_pInterfaces
 	@ObfuscatedName("eg.n")
-	public static Js5 field1806;
+	public static Js5 interfaces;
 
 	@ObfuscatedName("eg.j")
-	public static Js5 field1776;
+	public static Js5 models;
 
 	@ObfuscatedName("dc.z")
-	public static Js5 field1564;
+	public static Js5 sprites;
 
 	@ObfuscatedName("eg.g")
-	public static Js5 field1800;
+	public static Js5 fontMetrics;
 
 	@ObfuscatedName("eg.q")
 	public static LruCache spriteCache = new LruCache(200);
@@ -406,12 +408,13 @@ public class IfType extends Linkable {
 
 	@ObfuscatedName("ay.c(Lch;Lch;Lch;Lch;I)V")
 	public static void unpack(Js5 arg0, Js5 arg1, Js5 arg2, Js5 arg3) {
-		field1806 = arg0;
-		field1776 = arg1;
-		field1564 = arg2;
-		field1800 = arg3;
-		list = new IfType[field1806.getGroupCount()][];
-		field1508 = new boolean[field1806.getGroupCount()];
+		interfaces = arg0;
+		models = arg1;
+		sprites = arg2;
+		fontMetrics = arg3;
+
+		list = new IfType[interfaces.getGroupCount()][];
+		open = new boolean[interfaces.getGroupCount()];
 	}
 
 	@ObfuscatedName("bw.n(IB)Leg;")
@@ -439,42 +442,53 @@ public class IfType extends Linkable {
 		}
 	}
 
+	// jag::oldscape::rs2lib::IfType::OpenInterface
 	@ObfuscatedName("dw.z(II)Z")
-	public static boolean openInterface(int arg0) {
-		if (field1508[arg0]) {
+	public static boolean openInterface(int id) {
+		if (open[id]) {
 			return true;
-		} else if (field1806.isGroupReady(arg0)) {
-			int var1 = field1806.getFileCount(arg0);
-			if (var1 == 0) {
-				field1508[arg0] = true;
-				return true;
-			}
-			if (list[arg0] == null) {
-				list[arg0] = new IfType[var1];
-			}
-			for (int var2 = 0; var2 < var1; var2++) {
-				if (list[arg0][var2] == null) {
-					byte[] var3 = field1806.getFile(arg0, var2);
-					if (var3 != null) {
-						list[arg0][var2] = new IfType();
-						list[arg0][var2].parentlayer = (arg0 << 16) + var2;
-						if (var3[0] == -1) {
-							list[arg0][var2].decodeIf3(new Packet(var3));
-						} else {
-							list[arg0][var2].decodeIf1(new Packet(var3));
-						}
-					}
-				}
-			}
-			field1508[arg0] = true;
-			return true;
-		} else {
+		}
+
+		if (!interfaces.requestGroupDownload(id)) {
 			return false;
 		}
+
+		int children = interfaces.getFileIdLimit(id);
+		if (children == 0) {
+			open[id] = true;
+			return true;
+		}
+
+		if (list[id] == null) {
+			list[id] = new IfType[children];
+		}
+
+		for (int sub = 0; sub < children; sub++) {
+			if (list[id][sub] != null) {
+				continue;
+			}
+
+			byte[] data = interfaces.getFile(id, sub);
+			if (data == null) {
+				continue;
+			}
+
+			list[id][sub] = new IfType();
+			list[id][sub].parentlayer = (id << 16) + sub;
+			if (data[0] == -1) {
+				list[id][sub].decode3(new Packet(data));
+			} else {
+				list[id][sub].decode(new Packet(data));
+			}
+		}
+
+		open[id] = true;
+		return true;
 	}
 
+	// jag::oldscape::rs2lib::IfType::Decode
 	@ObfuscatedName("eg.g(Lev;I)V")
-	public void decodeIf1(Packet buf) {
+	public void decode(Packet buf) {
 		this.v3 = false;
 
 		this.type = buf.g1();
@@ -716,8 +730,9 @@ public class IfType extends Linkable {
 		}
 	}
 
+	// jag::oldscape::rs2lib::IfType::Decode
 	@ObfuscatedName("eg.q(Lev;I)V")
-	public void decodeIf3(Packet buf) {
+	public void decode3(Packet buf) {
 		buf.g1();
 		this.v3 = true;
 
@@ -835,11 +850,12 @@ public class IfType extends Linkable {
 		this.ondrag = this.decodeHook(buf);
 		this.ondragcomplete = this.decodeHook(buf);
 		this.onscrollwheel = this.decodeHook(buf);
-		this.onvartransmitlist = this.decodeHookTransmitList(buf);
-		this.oninvtransmitlist = this.decodeHookTransmitList(buf);
-		this.onstattransmitlist = this.decodeHookTransmitList(buf);
+		this.onvartransmitlist = this.decodeTransmitList(buf);
+		this.oninvtransmitlist = this.decodeTransmitList(buf);
+		this.onstattransmitlist = this.decodeTransmitList(buf);
 	}
 
+	// jag::oldscape::rs2lib::IfType::DecodeHook
 	@ObfuscatedName("eg.i(Lev;I)[Ljava/lang/Object;")
 	public Object[] decodeHook(Packet arg0) {
 		int var2 = arg0.g1();
@@ -859,8 +875,9 @@ public class IfType extends Linkable {
 		return var3;
 	}
 
+	// jag::oldscape::rs2lib::IfType::DecodeTransmitList
 	@ObfuscatedName("eg.s(Lev;I)[I")
-	public int[] decodeHookTransmitList(Packet arg0) {
+	public int[] decodeTransmitList(Packet arg0) {
 		int var2 = arg0.g1();
 		if (var2 == 0) {
 			return null;
@@ -902,7 +919,7 @@ public class IfType extends Linkable {
 			return var5;
 		}
 
-		Js5 var6 = field1564;
+		Js5 var6 = sprites;
 		Pix32 var7;
 		if (PixLoader.method905(var6, var2, 0)) {
 			var7 = PixLoader.method759();
@@ -947,8 +964,8 @@ public class IfType extends Linkable {
 		if (var1 != null) {
 			return var1;
 		}
-		Js5 var2 = field1564;
-		Js5 var3 = field1800;
+		Js5 var2 = sprites;
+		Js5 var3 = fontMetrics;
 		int var4 = this.font;
 		SoftwareFont var5;
 		if (PixLoader.method905(var2, var4, 0)) {
@@ -978,7 +995,7 @@ public class IfType extends Linkable {
 		if (var3 != null) {
 			return var3;
 		}
-		Js5 var4 = field1564;
+		Js5 var4 = sprites;
 		Pix32 var5;
 		if (PixLoader.method905(var4, var2, 0)) {
 			var5 = PixLoader.method759();
@@ -1013,7 +1030,7 @@ public class IfType extends Linkable {
 			ModelLit var7 = (ModelLit) field1850.get((long) ((var5 << 16) + var6));
 			if (var7 == null) {
 				if (var5 == 1) {
-					ModelUnlit var8 = ModelUnlit.tryGet(field1776, var6, 0);
+					ModelUnlit var8 = ModelUnlit.tryGet(models, var6, 0);
 					if (var8 == null) {
 						loadingAsset = true;
 						return null;

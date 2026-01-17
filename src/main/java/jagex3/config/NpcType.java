@@ -270,7 +270,7 @@ public class NpcType extends DoublyLinkable {
 		if (cached == null) {
 			boolean needsModel = false;
 			for (int i = 0; i < this.models.length; i++) {
-				if (!modelJs5.download(this.models[i], 0)) {
+				if (!modelJs5.requestDownload(this.models[i], 0)) {
 					needsModel = true;
 				}
 			}
@@ -338,7 +338,7 @@ public class NpcType extends DoublyLinkable {
 
 		boolean needsModel = false;
 		for (int i = 0; i < this.heads.length; i++) {
-			if (!modelJs5.download(this.heads[i], 0)) {
+			if (!modelJs5.requestDownload(this.heads[i], 0)) {
 				needsModel = true;
 			}
 		}
