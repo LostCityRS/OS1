@@ -285,7 +285,7 @@ public class Js5Net {
 	}
 
 	@ObfuscatedName("q.l(Lam;ZB)V")
-	public static void init(ClientStream stream, boolean loggedId) {
+	public static void init(ClientStream s, boolean loggedId) {
 		if (stream != null) {
 			try {
 				stream.close();
@@ -293,7 +293,7 @@ public class Js5Net {
 			}
 			stream = null;
 		}
-		stream = stream;
+		stream = s;
 		sendLoginLogoutPacket(loggedId);
 		incomingTransferHeader.pos = 0;
 		incomingRequest = null;
