@@ -4060,6 +4060,7 @@ public class Client extends GameShell {
 				}
 			}
 		} else if (ptype == 207) {
+			// OBJ_DEL
 			int var30 = in.g2_alt3();
 			int var31 = in.g1();
 			int var32 = (var31 >> 4 & 0x7) + baseX;
@@ -4080,6 +4081,7 @@ public class Client extends GameShell {
 				}
 			}
 		} else if (ptype == 205) {
+			// SOUND_AREA
 			int var36 = in.g1();
 			int var37 = (var36 >> 4 & 0x7) + baseX;
 			int var38 = (var36 & 0x7) + baseZ;
@@ -4100,6 +4102,7 @@ public class Client extends GameShell {
 				}
 			}
 		} else if (ptype == 6) {
+			// LOC_ANIM
 			int var45 = in.g2_alt2();
 			int var46 = in.g1_alt2();
 			int var47 = (var46 >> 4 & 0x7) + baseX;
@@ -4154,6 +4157,7 @@ public class Client extends GameShell {
 				}
 			}
 		} else if (ptype == 173) {
+			// OBJ_ADD
 			int var59 = in.g1_alt1();
 			int var60 = (var59 >> 4 & 0x7) + baseX;
 			int var61 = (var59 & 0x7) + baseZ;
@@ -4170,6 +4174,7 @@ public class Client extends GameShell {
 				showObject(var60, var61);
 			}
 		} else if (ptype == 106) {
+			// OBJ_COUNT
 			int var65 = in.g1();
 			int var66 = (var65 >> 4 & 0x7) + baseX;
 			int var67 = (var65 & 0x7) + baseZ;
@@ -4189,6 +4194,7 @@ public class Client extends GameShell {
 				}
 			}
 		} else if (ptype == 154) {
+			// LOC_ADD_CHANGE
 			int var73 = in.g2_alt3();
 			int var74 = in.g1_alt1();
 			int var75 = var74 >> 2;
@@ -4201,6 +4207,7 @@ public class Client extends GameShell {
 				locChangeCreate(minusedlevel, var79, var80, var77, var73, var75, var76, 0, -1);
 			}
 		} else if (ptype == 20) {
+			// MAP_ANIM
 			int var81 = in.g1();
 			int var82 = (var81 >> 4 & 0x7) + baseX;
 			int var83 = (var81 & 0x7) + baseZ;
@@ -4214,6 +4221,7 @@ public class Client extends GameShell {
 				spotanims.push(var89);
 			}
 		} else if (ptype == 32) {
+			// MAP_PROJANIM
 			int var90 = in.g1();
 			int var91 = (var90 >> 4 & 0x7) + baseX;
 			int var92 = (var90 & 0x7) + baseZ;
@@ -4237,6 +4245,7 @@ public class Client extends GameShell {
 				projectiles.push(var107);
 			}
 		} else if (ptype == 215) {
+			// OBJ_REVEAL
 			int var108 = in.g1_alt2();
 			int var109 = (var108 >> 4 & 0x7) + baseX;
 			int var110 = (var108 & 0x7) + baseZ;
@@ -4254,6 +4263,7 @@ public class Client extends GameShell {
 				showObject(var109, var110);
 			}
 		} else if (ptype == 7) {
+			// LOC_DEL
 			int var115 = in.g1_alt3();
 			int var116 = var115 >> 2;
 			int var117 = var115 & 0x3;
