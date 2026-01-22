@@ -377,27 +377,34 @@ public abstract class PixFont extends Pix2D {
 	}
 
 	@ObfuscatedName("fs.bd(Ljava/lang/String;IIII)V")
-	public void drawString(String arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (arg0 != null) {
-			this.resetState(arg3, arg4);
-			this.drawString(arg0, arg1, arg2);
+	public void drawString(String str, int x, int y, int rgb, int arg4) {
+		if (str == null) {
+			return;
 		}
+
+		this.resetState(rgb, arg4);
+		this.drawString(str, x, y);
 	}
 
 	@ObfuscatedName("fs.cr(Ljava/lang/String;IIII)V")
-	public void drawStringRight(String arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (arg0 != null) {
-			this.resetState(arg3, arg4);
-			this.drawString(arg0, arg1 - this.stringWid(arg0), arg2);
+	public void drawStringRight(String str, int x, int y, int rgb, int arg4) {
+		if (str == null) {
+			return;
 		}
+
+		this.resetState(rgb, arg4);
+		this.drawString(str, x - this.stringWid(str), y);
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::CentreString
 	@ObfuscatedName("fs.cs(Ljava/lang/String;IIII)V")
-	public void centreString(String arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (arg0 != null) {
-			this.resetState(arg3, arg4);
-			this.drawString(arg0, arg1 - this.stringWid(arg0) / 2, arg2);
+	public void centreString(String str, int x, int y, int rgb, int arg4) {
+		if (str == null) {
+			return;
 		}
+
+		this.resetState(rgb, arg4);
+		this.drawString(str, x - this.stringWid(str) / 2, y);
 	}
 
 	// jag::oldscape::jstring::PixfontGeneric::DrawStringMultiline

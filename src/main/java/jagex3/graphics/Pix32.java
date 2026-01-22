@@ -60,8 +60,9 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::Pix32::CopyHFlip
 	@ObfuscatedName("fq.bm()Lfq;")
-	public Pix32 method2719() {
+	public Pix32 copyHFlip() {
 		Pix32 var1 = new Pix32(this.wi, this.hi);
 		var1.owi = this.owi;
 		var1.ohi = this.ohi;

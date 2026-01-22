@@ -471,7 +471,7 @@ public class ClientBuild {
 			var21 += 256;
 		}
 		if (var9.hasBgSound()) {
-			BgSound.method763(arg0, arg1, arg2, var9, arg4);
+			BgSound.addSound(arg0, arg1, arg2, var9, arg4);
 		}
 		if (arg5 == 22) {
 			if (!Client.lowMemory || var9.active != 0 || var9.blockwalk == 1 || var9.forcedecor) {

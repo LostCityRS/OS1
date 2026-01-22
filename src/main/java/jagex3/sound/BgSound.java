@@ -10,6 +10,7 @@ import jagex3.datastruct.Linkable;
 @ObfuscatedName("de")
 public class BgSound extends Linkable {
 
+	// jag::oldscape::bgsound::m_soundlist
 	@ObfuscatedName("de.m")
 	public static LinkList soundlist = new LinkList();
 
@@ -58,23 +59,23 @@ public class BgSound extends Linkable {
 	// jag::oldscape::bgsound::RecalculateMultilocs
 	@ObfuscatedName("az.c(B)V")
 	public static void recalculateMultilocs() {
-		for (BgSound var0 = (BgSound) soundlist.head(); var0 != null; var0 = (BgSound) soundlist.next()) {
-			if (var0.multiloc != null) {
-				var0.recalcSound();
+		for (BgSound bg = (BgSound) soundlist.head(); bg != null; bg = (BgSound) soundlist.next()) {
+			if (bg.multiloc != null) {
+				bg.recalcSound();
 			}
 		}
 	}
 
 	// jag::oldscape::bgsound::Reset
 	public static void reset() {
-		for (BgSound var23 = (BgSound) soundlist.head(); var23 != null; var23 = (BgSound) soundlist.next()) {
-			if (var23.field1603 != null) {
-				Client.soundMixer.stopStream(var23.field1603);
-				var23.field1603 = null;
+		for (BgSound bg = (BgSound) soundlist.head(); bg != null; bg = (BgSound) soundlist.next()) {
+			if (bg.field1603 != null) {
+				Client.soundMixer.stopStream(bg.field1603);
+				bg.field1603 = null;
 			}
-			if (var23.field1614 != null) {
-				Client.soundMixer.stopStream(var23.field1614);
-				var23.field1614 = null;
+			if (bg.field1614 != null) {
+				Client.soundMixer.stopStream(bg.field1614);
+				bg.field1614 = null;
 			}
 		}
 		soundlist.clear();
@@ -106,8 +107,9 @@ public class BgSound extends Linkable {
 		}
 	}
 
+	// jag::oldscape::bgsound::AddSound
 	@ObfuscatedName("bs.j(IIILey;IB)V")
-	public static void method763(int arg0, int arg1, int arg2, LocType arg3, int arg4) {
+	public static void addSound(int arg0, int arg1, int arg2, LocType arg3, int arg4) {
 		BgSound bg = new BgSound();
 		bg.level = arg0;
 		bg.minX = arg1 * 128;
@@ -130,69 +132,73 @@ public class BgSound extends Linkable {
 			bg.recalcSound();
 		}
 		soundlist.push(bg);
+
 		if (bg.random != null) {
 			bg.field1613 = bg.mindelay + (int) (Math.random() * (double) (bg.maxdelay - bg.mindelay));
 		}
 	}
 
+	// jag::oldscape::bgsound::DoMix
 	@ObfuscatedName("ex.z(IIIII)V")
-	public static void method2297(int arg0, int arg1, int arg2, int arg3) {
+	public static void doMix(int arg0, int arg1, int arg2, int arg3) {
 		for (BgSound var4 = (BgSound) soundlist.head(); var4 != null; var4 = (BgSound) soundlist.next()) {
-			if (var4.sound != -1 || var4.random != null) {
-				int var5 = 0;
-				if (arg1 > var4.maxX) {
-					var5 += arg1 - var4.maxX;
-				} else if (arg1 < var4.minX) {
-					var5 += var4.minX - arg1;
+			if (var4.sound == -1 && var4.random == null) {
+				continue;
+			}
+
+ 			int var5 = 0;
+			if (arg1 > var4.maxX) {
+				var5 += arg1 - var4.maxX;
+			} else if (arg1 < var4.minX) {
+				var5 += var4.minX - arg1;
+			}
+			if (arg2 > var4.maxZ) {
+				var5 += arg2 - var4.maxZ;
+			} else if (arg2 < var4.minZ) {
+				var5 += var4.minZ - arg2;
+			}
+			if (var5 - 64 > var4.range || Client.ambientVolume == 0 || var4.level != arg0) {
+				if (var4.field1603 != null) {
+					Client.soundMixer.stopStream(var4.field1603);
+					var4.field1603 = null;
 				}
-				if (arg2 > var4.maxZ) {
-					var5 += arg2 - var4.maxZ;
-				} else if (arg2 < var4.minZ) {
-					var5 += var4.minZ - arg2;
+				if (var4.field1614 != null) {
+					Client.soundMixer.stopStream(var4.field1614);
+					var4.field1614 = null;
 				}
-				if (var5 - 64 > var4.range || Client.ambientVolume == 0 || var4.level != arg0) {
-					if (var4.field1603 != null) {
-						Client.soundMixer.stopStream(var4.field1603);
-						var4.field1603 = null;
+			} else {
+				var5 -= 64;
+				if (var5 < 0) {
+					var5 = 0;
+				}
+				int var6 = Client.ambientVolume * (var4.range - var5) / var4.range;
+				if (var4.field1603 != null) {
+					var4.field1603.method2090(var6);
+				} else if (var4.sound >= 0) {
+					JagFx var7 = JagFx.load(Client.jagFX, var4.sound, 0);
+					if (var7 != null) {
+						Wave var8 = var7.toWave().decimate(Client.soundDecimator);
+						WaveStream var9 = WaveStream.newRatePercent(var8, 100, var6);
+						var9.setLoopCount(-1);
+						Client.soundMixer.playStream(var9);
+						var4.field1603 = var9;
 					}
-					if (var4.field1614 != null) {
-						Client.soundMixer.stopStream(var4.field1614);
+				}
+				if (var4.field1614 != null) {
+					var4.field1614.method2090(var6);
+					if (!var4.field1614.isLinked()) {
 						var4.field1614 = null;
 					}
-				} else {
-					var5 -= 64;
-					if (var5 < 0) {
-						var5 = 0;
-					}
-					int var6 = Client.ambientVolume * (var4.range - var5) / var4.range;
-					if (var4.field1603 != null) {
-						var4.field1603.method2090(var6);
-					} else if (var4.sound >= 0) {
-						JagFx var7 = JagFx.load(Client.jagFX, var4.sound, 0);
-						if (var7 != null) {
-							Wave var8 = var7.toWave().decimate(Client.soundDecimator);
-							WaveStream var9 = WaveStream.newRatePercent(var8, 100, var6);
-							var9.setLoopCount(-1);
-							Client.soundMixer.playStream(var9);
-							var4.field1603 = var9;
-						}
-					}
-					if (var4.field1614 != null) {
-						var4.field1614.method2090(var6);
-						if (!var4.field1614.isLinked()) {
-							var4.field1614 = null;
-						}
-					} else if (var4.random != null && (var4.field1613 -= arg3) <= 0) {
-						int var10 = (int) (Math.random() * (double) var4.random.length);
-						JagFx var11 = JagFx.load(Client.jagFX, var4.random[var10], 0);
-						if (var11 != null) {
-							Wave var12 = var11.toWave().decimate(Client.soundDecimator);
-							WaveStream var13 = WaveStream.newRatePercent(var12, 100, var6);
-							var13.setLoopCount(0);
-							Client.soundMixer.playStream(var13);
-							var4.field1614 = var13;
-							var4.field1613 = var4.mindelay + (int) (Math.random() * (double) (var4.maxdelay - var4.mindelay));
-						}
+				} else if (var4.random != null && (var4.field1613 -= arg3) <= 0) {
+					int var10 = (int) (Math.random() * (double) var4.random.length);
+					JagFx var11 = JagFx.load(Client.jagFX, var4.random[var10], 0);
+					if (var11 != null) {
+						Wave var12 = var11.toWave().decimate(Client.soundDecimator);
+						WaveStream var13 = WaveStream.newRatePercent(var12, 100, var6);
+						var13.setLoopCount(0);
+						Client.soundMixer.playStream(var13);
+						var4.field1614 = var13;
+						var4.field1613 = var4.mindelay + (int) (Math.random() * (double) (var4.maxdelay - var4.mindelay));
 					}
 				}
 			}

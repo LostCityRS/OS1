@@ -184,8 +184,9 @@ public class Pix2D extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::graphics::Pix2D::FillRectVGrad
 	@ObfuscatedName("fv.b(IIIIII)V")
-	public static void method2592(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public static void fillRectVGrad(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		int var6 = 0;
 		int var7 = 65536 / arg3;
 		if (arg0 < clipMinX) {

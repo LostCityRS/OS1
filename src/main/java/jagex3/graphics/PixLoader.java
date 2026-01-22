@@ -38,6 +38,7 @@ public class PixLoader {
 		throw new Error();
 	}
 
+	// jag::oldscape::graphics::pixloader::Makepix8Array
 	@ObfuscatedName("al.r(Lch;Ljava/lang/String;Ljava/lang/String;B)[Lft;")
 	public static Pix8[] makePix8Array(Js5 arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
@@ -69,6 +70,7 @@ public class PixLoader {
 		return var5;
 	}
 
+	// jag::oldscape::graphics::pixloader::Makepix8
 	@ObfuscatedName("ak.d(Lch;Ljava/lang/String;Ljava/lang/String;I)Lft;")
 	public static Pix8 makePix8(Js5 arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
