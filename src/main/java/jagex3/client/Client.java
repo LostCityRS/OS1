@@ -1729,7 +1729,7 @@ public class Client extends GameShell {
 				SpotType.init(configJs5, modelJs5);
 				VarBitType.init(configJs5);
 				VarpType.init(configJs5);
-				IfType.unpack(interfaceJs5, modelJs5, spriteJs5, fontMetricJs5);
+				IfType.init(interfaceJs5, modelJs5, spriteJs5, fontMetricJs5);
 				InvType.resetCache(configJs5);
 				EnumType.init(configJs5);
 
@@ -2374,7 +2374,7 @@ public class Client extends GameShell {
 		SpotType.resetCache();
 		VarpType.resetCache();
 		PlayerModel.resetCache();
-		IfType.unload();
+		IfType.resetCache();
 		((WorldTextureProvider) Pix3D.textureProvider).method749();
 		ClientScript.cache.clear();
 
@@ -6427,8 +6427,8 @@ public class Client extends GameShell {
 						int var174 = (com.marginX + 32) * var173 + var12;
 						int var175 = (com.marginY + 32) * var172 + var13;
 						if (var171 < 20) {
-							var174 += com.invSlotOffsetX[var171];
-							var175 += com.invSlotOffsetY[var171];
+							var174 += com.invBackgroundX[var171];
+							var175 += com.invBackgroundY[var171];
 						}
 						if (com.linkObjType[var171] > 0) {
 							int var178 = com.linkObjType[var171] - 1;
@@ -6488,8 +6488,8 @@ public class Client extends GameShell {
 									var179.plotSprite(var174, var175);
 								}
 							}
-						} else if (com.invSlotGraphic != null && var171 < 20) {
-							Pix32 var185 = com.method1803(var171);
+						} else if (com.invBackground != null && var171 < 20) {
+							Pix32 var185 = com.getInvBackground(var171);
 							if (var185 != null) {
 								var185.plotSprite(var174, var175);
 							} else if (IfType.loadingAsset) {
@@ -6524,7 +6524,7 @@ public class Client extends GameShell {
 					Pix2D.drawRectTrans(var12, var13, com.renderwidth, com.renderheight, var186, 256 - (var14 & 0xFF));
 				}
 			} else if (com.type == 4) {
-				SoftwareFont var187 = com.method1800();
+				SoftwareFont var187 = com.getFont();
 				if (var187 != null) {
 					String var188 = com.text;
 					int var189;
@@ -6568,7 +6568,7 @@ public class Client extends GameShell {
 				if (com.v3) {
 					Pix32 var192;
 					if (com.field1791 == -1) {
-						var192 = com.getSprite(false);
+						var192 = com.getGraphic(false);
 					} else {
 						var192 = ObjType.getSprite(com.field1791, com.field1888, com.outline, com.graphicshadow, false);
 					}
@@ -6607,7 +6607,7 @@ public class Client extends GameShell {
 						componentUpdated(com);
 					}
 				} else {
-					Pix32 var191 = com.getSprite(getIfActive(com));
+					Pix32 var191 = com.getGraphic(getIfActive(com));
 					if (var191 != null) {
 						var191.plotSprite(var12, var13);
 					} else if (IfType.loadingAsset) {
@@ -6643,13 +6643,13 @@ public class Client extends GameShell {
 						var202 = localPlayer.getTempModel();
 					}
 				} else if (var201 == -1) {
-					var202 = com.method1802(null, -1, var200, localPlayer.model);
+					var202 = com.getTempModel(null, -1, var200, localPlayer.model);
 					if (var202 == null && IfType.loadingAsset) {
 						componentUpdated(com);
 					}
 				} else {
 					SeqType var206 = SeqType.list(var201);
-					var202 = com.method1802(var206, com.animFrame, var200, localPlayer.model);
+					var202 = com.getTempModel(var206, com.animFrame, var200, localPlayer.model);
 					if (var202 == null && IfType.loadingAsset) {
 						componentUpdated(com);
 					}
@@ -6671,7 +6671,7 @@ public class Client extends GameShell {
 				}
 				Pix3D.resetOrigin();
 			} else if (com.type == 7) {
-				SoftwareFont var209 = com.method1800();
+				SoftwareFont var209 = com.getFont();
 				if (var209 == null) {
 					if (IfType.loadingAsset) {
 						componentUpdated(com);
@@ -8812,15 +8812,15 @@ public class Client extends GameShell {
 							int var443 = objDragSlot;
 							while (var442 != var443) {
 								if (var442 > var443) {
-									var436.method1799(var442 - 1, var442);
+									var436.swapSlots(var442 - 1, var442);
 									var442--;
 								} else if (var442 < var443) {
-									var436.method1799(var442 + 1, var442);
+									var436.swapSlots(var442 + 1, var442);
 									var442++;
 								}
 							}
 						} else {
-							var436.method1799(objDragSlot, hoveredSlot);
+							var436.swapSlots(objDragSlot, hoveredSlot);
 						}
 						// INV_BUTTOND
 						out.p1Enc(2);
@@ -11054,8 +11054,8 @@ public class Client extends GameShell {
 					int var136 = (var10.marginX + 32) * var135;
 					int var137 = (var10.marginY + 32) * var134;
 					if (var133 < 20) {
-						var136 += var10.invSlotOffsetX[var133];
-						var137 += var10.invSlotOffsetY[var133];
+						var136 += var10.invBackgroundX[var133];
+						var137 += var10.invBackgroundY[var133];
 					}
 					if (var129 >= var136 && var130 >= var137 && var129 < var136 + 32 && var130 < var137 + 32) {
 						objDragSlot = var133;

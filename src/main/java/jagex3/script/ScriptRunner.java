@@ -835,7 +835,7 @@ public class ScriptRunner {
 
 						if (var71 >= 0 && var71 <= 9) {
 							ssp--;
-							var70.method1829(var71, stringStack[ssp]);
+							var70.setOpName(var71, stringStack[ssp]);
 							continue;
 						}
 

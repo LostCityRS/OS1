@@ -129,8 +129,9 @@ public class Pix32 extends Pix2D {
 		this.xof = 0;
 	}
 
+	// jag::oldscape::graphics::Pix32::Untrim
 	@ObfuscatedName("fq.ba(I)V")
-	public void pad(int arg0) {
+	public void untrim(int arg0) {
 		if (this.wi == this.owi && this.ohi == this.hi) {
 			return;
 		}
@@ -165,6 +166,7 @@ public class Pix32 extends Pix2D {
 		this.xof -= var4;
 	}
 
+	// ag::oldscape::graphics::Pix32::HFlip
 	@ObfuscatedName("fq.bc()V")
 	public void hflip() {
 		int[] var1 = new int[this.wi * this.hi];
@@ -178,6 +180,7 @@ public class Pix32 extends Pix2D {
 		this.yof = this.owi - this.wi - this.yof;
 	}
 
+	// ag::oldscape::graphics::Pix32::VFlip
 	@ObfuscatedName("fq.br()V")
 	public void vflip() {
 		int[] var1 = new int[this.wi * this.hi];
@@ -191,8 +194,9 @@ public class Pix32 extends Pix2D {
 		this.xof = this.ohi - this.hi - this.xof;
 	}
 
+	// jag::oldscape::graphics::Pix32::AddOutline
 	@ObfuscatedName("fq.bb(I)V")
-	public void shadow(int arg0) {
+	public void addOutline(int arg0) {
 		int[] var2 = new int[this.wi * this.hi];
 		int var3 = 0;
 		for (int var4 = 0; var4 < this.hi; var4++) {
@@ -215,8 +219,9 @@ public class Pix32 extends Pix2D {
 		this.data = var2;
 	}
 
+	// jag::oldscape::graphics::Pix32::AddShadow
 	@ObfuscatedName("fq.bd(I)V")
-	public void method2669(int arg0) {
+	public void addShadow(int arg0) {
 		for (int var2 = this.hi - 1; var2 > 0; var2--) {
 			int var3 = this.wi * var2;
 			for (int var4 = this.wi - 1; var4 > 0; var4--) {

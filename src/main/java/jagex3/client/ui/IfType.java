@@ -16,6 +16,7 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5;
 import jagex3.jstring.Text;
 
+// jag::oldscape::rs2lib::IfType
 @ObfuscatedName("eg")
 public class IfType extends Linkable {
 
@@ -31,23 +32,29 @@ public class IfType extends Linkable {
 	@ObfuscatedName("eg.n")
 	public static Js5 interfaces;
 
+	// jag::oldscape::rs2lib::IfType::m_pModels
 	@ObfuscatedName("eg.j")
 	public static Js5 models;
 
+	// jag::oldscape::rs2lib::IfType::m_pSprites
 	@ObfuscatedName("dc.z")
 	public static Js5 sprites;
 
+	// jag::oldscape::rs2lib::IfType::m_pFontMetrics
 	@ObfuscatedName("eg.g")
 	public static Js5 fontMetrics;
 
+	// jag::oldscape::rs2lib::IfType::m_spriteCache
 	@ObfuscatedName("eg.q")
 	public static LruCache spriteCache = new LruCache(200);
 
+	// jag::oldscape::rs2lib::IfType::m_modelCache
 	@ObfuscatedName("eg.i")
-	public static LruCache field1850 = new LruCache(50);
+	public static LruCache modelCache = new LruCache(50);
 
+	// jag::oldscape::rs2lib::IfType::m_fontCache
 	@ObfuscatedName("eg.s")
-	public static LruCache field1891 = new LruCache(20);
+	public static LruCache fontCache = new LruCache(20);
 
 	@ObfuscatedName("eg.u")
 	public static boolean loadingAsset = false;
@@ -221,13 +228,13 @@ public class IfType extends Linkable {
 	public int marginY = 0;
 
 	@ObfuscatedName("eg.bm")
-	public int[] invSlotOffsetX;
+	public int[] invBackgroundX;
 
 	@ObfuscatedName("eg.bn")
-	public int[] invSlotOffsetY;
+	public int[] invBackgroundY;
 
 	@ObfuscatedName("eg.be")
-	public int[] invSlotGraphic;
+	public int[] invBackground;
 
 	@ObfuscatedName("eg.bp")
 	public String[] iop;
@@ -406,8 +413,9 @@ public class IfType extends Linkable {
 	@ObfuscatedName("eg.eb")
 	public int drawTime = -1;
 
+	// jag::oldscape::rs2lib::IfType::Init
 	@ObfuscatedName("ay.c(Lch;Lch;Lch;Lch;I)V")
-	public static void unpack(Js5 arg0, Js5 arg1, Js5 arg2, Js5 arg3) {
+	public static void init(Js5 arg0, Js5 arg1, Js5 arg2, Js5 arg3) {
 		interfaces = arg0;
 		models = arg1;
 		sprites = arg2;
@@ -417,6 +425,7 @@ public class IfType extends Linkable {
 		open = new boolean[interfaces.getGroupCount()];
 	}
 
+	// jag::oldscape::rs2lib::IfType::Get
 	@ObfuscatedName("bw.n(IB)Leg;")
 	public static IfType get(int arg0) {
 		int var1 = arg0 >> 16;
@@ -430,6 +439,7 @@ public class IfType extends Linkable {
 		return list[var1][var2];
 	}
 
+	// jag::oldscape::rs2lib::IfType::Get
 	@ObfuscatedName("bd.j(IIB)Leg;")
 	public static IfType get(int arg0, int arg1) {
 		IfType var2 = get(arg0);
@@ -576,18 +586,18 @@ public class IfType extends Linkable {
 			this.marginX = buf.g1();
 			this.marginY = buf.g1();
 
-			this.invSlotOffsetX = new int[20];
-			this.invSlotOffsetY = new int[20];
-			this.invSlotGraphic = new int[20];
+			this.invBackgroundX = new int[20];
+			this.invBackgroundY = new int[20];
+			this.invBackground = new int[20];
 
 			for (int i = 0; i < 20; i++) {
 				int hasGraphic = buf.g1();
 				if (hasGraphic == 1) {
-					this.invSlotOffsetX[i] = buf.g2b();
-					this.invSlotOffsetY[i] = buf.g2b();
-					this.invSlotGraphic[i] = buf.g4();
+					this.invBackgroundX[i] = buf.g2b();
+					this.invBackgroundY[i] = buf.g2b();
+					this.invBackground[i] = buf.g4();
 				} else {
-					this.invSlotGraphic[i] = -1;
+					this.invBackground[i] = -1;
 				}
 			}
 
@@ -889,8 +899,9 @@ public class IfType extends Linkable {
 		return var3;
 	}
 
+	// jag::oldscape::rs2lib::IfType::SwapSlots
 	@ObfuscatedName("eg.u(IIB)V")
-	public void method1799(int arg0, int arg1) {
+	public void swapSlots(int arg0, int arg1) {
 		int var3 = this.linkObjType[arg1];
 		this.linkObjType[arg1] = this.linkObjType[arg0];
 		this.linkObjType[arg0] = var3;
@@ -899,8 +910,9 @@ public class IfType extends Linkable {
 		this.linkObjCount[arg0] = var4;
 	}
 
+	// jag::oldscape::rs2lib::IfType::GetGraphic
 	@ObfuscatedName("eg.v(ZB)Lfq;")
-	public Pix32 getSprite(boolean arg0) {
+	public Pix32 getGraphic(boolean arg0) {
 		loadingAsset = false;
 
 		int var2;
@@ -919,6 +931,7 @@ public class IfType extends Linkable {
 			return var5;
 		}
 
+		// todo: Inlined method (pixloader::Makepix32?)
 		Js5 var6 = sprites;
 		Pix32 var7;
 		if (PixLoader.method905(var6, var2, 0)) {
@@ -931,6 +944,7 @@ public class IfType extends Linkable {
 			return null;
 		}
 
+		// jag::oldscape::rs2lib::IfType::PrerenderProcessSprite
 		if (this.vflip) {
 			var7.vflip();
 		}
@@ -938,32 +952,34 @@ public class IfType extends Linkable {
 			var7.hflip();
 		}
 		if (this.outline > 0) {
-			var7.pad(this.outline);
+			var7.untrim(this.outline);
 		}
 		if (this.outline >= 1) {
-			var7.shadow(1);
+			var7.addOutline(1);
 		}
 		if (this.outline >= 2) {
-			var7.shadow(16777215);
+			var7.addOutline(16777215);
 		}
 		if (this.graphicshadow != 0) {
-			var7.method2669(this.graphicshadow);
+			var7.addShadow(this.graphicshadow);
 		}
 
 		spriteCache.put(var7, var3);
 		return var7;
 	}
 
+	// jag::oldscape::rs2lib::IfType::GetFont
 	@ObfuscatedName("eg.w(B)Lfm;")
-	public SoftwareFont method1800() {
+	public SoftwareFont getFont() {
 		loadingAsset = false;
 		if (this.font == -1) {
 			return null;
 		}
-		SoftwareFont var1 = (SoftwareFont) field1891.get((long) this.font);
+		SoftwareFont var1 = (SoftwareFont) fontCache.get((long) this.font);
 		if (var1 != null) {
 			return var1;
 		}
+		// todo: inlined method (SoftwareFont::Load?)
 		Js5 var2 = sprites;
 		Js5 var3 = fontMetrics;
 		int var4 = this.font;
@@ -976,18 +992,19 @@ public class IfType extends Linkable {
 		if (var5 == null) {
 			loadingAsset = true;
 		} else {
-			field1891.put(var5, (long) this.font);
+			fontCache.put(var5, (long) this.font);
 		}
 		return var5;
 	}
 
+	// jag::oldscape::rs2lib::IfType::GetInvBackground
 	@ObfuscatedName("eg.e(II)Lfq;")
-	public Pix32 method1803(int arg0) {
+	public Pix32 getInvBackground(int arg0) {
 		loadingAsset = false;
-		if (arg0 < 0 || arg0 >= this.invSlotGraphic.length) {
+		if (arg0 < 0 || arg0 >= this.invBackground.length) {
 			return null;
 		}
-		int var2 = this.invSlotGraphic[arg0];
+		int var2 = this.invBackground[arg0];
 		if (var2 == -1) {
 			return null;
 		}
@@ -995,6 +1012,7 @@ public class IfType extends Linkable {
 		if (var3 != null) {
 			return var3;
 		}
+		// todo: Inlined method (pixloader::Makepix32?)
 		Js5 var4 = sprites;
 		Pix32 var5;
 		if (PixLoader.method905(var4, var2, 0)) {
@@ -1010,8 +1028,9 @@ public class IfType extends Linkable {
 		return var5;
 	}
 
+	// jag::oldscape::rs2lib::IfType::GetTempModel
 	@ObfuscatedName("eg.b(Leo;IZLct;I)Lfo;")
-	public ModelLit method1802(SeqType arg0, int arg1, boolean arg2, PlayerModel arg3) {
+	public ModelLit getTempModel(SeqType arg0, int arg1, boolean arg2, PlayerModel arg3) {
 		loadingAsset = false;
 		int var5;
 		int var6;
@@ -1027,7 +1046,7 @@ public class IfType extends Linkable {
 		} else if (var5 == 1 && var6 == -1) {
 			return null;
 		} else {
-			ModelLit var7 = (ModelLit) field1850.get((long) ((var5 << 16) + var6));
+			ModelLit var7 = (ModelLit) modelCache.get((long) ((var5 << 16) + var6));
 			if (var7 == null) {
 				if (var5 == 1) {
 					ModelUnlit var8 = ModelUnlit.load(models, var6, 0);
@@ -1065,7 +1084,7 @@ public class IfType extends Linkable {
 					}
 					var7 = var12.light(var11.ambient + 64, var11.contrast + 768, -50, -10, -50);
 				}
-				field1850.put(var7, (long) ((var5 << 16) + var6));
+				modelCache.put(var7, (long) ((var5 << 16) + var6));
 			}
 			if (arg0 != null) {
 				var7 = arg0.animateModelWithExtra(var7, arg1);
@@ -1074,15 +1093,17 @@ public class IfType extends Linkable {
 		}
 	}
 
+	// jag::oldscape::rs2lib::IfType::ResetCache
 	@ObfuscatedName("ch.y(I)V")
-	public static void unload() {
+	public static void resetCache() {
 		spriteCache.clear();
-		field1850.clear();
-		field1891.clear();
+		modelCache.clear();
+		fontCache.clear();
 	}
 
+	// jag::oldscape::rs2lib::IfType::SetOpName
 	@ObfuscatedName("eg.t(ILjava/lang/String;B)V")
-	public void method1829(int arg0, String arg1) {
+	public void setOpName(int arg0, String arg1) {
 		if (this.ops == null || this.ops.length <= arg0) {
 			String[] var3 = new String[arg0 + 1];
 			if (this.ops != null) {

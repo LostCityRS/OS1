@@ -507,15 +507,15 @@ public class ObjType extends DoublyLinkable {
 		model.objRender(0, obj.yan2d, obj.zan2d, obj.xan2d, obj.xof2d, obj.yof2d + model.minY / 2 + var19, obj.yof2d + var20);
 
 		if (arg2 >= 1) {
-			var17.shadow(0x000001);
+			var17.addOutline(0x000001);
 		}
 
 		if (arg2 >= 2) {
-			var17.shadow(0xffffff);
+			var17.addOutline(0xffffff);
 		}
 
 		if (arg3 != 0) {
-			var17.method2669(arg3);
+			var17.addShadow(arg3);
 		}
 
 		Pix2D.setPixels(var17.data, 36, 32);
