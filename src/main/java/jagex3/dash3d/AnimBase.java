@@ -9,7 +9,7 @@ import jagex3.io.Packet;
 public class AnimBase extends Linkable {
 
 	@ObfuscatedName("ez.m")
-	public int field1724;
+	public int id;
 
 	@ObfuscatedName("ez.c")
 	public int size;
@@ -20,8 +20,8 @@ public class AnimBase extends Linkable {
 	@ObfuscatedName("ez.j")
 	public int[][] labels;
 
-	public AnimBase(int arg0, byte[] src) {
-		this.field1724 = arg0;
+	public AnimBase(int id, byte[] src) {
+		this.id = id;
 
 		Packet buf = new Packet(src);
 		this.size = buf.g1();

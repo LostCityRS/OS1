@@ -104,10 +104,10 @@ public class ModelUnlit extends ModelSource {
 	public FaceNormal[] faceNormal;
 
 	@ObfuscatedName("fw.al")
-	public VertexNormal[] vertexNormal;
+	public PointNormal[] vertexNormal;
 
 	@ObfuscatedName("fw.ab")
-	public VertexNormal[] field2685;
+	public PointNormal[] field2685;
 
 	@ObfuscatedName("fw.ao")
 	public short ambient;
@@ -1321,9 +1321,9 @@ public class ModelUnlit extends ModelSource {
 			return;
 		}
 
-		this.vertexNormal = new VertexNormal[this.vertexCount];
+		this.vertexNormal = new PointNormal[this.vertexCount];
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
-			this.vertexNormal[var1] = new VertexNormal();
+			this.vertexNormal[var1] = new PointNormal();
 		}
 
 		for (int f = 0; f < this.faceCount; f++) {
@@ -1364,7 +1364,7 @@ public class ModelUnlit extends ModelSource {
 			}
 
 			if (var19 == 0) {
-				VertexNormal n = this.vertexNormal[a];
+				PointNormal n = this.vertexNormal[a];
 				n.x += var16;
 				n.y += var17;
 				n.z += var18;
@@ -1463,7 +1463,7 @@ public class ModelUnlit extends ModelSource {
 		int[] var7 = arg1.vertexX;
 		int var8 = arg1.vertexCount;
 		for (int var9 = 0; var9 < arg0.vertexCount; var9++) {
-			VertexNormal var10 = arg0.vertexNormal[var9];
+			PointNormal var10 = arg0.vertexNormal[var9];
 			if (var10.w == 0) {
 				continue;
 			}
@@ -1478,23 +1478,23 @@ public class ModelUnlit extends ModelSource {
 					continue;
 				}
 				for (int var14 = 0; var14 < var8; var14++) {
-					VertexNormal var15 = arg1.vertexNormal[var14];
+					PointNormal var15 = arg1.vertexNormal[var14];
 					if (var7[var14] != var12 || arg1.vertexZ[var14] != var13 || arg1.vertexY[var14] != var11 || var15.w == 0) {
 						continue;
 					}
 					if (arg0.field2685 == null) {
-						arg0.field2685 = new VertexNormal[arg0.vertexCount];
+						arg0.field2685 = new PointNormal[arg0.vertexCount];
 					}
 					if (arg1.field2685 == null) {
-						arg1.field2685 = new VertexNormal[var8];
+						arg1.field2685 = new PointNormal[var8];
 					}
-					VertexNormal var16 = arg0.field2685[var9];
+					PointNormal var16 = arg0.field2685[var9];
 					if (var16 == null) {
-						var16 = arg0.field2685[var9] = new VertexNormal(var10);
+						var16 = arg0.field2685[var9] = new PointNormal(var10);
 					}
-					VertexNormal var17 = arg1.field2685[var14];
+					PointNormal var17 = arg1.field2685[var14];
 					if (var17 == null) {
-						var17 = arg1.field2685[var14] = new VertexNormal(var15);
+						var17 = arg1.field2685[var14] = new PointNormal(var15);
 					}
 					var16.x += var15.x;
 					var16.y += var15.y;
@@ -1604,7 +1604,7 @@ public class ModelUnlit extends ModelSource {
 			if (var18 == -1) {
 				if (var16 == 0) {
 					int var19 = this.faceColour[var15] & 0xFFFF;
-					VertexNormal var20;
+					PointNormal var20;
 					if (this.field2685 == null || this.field2685[this.faceVertexA[var15]] == null) {
 						var20 = this.vertexNormal[this.faceVertexA[var15]];
 					} else {
@@ -1612,7 +1612,7 @@ public class ModelUnlit extends ModelSource {
 					}
 					int var21 = (var20.z * arg4 + var20.x * arg2 + var20.y * arg3) / (var20.w * var7) + arg0;
 					var8.faceColourA[var15] = getColour(var19, var21);
-					VertexNormal var22;
+					PointNormal var22;
 					if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
 						var22 = this.vertexNormal[this.faceVertexB[var15]];
 					} else {
@@ -1620,7 +1620,7 @@ public class ModelUnlit extends ModelSource {
 					}
 					int var23 = (var22.z * arg4 + var22.x * arg2 + var22.y * arg3) / (var22.w * var7) + arg0;
 					var8.faceColourB[var15] = getColour(var19, var23);
-					VertexNormal var24;
+					PointNormal var24;
 					if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
 						var24 = this.vertexNormal[this.faceVertexC[var15]];
 					} else {
@@ -1640,7 +1640,7 @@ public class ModelUnlit extends ModelSource {
 					var8.faceColourC[var15] = -2;
 				}
 			} else if (var16 == 0) {
-				VertexNormal var28;
+				PointNormal var28;
 				if (this.field2685 == null || this.field2685[this.faceVertexA[var15]] == null) {
 					var28 = this.vertexNormal[this.faceVertexA[var15]];
 				} else {
@@ -1648,7 +1648,7 @@ public class ModelUnlit extends ModelSource {
 				}
 				int var29 = (var28.z * arg4 + var28.x * arg2 + var28.y * arg3) / (var28.w * var7) + arg0;
 				var8.faceColourA[var15] = getTexLight(var29);
-				VertexNormal var30;
+				PointNormal var30;
 				if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
 					var30 = this.vertexNormal[this.faceVertexB[var15]];
 				} else {
@@ -1656,7 +1656,7 @@ public class ModelUnlit extends ModelSource {
 				}
 				int var31 = (var30.z * arg4 + var30.x * arg2 + var30.y * arg3) / (var30.w * var7) + arg0;
 				var8.faceColourB[var15] = getTexLight(var31);
-				VertexNormal var32;
+				PointNormal var32;
 				if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
 					var32 = this.vertexNormal[this.faceVertexC[var15]];
 				} else {

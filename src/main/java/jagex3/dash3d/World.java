@@ -3,6 +3,7 @@ package jagex3.dash3d;
 import deob.ObfuscatedName;
 import jagex3.datastruct.LinkList;
 
+// jag::oldscape::dash3d::world
 @ObfuscatedName("aq")
 public class World {
 
@@ -448,15 +449,15 @@ public class World {
 		Decor var13 = new Decor();
 		var13.typecode = arg10;
 		var13.typecode2 = arg11;
-		var13.field710 = arg1 * 128 + 64;
-		var13.field707 = arg2 * 128 + 64;
-		var13.field709 = arg3;
+		var13.x = arg1 * 128 + 64;
+		var13.z = arg2 * 128 + 64;
+		var13.y = arg3;
 		var13.model = arg4;
-		var13.field713 = arg5;
-		var13.type = arg6;
-		var13.field705 = arg7;
-		var13.x = arg8;
-		var13.z = arg9;
+		var13.model2 = arg5;
+		var13.wshape = arg6;
+		var13.yof = arg7;
+		var13.xof = arg8;
+		var13.zof = arg9;
 		for (int var14 = arg0; var14 >= 0; var14--) {
 			if (this.levelTiles[var14][arg1][arg2] == null) {
 				this.levelTiles[var14][arg1][arg2] = new Square(var14, arg1, arg2);
@@ -620,8 +621,8 @@ public class World {
 		}
 		Decor var6 = var5.decor;
 		if (var6 != null) {
-			var6.x = var6.x * arg3 / 16;
-			var6.z = var6.z * arg3 / 16;
+			var6.xof = var6.xof * arg3 / 16;
+			var6.zof = var6.zof * arg3 / 16;
 		}
 	}
 
@@ -1360,13 +1361,13 @@ public class World {
 												}
 											}
 											if (var22 != null && !this.spriteOccluded(var7, var4, var5, var22.model.minY)) {
-												if ((var22.type & var20) != 0) {
-													var22.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var22.x + (var22.field710 - cx), var22.field709 - cy, var22.z + (var22.field707 - cz), var22.typecode);
-												} else if (var22.type == 256) {
-													int var23 = var22.field710 - cx;
-													int var24 = var22.field709 - cy;
-													int var25 = var22.field707 - cz;
-													int var26 = var22.field705;
+												if ((var22.wshape & var20) != 0) {
+													var22.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var22.xof + (var22.x - cx), var22.y - cy, var22.zof + (var22.z - cz), var22.typecode);
+												} else if (var22.wshape == 256) {
+													int var23 = var22.x - cx;
+													int var24 = var22.y - cy;
+													int var25 = var22.z - cz;
+													int var26 = var22.yof;
 													int var27;
 													if (var26 == 1 || var26 == 2) {
 														var27 = -var23;
@@ -1380,9 +1381,9 @@ public class World {
 														var28 = var25;
 													}
 													if (var28 < var27) {
-														var22.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var22.x + var23, var24, var22.z + var25, var22.typecode);
-													} else if (var22.field713 != null) {
-														var22.field713.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var23, var24, var25, var22.typecode);
+														var22.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var22.xof + var23, var24, var22.zof + var25, var22.typecode);
+													} else if (var22.model2 != null) {
+														var22.model2.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var23, var24, var25, var22.typecode);
 													}
 												}
 											}
@@ -1589,13 +1590,13 @@ public class World {
 			if (var3.backWallTypes != 0) {
 				Decor var69 = var3.decor;
 				if (var69 != null && !this.spriteOccluded(var7, var4, var5, var69.model.minY)) {
-					if ((var69.type & var3.backWallTypes) != 0) {
-						var69.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var69.x + (var69.field710 - cx), var69.field709 - cy, var69.z + (var69.field707 - cz), var69.typecode);
-					} else if (var69.type == 0x100) {
-						int var70 = var69.field710 - cx;
-						int var71 = var69.field709 - cy;
-						int var72 = var69.field707 - cz;
-						int var73 = var69.field705;
+					if ((var69.wshape & var3.backWallTypes) != 0) {
+						var69.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var69.xof + (var69.x - cx), var69.y - cy, var69.zof + (var69.z - cz), var69.typecode);
+					} else if (var69.wshape == 0x100) {
+						int var70 = var69.x - cx;
+						int var71 = var69.y - cy;
+						int var72 = var69.z - cz;
+						int var73 = var69.yof;
 						int var74;
 						if (var73 == 1 || var73 == 2) {
 							var74 = -var70;
@@ -1609,9 +1610,9 @@ public class World {
 							var75 = var72;
 						}
 						if (var75 >= var74) {
-							var69.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var69.x + var70, var71, var69.z + var72, var69.typecode);
-						} else if (var69.field713 != null) {
-							var69.field713.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var70, var71, var72, var69.typecode);
+							var69.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var69.xof + var70, var71, var69.zof + var72, var69.typecode);
+						} else if (var69.model2 != null) {
+							var69.model2.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var70, var71, var72, var69.typecode);
 						}
 					}
 				}

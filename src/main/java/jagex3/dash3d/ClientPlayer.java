@@ -8,6 +8,7 @@ import jagex3.config.SeqType;
 import jagex3.config.SpotAnimType;
 import jagex3.io.Packet;
 
+// jag::oldscape::ClientPlayer
 @ObfuscatedName("fi")
 public class ClientPlayer extends ClientEntity {
 
@@ -68,6 +69,7 @@ public class ClientPlayer extends ClientEntity {
 	@ObfuscatedName("fi.cp")
 	public int team = 0;
 
+	// jag::oldscape::ClientPlayer::SetAppearance
 	@ObfuscatedName("fi.am(Lev;I)V")
 	public final void setAppearance(Packet arg0) {
 		arg0.pos = 0;
@@ -145,6 +147,7 @@ public class ClientPlayer extends ClientEntity {
 		this.model.setAppearance(var4, var9, var2 == 1, var3);
 	}
 
+	// jag::oldscape::ClientPlayer::GetTempModel
 	@ObfuscatedName("fi.g(I)Lfo;")
 	public final ModelLit getTempModel() {
 		if (this.model == null) {
@@ -202,6 +205,7 @@ public class ClientPlayer extends ClientEntity {
 		return var3;
 	}
 
+	// jag::oldscape::ClientPlayer::Ready
 	@ObfuscatedName("fi.f(I)Z")
 	public final boolean ready() {
 		return this.model != null;

@@ -5,6 +5,7 @@ import jagex3.client.Client;
 import jagex3.config.LocType;
 import jagex3.config.SeqType;
 
+// jag::oldscape::ClientLocAnim
 @ObfuscatedName("ff")
 public class ClientLocAnim extends ModelSource {
 
@@ -61,6 +62,7 @@ public class ClientLocAnim extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::ClientLocAnim::GetTempModel
 	@ObfuscatedName("ff.g(I)Lfo;")
 	public final ModelLit getTempModel() {
 		if (this.anim != null) {

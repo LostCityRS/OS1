@@ -22,7 +22,7 @@ public class AnimFrameSet extends DoublyLinkable {
 			AnimBase var10 = null;
 			int var11 = (var9[0] & 0xFF) << 8 | var9[1] & 0xFF;
 			for (AnimBase var12 = (AnimBase) var5.head(); var12 != null; var12 = (AnimBase) var5.next()) {
-				if (var12.field1724 == var11) {
+				if (var12.id == var11) {
 					var10 = var12;
 					break;
 				}

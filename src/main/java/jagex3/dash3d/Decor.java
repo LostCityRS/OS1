@@ -7,31 +7,31 @@ import deob.ObfuscatedName;
 public class Decor {
 
 	@ObfuscatedName("bh.r")
-	public int field709;
+	public int y;
 
 	@ObfuscatedName("bh.d")
-	public int field710;
-
-	@ObfuscatedName("bh.l")
-	public int field707;
-
-	@ObfuscatedName("bh.m")
-	public int type;
-
-	@ObfuscatedName("bh.c")
-	public int field705;
-
-	@ObfuscatedName("bh.n")
 	public int x;
 
-	@ObfuscatedName("bh.j")
+	@ObfuscatedName("bh.l")
 	public int z;
+
+	@ObfuscatedName("bh.m")
+	public int wshape;
+
+	@ObfuscatedName("bh.c")
+	public int yof;
+
+	@ObfuscatedName("bh.n")
+	public int xof;
+
+	@ObfuscatedName("bh.j")
+	public int zof;
 
 	@ObfuscatedName("bh.z")
 	public ModelSource model;
 
 	@ObfuscatedName("bh.g")
-	public ModelSource field713;
+	public ModelSource model2;
 
 	@ObfuscatedName("bh.q")
 	public int typecode = 0;

@@ -3,6 +3,7 @@ package jagex3.dash3d;
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 
+// jag::oldscape::dash3d::Square
 @ObfuscatedName("es")
 public class Square extends Linkable {
 

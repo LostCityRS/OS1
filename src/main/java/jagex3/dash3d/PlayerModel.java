@@ -8,6 +8,7 @@ import jagex3.config.SeqType;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 
+// jag::oldscape::rs2lib::PlayerModel
 @ObfuscatedName("ct")
 public class PlayerModel {
 

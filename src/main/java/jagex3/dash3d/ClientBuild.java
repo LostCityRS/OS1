@@ -90,11 +90,11 @@ public class ClientBuild {
 
 	// jag::oldscape::ClientBuild::DECORXOF2
 	@ObfuscatedName("l.a")
-	public static final int[] field31 = new int[] { 1, -1, -1, 1 };
+	public static final int[] DECORXOF2 = new int[] { 1, -1, -1, 1 };
 
 	// jag::oldscape::ClientBuild::DECORZOF2
 	@ObfuscatedName("l.h")
-	public static final int[] field32 = new int[] { -1, -1, 1, 1 };
+	public static final int[] DECORZOF2 = new int[] { -1, -1, 1, 1 };
 
 	// jag::oldscape::ClientBuild::m_hueOff
 	@ObfuscatedName("l.x")
@@ -697,7 +697,7 @@ public class ClientBuild {
 			} else {
 				var37 = new ClientLocAnim(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.setDecor(arg0, arg1, arg2, var17, var37, null, 256, arg4, field31[arg4] * var35, field32[arg4] * var35, var20, var21);
+			arg6.setDecor(arg0, arg1, arg2, var17, var37, null, 256, arg4, DECORXOF2[arg4] * var35, DECORZOF2[arg4] * var35, var20, var21);
 		} else if (arg5 == 7) {
 			int var38 = arg4 + 2 & 0x3;
 			ModelSource var39;
@@ -723,7 +723,7 @@ public class ClientBuild {
 				var43 = new ClientLocAnim(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 				var44 = new ClientLocAnim(arg3, 4, var42 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.setDecor(arg0, arg1, arg2, var17, var43, var44, 256, arg4, field31[arg4] * var40, field32[arg4] * var40, var20, var21);
+			arg6.setDecor(arg0, arg1, arg2, var17, var43, var44, 256, arg4, DECORXOF2[arg4] * var40, DECORZOF2[arg4] * var40, var20, var21);
 		}
 	}
 
@@ -1403,7 +1403,7 @@ public class ClientBuild {
 			} else {
 				var37 = new ClientLocAnim(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.setDecor(arg0, arg2, arg3, var17, var37, null, 256, arg5, field31[arg5] * var35, field32[arg5] * var35, var20, var21);
+			arg7.setDecor(arg0, arg2, arg3, var17, var37, null, 256, arg5, DECORXOF2[arg5] * var35, DECORZOF2[arg5] * var35, var20, var21);
 		} else if (arg6 == 7) {
 			int var38 = arg5 + 2 & 0x3;
 			ModelSource var39;
@@ -1429,7 +1429,7 @@ public class ClientBuild {
 				var43 = new ClientLocAnim(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 				var44 = new ClientLocAnim(arg4, 4, var42 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.setDecor(arg0, arg2, arg3, var17, var43, var44, 256, arg5, field31[arg5] * var40, field32[arg5] * var40, var20, var21);
+			arg7.setDecor(arg0, arg2, arg3, var17, var43, var44, 256, arg5, DECORXOF2[arg5] * var40, DECORZOF2[arg5] * var40, var20, var21);
 		}
 	}
 

@@ -4133,7 +4133,7 @@ public class Client extends GameShell {
 							var55.model = new ClientLocAnim(var56, 4, (var51 + 2 & 0x3) + 4, minusedlevel, var47, var48, var45, false, var55.model);
 						} else if (var50 == 8) {
 							var55.model = new ClientLocAnim(var56, 4, var51 + 4, minusedlevel, var47, var48, var45, false, var55.model);
-							var55.field713 = new ClientLocAnim(var56, 4, (var51 + 2 & 0x3) + 4, minusedlevel, var47, var48, var45, false, var55.field713);
+							var55.model2 = new ClientLocAnim(var56, 4, (var51 + 2 & 0x3) + 4, minusedlevel, var47, var48, var45, false, var55.model2);
 						}
 					}
 				}
