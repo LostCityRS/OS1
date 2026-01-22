@@ -7,14 +7,14 @@ import jagex3.datastruct.Linkable;
 public class ClanMember extends Linkable {
 
 	@ObfuscatedName("dw.m")
-	public String field1617;
+	public String username;
 
 	@ObfuscatedName("dw.c")
-	public String field1618;
+	public String displayName;
 
 	@ObfuscatedName("dw.n")
-	public int field1620;
+	public int world;
 
 	@ObfuscatedName("dw.j")
-	public byte field1619;
+	public byte rank;
 }

@@ -1715,7 +1715,7 @@ public class ScriptRunner {
 						isp--;
 						int var165 = intStack[isp];
 
-						Client.clanSetRank(var164, var165);
+						Client.setFriendRank(var164, var165);
 						continue;
 					}
 					if (opcode == 3605) {
@@ -1764,16 +1764,16 @@ public class ScriptRunner {
 					}
 					if (opcode == 3611) {
 						// clan_getchatdisplayname
-						if (Client.field1955 == null) {
+						if (Client.chatDisplayName == null) {
 							stringStack[ssp++] = "";
 						} else {
-							stringStack[ssp++] = JString.imethod1(Client.field1955);
+							stringStack[ssp++] = JString.imethod1(Client.chatDisplayName);
 						}
 						continue;
 					}
 					if (opcode == 3612) {
 						// clan_getchatcount
-						if (Client.field1955 == null) {
+						if (Client.chatDisplayName == null) {
 							intStack[isp++] = 0;
 						} else {
 							intStack[isp++] = Client.field1220;
@@ -1785,8 +1785,8 @@ public class ScriptRunner {
 						isp--;
 						int var183 = intStack[isp];
 
-						if (Client.field1955 != null && var183 < Client.field1220) {
-							stringStack[ssp++] = Client.field1774[var183].field1617;
+						if (Client.chatDisplayName != null && var183 < Client.field1220) {
+							stringStack[ssp++] = Client.field1774[var183].username;
 							continue;
 						}
 
@@ -1798,8 +1798,8 @@ public class ScriptRunner {
 						isp--;
 						int var184 = intStack[isp];
 
-						if (Client.field1955 != null && var184 < Client.field1220) {
-							intStack[isp++] = Client.field1774[var184].field1620;
+						if (Client.chatDisplayName != null && var184 < Client.field1220) {
+							intStack[isp++] = Client.field1774[var184].world;
 							continue;
 						}
 
@@ -1811,8 +1811,8 @@ public class ScriptRunner {
 						isp--;
 						int var185 = intStack[isp];
 
-						if (Client.field1955 != null && var185 < Client.field1220) {
-							intStack[isp++] = Client.field1774[var185].field1619;
+						if (Client.chatDisplayName != null && var185 < Client.field1220) {
+							intStack[isp++] = Client.field1774[var185].rank;
 							continue;
 						}
 
@@ -1821,7 +1821,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 3616) {
 						// clan_getchatminkick
-						intStack[isp++] = Client.field1511;
+						intStack[isp++] = Client.chatMinKick;
 						continue;
 					}
 					if (opcode == 3617) {
@@ -1829,12 +1829,12 @@ public class ScriptRunner {
 						ssp--;
 						String var186 = stringStack[ssp];
 
-						Client.clanKickUser(var186);
+						Client.friendsChatKickUser(var186);
 						continue;
 					}
 					if (opcode == 3618) {
 						// clan_getchatrank
-						intStack[isp++] = Client.field1217;
+						intStack[isp++] = Client.chatRank;
 						continue;
 					}
 					if (opcode == 3619) {
@@ -1842,12 +1842,12 @@ public class ScriptRunner {
 						ssp--;
 						String var187 = stringStack[ssp];
 
-						Client.clanJoinChat(var187);
+						Client.friendsChatJoinChat(var187);
 						continue;
 					}
 					if (opcode == 3620) {
 						// clan_leavechat
-						Client.clanLeaveChat();
+						Client.friendsChatLeaveChat();
 						continue;
 					}
 					if (opcode == 3621) {
@@ -1889,7 +1889,7 @@ public class ScriptRunner {
 						isp--;
 						int var190 = intStack[isp];
 
-						if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].field1617.equalsIgnoreCase(Client.localPlayer.name)) {
+						if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].username.equalsIgnoreCase(Client.localPlayer.name)) {
 							intStack[isp++] = 1;
 							continue;
 						}

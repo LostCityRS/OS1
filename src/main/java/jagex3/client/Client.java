@@ -63,7 +63,7 @@ public class Client extends GameShell {
 	public static ModeGame modegame;
 
 	@ObfuscatedName("ab.al")
-	public static Namespace namespace;
+	public static NameSpace namespace;
 
 	@ObfuscatedName("client.ab")
 	public static boolean members = false;
@@ -993,7 +993,7 @@ public class Client extends GameShell {
 	public static int[] keypressKeycodes = new int[128];
 
 	@ObfuscatedName("client.nc")
-	public static String field1955 = null;
+	public static String chatDisplayName = null;
 
 	@ObfuscatedName("client.nh")
 	public static String field2155 = null;
@@ -1035,13 +1035,13 @@ public class Client extends GameShell {
 	public static int waveVolume = 127;
 
 	@ObfuscatedName("cz.ny")
-	public static byte field1217; // todo
+	public static byte chatRank; // todo
 
 	@ObfuscatedName("cv.nm")
 	public static int field1220; // todo
 
 	@ObfuscatedName("df.nr")
-	public static byte field1511; // todo
+	public static byte chatMinKick; // todo
 
 	@ObfuscatedName("dl.ns")
 	public static Pix32 minimap; // todo
@@ -1245,9 +1245,9 @@ public class Client extends GameShell {
 						modegame = ModeGame.get(Integer.parseInt(var5));
 
 						if (ModeGame.OLDSCAPE == modegame) {
-							namespace = Namespace.OLDSCAPE;
+							namespace = NameSpace.RUNESCAPE;
 						} else {
-							namespace = Namespace.LEGACY;
+							namespace = NameSpace.LEGACY;
 						}
 						break;
 					case 9:
@@ -2263,7 +2263,7 @@ public class Client extends GameShell {
 			componentRedrawRequested1[var14] = true;
 		}
 
-		field1955 = null;
+		chatDisplayName = null;
 		field1220 = 0;
 		field1774 = null;
 	}
@@ -8060,6 +8060,7 @@ public class Client extends GameShell {
 		chatTransmitNum = interfaceUpdateNum;
 	}
 
+	// jag::oldscape::FriendSystem::IsFriend
 	@ObfuscatedName("bg.gk(Ljava/lang/String;B)Z")
 	public static boolean isFriend(String arg0) {
 		if (arg0 == null) {
@@ -8077,6 +8078,7 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::FriendSystem::IsIgnored
 	@ObfuscatedName("bi.gx(Ljava/lang/String;I)Z")
 	public static boolean isIgnored(String arg0) {
 		if (arg0 == null) {
@@ -8094,6 +8096,7 @@ public class Client extends GameShell {
 		return false;
 	}
 
+	// jag::oldscape::FriendSystem::AddFriend
 	@ObfuscatedName("ch.gl(Ljava/lang/String;I)V")
 	public static void addFriend(String arg0) {
 		if (arg0 == null) {
@@ -8103,19 +8106,19 @@ public class Client extends GameShell {
 			addChat(0, "", Text.FRIENDLISTFULL);
 			return;
 		}
-		String var1 = NamespaceUtil.method743(arg0, namespace);
+		String var1 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
 		if (var1 == null) {
 			return;
 		}
 		for (int var2 = 0; var2 < friendCount; var2++) {
 			FriendListEntry var3 = friendList[var2];
-			String var4 = NamespaceUtil.method743(var3.name, namespace);
+			String var4 = DisplayNameTools.toBaseDisplayName(var3.name, namespace);
 			if (var4 != null && var4.equals(var1)) {
 				addChat(0, "", arg0 + Text.FRIENDLISTDUPE);
 				return;
 			}
 			if (var3.field177 != null) {
-				String var5 = NamespaceUtil.method743(var3.field177, namespace);
+				String var5 = DisplayNameTools.toBaseDisplayName(var3.field177, namespace);
 				if (var5 != null && var5.equals(var1)) {
 					addChat(0, "", arg0 + Text.FRIENDLISTDUPE);
 					return;
@@ -8124,20 +8127,20 @@ public class Client extends GameShell {
 		}
 		for (int var6 = 0; var6 < ignoreCount; var6++) {
 			IgnoreListEntry var7 = ignoreList[var6];
-			String var8 = NamespaceUtil.method743(var7.name, namespace);
+			String var8 = DisplayNameTools.toBaseDisplayName(var7.name, namespace);
 			if (var8 != null && var8.equals(var1)) {
 				addChat(0, "", Text.REMOVEIGNORE1 + arg0 + Text.REMOVEIGNORE2);
 				return;
 			}
 			if (var7.displayName != null) {
-				String var9 = NamespaceUtil.method743(var7.displayName, namespace);
+				String var9 = DisplayNameTools.toBaseDisplayName(var7.displayName, namespace);
 				if (var9 != null && var9.equals(var1)) {
 					addChat(0, "", Text.REMOVEIGNORE1 + arg0 + Text.REMOVEIGNORE2);
 					return;
 				}
 			}
 		}
-		if (NamespaceUtil.method743(localPlayer.name, namespace).equals(var1)) {
+		if (DisplayNameTools.toBaseDisplayName(localPlayer.name, namespace).equals(var1)) {
 			addChat(0, "", Text.FRIENDCANTADDSELF);
 		} else {
 			// FRIENDLIST_ADD
@@ -8147,6 +8150,7 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::FriendSystem::AddIgnore
 	@ObfuscatedName("a.gz(Ljava/lang/String;ZS)V")
 	public static void addIgnore(String arg0, boolean arg1) {
 		if (arg0 == null) {
@@ -8156,19 +8160,19 @@ public class Client extends GameShell {
 			addChat(0, "", Text.IGNORELISTFULL);
 			return;
 		}
-		String var2 = NamespaceUtil.method743(arg0, namespace);
+		String var2 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
 		if (var2 == null) {
 			return;
 		}
 		for (int var3 = 0; var3 < ignoreCount; var3++) {
 			IgnoreListEntry var4 = ignoreList[var3];
-			String var5 = NamespaceUtil.method743(var4.name, namespace);
+			String var5 = DisplayNameTools.toBaseDisplayName(var4.name, namespace);
 			if (var5 != null && var5.equals(var2)) {
 				addChat(0, "", arg0 + Text.IGNORELISTDUPE);
 				return;
 			}
 			if (var4.displayName != null) {
-				String var6 = NamespaceUtil.method743(var4.displayName, namespace);
+				String var6 = DisplayNameTools.toBaseDisplayName(var4.displayName, namespace);
 				if (var6 != null && var6.equals(var2)) {
 					addChat(0, "", arg0 + Text.IGNORELISTDUPE);
 					return;
@@ -8177,20 +8181,20 @@ public class Client extends GameShell {
 		}
 		for (int var7 = 0; var7 < friendCount; var7++) {
 			FriendListEntry var8 = friendList[var7];
-			String var9 = NamespaceUtil.method743(var8.name, namespace);
+			String var9 = DisplayNameTools.toBaseDisplayName(var8.name, namespace);
 			if (var9 != null && var9.equals(var2)) {
 				addChat(0, "", Text.REMOVEFRIEND1 + arg0 + Text.REMOVEFRIEND2);
 				return;
 			}
 			if (var8.field177 != null) {
-				String var10 = NamespaceUtil.method743(var8.field177, namespace);
+				String var10 = DisplayNameTools.toBaseDisplayName(var8.field177, namespace);
 				if (var10 != null && var10.equals(var2)) {
 					addChat(0, "", Text.REMOVEFRIEND1 + arg0 + Text.REMOVEFRIEND2);
 					return;
 				}
 			}
 		}
-		if (NamespaceUtil.method743(localPlayer.name, namespace).equals(var2)) {
+		if (DisplayNameTools.toBaseDisplayName(localPlayer.name, namespace).equals(var2)) {
 			addChat(0, "", Text.IGNORECANTADDSELF);
 		} else {
 			// IGNORELIST_ADD
@@ -8200,19 +8204,20 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::FriendSystem::DelFriend
 	@ObfuscatedName("ao.gp(Ljava/lang/String;B)V")
 	public static void delFriend(String arg0) {
 		if (arg0 == null) {
 			return;
 		}
-		String var1 = NamespaceUtil.method743(arg0, namespace);
+		String var1 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
 		if (var1 == null) {
 			return;
 		}
 		for (int var2 = 0; var2 < friendCount; var2++) {
 			FriendListEntry var3 = friendList[var2];
 			String var4 = var3.name;
-			String var5 = NamespaceUtil.method743(var4, namespace);
+			String var5 = DisplayNameTools.toBaseDisplayName(var4, namespace);
 			boolean var6;
 			if (arg0 == null || var4 == null) {
 				var6 = false;
@@ -8236,17 +8241,23 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::FriendsChatJoinChat
 	@ObfuscatedName("af.gf(Ljava/lang/String;I)V")
-	public static void clanJoinChat(String arg0) {
-		if (!arg0.equals("")) {
-			out.p1Enc(185);
-			out.p1(Packet.pjstrlen(arg0));
-			out.pjstr(arg0);
+	public static void friendsChatJoinChat(String arg0) {
+		if (arg0.equals("")) {
+			return;
 		}
+
+		// CLAN_JOINCHAT_LEAVECHAT
+		out.p1Enc(185);
+		out.p1(Packet.pjstrlen(arg0));
+		out.pjstr(arg0);
 	}
 
+	// jag::oldscape::Client::FriendsChatLeaveChat
 	@ObfuscatedName("aa.gv(I)V")
-	public static void clanLeaveChat() {
+	public static void friendsChatLeaveChat() {
+		// CLAN_JOINCHAT_LEAVECHAT
 		out.p1Enc(185);
 		out.p1(0);
 	}
@@ -9157,7 +9168,7 @@ public class Client extends GameShell {
 				// MESSAGE_GAME
 				String var97 = in.gjstr();
 				if (var97.endsWith(":tradereq:")) {
-					String var98 = NamespaceUtil.method743(var97.substring(0, var97.indexOf(":")), namespace);
+					String var98 = DisplayNameTools.toBaseDisplayName(var97.substring(0, var97.indexOf(":")), namespace);
 					boolean var99 = false;
 					if (isIgnored(var98)) {
 						var99 = true;
@@ -9166,7 +9177,7 @@ public class Client extends GameShell {
 						addChat(4, var98, Text.TRADEREQ);
 					}
 				} else if (var97.endsWith(":duelreq:")) {
-					String var100 = NamespaceUtil.method743(var97.substring(0, var97.indexOf(":")), namespace);
+					String var100 = DisplayNameTools.toBaseDisplayName(var97.substring(0, var97.indexOf(":")), namespace);
 					boolean var101 = false;
 					if (isIgnored(var100)) {
 						var101 = true;
@@ -9175,7 +9186,7 @@ public class Client extends GameShell {
 						addChat(8, var100, Text.DUELREQ);
 					}
 				} else if (var97.endsWith(":chalreq:")) {
-					String var102 = NamespaceUtil.method743(var97.substring(0, var97.indexOf(":")), namespace);
+					String var102 = DisplayNameTools.toBaseDisplayName(var97.substring(0, var97.indexOf(":")), namespace);
 					boolean var103 = false;
 					if (isIgnored(var102)) {
 						var103 = true;
@@ -9185,7 +9196,7 @@ public class Client extends GameShell {
 						addChat(8, var102, var104);
 					}
 				} else if (var97.endsWith(":assistreq:")) {
-					String var105 = NamespaceUtil.method743(var97.substring(0, var97.indexOf(":")), namespace);
+					String var105 = DisplayNameTools.toBaseDisplayName(var97.substring(0, var97.indexOf(":")), namespace);
 					boolean var106 = false;
 					if (isIgnored(var105)) {
 						var106 = true;
@@ -9715,7 +9726,7 @@ public class Client extends GameShell {
 					}
 					boolean var229 = false;
 					int var230;
-					for (var230 = 0; var230 < field1220 && (!field1774[var230].field1617.equals(var225) || field1774[var230].field1620 != var226); var230++) {
+					for (var230 = 0; var230 < field1220 && (!field1774[var230].username.equals(var225) || field1774[var230].world != var226); var230++) {
 					}
 					if (var230 < field1220) {
 						while (var230 < field1220 - 1) {
@@ -9728,18 +9739,18 @@ public class Client extends GameShell {
 				} else {
 					in.gjstr();
 					ClanMember var231 = new ClanMember();
-					var231.field1617 = var225;
-					var231.field1618 = NamespaceUtil.method743(var231.field1617, namespace);
-					var231.field1620 = var226;
-					var231.field1619 = var227;
+					var231.username = var225;
+					var231.displayName = DisplayNameTools.toBaseDisplayName(var231.username, namespace);
+					var231.world = var226;
+					var231.rank = var227;
 					int var232;
 					for (var232 = field1220 - 1; var232 >= 0; var232--) {
-						int var233 = field1774[var232].field1618.compareTo(var231.field1617);
+						int var233 = field1774[var232].displayName.compareTo(var231.username);
 						if (var233 == 0) {
-							field1774[var232].field1620 = var226;
-							field1774[var232].field1619 = var227;
+							field1774[var232].world = var226;
+							field1774[var232].rank = var227;
 							if (var225.equals(localPlayer.name)) {
-								field1217 = var227;
+								chatRank = var227;
 							}
 							friendChatUpdateNum = interfaceUpdateNum;
 							ptype = -1;
@@ -9762,7 +9773,7 @@ public class Client extends GameShell {
 					field1774[var232 + 1] = var231;
 					field1220++;
 					if (var225.equals(localPlayer.name)) {
-						field1217 = var227;
+						chatRank = var227;
 					}
 				}
 				friendChatUpdateNum = interfaceUpdateNum;
@@ -9999,7 +10010,7 @@ public class Client extends GameShell {
 			if (ptype == 120) {
 				friendChatUpdateNum = interfaceUpdateNum;
 				if (psize == 0) {
-					field1955 = null;
+					chatDisplayName = null;
 					field2155 = null;
 					field1220 = 0;
 					field1774 = null;
@@ -10008,8 +10019,8 @@ public class Client extends GameShell {
 				}
 				field2155 = in.gjstr();
 				long var309 = in.g8();
-				field1955 = JString.fromBase37(var309);
-				field1511 = in.g1b();
+				chatDisplayName = JString.fromBase37(var309);
+				chatMinKick = in.g1b();
 				int var311 = in.g1();
 				if (var311 == 255) {
 					ptype = -1;
@@ -10019,13 +10030,13 @@ public class Client extends GameShell {
 				ClanMember[] var312 = new ClanMember[100];
 				for (int var313 = 0; var313 < field1220; var313++) {
 					var312[var313] = new ClanMember();
-					var312[var313].field1617 = in.gjstr();
-					var312[var313].field1618 = NamespaceUtil.method743(var312[var313].field1617, namespace);
-					var312[var313].field1620 = in.g2();
-					var312[var313].field1619 = in.g1b();
+					var312[var313].username = in.gjstr();
+					var312[var313].displayName = DisplayNameTools.toBaseDisplayName(var312[var313].username, namespace);
+					var312[var313].world = in.g2();
+					var312[var313].rank = in.g1b();
 					in.gjstr();
-					if (var312[var313].field1617.equals(localPlayer.name)) {
-						field1217 = var312[var313].field1619;
+					if (var312[var313].username.equals(localPlayer.name)) {
+						chatRank = var312[var313].rank;
 					}
 				}
 				boolean var314 = false;
@@ -10034,7 +10045,7 @@ public class Client extends GameShell {
 					boolean var316 = true;
 					var315--;
 					for (int var317 = 0; var317 < var315; var317++) {
-						if (var312[var317].field1618.compareTo(var312[var317 + 1].field1618) > 0) {
+						if (var312[var317].displayName.compareTo(var312[var317 + 1].displayName) > 0) {
 							ClanMember var318 = var312[var317];
 							var312[var317] = var312[var317 + 1];
 							var312[var317 + 1] = var318;
@@ -11686,7 +11697,8 @@ public class Client extends GameShell {
 		}
 	}
 
-	public static void clanKickUser(String var186) {
+	// jag::oldscape::Client::FriendsChatKickUser
+	public static void friendsChatKickUser(String var186) {
 		if (field1774 == null) {
 			return;
 		}
@@ -11696,12 +11708,13 @@ public class Client extends GameShell {
 		out.pjstr(var186);
 	}
 
+	// jag::oldscape::FriendSystem::DelIgnore
 	public static void delIgnore(String var169) {
 		if (var169 == null) {
 			return;
 		}
 
-		String var170 = NamespaceUtil.method743(var169, namespace);
+		String var170 = DisplayNameTools.toBaseDisplayName(var169, namespace);
 		if (var170 == null) {
 			return;
 		}
@@ -11709,7 +11722,7 @@ public class Client extends GameShell {
 		for (int var171 = 0; var171 < ignoreCount; var171++) {
 			IgnoreListEntry var172 = ignoreList[var171];
 			String var173 = var172.name;
-			String var174 = NamespaceUtil.method743(var173, namespace);
+			String var174 = DisplayNameTools.toBaseDisplayName(var173, namespace);
 
 			boolean var175;
 			if (var169 == null || var173 == null) {
@@ -11737,7 +11750,8 @@ public class Client extends GameShell {
 		}
 	}
 
-	public static void clanSetRank(String var164, int var165) {
+	// jag::oldscape::FriendSystem::SetFriendRank
+	public static void setFriendRank(String var164, int var165) {
 		out.p1Enc(252);
 		out.p1(Packet.pjstrlen(var164) + 1);
 		out.pjstr(var164);
