@@ -159,7 +159,7 @@ public class ClientPlayer extends ClientEntity {
 		var3.method3002();
 		this.height = var3.minY;
 		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
-			ModelLit var4 = SpotAnimType.get(this.spotanimId).animate(this.spotanimFrame);
+			ModelLit var4 = SpotAnimType.list(this.spotanimId).getTempModel2(this.spotanimFrame);
 			if (var4 != null) {
 				var4.translate(0, -this.field2629, 0);
 				ModelLit[] var5 = new ModelLit[] { var3, var4 };
@@ -203,7 +203,7 @@ public class ClientPlayer extends ClientEntity {
 	}
 
 	@ObfuscatedName("fi.f(I)Z")
-	public final boolean isReady() {
+	public final boolean ready() {
 		return this.model != null;
 	}
 }

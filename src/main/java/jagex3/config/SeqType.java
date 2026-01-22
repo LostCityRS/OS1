@@ -186,7 +186,7 @@ public class SeqType extends DoublyLinkable {
 		if (var4 == null) {
 			return arg0.method2999(true);
 		} else {
-			ModelLit var6 = arg0.method2999(!var4.method2652(var5));
+			ModelLit var6 = arg0.method2999(!var4.getAnimateTransparencies(var5));
 			var6.method3005(var4, var5);
 			return var6;
 		}
@@ -200,7 +200,7 @@ public class SeqType extends DoublyLinkable {
 		if (var5 == null) {
 			return arg0.method2999(true);
 		}
-		ModelLit var7 = arg0.method2999(!var5.method2652(var6));
+		ModelLit var7 = arg0.method2999(!var5.getAnimateTransparencies(var6));
 		int var8 = arg2 & 0x3;
 		if (var8 == 1) {
 			var7.method3010();
@@ -228,7 +228,7 @@ public class SeqType extends DoublyLinkable {
 		if (var4 == null) {
 			return arg0.method3040(true);
 		} else {
-			ModelLit var6 = arg0.method3040(!var4.method2652(var5));
+			ModelLit var6 = arg0.method3040(!var4.getAnimateTransparencies(var5));
 			var6.method3005(var4, var5);
 			return var6;
 		}
@@ -246,11 +246,11 @@ public class SeqType extends DoublyLinkable {
 		AnimFrameSet var9 = method760(var8 >> 16);
 		int var10 = var8 & 0xFFFF;
 		if (var9 == null) {
-			ModelLit var11 = arg0.method2999(!var6.method2652(var7));
+			ModelLit var11 = arg0.method2999(!var6.getAnimateTransparencies(var7));
 			var11.method3005(var6, var7);
 			return var11;
 		} else {
-			ModelLit var12 = arg0.method2999(!var6.method2652(var7) & !var9.method2652(var10));
+			ModelLit var12 = arg0.method2999(!var6.getAnimateTransparencies(var7) & !var9.getAnimateTransparencies(var10));
 			var12.method3006(var6, var7, var9, var10, this.walkmerge);
 			return var12;
 		}
@@ -272,11 +272,11 @@ public class SeqType extends DoublyLinkable {
 			var7 = var8 & 0xFFFF;
 		}
 		if (var6 == null || var7 == 65535) {
-			ModelLit var10 = arg0.method2999(!var4.method2652(var5));
+			ModelLit var10 = arg0.method2999(!var4.getAnimateTransparencies(var5));
 			var10.method3005(var4, var5);
 			return var10;
 		} else {
-			ModelLit var9 = arg0.method2999(!var4.method2652(var5) & !var6.method2652(var7));
+			ModelLit var9 = arg0.method2999(!var4.getAnimateTransparencies(var5) & !var6.getAnimateTransparencies(var7));
 			var9.method3005(var4, var5);
 			var9.method3005(var6, var7);
 			return var9;

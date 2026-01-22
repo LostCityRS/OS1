@@ -2,15 +2,17 @@ package jagex3.dash3d;
 
 import deob.ObfuscatedName;
 
+// jag::oldscape::util::RegionRotate
 @ObfuscatedName("cw")
-public class WorldRegion {
+public class RegionRotate {
 
-	public WorldRegion() throws Throwable {
+	public RegionRotate() throws Throwable {
 		throw new Error();
 	}
 
+	// jag::oldscape::util::RegionRotate::DX
 	@ObfuscatedName("bf.r(IIIIIIB)I")
-	public static int rotateX(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public static int DX(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if ((arg5 & 0x1) == 1) {
 			int var6 = arg3;
 			arg3 = arg4;
@@ -28,8 +30,9 @@ public class WorldRegion {
 		}
 	}
 
+	// jag::oldscape::util::RegionRotate::DZ
 	@ObfuscatedName("bg.d(IIIIIII)I")
-	public static int rotateZ(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public static int DZ(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if ((arg5 & 0x1) == 1) {
 			int var6 = arg3;
 			arg3 = arg4;

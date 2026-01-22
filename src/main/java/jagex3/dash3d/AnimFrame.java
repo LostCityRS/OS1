@@ -7,15 +7,19 @@ import jagex3.io.Packet;
 @ObfuscatedName("ae")
 public class AnimFrame {
 
+	// jag::oldscape::dash3d::AnimFrame::m_tempTi
 	@ObfuscatedName("ae.r")
 	public static int[] tempTi = new int[500];
 
+	// jag::oldscape::dash3d::AnimFrame::m_tempTx
 	@ObfuscatedName("ae.d")
 	public static int[] tempTx = new int[500];
 
+	// jag::oldscape::dash3d::AnimFrame::m_tempTy
 	@ObfuscatedName("ae.l")
 	public static int[] tempTy = new int[500];
 
+	// jag::oldscape::dash3d::AnimFrame::m_tempTz
 	@ObfuscatedName("ae.m")
 	public static int[] tempTz = new int[500];
 

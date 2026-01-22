@@ -2,7 +2,7 @@ package jagex3.dash3d;
 
 import deob.ObfuscatedName;
 
-// jag::oldscape::dash3d::Sprite (?)
+// jag::oldscape::dash3d::Sprite
 @ObfuscatedName("au")
 public class Sprite {
 

@@ -3,6 +3,7 @@ package jagex3.dash3d;
 import deob.ObfuscatedName;
 import jagex3.config.SeqType;
 
+// jag::oldscape::ClientEntity
 @ObfuscatedName("fz")
 public abstract class ClientEntity extends ModelSource {
 
@@ -177,6 +178,7 @@ public abstract class ClientEntity extends ModelSource {
 	@ObfuscatedName("fz.bf")
 	public int preanimRouteLength = 0;
 
+	// jag::oldscape::ClientNpc::Teleport
 	@ObfuscatedName("fz.b(IIZB)V")
 	public final void teleport(int arg0, int arg1, boolean arg2) {
 		if (this.primarySeqId != -1 && SeqType.get(this.primarySeqId).postanim_move == 1) {
@@ -209,6 +211,7 @@ public abstract class ClientEntity extends ModelSource {
 		this.z = this.routeZ[0] * 128 + this.size * 64;
 	}
 
+	// jag::oldscape::ClientNpc::MoveCode
 	@ObfuscatedName("fz.y(IZI)V")
 	public final void moveCode(int arg0, boolean arg1) {
 		int var3 = this.routeX[0];
@@ -257,17 +260,20 @@ public abstract class ClientEntity extends ModelSource {
 		this.routeRun[0] = arg1;
 	}
 
+	// jag::oldscape::ClientEntity::AbortRoute
 	@ObfuscatedName("fz.t(I)V")
 	public final void abortRoute() {
 		this.routeLength = 0;
 		this.preanimRouteLength = 0;
 	}
 
+	// jag::oldscape::ClientEntity::Ready
 	@ObfuscatedName("fz.f(I)Z")
-	public boolean isReady() {
+	public boolean ready() {
 		return false;
 	}
 
+	// jag::oldscape::ClientEntity::AddHeadbar
 	@ObfuscatedName("fz.k(IIIB)V")
 	public final void addHitmark(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < 4; var4++) {

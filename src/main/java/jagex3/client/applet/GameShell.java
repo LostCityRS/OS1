@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import deob.Settings;
 import jagex3.client.Client;
 import jagex3.client.JagException;
-import jagex3.client.TaskHandler;
+import jagex3.client.SignLink;
 import jagex3.datastruct.*;
 import jagex3.graphics.JavaPixMap;
 import jagex3.graphics.JavaSafePixMap;
@@ -13,14 +13,17 @@ import jagex3.jstring.StringUtil;
 
 import java.applet.Applet;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.URL;
 
 @ObfuscatedName("dj")
 public abstract class GameShell extends Applet implements Runnable, FocusListener, WindowListener {
 
 	@ObfuscatedName("dj.r")
-	public static TaskHandler taskHandler;
+	public static SignLink signLink;
 
 	@ObfuscatedName("dj.d")
 	public static GameShell shell = null;
@@ -140,10 +143,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			JagException.revision = arg2;
 			JagException.applet = this;
 
-			if (taskHandler == null) {
-				taskHandler = new TaskHandler();
+			if (signLink == null) {
+				signLink = new SignLink();
 			}
-			taskHandler.threadreq(this, 1);
+			signLink.threadreq(this, 1);
 		} catch (Exception ex) {
 			JagException.report(null, ex);
 			this.error("crash");
@@ -212,11 +215,11 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@Override
 	public void run() {
 		try {
-			if (TaskHandler.javaVendor != null) {
-				String vendor = TaskHandler.javaVendor.toLowerCase();
+			if (SignLink.javaVendor != null) {
+				String vendor = SignLink.javaVendor.toLowerCase();
 
 				if (vendor.indexOf("sun") != -1 || vendor.indexOf("apple") != -1) {
-					String version = TaskHandler.javaVersion;
+					String version = SignLink.javaVersion;
 
 					if (version.equals("1.1") || version.startsWith("1.1.") || version.equals("1.2") || version.startsWith("1.2.") || version.equals("1.3") || version.startsWith("1.3.") || version.equals("1.4") || version.startsWith("1.4.") || version.equals("1.5") || version.startsWith("1.5.") || version.equals("1.6.0")) {
 						this.error("wrongjava");
@@ -284,7 +287,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 				this.mainredrawwrapper();
 
-				TaskHandler.flushEvents(taskHandler, canvas);
+				SignLink.flushEvents(signLink, canvas);
 			}
 		} catch (Exception ex) {
 			JagException.report(null, ex);
@@ -368,9 +371,9 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			}
 		}
 
-		if (taskHandler != null) {
+		if (signLink != null) {
 			try {
-				taskHandler.close();
+				signLink.close();
 			} catch (Exception ignore) {
 			}
 		}
@@ -436,7 +439,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 		fullredraw = true;
 
-		if (TaskHandler.javaVersion != null && TaskHandler.javaVersion.startsWith("1.5") && MonotonicTime.currentTime() - lastCanvasReplace > 1000L) {
+		if (SignLink.javaVersion != null && SignLink.javaVersion.startsWith("1.5") && MonotonicTime.currentTime() - lastCanvasReplace > 1000L) {
 			Rectangle bounds = g.getClipBounds();
 			if (bounds == null || bounds.width >= canvasWid && bounds.height >= canvasHei) {
 				canvasReplaceRecommended = true;

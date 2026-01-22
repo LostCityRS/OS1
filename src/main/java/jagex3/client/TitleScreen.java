@@ -929,7 +929,7 @@ public class TitleScreen {
 	public static void method377() {
 		try {
 			if (field35 == null) {
-				field35 = new WorldList(GameShell.taskHandler, new URL(worldlistUrl));
+				field35 = new WorldList(GameShell.signLink, new URL(worldlistUrl));
 			} else {
 				byte[] src = field35.getWorldList();
 				if (src == null) {

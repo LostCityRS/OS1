@@ -2,16 +2,14 @@ package jagex3.sound;
 
 import deob.ObfuscatedName;
 import jagex3.client.JagException;
-import jagex3.client.TaskHandler;
+import jagex3.client.SignLink;
 import jagex3.datastruct.PreciseSleep;
-
-import java.awt.event.ActionEvent;
 
 @ObfuscatedName("f")
 public class AudioThread implements Runnable {
 
 	@ObfuscatedName("f.r")
-	public TaskHandler taskHandler;
+	public SignLink signLink;
 
 	@ObfuscatedName("f.d")
 	public volatile PcmPlayer[] players = new PcmPlayer[2];
@@ -33,7 +31,7 @@ public class AudioThread implements Runnable {
 					}
 				}
 				PreciseSleep.sleep(10L);
-				TaskHandler.flushEvents(taskHandler, null);
+				SignLink.flushEvents(signLink, null);
 			}
 		} catch (Exception ex) {
 			JagException.report(null, ex);

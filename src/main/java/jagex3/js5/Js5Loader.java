@@ -124,7 +124,7 @@ public class Js5Loader extends Js5 {
 				Object var16 = Js5NetThread.field1207;
 				synchronized (var16) {
 					if (Js5NetThread.field1205 == 0) {
-						GameShell.taskHandler.threadreq(new Js5NetThread(), 5);
+						GameShell.signLink.threadreq(new Js5NetThread(), 5);
 					}
 					Js5NetThread.field1205 = 600;
 				}
@@ -153,7 +153,7 @@ public class Js5Loader extends Js5 {
 			Object var10 = Js5NetThread.field1207;
 			synchronized (var10) {
 				if (Js5NetThread.field1205 == 0) {
-					GameShell.taskHandler.threadreq(new Js5NetThread(), 5);
+					GameShell.signLink.threadreq(new Js5NetThread(), 5);
 				}
 				Js5NetThread.field1205 = 600;
 			}
@@ -253,7 +253,7 @@ public class Js5Loader extends Js5 {
 				Object var8 = Js5NetThread.field1207;
 				synchronized (var8) {
 					if (Js5NetThread.field1205 == 0) {
-						GameShell.taskHandler.threadreq(new Js5NetThread(), 5);
+						GameShell.signLink.threadreq(new Js5NetThread(), 5);
 					}
 					Js5NetThread.field1205 = 600;
 				}

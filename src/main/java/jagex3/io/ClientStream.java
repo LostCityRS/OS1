@@ -3,7 +3,7 @@ package jagex3.io;
 import deob.ObfuscatedName;
 import jagex3.client.JagException;
 import jagex3.client.PrivilegedRequest;
-import jagex3.client.TaskHandler;
+import jagex3.client.SignLink;
 import jagex3.datastruct.PreciseSleep;
 
 import java.io.EOFException;
@@ -29,7 +29,7 @@ public class ClientStream implements Runnable {
 	public boolean dummy = false;
 
 	@ObfuscatedName("am.c")
-	public TaskHandler signlink;
+	public SignLink signlink;
 
 	@ObfuscatedName("am.n")
 	public PrivilegedRequest writer;
@@ -46,7 +46,7 @@ public class ClientStream implements Runnable {
 	@ObfuscatedName("am.q")
 	public boolean ioerror = false;
 
-	public ClientStream(Socket arg0, TaskHandler arg1) throws IOException {
+	public ClientStream(Socket arg0, SignLink arg1) throws IOException {
 		this.signlink = arg1;
 		this.socket = arg0;
 		this.socket.setSoTimeout(30000);

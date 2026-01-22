@@ -36,7 +36,7 @@ public class WorldList {
 	@ObfuscatedName("i.z")
 	public long timeout;
 
-	public WorldList(TaskHandler sign, URL url) {
+	public WorldList(SignLink sign, URL url) {
 		this.req = sign.urlreq(url);
 		this.stage = 0;
 		this.timeout = MonotonicTime.currentTime() + 30000L;

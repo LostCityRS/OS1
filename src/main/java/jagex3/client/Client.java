@@ -4,7 +4,10 @@ import deob.ObfuscatedName;
 import jagex3.client.applet.*;
 import jagex3.client.chat.*;
 import jagex3.client.obfuscation.ReflectionChecker;
-import jagex3.client.ui.*;
+import jagex3.client.ui.ClientInvCache;
+import jagex3.client.ui.IfType;
+import jagex3.client.ui.ServerActive;
+import jagex3.client.ui.SubInterface;
 import jagex3.config.*;
 import jagex3.dash3d.*;
 import jagex3.datastruct.*;
@@ -20,7 +23,10 @@ import jagex3.js5.Js5Loader;
 import jagex3.js5.Js5Net;
 import jagex3.js5.Js5NetThread;
 import jagex3.js5.Js5WorkerRequest;
-import jagex3.jstring.*;
+import jagex3.jstring.JString;
+import jagex3.jstring.StringConstants;
+import jagex3.jstring.StringUtil;
+import jagex3.jstring.Text;
 import jagex3.midi.MidiManager;
 import jagex3.midi.MidiPlayer;
 import jagex3.script.ClientScript;
@@ -138,7 +144,7 @@ public class Client extends GameShell {
 	public static int loadingStep = 0;
 
 	@ObfuscatedName("l.bj")
-	public static PrivilegedRequest js5SocketTask;
+	public static PrivilegedRequest js5SocketReq;
 
 	@ObfuscatedName("br.bz")
 	public static ClientStream js5Stream;
@@ -1491,23 +1497,23 @@ public class Client extends GameShell {
 
 		try {
 			if (js5ConnectState == 0) {
-				js5SocketTask = GameShell.taskHandler.socketreq(loginHost, loginPort);
+				js5SocketReq = GameShell.signLink.socketreq(loginHost, loginPort);
 				js5ConnectState++;
 			}
 
 			if (js5ConnectState == 1) {
-				if (js5SocketTask.status == 2) {
+				if (js5SocketReq.status == 2) {
 					this.js5error(-1);
 					return;
 				}
 
-				if (js5SocketTask.status == 1) {
+				if (js5SocketReq.status == 1) {
 					js5ConnectState++;
 				}
 			}
 
 			if (js5ConnectState == 2) {
-				js5Stream = new ClientStream((Socket) js5SocketTask.result, GameShell.taskHandler);
+				js5Stream = new ClientStream((Socket) js5SocketReq.result, GameShell.signLink);
 				Packet var1 = new Packet(5);
 				var1.p1(15); // INIT_JS5REMOTE_CONNECTION
 				var1.p4(1); // revision
@@ -1533,7 +1539,7 @@ public class Client extends GameShell {
 
 			if (js5ConnectState == 4) {
 				Js5Net.init(js5Stream, state > 20);
-				js5SocketTask = null;
+				js5SocketReq = null;
 				js5Stream = null;
 				js5ConnectState = 0;
 				js5Errors = 0;
@@ -1545,7 +1551,7 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.cf(II)V")
 	public void js5error(int arg0) {
-		js5SocketTask = null;
+		js5SocketReq = null;
 		js5Stream = null;
 		js5ConnectState = 0;
 
@@ -1657,11 +1663,11 @@ public class Client extends GameShell {
 
 			MidiPlayer midiPlayer = new MidiPlayer();
 			midiPlayer.setChannelDefaultPatch(9, 128);
-			midiPcmPlayer = PcmPlayer.getPlayer(GameShell.taskHandler, GameShell.canvas, 0, 22050);
+			midiPcmPlayer = PcmPlayer.getPlayer(GameShell.signLink, GameShell.canvas, 0, 22050);
 			midiPcmPlayer.playStream(midiPlayer);
 			MidiManager.init(musicPatchesJs5, musicSamplesJs5, soundFxJs5, midiPlayer);
 
-			soundPcmPlayer = PcmPlayer.getPlayer(GameShell.taskHandler, GameShell.canvas, 1, 2048);
+			soundPcmPlayer = PcmPlayer.getPlayer(GameShell.signLink, GameShell.canvas, 1, 2048);
 			soundMixer = new Mixer();
 			soundPcmPlayer.playStream(soundMixer);
 			soundDecimator = new Decimator(22050, PcmPlayer.frequency);
@@ -1858,7 +1864,7 @@ public class Client extends GameShell {
 			}
 		} else if (loadingStep == 110) {
 			mouseTracking = new MouseTracking();
-			GameShell.taskHandler.threadreq(mouseTracking, 10);
+			GameShell.signLink.threadreq(mouseTracking, 10);
 
 			TitleScreen.loadString = Text.MAINLOAD110;
 			TitleScreen.loadPos = 94;
@@ -1868,8 +1874,8 @@ public class Client extends GameShell {
 				TitleScreen.loadString = Text.MAINLOAD120 + "%";
 				TitleScreen.loadPos = 96;
 			} else {
-				WordPack var56 = new WordPack(binaryJs5.getFile("huffman", ""));
-				Huffman.method816(var56);
+				Huffman huffman = new Huffman(binaryJs5.getFile("huffman", ""));
+				WordPack.setHuffman(huffman);
 
 				TitleScreen.loadString = Text.MAINLOAD120B;
 				TitleScreen.loadPos = 96;
@@ -1921,13 +1927,13 @@ public class Client extends GameShell {
 			}
 			if (loginStep == 1) {
 				if (field806 == null) {
-					field806 = GameShell.taskHandler.socketreq(loginHost, loginPort);
+					field806 = GameShell.signLink.socketreq(loginHost, loginPort);
 				}
 				if (field806.status == 2) {
 					throw new IOException();
 				}
 				if (field806.status == 1) {
-					loginStream = new ClientStream((Socket) field806.result, GameShell.taskHandler);
+					loginStream = new ClientStream((Socket) field806.result, GameShell.signLink);
 					field806 = null;
 					loginStep = 2;
 				}
@@ -2995,7 +3001,7 @@ public class Client extends GameShell {
 				entity.spotanimFrame = 0;
 			}
 
-			int spotAnim = SpotAnimType.get(entity.spotanimId).anim;
+			int spotAnim = SpotAnimType.list(entity.spotanimId).anim;
 			if (spotAnim == -1) {
 				entity.spotanimId = -1;
 			} else {
@@ -3141,7 +3147,7 @@ public class Client extends GameShell {
 				player = players[playerIds[i]];
 				var4 = playerIds[i] << 14;
 			}
-			if (player == null || !player.isReady()) {
+			if (player == null || !player.ready()) {
 				continue;
 			}
 			player.lowMemory = false;
@@ -3176,7 +3182,7 @@ public class Client extends GameShell {
 		for (int var1 = 0; var1 < npcCount; var1++) {
 			ClientNpc var2 = npcs[npcIds[var1]];
 			int var3 = (npcIds[var1] << 14) + 0x20000000;
-			if (var2 == null || !var2.isReady() || var2.type.alwaysontop != arg0 || !var2.type.isNotMulti()) {
+			if (var2 == null || !var2.ready() || var2.type.alwaysontop != arg0 || !var2.type.isNotMulti()) {
 				continue;
 			}
 			int var4 = var2.x >> 7;
@@ -3211,7 +3217,7 @@ public class Client extends GameShell {
 					ClientNpc npc = npcs[proj.target - 1];
 
 					if (npc != null && npc.x >= 0 && npc.x < 13312 && npc.z >= 0 && npc.z < 13312) {
-						proj.updateVelocity(npc.x, npc.z, getAvH(npc.x, npc.z, proj.level) - proj.h2, loopCycle);
+						proj.setTarget(npc.x, npc.z, getAvH(npc.x, npc.z, proj.level) - proj.h2, loopCycle);
 					}
 				} else if (proj.target < 0) {
 					int pid = -proj.target - 1;
@@ -3224,11 +3230,11 @@ public class Client extends GameShell {
 					}
 
 					if (player != null && player.x >= 0 && player.x < 13312 && player.z >= 0 && player.z < 13312) {
-						proj.updateVelocity(player.x, player.z, getAvH(player.x, player.z, proj.level) - proj.h2, loopCycle);
+						proj.setTarget(player.x, player.z, getAvH(player.x, player.z, proj.level) - proj.h2, loopCycle);
 					}
 				}
 
-				proj.update(worldUpdateNum);
+				proj.move(worldUpdateNum);
 				world.add(minusedlevel, (int) proj.x, (int) proj.z, (int) proj.y, 60, proj, proj.yaw, -1, false);
 			}
 		}
@@ -3241,7 +3247,7 @@ public class Client extends GameShell {
 			if (minusedlevel != var0.level || var0.animComplete) {
 				var0.unlink();
 			} else if (loopCycle >= var0.startCycle) {
-				var0.update(worldUpdateNum);
+				var0.doAnim(worldUpdateNum);
 
 				if (var0.animComplete) {
 					var0.unlink();
@@ -4227,7 +4233,7 @@ public class Client extends GameShell {
 				int var105 = var93 * 128 + 64;
 				int var106 = var94 * 128 + 64;
 				ClientProj var107 = new ClientProj(var96, minusedlevel, var103, var104, getAvH(var103, var104, minusedlevel) - var97, loopCycle + var99, loopCycle + var100, var101, var102, var95, var98);
-				var107.updateVelocity(var105, var106, getAvH(var105, var106, minusedlevel) - var98, loopCycle + var99);
+				var107.setTarget(var105, var106, getAvH(var105, var106, minusedlevel) - var98, loopCycle + var99);
 				projectiles.push(var107);
 			}
 		} else if (ptype == 215) {
@@ -4351,7 +4357,7 @@ public class Client extends GameShell {
 				world.removeWall(arg0, arg2, arg3);
 				LocType var15 = LocType.get(var12);
 				if (var15.blockwalk != 0) {
-					levelCollisionMap[arg0].removeWall(arg2, arg3, var13, var14, var15.blockrange);
+					levelCollisionMap[arg0].delWall(arg2, arg3, var13, var14, var15.blockrange);
 				}
 			}
 			if (layer == 1) {
@@ -4364,14 +4370,14 @@ public class Client extends GameShell {
 					return;
 				}
 				if (var16.blockwalk != 0) {
-					levelCollisionMap[arg0].removeLoc(arg2, arg3, var16.width, var16.length, var14, var16.blockrange);
+					levelCollisionMap[arg0].delLoc(arg2, arg3, var16.width, var16.length, var14, var16.blockrange);
 				}
 			}
 			if (layer == 3) {
 				world.removeGroundDecor(arg0, arg2, arg3);
 				LocType var17 = LocType.get(var12);
 				if (var17.blockwalk == 1) {
-					levelCollisionMap[arg0].removeBlocked(arg2, arg3);
+					levelCollisionMap[arg0].unblockGroundDecor(arg2, arg3);
 				}
 			}
 		}
@@ -4380,7 +4386,7 @@ public class Client extends GameShell {
 			if (arg0 < 3 && (ClientBuild.mapl[1][arg2][arg3] & 0x2) == 2) {
 				var18 = arg0 + 1;
 			}
-			ClientBuild.addLoc(arg0, var18, arg2, arg3, arg4, arg5, arg6, world, levelCollisionMap[arg0]);
+			ClientBuild.changeLocUnchecked(arg0, var18, arg2, arg3, arg4, arg5, arg6, world, levelCollisionMap[arg0]);
 		}
 	}
 
@@ -4605,7 +4611,7 @@ public class Client extends GameShell {
 					field2016.pos = 0;
 					in.gdata(field2016.data, 0, var30);
 					field2016.pos = 0;
-					String var33 = PixFont.method2844(StringUtil.method54(Huffman.method1035(field2016)));
+					String var33 = PixFont.method2844(StringUtil.method54(WordPack.unpack(field2016)));
 					var26.chat = var33.trim();
 					var26.field2652 = var28 >> 8;
 					var26.field2670 = var28 & 0xFF;
@@ -7911,7 +7917,7 @@ public class Client extends GameShell {
 			}
 			for (int var14 = 0; var14 < npcCount; var14++) {
 				ClientNpc var15 = npcs[npcIds[var14]];
-				if (var15 != null && var15.isReady()) {
+				if (var15 != null && var15.ready()) {
 					NpcType var16 = var15.type;
 					if (var16 != null && var16.multinpc != null) {
 						var16 = var16.getMultiNpc();
@@ -7925,7 +7931,7 @@ public class Client extends GameShell {
 			}
 			for (int var19 = 0; var19 < playerCount; var19++) {
 				ClientPlayer var20 = players[playerIds[var19]];
-				if (var20 != null && var20.isReady()) {
+				if (var20 != null && var20.ready()) {
 					int var21 = var20.x / 32 - localPlayer.x / 32;
 					int var22 = var20.z / 32 - localPlayer.z / 32;
 					boolean var23 = false;
@@ -8394,7 +8400,7 @@ public class Client extends GameShell {
 		}
 
 		flushAudio();
-		ClientBuild.load();
+		ClientBuild.init();
 
 		int maps = mapBuildGroundData.length;
 		BgSound.reset();
@@ -9116,7 +9122,7 @@ public class Client extends GameShell {
 			}
 			if (ptype == 168) {
 				String var83 = in.gjstr();
-				String var91 = PixFont.method2844(StringUtil.method54(imethod16(in)));
+				String var91 = PixFont.method2844(StringUtil.method54(WordPack.unpack2(in)));
 				addChat(6, var83, var91);
 				ptype = -1;
 				return true;
@@ -9274,7 +9280,7 @@ public class Client extends GameShell {
 				if (!var123 && overrideChat == 0) {
 					field2148[field2149] = var121;
 					field2149 = (field2149 + 1) % 100;
-					String var132 = PixFont.method2844(StringUtil.method54(imethod16(in)));
+					String var132 = PixFont.method2844(StringUtil.method54(WordPack.unpack2(in)));
 					if (var120 == 2 || var120 == 3) {
 						addChat(7, StringConstants.TAG_IMG(1) + var115, var132);
 					} else if (var120 == 1) {
@@ -9332,7 +9338,7 @@ public class Client extends GameShell {
 			}
 			if (ptype == 241) {
 				int var139 = in.g4_alt1();
-				field170 = GameShell.taskHandler.dnsreq(var139);
+				field170 = GameShell.signLink.dnsreq(var139);
 				ptype = -1;
 				return true;
 			}
@@ -9877,7 +9883,7 @@ public class Client extends GameShell {
 				if (!var278 && overrideChat == 0) {
 					field2148[field2149] = var276;
 					field2149 = (field2149 + 1) % 100;
-					String var287 = PixFont.method2844(StringUtil.method54(imethod16(in)));
+					String var287 = PixFont.method2844(StringUtil.method54(WordPack.unpack2(in)));
 					if (var275 == 2 || var275 == 3) {
 						addChat(9, StringConstants.TAG_IMG(1) + var268, var287, JString.fromBase37Upper(var269));
 					} else if (var275 == 1) {
@@ -10313,32 +10319,18 @@ public class Client extends GameShell {
 			}
 			JagException.report("T1 - " + ptype + "," + ptype1 + "," + ptype2 + " - " + psize, null);
 			logout();
-		} catch (IOException var525) {
+		} catch (IOException ex) {
 			lostCon();
-		} catch (Exception var526) {
+		} catch (Exception ex) {
 			String var382 = "T2 - " + ptype + "," + ptype1 + "," + ptype2 + " - " + psize + "," + (mapBuildBaseX + localPlayer.routeX[0]) + "," + (mapBuildBaseZ + localPlayer.routeZ[0]) + " - ";
 			for (int var383 = 0; var383 < psize && var383 < 50; var383++) {
 				var382 += in.data[var383] + ",";
 			}
-			JagException.report(var382, var526);
+			JagException.report(var382, ex);
 			logout();
 		}
 
 		return true;
-	}
-
-	public static String imethod16(PacketBit var84) {
-		try {
-			int var85 = var84.gsmart();
-			if (var85 > 32767) {
-				var85 = 32767;
-			}
-			byte[] var86 = new byte[var85];
-			var84.pos += Huffman.wordPack.decompress(var84.data, var84.pos, var86, 0, var85);
-			return Cp1252.decode(var86, 0, var85);
-		} catch (Exception var515) {
-			return "Cabbage";
-		}
 	}
 
 	public static void gameDraw() {
@@ -10568,7 +10560,7 @@ public class Client extends GameShell {
 				if (var423.startTime > 0) {
 					var423.startTime--;
 				}
-				if (var423.startTime == 0 && var423.x >= 1 && var423.z >= 1 && var423.x <= 102 && var423.z <= 102 && (var423.newType < 0 || ClientBuild.isLocDownloaded(var423.newType, var423.newShape))) {
+				if (var423.startTime == 0 && var423.x >= 1 && var423.z >= 1 && var423.x <= 102 && var423.z <= 102 && (var423.newType < 0 || ClientBuild.changeLocAvailable(var423.newType, var423.newShape))) {
 					locChangeUnchecked(var423.level, var423.layer, var423.x, var423.z, var423.newType, var423.newAngle, var423.newShape);
 					var423.startTime = -1;
 					if (var423.newType == var423.oldType && var423.oldType == -1) {
@@ -10577,7 +10569,7 @@ public class Client extends GameShell {
 						var423.unlink();
 					}
 				}
-			} else if (var423.oldType < 0 || ClientBuild.isLocDownloaded(var423.oldType, var423.oldShape)) {
+			} else if (var423.oldType < 0 || ClientBuild.changeLocAvailable(var423.oldType, var423.oldShape)) {
 				locChangeUnchecked(var423.level, var423.layer, var423.x, var423.z, var423.oldType, var423.oldAngle, var423.oldShape);
 				var423.unlink();
 			}
@@ -11236,7 +11228,7 @@ public class Client extends GameShell {
 			} else {
 				var75 = npcs[npcIds[var74 - playerCount]];
 			}
-			if (var75 != null && var75.isReady()) {
+			if (var75 != null && var75.ready()) {
 				if (var75 instanceof ClientNpc) {
 					NpcType var76 = ((ClientNpc) var75).type;
 					if (var76.multinpc != null) {

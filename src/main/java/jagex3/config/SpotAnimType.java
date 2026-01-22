@@ -60,8 +60,9 @@ public class SpotAnimType extends DoublyLinkable {
 	@ObfuscatedName("eu.k")
 	public int contrast = 0;
 
+	// jag::oldscape::configdecoder::SpotType::List
 	@ObfuscatedName("cm.z(IB)Leu;")
-	public static SpotAnimType get(int arg0) {
+	public static SpotAnimType list(int arg0) {
 		SpotAnimType var1 = (SpotAnimType) field2379.get((long) arg0);
 		if (var1 != null) {
 			return var1;
@@ -122,8 +123,9 @@ public class SpotAnimType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::SpotType::GetTempModel2
 	@ObfuscatedName("eu.i(IS)Lfo;")
-	public final ModelLit animate(int arg0) {
+	public final ModelLit getTempModel2(int arg0) {
 		ModelLit var2 = (ModelLit) field2392.get((long) this.field2382);
 		if (var2 == null) {
 			ModelUnlit var3 = ModelUnlit.tryGet(modelJs5, this.model, 0);

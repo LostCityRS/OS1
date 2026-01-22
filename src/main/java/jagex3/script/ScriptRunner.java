@@ -5,7 +5,10 @@ import jagex3.client.Client;
 import jagex3.client.JagException;
 import jagex3.client.VarCache;
 import jagex3.client.chat.ChatFilterPrivacy;
-import jagex3.client.ui.*;
+import jagex3.client.ui.ClientInvCache;
+import jagex3.client.ui.IfType;
+import jagex3.client.ui.ServerActive;
+import jagex3.client.ui.SubInterface;
 import jagex3.config.EnumType;
 import jagex3.config.InvType;
 import jagex3.config.ObjType;
@@ -17,7 +20,7 @@ import jagex3.jstring.JString;
 import jagex3.jstring.StringConstants;
 import jagex3.jstring.StringUtil;
 import jagex3.jstring.Text;
-import jagex3.wordenc.Huffman;
+import jagex3.wordenc.WordPack;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -2588,7 +2591,7 @@ public class ScriptRunner {
 
 							Client.out.p1(color);
 							Client.out.p1(effect);
-							Huffman.method911(Client.out, message);
+							WordPack.pack(Client.out, message);
 
 							Client.out.psize1(Client.out.pos - start);
 						}
@@ -2606,7 +2609,7 @@ public class ScriptRunner {
 						int var357 = Client.out.pos;
 
 						Client.out.pjstr(var355);
-						Huffman.method911(Client.out, var356);
+						WordPack.pack(Client.out, var356);
 
 						Client.out.psize2(Client.out.pos - var357);
 						continue;

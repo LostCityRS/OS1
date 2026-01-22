@@ -5,12 +5,14 @@ import jagex3.config.NpcType;
 import jagex3.config.SeqType;
 import jagex3.config.SpotAnimType;
 
+// jag::oldscape::ClientNpc
 @ObfuscatedName("ge")
 public class ClientNpc extends ClientEntity {
 
 	@ObfuscatedName("ge.bu")
 	public NpcType type;
 
+	// jag::oldscape::ClientNpc::GetTempModel
 	@ObfuscatedName("ge.g(I)Lfo;")
 	public final ModelLit getTempModel() {
 		if (this.type == null) {
@@ -25,7 +27,7 @@ public class ClientNpc extends ClientEntity {
 		var3.method3002();
 		this.height = var3.minY;
 		if (this.spotanimId != -1 && this.spotanimFrame != -1) {
-			ModelLit var4 = SpotAnimType.get(this.spotanimId).animate(this.spotanimFrame);
+			ModelLit var4 = SpotAnimType.list(this.spotanimId).getTempModel2(this.spotanimFrame);
 			if (var4 != null) {
 				var4.translate(0, -this.field2629, 0);
 				ModelLit[] var5 = new ModelLit[] { var3, var4 };
@@ -38,8 +40,9 @@ public class ClientNpc extends ClientEntity {
 		return var3;
 	}
 
+	// jag::oldscape::ClientNpc::Ready
 	@ObfuscatedName("ge.f(I)Z")
-	public final boolean isReady() {
+	public final boolean ready() {
 		return this.type != null;
 	}
 }

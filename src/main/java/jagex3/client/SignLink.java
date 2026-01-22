@@ -11,9 +11,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 
-// similar to the old signlink
 @ObfuscatedName("ak")
-public class TaskHandler implements Runnable {
+public class SignLink implements Runnable {
 
 	@ObfuscatedName("ak.r")
 	public static String javaVendor;
@@ -39,7 +38,7 @@ public class TaskHandler implements Runnable {
 	@ObfuscatedName("ak.z")
 	public EventQueue eventQueue;
 
-	public TaskHandler() {
+	public SignLink() {
 		javaVendor = "Unknown";
 		javaVersion = "1.1";
 		try {
@@ -161,7 +160,7 @@ public class TaskHandler implements Runnable {
 		return this.field376;
 	}
 
-	public static void flushEvents(TaskHandler handler, Object source) {
+	public static void flushEvents(SignLink handler, Object source) {
 		if (handler.eventQueue == null) {
 			return;
 		}

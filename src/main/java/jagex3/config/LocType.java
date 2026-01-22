@@ -384,8 +384,9 @@ public class LocType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::LocType::CheckModel
 	@ObfuscatedName("ey.u(II)Z")
-	public final boolean isDownloaded(int arg0) {
+	public final boolean checkModel(int arg0) {
 		if (this.shapes != null) {
 			for (int var4 = 0; var4 < this.shapes.length; var4++) {
 				if (this.shapes[var4] == arg0) {
@@ -407,7 +408,7 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.v(I)Z")
-	public final boolean isDownloaded() {
+	public final boolean checkModel() {
 		if (this.models == null) {
 			return true;
 		}

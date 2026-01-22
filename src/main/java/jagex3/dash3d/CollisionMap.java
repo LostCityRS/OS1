@@ -28,6 +28,7 @@ public class CollisionMap {
 		this.reset();
 	}
 
+	// jag::oldscape::movement::CollisionMap::Reset
 	@ObfuscatedName("ck.r(I)V")
 	public void reset() {
 		for (int var1 = 0; var1 < this.sizeX; var1++) {
@@ -41,6 +42,7 @@ public class CollisionMap {
 		}
 	}
 
+	// jag::oldscape::movement::CollisionMap::AddWall
 	@ObfuscatedName("ck.d(IIIIZI)V")
 	public void addWall(int arg0, int arg1, int arg2, int arg3, boolean arg4) {
 		int var6 = arg0 - this.startX;
@@ -165,6 +167,7 @@ public class CollisionMap {
 		}
 	}
 
+	// jag::oldscape::movement::CollisionMap::AddLoc
 	@ObfuscatedName("ck.l(IIIIZI)V")
 	public void addLoc(int arg0, int arg1, int arg2, int arg3, boolean arg4) {
 		int var6 = 256;
@@ -184,6 +187,7 @@ public class CollisionMap {
 		}
 	}
 
+	// jag::oldscape::movement::CollisionMap::BlockGround
 	@ObfuscatedName("ck.m(III)V")
 	public void blockGround(int arg0, int arg1) {
 		int var3 = arg0 - this.startX;
@@ -191,6 +195,7 @@ public class CollisionMap {
 		this.flags[var3][var4] |= 0x200000;
 	}
 
+	// jag::oldscape::movement::CollisionMap::BlockGroundDecor
 	@ObfuscatedName("ck.c(IIB)V")
 	public void blockGroundDecor(int arg0, int arg1) {
 		int var3 = arg0 - this.startX;
@@ -198,13 +203,15 @@ public class CollisionMap {
 		this.flags[var3][var4] |= 0x40000;
 	}
 
+	// jag::oldscape::movement::CollisionMap::AddCMap
 	@ObfuscatedName("ck.n(IIII)V")
 	public void addCMap(int arg0, int arg1, int arg2) {
 		this.flags[arg0][arg1] |= arg2;
 	}
 
+	// jag::oldscape::movement::CollisionMap::DelWall
 	@ObfuscatedName("ck.j(IIIIZI)V")
-	public void removeWall(int arg0, int arg1, int arg2, int arg3, boolean arg4) {
+	public void delWall(int arg0, int arg1, int arg2, int arg3, boolean arg4) {
 		int var6 = arg0 - this.startX;
 		int var7 = arg1 - this.startZ;
 		if (arg2 == 0) {
@@ -327,8 +334,9 @@ public class CollisionMap {
 		}
 	}
 
+	// jag::oldscape::movement::CollisionMap::DelLoc
 	@ObfuscatedName("ck.z(IIIIIZI)V")
-	public void removeLoc(int arg0, int arg1, int arg2, int arg3, int arg4, boolean arg5) {
+	public void delLoc(int arg0, int arg1, int arg2, int arg3, int arg4, boolean arg5) {
 		int var7 = 256;
 		if (arg5) {
 			var7 += 131072;
@@ -351,18 +359,21 @@ public class CollisionMap {
 		}
 	}
 
+	// jag::oldscape::movement::CollisionMap::RemCMap
 	@ObfuscatedName("ck.g(IIII)V")
 	public void remCMap(int arg0, int arg1, int arg2) {
 		this.flags[arg0][arg1] &= ~arg2;
 	}
 
+	// jag::oldscape::movement::CollisionMap::UnblockGroundDecor
 	@ObfuscatedName("ck.q(III)V")
-	public void removeBlocked(int arg0, int arg1) {
+	public void unblockGroundDecor(int arg0, int arg1) {
 		int var3 = arg0 - this.startX;
 		int var4 = arg1 - this.startZ;
 		this.flags[var3][var4] &= 0xFFFBFFFF;
 	}
 
+	// jag::oldscape::movement::CollisionMap::TestWall
 	@ObfuscatedName("ck.i(IIIIIII)Z")
 	public boolean testWall(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg0 == arg2 && arg1 == arg3) {
@@ -487,6 +498,7 @@ public class CollisionMap {
 		return false;
 	}
 
+	// jag::oldscape::movement::CollisionMap::TestWDecor
 	@ObfuscatedName("ck.s(IIIIIIB)Z")
 	public boolean testWDecor(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg0 == arg2 && arg1 == arg3) {
@@ -547,6 +559,7 @@ public class CollisionMap {
 		return false;
 	}
 
+	// jag::oldscape::movement::CollisionMap::TestLoc
 	@ObfuscatedName("ck.u(IIIIIIII)Z")
 	public boolean testLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		int var8 = arg2 + arg4 - 1;

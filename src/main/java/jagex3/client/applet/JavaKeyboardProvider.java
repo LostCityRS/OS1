@@ -1,7 +1,7 @@
 package jagex3.client.applet;
 
 import deob.ObfuscatedName;
-import jagex3.client.TaskHandler;
+import jagex3.client.SignLink;
 import jagex3.jstring.Cp1252;
 
 import java.awt.*;
@@ -186,7 +186,7 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 	}
 
 	public static void imethod1() {
-		if (TaskHandler.javaVendor.toLowerCase().indexOf("microsoft") == -1) {
+		if (SignLink.javaVendor.toLowerCase().indexOf("microsoft") == -1) {
 			field476[44] = 71;
 			field476[45] = 26;
 			field476[46] = 72;

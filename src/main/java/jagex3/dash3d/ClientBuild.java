@@ -8,75 +8,99 @@ import jagex3.config.LocType;
 import jagex3.io.Packet;
 import jagex3.sound.BgSound;
 
+// jag::oldscape::ClientBuild
 @ObfuscatedName("l")
 public class ClientBuild {
 
+	// jag::oldscape::ClientBuild::m_groundh
 	@ObfuscatedName("l.r")
 	public static int[][][] groundh = new int[4][105][105];
 
+	// jag::oldscape::ClientBuild::m_mapl
 	@ObfuscatedName("l.d")
 	public static byte[][][] mapl = new byte[4][104][104];
 
+	// jag::oldscape::ClientBuild::minusedlevel
 	@ObfuscatedName("l.l")
 	public static int minusedlevel = 99;
 
+	// jag::oldscape::ClientBuild::m_floort1
 	@ObfuscatedName("l.m")
 	public static byte[][][] floort1;
 
+	// jag::oldscape::ClientBuild::m_floort2
 	@ObfuscatedName("l.c")
 	public static byte[][][] floort2;
 
+	// jag::oldscape::ClientBuild::m_floors
 	@ObfuscatedName("l.n")
 	public static byte[][][] floors;
 
+	// jag::oldscape::ClientBuild::m_floorr
 	@ObfuscatedName("l.j")
 	public static byte[][][] floorr;
 
+	// jag::oldscape::ClientBuild::m_shadow
 	@ObfuscatedName("l.z")
 	public static byte[][][] shadow;
 
+	// jag::oldscape::ClientBuild::m_lightmap
 	@ObfuscatedName("ag.g")
 	public static int[][] lightmap;
 
+	// jag::oldscape::ClientBuild::m_huetot
 	@ObfuscatedName("ax.q")
 	public static int[] huetot;
 
+	// jag::oldscape::ClientBuild::m_sattot
 	@ObfuscatedName("da.i")
 	public static int[] sattot;
 
+	// jag::oldscape::ClientBuild::m_ligtot
 	@ObfuscatedName("l.s")
 	public static int[] ligtot;
 
+	// jag::oldscape::ClientBuild::m_comtot
 	@ObfuscatedName("dm.u")
 	public static int[] comtot;
 
+	// jag::oldscape::ClientBuild::m_tot
 	@ObfuscatedName("l.v")
 	public static int[] tot;
 
+	// jag::oldscape::ClientBuild::m_mapo
 	@ObfuscatedName("bp.w")
 	public static int[][][] mapo;
 
+	// jag::oldscape::ClientBuild::WSHAPE0
 	@ObfuscatedName("l.t")
 	public static final int[] WSHAPE0 = new int[] { 1, 2, 4, 8 };
 
+	// jag::oldscape::ClientBuild::WSHAPE1
 	@ObfuscatedName("l.f")
 	public static final int[] WSHAPE1 = new int[] { 16, 32, 64, 128 };
 
+	// jag::oldscape::ClientBuild::DECORXOF
 	@ObfuscatedName("l.k")
 	public static final int[] DECORXOF = new int[] { 1, 0, -1, 0 };
 
+	// jag::oldscape::ClientBuild::DECORZOF
 	@ObfuscatedName("l.o")
 	public static final int[] DECORZOF = new int[] { 0, -1, 0, 1 };
 
+	// jag::oldscape::ClientBuild::DECORXOF2
 	@ObfuscatedName("l.a")
 	public static final int[] field31 = new int[] { 1, -1, -1, 1 };
 
+	// jag::oldscape::ClientBuild::DECORZOF2
 	@ObfuscatedName("l.h")
 	public static final int[] field32 = new int[] { -1, -1, 1, 1 };
 
+	// jag::oldscape::ClientBuild::m_hueOff
 	@ObfuscatedName("l.x")
 	public static int hueOff = (int) (Math.random() * 17.0D) - 8;
 
+	// jag::oldscape::ClientBuild::m_ligOff
 	@ObfuscatedName("l.p")
 	public static int ligOff = (int) (Math.random() * 33.0D) - 16;
 
@@ -101,6 +125,7 @@ public class ClientBuild {
 		tot = null;
 	}
 
+	// jag::oldscape::ClientBuild::FadeAdjacent
 	@ObfuscatedName("dy.d(IIIIB)V")
 	public static void fadeAdjacent(int arg0, int arg1, int arg2, int arg3) {
 		for (int var4 = arg1; var4 <= arg1 + arg3; var4++) {
@@ -124,6 +149,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::LoadGround
 	@ObfuscatedName("aa.l([BIIII[Lck;I)V")
 	public static void loadGround(byte[] arg0, int arg1, int arg2, int arg3, int arg4, CollisionMap[] arg5) {
 		for (int var6 = 0; var6 < 4; var6++) {
@@ -145,6 +171,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::LoadGroundRegion
 	@ObfuscatedName("aa.m([BIIIIIII[Lck;B)V")
 	public static void loadGroundRegion(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, CollisionMap[] arg8) {
 		for (int var9 = 0; var9 < 8; var9++) {
@@ -195,6 +222,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::LoadGroundSquare
 	@ObfuscatedName("dz.c(Lev;IIIIIII)V")
 	public static void loadGroundSquare(Packet arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		if (arg2 < 0 || arg2 >= 104 || arg3 < 0 || arg3 >= 104) {
@@ -248,6 +276,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::CheckLocations
 	@ObfuscatedName("as.n([BIII)Z")
 	public static boolean checkLocations(byte[] arg0, int arg1, int arg2) {
 		boolean var3 = true;
@@ -277,7 +306,7 @@ public class ClientBuild {
 					if (var14 > 0 && var15 > 0 && var14 < 103 && var15 < 103) {
 						LocType var16 = LocType.get(var5);
 						if (var13 != 22 || !Client.lowMemory || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
-							if (!var16.isDownloaded()) {
+							if (!var16.checkModel()) {
 								Client.locModelLoadCount++;
 								var3 = false;
 							}
@@ -294,6 +323,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::LoadLocations
 	@ObfuscatedName("dk.j([BIILaq;[Lck;I)V")
 	public static void loadLocations(byte[] arg0, int arg1, int arg2, World arg3, CollisionMap[] arg4) {
 		Packet var5 = new Packet(arg0);
@@ -334,6 +364,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::LoadLocationsRegion
 	@ObfuscatedName("ag.z([BIIIIIIILaq;[Lck;I)V")
 	public static void loadLocationsRegion(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, World arg8, CollisionMap[] arg9) {
 		Packet var10 = new Packet(arg0);
@@ -359,8 +390,8 @@ public class ClientBuild {
 				int var20 = var18 & 0x3;
 				if (arg4 == var17 && var16 >= arg5 && var16 < arg5 + 8 && var15 >= arg6 && var15 < arg6 + 8) {
 					LocType var21 = LocType.get(var11);
-					int var22 = arg2 + WorldRegion.rotateX(var16 & 0x7, var15 & 0x7, arg7, var21.width, var21.length, var20);
-					int var23 = arg3 + WorldRegion.rotateZ(var16 & 0x7, var15 & 0x7, arg7, var21.width, var21.length, var20);
+					int var22 = arg2 + RegionRotate.DX(var16 & 0x7, var15 & 0x7, arg7, var21.width, var21.length, var20);
+					int var23 = arg3 + RegionRotate.DZ(var16 & 0x7, var15 & 0x7, arg7, var21.width, var21.length, var20);
 					if (var22 > 0 && var23 > 0 && var22 < 103 && var23 < 103) {
 						int var24 = arg1;
 						if ((mapl[1][var22][var23] & 0x2) == 2) {
@@ -377,6 +408,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::AddLoc
 	@ObfuscatedName("bi.g(IIIIIILaq;Lck;I)V")
 	public static void addLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, World arg6, CollisionMap arg7) {
 		if (Client.lowMemory && (mapl[0][arg1][arg2] & 0x2) == 0) {
@@ -695,6 +727,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::FinishBuild
 	@ObfuscatedName("fp.q(Laq;[Lck;I)V")
 	public static void finishBuild(World arg0, CollisionMap[] arg1) {
 		for (int var2 = 0; var2 < 4; var2++) {
@@ -1081,6 +1114,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::PerlinNoise
 	@ObfuscatedName("fb.i(IIB)I")
 	public static int perlinNoise(int arg0, int arg1) {
 		int var2 = interpolatedNoise(arg0 + 45365, arg1 + 91923, 4) - 128 + (interpolatedNoise(arg0 + 10294, arg1 + 37821, 2) - 128 >> 1) + (interpolatedNoise(arg0, arg1, 1) - 128 >> 2);
@@ -1093,6 +1127,7 @@ public class ClientBuild {
 		return var3;
 	}
 
+	// jag::oldscape::ClientBuild::InterpolatedNoise
 	@ObfuscatedName("dn.s(IIIB)I")
 	public static int interpolatedNoise(int arg0, int arg1, int arg2) {
 		int var3 = arg0 / arg2;
@@ -1111,6 +1146,7 @@ public class ClientBuild {
 		return ((65536 - var17) * var12 >> 16) + (var15 * var17 >> 16);
 	}
 
+	// jag::oldscape::ClientBuild::SmoothNoise
 	@ObfuscatedName("cw.u(III)I")
 	public static int smoothNoise(int arg0, int arg1) {
 		int var2 = noise(arg0 - 1, arg1 - 1) + noise(arg0 + 1, arg1 - 1) + noise(arg0 - 1, arg1 + 1) + noise(arg0 + 1, arg1 + 1);
@@ -1119,6 +1155,7 @@ public class ClientBuild {
 		return var4 / 4 + var2 / 16 + var3 / 8;
 	}
 
+	// jag::oldscape::ClientBuild::Noise
 	@ObfuscatedName("ef.v(III)I")
 	public static int noise(int arg0, int arg1) {
 		int var2 = arg1 * 57 + arg0;
@@ -1127,6 +1164,7 @@ public class ClientBuild {
 		return var4 >> 19 & 0xFF;
 	}
 
+	// jag::oldscape::ClientBuild::GetUCol
 	@ObfuscatedName("ch.w(IIB)I")
 	public static int getUCol(int arg0, int arg1) {
 		if (arg0 == -1) {
@@ -1141,6 +1179,7 @@ public class ClientBuild {
 		return (arg0 & 0xFF80) + var2;
 	}
 
+	// jag::oldscape::ClientBuild::GetOCol
 	@ObfuscatedName("eg.e(III)I")
 	public static int getOCol(int arg0, int arg1) {
 		if (arg0 == -2) {
@@ -1163,6 +1202,7 @@ public class ClientBuild {
 		}
 	}
 
+	// jag::oldscape::ClientBuild::GetTable
 	@ObfuscatedName("aa.b(IIII)I")
 	public static int getTable(int arg0, int arg1, int arg2) {
 		if (arg2 > 179) {
@@ -1180,8 +1220,9 @@ public class ClientBuild {
 		return arg2 / 2 + (arg0 / 4 << 10) + (arg1 / 32 << 7);
 	}
 
+	// jag::oldscape::ClientBuild::ChangeLocAvailable
 	@ObfuscatedName("bk.y(III)Z")
-	public static boolean isLocDownloaded(int arg0, int arg1) {
+	public static boolean changeLocAvailable(int arg0, int arg1) {
 		LocType var2 = LocType.get(arg0);
 		if (arg1 == 11) {
 			arg1 = 10;
@@ -1189,11 +1230,12 @@ public class ClientBuild {
 		if (arg1 >= 5 && arg1 <= 8) {
 			arg1 = 4;
 		}
-		return var2.isDownloaded(arg1);
+		return var2.checkModel(arg1);
 	}
 
+	// jag::oldscape::ClientBuild::ChangeLocUnchecked
 	@ObfuscatedName("bc.t(IIIIIIILaq;Lck;I)V")
-	public static void addLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, World arg7, CollisionMap arg8) {
+	public static void changeLocUnchecked(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, World arg7, CollisionMap arg8) {
 		LocType var9 = LocType.get(arg4);
 		int var10;
 		int var11;
@@ -1391,7 +1433,8 @@ public class ClientBuild {
 		}
 	}
 
-	public static void load() {
+	// jag::oldscape::ClientBuild::Init
+	public static void init() {
 		minusedlevel = 99;
 		floort1 = new byte[4][104][104];
 		floort2 = new byte[4][104][104];

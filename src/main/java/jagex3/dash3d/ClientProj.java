@@ -4,6 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.config.SeqType;
 import jagex3.config.SpotAnimType;
 
+// jag::oldscape::ClientProj::ClientProj
 @ObfuscatedName("fh")
 public class ClientProj extends ModelSource {
 
@@ -95,7 +96,7 @@ public class ClientProj extends ModelSource {
 		this.target = arg9;
 		this.h2 = arg10;
 		this.mobile = false;
-		int var12 = SpotAnimType.get(this.spotanim).anim;
+		int var12 = SpotAnimType.list(this.spotanim).anim;
 		if (var12 == -1) {
 			this.anim = null;
 		} else {
@@ -103,8 +104,9 @@ public class ClientProj extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::ClientProj::SetTarget
 	@ObfuscatedName("fh.b(IIIII)V")
-	public final void updateVelocity(int arg0, int arg1, int arg2, int arg3) {
+	public final void setTarget(int arg0, int arg1, int arg2, int arg3) {
 		if (!this.mobile) {
 			double var5 = (double) (arg0 - this.srcX);
 			double var7 = (double) (arg1 - this.srcZ);
@@ -123,8 +125,9 @@ public class ClientProj extends ModelSource {
 		this.accelerationY = ((double) arg2 - this.y - this.velocityY * var11) * 2.0D / (var11 * var11);
 	}
 
+	// jag::oldscape::ClientProj::Move
 	@ObfuscatedName("fh.y(IB)V")
-	public final void update(int arg0) {
+	public final void move(int arg0) {
 		this.mobile = true;
 		this.x += (double) arg0 * this.velocityX;
 		this.z += (double) arg0 * this.velocityZ;
@@ -150,10 +153,11 @@ public class ClientProj extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::ClientProj::GetTempModel
 	@ObfuscatedName("fh.g(I)Lfo;")
 	public final ModelLit getTempModel() {
-		SpotAnimType var1 = SpotAnimType.get(this.spotanim);
-		ModelLit var2 = var1.animate(this.animFrame);
+		SpotAnimType var1 = SpotAnimType.list(this.spotanim);
+		ModelLit var2 = var1.getTempModel2(this.animFrame);
 		if (var2 == null) {
 			return null;
 		} else {

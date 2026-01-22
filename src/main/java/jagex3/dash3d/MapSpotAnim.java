@@ -4,6 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.config.SeqType;
 import jagex3.config.SpotAnimType;
 
+// jag::oldscape::MapSpotAnim
 @ObfuscatedName("fn")
 public class MapSpotAnim extends ModelSource {
 
@@ -44,7 +45,7 @@ public class MapSpotAnim extends ModelSource {
 		this.z = arg3;
 		this.y = arg4;
 		this.startCycle = arg5 + arg6;
-		int var8 = SpotAnimType.get(this.type).anim;
+		int var8 = SpotAnimType.list(this.type).anim;
 		if (var8 == -1) {
 			this.animComplete = true;
 		} else {
@@ -53,8 +54,9 @@ public class MapSpotAnim extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::MapSpotAnim::DoAnim
 	@ObfuscatedName("fn.b(II)V")
-	public final void update(int arg0) {
+	public final void doAnim(int arg0) {
 		if (this.animComplete) {
 			return;
 		}
@@ -69,14 +71,15 @@ public class MapSpotAnim extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::MapSpotAnim::GetTempModel
 	@ObfuscatedName("fn.g(I)Lfo;")
 	public final ModelLit getTempModel() {
-		SpotAnimType var1 = SpotAnimType.get(this.type);
+		SpotAnimType var1 = SpotAnimType.list(this.type);
 		ModelLit var2;
 		if (this.animComplete) {
-			var2 = var1.animate(-1);
+			var2 = var1.getTempModel2(-1);
 		} else {
-			var2 = var1.animate(this.animFrame);
+			var2 = var1.getTempModel2(this.animFrame);
 		}
 		return var2 == null ? null : var2;
 	}

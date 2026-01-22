@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.client.TaskHandler;
+import jagex3.client.SignLink;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class JavaSafePcmPlayer extends PcmPlayer {
 	@ObfuscatedName("dv.aa")
 	public int field1551;
 
-	public JavaSafePcmPlayer(TaskHandler arg0, int arg1) {
+	public JavaSafePcmPlayer(SignLink arg0, int arg1) {
 		source = arg0.method440();
 		this.field1551 = arg1;
 	}

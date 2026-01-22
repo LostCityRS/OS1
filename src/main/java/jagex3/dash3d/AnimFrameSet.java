@@ -41,8 +41,9 @@ public class AnimFrameSet extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::dash3d::AnimFrameSet::GetAnimateTransparencies
 	@ObfuscatedName("fr.z(IB)Z")
-	public boolean method2652(int arg0) {
+	public boolean getAnimateTransparencies(int arg0) {
 		return this.field2488[arg0].hasAlpha;
 	}
 }

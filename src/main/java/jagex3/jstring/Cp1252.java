@@ -95,7 +95,7 @@ public class Cp1252 {
 	}
 
 	@ObfuscatedName("ck.m(Ljava/lang/CharSequence;I)[B")
-	public static byte[] method1231(CharSequence arg0) {
+	public static byte[] encode(CharSequence arg0) {
 		int var1 = arg0.length();
 		byte[] var2 = new byte[var1];
 		for (int var3 = 0; var3 < var1; var3++) {

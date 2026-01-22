@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.client.TaskHandler;
+import jagex3.client.SignLink;
 import jagex3.datastruct.ArrayUtil;
 import jagex3.datastruct.MonotonicTime;
 import jagex3.datastruct.PreciseSleep;
@@ -83,7 +83,7 @@ public class PcmPlayer {
 	}
 
 	@ObfuscatedName("cm.d(Lak;Ljava/awt/Component;III)Ly;")
-	public static PcmPlayer getPlayer(TaskHandler taskHandler, Component arg1, int arg2, int arg3) {
+	public static PcmPlayer getPlayer(SignLink signLink, Component arg1, int arg2, int arg3) {
 		if (frequency == 0) {
 			throw new IllegalStateException();
 		} else if (arg2 >= 0 && arg2 < 2) {
@@ -102,8 +102,8 @@ public class PcmPlayer {
 				var4.open(var4.capacity);
 				if (threadPriority > 0 && thread == null) {
 					thread = new AudioThread();
-					thread.taskHandler = taskHandler;
-					taskHandler.threadreq(thread, threadPriority);
+					thread.signLink = signLink;
+					signLink.threadreq(thread, threadPriority);
 				}
 				if (thread != null) {
 					if (thread.players[arg2] != null) {
@@ -114,7 +114,7 @@ public class PcmPlayer {
 				return var4;
 			} catch (Throwable var9) {
 				try {
-					JavaSafePcmPlayer var6 = new JavaSafePcmPlayer(taskHandler, arg2);
+					JavaSafePcmPlayer var6 = new JavaSafePcmPlayer(signLink, arg2);
 					var6.samples = new int[(stereo ? 2 : 1) * 256];
 					var6.initialTargetSampledQueued = arg3;
 					var6.init(arg1);
@@ -122,8 +122,8 @@ public class PcmPlayer {
 					var6.open(var6.capacity);
 					if (threadPriority > 0 && thread == null) {
 						thread = new AudioThread();
-						thread.taskHandler = taskHandler;
-						taskHandler.threadreq(thread, threadPriority);
+						thread.signLink = signLink;
+						signLink.threadreq(thread, threadPriority);
 					}
 					if (thread != null) {
 						if (thread.players[arg2] != null) {
