@@ -189,7 +189,7 @@ public class IfType extends Linkable {
 	public int modelYan = 0;
 
 	@ObfuscatedName("eg.bv")
-	public int zan = 0;
+	public int modelZan = 0;
 
 	@ObfuscatedName("eg.bg")
 	public int modelZoom = 100;
@@ -375,10 +375,10 @@ public class IfType extends Linkable {
 	public int[] linkObjCount;
 
 	@ObfuscatedName("eg.db")
-	public int field1791 = -1;
+	public int invobject = -1;
 
 	@ObfuscatedName("eg.dq")
-	public int field1888 = 0;
+	public int invcount = 0;
 
 	@ObfuscatedName("eg.dr")
 	public int animFrame = 0;
@@ -793,7 +793,7 @@ public class IfType extends Linkable {
 			this.yof = buf.g2b();
 			this.modelXan = buf.g2();
 			this.modelYan = buf.g2();
-			this.zan = buf.g2();
+			this.modelZan = buf.g2();
 			this.modelZoom = buf.g2();
 			this.modelAnim = buf.g2();
 			if (this.modelAnim == 65535) {
@@ -1030,53 +1030,53 @@ public class IfType extends Linkable {
 
 	// jag::oldscape::rs2lib::IfType::GetTempModel
 	@ObfuscatedName("eg.b(Leo;IZLct;I)Lfo;")
-	public ModelLit getTempModel(SeqType arg0, int arg1, boolean arg2, PlayerModel arg3) {
+	public ModelLit getTempModel(SeqType arg0, int arg1, boolean arg2, PlayerModel player) {
 		loadingAsset = false;
-		int var5;
-		int var6;
+		int type;
+		int id;
 		if (arg2) {
-			var5 = this.model2Type;
-			var6 = this.model2Id;
+			type = this.model2Type;
+			id = this.model2Id;
 		} else {
-			var5 = this.modelType;
-			var6 = this.modelId;
+			type = this.modelType;
+			id = this.modelId;
 		}
-		if (var5 == 0) {
+		if (type == 0) {
 			return null;
-		} else if (var5 == 1 && var6 == -1) {
+		} else if (type == 1 && id == -1) {
 			return null;
 		} else {
-			ModelLit var7 = (ModelLit) modelCache.get((long) ((var5 << 16) + var6));
+			ModelLit var7 = (ModelLit) modelCache.get((long) ((type << 16) + id));
 			if (var7 == null) {
-				if (var5 == 1) {
-					ModelUnlit var8 = ModelUnlit.load(models, var6, 0);
+				if (type == 1) {
+					ModelUnlit var8 = ModelUnlit.load(models, id, 0);
 					if (var8 == null) {
 						loadingAsset = true;
 						return null;
 					}
 					var7 = var8.light(64, 768, -50, -10, -50);
 				}
-				if (var5 == 2) {
-					ModelUnlit var9 = NpcType.list(var6).getHead();
+				if (type == 2) {
+					ModelUnlit var9 = NpcType.list(id).getHead();
 					if (var9 == null) {
 						loadingAsset = true;
 						return null;
 					}
 					var7 = var9.light(64, 768, -50, -10, -50);
 				}
-				if (var5 == 3) {
-					if (arg3 == null) {
+				if (type == 3) {
+					if (player == null) {
 						return null;
 					}
-					ModelUnlit var10 = arg3.getHeadModel();
+					ModelUnlit var10 = player.getHeadModel();
 					if (var10 == null) {
 						loadingAsset = true;
 						return null;
 					}
 					var7 = var10.light(64, 768, -50, -10, -50);
 				}
-				if (var5 == 4) {
-					ObjType var11 = ObjType.list(var6);
+				if (type == 4) {
+					ObjType var11 = ObjType.list(id);
 					ModelUnlit var12 = var11.getModelUnlit(10);
 					if (var12 == null) {
 						loadingAsset = true;
@@ -1084,7 +1084,7 @@ public class IfType extends Linkable {
 					}
 					var7 = var12.light(var11.ambient + 64, var11.contrast + 768, -50, -10, -50);
 				}
-				modelCache.put(var7, (long) ((var5 << 16) + var6));
+				modelCache.put(var7, (long) ((type << 16) + id));
 			}
 			if (arg0 != null) {
 				var7 = arg0.animateModelWithExtra(var7, arg1);

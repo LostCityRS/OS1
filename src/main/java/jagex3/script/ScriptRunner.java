@@ -664,7 +664,7 @@ public class ScriptRunner {
 						var63.yof = intStack[isp + 1];
 						var63.modelXan = intStack[isp + 2];
 						var63.modelYan = intStack[isp + 3];
-						var63.zan = intStack[isp + 4];
+						var63.modelZan = intStack[isp + 4];
 						var63.modelZoom = intStack[isp + 5];
 
 						Client.componentUpdated(var63);
@@ -789,12 +789,12 @@ public class ScriptRunner {
 						int var67 = intStack[isp];
 						int var68 = intStack[isp + 1];
 
-						var66.field1791 = var67;
-						var66.field1888 = var68;
+						var66.invobject = var67;
+						var66.invcount = var68;
 						ObjType var69 = ObjType.list(var67);
 						var66.modelXan = var69.xan2d;
 						var66.modelYan = var69.yan2d;
-						var66.zan = var69.zan2d;
+						var66.modelZan = var69.zan2d;
 						var66.xof = var69.xof2d;
 						var66.yof = var69.yof2d;
 						var66.modelZoom = var69.zoom2d;
@@ -1103,7 +1103,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 1607) {
 						// cc_getmodelangle_z
-						intStack[isp++] = var82.zan;
+						intStack[isp++] = var82.modelZan;
 						continue;
 					}
 					if (opcode == 1608) {
@@ -1115,15 +1115,15 @@ public class ScriptRunner {
 					IfType var83 = secondary ? activeComponent2 : activeComponent;
 					if (opcode == 1700) {
 						// cc_getinvobject
-						intStack[isp++] = var83.field1791;
+						intStack[isp++] = var83.invobject;
 						continue;
 					}
 					if (opcode == 1701) {
 						// cc_getinvcount
-						if (var83.field1791 == -1) {
+						if (var83.invobject == -1) {
 							intStack[isp++] = 0;
 						} else {
-							intStack[isp++] = var83.field1888;
+							intStack[isp++] = var83.invcount;
 						}
 						continue;
 					}
@@ -1235,7 +1235,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 2607) {
 						// if_getmodelangle_z
-						intStack[isp++] = var87.zan;
+						intStack[isp++] = var87.modelZan;
 						continue;
 					}
 					if (opcode == 2608) {
@@ -1249,7 +1249,7 @@ public class ScriptRunner {
 						isp--;
 
 						IfType var88 = IfType.get(intStack[isp]);
-						intStack[isp++] = var88.field1791;
+						intStack[isp++] = var88.invobject;
 						continue;
 					}
 					if (opcode == 2701) {
@@ -1257,10 +1257,10 @@ public class ScriptRunner {
 						isp--;
 
 						IfType var89 = IfType.get(intStack[isp]);
-						if (var89.field1791 == -1) {
+						if (var89.invobject == -1) {
 							intStack[isp++] = 0;
 						} else {
-							intStack[isp++] = var89.field1888;
+							intStack[isp++] = var89.invcount;
 						}
 						continue;
 					}

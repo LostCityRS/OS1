@@ -1047,7 +1047,7 @@ public class Client extends GameShell {
 	public static Pix32 minimap; // todo
 
 	@ObfuscatedName("eh.nd")
-	public static ClanMember[] field1774; // todo
+	public static FriendChatUser[] field1774; // todo
 
 	@ObfuscatedName("client.oz")
 	public static int ambientVolume = 127;
@@ -6542,14 +6542,14 @@ public class Client extends GameShell {
 							var189 = com.colourOver;
 						}
 					}
-					if (com.v3 && com.field1791 != -1) {
-						ObjType var190 = ObjType.list(com.field1791);
+					if (com.v3 && com.invobject != -1) {
+						ObjType var190 = ObjType.list(com.invobject);
 						var188 = var190.name;
 						if (var188 == null) {
 							var188 = "null";
 						}
-						if ((var190.stackable == 1 || com.field1888 != 1) && com.field1888 != -1) {
-							var188 = StringConstants.TAG_COLOUR(0xff9040) + var188 + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.field1888);
+						if ((var190.stackable == 1 || com.invcount != 1) && com.invcount != -1) {
+							var188 = StringConstants.TAG_COLOUR(0xff9040) + var188 + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.invcount);
 						}
 					}
 					if (resumedPauseButton == com) {
@@ -6567,10 +6567,10 @@ public class Client extends GameShell {
 			} else if (com.type == 5) {
 				if (com.v3) {
 					Pix32 var192;
-					if (com.field1791 == -1) {
+					if (com.invobject == -1) {
 						var192 = com.getGraphic(false);
 					} else {
-						var192 = ObjType.getSprite(com.field1791, com.field1888, com.outline, com.graphicshadow, false);
+						var192 = ObjType.getSprite(com.invobject, com.invcount, com.outline, com.graphicshadow, false);
 					}
 					if (var192 != null) {
 						int var193 = var192.owi;
@@ -6624,10 +6624,10 @@ public class Client extends GameShell {
 				}
 				ModelLit var202 = null;
 				int var203 = 0;
-				if (com.field1791 != -1) {
-					ObjType var204 = ObjType.list(com.field1791);
+				if (com.invobject != -1) {
+					ObjType var204 = ObjType.list(com.invobject);
 					if (var204 != null) {
-						ObjType var205 = var204.getStackSizeAlt(com.field1888);
+						ObjType var205 = var204.getStackSizeAlt(com.invcount);
 						var202 = var205.getModelLit(1);
 						if (var202 != null) {
 							var202.calcBoundingCylinder();
@@ -6661,9 +6661,9 @@ public class Client extends GameShell {
 					if (com.v3) {
 						var202.calcBoundingCylinder();
 						if (com.modelOrthographic) {
-							var202.objRenderOrthog(0, com.modelYan, com.zan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208, com.modelZoom);
+							var202.objRenderOrthog(0, com.modelYan, com.modelZan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208, com.modelZoom);
 						} else {
-							var202.objRender(0, com.modelYan, com.zan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208);
+							var202.objRender(0, com.modelYan, com.modelZan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208);
 						}
 					} else {
 						var202.objRender(0, com.modelYan, 0, com.modelXan, 0, var207, var208);
@@ -9118,6 +9118,7 @@ public class Client extends GameShell {
 			ptype2 = ptype1;
 			ptype1 = ptype0;
 			ptype0 = ptype;
+
 			if (ptype == 180) {
 				// VARP_LARGE
 				int var81 = in.g2_alt3();
@@ -9132,6 +9133,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 168) {
+				// MESSAGE_PRIVATE_ECHO
 				String var83 = in.gjstr();
 				String var91 = PixFont.method2844(StringUtil.method54(WordPack.unpack2(in)));
 				addChat(6, var83, var91);
@@ -9139,6 +9141,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 87) {
+				// IF_CLOSESUB
 				int var92 = in.g4();
 				SubInterface var93 = (SubInterface) subinterfaces.get((long) var92);
 				if (var93 != null) {
@@ -9152,6 +9155,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 176) {
+				// IF_SETANIM
 				int var94 = in.g2b_alt3();
 				int var95 = in.g4();
 				IfType var96 = IfType.get(var95);
@@ -9232,6 +9236,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 246) {
+				// TELEPORT (unofficial name)
 				int var110 = in.g1_alt2();
 				int var111 = in.g1_alt1();
 				int var112 = in.g1_alt3();
@@ -9254,6 +9259,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 42) {
+				// TRIGGER_ONDIALOGABORT
 				if (toplevelinterface != -1) {
 					runHookImmediate(toplevelinterface, 0);
 				}
@@ -9266,6 +9272,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 41) {
+				// UPDATE_RUNENERGY
 				legacyUpdated();
 				runEnergy = in.g1();
 				field2119 = interfaceUpdateNum;
@@ -9273,6 +9280,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 86) {
+				// MESSAGE_PRIVATE
 				String var115 = in.gjstr();
 				long var116 = (long) in.g2();
 				long var118 = (long) in.g3();
@@ -9304,6 +9312,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 184) {
+				// IF_OPENSUB
 				int var133 = in.g1_alt2();
 				int var134 = in.g2_alt2();
 				int var135 = in.g4_alt1();
@@ -9316,7 +9325,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 214) {
-				// UPDATE_UID192 (?)
+				// UPDATE_UID192
 				in.pos += 28;
 				if (in.checkcrc()) {
 					GameShellCache.storeUID192(in, in.pos - 28);
@@ -9325,6 +9334,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 137) {
+				// CHAT_FILTER_SETTINGS
 				publicChatFilter = in.g1();
 				tradeChatFilter = in.g1();
 				ptype = -1;
@@ -9337,6 +9347,7 @@ public class Client extends GameShell {
 				return false;
 			}
 			if (ptype == 147) {
+				// IF_OPENTOP
 				int var137 = in.g2_alt1();
 				toplevelinterface = var137;
 				ifAnimReset(var137);
@@ -9348,6 +9359,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 241) {
+				// LAST_LOGIN_INFO
 				int var139 = in.g4_alt1();
 				field170 = GameShell.signLink.dnsreq(var139);
 				ptype = -1;
@@ -9382,6 +9394,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 234) {
+				// IF_SETCOLOUR
 				int var147 = in.g4_alt1();
 				int var148 = in.g2();
 				int var149 = var148 >> 10 & 0x1F;
@@ -9397,6 +9410,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 85) {
+				// IF_SETPOSITION
 				int var154 = in.g2b_alt2();
 				int var155 = in.g2b_alt1();
 				int var156 = in.g4_alt1();
@@ -9412,6 +9426,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 1) {
+				// UPDATE_RUNWEIGHT
 				legacyUpdated();
 				runWeight = in.g2b();
 				field2119 = interfaceUpdateNum;
@@ -9442,6 +9457,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 73) {
+				// REBUILD_REGION
 				rebuildPacket(true);
 				ptype = -1;
 				return true;
@@ -9513,6 +9529,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 39) {
+				// IF_RESYNC (unofficial name)
 				int var178 = psize + in.pos;
 				int var179 = in.g2();
 				int var180 = in.g2();
@@ -9560,16 +9577,19 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 21) {
+				// REBUILD_NORMAL
 				rebuildPacket(false);
 				ptype = -1;
 				return true;
 			}
 			if (ptype == 190) {
+				// MINIMAP_TOGGLE
 				minimapState = in.g1();
 				ptype = -1;
 				return true;
 			}
 			if (ptype == 84) {
+				// IF_SETHIDE
 				int var194 = in.g4_alt1();
 				boolean var195 = in.g1_alt3() == 1;
 				IfType var196 = IfType.get(var194);
@@ -9581,6 +9601,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 129) {
+				// VARP_RESET (unofficial name)
 				for (int var197 = 0; var197 < VarpType.numDefinitions; var197++) {
 					VarpType var198 = VarpType.list(var197);
 					if (var198 != null && var198.clientcode == 0) {
@@ -9636,6 +9657,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 66) {
+				// IF_SETNPCHEAD
 				int var206 = in.g4_alt2();
 				int var207 = in.g2_alt2();
 				IfType var208 = IfType.get(var206);
@@ -9648,6 +9670,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 208) {
+				// UPDATE_STAT
 				legacyUpdated();
 				int var209 = in.g1_alt1();
 				int var210 = in.g1_alt1();
@@ -9665,12 +9688,14 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 95) {
+				// FRIENDLIST_LOADED
 				friendListStatus = 1;
 				friendSystemUpdateNum = interfaceUpdateNum;
 				ptype = -1;
 				return true;
 			}
 			if (ptype == 164) {
+				// SET_PLAYER_OP
 				String var213 = in.gjstr();
 				int var214 = in.g1_alt1();
 				int var215 = in.g1_alt3();
@@ -9700,6 +9725,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 172) {
+				// UPDATE_INV_STOPTRANSMIT
 				int var219 = in.g2_alt2();
 				ClientInvCache.method55(var219);
 				field2112[++field2050 - 1 & 0x1F] = var219 & 0x7FFF;
@@ -9707,11 +9733,13 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 70) {
+				// CHAT_FILTER_SETTINGS_PRIVATECHAT
 				privateChatFilter = ChatFilterPrivacy.get(in.g1());
 				ptype = -1;
 				return true;
 			}
 			if (ptype == 140) {
+				// UPDATE_FRIENDCHAT_CHANNEL_SINGLEUSER
 				String var225 = in.gjstr();
 				int var226 = in.g2();
 				byte var227 = in.g1b();
@@ -9738,7 +9766,7 @@ public class Client extends GameShell {
 					}
 				} else {
 					in.gjstr();
-					ClanMember var231 = new ClanMember();
+					FriendChatUser var231 = new FriendChatUser();
 					var231.username = var225;
 					var231.displayName = DisplayNameTools.toBaseDisplayName(var231.username, namespace);
 					var231.world = var226;
@@ -9768,7 +9796,7 @@ public class Client extends GameShell {
 						field1774[var234 + 1] = field1774[var234];
 					}
 					if (field1220 == 0) {
-						field1774 = new ClanMember[100];
+						field1774 = new FriendChatUser[100];
 					}
 					field1774[var232 + 1] = var231;
 					field1220++;
@@ -9781,12 +9809,13 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 25) {
+				// REFLECTION_CHECKER
 				ReflectionChecker.addCheck(in, psize);
 				ptype = -1;
 				return true;
 			}
 			if (ptype == 161) {
-				// UNSET_MAP_FLAG
+				// UNSET_MAP_FLAG (unofficial name)
 				minimapFlagX = 0;
 				ptype = -1;
 				return true;
@@ -9836,6 +9865,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 102) {
+				// IF_SETOBJECT
 				int var262 = in.g4();
 				int var263 = in.g2_alt2();
 				if (var263 == 65535) {
@@ -9844,12 +9874,12 @@ public class Client extends GameShell {
 				int var264 = in.g4_alt1();
 				IfType var265 = IfType.get(var262);
 				if (var265.v3) {
-					var265.field1791 = var263;
-					var265.field1888 = var264;
+					var265.invobject = var263;
+					var265.invcount = var264;
 					ObjType var267 = ObjType.list(var263);
 					var265.modelXan = var267.xan2d;
 					var265.modelYan = var267.yan2d;
-					var265.zan = var267.zan2d;
+					var265.modelZan = var267.zan2d;
 					var265.xof = var267.xof2d;
 					var265.yof = var267.yof2d;
 					var265.modelZoom = var267.zoom2d;
@@ -9875,6 +9905,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 57) {
+				// MESSAGE_FRIENDCHANNEL
 				String var268 = in.gjstr();
 				long var269 = in.g8();
 				long var271 = (long) in.g2();
@@ -9907,6 +9938,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 80) {
+				// UPDATE_FRIENDLIST
 				while (in.pos < psize) {
 					boolean var288 = in.g1() == 1;
 					String var289 = in.gjstr();
@@ -10008,6 +10040,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 120) {
+				// UPDATE_FRIENDCHAT_CHANNEL_FULL
 				friendChatUpdateNum = interfaceUpdateNum;
 				if (psize == 0) {
 					chatDisplayName = null;
@@ -10027,9 +10060,9 @@ public class Client extends GameShell {
 					return true;
 				}
 				field1220 = var311;
-				ClanMember[] var312 = new ClanMember[100];
+				FriendChatUser[] var312 = new FriendChatUser[100];
 				for (int var313 = 0; var313 < field1220; var313++) {
-					var312[var313] = new ClanMember();
+					var312[var313] = new FriendChatUser();
 					var312[var313].username = in.gjstr();
 					var312[var313].displayName = DisplayNameTools.toBaseDisplayName(var312[var313].username, namespace);
 					var312[var313].world = in.g2();
@@ -10046,7 +10079,7 @@ public class Client extends GameShell {
 					var315--;
 					for (int var317 = 0; var317 < var315; var317++) {
 						if (var312[var317].displayName.compareTo(var312[var317 + 1].displayName) > 0) {
-							ClanMember var318 = var312[var317];
+							FriendChatUser var318 = var312[var317];
 							var312[var317] = var312[var317 + 1];
 							var312[var317 + 1] = var318;
 							var316 = false;
@@ -10073,7 +10106,6 @@ public class Client extends GameShell {
 					com = IfType.get(comId);
 				} else {
 					com = null;
-
 				}
 
 				if (com != null) {
@@ -10163,6 +10195,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 50) {
+				// IF_SETSCROLLPOS
 				int var331 = in.g4_alt3();
 				int var332 = in.g2();
 				IfType var333 = IfType.get(var331);
@@ -10182,6 +10215,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 26) {
+				// IF_SETANGLE
 				int var334 = in.g2_alt2();
 				int var335 = in.g2();
 				int var336 = in.g4_alt1();
@@ -10204,6 +10238,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 251) {
+				// IF_SETMODEL
 				int var339 = in.g2();
 				int var340 = in.g4_alt2();
 				IfType var341 = IfType.get(var340);
@@ -10225,6 +10260,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 142) {
+				// UPDATE_IGNORELIST
 				while (in.pos < psize) {
 					int var348 = in.g1();
 					boolean var349 = (var348 & 0x1) == 1;
@@ -10260,6 +10296,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 171) {
+				// IF_SETPLAYERHEAD
 				int var355 = in.g4_alt3();
 				IfType var356 = IfType.get(var355);
 				var356.modelType = 3;
@@ -10300,7 +10337,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 111) {
-				// RESET_CLIENT_VARCACHE
+				// VARP_SYNC (unofficial name)
 				for (int i = 0; i < VarCache.var.length; i++) {
 					if (VarCache.varServ[i] != VarCache.var[i]) {
 						VarCache.var[i] = VarCache.varServ[i];
@@ -10318,6 +10355,7 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 197) {
+				// IF_SETTEXT
 				String var377 = in.gjstr();
 				int var378 = in.g4_alt3();
 				IfType var379 = IfType.get(var378);
@@ -10328,6 +10366,7 @@ public class Client extends GameShell {
 				ptype = -1;
 				return true;
 			}
+
 			JagException.report("T1 - " + ptype + "," + ptype1 + "," + ptype2 + " - " + psize, null);
 			logout();
 		} catch (IOException ex) {

@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 
 @ObfuscatedName("dw")
-public class ClanMember extends Linkable {
+public class FriendChatUser extends Linkable {
 
 	@ObfuscatedName("dw.m")
 	public String username;
