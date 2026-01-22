@@ -1432,7 +1432,7 @@ public class ModelUnlit extends ModelSource {
 	}
 
 	@ObfuscatedName("fw.an(Lfw;Lfw;IIIZ)V")
-	public static void mergeNormals(ModelUnlit arg0, ModelUnlit arg1, int arg2, int arg3, int arg4, boolean arg5) {
+	public static void modelShareLight(ModelUnlit arg0, ModelUnlit arg1, int arg2, int arg3, int arg4, boolean arg5) {
 		arg0.calculateBoundsAABB();
 		arg0.calculateNormals();
 		arg1.calculateBoundsAABB();
@@ -1511,7 +1511,7 @@ public class ModelUnlit extends ModelSource {
 	}
 
 	@ObfuscatedName("fw.ah(IIIII)Lfo;")
-	public final ModelLit calculateNormals(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public final ModelLit light(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		this.calculateNormals();
 		int var6 = (int) Math.sqrt(arg4 * arg4 + arg2 * arg2 + arg3 * arg3);
 		int var7 = arg1 * var6 >> 8;

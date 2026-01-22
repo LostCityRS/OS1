@@ -21,41 +21,49 @@ public class PlayerModel {
 	public boolean gender;
 
 	@ObfuscatedName("ct.m")
-	public int field1225;
+	public int transmog;
 
 	@ObfuscatedName("ct.c")
-	public long field1226;
+	public long baseId;
 
+	// jag::oldscape::rs2lib::PlayerModel::m_headModelHashToModelCacheID
 	@ObfuscatedName("ct.n")
-	public long field1227;
+	public long headModelHashToModelCacheID;
 
+	// jag::oldscape::rs2lib::PlayerModel::m_recol1s
 	@ObfuscatedName("c.j")
 	public static short[] recol1s;
 
+	// jag::oldscape::rs2lib::PlayerModel::m_recol1d
 	@ObfuscatedName("bw.z")
 	public static short[][] recol1d;
 
+	// jag::oldscape::rs2lib::PlayerModel::m_recol2s
 	@ObfuscatedName("ct.g")
 	public static short[] recol2s;
 
+	// jag::oldscape::rs2lib::PlayerModel::m_recol2d
 	@ObfuscatedName("ct.q")
 	public static short[][] recol2d;
 
+	// jag::oldscape::rs2lib::PlayerModel::m_basePartMap
 	@ObfuscatedName("ct.i")
-	public static final int[] field1230 = new int[] { 8, 11, 4, 6, 9, 7, 10 };
+	public static final int[] basePartMap = new int[] { 8, 11, 4, 6, 9, 7, 10 };
 
+	// jag::oldscape::rs2lib::PlayerModel::m_modelCache
 	@ObfuscatedName("ct.s")
-	public static LruCache field1231 = new LruCache(260);
+	public static LruCache modelCache = new LruCache(260);
 
+	// jag::oldscape::rs2lib::PlayerModel::SetAppearance
 	@ObfuscatedName("ct.r([I[IZII)V")
-	public void method1168(int[] arg0, int[] arg1, boolean arg2, int arg3) {
+	public void setAppearance(int[] arg0, int[] arg1, boolean arg2, int arg3) {
 		if (arg0 == null) {
 			arg0 = new int[12];
 			for (int var5 = 0; var5 < 7; var5++) {
 				for (int var6 = 0; var6 < IdkType.count; var6++) {
 					IdkType var7 = IdkType.get(var6);
 					if (var7 != null && !var7.disable && var7.type == var5 + (arg2 ? 7 : 0)) {
-						arg0[field1230[var5]] = var6 + 256;
+						arg0[basePartMap[var5]] = var6 + 256;
 						break;
 					}
 				}
@@ -64,16 +72,17 @@ public class PlayerModel {
 		this.field1228 = arg0;
 		this.field1223 = arg1;
 		this.gender = arg2;
-		this.field1225 = arg3;
-		this.method1173();
+		this.transmog = arg3;
+		this.calcBaseId();
 	}
 
+	// jag::oldscape::rs2lib::PlayerModel::IdkChangePart
 	@ObfuscatedName("ct.d(IZI)V")
 	public void idkChangePart(int arg0, boolean arg1) {
 		if (arg0 == 1 && this.gender) {
 			return;
 		}
-		int var3 = this.field1228[field1230[arg0]];
+		int var3 = this.field1228[basePartMap[arg0]];
 		if (var3 == 0) {
 			return;
 		}
@@ -93,10 +102,11 @@ public class PlayerModel {
 			}
 			var4 = IdkType.get(var3);
 		} while (var4 == null || var4.disable || var4.type != (this.gender ? 7 : 0) + arg0);
-		this.field1228[field1230[arg0]] = var3 + 256;
-		this.method1173();
+		this.field1228[basePartMap[arg0]] = var3 + 256;
+		this.calcBaseId();
 	}
 
+	// jag::oldscape::rs2lib::PlayerModel::IdkChangeColour
 	@ObfuscatedName("ct.l(IZI)V")
 	public void idkChangeColour(int arg0, boolean arg1) {
 		int var3 = this.field1223[arg0];
@@ -112,21 +122,23 @@ public class PlayerModel {
 			}
 		}
 		this.field1223[arg0] = var3;
-		this.method1173();
+		this.calcBaseId();
 	}
 
+	// jag::oldscape::rs2lib::PlayerModel::IdkChangeBodytype
 	@ObfuscatedName("ct.m(ZI)V")
 	public void idkChangeGender(boolean arg0) {
 		if (this.gender != arg0) {
-			this.method1168(null, this.field1223, arg0, -1);
+			this.setAppearance(null, this.field1223, arg0, -1);
 		}
 	}
 
+	// jag::oldscape::rs2lib::PlayerModel::IdkSaveDesign
 	@ObfuscatedName("ct.c(Lev;I)V")
 	public void idkSaveDesign(Packet arg0) {
 		arg0.p1(this.gender ? 1 : 0);
 		for (int var2 = 0; var2 < 7; var2++) {
-			int var3 = this.field1228[field1230[var2]];
+			int var3 = this.field1228[basePartMap[var2]];
 			if (var3 == 0) {
 				arg0.p1(-1);
 			} else {
@@ -138,45 +150,47 @@ public class PlayerModel {
 		}
 	}
 
+	// jag::oldscape::rs2lib::PlayerModel::CalcBaseId
 	@ObfuscatedName("ct.n(I)V")
-	public void method1173() {
-		long var1 = this.field1226;
+	public void calcBaseId() {
+		long var1 = this.baseId;
 		int var3 = this.field1228[5];
 		int var4 = this.field1228[9];
 		this.field1228[5] = var4;
 		this.field1228[9] = var3;
-		this.field1226 = 0L;
+		this.baseId = 0L;
 		for (int var5 = 0; var5 < 12; var5++) {
-			this.field1226 <<= 0x4;
+			this.baseId <<= 0x4;
 			if (this.field1228[var5] >= 256) {
-				this.field1226 += this.field1228[var5] - 256;
+				this.baseId += this.field1228[var5] - 256;
 			}
 		}
 		if (this.field1228[0] >= 256) {
-			this.field1226 += this.field1228[0] - 256 >> 4;
+			this.baseId += this.field1228[0] - 256 >> 4;
 		}
 		if (this.field1228[1] >= 256) {
-			this.field1226 += this.field1228[1] - 256 >> 8;
+			this.baseId += this.field1228[1] - 256 >> 8;
 		}
 		for (int var6 = 0; var6 < 5; var6++) {
-			this.field1226 <<= 0x3;
-			this.field1226 += this.field1223[var6];
+			this.baseId <<= 0x3;
+			this.baseId += this.field1223[var6];
 		}
-		this.field1226 <<= 0x1;
-		this.field1226 += this.gender ? 1 : 0;
+		this.baseId <<= 0x1;
+		this.baseId += this.gender ? 1 : 0;
 		this.field1228[5] = var3;
 		this.field1228[9] = var4;
-		if (var1 != 0L && this.field1226 != var1) {
-			field1231.remove(var1);
+		if (var1 != 0L && this.baseId != var1) {
+			modelCache.remove(var1);
 		}
 	}
 
+	// jag::oldscape::rs2lib::PlayerModel::GetTempModel
 	@ObfuscatedName("ct.j(Leo;ILeo;IB)Lfo;")
-	public ModelLit method1174(SeqType arg0, int arg1, SeqType arg2, int arg3) {
-		if (this.field1225 != -1) {
-			return NpcType.get(this.field1225).getModel(arg0, arg1, arg2, arg3);
+	public ModelLit getTempModel(SeqType arg0, int arg1, SeqType arg2, int arg3) {
+		if (this.transmog != -1) {
+			return NpcType.list(this.transmog).getModel(arg0, arg1, arg2, arg3);
 		}
-		long var5 = this.field1226;
+		long var5 = this.baseId;
 		int[] var7 = this.field1228;
 		if (arg0 != null && (arg0.replaceheldleft >= 0 || arg0.replaceheldright >= 0)) {
 			var7 = new int[12];
@@ -192,7 +206,7 @@ public class PlayerModel {
 				var7[3] = arg0.replaceheldright;
 			}
 		}
-		ModelLit var9 = (ModelLit) field1231.get(var5);
+		ModelLit var9 = (ModelLit) modelCache.get(var5);
 		if (var9 == null) {
 			boolean var10 = false;
 			for (int var11 = 0; var11 < 12; var11++) {
@@ -205,8 +219,8 @@ public class PlayerModel {
 				}
 			}
 			if (var10) {
-				if (this.field1227 != -1L) {
-					var9 = (ModelLit) field1231.get(this.field1227);
+				if (this.headModelHashToModelCacheID != -1L) {
+					var9 = (ModelLit) modelCache.get(this.headModelHashToModelCacheID);
 				}
 				if (var9 == null) {
 					return null;
@@ -239,9 +253,9 @@ public class PlayerModel {
 						var19.recolour(recol2s[var20], recol2d[var20][this.field1223[var20]]);
 					}
 				}
-				var9 = var19.calculateNormals(64, 850, -30, -50, -30);
-				field1231.put(var9, var5);
-				this.field1227 = var5;
+				var9 = var19.light(64, 850, -30, -50, -30);
+				modelCache.put(var9, var5);
+				this.headModelHashToModelCacheID = var5;
 			}
 		}
 		if (arg0 == null && arg2 == null) {
@@ -258,10 +272,11 @@ public class PlayerModel {
 		return var21;
 	}
 
+	// jag::oldscape::rs2lib::PlayerModel::GetHeadModel
 	@ObfuscatedName("ct.z(I)Lfw;")
-	public ModelUnlit method1192() {
-		if (this.field1225 != -1) {
-			return NpcType.get(this.field1225).getHeadModel();
+	public ModelUnlit getHeadModel() {
+		if (this.transmog != -1) {
+			return NpcType.list(this.transmog).getHeadModel();
 		}
 		boolean var1 = false;
 		for (int var2 = 0; var2 < 12; var2++) {
@@ -307,11 +322,16 @@ public class PlayerModel {
 
 	@ObfuscatedName("ct.g(I)I")
 	public int method1176() {
-		return this.field1225 == -1 ? (this.field1228[11] << 5) + (this.field1228[8] << 10) + (this.field1228[0] << 15) + (this.field1223[4] << 20) + (this.field1223[0] << 25) + this.field1228[1] : NpcType.get(this.field1225).index + 305419896;
+		if (this.transmog != -1) {
+			return NpcType.list(this.transmog).index + 0x12345678;
+		}
+
+		return (this.field1228[11] << 5) + (this.field1228[8] << 10) + (this.field1228[0] << 15) + (this.field1223[4] << 20) + (this.field1223[0] << 25) + this.field1228[1];
 	}
 
+	// jag::oldscape::rs2lib::PlayerModel::ResetCache
 	@ObfuscatedName("ba.q(I)V")
-	public static void unload() {
-		field1231.clear();
+	public static void resetCache() {
+		modelCache.clear();
 	}
 }

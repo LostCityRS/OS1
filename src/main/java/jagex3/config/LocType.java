@@ -439,7 +439,7 @@ public class LocType extends DoublyLinkable {
 				var10.calculateNormals();
 				var9 = var10;
 			} else {
-				var9 = var10.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
+				var9 = var10.light(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 			}
 			mc2.put(var9, var7);
 		}
@@ -470,7 +470,7 @@ public class LocType extends DoublyLinkable {
 			if (var10 == null) {
 				return null;
 			}
-			var9 = var10.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
+			var9 = var10.light(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 			field2307.put(var9, var7);
 		}
 		if (this.skewType >= 0) {
@@ -493,7 +493,7 @@ public class LocType extends DoublyLinkable {
 			if (var12 == null) {
 				return null;
 			}
-			var11 = var12.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
+			var11 = var12.light(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 			field2307.put(var11, var9);
 		}
 		if (arg6 == null && this.skewType == -1) {

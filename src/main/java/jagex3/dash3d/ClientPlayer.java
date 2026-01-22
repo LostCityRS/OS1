@@ -142,7 +142,7 @@ public class ClientPlayer extends ClientEntity {
 		if (this.model == null) {
 			this.model = new PlayerModel();
 		}
-		this.model.method1168(var4, var9, var2 == 1, var3);
+		this.model.setAppearance(var4, var9, var2 == 1, var3);
 	}
 
 	@ObfuscatedName("fi.g(I)Lfo;")
@@ -152,7 +152,7 @@ public class ClientPlayer extends ClientEntity {
 		}
 		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.get(this.primarySeqId) : null;
 		SeqType var2 = this.secondarySeqId == -1 || this.lowMemory || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.get(this.secondarySeqId);
-		ModelLit var3 = this.model.method1174(var1, this.primarySeqFrame, var2, this.field2641);
+		ModelLit var3 = this.model.getTempModel(var1, this.primarySeqFrame, var2, this.field2641);
 		if (var3 == null) {
 			return null;
 		}

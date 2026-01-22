@@ -481,7 +481,7 @@ public class ClientBuild {
 				} else {
 					var22 = new ClientLocAnim(arg3, 22, arg4, arg0, arg1, arg2, var9.anim, true, null);
 				}
-				arg6.addGroundDecor(arg0, arg1, arg2, var17, var22, var20, var21);
+				arg6.setGroundDecor(arg0, arg1, arg2, var17, var22, var20, var21);
 				if (var9.blockwalk == 1 && arg7 != null) {
 					arg7.blockGroundDecor(arg1, arg2);
 				}
@@ -493,7 +493,7 @@ public class ClientBuild {
 			} else {
 				var45 = new ClientLocAnim(arg3, 10, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			if (var45 != null && arg6.add(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.shadow) {
+			if (var45 != null && arg6.addScenery(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.shadow) {
 				int var46 = 15;
 				if (var45 instanceof ModelLit) {
 					var46 = ((ModelLit) var45).method3004() / 4;
@@ -519,7 +519,7 @@ public class ClientBuild {
 			} else {
 				var23 = new ClientLocAnim(arg3, arg5, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.add(arg0, arg1, arg2, var17, 1, 1, var23, 0, var20, var21);
+			arg6.addScenery(arg0, arg1, arg2, var17, 1, 1, var23, 0, var20, var21);
 			if (arg5 >= 12 && arg5 <= 17 && arg5 != 13 && arg0 > 0) {
 				mapo[arg0][arg1][arg2] |= 0x924;
 			}
@@ -533,7 +533,7 @@ public class ClientBuild {
 			} else {
 				var24 = new ClientLocAnim(arg3, 0, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addWall(arg0, arg1, arg2, var17, var24, null, WSHAPE0[arg4], 0, var20, var21);
+			arg6.setWall(arg0, arg1, arg2, var17, var24, null, WSHAPE0[arg4], 0, var20, var21);
 			if (arg4 == 0) {
 				if (var9.shadow) {
 					shadow[arg0][arg1][arg2] = 50;
@@ -580,7 +580,7 @@ public class ClientBuild {
 			} else {
 				var25 = new ClientLocAnim(arg3, 1, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addWall(arg0, arg1, arg2, var17, var25, null, WSHAPE1[arg4], 0, var20, var21);
+			arg6.setWall(arg0, arg1, arg2, var17, var25, null, WSHAPE1[arg4], 0, var20, var21);
 			if (var9.shadow) {
 				if (arg4 == 0) {
 					shadow[arg0][arg1][arg2 + 1] = 50;
@@ -606,7 +606,7 @@ public class ClientBuild {
 				var27 = new ClientLocAnim(arg3, 2, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 				var28 = new ClientLocAnim(arg3, 2, var26, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addWall(arg0, arg1, arg2, var17, var27, var28, WSHAPE0[arg4], WSHAPE0[var26], var20, var21);
+			arg6.setWall(arg0, arg1, arg2, var17, var27, var28, WSHAPE0[arg4], WSHAPE0[var26], var20, var21);
 			if (var9.occlude) {
 				if (arg4 == 0) {
 					mapo[arg0][arg1][arg2] |= 0x249;
@@ -635,7 +635,7 @@ public class ClientBuild {
 			} else {
 				var29 = new ClientLocAnim(arg3, 3, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addWall(arg0, arg1, arg2, var17, var29, null, WSHAPE1[arg4], 0, var20, var21);
+			arg6.setWall(arg0, arg1, arg2, var17, var29, null, WSHAPE1[arg4], 0, var20, var21);
 			if (var9.shadow) {
 				if (arg4 == 0) {
 					shadow[arg0][arg1][arg2 + 1] = 50;
@@ -657,7 +657,7 @@ public class ClientBuild {
 			} else {
 				var30 = new ClientLocAnim(arg3, arg5, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.add(arg0, arg1, arg2, var17, 1, 1, var30, 0, var20, var21);
+			arg6.addScenery(arg0, arg1, arg2, var17, 1, 1, var30, 0, var20, var21);
 			if (var9.blockwalk != 0 && arg7 != null) {
 				arg7.addLoc(arg1, arg2, var10, var11, var9.blockrange);
 			}
@@ -671,7 +671,7 @@ public class ClientBuild {
 			} else {
 				var31 = new ClientLocAnim(arg3, 4, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addDecor(arg0, arg1, arg2, var17, var31, null, WSHAPE0[arg4], 0, 0, 0, var20, var21);
+			arg6.setDecor(arg0, arg1, arg2, var17, var31, null, WSHAPE0[arg4], 0, 0, 0, var20, var21);
 		} else if (arg5 == 5) {
 			int var32 = 16;
 			int var33 = arg6.wallType(arg0, arg1, arg2);
@@ -684,7 +684,7 @@ public class ClientBuild {
 			} else {
 				var34 = new ClientLocAnim(arg3, 4, arg4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addDecor(arg0, arg1, arg2, var17, var34, null, WSHAPE0[arg4], 0, DECORXOF[arg4] * var32, DECORZOF[arg4] * var32, var20, var21);
+			arg6.setDecor(arg0, arg1, arg2, var17, var34, null, WSHAPE0[arg4], 0, DECORXOF[arg4] * var32, DECORZOF[arg4] * var32, var20, var21);
 		} else if (arg5 == 6) {
 			int var35 = 8;
 			int var36 = arg6.wallType(arg0, arg1, arg2);
@@ -697,7 +697,7 @@ public class ClientBuild {
 			} else {
 				var37 = new ClientLocAnim(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addDecor(arg0, arg1, arg2, var17, var37, null, 256, arg4, field31[arg4] * var35, field32[arg4] * var35, var20, var21);
+			arg6.setDecor(arg0, arg1, arg2, var17, var37, null, 256, arg4, field31[arg4] * var35, field32[arg4] * var35, var20, var21);
 		} else if (arg5 == 7) {
 			int var38 = arg4 + 2 & 0x3;
 			ModelSource var39;
@@ -706,7 +706,7 @@ public class ClientBuild {
 			} else {
 				var39 = new ClientLocAnim(arg3, 4, var38 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addDecor(arg0, arg1, arg2, var17, var39, null, 256, var38, 0, 0, var20, var21);
+			arg6.setDecor(arg0, arg1, arg2, var17, var39, null, 256, var38, 0, 0, var20, var21);
 		} else if (arg5 == 8) {
 			int var40 = 8;
 			int var41 = arg6.wallType(arg0, arg1, arg2);
@@ -723,7 +723,7 @@ public class ClientBuild {
 				var43 = new ClientLocAnim(arg3, 4, arg4 + 4, arg0, arg1, arg2, var9.anim, true, null);
 				var44 = new ClientLocAnim(arg3, 4, var42 + 4, arg0, arg1, arg2, var9.anim, true, null);
 			}
-			arg6.addDecor(arg0, arg1, arg2, var17, var43, var44, 256, arg4, field31[arg4] * var40, field32[arg4] * var40, var20, var21);
+			arg6.setDecor(arg0, arg1, arg2, var17, var43, var44, 256, arg4, field31[arg4] * var40, field32[arg4] * var40, var20, var21);
 		}
 	}
 
@@ -898,7 +898,7 @@ public class ClientBuild {
 									var56 = Pix3D.palette[getUCol(var49, 96)];
 								}
 								if (var39 == 0) {
-									arg0.setTile(var6, var21, var34, 0, 0, -1, var40, var41, var42, var43, getUCol(var48, var44), getUCol(var48, var45), getUCol(var48, var46), getUCol(var48, var47), 0, 0, 0, 0, var56, 0);
+									arg0.setGround(var6, var21, var34, 0, 0, -1, var40, var41, var42, var43, getUCol(var48, var44), getUCol(var48, var45), getUCol(var48, var46), getUCol(var48, var47), 0, 0, 0, 0, var56, 0);
 								} else {
 									int var57 = floors[var6][var21][var34] + 1;
 									byte var58 = floorr[var6][var21][var34];
@@ -939,7 +939,7 @@ public class ClientBuild {
 										int var68 = getTable(var66, var59.mapSaturation, var67);
 										var65 = Pix3D.palette[getOCol(var68, 96)];
 									}
-									arg0.setTile(var6, var21, var34, var57, var58, var60, var40, var41, var42, var43, getUCol(var48, var44), getUCol(var48, var45), getUCol(var48, var46), getUCol(var48, var47), getOCol(var62, var44), getOCol(var62, var45), getOCol(var62, var46), getOCol(var62, var47), var56, var65);
+									arg0.setGround(var6, var21, var34, var57, var58, var60, var40, var41, var42, var43, getUCol(var48, var44), getUCol(var48, var45), getUCol(var48, var46), getUCol(var48, var47), getOCol(var62, var44), getOCol(var62, var45), getOCol(var62, var46), getOCol(var62, var47), var56, var65);
 								}
 							}
 						}
@@ -956,7 +956,7 @@ public class ClientBuild {
 					} else {
 						var75 = var6 - 1;
 					}
-					arg0.setDrawLevel(var6, var70, var69, var75);
+					arg0.setLayer(var6, var70, var69, var75);
 				}
 			}
 			floort1[var6] = null;
@@ -965,7 +965,7 @@ public class ClientBuild {
 			floorr[var6] = null;
 			shadow[var6] = null;
 		}
-		arg0.buildModels(-50, -10, -50);
+		arg0.shareLight(-50, -10, -50);
 		for (int var76 = 0; var76 < 104; var76++) {
 			for (int var77 = 0; var77 < 104; var77++) {
 				if ((mapl[1][var76][var77] & 0x2) == 2) {
@@ -1283,7 +1283,7 @@ public class ClientBuild {
 			} else {
 				var22 = new ClientLocAnim(arg4, 22, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addGroundDecor(arg0, arg2, arg3, var17, var22, var20, var21);
+			arg7.setGroundDecor(arg0, arg2, arg3, var17, var22, var20, var21);
 			if (var9.blockwalk == 1) {
 				arg8.blockGroundDecor(arg2, arg3);
 			}
@@ -1295,7 +1295,7 @@ public class ClientBuild {
 				var45 = new ClientLocAnim(arg4, 10, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
 			if (var45 != null) {
-				arg7.add(arg0, arg2, arg3, var17, var10, var11, var45, arg6 == 11 ? 256 : 0, var20, var21);
+				arg7.addScenery(arg0, arg2, arg3, var17, var10, var11, var45, arg6 == 11 ? 256 : 0, var20, var21);
 			}
 			if (var9.blockwalk != 0) {
 				arg8.addLoc(arg2, arg3, var10, var11, var9.blockrange);
@@ -1307,7 +1307,7 @@ public class ClientBuild {
 			} else {
 				var23 = new ClientLocAnim(arg4, arg6, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.add(arg0, arg2, arg3, var17, 1, 1, var23, 0, var20, var21);
+			arg7.addScenery(arg0, arg2, arg3, var17, 1, 1, var23, 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.addLoc(arg2, arg3, var10, var11, var9.blockrange);
 			}
@@ -1318,7 +1318,7 @@ public class ClientBuild {
 			} else {
 				var24 = new ClientLocAnim(arg4, 0, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addWall(arg0, arg2, arg3, var17, var24, null, WSHAPE0[arg5], 0, var20, var21);
+			arg7.setWall(arg0, arg2, arg3, var17, var24, null, WSHAPE0[arg5], 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.addWall(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
@@ -1329,7 +1329,7 @@ public class ClientBuild {
 			} else {
 				var25 = new ClientLocAnim(arg4, 1, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addWall(arg0, arg2, arg3, var17, var25, null, WSHAPE1[arg5], 0, var20, var21);
+			arg7.setWall(arg0, arg2, arg3, var17, var25, null, WSHAPE1[arg5], 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.addWall(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
@@ -1344,7 +1344,7 @@ public class ClientBuild {
 				var27 = new ClientLocAnim(arg4, 2, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 				var28 = new ClientLocAnim(arg4, 2, var26, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addWall(arg0, arg2, arg3, var17, var27, var28, WSHAPE0[arg5], WSHAPE0[var26], var20, var21);
+			arg7.setWall(arg0, arg2, arg3, var17, var27, var28, WSHAPE0[arg5], WSHAPE0[var26], var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.addWall(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
@@ -1355,7 +1355,7 @@ public class ClientBuild {
 			} else {
 				var29 = new ClientLocAnim(arg4, 3, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addWall(arg0, arg2, arg3, var17, var29, null, WSHAPE1[arg5], 0, var20, var21);
+			arg7.setWall(arg0, arg2, arg3, var17, var29, null, WSHAPE1[arg5], 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.addWall(arg2, arg3, arg6, arg5, var9.blockrange);
 			}
@@ -1366,7 +1366,7 @@ public class ClientBuild {
 			} else {
 				var30 = new ClientLocAnim(arg4, arg6, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.add(arg0, arg2, arg3, var17, 1, 1, var30, 0, var20, var21);
+			arg7.addScenery(arg0, arg2, arg3, var17, 1, 1, var30, 0, var20, var21);
 			if (var9.blockwalk != 0) {
 				arg8.addLoc(arg2, arg3, var10, var11, var9.blockrange);
 			}
@@ -1377,7 +1377,7 @@ public class ClientBuild {
 			} else {
 				var31 = new ClientLocAnim(arg4, 4, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addDecor(arg0, arg2, arg3, var17, var31, null, WSHAPE0[arg5], 0, 0, 0, var20, var21);
+			arg7.setDecor(arg0, arg2, arg3, var17, var31, null, WSHAPE0[arg5], 0, 0, 0, var20, var21);
 		} else if (arg6 == 5) {
 			int var32 = 16;
 			int var33 = arg7.wallType(arg0, arg2, arg3);
@@ -1390,7 +1390,7 @@ public class ClientBuild {
 			} else {
 				var34 = new ClientLocAnim(arg4, 4, arg5, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addDecor(arg0, arg2, arg3, var17, var34, null, WSHAPE0[arg5], 0, DECORXOF[arg5] * var32, DECORZOF[arg5] * var32, var20, var21);
+			arg7.setDecor(arg0, arg2, arg3, var17, var34, null, WSHAPE0[arg5], 0, DECORXOF[arg5] * var32, DECORZOF[arg5] * var32, var20, var21);
 		} else if (arg6 == 6) {
 			int var35 = 8;
 			int var36 = arg7.wallType(arg0, arg2, arg3);
@@ -1403,7 +1403,7 @@ public class ClientBuild {
 			} else {
 				var37 = new ClientLocAnim(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addDecor(arg0, arg2, arg3, var17, var37, null, 256, arg5, field31[arg5] * var35, field32[arg5] * var35, var20, var21);
+			arg7.setDecor(arg0, arg2, arg3, var17, var37, null, 256, arg5, field31[arg5] * var35, field32[arg5] * var35, var20, var21);
 		} else if (arg6 == 7) {
 			int var38 = arg5 + 2 & 0x3;
 			ModelSource var39;
@@ -1412,7 +1412,7 @@ public class ClientBuild {
 			} else {
 				var39 = new ClientLocAnim(arg4, 4, var38 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addDecor(arg0, arg2, arg3, var17, var39, null, 256, var38, 0, 0, var20, var21);
+			arg7.setDecor(arg0, arg2, arg3, var17, var39, null, 256, var38, 0, 0, var20, var21);
 		} else if (arg6 == 8) {
 			int var40 = 8;
 			int var41 = arg7.wallType(arg0, arg2, arg3);
@@ -1429,7 +1429,7 @@ public class ClientBuild {
 				var43 = new ClientLocAnim(arg4, 4, arg5 + 4, arg1, arg2, arg3, var9.anim, true, null);
 				var44 = new ClientLocAnim(arg4, 4, var42 + 4, arg1, arg2, arg3, var9.anim, true, null);
 			}
-			arg7.addDecor(arg0, arg2, arg3, var17, var43, var44, 256, arg5, field31[arg5] * var40, field32[arg5] * var40, var20, var21);
+			arg7.setDecor(arg0, arg2, arg3, var17, var43, var44, 256, arg5, field31[arg5] * var40, field32[arg5] * var40, var20, var21);
 		}
 	}
 

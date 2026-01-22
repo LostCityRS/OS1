@@ -142,7 +142,7 @@ public class SpotAnimType extends DoublyLinkable {
 					var3.retexture(this.retex_s[var5], this.retex_d[var5]);
 				}
 			}
-			var2 = var3.calculateNormals(this.ambient + 64, this.contrast + 850, -30, -50, -30);
+			var2 = var3.light(this.ambient + 64, this.contrast + 850, -30, -50, -30);
 			field2392.put(var2, (long) this.field2382);
 		}
 		ModelLit var6;

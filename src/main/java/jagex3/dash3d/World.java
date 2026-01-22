@@ -6,11 +6,12 @@ import jagex3.datastruct.LinkList;
 @ObfuscatedName("aq")
 public class World {
 
+	// jag::oldscape::dash3d::world::m_lowMem
 	@ObfuscatedName("aq.r")
-	public static boolean lowMemory = true;
+	public static boolean lowMem = true;
 
 	@ObfuscatedName("aq.d")
-	public int maxLevel;
+	public int maxTileLevel;
 
 	@ObfuscatedName("aq.l")
 	public int maxTileX;
@@ -28,80 +29,102 @@ public class World {
 	public int minLevel = 0;
 
 	@ObfuscatedName("aq.z")
-	public int temporaryLocCount = 0;
+	public int dynamicCount = 0;
 
 	@ObfuscatedName("aq.g")
-	public Sprite[] temporaryLocs = new Sprite[5000];
+	public Sprite[] dynamicSprites = new Sprite[5000];
 
 	@ObfuscatedName("aq.q")
-	public int[][][] levelTileOcclusionCycles;
+	public int[][][] occlusionCycle;
 
+	// jag::oldscape::dash3d::world::m_fillLeft
 	@ObfuscatedName("aq.e")
 	public static int fillLeft = 0;
 
+	// jag::oldscape::dash3d::world::m_maxLevel
 	@ObfuscatedName("aq.b")
-	public static int topLevel = 0;
+	public static int maxLevel = 0;
 
+	// jag::oldscape::dash3d::world::m_cycleNo
 	@ObfuscatedName("aq.y")
-	public static int cycle;
+	public static int cycleNo;
 
+	// jag::oldscape::dash3d::world::m_minX
 	@ObfuscatedName("aq.t")
-	public static int minDrawTileX;
+	public static int minX;
 
+	// jag::oldscape::dash3d::world::m_maxX
 	@ObfuscatedName("aq.f")
-	public static int maxDrawTileX;
+	public static int maxX;
 
+	// jag::oldscape::dash3d::world::m_minZ
 	@ObfuscatedName("aq.k")
-	public static int minDrawTileZ;
+	public static int minZ;
 
+	// jag::oldscape::dash3d::world::m_maxZ
 	@ObfuscatedName("aq.o")
-	public static int maxDrawTileZ;
+	public static int maxZ;
 
+	// jag::oldscape::dash3d::world::m_gx
 	@ObfuscatedName("aq.a")
 	public static int gx;
 
+	// jag::oldscape::dash3d::world::m_gz
 	@ObfuscatedName("aq.h")
 	public static int gz;
 
+	// jag::oldscape::dash3d::world::m_cx
 	@ObfuscatedName("aq.x")
 	public static int cx;
 
+	// jag::oldscape::dash3d::world::m_cy
 	@ObfuscatedName("aq.p")
 	public static int cy;
 
+	// jag::oldscape::dash3d::world::m_cx
 	@ObfuscatedName("aq.ad")
 	public static int cz;
 
+	// jag::oldscape::dash3d::world::m_cameraSinX
 	@ObfuscatedName("aq.ac")
 	public static int cameraSinX;
 
+	// jag::oldscape::dash3d::world::m_cameraCosX
 	@ObfuscatedName("aq.aa")
 	public static int cameraCosX;
 
+	// jag::oldscape::dash3d::world::m_cameraSinY
 	@ObfuscatedName("aq.as")
 	public static int cameraSinY;
 
+	// jag::oldscape::dash3d::world::m_cameraCosY
 	@ObfuscatedName("aq.am")
 	public static int cameraCosY;
 
 	@ObfuscatedName("aq.ap")
 	public static Sprite[] spriteBuffer = new Sprite[100];
 
+	// jag::oldscape::dash3d::world::m_click
 	@ObfuscatedName("aq.av")
-	public static boolean takingInput = false;
+	public static boolean click = false;
 
+	// jag::oldscape::dash3d::world::m_clickLev
 	@ObfuscatedName("aq.ak")
-	public static int clickLevel = 0;
+	public static int clickLev = 0;
 
+	// jag::oldscape::dash3d::world::m_clickX
 	@ObfuscatedName("aq.az")
-	public static int mouseX = 0;
+	public static int clickX = 0;
 
+	// jag::oldscape::dash3d::world::m_clickY
 	@ObfuscatedName("aq.an")
-	public static int mouseY = 0;
+	public static int clickY = 0;
 
+	// jag::oldscape::dash3d::world::m_groundX
 	@ObfuscatedName("aq.ah")
 	public static int groundX = -1;
 
+	// jag::oldscape::dash3d::world::m_groundZ
 	@ObfuscatedName("aq.ay")
 	public static int groundZ = -1;
 
@@ -123,32 +146,60 @@ public class World {
 	@ObfuscatedName("aq.ae")
 	public static LinkList fillQueue = new LinkList();
 
+	// // jag::oldscape::dash3d::world::PRETAB
 	@ObfuscatedName("aq.au")
-	public static final int[] FRONT_WALL_TYPES = new int[] { 19, 55, 38, 155, 255, 110, 137, 205, 76 };
+	public static final int[] PRETAB = new int[] { 19, 55, 38, 155, 255, 110, 137, 205, 76 };
 
+	// // jag::oldscape::dash3d::world::MIDTAB
 	@ObfuscatedName("aq.ax")
-	public static final int[] DIRECTION_ALLOW_WALL_CORNER_TYPE = new int[] { 160, 192, 80, 96, 0, 144, 80, 48, 160 };
+	public static final int[] MIDTAB = new int[] { 160, 192, 80, 96, 0, 144, 80, 48, 160 };
 
+	// jag::oldscape::dash3d::world::POSTTAB
 	@ObfuscatedName("aq.ai")
-	public static final int[] BACK_WALL_TYPES = new int[] { 76, 8, 137, 4, 0, 1, 38, 2, 19 };
+	public static final int[] POSTTAB = new int[] { 76, 8, 137, 4, 0, 1, 38, 2, 19 };
 
+	// jag::oldscape::dash3d::world::MIDDEP_16
 	@ObfuscatedName("aq.aj")
-	public static final int[] WALL_CORNER_TYPE_16_BLOCK_LOC_SPANS = new int[] { 0, 0, 2, 0, 0, 2, 1, 1, 0 };
+	public static final int[] MIDDEP_16 = new int[] { 0, 0, 2, 0, 0, 2, 1, 1, 0 };
 
+	// jag::oldscape::dash3d::world::MIDDEP_32
 	@ObfuscatedName("aq.aw")
-	public static final int[] WALL_CORNER_TYPE_32_BLOCK_LOC_SPANS = new int[] { 2, 0, 0, 2, 0, 0, 0, 4, 4 };
+	public static final int[] MIDDEP_32 = new int[] { 2, 0, 0, 2, 0, 0, 0, 4, 4 };
 
+	// jag::oldscape::dash3d::world::MIDDEP_64
 	@ObfuscatedName("aq.af")
-	public static final int[] WALL_CORNER_TYPE_64_BLOCK_LOC_SPANS = new int[] { 0, 4, 4, 8, 0, 0, 8, 0, 0 };
+	public static final int[] MIDDEP_64 = new int[] { 0, 4, 4, 8, 0, 0, 8, 0, 0 };
 
+	// jag::oldscape::dash3d::world::MIDDEP_128
 	@ObfuscatedName("aq.bh")
-	public static final int[] WALL_CORNER_TYPE_128_BLOCK_LOC_SPANS = new int[] { 1, 1, 0, 0, 0, 8, 0, 0, 8 };
+	public static final int[] MIDDEP_128 = new int[] { 1, 1, 0, 0, 0, 8, 0, 0, 8 };
 
+	// jag::oldscape::dash3d::world::MINIMAP_SHAPE
 	@ObfuscatedName("aq.bi")
-	public int[][] MINIMAP_OVERLAY_SHAPE = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1 }, { 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 }, { 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1 }, { 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 }, { 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1 }, { 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1 } };
+	public int[][] MINIMAP_SHAPE = new int[][] {
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+		{ 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1 },
+		{ 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 },
+		{ 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1 },
+		{ 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+		{ 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
+		{ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 },
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1 },
+		{ 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1 }
+	};
 
+	// jag::oldscape::dash3d::world::MINIMAP_ROTATE
 	@ObfuscatedName("aq.bs")
-	public int[][] MINIMAP_OVERLAY_ROTATION = new int[][] { { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }, { 12, 8, 4, 0, 13, 9, 5, 1, 14, 10, 6, 2, 15, 11, 7, 3 }, { 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }, { 3, 7, 11, 15, 2, 6, 10, 14, 1, 5, 9, 13, 0, 4, 8, 12 } };
+	public int[][] MINIMAP_ROTATE = new int[][] {
+		{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+		{ 12, 8, 4, 0, 13, 9, 5, 1, 14, 10, 6, 2, 15, 11, 7, 3 },
+		{ 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 },
+		{ 3, 7, 11, 15, 2, 6, 10, 14, 1, 5, 9, 13, 0, 4, 8, 12 }
+	};
 
 	@ObfuscatedName("aq.bk")
 	public static boolean[][][][] visibilityMatrix = new boolean[8][32][51][51];
@@ -157,10 +208,10 @@ public class World {
 	public static boolean[][] visibilityMap;
 
 	@ObfuscatedName("aq.bg")
-	public static int viewportCenterX;
+	public static int viewportCentreX;
 
 	@ObfuscatedName("aq.bl")
-	public static int viewportCenterY;
+	public static int viewportCentreY;
 
 	@ObfuscatedName("aq.bt")
 	public static int viewportLeft;
@@ -175,11 +226,11 @@ public class World {
 	public static int viewportBottom;
 
 	public World(int level, int x, int z, int[][][] heightmap) {
-		this.maxLevel = level;
+		this.maxTileLevel = level;
 		this.maxTileX = x;
 		this.maxTileZ = z;
 		this.levelTiles = new Square[level][x][z];
-		this.levelTileOcclusionCycles = new int[level][x + 1][z + 1];
+		this.occlusionCycle = new int[level][x + 1][z + 1];
 		this.groundh = heightmap;
 		this.resetMap();
 	}
@@ -187,7 +238,7 @@ public class World {
 	// jag::oldscape::dash3d::world::ResetMap
 	@ObfuscatedName("aq.r()V")
 	public void resetMap() {
-		for (int level = 0; level < this.maxLevel; level++) {
+		for (int level = 0; level < this.maxTileLevel; level++) {
 			for (int x = 0; x < this.maxTileX; x++) {
 				for (int z = 0; z < this.maxTileZ; z++) {
 					this.levelTiles[level][x][z] = null;
@@ -203,10 +254,10 @@ public class World {
 			levelOccluderCount[level] = 0;
 		}
 
-		for (int i = 0; i < this.temporaryLocCount; i++) {
-			this.temporaryLocs[i] = null;
+		for (int i = 0; i < this.dynamicCount; i++) {
+			this.dynamicSprites[i] = null;
 		}
-		this.temporaryLocCount = 0;
+		this.dynamicCount = 0;
 
 		for (int i = 0; i < spriteBuffer.length; i++) {
 			spriteBuffer[i] = null;
@@ -227,6 +278,7 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::PushDown
 	@ObfuscatedName("aq.l(II)V")
 	public void pushDown(int x, int z) {
 		Square tile = this.levelTiles[0][x][z];
@@ -256,6 +308,7 @@ public class World {
 		this.levelTiles[3][x][z] = null;
 	}
 
+	// jag::oldscape::dash3d::world::SetOcclude
 	@ObfuscatedName("aq.m(IIIIIIII)V")
 	public static void setOcclude(int level, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		Occlude occlude = new Occlude();
@@ -273,16 +326,18 @@ public class World {
 		levelOccluders[level][levelOccluderCount[level]++] = occlude;
 	}
 
+	// jag::oldscape::dash3d::world::SetLayer
 	@ObfuscatedName("aq.c(IIII)V")
-	public void setDrawLevel(int arg0, int arg1, int arg2, int arg3) {
+	public void setLayer(int arg0, int arg1, int arg2, int arg3) {
 		Square var5 = this.levelTiles[arg0][arg1][arg2];
 		if (var5 != null) {
 			this.levelTiles[arg0][arg1][arg2].drawLevel = arg3;
 		}
 	}
 
+	// jag::oldscape::dash3d::world::SetGround
 	@ObfuscatedName("aq.n(IIIIIIIIIIIIIIIIIIII)V")
-	public void setTile(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18, int arg19) {
+	public void setGround(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18, int arg19) {
 		if (arg3 == 0) {
 			QuickGround var21 = new QuickGround(arg10, arg11, arg12, arg13, -1, arg18, false);
 			for (int var22 = arg0; var22 >= 0; var22--) {
@@ -310,8 +365,9 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::SetGroundDecor
 	@ObfuscatedName("aq.j(IIIILfu;II)V")
-	public void addGroundDecor(int arg0, int arg1, int arg2, int arg3, ModelSource arg4, int arg5, int arg6) {
+	public void setGroundDecor(int arg0, int arg1, int arg2, int arg3, ModelSource arg4, int arg5, int arg6) {
 		if (arg4 == null) {
 			return;
 		}
@@ -328,8 +384,9 @@ public class World {
 		this.levelTiles[arg0][arg1][arg2].groundDecor = var8;
 	}
 
+	// jag::oldscape::dash3d::world::SetObj
 	@ObfuscatedName("aq.z(IIIILfu;ILfu;Lfu;)V")
-	public void addObjStack(int arg0, int arg1, int arg2, int arg3, ModelSource arg4, int arg5, ModelSource arg6, ModelSource arg7) {
+	public void setObj(int arg0, int arg1, int arg2, int arg3, ModelSource arg4, int arg5, ModelSource arg6, ModelSource arg7) {
 		GroundObject var9 = new GroundObject();
 		var9.topObj = arg4;
 		var9.x = arg1 * 128 + 64;
@@ -358,8 +415,9 @@ public class World {
 		this.levelTiles[arg0][arg1][arg2].groundObject = var9;
 	}
 
+	// jag::oldscape::dash3d::world::SetWall
 	@ObfuscatedName("aq.g(IIIILfu;Lfu;IIII)V")
-	public void addWall(int arg0, int arg1, int arg2, int arg3, ModelSource arg4, ModelSource arg5, int arg6, int arg7, int arg8, int arg9) {
+	public void setWall(int arg0, int arg1, int arg2, int arg3, ModelSource arg4, ModelSource arg5, int arg6, int arg7, int arg8, int arg9) {
 		if (arg4 == null && arg5 == null) {
 			return;
 		}
@@ -381,8 +439,9 @@ public class World {
 		this.levelTiles[arg0][arg1][arg2].wall = var11;
 	}
 
+	// jag::oldscape::dash3d::world::SetDecor
 	@ObfuscatedName("aq.q(IIIILfu;Lfu;IIIIII)V")
-	public void addDecor(int arg0, int arg1, int arg2, int arg3, ModelSource arg4, ModelSource arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+	public void setDecor(int arg0, int arg1, int arg2, int arg3, ModelSource arg4, ModelSource arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
 		if (arg4 == null) {
 			return;
 		}
@@ -406,19 +465,20 @@ public class World {
 		this.levelTiles[arg0][arg1][arg2].decor = var13;
 	}
 
+	// jag::oldscape::dash3d::world::AddScenery
 	@ObfuscatedName("aq.i(IIIIIILfu;III)Z")
-	public boolean add(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, ModelSource arg6, int arg7, int arg8, int arg9) {
+	public boolean addScenery(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, ModelSource arg6, int arg7, int arg8, int arg9) {
 		if (arg6 == null) {
 			return true;
-		} else {
-			int var11 = arg1 * 128 + arg4 * 64;
-			int var12 = arg2 * 128 + arg5 * 64;
-			return this.add(arg0, arg1, arg2, arg4, arg5, var11, var12, arg3, arg6, arg7, false, arg8, arg9);
 		}
+		int var11 = arg1 * 128 + arg4 * 64;
+		int var12 = arg2 * 128 + arg5 * 64;
+		return this.setSprite(arg0, arg1, arg2, arg4, arg5, var11, var12, arg3, arg6, arg7, false, arg8, arg9);
 	}
 
+	// jag::oldscape::dash3d::world::AddDynamic
 	@ObfuscatedName("aq.s(IIIIILfu;IIZ)Z")
-	public boolean add(int arg0, int arg1, int arg2, int arg3, int arg4, ModelSource arg5, int arg6, int arg7, boolean arg8) {
+	public boolean addDynamic(int arg0, int arg1, int arg2, int arg3, int arg4, ModelSource arg5, int arg6, int arg7, boolean arg8) {
 		if (arg5 == null) {
 			return true;
 		}
@@ -444,16 +504,18 @@ public class World {
 		int var15 = var11 / 128;
 		int var16 = var12 / 128;
 		int var17 = var13 / 128;
-		return this.add(arg0, var14, var15, var16 - var14 + 1, var17 - var15 + 1, arg1, arg2, arg3, arg5, arg6, true, arg7, 0);
+		return this.setSprite(arg0, var14, var15, var16 - var14 + 1, var17 - var15 + 1, arg1, arg2, arg3, arg5, arg6, true, arg7, 0);
 	}
 
+	// jag::oldscape::dash3d::world::AddDynamic
 	@ObfuscatedName("aq.u(IIIIILfu;IIIIII)Z")
-	public boolean add(int arg0, int arg1, int arg2, int arg3, int arg4, ModelSource arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
-		return arg5 == null ? true : this.add(arg0, arg8, arg9, arg10 - arg8 + 1, arg11 - arg9 + 1, arg1, arg2, arg3, arg5, arg6, true, arg7, 0);
+	public boolean addDynamic(int arg0, int arg1, int arg2, int arg3, int arg4, ModelSource arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+		return arg5 == null ? true : this.setSprite(arg0, arg8, arg9, arg10 - arg8 + 1, arg11 - arg9 + 1, arg1, arg2, arg3, arg5, arg6, true, arg7, 0);
 	}
 
+	// jag::oldscape::dash3d::world::SetSprite
 	@ObfuscatedName("aq.v(IIIIIIIILfu;IZII)Z")
-	public boolean add(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, ModelSource arg8, int arg9, boolean arg10, int arg11, int arg12) {
+	public boolean setSprite(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, ModelSource arg8, int arg9, boolean dynamic, int arg11, int arg12) {
 		for (int var14 = arg1; var14 < arg1 + arg3; var14++) {
 			for (int var15 = arg2; var15 < arg2 + arg4; var15++) {
 				if (var14 < 0 || var15 < 0 || var14 >= this.maxTileX || var15 >= this.maxTileZ) {
@@ -505,24 +567,26 @@ public class World {
 				var22.spriteCount++;
 			}
 		}
-		if (arg10) {
-			this.temporaryLocs[this.temporaryLocCount++] = var17;
+		if (dynamic) {
+			this.dynamicSprites[this.dynamicCount++] = var17;
 		}
 		return true;
 	}
 
+	// jag::oldscape::dash3d::world::RemoveSprites
 	@ObfuscatedName("aq.w()V")
 	public void removeSprites() {
-		for (int var1 = 0; var1 < this.temporaryLocCount; var1++) {
-			Sprite var2 = this.temporaryLocs[var1];
-			this.removeLoc(var2);
-			this.temporaryLocs[var1] = null;
+		for (int var1 = 0; var1 < this.dynamicCount; var1++) {
+			Sprite var2 = this.dynamicSprites[var1];
+			this.delSprite(var2);
+			this.dynamicSprites[var1] = null;
 		}
-		this.temporaryLocCount = 0;
+		this.dynamicCount = 0;
 	}
 
+	// jag::oldscape::dash3d::world::DelSprite
 	@ObfuscatedName("aq.e(Lau;)V")
-	public void removeLoc(Sprite arg0) {
+	public void delSprite(Sprite arg0) {
 		for (int var2 = arg0.minTileX; var2 <= arg0.maxTileX; var2++) {
 			for (int var3 = arg0.minTileZ; var3 <= arg0.maxTileZ; var3++) {
 				Square var4 = this.levelTiles[arg0.level][var2][var3];
@@ -561,24 +625,27 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::DelWall
 	@ObfuscatedName("aq.y(III)V")
-	public void removeWall(int arg0, int arg1, int arg2) {
+	public void delWall(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		if (var4 != null) {
 			var4.wall = null;
 		}
 	}
 
+	// jag::oldscape::dash3d::world::DelDecor
 	@ObfuscatedName("aq.t(III)V")
-	public void removeDecor(int arg0, int arg1, int arg2) {
+	public void delDecor(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		if (var4 != null) {
 			var4.decor = null;
 		}
 	}
 
+	// jag::oldscape::dash3d::world::DelLoc
 	@ObfuscatedName("aq.f(III)V")
-	public void removeLoc(int arg0, int arg1, int arg2) {
+	public void delLoc(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		if (var4 == null) {
 			return;
@@ -586,42 +653,47 @@ public class World {
 		for (int var5 = 0; var5 < var4.spriteCount; var5++) {
 			Sprite var6 = var4.sprites[var5];
 			if ((var6.typecode >> 29 & 0x3) == 2 && var6.minTileX == arg1 && var6.minTileZ == arg2) {
-				this.removeLoc(var6);
+				this.delSprite(var6);
 				return;
 			}
 		}
 	}
 
+	// jag::oldscape::dash3d::world::DelGroundDecor
 	@ObfuscatedName("aq.k(III)V")
-	public void removeGroundDecor(int arg0, int arg1, int arg2) {
+	public void delGroundDecor(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		if (var4 != null) {
 			var4.groundDecor = null;
 		}
 	}
 
+	// jag::oldscape::dash3d::world::DelObj
 	@ObfuscatedName("aq.o(III)V")
-	public void removeObjStacks(int arg0, int arg1, int arg2) {
+	public void delObj(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		if (var4 != null) {
 			var4.groundObject = null;
 		}
 	}
 
+	// jag::oldscape::dash3d::world::GetWall
 	@ObfuscatedName("aq.a(III)Lat;")
 	public Wall getWall(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		return var4 == null ? null : var4.wall;
 	}
 
+	// jag::oldscape::dash3d::world::GetDecor
 	@ObfuscatedName("aq.h(III)Lbh;")
 	public Decor getDecor(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		return var4 == null ? null : var4.decor;
 	}
 
+	// jag::oldscape::dash3d::world::GetScene
 	@ObfuscatedName("aq.x(III)Lau;")
-	public Sprite getLoc(int arg0, int arg1, int arg2) {
+	public Sprite getScene(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		if (var4 == null) {
 			return null;
@@ -635,24 +707,28 @@ public class World {
 		return null;
 	}
 
+	// jag::oldscape::dash3d::world::GetGd
 	@ObfuscatedName("aq.p(III)Laf;")
-	public GroundDecor getGroundDecor(int arg0, int arg1, int arg2) {
+	public GroundDecor getGd(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		return var4 == null || var4.groundDecor == null ? null : var4.groundDecor;
 	}
 
+	// jag::oldscape::dash3d::world::WallType
 	@ObfuscatedName("aq.ad(III)I")
 	public int wallType(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		return var4 == null || var4.wall == null ? 0 : var4.wall.typecode;
 	}
 
+	// jag::oldscape::dash3d::world::DecorType
 	@ObfuscatedName("aq.ac(III)I")
 	public int decorType(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		return var4 == null || var4.decor == null ? 0 : var4.decor.typecode;
 	}
 
+	// jag::oldscape::dash3d::world::SceneType
 	@ObfuscatedName("aq.aa(III)I")
 	public int sceneType(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
@@ -668,12 +744,14 @@ public class World {
 		return 0;
 	}
 
+	// jag::oldscape::dash3d::world::GdType
 	@ObfuscatedName("aq.as(III)I")
 	public int gdType(int arg0, int arg1, int arg2) {
 		Square var4 = this.levelTiles[arg0][arg1][arg2];
 		return var4 == null || var4.groundDecor == null ? 0 : var4.groundDecor.typecode;
 	}
 
+	// jag::oldscape::dash3d::world::TypeCode2
 	@ObfuscatedName("aq.am(IIII)I")
 	public int typecode2(int arg0, int arg1, int arg2, int arg3) {
 		Square var5 = this.levelTiles[arg0][arg1][arg2];
@@ -695,9 +773,10 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::ShareLight
 	@ObfuscatedName("aq.ap(III)V")
-	public void buildModels(int arg0, int arg1, int arg2) {
-		for (int var4 = 0; var4 < this.maxLevel; var4++) {
+	public void shareLight(int arg0, int arg1, int arg2) {
+		for (int var4 = 0; var4 < this.maxTileLevel; var4++) {
 			for (int var5 = 0; var5 < this.maxTileX; var5++) {
 				for (int var6 = 0; var6 < this.maxTileZ; var6++) {
 					Square var7 = this.levelTiles[var4][var5][var6];
@@ -707,76 +786,77 @@ public class World {
 					Wall var8 = var7.wall;
 					if (var8 != null && var8.modelA instanceof ModelUnlit) {
 						ModelUnlit var9 = (ModelUnlit) var8.modelA;
-						this.mergeLocNormals(var9, var4, var5, var6, 1, 1);
+						this.shareLightLoc(var9, var4, var5, var6, 1, 1);
 						if (var8.modelB instanceof ModelUnlit) {
 							ModelUnlit var10 = (ModelUnlit) var8.modelB;
-							this.mergeLocNormals(var10, var4, var5, var6, 1, 1);
-							ModelUnlit.mergeNormals(var9, var10, 0, 0, 0, false);
-							var8.modelB = var10.calculateNormals(var10.field2708, var10.field2706, arg0, arg1, arg2);
+							this.shareLightLoc(var10, var4, var5, var6, 1, 1);
+							ModelUnlit.modelShareLight(var9, var10, 0, 0, 0, false);
+							var8.modelB = var10.light(var10.field2708, var10.field2706, arg0, arg1, arg2);
 						}
-						var8.modelA = var9.calculateNormals(var9.field2708, var9.field2706, arg0, arg1, arg2);
+						var8.modelA = var9.light(var9.field2708, var9.field2706, arg0, arg1, arg2);
 					}
 					for (int var11 = 0; var11 < var7.spriteCount; var11++) {
 						Sprite var12 = var7.sprites[var11];
 						if (var12 != null && var12.model instanceof ModelUnlit) {
 							ModelUnlit var13 = (ModelUnlit) var12.model;
-							this.mergeLocNormals(var13, var4, var5, var6, var12.maxTileX - var12.minTileX + 1, var12.maxTileZ - var12.minTileZ + 1);
-							var12.model = var13.calculateNormals(var13.field2708, var13.field2706, arg0, arg1, arg2);
+							this.shareLightLoc(var13, var4, var5, var6, var12.maxTileX - var12.minTileX + 1, var12.maxTileZ - var12.minTileZ + 1);
+							var12.model = var13.light(var13.field2708, var13.field2706, arg0, arg1, arg2);
 						}
 					}
 					GroundDecor var14 = var7.groundDecor;
 					if (var14 != null && var14.model instanceof ModelUnlit) {
 						ModelUnlit var15 = (ModelUnlit) var14.model;
-						this.mergeGroundDecorNormals(var15, var4, var5, var6);
-						var14.model = var15.calculateNormals(var15.field2708, var15.field2706, arg0, arg1, arg2);
+						this.shareLightGd(var15, var4, var5, var6);
+						var14.model = var15.light(var15.field2708, var15.field2706, arg0, arg1, arg2);
 					}
 				}
 			}
 		}
 	}
 
+	// jag::oldscape::dash3d::world::ShareLightGd
 	@ObfuscatedName("aq.av(Lfw;III)V")
-	public void mergeGroundDecorNormals(ModelUnlit arg0, int arg1, int arg2, int arg3) {
+	public void shareLightGd(ModelUnlit arg0, int arg1, int arg2, int arg3) {
 		if (arg2 < this.maxTileX) {
 			Square var5 = this.levelTiles[arg1][arg2 + 1][arg3];
 			if (var5 != null && var5.groundDecor != null && var5.groundDecor.model instanceof ModelUnlit) {
 				ModelUnlit var6 = (ModelUnlit) var5.groundDecor.model;
-				ModelUnlit.mergeNormals(arg0, var6, 128, 0, 0, true);
+				ModelUnlit.modelShareLight(arg0, var6, 128, 0, 0, true);
 			}
 		}
 		if (arg3 < this.maxTileX) {
 			Square var7 = this.levelTiles[arg1][arg2][arg3 + 1];
 			if (var7 != null && var7.groundDecor != null && var7.groundDecor.model instanceof ModelUnlit) {
 				ModelUnlit var8 = (ModelUnlit) var7.groundDecor.model;
-				ModelUnlit.mergeNormals(arg0, var8, 0, 0, 128, true);
+				ModelUnlit.modelShareLight(arg0, var8, 0, 0, 128, true);
 			}
 		}
 		if (arg2 < this.maxTileX && arg3 < this.maxTileZ) {
 			Square var9 = this.levelTiles[arg1][arg2 + 1][arg3 + 1];
 			if (var9 != null && var9.groundDecor != null && var9.groundDecor.model instanceof ModelUnlit) {
 				ModelUnlit var10 = (ModelUnlit) var9.groundDecor.model;
-				ModelUnlit.mergeNormals(arg0, var10, 128, 0, 128, true);
+				ModelUnlit.modelShareLight(arg0, var10, 128, 0, 128, true);
 			}
 		}
-		if (arg2 >= this.maxTileX || arg3 <= 0) {
-			return;
-		}
-		Square var11 = this.levelTiles[arg1][arg2 + 1][arg3 - 1];
-		if (var11 != null && var11.groundDecor != null && var11.groundDecor.model instanceof ModelUnlit) {
-			ModelUnlit var12 = (ModelUnlit) var11.groundDecor.model;
-			ModelUnlit.mergeNormals(arg0, var12, 128, 0, -128, true);
+		if (arg2 < this.maxTileX && arg3 > 0) {
+			Square var11 = this.levelTiles[arg1][arg2 + 1][arg3 - 1];
+			if (var11 != null && var11.groundDecor != null && var11.groundDecor.model instanceof ModelUnlit) {
+				ModelUnlit var12 = (ModelUnlit) var11.groundDecor.model;
+				ModelUnlit.modelShareLight(arg0, var12, 128, 0, -128, true);
+			}
 		}
 	}
 
+	// jag::oldscape::dash3d::world::ShareLightLoc
 	@ObfuscatedName("aq.ak(Lfw;IIIII)V")
-	public void mergeLocNormals(ModelUnlit arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public void shareLightLoc(ModelUnlit arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		boolean var7 = true;
 		int var8 = arg2;
 		int var9 = arg2 + arg4;
 		int var10 = arg3 - 1;
 		int var11 = arg3 + arg5;
 		for (int var12 = arg1; var12 <= arg1 + 1; var12++) {
-			if (this.maxLevel == var12) {
+			if (this.maxTileLevel == var12) {
 				continue;
 			}
 			for (int var13 = var8; var13 <= var9; var13++) {
@@ -796,11 +876,11 @@ public class World {
 					if (var17 != null) {
 						if (var17.modelA instanceof ModelUnlit) {
 							ModelUnlit var18 = (ModelUnlit) var17.modelA;
-							ModelUnlit.mergeNormals(arg0, var18, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
+							ModelUnlit.modelShareLight(arg0, var18, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
 						}
 						if (var17.modelB instanceof ModelUnlit) {
 							ModelUnlit var19 = (ModelUnlit) var17.modelB;
-							ModelUnlit.mergeNormals(arg0, var19, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
+							ModelUnlit.modelShareLight(arg0, var19, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
 						}
 					}
 					for (int var20 = 0; var20 < var15.spriteCount; var20++) {
@@ -809,7 +889,7 @@ public class World {
 							ModelUnlit var22 = (ModelUnlit) var21.model;
 							int var23 = var21.maxTileX - var21.minTileX + 1;
 							int var24 = var21.maxTileZ - var21.minTileZ + 1;
-							ModelUnlit.mergeNormals(arg0, var22, (var21.minTileX - arg2) * 128 + (var23 - arg4) * 64, var16, (var21.minTileZ - arg3) * 128 + (var24 - arg5) * 64, var7);
+							ModelUnlit.modelShareLight(arg0, var22, (var21.minTileX - arg2) * 128 + (var23 - arg4) * 64, var16, (var21.minTileZ - arg3) * 128 + (var24 - arg5) * 64, var7);
 						}
 					}
 				}
@@ -819,6 +899,7 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::Render2DGround
 	@ObfuscatedName("aq.az([IIIIII)V")
 	public void render2DGround(int[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		Square var7 = this.levelTiles[arg3][arg4][arg5];
@@ -840,40 +921,39 @@ public class World {
 			return;
 		}
 		Ground var11 = var7.ground;
-		if (var11 == null) {
-			return;
-		}
-		int var12 = var11.overlayShape;
-		int var13 = var11.overlayRotation;
-		int var14 = var11.minimapOverlay;
-		int var15 = var11.minimapUnderlay;
-		int[] var16 = this.MINIMAP_OVERLAY_SHAPE[var12];
-		int[] var17 = this.MINIMAP_OVERLAY_ROTATION[var13];
-		int var18 = 0;
-		if (var14 != 0) {
-			for (int var19 = 0; var19 < 4; var19++) {
-				arg0[arg1] = var16[var17[var18++]] == 0 ? var14 : var15;
-				arg0[arg1 + 1] = var16[var17[var18++]] == 0 ? var14 : var15;
-				arg0[arg1 + 2] = var16[var17[var18++]] == 0 ? var14 : var15;
-				arg0[arg1 + 3] = var16[var17[var18++]] == 0 ? var14 : var15;
+		if (var11 != null) {
+			int var12 = var11.overlayShape;
+			int var13 = var11.overlayRotation;
+			int var14 = var11.minimapOverlay;
+			int var15 = var11.minimapUnderlay;
+			int[] var16 = this.MINIMAP_SHAPE[var12];
+			int[] var17 = this.MINIMAP_ROTATE[var13];
+			int var18 = 0;
+			if (var14 != 0) {
+				for (int var19 = 0; var19 < 4; var19++) {
+					arg0[arg1] = var16[var17[var18++]] == 0 ? var14 : var15;
+					arg0[arg1 + 1] = var16[var17[var18++]] == 0 ? var14 : var15;
+					arg0[arg1 + 2] = var16[var17[var18++]] == 0 ? var14 : var15;
+					arg0[arg1 + 3] = var16[var17[var18++]] == 0 ? var14 : var15;
+					arg1 += arg2;
+				}
+				return;
+			}
+			for (int var20 = 0; var20 < 4; var20++) {
+				if (var16[var17[var18++]] != 0) {
+					arg0[arg1] = var15;
+				}
+				if (var16[var17[var18++]] != 0) {
+					arg0[arg1 + 1] = var15;
+				}
+				if (var16[var17[var18++]] != 0) {
+					arg0[arg1 + 2] = var15;
+				}
+				if (var16[var17[var18++]] != 0) {
+					arg0[arg1 + 3] = var15;
+				}
 				arg1 += arg2;
 			}
-			return;
-		}
-		for (int var20 = 0; var20 < 4; var20++) {
-			if (var16[var17[var18++]] != 0) {
-				arg0[arg1] = var15;
-			}
-			if (var16[var17[var18++]] != 0) {
-				arg0[arg1 + 1] = var15;
-			}
-			if (var16[var17[var18++]] != 0) {
-				arg0[arg1 + 2] = var15;
-			}
-			if (var16[var17[var18++]] != 0) {
-				arg0[arg1 + 3] = var15;
-			}
-			arg1 += arg2;
 		}
 	}
 
@@ -883,8 +963,8 @@ public class World {
 		viewportTop = 0;
 		viewportRight = arg3;
 		viewportBottom = arg4;
-		viewportCenterX = arg3 / 2;
-		viewportCenterY = arg4 / 2;
+		viewportCentreX = arg3 / 2;
+		viewportCentreY = arg4 / 2;
 		boolean[][][][] var5 = new boolean[9][32][53][53];
 		for (int var6 = 128; var6 <= 384; var6 += 32) {
 			for (int var7 = 0; var7 < 2048; var7 += 64) {
@@ -949,25 +1029,26 @@ public class World {
 		int var4 = cameraCosY * arg2 - cameraSinY * arg0 >> 16;
 		int var5 = cameraSinX * arg1 + cameraCosX * var4 >> 16;
 		int var6 = cameraCosX * arg1 - cameraSinX * var4 >> 16;
-		if (var5 >= 50 && var5 <= 3500) {
-			int var7 = (var3 << 9) / var5 + viewportCenterX;
-			int var8 = (var6 << 9) / var5 + viewportCenterY;
-			return var7 >= viewportLeft && var7 <= viewportRight && var8 >= viewportTop && var8 <= viewportBottom;
-		} else {
+		if (var5 < 50 || var5 > 3500) {
 			return false;
 		}
+		int var7 = (var3 << 9) / var5 + viewportCentreX;
+		int var8 = (var6 << 9) / var5 + viewportCentreY;
+		return var7 >= viewportLeft && var7 <= viewportRight && var8 >= viewportTop && var8 <= viewportBottom;
 	}
 
+	// jag::oldscape::dash3d::world::UpdateMousePickingRSeven
 	@ObfuscatedName("aq.ay(III)V")
-	public void click(int arg0, int arg1, int arg2) {
-		takingInput = true;
-		clickLevel = arg0;
-		mouseX = arg1;
-		mouseY = arg2;
+	public void updateMousePicking(int arg0, int arg1, int arg2) {
+		click = true;
+		clickLev = arg0;
+		clickX = arg1;
+		clickY = arg2;
 		groundX = -1;
 		groundZ = -1;
 	}
 
+	// jag::oldscape::dash3d::world::RenderAllSlow
 	@ObfuscatedName("aq.al(IIIIII)V")
 	public void renderAll(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg0 < 0) {
@@ -980,7 +1061,7 @@ public class World {
 		} else if (arg2 >= this.maxTileZ * 128) {
 			arg2 = this.maxTileZ * 128 - 1;
 		}
-		cycle++;
+		cycleNo++;
 		cameraSinX = Pix3D.sinTable[arg3];
 		cameraCosX = Pix3D.cosTable[arg3];
 		cameraSinY = Pix3D.sinTable[arg4];
@@ -991,29 +1072,29 @@ public class World {
 		cz = arg2;
 		gx = arg0 / 128;
 		gz = arg2 / 128;
-		topLevel = arg5;
-		minDrawTileX = gx - 25;
-		if (minDrawTileX < 0) {
-			minDrawTileX = 0;
+		maxLevel = arg5;
+		minX = gx - 25;
+		if (minX < 0) {
+			minX = 0;
 		}
-		minDrawTileZ = gz - 25;
-		if (minDrawTileZ < 0) {
-			minDrawTileZ = 0;
+		minZ = gz - 25;
+		if (minZ < 0) {
+			minZ = 0;
 		}
-		maxDrawTileX = gx + 25;
-		if (maxDrawTileX > this.maxTileX) {
-			maxDrawTileX = this.maxTileX;
+		maxX = gx + 25;
+		if (maxX > this.maxTileX) {
+			maxX = this.maxTileX;
 		}
-		maxDrawTileZ = gz + 25;
-		if (maxDrawTileZ > this.maxTileZ) {
-			maxDrawTileZ = this.maxTileZ;
+		maxZ = gz + 25;
+		if (maxZ > this.maxTileZ) {
+			maxZ = this.maxTileZ;
 		}
-		this.updateActiveOccluders();
+		this.calcOcclude();
 		fillLeft = 0;
-		for (int var7 = this.minLevel; var7 < this.maxLevel; var7++) {
+		for (int var7 = this.minLevel; var7 < this.maxTileLevel; var7++) {
 			Square[][] var8 = this.levelTiles[var7];
-			for (int var9 = minDrawTileX; var9 < maxDrawTileX; var9++) {
-				for (int var10 = minDrawTileZ; var10 < maxDrawTileZ; var10++) {
+			for (int var9 = minX; var9 < maxX; var9++) {
+				for (int var10 = minZ; var10 < maxZ; var10++) {
 					Square var11 = var8[var9][var10];
 					if (var11 == null) {
 						continue;
@@ -1035,39 +1116,39 @@ public class World {
 				}
 			}
 		}
-		for (int var12 = this.minLevel; var12 < this.maxLevel; var12++) {
+		for (int var12 = this.minLevel; var12 < this.maxTileLevel; var12++) {
 			Square[][] var13 = this.levelTiles[var12];
 			for (int var14 = -25; var14 <= 0; var14++) {
 				int var15 = gx + var14;
 				int var16 = gx - var14;
-				if (var15 < minDrawTileX && var16 >= maxDrawTileX) {
+				if (var15 < minX && var16 >= maxX) {
 					continue;
 				}
 				for (int var17 = -25; var17 <= 0; var17++) {
 					int var18 = gz + var17;
 					int var19 = gz - var17;
-					if (var15 >= minDrawTileX) {
-						if (var18 >= minDrawTileZ) {
+					if (var15 >= minX) {
+						if (var18 >= minZ) {
 							Square var20 = var13[var15][var18];
 							if (var20 != null && var20.drawFront) {
 								this.fill(var20, true);
 							}
 						}
-						if (var19 < maxDrawTileZ) {
+						if (var19 < maxZ) {
 							Square var21 = var13[var15][var19];
 							if (var21 != null && var21.drawFront) {
 								this.fill(var21, true);
 							}
 						}
 					}
-					if (var16 < maxDrawTileX) {
-						if (var18 >= minDrawTileZ) {
+					if (var16 < maxX) {
+						if (var18 >= minZ) {
 							Square var22 = var13[var16][var18];
 							if (var22 != null && var22.drawFront) {
 								this.fill(var22, true);
 							}
 						}
-						if (var19 < maxDrawTileZ) {
+						if (var19 < maxZ) {
 							Square var23 = var13[var16][var19];
 							if (var23 != null && var23.drawFront) {
 								this.fill(var23, true);
@@ -1075,43 +1156,43 @@ public class World {
 						}
 					}
 					if (fillLeft == 0) {
-						takingInput = false;
+						click = false;
 						return;
 					}
 				}
 			}
 		}
-		for (int var24 = this.minLevel; var24 < this.maxLevel; var24++) {
+		for (int var24 = this.minLevel; var24 < this.maxTileLevel; var24++) {
 			Square[][] var25 = this.levelTiles[var24];
 			for (int var26 = -25; var26 <= 0; var26++) {
 				int var27 = gx + var26;
 				int var28 = gx - var26;
-				if (var27 >= minDrawTileX || var28 < maxDrawTileX) {
+				if (var27 >= minX || var28 < maxX) {
 					for (int var29 = -25; var29 <= 0; var29++) {
 						int var30 = gz + var29;
 						int var31 = gz - var29;
-						if (var27 >= minDrawTileX) {
-							if (var30 >= minDrawTileZ) {
+						if (var27 >= minX) {
+							if (var30 >= minZ) {
 								Square var32 = var25[var27][var30];
 								if (var32 != null && var32.drawFront) {
 									this.fill(var32, false);
 								}
 							}
-							if (var31 < maxDrawTileZ) {
+							if (var31 < maxZ) {
 								Square var33 = var25[var27][var31];
 								if (var33 != null && var33.drawFront) {
 									this.fill(var33, false);
 								}
 							}
 						}
-						if (var28 < maxDrawTileX) {
-							if (var30 >= minDrawTileZ) {
+						if (var28 < maxX) {
+							if (var30 >= minZ) {
 								Square var34 = var25[var28][var30];
 								if (var34 != null && var34.drawFront) {
 									this.fill(var34, false);
 								}
 							}
-							if (var31 < maxDrawTileZ) {
+							if (var31 < maxZ) {
 								Square var35 = var25[var28][var31];
 								if (var35 != null && var35.drawFront) {
 									this.fill(var35, false);
@@ -1119,16 +1200,17 @@ public class World {
 							}
 						}
 						if (fillLeft == 0) {
-							takingInput = false;
+							click = false;
 							return;
 						}
 					}
 				}
 			}
 		}
-		takingInput = false;
+		click = false;
 	}
 
+	// jag::oldscape::dash3d::world::Fill
 	@ObfuscatedName("aq.ab(Les;Z)V")
 	public void fill(Square arg0, boolean arg1) {
 		fillQueue.push(arg0);
@@ -1172,25 +1254,25 @@ public class World {
 														continue;
 													}
 												}
-												if (var4 <= gx && var4 > minDrawTileX) {
+												if (var4 <= gx && var4 > minX) {
 													Square var10 = var8[var4 - 1][var5];
 													if (var10 != null && var10.drawBack && (var10.drawFront || (var3.spriteSpans & 0x1) == 0)) {
 														continue;
 													}
 												}
-												if (var4 >= gx && var4 < maxDrawTileX - 1) {
+												if (var4 >= gx && var4 < maxX - 1) {
 													Square var11 = var8[var4 + 1][var5];
 													if (var11 != null && var11.drawBack && (var11.drawFront || (var3.spriteSpans & 0x4) == 0)) {
 														continue;
 													}
 												}
-												if (var5 <= gz && var5 > minDrawTileZ) {
+												if (var5 <= gz && var5 > minZ) {
 													Square var12 = var8[var4][var5 - 1];
 													if (var12 != null && var12.drawBack && (var12.drawFront || (var3.spriteSpans & 0x8) == 0)) {
 														continue;
 													}
 												}
-												if (var5 >= gz && var5 < maxDrawTileZ - 1) {
+												if (var5 >= gz && var5 < maxZ - 1) {
 													Square var13 = var8[var4][var5 + 1];
 													if (var13 != null && var13.drawBack && (var13.drawFront || (var3.spriteSpans & 0x2) == 0)) {
 														continue;
@@ -1203,11 +1285,11 @@ public class World {
 											if (var3.linkedSquare != null) {
 												Square var14 = var3.linkedSquare;
 												if (var14.quickGround == null) {
-													if (var14.ground != null && !this.tileVisible(0, var4, var5)) {
-														this.drawGround(var14.ground, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
+													if (var14.ground != null && !this.groundOccluded(0, var4, var5)) {
+														this.renderGround(var14.ground, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
 													}
-												} else if (!this.tileVisible(0, var4, var5)) {
-													this.drawQuickGround(var14.quickGround, 0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
+												} else if (!this.groundOccluded(0, var4, var5)) {
+													this.renderQuickGround(var14.quickGround, 0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
 												}
 												Wall var15 = var14.wall;
 												if (var15 != null) {
@@ -1222,14 +1304,14 @@ public class World {
 											}
 											boolean var18 = false;
 											if (var3.quickGround == null) {
-												if (var3.ground != null && !this.tileVisible(var7, var4, var5)) {
+												if (var3.ground != null && !this.groundOccluded(var7, var4, var5)) {
 													var18 = true;
-													this.drawGround(var3.ground, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
+													this.renderGround(var3.ground, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
 												}
-											} else if (!this.tileVisible(var7, var4, var5)) {
+											} else if (!this.groundOccluded(var7, var4, var5)) {
 												var18 = true;
-												if (var3.quickGround.colourNE != 12345678 || takingInput && var6 <= clickLevel) {
-													this.drawQuickGround(var3.quickGround, var7, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
+												if (var3.quickGround.colourNE != 12345678 || click && var6 <= clickLev) {
+													this.renderQuickGround(var3.quickGround, var7, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var4, var5);
 												}
 											}
 											int var19 = 0;
@@ -1247,37 +1329,37 @@ public class World {
 												} else if (gz > var5) {
 													var19 += 6;
 												}
-												var20 = FRONT_WALL_TYPES[var19];
-												var3.backWallTypes = BACK_WALL_TYPES[var19];
+												var20 = PRETAB[var19];
+												var3.backWallTypes = POSTTAB[var19];
 											}
 											if (var21 != null) {
-												if ((var21.typeA & DIRECTION_ALLOW_WALL_CORNER_TYPE[var19]) == 0) {
+												if ((var21.typeA & MIDTAB[var19]) == 0) {
 													var3.checkLocSpans = 0;
 												} else if (var21.typeA == 16) {
 													var3.checkLocSpans = 3;
-													var3.blockLocSpans = WALL_CORNER_TYPE_16_BLOCK_LOC_SPANS[var19];
+													var3.blockLocSpans = MIDDEP_16[var19];
 													var3.inverseBlockLocSpans = 3 - var3.blockLocSpans;
 												} else if (var21.typeA == 32) {
 													var3.checkLocSpans = 6;
-													var3.blockLocSpans = WALL_CORNER_TYPE_32_BLOCK_LOC_SPANS[var19];
+													var3.blockLocSpans = MIDDEP_32[var19];
 													var3.inverseBlockLocSpans = 6 - var3.blockLocSpans;
 												} else if (var21.typeA == 64) {
 													var3.checkLocSpans = 12;
-													var3.blockLocSpans = WALL_CORNER_TYPE_64_BLOCK_LOC_SPANS[var19];
+													var3.blockLocSpans = MIDDEP_64[var19];
 													var3.inverseBlockLocSpans = 12 - var3.blockLocSpans;
 												} else {
 													var3.checkLocSpans = 9;
-													var3.blockLocSpans = WALL_CORNER_TYPE_128_BLOCK_LOC_SPANS[var19];
+													var3.blockLocSpans = MIDDEP_128[var19];
 													var3.inverseBlockLocSpans = 9 - var3.blockLocSpans;
 												}
-												if ((var21.typeA & var20) != 0 && !this.wallVisible(var7, var4, var5, var21.typeA)) {
+												if ((var21.typeA & var20) != 0 && !this.wallOccluded(var7, var4, var5, var21.typeA)) {
 													var21.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var21.x - cx, var21.y - cy, var21.z - cz, var21.typecode);
 												}
-												if ((var21.typeB & var20) != 0 && !this.wallVisible(var7, var4, var5, var21.typeB)) {
+												if ((var21.typeB & var20) != 0 && !this.wallOccluded(var7, var4, var5, var21.typeB)) {
 													var21.modelB.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var21.x - cx, var21.y - cy, var21.z - cz, var21.typecode);
 												}
 											}
-											if (var22 != null && !this.visible(var7, var4, var5, var22.model.minY)) {
+											if (var22 != null && !this.spriteOccluded(var7, var4, var5, var22.model.minY)) {
 												if ((var22.type & var20) != 0) {
 													var22.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var22.x + (var22.field710 - cx), var22.field709 - cy, var22.z + (var22.field707 - cz), var22.typecode);
 												} else if (var22.type == 256) {
@@ -1354,14 +1436,14 @@ public class World {
 										if (var3.checkLocSpans != 0) {
 											boolean var36 = true;
 											for (int var37 = 0; var37 < var3.spriteCount; var37++) {
-												if (var3.sprites[var37].cycle != cycle && (var3.spriteSpan[var37] & var3.checkLocSpans) == var3.blockLocSpans) {
+												if (var3.sprites[var37].cycle != cycleNo && (var3.spriteSpan[var37] & var3.checkLocSpans) == var3.blockLocSpans) {
 													var36 = false;
 													break;
 												}
 											}
 											if (var36) {
 												Wall var38 = var3.wall;
-												if (!this.wallVisible(var7, var4, var5, var38.typeA)) {
+												if (!this.wallOccluded(var7, var4, var5, var38.typeA)) {
 													var38.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var38.x - cx, var38.y - cy, var38.z - cz, var38.typecode);
 												}
 												var3.checkLocSpans = 0;
@@ -1377,7 +1459,7 @@ public class World {
 											label563:
 											for (int var41 = 0; var41 < var39; var41++) {
 												Sprite var42 = var3.sprites[var41];
-												if (var42.cycle != cycle) {
+												if (var42.cycle != cycleNo) {
 													for (int var43 = var42.minTileX; var43 <= var42.maxTileX; var43++) {
 														for (int var44 = var42.minTileZ; var44 <= var42.maxTileZ; var44++) {
 															Square var45 = var8[var43][var44];
@@ -1426,7 +1508,7 @@ public class World {
 												int var52 = -1;
 												for (int var53 = 0; var53 < var40; var53++) {
 													Sprite var54 = spriteBuffer[var53];
-													if (var54.cycle != cycle) {
+													if (var54.cycle != cycleNo) {
 														if (var54.distance > var51) {
 															var51 = var54.distance;
 															var52 = var53;
@@ -1445,8 +1527,8 @@ public class World {
 													break;
 												}
 												Sprite var59 = spriteBuffer[var52];
-												var59.cycle = cycle;
-												if (!this.method671(var7, var59.minTileX, var59.maxTileX, var59.minTileZ, var59.maxTileZ, var59.model.minY)) {
+												var59.cycle = cycleNo;
+												if (!this.spriteOccluded(var7, var59.minTileX, var59.maxTileX, var59.minTileZ, var59.maxTileZ, var59.model.minY)) {
 													var59.model.worldRender(var59.yaw, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var59.x - cx, var59.y - cy, var59.z - cz, var59.typecode);
 												}
 												for (int var60 = var59.minTileX; var60 <= var59.maxTileX; var60++) {
@@ -1470,22 +1552,22 @@ public class World {
 									}
 								} while (!var3.drawBack);
 							} while (var3.checkLocSpans != 0);
-							if (var4 > gx || var4 <= minDrawTileX) {
+							if (var4 > gx || var4 <= minX) {
 								break;
 							}
 							var64 = var8[var4 - 1][var5];
 						} while (var64 != null && var64.drawBack);
-						if (var4 < gx || var4 >= maxDrawTileX - 1) {
+						if (var4 < gx || var4 >= maxX - 1) {
 							break;
 						}
 						var65 = var8[var4 + 1][var5];
 					} while (var65 != null && var65.drawBack);
-					if (var5 > gz || var5 <= minDrawTileZ) {
+					if (var5 > gz || var5 <= minZ) {
 						break;
 					}
 					var66 = var8[var4][var5 - 1];
 				} while (var66 != null && var66.drawBack);
-				if (var5 < gz || var5 >= maxDrawTileZ - 1) {
+				if (var5 < gz || var5 >= maxZ - 1) {
 					break;
 				}
 				var67 = var8[var4][var5 + 1];
@@ -1506,7 +1588,7 @@ public class World {
 			}
 			if (var3.backWallTypes != 0) {
 				Decor var69 = var3.decor;
-				if (var69 != null && !this.visible(var7, var4, var5, var69.model.minY)) {
+				if (var69 != null && !this.spriteOccluded(var7, var4, var5, var69.model.minY)) {
 					if ((var69.type & var3.backWallTypes) != 0) {
 						var69.model.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var69.x + (var69.field710 - cx), var69.field709 - cy, var69.z + (var69.field707 - cz), var69.typecode);
 					} else if (var69.type == 0x100) {
@@ -1535,15 +1617,15 @@ public class World {
 				}
 				Wall var76 = var3.wall;
 				if (var76 != null) {
-					if ((var76.typeB & var3.backWallTypes) != 0 && !this.wallVisible(var7, var4, var5, var76.typeB)) {
+					if ((var76.typeB & var3.backWallTypes) != 0 && !this.wallOccluded(var7, var4, var5, var76.typeB)) {
 						var76.modelB.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var76.x - cx, var76.y - cy, var76.z - cz, var76.typecode);
 					}
-					if ((var76.typeA & var3.backWallTypes) != 0 && !this.wallVisible(var7, var4, var5, var76.typeA)) {
+					if ((var76.typeA & var3.backWallTypes) != 0 && !this.wallOccluded(var7, var4, var5, var76.typeA)) {
 						var76.modelA.worldRender(0, cameraSinX, cameraCosX, cameraSinY, cameraCosY, var76.x - cx, var76.y - cy, var76.z - cz, var76.typecode);
 					}
 				}
 			}
-			if (var6 < this.maxLevel - 1) {
+			if (var6 < this.maxTileLevel - 1) {
 				Square var77 = this.levelTiles[var6 + 1][var4][var5];
 				if (var77 != null && var77.drawBack) {
 					fillQueue.push(var77);
@@ -1576,8 +1658,9 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::SoftwareWorldRenderer::RenderQuickGround
 	@ObfuscatedName("aq.ao(Lai;IIIIIII)V")
-	public void drawQuickGround(QuickGround underlay, int level, int arg2, int arg3, int arg4, int arg5, int tileX, int tileZ) {
+	public void renderQuickGround(QuickGround underlay, int level, int arg2, int arg3, int arg4, int arg5, int tileX, int tileZ) {
 		int var9;
 		int var10 = var9 = (tileX << 7) - cx;
 		int var11;
@@ -1647,7 +1730,7 @@ public class World {
 				Pix3D.hclip = true;
 			}
 
-			if (takingInput && this.pointInsideTriangle(mouseX, mouseY, pz1, py3, px1, py1, px3, pz0)) {
+			if (click && this.insideTriangle(clickX, clickY, pz1, py3, px1, py1, px3, pz0)) {
 				groundX = tileX;
 				groundZ = tileZ;
 			}
@@ -1656,7 +1739,7 @@ public class World {
 				if (underlay.colourNE != 12345678) {
 					Pix3D.gouraudTriangle(pz1, py3, px1, py1, px3, pz0, underlay.colourNE, underlay.colourNW, underlay.colourSE);
 				}
-			} else if (lowMemory) {
+			} else if (lowMem) {
 				int textureColor = Pix3D.textureProvider.getAverageRgb(underlay.texture);
 				Pix3D.gouraudTriangle(pz1, py3, px1, py1, px3, pz0, mulLightness(textureColor, underlay.colourNE), mulLightness(textureColor, underlay.colourNW), mulLightness(textureColor, underlay.colourSE));
 			} else if (underlay.flat) {
@@ -1672,7 +1755,7 @@ public class World {
 				Pix3D.hclip = true;
 			}
 
-			if (takingInput && this.pointInsideTriangle(mouseX, mouseY, py0, px1, py3, px0, pz0, px3)) {
+			if (click && this.insideTriangle(clickX, clickY, py0, px1, py3, px0, pz0, px3)) {
 				groundX = tileX;
 				groundZ = tileZ;
 			}
@@ -1681,7 +1764,7 @@ public class World {
 				if (underlay.colourSW != 12345678) {
 					Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, underlay.colourSW, underlay.colourSE, underlay.colourNW);
 				}
-			} else if (lowMemory) {
+			} else if (lowMem) {
 				int averageColour = Pix3D.textureProvider.getAverageRgb(underlay.texture);
 				Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, mulLightness(averageColour, underlay.colourSW), mulLightness(averageColour, underlay.colourSE), mulLightness(averageColour, underlay.colourNW));
 			} else {
@@ -1690,8 +1773,9 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::SoftwareWorldRenderer::RenderGround
 	@ObfuscatedName("aq.ag(Lar;IIIIII)V")
-	public void drawGround(Ground overlay, int sinEyePitch, int cosEyePitch, int sinEyeYaw, int cosEyeYaw, int arg5, int arg6) {
+	public void renderGround(Ground overlay, int sinEyePitch, int cosEyePitch, int sinEyeYaw, int cosEyeYaw, int arg5, int arg6) {
 		int vertexCount = overlay.vertexX.length;
 
 		for (int i = 0; i < vertexCount; i++) {
@@ -1740,7 +1824,7 @@ public class World {
 					Pix3D.hclip = true;
 				}
 
-				if (takingInput && this.pointInsideTriangle(mouseX, mouseY, yA, yB, yC, xA, xB, xC)) {
+				if (click && this.insideTriangle(clickX, clickY, yA, yB, yC, xA, xB, xC)) {
 					groundX = arg5;
 					groundZ = arg6;
 				}
@@ -1749,7 +1833,7 @@ public class World {
 					if (overlay.faceColourA[var20] != 12345678) {
 						Pix3D.gouraudTriangle(yA, yB, yC, xA, xB, xC, overlay.faceColourA[var20], overlay.faceColourB[var20], overlay.faceColourC[var20]);
 					}
-				} else if (lowMemory) {
+				} else if (lowMem) {
 					int textureColor = Pix3D.textureProvider.getAverageRgb(overlay.faceTexture[var20]);
 					Pix3D.gouraudTriangle(yA, yB, yC, xA, xB, xC, mulLightness(textureColor, overlay.faceColourA[var20]), mulLightness(textureColor, overlay.faceColourB[var20]), mulLightness(textureColor, overlay.faceColourC[var20]));
 				} else if (overlay.flat) {
@@ -1772,8 +1856,9 @@ public class World {
 		return (arg0 & 0xFF80) + var2;
 	}
 
+	// jag::oldscape::dash3d::world::InsideTriangle
 	@ObfuscatedName("aq.aq(IIIIIIII)Z")
-	public boolean pointInsideTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public boolean insideTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		if (arg1 < arg2 && arg1 < arg3 && arg1 < arg4) {
 			return false;
 		} else if (arg1 > arg2 && arg1 > arg3 && arg1 > arg4) {
@@ -1790,10 +1875,11 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::CalcOcclude
 	@ObfuscatedName("aq.at()V")
-	public void updateActiveOccluders() {
-		int var1 = levelOccluderCount[topLevel];
-		Occlude[] var2 = levelOccluders[topLevel];
+	public void calcOcclude() {
+		int var1 = levelOccluderCount[maxLevel];
+		Occlude[] var2 = levelOccluders[maxLevel];
 		activeOccluderCount = 0;
 		for (int var3 = 0; var3 < var1; var3++) {
 			Occlude var4 = var2[var3];
@@ -1913,29 +1999,31 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::GroundoOcluded [sic]
 	@ObfuscatedName("aq.ae(III)Z")
-	public boolean tileVisible(int arg0, int arg1, int arg2) {
-		int var4 = this.levelTileOcclusionCycles[arg0][arg1][arg2];
-		if (-cycle == var4) {
+	public boolean groundOccluded(int arg0, int arg1, int arg2) {
+		int var4 = this.occlusionCycle[arg0][arg1][arg2];
+		if (-cycleNo == var4) {
 			return false;
-		} else if (cycle == var4) {
+		} else if (cycleNo == var4) {
 			return true;
 		} else {
 			int var5 = arg1 << 7;
 			int var6 = arg2 << 7;
 			if (this.occluded(var5 + 1, this.groundh[arg0][arg1][arg2], var6 + 1) && this.occluded(var5 + 128 - 1, this.groundh[arg0][arg1 + 1][arg2], var6 + 1) && this.occluded(var5 + 128 - 1, this.groundh[arg0][arg1 + 1][arg2 + 1], var6 + 128 - 1) && this.occluded(var5 + 1, this.groundh[arg0][arg1][arg2 + 1], var6 + 128 - 1)) {
-				this.levelTileOcclusionCycles[arg0][arg1][arg2] = cycle;
+				this.occlusionCycle[arg0][arg1][arg2] = cycleNo;
 				return true;
 			} else {
-				this.levelTileOcclusionCycles[arg0][arg1][arg2] = -cycle;
+				this.occlusionCycle[arg0][arg1][arg2] = -cycleNo;
 				return false;
 			}
 		}
 	}
 
+	// jag::oldscape::dash3d::world::WallOccluded
 	@ObfuscatedName("aq.au(IIII)Z")
-	public boolean wallVisible(int arg0, int arg1, int arg2, int arg3) {
-		if (!this.tileVisible(arg0, arg1, arg2)) {
+	public boolean wallOccluded(int arg0, int arg1, int arg2, int arg3) {
+		if (!this.groundOccluded(arg0, arg1, arg2)) {
 			return false;
 		}
 		int var5 = arg1 << 7;
@@ -2061,23 +2149,24 @@ public class World {
 		}
 	}
 
+	// jag::oldscape::dash3d::world::SpriteOccluded
 	@ObfuscatedName("aq.ax(IIII)Z")
-	public boolean visible(int arg0, int arg1, int arg2, int arg3) {
-		if (this.tileVisible(arg0, arg1, arg2)) {
-			int var5 = arg1 << 7;
-			int var6 = arg2 << 7;
-			return this.occluded(var5 + 1, this.groundh[arg0][arg1][arg2] - arg3, var6 + 1) && this.occluded(var5 + 128 - 1, this.groundh[arg0][arg1 + 1][arg2] - arg3, var6 + 1) && this.occluded(var5 + 128 - 1, this.groundh[arg0][arg1 + 1][arg2 + 1] - arg3, var6 + 128 - 1) && this.occluded(var5 + 1, this.groundh[arg0][arg1][arg2 + 1] - arg3, var6 + 128 - 1);
-		} else {
+	public boolean spriteOccluded(int arg0, int arg1, int arg2, int arg3) {
+		if (!this.groundOccluded(arg0, arg1, arg2)) {
 			return false;
 		}
+		int var5 = arg1 << 7;
+		int var6 = arg2 << 7;
+		return this.occluded(var5 + 1, this.groundh[arg0][arg1][arg2] - arg3, var6 + 1) && this.occluded(var5 + 128 - 1, this.groundh[arg0][arg1 + 1][arg2] - arg3, var6 + 1) && this.occluded(var5 + 128 - 1, this.groundh[arg0][arg1 + 1][arg2 + 1] - arg3, var6 + 128 - 1) && this.occluded(var5 + 1, this.groundh[arg0][arg1][arg2 + 1] - arg3, var6 + 128 - 1);
 	}
 
+	// jag::oldscape::dash3d::world::SpriteOccluded
 	@ObfuscatedName("aq.ai(IIIIII)Z")
-	public boolean method671(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public boolean spriteOccluded(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg1 != arg2 || arg3 != arg4) {
 			for (int var9 = arg1; var9 <= arg2; var9++) {
 				for (int var10 = arg3; var10 <= arg4; var10++) {
-					if (this.levelTileOcclusionCycles[arg0][var9][var10] == -cycle) {
+					if (this.occlusionCycle[arg0][var9][var10] == -cycleNo) {
 						return false;
 					}
 				}
@@ -2095,20 +2184,21 @@ public class World {
 			int var15 = (arg4 << 7) - 1;
 			if (!this.occluded(var11, var13, var15)) {
 				return false;
-			} else if (this.occluded(var14, var13, var15)) {
-				return true;
-			} else {
+			} else if (!this.occluded(var14, var13, var15)) {
 				return false;
+			} else {
+				return true;
 			}
-		} else if (this.tileVisible(arg0, arg1, arg3)) {
+		} else if (!this.groundOccluded(arg0, arg1, arg3)) {
+			return false;
+		} else {
 			int var7 = arg1 << 7;
 			int var8 = arg3 << 7;
 			return this.occluded(var7 + 1, this.groundh[arg0][arg1][arg3] - arg5, var8 + 1) && this.occluded(var7 + 128 - 1, this.groundh[arg0][arg1 + 1][arg3] - arg5, var8 + 1) && this.occluded(var7 + 128 - 1, this.groundh[arg0][arg1 + 1][arg3 + 1] - arg5, var8 + 128 - 1) && this.occluded(var7 + 1, this.groundh[arg0][arg1][arg3 + 1] - arg5, var8 + 128 - 1);
-		} else {
-			return false;
 		}
 	}
 
+	// jag::oldscape::dash3d::world::Occluded
 	@ObfuscatedName("aq.aj(III)Z")
 	public boolean occluded(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < activeOccluderCount; var4++) {

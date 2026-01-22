@@ -125,7 +125,7 @@ public class NpcType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("f.g(IB)Lem;")
-	public static NpcType get(int id) {
+	public static NpcType list(int id) {
 		NpcType cached = (NpcType) configCache.get(id);
 		if (cached != null) {
 			return cached;
@@ -303,7 +303,7 @@ public class NpcType extends DoublyLinkable {
 				}
 			}
 
-			cached = model.calculateNormals(this.ambient + 64, this.contrast + 850, -30, -50, -30);
+			cached = model.light(this.ambient + 64, this.contrast + 850, -30, -50, -30);
 			modelCache.put(cached, this.index);
 		}
 
@@ -387,7 +387,7 @@ public class NpcType extends DoublyLinkable {
 			return null;
 		}
 
-		return get(this.multinpc[value]);
+		return list(this.multinpc[value]);
 	}
 
 	@ObfuscatedName("em.e(I)Z")

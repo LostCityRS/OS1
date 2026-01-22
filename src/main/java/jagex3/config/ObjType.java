@@ -406,7 +406,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelLit litModel = model.calculateNormals(this.ambient + 64, this.contrast + 768, -50, -10, -50);
+		ModelLit litModel = model.light(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 		litModel.useAABBMouseCheck = true;
 		modelCache.put(litModel, this.index);
 		return litModel;

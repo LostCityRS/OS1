@@ -2,6 +2,7 @@ package jagex3.dash3d;
 
 import deob.ObfuscatedName;
 
+// jag::oldscape::dash3d::QuickGround
 @ObfuscatedName("ai")
 public class QuickGround {
 

@@ -1035,26 +1035,26 @@ public class IfType extends Linkable {
 						loadingAsset = true;
 						return null;
 					}
-					var7 = var8.calculateNormals(64, 768, -50, -10, -50);
+					var7 = var8.light(64, 768, -50, -10, -50);
 				}
 				if (var5 == 2) {
-					ModelUnlit var9 = NpcType.get(var6).getHeadModel();
+					ModelUnlit var9 = NpcType.list(var6).getHeadModel();
 					if (var9 == null) {
 						loadingAsset = true;
 						return null;
 					}
-					var7 = var9.calculateNormals(64, 768, -50, -10, -50);
+					var7 = var9.light(64, 768, -50, -10, -50);
 				}
 				if (var5 == 3) {
 					if (arg3 == null) {
 						return null;
 					}
-					ModelUnlit var10 = arg3.method1192();
+					ModelUnlit var10 = arg3.getHeadModel();
 					if (var10 == null) {
 						loadingAsset = true;
 						return null;
 					}
-					var7 = var10.calculateNormals(64, 768, -50, -10, -50);
+					var7 = var10.light(64, 768, -50, -10, -50);
 				}
 				if (var5 == 4) {
 					ObjType var11 = ObjType.get(var6);
@@ -1063,7 +1063,7 @@ public class IfType extends Linkable {
 						loadingAsset = true;
 						return null;
 					}
-					var7 = var12.calculateNormals(var11.ambient + 64, var11.contrast + 768, -50, -10, -50);
+					var7 = var12.light(var11.ambient + 64, var11.contrast + 768, -50, -10, -50);
 				}
 				field1850.put(var7, (long) ((var5 << 16) + var6));
 			}

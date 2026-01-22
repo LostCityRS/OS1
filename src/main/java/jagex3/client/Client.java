@@ -2249,7 +2249,7 @@ public class Client extends GameShell {
 		isMenuOpen = false;
 		menuNumEntries = 0;
 
-		selfModel.method1168(null, new int[] { 0, 0, 0, 0, 0 }, false, -1);
+		selfModel.setAppearance(null, new int[] { 0, 0, 0, 0, 0 }, false, -1);
 
 		for (int var13 = 0; var13 < 8; var13++) {
 			playerOp[var13] = null;
@@ -2373,7 +2373,7 @@ public class Client extends GameShell {
 		SeqType.unload();
 		SpotAnimType.unload();
 		VarPlayerType.unload();
-		PlayerModel.unload();
+		PlayerModel.resetCache();
 		IfType.unload();
 		((WorldTextureProvider) Pix3D.textureProvider).method749();
 		ClientScript.cache.clear();
@@ -3167,11 +3167,11 @@ public class Client extends GameShell {
 					tileLastOccupiedCycle[x][z] = sceneCycle;
 				}
 				player.y = getAvH(player.x, player.z, minusedlevel);
-				world.add(minusedlevel, player.x, player.z, player.y, 60, player, player.yaw, var4, player.needsForwardDrawPadding);
+				world.addDynamic(minusedlevel, player.x, player.z, player.y, 60, player, player.yaw, var4, player.needsForwardDrawPadding);
 			} else {
 				player.lowMemory = false;
 				player.y = getAvH(player.x, player.z, minusedlevel);
-				world.add(minusedlevel, player.x, player.z, player.y, 60, player, player.yaw, var4, player.minTileX, player.minTileZ, player.maxTileX, player.maxTileZ);
+				world.addDynamic(minusedlevel, player.x, player.z, player.y, 60, player, player.yaw, var4, player.minTileX, player.minTileZ, player.maxTileX, player.maxTileZ);
 			}
 		}
 	}
@@ -3199,7 +3199,7 @@ public class Client extends GameShell {
 			if (!var2.type.active) {
 				var3 -= Integer.MIN_VALUE;
 			}
-			world.add(minusedlevel, var2.x, var2.z, getAvH(var2.x + (var2.size * 64 - 64), var2.z + (var2.size * 64 - 64), minusedlevel), var2.size * 64 - 64 + 60, var2, var2.yaw, var3, var2.needsForwardDrawPadding);
+			world.addDynamic(minusedlevel, var2.x, var2.z, getAvH(var2.x + (var2.size * 64 - 64), var2.z + (var2.size * 64 - 64), minusedlevel), var2.size * 64 - 64 + 60, var2, var2.yaw, var3, var2.needsForwardDrawPadding);
 		}
 	}
 
@@ -3235,7 +3235,7 @@ public class Client extends GameShell {
 				}
 
 				proj.move(worldUpdateNum);
-				world.add(minusedlevel, (int) proj.x, (int) proj.z, (int) proj.y, 60, proj, proj.yaw, -1, false);
+				world.addDynamic(minusedlevel, (int) proj.x, (int) proj.z, (int) proj.y, 60, proj, proj.yaw, -1, false);
 			}
 		}
 	}
@@ -3252,7 +3252,7 @@ public class Client extends GameShell {
 				if (var0.animComplete) {
 					var0.unlink();
 				} else {
-					world.add(var0.level, var0.x, var0.z, var0.y, 60, var0, 0, -1, false);
+					world.addDynamic(var0.level, var0.x, var0.z, var0.y, 60, var0, 0, -1, false);
 				}
 			}
 		}
@@ -4138,7 +4138,7 @@ public class Client extends GameShell {
 					}
 				}
 				if (var52 == 2) {
-					Sprite var57 = world.getLoc(minusedlevel, var47, var48);
+					Sprite var57 = world.getScene(minusedlevel, var47, var48);
 					if (var50 == 11) {
 						var50 = 10;
 					}
@@ -4147,7 +4147,7 @@ public class Client extends GameShell {
 					}
 				}
 				if (var52 == 3) {
-					GroundDecor var58 = world.getGroundDecor(minusedlevel, var47, var48);
+					GroundDecor var58 = world.getGd(minusedlevel, var47, var48);
 					if (var58 != null) {
 						var58.model = new ClientLocAnim(var58.typecode >> 14 & 0x7FFF, 22, var51, minusedlevel, var47, var48, var45, false, var58.model);
 					}
@@ -4354,17 +4354,17 @@ public class Client extends GameShell {
 			int var13 = var11 & 0x1F;
 			int var14 = var11 >> 6 & 0x3;
 			if (layer == 0) {
-				world.removeWall(arg0, arg2, arg3);
+				world.delWall(arg0, arg2, arg3);
 				LocType var15 = LocType.get(var12);
 				if (var15.blockwalk != 0) {
 					levelCollisionMap[arg0].delWall(arg2, arg3, var13, var14, var15.blockrange);
 				}
 			}
 			if (layer == 1) {
-				world.removeDecor(arg0, arg2, arg3);
+				world.delDecor(arg0, arg2, arg3);
 			}
 			if (layer == 2) {
-				world.removeLoc(arg0, arg2, arg3);
+				world.delLoc(arg0, arg2, arg3);
 				LocType var16 = LocType.get(var12);
 				if (var16.width + arg2 > 103 || var16.width + arg3 > 103 || var16.length + arg2 > 103 || var16.length + arg3 > 103) {
 					return;
@@ -4374,7 +4374,7 @@ public class Client extends GameShell {
 				}
 			}
 			if (layer == 3) {
-				world.removeGroundDecor(arg0, arg2, arg3);
+				world.delGroundDecor(arg0, arg2, arg3);
 				LocType var17 = LocType.get(var12);
 				if (var17.blockwalk == 1) {
 					levelCollisionMap[arg0].unblockGroundDecor(arg2, arg3);
@@ -4395,7 +4395,7 @@ public class Client extends GameShell {
 	public static void showObject(int arg0, int arg1) {
 		LinkList var2 = objStacks[minusedlevel][arg0][arg1];
 		if (var2 == null) {
-			world.removeObjStacks(minusedlevel, arg0, arg1);
+			world.delObj(minusedlevel, arg0, arg1);
 			return;
 		}
 		int var3 = -99999999;
@@ -4412,7 +4412,7 @@ public class Client extends GameShell {
 			}
 		}
 		if (var4 == null) {
-			world.removeObjStacks(minusedlevel, arg0, arg1);
+			world.delObj(minusedlevel, arg0, arg1);
 			return;
 		}
 		var2.addHead(var4);
@@ -4429,7 +4429,7 @@ public class Client extends GameShell {
 			}
 		}
 		int var11 = (arg1 << 7) + arg0 + 1610612736;
-		world.addObjStack(minusedlevel, arg0, arg1, getAvH(arg0 * 128 + 64, arg1 * 128 + 64, minusedlevel), var4, var11, var8, var9);
+		world.setObj(minusedlevel, arg0, arg1, getAvH(arg0 * 128 + 64, arg1 * 128 + 64, minusedlevel), var4, var11, var8, var9);
 	}
 
 	@ObfuscatedName("ej.ee(I)V")
@@ -4815,7 +4815,7 @@ public class Client extends GameShell {
 				entityUpdateIds[++entityUpdateCount - 1] = var0;
 			}
 			int var6 = in.gBit(1);
-			var2.type = NpcType.get(in.gBit(14));
+			var2.type = NpcType.list(in.gBit(14));
 			int var7 = in.gBit(5);
 			if (var7 > 15) {
 				var7 -= 32;
@@ -4904,7 +4904,7 @@ public class Client extends GameShell {
 				}
 			}
 			if ((var3 & 0x40) != 0) {
-				var2.type = NpcType.get(in.g2());
+				var2.type = NpcType.list(in.g2());
 				var2.size = var2.type.size;
 				var2.turnSpeed = var2.type.turnspeed;
 				var2.walkanim = var2.type.walkanim;
@@ -5719,7 +5719,7 @@ public class Client extends GameShell {
 		}
 
 		if (action == 23) {
-			world.click(minusedlevel, b, c);
+			world.updateMousePicking(minusedlevel, b, c);
 		}
 
 		if (action == 4) {
@@ -6638,7 +6638,7 @@ public class Client extends GameShell {
 					}
 				} else if (com.modelType == 5) {
 					if (com.modelId == 0) {
-						var202 = selfModel.method1174(null, -1, null, -1);
+						var202 = selfModel.getTempModel(null, -1, null, -1);
 					} else {
 						var202 = localPlayer.getTempModel();
 					}
@@ -11856,13 +11856,13 @@ public class Client extends GameShell {
 	}
 
 	public static void setHighMemory() {
-		World.lowMemory = false;
+		World.lowMem = false;
 		lowMemory = false;
 	}
 
 	// not exposed as an option anymore :(
 	public static void setLowMemory() {
-		World.lowMemory = true;
+		World.lowMem = true;
 		lowMemory = true;
 	}
 }
