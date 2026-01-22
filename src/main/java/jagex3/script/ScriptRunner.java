@@ -2400,6 +2400,7 @@ public class ScriptRunner {
 						}
 						Client.tradeChatFilter = intStack[isp + 2];
 
+						// SET_CHATFILTERSETTINGS
 						Client.out.p1Enc(167);
 						Client.out.p1(Client.publicChatFilter);
 						Client.out.p1(Client.privateChatFilter.index);
@@ -2415,6 +2416,7 @@ public class ScriptRunner {
 						int var343 = intStack[isp];
 						int var344 = intStack[isp + 1];
 
+						// SEND_SNAPSHOT
 						Client.out.p1Enc(96);
 						Client.out.p1(Packet.pjstrlen(var342) + 2);
 						Client.out.pjstr(var342);

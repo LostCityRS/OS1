@@ -8633,20 +8633,27 @@ public class Client extends GameShell {
 		if (rebootTimer > 1) {
 			rebootTimer--;
 		}
+
 		if (logoutTimer > 0) {
 			logoutTimer--;
 		}
+
 		if (networkError) {
 			networkError = false;
 			lostCon();
 			return;
 		}
+
 		for (int var78 = 0; var78 < 100 && tcpIn(); var78++) {
 		}
+
 		if (state != 30) {
 			return;
 		}
+
+		// REFLECTION_CHECK_REPLY
 		ReflectionChecker.performCheck(out, 108);
+
 		Object var384 = mouseTracking.lock;
 		synchronized (var384) {
 			if (!mouseTracked) {
@@ -11742,6 +11749,7 @@ public class Client extends GameShell {
 			return;
 		}
 
+		// CLAN_KICKUSER
 		out.p1Enc(245);
 		out.p1(Packet.pjstrlen(var186));
 		out.pjstr(var186);
@@ -11791,6 +11799,7 @@ public class Client extends GameShell {
 
 	// jag::oldscape::FriendSystem::SetFriendRank
 	public static void setFriendRank(String var164, int var165) {
+		// FRIEND_SETRANK
 		out.p1Enc(252);
 		out.p1(Packet.pjstrlen(var164) + 1);
 		out.pjstr(var164);
