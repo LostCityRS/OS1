@@ -44,7 +44,7 @@ public class ClientScript extends DoublyLinkable {
 			return cached;
 		}
 
-		byte[] data = Client.clientScriptJs5.getFile(id, 0);
+		byte[] data = Client.scripts.getFile(id, 0);
 		if (data == null) {
 			return null;
 		}

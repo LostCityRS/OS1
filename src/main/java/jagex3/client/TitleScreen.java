@@ -217,7 +217,7 @@ public class TitleScreen {
 			if (field142) {
 				MidiManager.stop();
 			} else {
-				Js5Loader var1 = Client.midiSongJs5;
+				Js5Loader var1 = Client.songs;
 				int var2 = var1.getGroupId("scape main");
 				int var3 = var1.getFileId(var2, "");
 				MidiManager.method1125(var1, var2, var3, 255, false);
@@ -627,7 +627,7 @@ public class TitleScreen {
 		field132[field142 ? 1 : 0].plotSprite(725, 463);
 		if (Client.state > 5 && Client.lang == 0) {
 			if (field215 == null) {
-				field215 = PixLoader.makePix8(Client.spriteJs5, "sl_button", "");
+				field215 = PixLoader.makePix8(Client.sprites, "sl_button", "");
 			} else {
 				byte var82 = 5;
 				short var83 = 463;
@@ -704,16 +704,16 @@ public class TitleScreen {
 	@ObfuscatedName("de.z(Lfm;Lfm;I)V")
 	public static void method1500(SoftwareFont arg0, SoftwareFont arg1) {
 		if (field1530 == null) {
-			field1530 = PixLoader.makePix32Array(Client.spriteJs5, "sl_back", "");
+			field1530 = PixLoader.makePix32Array(Client.sprites, "sl_back", "");
 		}
 		if (field2612 == null) {
-			field2612 = PixLoader.makePix8Array(Client.spriteJs5, "sl_flags", "");
+			field2612 = PixLoader.makePix8Array(Client.sprites, "sl_flags", "");
 		}
 		if (field681 == null) {
-			field681 = PixLoader.makePix8Array(Client.spriteJs5, "sl_arrows", "");
+			field681 = PixLoader.makePix8Array(Client.sprites, "sl_arrows", "");
 		}
 		if (field811 == null) {
-			field811 = PixLoader.makePix8Array(Client.spriteJs5, "sl_stars", "");
+			field811 = PixLoader.makePix8Array(Client.sprites, "sl_stars", "");
 		}
 		Pix2D.fillRect(0, 23, 765, 480, 0);
 		Pix2D.method2592(0, 0, 125, 23, 12425273, 9135624);
@@ -902,7 +902,7 @@ public class TitleScreen {
 			return;
 		}
 		WorldEntry var5 = worlds[field168];
-		if (Client.members == var5.members) {
+		if (Client.memServer == var5.members) {
 			Client.loginHost = var5.host;
 			Client.worldid = var5.id;
 			Client.loginGamePort = Client.modewhere == 0 ? 43594 : var5.id + 40000;
@@ -1145,7 +1145,7 @@ public class TitleScreen {
 		if (field142) {
 			MidiManager.stop2();
 		} else {
-			MidiManager.imethod1(Client.midiSongJs5);
+			MidiManager.imethod1(Client.songs);
 		}
 		Js5Net.sendLoginLogoutPacket(false);
 		opened = true;

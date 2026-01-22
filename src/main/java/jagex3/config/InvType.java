@@ -60,8 +60,8 @@ public class InvType extends DoublyLinkable {
 		return inv;
 	}
 
-	// jag::oldscape::configdecoder::InvType::ResetCache
-	public static void resetCache(Js5Loader config) {
+	// jag::oldscape::configdecoder::InvType::Init
+	public static void init(Js5Loader config) {
 		configClient = config;
 	}
 }

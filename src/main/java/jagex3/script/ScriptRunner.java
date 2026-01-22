@@ -1521,7 +1521,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 3312) {
 						// map_members
-						intStack[isp++] = Client.members ? 1 : 0;
+						intStack[isp++] = Client.memServer ? 1 : 0;
 						continue;
 					}
 					if (opcode == 3313) {
@@ -2153,7 +2153,7 @@ public class ScriptRunner {
 						int var282 = intStack[isp];
 						int var283 = intStack[isp + 1];
 
-						byte[] var284 = Client.fontMetricJs5.getFile(var283, 0);
+						byte[] var284 = Client.fontMetrics.getFile(var283, 0);
 						SoftwareFont var285 = new SoftwareFont(var284);
 						intStack[isp++] = var285.method2889(var281, var282);
 						continue;
@@ -2167,7 +2167,7 @@ public class ScriptRunner {
 						int var287 = intStack[isp];
 						int var288 = intStack[isp + 1];
 
-						byte[] var289 = Client.fontMetricJs5.getFile(var288, 0);
+						byte[] var289 = Client.fontMetrics.getFile(var288, 0);
 						SoftwareFont var290 = new SoftwareFont(var289);
 						intStack[isp++] = var290.method2818(var286, var287);
 						continue;

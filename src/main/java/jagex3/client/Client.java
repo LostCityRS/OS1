@@ -66,7 +66,7 @@ public class Client extends GameShell {
 	public static NameSpace namespace;
 
 	@ObfuscatedName("client.ab")
-	public static boolean members = false;
+	public static boolean memServer = false;
 
 	@ObfuscatedName("client.ao")
 	public static boolean lowMemory = false;
@@ -159,52 +159,52 @@ public class Client extends GameShell {
 	public static long field1943;
 
 	@ObfuscatedName("bb.bp")
-	public static Js5Loader animFrameJs5;
+	public static Js5Loader anims;
 
 	@ObfuscatedName("es.ba")
-	public static Js5Loader animBaseJs5;
+	public static Js5Loader bases;
 
 	@ObfuscatedName("cc.bc")
-	public static Js5Loader configJs5;
+	public static Js5Loader config;
 
 	@ObfuscatedName("bd.br")
-	public static Js5Loader interfaceJs5;
+	public static Js5Loader interfaces;
 
 	@ObfuscatedName("df.bb")
-	public static Js5Loader soundFxJs5;
+	public static Js5Loader jagFX;
 
 	@ObfuscatedName("ck.bd")
-	public static Js5Loader mapJs5;
+	public static Js5Loader maps;
 
 	@ObfuscatedName("bb.cr")
-	public static Js5Loader midiSongJs5;
+	public static Js5Loader songs;
 
 	@ObfuscatedName("aa.cs")
-	public static Js5Loader modelJs5;
+	public static Js5Loader models;
 
 	@ObfuscatedName("client.cj")
-	public static Js5Loader spriteJs5;
+	public static Js5Loader sprites;
 
 	@ObfuscatedName("client.cl")
-	public static Js5Loader textureJs5;
+	public static Js5Loader textures;
 
 	@ObfuscatedName("ab.cp")
-	public static Js5Loader binaryJs5;
+	public static Js5Loader binary;
 
 	@ObfuscatedName("dz.ca")
-	public static Js5Loader midiJingleJs5;
+	public static Js5Loader jingles;
 
 	@ObfuscatedName("ct.co")
-	public static Js5Loader clientScriptJs5;
+	public static Js5Loader scripts;
 
 	@ObfuscatedName("cj.ch")
-	public static Js5Loader fontMetricJs5;
+	public static Js5Loader fontMetrics;
 
 	@ObfuscatedName("ey.cu")
-	public static Js5Loader musicSamplesJs5;
+	public static Js5Loader vorbis;
 
 	@ObfuscatedName("z.cc")
-	public static Js5Loader musicPatchesJs5;
+	public static Js5Loader patches;
 
 	@ObfuscatedName("client.cm")
 	public static int js5Errors = 0;
@@ -1233,9 +1233,9 @@ public class Client extends GameShell {
 						break;
 					case 6:
 						if (var5.equalsIgnoreCase(StringConstants.TRUE_S)) {
-							members = true;
+							memServer = true;
 						} else {
-							members = false;
+							memServer = false;
 						}
 						break;
 					case 7:
@@ -1455,7 +1455,7 @@ public class Client extends GameShell {
 		}
 
 		if (newState == 5 || newState == 10 || newState == 20) {
-			TitleScreen.open(GameShell.canvas, binaryJs5, spriteJs5);
+			TitleScreen.open(GameShell.canvas, binary, sprites);
 		} else {
 			TitleScreen.close();
 		}
@@ -1609,44 +1609,44 @@ public class Client extends GameShell {
 			TitleScreen.loadPos = 10;
 			loadingStep = 30;
 		} else if (loadingStep == 30) {
-			animFrameJs5 = openJs5(0, false, true, true);
-			animBaseJs5 = openJs5(1, false, true, true);
-			configJs5 = openJs5(2, true, false, true);
-			interfaceJs5 = openJs5(3, false, true, true);
-			soundFxJs5 = openJs5(4, false, true, true);
-			mapJs5 = openJs5(5, true, true, true);
-			midiSongJs5 = openJs5(6, true, true, false);
-			modelJs5 = openJs5(7, false, true, true);
-			spriteJs5 = openJs5(8, false, true, true);
-			textureJs5 = openJs5(9, false, true, true);
-			binaryJs5 = openJs5(10, false, true, true);
-			midiJingleJs5 = openJs5(11, false, true, true);
-			clientScriptJs5 = openJs5(12, false, true, true);
-			fontMetricJs5 = openJs5(13, true, false, true);
-			musicSamplesJs5 = openJs5(14, false, true, false);
-			musicPatchesJs5 = openJs5(15, false, true, true);
+			anims = openJs5(0, false, true, true);
+			bases = openJs5(1, false, true, true);
+			config = openJs5(2, true, false, true);
+			interfaces = openJs5(3, false, true, true);
+			jagFX = openJs5(4, false, true, true);
+			maps = openJs5(5, true, true, true);
+			songs = openJs5(6, true, true, false);
+			models = openJs5(7, false, true, true);
+			sprites = openJs5(8, false, true, true);
+			textures = openJs5(9, false, true, true);
+			binary = openJs5(10, false, true, true);
+			jingles = openJs5(11, false, true, true);
+			scripts = openJs5(12, false, true, true);
+			fontMetrics = openJs5(13, true, false, true);
+			vorbis = openJs5(14, false, true, false);
+			patches = openJs5(15, false, true, true);
 
 			TitleScreen.loadString = Text.MAINLOAD30;
 			TitleScreen.loadPos = 20;
 			loadingStep = 40;
 		} else if (loadingStep == 40) {
 			byte var6 = 0;
-			int var7 = var6 + animFrameJs5.getIndexPercentage() * 4 / 100;
-			int var8 = var7 + animBaseJs5.getIndexPercentage() * 4 / 100;
-			int var9 = var8 + configJs5.getIndexPercentage() * 2 / 100;
-			int var10 = var9 + interfaceJs5.getIndexPercentage() * 2 / 100;
-			int var11 = var10 + soundFxJs5.getIndexPercentage() * 6 / 100;
-			int var12 = var11 + mapJs5.getIndexPercentage() * 4 / 100;
-			int var13 = var12 + midiSongJs5.getIndexPercentage() * 2 / 100;
-			int var14 = var13 + modelJs5.getIndexPercentage() * 60 / 100;
-			int var15 = var14 + spriteJs5.getIndexPercentage() * 2 / 100;
-			int var16 = var15 + textureJs5.getIndexPercentage() * 2 / 100;
-			int var17 = var16 + binaryJs5.getIndexPercentage() * 2 / 100;
-			int var18 = var17 + midiJingleJs5.getIndexPercentage() * 2 / 100;
-			int var19 = var18 + clientScriptJs5.getIndexPercentage() * 2 / 100;
-			int var20 = var19 + fontMetricJs5.getIndexPercentage() * 2 / 100;
-			int var21 = var20 + musicSamplesJs5.getIndexPercentage() * 2 / 100;
-			int var22 = var21 + musicPatchesJs5.getIndexPercentage() * 2 / 100;
+			int var7 = var6 + anims.getIndexPercentage() * 4 / 100;
+			int var8 = var7 + bases.getIndexPercentage() * 4 / 100;
+			int var9 = var8 + config.getIndexPercentage() * 2 / 100;
+			int var10 = var9 + interfaces.getIndexPercentage() * 2 / 100;
+			int var11 = var10 + jagFX.getIndexPercentage() * 6 / 100;
+			int var12 = var11 + maps.getIndexPercentage() * 4 / 100;
+			int var13 = var12 + songs.getIndexPercentage() * 2 / 100;
+			int var14 = var13 + models.getIndexPercentage() * 60 / 100;
+			int var15 = var14 + sprites.getIndexPercentage() * 2 / 100;
+			int var16 = var15 + textures.getIndexPercentage() * 2 / 100;
+			int var17 = var16 + binary.getIndexPercentage() * 2 / 100;
+			int var18 = var17 + jingles.getIndexPercentage() * 2 / 100;
+			int var19 = var18 + scripts.getIndexPercentage() * 2 / 100;
+			int var20 = var19 + fontMetrics.getIndexPercentage() * 2 / 100;
+			int var21 = var20 + vorbis.getIndexPercentage() * 2 / 100;
+			int var22 = var21 + patches.getIndexPercentage() * 2 / 100;
 
 			if (var22 != 100) {
 				if (var22 != 0) {
@@ -1665,7 +1665,7 @@ public class Client extends GameShell {
 			midiPlayer.setChannelDefaultPatch(9, 128);
 			midiPcmPlayer = PcmPlayer.getPlayer(GameShell.signLink, GameShell.canvas, 0, 22050);
 			midiPcmPlayer.playStream(midiPlayer);
-			MidiManager.init(musicPatchesJs5, musicSamplesJs5, soundFxJs5, midiPlayer);
+			MidiManager.init(patches, vorbis, jagFX, midiPlayer);
 
 			soundPcmPlayer = PcmPlayer.getPlayer(GameShell.signLink, GameShell.canvas, 1, 2048);
 			soundMixer = new Mixer();
@@ -1678,17 +1678,17 @@ public class Client extends GameShell {
 		} else if (loadingStep == 50) {
 			int var24 = 0;
 			if (fontPlain11 == null) {
-				fontPlain11 = PixLoader.makeFont(spriteJs5, fontMetricJs5, "p11_full", "");
+				fontPlain11 = PixLoader.makeFont(sprites, fontMetrics, "p11_full", "");
 			} else {
 				var24++;
 			}
 			if (fontPlain12 == null) {
-				fontPlain12 = PixLoader.makeFont(spriteJs5, fontMetricJs5, "p12_full", "");
+				fontPlain12 = PixLoader.makeFont(sprites, fontMetrics, "p12_full", "");
 			} else {
 				var24++;
 			}
 			if (fontBold12 == null) {
-				fontBold12 = PixLoader.makeFont(spriteJs5, fontMetricJs5, "b12_full", "");
+				fontBold12 = PixLoader.makeFont(sprites, fontMetrics, "b12_full", "");
 			} else {
 				var24++;
 			}
@@ -1702,7 +1702,7 @@ public class Client extends GameShell {
 				loadingStep = 60;
 			}
 		} else if (loadingStep == 60) {
-			int var27 = imethod48(binaryJs5, spriteJs5);
+			int var27 = imethod48(binary, sprites);
 			int var30 = TitleScreen.method162();
 
 			if (var27 < var30) {
@@ -1715,23 +1715,23 @@ public class Client extends GameShell {
 				loadingStep = 70;
 			}
 		} else if (loadingStep == 70) {
-			if (!configJs5.requestFullDownload()) {
-				TitleScreen.loadString = Text.MAINLOAD70 + configJs5.getIndexLoadProgress() + "%";
+			if (!config.requestFullDownload()) {
+				TitleScreen.loadString = Text.MAINLOAD70 + config.getIndexLoadProgress() + "%";
 				TitleScreen.loadPos = 60;
 			} else {
-				FloType.init(configJs5);
-				FluType.init(configJs5);
-				IdkType.init(configJs5, modelJs5);
-				LocType.init(configJs5, modelJs5, lowMemory);
-				NpcType.init(configJs5, modelJs5);
-				ObjType.init(configJs5, modelJs5, members, fontPlain11);
-				SeqType.init(configJs5, animFrameJs5, animBaseJs5);
-				SpotType.init(configJs5, modelJs5);
-				VarBitType.init(configJs5);
-				VarpType.init(configJs5);
-				IfType.init(interfaceJs5, modelJs5, spriteJs5, fontMetricJs5);
-				InvType.resetCache(configJs5);
-				EnumType.init(configJs5);
+				FloType.init(config);
+				FluType.init(config);
+				IdkType.init(config, models);
+				LocType.init(config, models, lowMemory);
+				NpcType.init(config, models);
+				ObjType.init(config, models, memServer, fontPlain11);
+				SeqType.init(config, anims, bases);
+				SpotType.init(config, models);
+				VarBitType.init(config);
+				VarpType.init(config);
+				IfType.init(interfaces, models, sprites, fontMetrics);
+				InvType.init(config);
+				EnumType.init(config);
 
 				TitleScreen.loadString = Text.MAINLOAD70B;
 				TitleScreen.loadPos = 60;
@@ -1741,85 +1741,85 @@ public class Client extends GameShell {
 			int count = 0;
 
 			if (compass == null) {
-				compass = PixLoader.makePix32(spriteJs5, "compass", "");
+				compass = PixLoader.makePix32(sprites, "compass", "");
 			} else {
 				count++;
 			}
 
 			if (mapedge == null) {
-				mapedge = PixLoader.makePix32(spriteJs5, "mapedge", "");
+				mapedge = PixLoader.makePix32(sprites, "mapedge", "");
 			} else {
 				count++;
 			}
 
 			if (mapscene == null) {
-				mapscene = PixLoader.makePix8Array(spriteJs5, "mapscene", "");
+				mapscene = PixLoader.makePix8Array(sprites, "mapscene", "");
 			} else {
 				count++;
 			}
 
 			if (mapfunction == null) {
-				mapfunction = PixLoader.makePix32Array(spriteJs5, "mapfunction", "");
+				mapfunction = PixLoader.makePix32Array(sprites, "mapfunction", "");
 			} else {
 				count++;
 			}
 
 			if (hitmarks == null) {
-				hitmarks = PixLoader.makePix32Array(spriteJs5, "hitmarks", "");
+				hitmarks = PixLoader.makePix32Array(sprites, "hitmarks", "");
 			} else {
 				count++;
 			}
 
 			if (headiconsPk == null) {
-				headiconsPk = PixLoader.makePix32Array(spriteJs5, "headicons_pk", "");
+				headiconsPk = PixLoader.makePix32Array(sprites, "headicons_pk", "");
 			} else {
 				count++;
 			}
 
 			if (headiconsPrayer == null) {
-				headiconsPrayer = PixLoader.makePix32Array(spriteJs5, "headicons_prayer", "");
+				headiconsPrayer = PixLoader.makePix32Array(sprites, "headicons_prayer", "");
 			} else {
 				count++;
 			}
 
 			if (headiconsHint == null) {
-				headiconsHint = PixLoader.makePix32Array(spriteJs5, "headicons_hint", "");
+				headiconsHint = PixLoader.makePix32Array(sprites, "headicons_hint", "");
 			} else {
 				count++;
 			}
 
 			if (mapmarker == null) {
-				mapmarker = PixLoader.makePix32Array(spriteJs5, "mapmarker", "");
+				mapmarker = PixLoader.makePix32Array(sprites, "mapmarker", "");
 			} else {
 				count++;
 			}
 
 			if (cross == null) {
-				cross = PixLoader.makePix32Array(spriteJs5, "cross", "");
+				cross = PixLoader.makePix32Array(sprites, "cross", "");
 			} else {
 				count++;
 			}
 
 			if (mapdots == null) {
-				mapdots = PixLoader.makePix32Array(spriteJs5, "mapdots", "");
+				mapdots = PixLoader.makePix32Array(sprites, "mapdots", "");
 			} else {
 				count++;
 			}
 
 			if (scrollbar == null) {
-				scrollbar = PixLoader.makePix8Array(spriteJs5, "scrollbar", "");
+				scrollbar = PixLoader.makePix8Array(sprites, "scrollbar", "");
 			} else {
 				count++;
 			}
 
 			if (modIcons == null) {
-				modIcons = PixLoader.makePix8Array(spriteJs5, "mod_icons", "");
+				modIcons = PixLoader.makePix8Array(sprites, "mod_icons", "");
 			} else {
 				count++;
 			}
 
 			if (mapback == null) {
-				mapback = PixLoader.makePix8(spriteJs5, "mapback", "");
+				mapback = PixLoader.makePix8(sprites, "mapback", "");
 			} else {
 				count++;
 			}
@@ -1850,11 +1850,11 @@ public class Client extends GameShell {
 				loadingStep = 90;
 			}
 		} else if (loadingStep == 90) {
-			if (!textureJs5.requestFullDownload()) {
-				TitleScreen.loadString = Text.MAINLOAD90 + textureJs5.getIndexLoadProgress() + "%";
+			if (!textures.requestFullDownload()) {
+				TitleScreen.loadString = Text.MAINLOAD90 + textures.getIndexLoadProgress() + "%";
 				TitleScreen.loadPos = 90;
 			} else {
-				WorldTextureProvider provider = new WorldTextureProvider(textureJs5, spriteJs5, 20, 0.8D, lowMemory ? 64 : 128);
+				WorldTextureProvider provider = new WorldTextureProvider(textures, sprites, 20, 0.8D, lowMemory ? 64 : 128);
 				Pix3D.setTextures(provider);
 				Pix3D.initColourTable(0.8D);
 
@@ -1870,11 +1870,11 @@ public class Client extends GameShell {
 			TitleScreen.loadPos = 94;
 			loadingStep = 120;
 		} else if (loadingStep == 120) {
-			if (!binaryJs5.requestDownload("huffman", "")) {
+			if (!binary.requestDownload("huffman", "")) {
 				TitleScreen.loadString = Text.MAINLOAD120 + "%";
 				TitleScreen.loadPos = 96;
 			} else {
-				Huffman huffman = new Huffman(binaryJs5.getFile("huffman", ""));
+				Huffman huffman = new Huffman(binary.getFile("huffman", ""));
 				WordPack.setHuffman(huffman);
 
 				TitleScreen.loadString = Text.MAINLOAD120B;
@@ -1882,14 +1882,14 @@ public class Client extends GameShell {
 				loadingStep = 130;
 			}
 		} else if (loadingStep == 130) {
-			if (!interfaceJs5.requestFullDownload()) {
-				TitleScreen.loadString = Text.MAINLOAD130 + interfaceJs5.getIndexLoadProgress() * 4 / 5 + "%";
+			if (!interfaces.requestFullDownload()) {
+				TitleScreen.loadString = Text.MAINLOAD130 + interfaces.getIndexLoadProgress() * 4 / 5 + "%";
 				TitleScreen.loadPos = 100;
-			} else if (!clientScriptJs5.requestFullDownload()) {
-				TitleScreen.loadString = Text.MAINLOAD130 + (clientScriptJs5.getIndexLoadProgress() / 6 + 80) + "%";
+			} else if (!scripts.requestFullDownload()) {
+				TitleScreen.loadString = Text.MAINLOAD130 + (scripts.getIndexLoadProgress() / 6 + 80) + "%";
 				TitleScreen.loadPos = 100;
-			} else if (!fontMetricJs5.requestFullDownload()) {
-				TitleScreen.loadString = Text.MAINLOAD130 + (fontMetricJs5.getIndexLoadProgress() / 20 + 96) + "%";
+			} else if (!fontMetrics.requestFullDownload()) {
+				TitleScreen.loadString = Text.MAINLOAD130 + (fontMetrics.getIndexLoadProgress() / 20 + 96) + "%";
 				TitleScreen.loadPos = 100;
 			} else {
 				TitleScreen.loadString = Text.MAINLOAD130B;
@@ -2005,22 +2005,22 @@ public class Client extends GameShell {
 				login.pjstr(TitleScreen.username);
 				login.p1(lowMemory ? 1 : 0);
 				GameShellCache.pushUID192(login); // 24 bytes
-				login.p4(animFrameJs5.crc);
-				login.p4(animBaseJs5.crc);
-				login.p4(configJs5.crc);
-				login.p4(interfaceJs5.crc);
-				login.p4(soundFxJs5.crc);
-				login.p4(mapJs5.crc);
-				login.p4(midiSongJs5.crc);
-				login.p4(modelJs5.crc);
-				login.p4(spriteJs5.crc);
-				login.p4(textureJs5.crc);
-				login.p4(binaryJs5.crc);
-				login.p4(midiJingleJs5.crc);
-				login.p4(clientScriptJs5.crc);
-				login.p4(fontMetricJs5.crc);
-				login.p4(musicSamplesJs5.crc);
-				login.p4(musicPatchesJs5.crc);
+				login.p4(anims.crc);
+				login.p4(bases.crc);
+				login.p4(config.crc);
+				login.p4(interfaces.crc);
+				login.p4(jagFX.crc);
+				login.p4(maps.crc);
+				login.p4(songs.crc);
+				login.p4(models.crc);
+				login.p4(sprites.crc);
+				login.p4(textures.crc);
+				login.p4(binary.crc);
+				login.p4(jingles.crc);
+				login.p4(scripts.crc);
+				login.p4(fontMetrics.crc);
+				login.p4(vorbis.crc);
+				login.p4(patches.crc);
 				login.tinyenc(seed, xteaStart, login.pos);
 
 				login.psize2(login.pos - start);
@@ -2378,18 +2378,18 @@ public class Client extends GameShell {
 		((WorldTextureProvider) Pix3D.textureProvider).method749();
 		ClientScript.cache.clear();
 
-		animFrameJs5.discardAllFiles();
-		animBaseJs5.discardAllFiles();
-		interfaceJs5.discardAllFiles();
-		soundFxJs5.discardAllFiles();
-		mapJs5.discardAllFiles();
-		midiSongJs5.discardAllFiles();
-		modelJs5.discardAllFiles();
-		spriteJs5.discardAllFiles();
-		textureJs5.discardAllFiles();
-		binaryJs5.discardAllFiles();
-		midiJingleJs5.discardAllFiles();
-		clientScriptJs5.discardAllFiles();
+		anims.discardAllFiles();
+		bases.discardAllFiles();
+		interfaces.discardAllFiles();
+		jagFX.discardAllFiles();
+		maps.discardAllFiles();
+		songs.discardAllFiles();
+		models.discardAllFiles();
+		sprites.discardAllFiles();
+		textures.discardAllFiles();
+		binary.discardAllFiles();
+		jingles.discardAllFiles();
+		scripts.discardAllFiles();
 	}
 
 	@ObfuscatedName("da.dj(I)V")
@@ -2436,7 +2436,7 @@ public class Client extends GameShell {
 		if (id == -1 && !field2189) {
 			MidiManager.stop();
 		} else if (id != -1 && previousSong != id && midiVolume != 0 && !field2189) {
-			MidiManager.play(2, midiSongJs5, id, 0, midiVolume, false);
+			MidiManager.play(2, songs, id, 0, midiVolume, false);
 		}
 
 		previousSong = id;
@@ -3401,8 +3401,8 @@ public class Client extends GameShell {
 					int var13 = (var11 << 8) + var12;
 					if (!var9 || var12 != 49 && var12 != 149 && var12 != 147 && var11 != 50 && (var11 != 49 || var12 != 47)) {
 						mapBuildIndex[var10] = var13;
-						mapBuildGroundFile[var10] = mapJs5.getGroupId("m" + var11 + "_" + var12);
-						mapBuildLocationFile[var10] = mapJs5.getGroupId("l" + var11 + "_" + var12);
+						mapBuildGroundFile[var10] = maps.getGroupId("m" + var11 + "_" + var12);
+						mapBuildLocationFile[var10] = maps.getGroupId("l" + var11 + "_" + var12);
 						var10++;
 					}
 				}
@@ -3459,8 +3459,8 @@ public class Client extends GameShell {
 								mapBuildIndex[var26] = var33;
 								int var35 = var33 >> 8 & 0xFF;
 								int var36 = var33 & 0xFF;
-								mapBuildGroundFile[var26] = mapJs5.getGroupId("m" + var35 + "_" + var36);
-								mapBuildLocationFile[var26] = mapJs5.getGroupId("l" + var35 + "_" + var36);
+								mapBuildGroundFile[var26] = maps.getGroupId("m" + var35 + "_" + var36);
+								mapBuildLocationFile[var26] = maps.getGroupId("l" + var35 + "_" + var36);
 								var26++;
 							}
 						}
@@ -6963,7 +6963,7 @@ public class Client extends GameShell {
 					int var10 = var9 + script[pc++];
 					IfType var11 = IfType.get(var10);
 					int var12 = script[pc++];
-					if (var12 != -1 && (!ObjType.list(var12).members || members)) {
+					if (var12 != -1 && (!ObjType.list(var12).members || memServer)) {
 						for (int var13 = 0; var13 < var11.linkObjType.length; var13++) {
 							if (var12 + 1 == var11.linkObjType[var13]) {
 								register += var11.linkObjCount[var13];
@@ -6989,7 +6989,7 @@ public class Client extends GameShell {
 					int var16 = var15 + script[pc++];
 					IfType var17 = IfType.get(var16);
 					int var18 = script[pc++];
-					if (var18 != -1 && (!ObjType.list(var18).members || members)) {
+					if (var18 != -1 && (!ObjType.list(var18).members || memServer)) {
 						for (int var19 = 0; var19 < var17.linkObjType.length; var19++) {
 							if (var18 + 1 == var17.linkObjType[var19]) {
 								register = 999999999;
@@ -7695,7 +7695,7 @@ public class Client extends GameShell {
 
 			if (midiVolume != volume) {
 				if (midiVolume == 0 && previousSong != -1) {
-					MidiManager.method1125(midiSongJs5, previousSong, 0, volume, false);
+					MidiManager.method1125(songs, previousSong, 0, volume, false);
 					field2189 = false;
 				} else if (volume == 0) {
 					MidiManager.stop();
@@ -8346,14 +8346,14 @@ public class Client extends GameShell {
 		boolean var11 = true;
 		for (int var12 = 0; var12 < mapBuildGroundData.length; var12++) {
 			if (mapBuildGroundFile[var12] != -1 && mapBuildGroundData[var12] == null) {
-				mapBuildGroundData[var12] = mapJs5.getFile(mapBuildGroundFile[var12], 0);
+				mapBuildGroundData[var12] = maps.getFile(mapBuildGroundFile[var12], 0);
 				if (mapBuildGroundData[var12] == null) {
 					var11 = false;
 					mapLoadCount++;
 				}
 			}
 			if (mapBuildLocationFile[var12] != -1 && mapBuildLocationData[var12] == null) {
-				mapBuildLocationData[var12] = mapJs5.fetchFile(mapBuildLocationFile[var12], 0, mapKeys[var12]);
+				mapBuildLocationData[var12] = maps.fetchFile(mapBuildLocationFile[var12], 0, mapKeys[var12]);
 				if (mapBuildLocationData[var12] == null) {
 					var11 = false;
 					mapLoadCount++;
@@ -8564,8 +8564,8 @@ public class Client extends GameShell {
 			for (int var76 = var72 - 1; var76 <= var73 + 1; var76++) {
 				for (int var77 = var74 - 1; var77 <= var75 + 1; var77++) {
 					if (var76 < var72 || var76 > var73 || var77 < var74 || var77 > var75) {
-						mapJs5.updateCacheHint("m" + var76 + "_" + var77);
-						mapJs5.updateCacheHint("l" + var76 + "_" + var77);
+						Client.maps.updateCacheHint("m" + var76 + "_" + var77);
+						Client.maps.updateCacheHint("l" + var76 + "_" + var77);
 					}
 				}
 			}
@@ -10642,7 +10642,7 @@ public class Client extends GameShell {
 				JagFx sound = waveSounds[i];
 
 				if (sound == null) {
-					sound = JagFx.load(soundFxJs5, waveSoundIds[i], 0);
+					sound = JagFx.load(jagFX, waveSoundIds[i], 0);
 					if (sound == null) {
 						continue;
 					}
@@ -10711,7 +10711,7 @@ public class Client extends GameShell {
 
 		if (field2189 && !MidiManager.method2456()) {
 			if (midiVolume != 0 && previousSong != -1) {
-				MidiManager.method1125(midiSongJs5, previousSong, 0, midiVolume, false);
+				MidiManager.method1125(songs, previousSong, 0, midiVolume, false);
 			}
 
 			field2189 = false;
@@ -11812,7 +11812,7 @@ public class Client extends GameShell {
 			return;
 		}
 
-		MidiManager.method1125(midiJingleJs5, var113, 0, midiVolume, false);
+		MidiManager.method1125(jingles, var113, 0, midiVolume, false);
 		field2189 = true;
 	}
 
