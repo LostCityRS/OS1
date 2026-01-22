@@ -146,7 +146,7 @@ public class IdkType extends DoublyLinkable {
 
 		ModelUnlit[] models = new ModelUnlit[this.models.length];
 		for (int i = 0; i < this.models.length; i++) {
-			models[i] = ModelUnlit.tryGet(modelJs5, this.models[i], 0);
+			models[i] = ModelUnlit.load(modelJs5, this.models[i], 0);
 		}
 
 		ModelUnlit model;
@@ -188,7 +188,7 @@ public class IdkType extends DoublyLinkable {
 		int modelCount = 0;
 		for (int i = 0; i < 5; i++) {
 			if (this.heads[i] != -1) {
-				models[modelCount++] = ModelUnlit.tryGet(modelJs5, this.heads[i], 0);
+				models[modelCount++] = ModelUnlit.load(modelJs5, this.heads[i], 0);
 			}
 		}
 

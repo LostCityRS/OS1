@@ -4034,7 +4034,7 @@ public class Client extends GameShell {
 				int var25 = (var10 << 7) + (width << 6);
 				int var26 = (var11 << 7) + (length << 6);
 
-				ModelLit var27 = loc.getModel(var3, var4, var23, var25, locOffsetY, var26);
+				ModelLit var27 = loc.getModelLit(var3, var4, var23, var25, locOffsetY, var26);
 				if (var27 != null) {
 					locChangeCreate(minusedlevel, var10, var11, var5, -1, 0, 0, var7 + 1, var0 + 1);
 					player.locStartCycle = loopCycle + var7;

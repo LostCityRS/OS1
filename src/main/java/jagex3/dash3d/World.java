@@ -790,24 +790,24 @@ public class World {
 						if (var8.modelB instanceof ModelUnlit) {
 							ModelUnlit var10 = (ModelUnlit) var8.modelB;
 							this.shareLightLoc(var10, var4, var5, var6, 1, 1);
-							ModelUnlit.modelShareLight(var9, var10, 0, 0, 0, false);
-							var8.modelB = var10.light(var10.field2708, var10.field2706, arg0, arg1, arg2);
+							ModelUnlit.shareLight(var9, var10, 0, 0, 0, false);
+							var8.modelB = var10.light(var10.ambient, var10.contrast, arg0, arg1, arg2);
 						}
-						var8.modelA = var9.light(var9.field2708, var9.field2706, arg0, arg1, arg2);
+						var8.modelA = var9.light(var9.ambient, var9.contrast, arg0, arg1, arg2);
 					}
 					for (int var11 = 0; var11 < var7.spriteCount; var11++) {
 						Sprite var12 = var7.sprites[var11];
 						if (var12 != null && var12.model instanceof ModelUnlit) {
 							ModelUnlit var13 = (ModelUnlit) var12.model;
 							this.shareLightLoc(var13, var4, var5, var6, var12.maxTileX - var12.minTileX + 1, var12.maxTileZ - var12.minTileZ + 1);
-							var12.model = var13.light(var13.field2708, var13.field2706, arg0, arg1, arg2);
+							var12.model = var13.light(var13.ambient, var13.contrast, arg0, arg1, arg2);
 						}
 					}
 					GroundDecor var14 = var7.groundDecor;
 					if (var14 != null && var14.model instanceof ModelUnlit) {
 						ModelUnlit var15 = (ModelUnlit) var14.model;
 						this.shareLightGd(var15, var4, var5, var6);
-						var14.model = var15.light(var15.field2708, var15.field2706, arg0, arg1, arg2);
+						var14.model = var15.light(var15.ambient, var15.contrast, arg0, arg1, arg2);
 					}
 				}
 			}
@@ -821,28 +821,28 @@ public class World {
 			Square var5 = this.levelTiles[arg1][arg2 + 1][arg3];
 			if (var5 != null && var5.groundDecor != null && var5.groundDecor.model instanceof ModelUnlit) {
 				ModelUnlit var6 = (ModelUnlit) var5.groundDecor.model;
-				ModelUnlit.modelShareLight(arg0, var6, 128, 0, 0, true);
+				ModelUnlit.shareLight(arg0, var6, 128, 0, 0, true);
 			}
 		}
 		if (arg3 < this.maxTileX) {
 			Square var7 = this.levelTiles[arg1][arg2][arg3 + 1];
 			if (var7 != null && var7.groundDecor != null && var7.groundDecor.model instanceof ModelUnlit) {
 				ModelUnlit var8 = (ModelUnlit) var7.groundDecor.model;
-				ModelUnlit.modelShareLight(arg0, var8, 0, 0, 128, true);
+				ModelUnlit.shareLight(arg0, var8, 0, 0, 128, true);
 			}
 		}
 		if (arg2 < this.maxTileX && arg3 < this.maxTileZ) {
 			Square var9 = this.levelTiles[arg1][arg2 + 1][arg3 + 1];
 			if (var9 != null && var9.groundDecor != null && var9.groundDecor.model instanceof ModelUnlit) {
 				ModelUnlit var10 = (ModelUnlit) var9.groundDecor.model;
-				ModelUnlit.modelShareLight(arg0, var10, 128, 0, 128, true);
+				ModelUnlit.shareLight(arg0, var10, 128, 0, 128, true);
 			}
 		}
 		if (arg2 < this.maxTileX && arg3 > 0) {
 			Square var11 = this.levelTiles[arg1][arg2 + 1][arg3 - 1];
 			if (var11 != null && var11.groundDecor != null && var11.groundDecor.model instanceof ModelUnlit) {
 				ModelUnlit var12 = (ModelUnlit) var11.groundDecor.model;
-				ModelUnlit.modelShareLight(arg0, var12, 128, 0, -128, true);
+				ModelUnlit.shareLight(arg0, var12, 128, 0, -128, true);
 			}
 		}
 	}
@@ -876,11 +876,11 @@ public class World {
 					if (var17 != null) {
 						if (var17.modelA instanceof ModelUnlit) {
 							ModelUnlit var18 = (ModelUnlit) var17.modelA;
-							ModelUnlit.modelShareLight(arg0, var18, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
+							ModelUnlit.shareLight(arg0, var18, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
 						}
 						if (var17.modelB instanceof ModelUnlit) {
 							ModelUnlit var19 = (ModelUnlit) var17.modelB;
-							ModelUnlit.modelShareLight(arg0, var19, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
+							ModelUnlit.shareLight(arg0, var19, (var13 - arg2) * 128 + (1 - arg4) * 64, var16, (var14 - arg3) * 128 + (1 - arg5) * 64, var7);
 						}
 					}
 					for (int var20 = 0; var20 < var15.spriteCount; var20++) {
@@ -889,7 +889,7 @@ public class World {
 							ModelUnlit var22 = (ModelUnlit) var21.model;
 							int var23 = var21.maxTileX - var21.minTileX + 1;
 							int var24 = var21.maxTileZ - var21.minTileZ + 1;
-							ModelUnlit.modelShareLight(arg0, var22, (var21.minTileX - arg2) * 128 + (var23 - arg4) * 64, var16, (var21.minTileZ - arg3) * 128 + (var24 - arg5) * 64, var7);
+							ModelUnlit.shareLight(arg0, var22, (var21.minTileX - arg2) * 128 + (var23 - arg4) * 64, var16, (var21.minTileZ - arg3) * 128 + (var24 - arg5) * 64, var7);
 						}
 					}
 				}

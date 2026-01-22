@@ -420,7 +420,7 @@ public class LocType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("ey.w(II[[IIIII)Lfu;")
-	public final ModelSource method2364(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5) {
+	public final ModelSource getModel(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5) {
 		long var7;
 		if (this.shapes == null) {
 			var7 = (this.id << 10) + arg1;
@@ -434,8 +434,8 @@ public class LocType extends DoublyLinkable {
 				return null;
 			}
 			if (this.sharelight) {
-				var10.field2708 = (short) (this.ambient + 64);
-				var10.field2706 = (short) (this.contrast + 768);
+				var10.ambient = (short) (this.ambient + 64);
+				var10.contrast = (short) (this.contrast + 768);
 				var10.calculateNormals();
 				var9 = var10;
 			} else {
@@ -444,20 +444,20 @@ public class LocType extends DoublyLinkable {
 			mc2.put(var9, var7);
 		}
 		if (this.sharelight) {
-			var9 = ((ModelUnlit) var9).method2982();
+			var9 = ((ModelUnlit) var9).copyForShareLight();
 		}
 		if (this.skewType >= 0) {
 			if (var9 instanceof ModelLit) {
 				var9 = ((ModelLit) var9).hillSkew(arg2, arg3, arg4, arg5, true, this.skewType);
 			} else if (var9 instanceof ModelUnlit) {
-				var9 = ((ModelUnlit) var9).method2928(arg2, arg3, arg4, arg5, true, this.skewType);
+				var9 = ((ModelUnlit) var9).hillSkew(arg2, arg3, arg4, arg5, true, this.skewType);
 			}
 		}
 		return var9;
 	}
 
 	@ObfuscatedName("ey.e(II[[IIIII)Lfo;")
-	public final ModelLit getModel(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5) {
+	public final ModelLit getModelLit(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5) {
 		long var7;
 		if (this.shapes == null) {
 			var7 = (this.id << 10) + arg1;
@@ -533,12 +533,12 @@ public class LocType extends DoublyLinkable {
 				}
 				var3 = (ModelUnlit) mc1.get((long) var7);
 				if (var3 == null) {
-					var3 = ModelUnlit.tryGet(modelJs5, var7 & 0xFFFF, 0);
+					var3 = ModelUnlit.load(modelJs5, var7 & 0xFFFF, 0);
 					if (var3 == null) {
 						return null;
 					}
 					if (var4) {
-						var3.rotateY180();
+						var3.mirror();
 					}
 					mc1.put(var3, (long) var7);
 				}
@@ -567,12 +567,12 @@ public class LocType extends DoublyLinkable {
 			}
 			var3 = (ModelUnlit) mc1.get((long) var10);
 			if (var3 == null) {
-				var3 = ModelUnlit.tryGet(modelJs5, var10 & 0xFFFF, 0);
+				var3 = ModelUnlit.load(modelJs5, var10 & 0xFFFF, 0);
 				if (var3 == null) {
 					return null;
 				}
 				if (var11) {
-					var3.rotateY180();
+					var3.mirror();
 				}
 				mc1.put(var3, (long) var10);
 			}
@@ -591,16 +591,16 @@ public class LocType extends DoublyLinkable {
 		}
 		ModelUnlit var14 = new ModelUnlit(var3, arg1 == 0 && !var12 && !var13, this.recol_s == null, this.retex_s == null, true);
 		if (arg0 == 4 && arg1 > 3) {
-			var14.method2933(256);
+			var14.rotateXAxis(256);
 			var14.translate(45, 0, -45);
 		}
 		int var15 = arg1 & 0x3;
 		if (var15 == 1) {
-			var14.method2930();
+			var14.rotate90();
 		} else if (var15 == 2) {
-			var14.method2931();
+			var14.rotate180();
 		} else if (var15 == 3) {
-			var14.method2923();
+			var14.rotate270();
 		}
 		if (this.recol_s != null) {
 			for (int var16 = 0; var16 < this.recol_s.length; var16++) {
@@ -613,7 +613,7 @@ public class LocType extends DoublyLinkable {
 			}
 		}
 		if (var12) {
-			var14.scale(this.resizex, this.resizey, this.resizez);
+			var14.resize(this.resizex, this.resizey, this.resizez);
 		}
 		if (var13) {
 			var14.translate(this.offsetx, this.offsety, this.offsetz);

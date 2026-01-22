@@ -281,7 +281,7 @@ public class NpcType extends DoublyLinkable {
 
 			ModelUnlit[] models = new ModelUnlit[this.models.length];
 			for (int i = 0; i < this.models.length; i++) {
-				models[i] = ModelUnlit.tryGet(modelJs5, this.models[i], 0);
+				models[i] = ModelUnlit.load(modelJs5, this.models[i], 0);
 			}
 
 			ModelUnlit model;
@@ -349,7 +349,7 @@ public class NpcType extends DoublyLinkable {
 
 		ModelUnlit[] models = new ModelUnlit[this.heads.length];
 		for (int i = 0; i < this.heads.length; i++) {
-			models[i] = ModelUnlit.tryGet(modelJs5, this.heads[i], 0);
+			models[i] = ModelUnlit.load(modelJs5, this.heads[i], 0);
 		}
 
 		ModelUnlit model;

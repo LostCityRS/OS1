@@ -1030,7 +1030,7 @@ public class IfType extends Linkable {
 			ModelLit var7 = (ModelLit) field1850.get((long) ((var5 << 16) + var6));
 			if (var7 == null) {
 				if (var5 == 1) {
-					ModelUnlit var8 = ModelUnlit.tryGet(models, var6, 0);
+					ModelUnlit var8 = ModelUnlit.load(models, var6, 0);
 					if (var8 == null) {
 						loadingAsset = true;
 						return null;

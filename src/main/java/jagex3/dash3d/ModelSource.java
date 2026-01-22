@@ -3,6 +3,7 @@ package jagex3.dash3d;
 import deob.ObfuscatedName;
 import jagex3.datastruct.DoublyLinkable;
 
+// jag::oldscape::dash3d::ModelSource
 @ObfuscatedName("fu")
 public abstract class ModelSource extends DoublyLinkable {
 

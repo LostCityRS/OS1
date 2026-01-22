@@ -341,13 +341,13 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelUnlit model = ModelUnlit.tryGet(modelJs5, this.model, 0);
+		ModelUnlit model = ModelUnlit.load(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
 
 		if (this.resizex != 128 || this.resizey != 128 || this.resizez != 128) {
-			model.scale(this.resizex, this.resizey, this.resizez);
+			model.resize(this.resizex, this.resizey, this.resizez);
 		}
 
 		if (this.recol_s != null) {
@@ -385,13 +385,13 @@ public class ObjType extends DoublyLinkable {
 			return cached;
 		}
 
-		ModelUnlit model = ModelUnlit.tryGet(modelJs5, this.model, 0);
+		ModelUnlit model = ModelUnlit.load(modelJs5, this.model, 0);
 		if (model == null) {
 			return null;
 		}
 
 		if (this.resizex != 128 || this.resizey != 128 || this.resizez != 128) {
-			model.scale(this.resizex, this.resizey, this.resizez);
+			model.resize(this.resizex, this.resizey, this.resizez);
 		}
 
 		if (this.recol_s != null) {
@@ -579,14 +579,14 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelUnlit model = ModelUnlit.tryGet(modelJs5, wear1, 0);
+		ModelUnlit model = ModelUnlit.load(modelJs5, wear1, 0);
 		if (wear2 != -1) {
-			ModelUnlit model2 = ModelUnlit.tryGet(modelJs5, wear2, 0);
+			ModelUnlit model2 = ModelUnlit.load(modelJs5, wear2, 0);
 			if (wear3 == -1) {
 				ModelUnlit[] models = new ModelUnlit[] { model, model2 };
 				model = new ModelUnlit(models, 2);
 			} else {
-				ModelUnlit model3 = ModelUnlit.tryGet(modelJs5, wear3, 0);
+				ModelUnlit model3 = ModelUnlit.load(modelJs5, wear3, 0);
 				ModelUnlit[] models = new ModelUnlit[] { model, model2, model3 };
 				model = new ModelUnlit(models, 3);
 			}
@@ -647,9 +647,9 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelUnlit model = ModelUnlit.tryGet(modelJs5, head1, 0);
+		ModelUnlit model = ModelUnlit.load(modelJs5, head1, 0);
 		if (head2 != -1) {
-			ModelUnlit model2 = ModelUnlit.tryGet(modelJs5, head2, 0);
+			ModelUnlit model2 = ModelUnlit.load(modelJs5, head2, 0);
 			ModelUnlit[] models = new ModelUnlit[] { model, model2 };
 			model = new ModelUnlit(models, 2);
 		}

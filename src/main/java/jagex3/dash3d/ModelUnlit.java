@@ -95,10 +95,10 @@ public class ModelUnlit extends ModelSource {
 	public int[] faceLabel;
 
 	@ObfuscatedName("fw.an")
-	public int[][] field2700;
+	public int[][] labelVertices;
 
 	@ObfuscatedName("fw.ah")
-	public int[][] field2701;
+	public int[][] labelFaces;
 
 	@ObfuscatedName("fw.ay")
 	public FaceNormal[] faceNormal;
@@ -110,10 +110,10 @@ public class ModelUnlit extends ModelSource {
 	public VertexNormal[] field2685;
 
 	@ObfuscatedName("fw.ao")
-	public short field2708;
+	public short ambient;
 
 	@ObfuscatedName("fw.ag")
-	public short field2706;
+	public short contrast;
 
 	@ObfuscatedName("fw.ar")
 	public boolean boundsCalculated = false;
@@ -139,8 +139,9 @@ public class ModelUnlit extends ModelSource {
 	@ObfuscatedName("fw.aj")
 	public static int[] field2714 = new int[10000];
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::m_shareTic
 	@ObfuscatedName("fw.aw")
-	public static int field2715 = 0;
+	public static int shareTic = 0;
 
 	@ObfuscatedName("fw.af")
 	public static int[] sinTable = Pix3D.sinTable;
@@ -151,8 +152,9 @@ public class ModelUnlit extends ModelSource {
 	public ModelUnlit() {
 	}
 
+	// jag::oldscape::dash3d::ModelUnlit::Load
 	@ObfuscatedName("fw.b(Lch;II)Lfw;")
-	public static ModelUnlit tryGet(Js5 arg0, int arg1, int arg2) {
+	public static ModelUnlit load(Js5 arg0, int arg1, int arg2) {
 		byte[] var3 = arg0.getFile(arg1, arg2);
 		return var3 == null ? null : new ModelUnlit(var3);
 	}
@@ -165,6 +167,7 @@ public class ModelUnlit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::LoadOb3Engine200
 	@ObfuscatedName("fw.y([B)V")
 	public void loadOb3(byte[] src) {
 		Packet var1 = new Packet(src);
@@ -477,6 +480,7 @@ public class ModelUnlit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::LoadOb2Engine200
 	@ObfuscatedName("fw.t([B)V")
 	public void loadOb2(byte[] src) {
 		boolean var2 = false;
@@ -884,17 +888,17 @@ public class ModelUnlit extends ModelSource {
 						}
 					}
 					this.faceColour[this.faceCount] = var12.faceColour[var13];
-					this.faceVertexA[this.faceCount] = this.method2947(var12, var12.faceVertexA[var13]);
-					this.faceVertexB[this.faceCount] = this.method2947(var12, var12.faceVertexB[var13]);
-					this.faceVertexC[this.faceCount] = this.method2947(var12, var12.faceVertexC[var13]);
+					this.faceVertexA[this.faceCount] = this.addPoint(var12, var12.faceVertexA[var13]);
+					this.faceVertexB[this.faceCount] = this.addPoint(var12, var12.faceVertexB[var13]);
+					this.faceVertexC[this.faceCount] = this.addPoint(var12, var12.faceVertexC[var13]);
 					this.faceCount++;
 				}
 				for (int var14 = 0; var14 < var12.faceTextureCount; var14++) {
 					byte var15 = this.field2687[this.faceTextureCount] = var12.field2687[var14];
 					if (var15 == 0) {
-						this.faceTextureP[this.faceTextureCount] = (short) this.method2947(var12, var12.faceTextureP[var14]);
-						this.faceTextureM[this.faceTextureCount] = (short) this.method2947(var12, var12.faceTextureM[var14]);
-						this.faceTextureN[this.faceTextureCount] = (short) this.method2947(var12, var12.faceTextureN[var14]);
+						this.faceTextureP[this.faceTextureCount] = (short) this.addPoint(var12, var12.faceTextureP[var14]);
+						this.faceTextureM[this.faceTextureCount] = (short) this.addPoint(var12, var12.faceTextureM[var14]);
+						this.faceTextureN[this.faceTextureCount] = (short) this.addPoint(var12, var12.faceTextureN[var14]);
 					}
 					if (var15 >= 1 && var15 <= 3) {
 						this.faceTextureP[this.faceTextureCount] = var12.faceTextureP[var14];
@@ -916,8 +920,9 @@ public class ModelUnlit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::AddPoint
 	@ObfuscatedName("fw.f(Lfw;I)I")
-	public final int method2947(ModelUnlit arg0, int arg1) {
+	public final int addPoint(ModelUnlit arg0, int arg1) {
 		int var3 = -1;
 		int var4 = arg0.vertexX[arg1];
 		int var5 = arg0.vertexY[arg1];
@@ -1008,17 +1013,18 @@ public class ModelUnlit extends ModelSource {
 		this.field2696 = arg0.field2696;
 		this.vertexLabel = arg0.vertexLabel;
 		this.faceLabel = arg0.faceLabel;
-		this.field2700 = arg0.field2700;
-		this.field2701 = arg0.field2701;
+		this.labelVertices = arg0.labelVertices;
+		this.labelFaces = arg0.labelFaces;
 		this.vertexNormal = arg0.vertexNormal;
 		this.faceNormal = arg0.faceNormal;
 		this.field2685 = arg0.field2685;
-		this.field2708 = arg0.field2708;
-		this.field2706 = arg0.field2706;
+		this.ambient = arg0.ambient;
+		this.contrast = arg0.contrast;
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::CopyForShareLight
 	@ObfuscatedName("fw.k()Lfw;")
-	public ModelUnlit method2982() {
+	public ModelUnlit copyForShareLight() {
 		ModelUnlit var1 = new ModelUnlit();
 		if (this.field2679 != null) {
 			var1.field2679 = new byte[this.faceCount];
@@ -1054,18 +1060,19 @@ public class ModelUnlit extends ModelSource {
 		var1.field2696 = this.field2696;
 		var1.vertexLabel = this.vertexLabel;
 		var1.faceLabel = this.faceLabel;
-		var1.field2700 = this.field2700;
-		var1.field2701 = this.field2701;
+		var1.labelVertices = this.labelVertices;
+		var1.labelFaces = this.labelFaces;
 		var1.vertexNormal = this.vertexNormal;
 		var1.faceNormal = this.faceNormal;
-		var1.field2708 = this.field2708;
-		var1.field2706 = this.field2706;
+		var1.ambient = this.ambient;
+		var1.contrast = this.contrast;
 		return var1;
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::HillSkew
 	@ObfuscatedName("fw.o([[IIIIZI)Lfw;")
-	public ModelUnlit method2928(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
-		this.calculateBoundsAABB();
+	public ModelUnlit hillSkew(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
+		this.calcBoundingCube();
 		int var7 = this.minX + arg1;
 		int var8 = this.maxX + arg1;
 		int var9 = this.maxZ + arg3;
@@ -1111,10 +1118,10 @@ public class ModelUnlit extends ModelSource {
 			var15.field2696 = this.field2696;
 			var15.vertexLabel = this.vertexLabel;
 			var15.faceLabel = this.faceLabel;
-			var15.field2700 = this.field2700;
-			var15.field2701 = this.field2701;
-			var15.field2708 = this.field2708;
-			var15.field2706 = this.field2706;
+			var15.labelVertices = this.labelVertices;
+			var15.labelFaces = this.labelFaces;
+			var15.ambient = this.ambient;
+			var15.contrast = this.contrast;
 			var15.vertexY = new int[var15.vertexCount];
 		} else {
 			var15 = this;
@@ -1149,91 +1156,95 @@ public class ModelUnlit extends ModelSource {
 				}
 			}
 		}
-		var15.method2986();
+		var15.geometryChanged();
 		return var15;
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::PrepareAnim
 	@ObfuscatedName("fw.a()V")
-	public void method2929() {
-		int var10002;
+	public void prepareAnim() {
 		if (this.vertexLabel != null) {
 			int[] var1 = new int[256];
 			int var2 = 0;
 			for (int var3 = 0; var3 < this.vertexCount; var3++) {
 				int var4 = this.vertexLabel[var3];
-				var10002 = var1[var4]++;
+				var1[var4]++;
 				if (var4 > var2) {
 					var2 = var4;
 				}
 			}
-			this.field2700 = new int[var2 + 1][];
+			this.labelVertices = new int[var2 + 1][];
 			for (int var5 = 0; var5 <= var2; var5++) {
-				this.field2700[var5] = new int[var1[var5]];
+				this.labelVertices[var5] = new int[var1[var5]];
 				var1[var5] = 0;
 			}
 			int var6 = 0;
 			while (var6 < this.vertexCount) {
 				int var7 = this.vertexLabel[var6];
-				this.field2700[var7][var1[var7]++] = var6++;
+				this.labelVertices[var7][var1[var7]++] = var6++;
 			}
 			this.vertexLabel = null;
 		}
-		if (this.faceLabel == null) {
-			return;
-		}
-		int[] var8 = new int[256];
-		int var9 = 0;
-		for (int var10 = 0; var10 < this.faceCount; var10++) {
-			int var11 = this.faceLabel[var10];
-			var10002 = var8[var11]++;
-			if (var11 > var9) {
-				var9 = var11;
+
+		if (this.faceLabel != null) {
+			int[] var8 = new int[256];
+			int var9 = 0;
+			for (int var10 = 0; var10 < this.faceCount; var10++) {
+				int var11 = this.faceLabel[var10];
+				var8[var11]++;
+				if (var11 > var9) {
+					var9 = var11;
+				}
 			}
+			this.labelFaces = new int[var9 + 1][];
+			for (int var12 = 0; var12 <= var9; var12++) {
+				this.labelFaces[var12] = new int[var8[var12]];
+				var8[var12] = 0;
+			}
+			int var13 = 0;
+			while (var13 < this.faceCount) {
+				int var14 = this.faceLabel[var13];
+				this.labelFaces[var14][var8[var14]++] = var13++;
+			}
+			this.faceLabel = null;
 		}
-		this.field2701 = new int[var9 + 1][];
-		for (int var12 = 0; var12 <= var9; var12++) {
-			this.field2701[var12] = new int[var8[var12]];
-			var8[var12] = 0;
-		}
-		int var13 = 0;
-		while (var13 < this.faceCount) {
-			int var14 = this.faceLabel[var13];
-			this.field2701[var14][var8[var14]++] = var13++;
-		}
-		this.faceLabel = null;
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Rotate90
 	@ObfuscatedName("fw.h()V")
-	public void method2930() {
+	public void rotate90() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexX[var1];
 			this.vertexX[var1] = this.vertexZ[var1];
 			this.vertexZ[var1] = -var2;
 		}
-		this.method2986();
+		this.geometryChanged();
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Rotate180
 	@ObfuscatedName("fw.x()V")
-	public void method2931() {
+	public void rotate180() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			this.vertexX[var1] = -this.vertexX[var1];
 			this.vertexZ[var1] = -this.vertexZ[var1];
 		}
-		this.method2986();
+		this.geometryChanged();
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Rotate270
 	@ObfuscatedName("fw.p()V")
-	public void method2923() {
+	public void rotate270() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexZ[var1];
 			this.vertexZ[var1] = this.vertexX[var1];
 			this.vertexX[var1] = -var2;
 		}
-		this.method2986();
+		this.geometryChanged();
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::RotateXAxis
 	@ObfuscatedName("fw.ad(I)V")
-	public void method2933(int arg0) {
+	public void rotateXAxis(int arg0) {
 		int var2 = sinTable[arg0];
 		int var3 = cosTable[arg0];
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
@@ -1241,9 +1252,10 @@ public class ModelUnlit extends ModelSource {
 			this.vertexZ[var4] = this.vertexZ[var4] * var3 - this.vertexX[var4] * var2 >> 16;
 			this.vertexX[var4] = var5;
 		}
-		this.method2986();
+		this.geometryChanged();
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Translate
 	@ObfuscatedName("fw.ac(III)V")
 	public void translate(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
@@ -1251,9 +1263,10 @@ public class ModelUnlit extends ModelSource {
 			this.vertexY[var4] += arg1;
 			this.vertexZ[var4] += arg2;
 		}
-		this.method2986();
+		this.geometryChanged();
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Recolour
 	@ObfuscatedName("fw.aa(SS)V")
 	public void recolour(short arg0, short arg1) {
 		for (int var3 = 0; var3 < this.faceCount; var3++) {
@@ -1263,6 +1276,7 @@ public class ModelUnlit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Retexture
 	@ObfuscatedName("fw.as(SS)V")
 	public void retexture(short arg0, short arg1) {
 		if (this.field2705 == null) {
@@ -1275,8 +1289,9 @@ public class ModelUnlit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Mirror
 	@ObfuscatedName("fw.am()V")
-	public void rotateY180() {
+	public void mirror() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			this.vertexZ[var1] = -this.vertexZ[var1];
 		}
@@ -1285,19 +1300,21 @@ public class ModelUnlit extends ModelSource {
 			this.faceVertexA[var2] = this.faceVertexC[var2];
 			this.faceVertexC[var2] = var3;
 		}
-		this.method2986();
+		this.geometryChanged();
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Resize
 	@ObfuscatedName("fw.ap(III)V")
-	public void scale(int arg0, int arg1, int arg2) {
+	public void resize(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
 			this.vertexX[var4] = this.vertexX[var4] * arg0 / 128;
 			this.vertexY[var4] = this.vertexY[var4] * arg1 / 128;
 			this.vertexZ[var4] = this.vertexZ[var4] * arg2 / 128;
 		}
-		this.method2986();
+		this.geometryChanged();
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::CalculateNormals
 	@ObfuscatedName("fw.av()V")
 	public void calculateNormals() {
 		if (this.vertexNormal != null) {
@@ -1377,16 +1394,18 @@ public class ModelUnlit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::GeometryChanged
 	@ObfuscatedName("fw.ak()V")
-	public void method2986() {
+	public void geometryChanged() {
 		this.vertexNormal = null;
 		this.field2685 = null;
 		this.faceNormal = null;
 		this.boundsCalculated = false;
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::CalcBoundingCube
 	@ObfuscatedName("fw.az()V")
-	public void calculateBoundsAABB() {
+	public void calcBoundingCube() {
 		if (this.boundsCalculated) {
 			return;
 		}
@@ -1431,14 +1450,15 @@ public class ModelUnlit extends ModelSource {
 		this.boundsCalculated = true;
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::ShareLight
 	@ObfuscatedName("fw.an(Lfw;Lfw;IIIZ)V")
-	public static void modelShareLight(ModelUnlit arg0, ModelUnlit arg1, int arg2, int arg3, int arg4, boolean arg5) {
-		arg0.calculateBoundsAABB();
+	public static void shareLight(ModelUnlit arg0, ModelUnlit arg1, int arg2, int arg3, int arg4, boolean arg5) {
+		arg0.calcBoundingCube();
 		arg0.calculateNormals();
-		arg1.calculateBoundsAABB();
+		arg1.calcBoundingCube();
 		arg1.calculateNormals();
 
-		field2715++;
+		shareTic++;
 		int var6 = 0;
 		int[] var7 = arg1.vertexX;
 		int var8 = arg1.vertexCount;
@@ -1485,14 +1505,14 @@ public class ModelUnlit extends ModelSource {
 					var17.z += var10.z;
 					var17.w += var10.w;
 					var6++;
-					field2683[var9] = field2715;
-					field2714[var14] = field2715;
+					field2683[var9] = shareTic;
+					field2714[var14] = shareTic;
 				}
 			}
 		}
 		if (var6 >= 3 && arg5) {
 			for (int var18 = 0; var18 < arg0.faceCount; var18++) {
-				if (field2683[arg0.faceVertexA[var18]] == field2715 && field2683[arg0.faceVertexB[var18]] == field2715 && field2683[arg0.faceVertexC[var18]] == field2715) {
+				if (field2683[arg0.faceVertexA[var18]] == shareTic && field2683[arg0.faceVertexB[var18]] == shareTic && field2683[arg0.faceVertexC[var18]] == shareTic) {
 					if (arg0.field2679 == null) {
 						arg0.field2679 = new byte[arg0.faceCount];
 					}
@@ -1500,7 +1520,7 @@ public class ModelUnlit extends ModelSource {
 				}
 			}
 			for (int var19 = 0; var19 < arg1.faceCount; var19++) {
-				if (field2714[arg1.faceVertexA[var19]] == field2715 && field2714[arg1.faceVertexB[var19]] == field2715 && field2714[arg1.faceVertexC[var19]] == field2715) {
+				if (field2714[arg1.faceVertexA[var19]] == shareTic && field2714[arg1.faceVertexB[var19]] == shareTic && field2714[arg1.faceVertexC[var19]] == shareTic) {
 					if (arg1.field2679 == null) {
 						arg1.field2679 = new byte[arg1.faceCount];
 					}
@@ -1510,6 +1530,7 @@ public class ModelUnlit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelUnlitImpl::Light
 	@ObfuscatedName("fw.ah(IIIII)Lfo;")
 	public final ModelLit light(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		this.calculateNormals();
@@ -1590,7 +1611,7 @@ public class ModelUnlit extends ModelSource {
 						var20 = this.field2685[this.faceVertexA[var15]];
 					}
 					int var21 = (var20.z * arg4 + var20.x * arg2 + var20.y * arg3) / (var20.w * var7) + arg0;
-					var8.faceColourA[var15] = method2943(var19, var21);
+					var8.faceColourA[var15] = getColour(var19, var21);
 					VertexNormal var22;
 					if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
 						var22 = this.vertexNormal[this.faceVertexB[var15]];
@@ -1598,7 +1619,7 @@ public class ModelUnlit extends ModelSource {
 						var22 = this.field2685[this.faceVertexB[var15]];
 					}
 					int var23 = (var22.z * arg4 + var22.x * arg2 + var22.y * arg3) / (var22.w * var7) + arg0;
-					var8.faceColourB[var15] = method2943(var19, var23);
+					var8.faceColourB[var15] = getColour(var19, var23);
 					VertexNormal var24;
 					if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
 						var24 = this.vertexNormal[this.faceVertexC[var15]];
@@ -1606,11 +1627,11 @@ public class ModelUnlit extends ModelSource {
 						var24 = this.field2685[this.faceVertexC[var15]];
 					}
 					int var25 = (var24.z * arg4 + var24.x * arg2 + var24.y * arg3) / (var24.w * var7) + arg0;
-					var8.faceColourC[var15] = method2943(var19, var25);
+					var8.faceColourC[var15] = getColour(var19, var25);
 				} else if (var16 == 1) {
 					FaceNormal var26 = this.faceNormal[var15];
 					int var27 = (var26.z * arg4 + var26.x * arg2 + var26.y * arg3) / (var7 / 2 + var7) + arg0;
-					var8.faceColourA[var15] = method2943(this.faceColour[var15] & 0xFFFF, var27);
+					var8.faceColourA[var15] = getColour(this.faceColour[var15] & 0xFFFF, var27);
 					var8.faceColourC[var15] = -1;
 				} else if (var16 == 3) {
 					var8.faceColourA[var15] = 128;
@@ -1626,7 +1647,7 @@ public class ModelUnlit extends ModelSource {
 					var28 = this.field2685[this.faceVertexA[var15]];
 				}
 				int var29 = (var28.z * arg4 + var28.x * arg2 + var28.y * arg3) / (var28.w * var7) + arg0;
-				var8.faceColourA[var15] = method2939(var29);
+				var8.faceColourA[var15] = getTexLight(var29);
 				VertexNormal var30;
 				if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
 					var30 = this.vertexNormal[this.faceVertexB[var15]];
@@ -1634,7 +1655,7 @@ public class ModelUnlit extends ModelSource {
 					var30 = this.field2685[this.faceVertexB[var15]];
 				}
 				int var31 = (var30.z * arg4 + var30.x * arg2 + var30.y * arg3) / (var30.w * var7) + arg0;
-				var8.faceColourB[var15] = method2939(var31);
+				var8.faceColourB[var15] = getTexLight(var31);
 				VertexNormal var32;
 				if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
 					var32 = this.vertexNormal[this.faceVertexC[var15]];
@@ -1642,17 +1663,17 @@ public class ModelUnlit extends ModelSource {
 					var32 = this.field2685[this.faceVertexC[var15]];
 				}
 				int var33 = (var32.z * arg4 + var32.x * arg2 + var32.y * arg3) / (var32.w * var7) + arg0;
-				var8.faceColourC[var15] = method2939(var33);
+				var8.faceColourC[var15] = getTexLight(var33);
 			} else if (var16 == 1) {
 				FaceNormal var34 = this.faceNormal[var15];
 				int var35 = (var34.z * arg4 + var34.x * arg2 + var34.y * arg3) / (var7 / 2 + var7) + arg0;
-				var8.faceColourA[var15] = method2939(var35);
+				var8.faceColourA[var15] = getTexLight(var35);
 				var8.faceColourC[var15] = -1;
 			} else {
 				var8.faceColourC[var15] = -2;
 			}
 		}
-		this.method2929();
+		this.prepareAnim();
 		var8.vertexCount = this.vertexCount;
 		var8.vertexX = this.vertexX;
 		var8.vertexY = this.vertexY;
@@ -1664,14 +1685,15 @@ public class ModelUnlit extends ModelSource {
 		var8.facePriority = this.facePriority;
 		var8.faceAlpha = this.faceAlpha;
 		var8.field2737 = this.priority;
-		var8.labelVertices = this.field2700;
-		var8.field2743 = this.field2701;
+		var8.labelVertices = this.labelVertices;
+		var8.field2743 = this.labelFaces;
 		var8.field2718 = this.field2705;
 		return var8;
 	}
 
+	// jag::oldscape::dash3d::ModelUnlit::GetColour
 	@ObfuscatedName("fw.ay(II)I")
-	public static int method2943(int arg0, int arg1) {
+	public static int getColour(int arg0, int arg1) {
 		int var2 = (arg0 & 0x7F) * arg1 >> 7;
 		if (var2 < 2) {
 			var2 = 2;
@@ -1681,8 +1703,9 @@ public class ModelUnlit extends ModelSource {
 		return (arg0 & 0xFF80) + var2;
 	}
 
+	// jag::oldscape::dash3d::ModelUnlit::GetTexLight
 	@ObfuscatedName("fw.al(I)I")
-	public static int method2939(int arg0) {
+	public static int getTexLight(int arg0) {
 		if (arg0 < 2) {
 			arg0 = 2;
 		} else if (arg0 > 126) {

@@ -128,7 +128,7 @@ public class SpotAnimType extends DoublyLinkable {
 	public final ModelLit getTempModel2(int arg0) {
 		ModelLit var2 = (ModelLit) field2392.get((long) this.field2382);
 		if (var2 == null) {
-			ModelUnlit var3 = ModelUnlit.tryGet(modelJs5, this.model, 0);
+			ModelUnlit var3 = ModelUnlit.load(modelJs5, this.model, 0);
 			if (var3 == null) {
 				return null;
 			}
