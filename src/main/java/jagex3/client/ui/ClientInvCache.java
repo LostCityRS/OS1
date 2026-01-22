@@ -8,8 +8,9 @@ import jagex3.datastruct.Linkable;
 @ObfuscatedName("dl")
 public class ClientInvCache extends Linkable {
 
+	// jag::oldscape::ClientInvCache::m_invList
 	@ObfuscatedName("dl.m")
-	public static HashTable field1623 = new HashTable(32);
+	public static HashTable invList = new HashTable(32);
 
 	@ObfuscatedName("dl.c")
 	public int[] objId = new int[] { -1 };
@@ -17,42 +18,45 @@ public class ClientInvCache extends Linkable {
 	@ObfuscatedName("dl.n")
 	public int[] objCount = new int[] { 0 };
 
+	// jag::oldscape::ClientInvCache::GetCount
 	@ObfuscatedName("r.c(III)I")
-	public static int getNum(int arg0, int arg1) {
-		ClientInvCache var2 = (ClientInvCache) field1623.get(arg0);
+	public static int getCount(int arg0, int arg1) {
+		ClientInvCache var2 = (ClientInvCache) invList.get(arg0);
 		if (var2 == null) {
 			return 0;
-		} else if (arg1 >= 0 && arg1 < var2.objCount.length) {
-			return var2.objCount[arg1];
-		} else {
+		}
+		if (arg1 < 0 || arg1 >= var2.objCount.length) {
 			return 0;
 		}
+		return var2.objCount[arg1];
 	}
 
+	// jag::oldscape::ClientInvCache::InvTotal
 	@ObfuscatedName("dj.n(IIB)I")
-	public static int getTotal(int arg0, int arg1) {
-		ClientInvCache var2 = (ClientInvCache) field1623.get(arg0);
+	public static int invTotal(int arg0, int arg1) {
+		ClientInvCache var2 = (ClientInvCache) invList.get(arg0);
 		if (var2 == null) {
 			return 0;
-		} else if (arg1 == -1) {
-			return 0;
-		} else {
-			int var3 = 0;
-			for (int var4 = 0; var4 < var2.objCount.length; var4++) {
-				if (var2.objId[var4] == arg1) {
-					var3 += var2.objCount[var4];
-				}
-			}
-			return var3;
 		}
+		if (arg1 == -1) {
+			return 0;
+		}
+		int var3 = 0;
+		for (int var4 = 0; var4 < var2.objCount.length; var4++) {
+			if (var2.objId[var4] == arg1) {
+				var3 += var2.objCount[var4];
+			}
+		}
+		return var3;
 	}
 
+	// jag::oldscape::ClientInvCache::Set
 	@ObfuscatedName("fh.j(IIIII)V")
 	public static void method2901(int arg0, int arg1, int arg2, int arg3) {
-		ClientInvCache var4 = (ClientInvCache) field1623.get(arg0);
+		ClientInvCache var4 = (ClientInvCache) invList.get(arg0);
 		if (var4 == null) {
 			var4 = new ClientInvCache();
-			field1623.put(var4, (long) arg0);
+			invList.put(var4, (long) arg0);
 		}
 		if (var4.objId.length <= arg1) {
 			int[] var5 = new int[arg1 + 1];
@@ -72,22 +76,29 @@ public class ClientInvCache extends Linkable {
 		var4.objCount[arg1] = arg3;
 	}
 
+	// jag::oldscape::ClientInvCache::Delete
 	@ObfuscatedName("n.z(IB)V")
-	public static void method55(int arg0) {
-		ClientInvCache var1 = (ClientInvCache) field1623.get(arg0);
+	public static void delete(int arg0) {
+		ClientInvCache var1 = (ClientInvCache) invList.get(arg0);
 		if (var1 != null) {
 			var1.unlink();
 		}
 	}
 
-	public static int getObj(int var141, int var142) {
-		ClientInvCache var145 = (ClientInvCache) ClientInvCache.field1623.get(var141);
+	// jag::oldscape::ClientInvCache::GetType
+	public static int getType(int var141, int var142) {
+		ClientInvCache var145 = (ClientInvCache) ClientInvCache.invList.get(var141);
 		if (var145 == null) {
 			return -1;
-		} else if (var142 >= 0 && var142 < var145.objId.length) {
-			return var145.objId[var142];
-		} else {
+		}
+		if (var142 < 0 || var142 >= var145.objId.length) {
 			return -1;
 		}
+		return var145.objId[var142];
+	}
+
+	// jag::oldscape::ClientInvCache::DeleteAll
+	public static void deleteAll() {
+		invList = new HashTable(32);
 	}
 }

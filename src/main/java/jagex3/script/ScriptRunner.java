@@ -1433,7 +1433,7 @@ public class ScriptRunner {
 						int var115 = intStack[isp];
 						int var116 = intStack[isp + 1];
 
-						intStack[isp++] = ClientInvCache.getObj(var115, var116);
+						intStack[isp++] = ClientInvCache.getType(var115, var116);
 						continue;
 					}
 					if (opcode == 3302) {
@@ -1442,7 +1442,7 @@ public class ScriptRunner {
 						int var121 = intStack[isp];
 						int var122 = intStack[isp + 1];
 
-						intStack[isp++] = ClientInvCache.getNum(var121, var122);
+						intStack[isp++] = ClientInvCache.getCount(var121, var122);
 						continue;
 					}
 					if (opcode == 3303) {
@@ -1451,7 +1451,7 @@ public class ScriptRunner {
 						int var123 = intStack[isp];
 						int var124 = intStack[isp + 1];
 
-						intStack[isp++] = ClientInvCache.getTotal(var123, var124);
+						intStack[isp++] = ClientInvCache.invTotal(var123, var124);
 						continue;
 					}
 					if (opcode == 3304) {
@@ -1530,7 +1530,7 @@ public class ScriptRunner {
 						int var141 = intStack[isp] + 32768;
 						int var142 = intStack[isp + 1];
 
-						intStack[isp++] = ClientInvCache.getObj(var141, var142);
+						intStack[isp++] = ClientInvCache.getType(var141, var142);
 						continue;
 					}
 					if (opcode == 3314) {
@@ -1539,7 +1539,7 @@ public class ScriptRunner {
 						int var147 = intStack[isp] + 32768;
 						int var148 = intStack[isp + 1];
 
-						intStack[isp++] = ClientInvCache.getNum(var147, var148);
+						intStack[isp++] = ClientInvCache.getCount(var147, var148);
 						continue;
 					}
 					if (opcode == 3315) {
@@ -1548,7 +1548,7 @@ public class ScriptRunner {
 						int var149 = intStack[isp] + 32768;
 						int var150 = intStack[isp + 1];
 
-						intStack[isp++] = ClientInvCache.getTotal(var149, var150);
+						intStack[isp++] = ClientInvCache.invTotal(var149, var150);
 						continue;
 					}
 					if (opcode == 3316) {

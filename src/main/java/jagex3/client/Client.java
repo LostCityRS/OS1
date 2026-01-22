@@ -288,13 +288,13 @@ public class Client extends GameShell {
 	public static boolean networkError = false;
 
 	@ObfuscatedName("dw.db")
-	public static SoftwareFont fontPlain11;
+	public static SoftwareFont p11;
 
 	@ObfuscatedName("bd.dq")
-	public static SoftwareFont fontPlain12;
+	public static SoftwareFont p12;
 
 	@ObfuscatedName("af.dr")
-	public static SoftwareFont fontBold12;
+	public static SoftwareFont b12;
 
 	@ObfuscatedName("a.de")
 	public static int mapBuildBaseX;
@@ -1293,7 +1293,7 @@ public class Client extends GameShell {
 		imethod1();
 		MidiManager.method825();
 
-		flushAudio();
+		doAudio();
 		JavaKeyboardProvider.imethod4();
 		JavaMouseProvider.imethod3();
 
@@ -1345,11 +1345,11 @@ public class Client extends GameShell {
 		if (state == 0) {
 			GameShell.drawProgress(TitleScreen.loadPos, TitleScreen.loadString, null);
 		} else if (state == 5) {
-			TitleScreen.draw(fontBold12, fontPlain11);
+			TitleScreen.draw(b12, p11);
 		} else if (state == 10) {
-			TitleScreen.draw(fontBold12, fontPlain11);
+			TitleScreen.draw(b12, p11);
 		} else if (state == 20) {
-			TitleScreen.draw(fontBold12, fontPlain11);
+			TitleScreen.draw(b12, p11);
 		} else if (state == 25) {
 			if (mapLoadingStage == 1) {
 				if (mapLoadCount > mapLoadPrevCount) {
@@ -1630,27 +1630,27 @@ public class Client extends GameShell {
 			TitleScreen.loadPos = 20;
 			loadingStep = 40;
 		} else if (loadingStep == 40) {
-			byte var6 = 0;
-			int var7 = var6 + anims.getIndexPercentage() * 4 / 100;
-			int var8 = var7 + bases.getIndexPercentage() * 4 / 100;
-			int var9 = var8 + config.getIndexPercentage() * 2 / 100;
-			int var10 = var9 + interfaces.getIndexPercentage() * 2 / 100;
-			int var11 = var10 + jagFX.getIndexPercentage() * 6 / 100;
-			int var12 = var11 + maps.getIndexPercentage() * 4 / 100;
-			int var13 = var12 + songs.getIndexPercentage() * 2 / 100;
-			int var14 = var13 + models.getIndexPercentage() * 60 / 100;
-			int var15 = var14 + sprites.getIndexPercentage() * 2 / 100;
-			int var16 = var15 + textures.getIndexPercentage() * 2 / 100;
-			int var17 = var16 + binary.getIndexPercentage() * 2 / 100;
-			int var18 = var17 + jingles.getIndexPercentage() * 2 / 100;
-			int var19 = var18 + scripts.getIndexPercentage() * 2 / 100;
-			int var20 = var19 + fontMetrics.getIndexPercentage() * 2 / 100;
-			int var21 = var20 + vorbis.getIndexPercentage() * 2 / 100;
-			int var22 = var21 + patches.getIndexPercentage() * 2 / 100;
+			int total = 0;
+			total += anims.getIndexPercentage() * 4 / 100;
+			total += bases.getIndexPercentage() * 4 / 100;
+			total += config.getIndexPercentage() * 2 / 100;
+			total += interfaces.getIndexPercentage() * 2 / 100;
+			total += jagFX.getIndexPercentage() * 6 / 100;
+			total += maps.getIndexPercentage() * 4 / 100;
+			total += songs.getIndexPercentage() * 2 / 100;
+			total += models.getIndexPercentage() * 60 / 100;
+			total += sprites.getIndexPercentage() * 2 / 100;
+			total += textures.getIndexPercentage() * 2 / 100;
+			total += binary.getIndexPercentage() * 2 / 100;
+			total += jingles.getIndexPercentage() * 2 / 100;
+			total += scripts.getIndexPercentage() * 2 / 100;
+			total += fontMetrics.getIndexPercentage() * 2 / 100;
+			total += vorbis.getIndexPercentage() * 2 / 100;
+			total += patches.getIndexPercentage() * 2 / 100;
 
-			if (var22 != 100) {
-				if (var22 != 0) {
-					TitleScreen.loadString = Text.MAINLOAD40 + var22 + "%";
+			if (total != 100) {
+				if (total != 0) {
+					TitleScreen.loadString = Text.MAINLOAD40 + total + "%";
 				}
 				TitleScreen.loadPos = 30;
 			} else {
@@ -1677,18 +1677,18 @@ public class Client extends GameShell {
 			loadingStep = 50;
 		} else if (loadingStep == 50) {
 			int var24 = 0;
-			if (fontPlain11 == null) {
-				fontPlain11 = PixLoader.makeFont(sprites, fontMetrics, "p11_full", "");
+			if (p11 == null) {
+				p11 = PixLoader.makeFont(sprites, fontMetrics, "p11_full", "");
 			} else {
 				var24++;
 			}
-			if (fontPlain12 == null) {
-				fontPlain12 = PixLoader.makeFont(sprites, fontMetrics, "p12_full", "");
+			if (p12 == null) {
+				p12 = PixLoader.makeFont(sprites, fontMetrics, "p12_full", "");
 			} else {
 				var24++;
 			}
-			if (fontBold12 == null) {
-				fontBold12 = PixLoader.makeFont(sprites, fontMetrics, "b12_full", "");
+			if (b12 == null) {
+				b12 = PixLoader.makeFont(sprites, fontMetrics, "b12_full", "");
 			} else {
 				var24++;
 			}
@@ -1724,7 +1724,7 @@ public class Client extends GameShell {
 				IdkType.init(config, models);
 				LocType.init(config, models, lowMemory);
 				NpcType.init(config, models);
-				ObjType.init(config, models, memServer, fontPlain11);
+				ObjType.init(config, models, memServer, p11);
 				SeqType.init(config, anims, bases);
 				SpotType.init(config, models);
 				VarBitType.init(config);
@@ -2042,7 +2042,7 @@ public class Client extends GameShell {
 				} else if (var5 == 2) {
 					loginStep = 9;
 				} else if (var5 == 15 && state == 40) {
-					imethod10();
+					reconnectDone();
 					return;
 				} else if (var5 == 23 && loginFailCount < 1) {
 					loginFailCount++;
@@ -2256,7 +2256,7 @@ public class Client extends GameShell {
 			playerOpPriority[var13] = false;
 		}
 
-		ClientInvCache.field1623 = new HashTable(32);
+		ClientInvCache.invList = new HashTable(32);
 		field1921 = true;
 
 		for (int var14 = 0; var14 < 100; var14++) {
@@ -2393,7 +2393,7 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("da.dj(I)V")
-	public static void flushAudio() {
+	public static void doAudio() {
 		if (soundPcmPlayer != null) {
 			soundPcmPlayer.cycle();
 		}
@@ -3097,12 +3097,12 @@ public class Client extends GameShell {
 		byte var2 = 4;
 		int var3 = var2 + 6;
 		int var4 = var2 + 6;
-		int var5 = fontPlain12.method2818(arg0, 250);
-		int var6 = fontPlain12.method2889(arg0, 250) * 13;
+		int var5 = p12.method2818(arg0, 250);
+		int var6 = p12.method2889(arg0, 250) * 13;
 
 		Pix2D.fillRect(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2, 0);
 		Pix2D.drawRect(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2, 0xffffff);
-		fontPlain12.drawStringMultiline(arg0, var3, var4, var5, var6, 0xffffff, -1, 1, 1, 0);
+		p12.drawStringMultiline(arg0, var3, var4, var5, var6, 0xffffff, -1, 1, 1, 0);
 		dirtyArea(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2);
 
 		if (arg1) {
@@ -3294,7 +3294,7 @@ public class Client extends GameShell {
 		if (showFps) {
 			int var6 = arg0 + 512 - 5;
 			int var7 = arg1 + 20;
-			fontPlain12.drawStringRight("Fps:" + fps, var6, var7, 0xffff00, -1);
+			p12.drawStringRight("Fps:" + fps, var6, var7, 0xffff00, -1);
 
 			int var11 = var7 + 15;
 			Runtime var8 = Runtime.getRuntime();
@@ -3306,7 +3306,7 @@ public class Client extends GameShell {
 			if (var9 > 65536 && !lowMemory) {
 				var10 = 0xff0000;
 			}
-			fontPlain12.drawStringRight("Mem:" + var9 + "k", var6, var11, var10, -1);
+			p12.drawStringRight("Mem:" + var9 + "k", var6, var11, var10, -1);
 			var7 = var11 + 15;
 		}
 	}
@@ -3577,7 +3577,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::PreventTimeout
 	@ObfuscatedName("at.ej(ZB)V")
 	public static void preventTimeout(boolean arg0) {
-		flushAudio();
+		doAudio();
 
 		noTimeoutCycle++;
 		if (noTimeoutCycle < 50 && !arg0) {
@@ -4943,9 +4943,9 @@ public class Client extends GameShell {
 	// jag::oldscape::minimenu::Minimenu::Open
 	@ObfuscatedName("bk.ep(B)V")
 	public static void openMenu() {
-		int width = fontBold12.stringWid(Text.CHOOSEOPTION);
+		int width = b12.stringWid(Text.CHOOSEOPTION);
 		for (int i = 0; i < menuNumEntries; i++) {
-			int var2 = fontBold12.stringWid(getLine(i));
+			int var2 = b12.stringWid(getLine(i));
 			if (var2 > width) {
 				width = var2;
 			}
@@ -6705,7 +6705,8 @@ public class Client extends GameShell {
 			} else if (com.type == 8 && field654 == com && field2076 == field1995) {
 				int var217 = 0;
 				int var218 = 0;
-				SoftwareFont var219 = fontPlain12;
+				// todo: inlined method?
+				SoftwareFont var219 = p12;
 				String var220 = com.text;
 				String var221 = substituteVars(var220, com);
 				while (var221.length() > 0) {
@@ -7890,7 +7891,7 @@ public class Client extends GameShell {
 	// jag::oldscape::minimap::Minimap::Draw
 	@ObfuscatedName("ba.gh(IIII)V")
 	public static void minimapDraw(int arg0, int arg1, int arg2) {
-		flushAudio();
+		doAudio();
 		Pix2D.setClipping(arg0, arg1, mapback.wi + arg0, mapback.hi + arg1);
 
 		if (minimapState == 2 || minimapState == 5) {
@@ -8389,13 +8390,13 @@ public class Client extends GameShell {
 			messageBox(Text.LOADING + StringConstants.TAG_BREAK + StringConstants.OPEN_BRACKET + 100 + "%" + StringConstants.CLOSE_BRACKET, true);
 		}
 
-		flushAudio();
+		doAudio();
 		clearCaches();
 
-		flushAudio();
+		doAudio();
 		world.resetMap();
 
-		flushAudio();
+		doAudio();
 		System.gc();
 
 		for (int var18 = 0; var18 < 4; var18++) {
@@ -8410,7 +8411,7 @@ public class Client extends GameShell {
 			}
 		}
 
-		flushAudio();
+		doAudio();
 		ClientBuild.init();
 
 		int maps = mapBuildGroundData.length;
@@ -8424,7 +8425,7 @@ public class Client extends GameShell {
 				int var26 = (mapBuildIndex[var24] & 0xFF) * 64 - mapBuildBaseZ;
 				byte[] var27 = mapBuildGroundData[var24];
 				if (var27 != null) {
-					flushAudio();
+					doAudio();
 					ClientBuild.loadGround(var27, var25, var26, mapBuildCenterZoneX * 8 - 48, mapBuildCenterZoneZ * 8 - 48, levelCollisionMap);
 				}
 			}
@@ -8434,7 +8435,7 @@ public class Client extends GameShell {
 				int var30 = (mapBuildIndex[var28] & 0xFF) * 64 - mapBuildBaseZ;
 				byte[] var31 = mapBuildGroundData[var28];
 				if (var31 == null && mapBuildCenterZoneZ < 800) {
-					flushAudio();
+					doAudio();
 					ClientBuild.fadeAdjacent(var29, var30, 64, 64);
 				}
 			}
@@ -8447,7 +8448,7 @@ public class Client extends GameShell {
 					int var34 = (mapBuildIndex[var32] >> 8) * 64 - mapBuildBaseX;
 					int var35 = (mapBuildIndex[var32] & 0xFF) * 64 - mapBuildBaseZ;
 
-					flushAudio();
+					doAudio();
 					ClientBuild.loadLocations(var33, var34, var35, world, levelCollisionMap);
 				}
 			}
@@ -8455,7 +8456,7 @@ public class Client extends GameShell {
 
 		if (regionmode) {
 			for (int var36 = 0; var36 < 4; var36++) {
-				flushAudio();
+				doAudio();
 
 				for (int var37 = 0; var37 < 13; var37++) {
 					for (int var38 = 0; var38 < 13; var38++) {
@@ -8494,7 +8495,7 @@ public class Client extends GameShell {
 			preventTimeout(true);
 
 			for (int var57 = 0; var57 < 4; var57++) {
-				flushAudio();
+				doAudio();
 
 				for (int var58 = 0; var58 < 13; var58++) {
 					for (int var59 = 0; var59 < 13; var59++) {
@@ -8520,7 +8521,7 @@ public class Client extends GameShell {
 		preventTimeout(true);
 		clearCaches();
 
-		flushAudio();
+		doAudio();
 		ClientBuild.finishBuild(world, levelCollisionMap);
 
 		preventTimeout(true);
@@ -8545,7 +8546,7 @@ public class Client extends GameShell {
 			}
 		}
 
-		flushAudio();
+		doAudio();
 		locChangePostBuildCorrect();
 
 		LocType.mc1.clear();
@@ -8573,7 +8574,7 @@ public class Client extends GameShell {
 
 		setMainState(30);
 
-		flushAudio();
+		doAudio();
 		ClientBuild.quit();
 
 		// MAP_BUILD_COMPLETE
@@ -8594,7 +8595,8 @@ public class Client extends GameShell {
 		}
 	}
 
-	public static void imethod10() {
+	// jag::oldscape::Client::ReconnectDone
+	public static void reconnectDone() {
 		out.pos = 0;
 		in.pos = 0;
 		ptype = -1;
@@ -8602,31 +8604,34 @@ public class Client extends GameShell {
 		ptype1 = -1;
 		ptype2 = -1;
 		psize = 0;
+
 		timeoutTimer = 0;
 		rebootTimer = 0;
+
 		menuNumEntries = 0;
 		isMenuOpen = false;
+
 		minimapState = 0;
 		minimapFlagX = 0;
-		for (int var6 = 0; var6 < players.length; var6++) {
-			if (players[var6] != null) {
-				players[var6].targetId = -1;
-			}
-		}
-		for (int var7 = 0; var7 < npcs.length; var7++) {
-			if (npcs[var7] != null) {
-				npcs[var7].targetId = -1;
-			}
-		}
-		imethod11();
-		setMainState(30);
-		for (int var8 = 0; var8 < 100; var8++) {
-			componentRedrawRequested1[var8] = true;
-		}
-	}
 
-	public static void imethod11() {
-		ClientInvCache.field1623 = new HashTable(32);
+		for (int i = 0; i < players.length; i++) {
+			if (players[i] != null) {
+				players[i].targetId = -1;
+			}
+		}
+
+		for (int i = 0; i < npcs.length; i++) {
+			if (npcs[i] != null) {
+				npcs[i].targetId = -1;
+			}
+		}
+
+		ClientInvCache.deleteAll();
+		setMainState(30);
+
+		for (int i = 0; i < 100; i++) {
+			componentRedrawRequested1[i] = true;
+		}
 	}
 
 	public static void gameLoop() {
@@ -9734,7 +9739,7 @@ public class Client extends GameShell {
 			if (ptype == 172) {
 				// UPDATE_INV_STOPTRANSMIT
 				int var219 = in.g2_alt2();
-				ClientInvCache.method55(var219);
+				ClientInvCache.delete(var219);
 				field2112[++field2050 - 1 & 0x1F] = var219 & 0x7FFF;
 				ptype = -1;
 				return true;
@@ -10122,7 +10127,7 @@ public class Client extends GameShell {
 					}
 				}
 
-				ClientInvCache inv = (ClientInvCache) ClientInvCache.field1623.get((long) invId);
+				ClientInvCache inv = (ClientInvCache) ClientInvCache.invList.get((long) invId);
 				if (inv != null) {
 					for (int i = 0; i < inv.objId.length; i++) {
 						inv.objId[i] = -1;
@@ -10481,7 +10486,7 @@ public class Client extends GameShell {
 		Pix2D.fillRect(var27, var28, var29, var30, var31);
 		Pix2D.fillRect(var27 + 1, var28 + 1, var29 - 2, 16, 0);
 		Pix2D.drawRect(var27 + 1, var28 + 18, var29 - 2, var30 - 19, 0);
-		fontBold12.drawString(Text.CHOOSEOPTION, var27 + 3, var28 + 14, var31, -1);
+		b12.drawString(Text.CHOOSEOPTION, var27 + 3, var28 + 14, var31, -1);
 		int var32 = JavaMouseProvider.mouseX;
 		int var33 = JavaMouseProvider.mouseY;
 		for (int var34 = 0; var34 < menuNumEntries; var34++) {
@@ -10490,7 +10495,7 @@ public class Client extends GameShell {
 			if (var32 > var27 && var32 < var27 + var29 && var33 > var35 - 13 && var33 < var35 + 3) {
 				var36 = 0xffff00;
 			}
-			fontBold12.drawString(getLine(var34), var27 + 3, var35, var36, 0);
+			b12.drawString(getLine(var34), var27 + 3, var35, var36, 0);
 		}
 		imethod26(menuX, menuY, menuWidth, menuHeight);
 	}
@@ -10518,7 +10523,7 @@ public class Client extends GameShell {
 		if (menuNumEntries > 2) {
 			var26 = var26 + StringConstants.TAG_COLOUR(0xffffff) + " " + '/' + " " + (menuNumEntries - 2) + Text.MOREOPTIONS;
 		}
-		fontBold12.method2828(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
+		b12.method2828(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
 	}
 
 	// jag::oldscape::Client::GlCheckMinimap
@@ -11041,13 +11046,13 @@ public class Client extends GameShell {
 			ModelLit.pickedCount = 0;
 		}
 
-		flushAudio();
+		doAudio();
 		Pix2D.fillRect(var12, var13, var31, var32, 0);
 
-		flushAudio();
+		doAudio();
 		world.renderAll(camX, camY, camZ, camPitch, camYaw, var62);
 
-		flushAudio();
+		doAudio();
 		world.removeSprites();
 
 		entityOverlays(var12, var13, var31, var32);
@@ -11338,8 +11343,8 @@ public class Client extends GameShell {
 				if (var75.chat != null && (var74 >= playerCount || publicChatFilter == 0 || publicChatFilter == 3 || publicChatFilter == 1 && isFriend(((ClientPlayer) var75).name))) {
 					getOverlayPos(var75, var75.height);
 					if (projectX > -1 && chatCount < MAX_CHATS) {
-						chatWidth[chatCount] = fontBold12.stringWid(var75.chat) / 2;
-						chatHeight[chatCount] = fontBold12.field2550;
+						chatWidth[chatCount] = b12.stringWid(var75.chat) / 2;
+						chatHeight[chatCount] = b12.field2550;
 						chatX[chatCount] = projectX;
 						chatY[chatCount] = projectY;
 						chatColour[chatCount] = var75.field2652;
@@ -11382,7 +11387,7 @@ public class Client extends GameShell {
 					}
 
 					hitmarks[var75.damageTypes[var81]].plotSprite(projectX + var12 - 12, projectY + var13 - 12);
-					fontPlain11.centreString(Integer.toString(var75.damageValues[var81]), projectX + var12 - 1, projectY + var13 + 3, 16777215, 0);
+					p11.centreString(Integer.toString(var75.damageValues[var81]), projectX + var12 - 1, projectY + var13 + 3, 16777215, 0);
 				}
 			}
 		}
@@ -11449,21 +11454,21 @@ public class Client extends GameShell {
 					}
 				}
 				if (chatEffect[var82] == 0) {
-					fontBold12.centreString(var89, projectX + var12, projectY + var13, var90, 0);
+					b12.centreString(var89, projectX + var12, projectY + var13, var90, 0);
 				}
 				if (chatEffect[var82] == 1) {
-					fontBold12.centerStringWave(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
+					b12.centerStringWave(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
 				}
 				if (chatEffect[var82] == 2) {
-					fontBold12.method2826(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
+					b12.method2826(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
 				}
 				if (chatEffect[var82] == 3) {
-					fontBold12.method2827(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle, 150 - chatTimer[var82]);
+					b12.method2827(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle, 150 - chatTimer[var82]);
 				}
 				if (chatEffect[var82] == 4) {
-					int var94 = (150 - chatTimer[var82]) * (fontBold12.stringWid(var89) + 100) / 150;
+					int var94 = (150 - chatTimer[var82]) * (b12.stringWid(var89) + 100) / 150;
 					Pix2D.setSubClipping(projectX + var12 - 50, var13, projectX + var12 + 50, var13 + var32);
-					fontBold12.drawString(var89, projectX + var12 + 50 - var94, projectY + var13, var90, 0);
+					b12.drawString(var89, projectX + var12 + 50 - var94, projectY + var13, var90, 0);
 					Pix2D.setClipping(var12, var13, var12 + var31, var13 + var32);
 				}
 				if (chatEffect[var82] == 5) {
@@ -11474,12 +11479,12 @@ public class Client extends GameShell {
 					} else if (var95 > 125) {
 						var96 = var95 - 125;
 					}
-					Pix2D.setSubClipping(var12, projectY + var13 - fontBold12.field2550 - 1, var12 + var31, projectY + var13 + 5);
-					fontBold12.centreString(var89, projectX + var12, projectY + var13 + var96, var90, 0);
+					Pix2D.setSubClipping(var12, projectY + var13 - b12.field2550 - 1, var12 + var31, projectY + var13 + 5);
+					b12.centreString(var89, projectX + var12, projectY + var13 + var96, var90, 0);
 					Pix2D.setClipping(var12, var13, var12 + var31, var13 + var32);
 				}
 			} else {
-				fontBold12.centreString(var89, projectX + var12, projectY + var13, 16776960, 0);
+				b12.centreString(var89, projectX + var12, projectY + var13, 16776960, 0);
 			}
 		}
 	}
