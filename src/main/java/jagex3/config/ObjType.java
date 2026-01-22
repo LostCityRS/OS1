@@ -14,29 +14,34 @@ import jagex3.js5.Js5;
 import jagex3.js5.Js5Loader;
 import jagex3.jstring.Text;
 
+// jag::oldscape::configdecoder::ObjType
 @ObfuscatedName("fj")
 public class ObjType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::ObjType::m_pConfigClient
 	@ObfuscatedName("fj.n")
-	public static Js5 configJs5;
+	public static Js5 configClient;
 
+	// jag::oldscape::configdecoder::ObjType::m_pModels
 	@ObfuscatedName("bb.j")
-	public static Js5 modelJs5;
+	public static Js5 models;
 
+	// jag::oldscape::configdecoder::ObjType::m_memServer
 	@ObfuscatedName("cq.z")
-	public static boolean membersWorld;
+	public static boolean memServer;
 
 	@ObfuscatedName("fj.g")
-	public static LruCache typeCache = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
 	@ObfuscatedName("fj.q")
 	public static LruCache modelCache = new LruCache(50);
 
 	@ObfuscatedName("fj.i")
-	public static LruCache iconCache = new LruCache(100);
+	public static LruCache spriteCache = new LruCache(100);
 
+	// jag::oldscape::configdecoder::ObjType::m_countFont
 	@ObfuscatedName("bf.s")
-	public static SoftwareFont font;
+	public static SoftwareFont countFont;
 
 	@ObfuscatedName("fj.u")
 	public int index;
@@ -158,14 +163,15 @@ public class ObjType extends DoublyLinkable {
 	@ObfuscatedName("fj.af")
 	public int team = 0;
 
+	// jag::oldscape::configdecoder::ObjType::List
 	@ObfuscatedName("bb.z(II)Lfj;")
-	public static ObjType get(int id) {
-		ObjType cached = (ObjType) typeCache.get(id);
+	public static ObjType list(int id) {
+		ObjType cached = (ObjType) recentUse.get(id);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] files = configJs5.getFile(10, id);
+		byte[] files = configClient.getFile(10, id);
 		ObjType obj = new ObjType();
 		obj.index = id;
 		if (files != null) {
@@ -174,24 +180,26 @@ public class ObjType extends DoublyLinkable {
 		obj.postDecode();
 
 		if (obj.certtemplate != -1) {
-			obj.toCertificate(get(obj.certtemplate), get(obj.certlink));
+			obj.genCert(list(obj.certtemplate), list(obj.certlink));
 		}
 
-		if (!membersWorld && obj.members) {
+		if (!memServer && obj.members) {
 			obj.name = Text.MEMBERS_OBJECT;
 			obj.op = null;
 			obj.iop = null;
 			obj.team = 0;
 		}
 
-		typeCache.put(obj, id);
+		recentUse.put(obj, id);
 		return obj;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::PostDecode
 	@ObfuscatedName("fj.g(B)V")
 	public void postDecode() {
 	}
 
+	// jag::oldscape::configdecoder::ObjType::Decode
 	@ObfuscatedName("fj.q(Lev;B)V")
 	public void decode(Packet buf) {
 		while (true) {
@@ -200,12 +208,13 @@ public class ObjType extends DoublyLinkable {
 				return;
 			}
 
-			this.decodeInner(buf, code);
+			this.decode(buf, code);
 		}
 	}
 
+	// jag::oldscape::configdecoder::ObjType::Decode
 	@ObfuscatedName("fj.i(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
+	public void decode(Packet buf, int code) {
 		if (code == 1) {
 			this.model = buf.g2();
 		} else if (code == 2) {
@@ -305,8 +314,9 @@ public class ObjType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::ObjType::GenCert
 	@ObfuscatedName("fj.s(Lfj;Lfj;I)V")
-	public void toCertificate(ObjType template, ObjType link) {
+	public void genCert(ObjType template, ObjType link) {
 		this.model = template.model;
 		this.zoom2d = template.zoom2d;
 		this.xan2d = template.xan2d;
@@ -326,8 +336,9 @@ public class ObjType extends DoublyLinkable {
 		this.stackable = 1;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::GetModelUnlit
 	@ObfuscatedName("fj.u(II)Lfw;")
-	public final ModelUnlit getInvModel(int count) {
+	public final ModelUnlit getModelUnlit(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -337,11 +348,11 @@ public class ObjType extends DoublyLinkable {
 			}
 
 			if (real != -1) {
-				return get(real).getInvModel(1);
+				return list(real).getModelUnlit(1);
 			}
 		}
 
-		ModelUnlit model = ModelUnlit.load(modelJs5, this.model, 0);
+		ModelUnlit model = ModelUnlit.load(models, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -365,8 +376,9 @@ public class ObjType extends DoublyLinkable {
 		return model;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::GetModelLit
 	@ObfuscatedName("fj.v(IB)Lfo;")
-	public final ModelLit getModel(int count) {
+	public final ModelLit getModelLit(int count) {
 		if (this.countobj != null && count > 1) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -376,7 +388,7 @@ public class ObjType extends DoublyLinkable {
 			}
 
 			if (real != -1) {
-				return get(real).getModel(1);
+				return list(real).getModelLit(1);
 			}
 		}
 
@@ -385,7 +397,7 @@ public class ObjType extends DoublyLinkable {
 			return cached;
 		}
 
-		ModelUnlit model = ModelUnlit.load(modelJs5, this.model, 0);
+		ModelUnlit model = ModelUnlit.load(models, this.model, 0);
 		if (model == null) {
 			return null;
 		}
@@ -412,8 +424,9 @@ public class ObjType extends DoublyLinkable {
 		return litModel;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::GetStackSizeAlt
 	@ObfuscatedName("fj.w(II)Lfj;")
-	public ObjType getObj(int count) {
+	public ObjType getStackSizeAlt(int count) {
 		if (this.countobj != null && count > 1) {
 			int obj = -1;
 			for (int i = 0; i < 10; i++) {
@@ -423,24 +436,25 @@ public class ObjType extends DoublyLinkable {
 			}
 
 			if (obj != -1) {
-				return get(obj);
+				return list(obj);
 			}
 		}
 
 		return this;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::GetSprite
 	@ObfuscatedName("eg.e(IIIIZI)Lfq;")
-	public static Pix32 getIcon(int id, int count, int arg2, int arg3, boolean outlineRgb) {
+	public static Pix32 getSprite(int id, int count, int arg2, int arg3, boolean outlineRgb) {
 		long key = ((long) arg3 << 40) + ((long) arg2 << 38) + ((long) count << 16) + (long) id;
 		if (!outlineRgb) {
-			Pix32 cached = (Pix32) iconCache.get(key);
+			Pix32 cached = (Pix32) spriteCache.get(key);
 			if (cached != null) {
 				return cached;
 			}
 		}
 
-		ObjType obj = get(id);
+		ObjType obj = list(id);
 		if (count > 1 && obj.countobj != null) {
 			int real = -1;
 			for (int i = 0; i < 10; i++) {
@@ -450,18 +464,18 @@ public class ObjType extends DoublyLinkable {
 			}
 
 			if (real != -1) {
-				obj = get(real);
+				obj = list(real);
 			}
 		}
 
-		ModelLit model = obj.getModel(1);
+		ModelLit model = obj.getModelLit(1);
 		if (model == null) {
 			return null;
 		}
 
 		Pix32 certIcon = null;
 		if (obj.certtemplate != -1) {
-			certIcon = getIcon(obj.certlink, 10, 1, 0, true);
+			certIcon = getSprite(obj.certlink, 10, 1, 0, true);
 			if (certIcon == null) {
 				return null;
 			}
@@ -511,11 +525,11 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		if (!outlineRgb && (obj.stackable == 1 || count != 1) && count != -1) {
-			font.drawString(invNumber(count), 0, 9, 0xffff00, 1);
+			countFont.drawString(invNumber(count), 0, 9, 0xffff00, 1);
 		}
 
 		if (!outlineRgb) {
-			iconCache.put(var17, key);
+			spriteCache.put(var17, key);
 		}
 
 		Pix2D.setPixels(data, width2d, height2d);
@@ -537,8 +551,9 @@ public class ObjType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::ObjType::CheckWearModel
 	@ObfuscatedName("fj.y(ZI)Z")
-	public final boolean downloadWornModel(boolean gender) {
+	public final boolean checkWearModel(boolean gender) {
 		int wear1 = this.manwear;
 		int wear2 = this.manwear2;
 		int wear3 = this.manwear3;
@@ -553,19 +568,20 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		boolean status = true;
-		if (!modelJs5.requestDownload(wear1, 0)) {
+		if (!models.requestDownload(wear1, 0)) {
 			status = false;
-		} else if (wear2 != -1 && !modelJs5.requestDownload(wear2, 0)) {
+		} else if (wear2 != -1 && !models.requestDownload(wear2, 0)) {
 			status = false;
-		} else if (wear3 != -1 && !modelJs5.requestDownload(wear3, 0)) {
+		} else if (wear3 != -1 && !models.requestDownload(wear3, 0)) {
 			status = false;
 		}
 
 		return status;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::GetWearModelNoCheck
 	@ObfuscatedName("fj.t(ZI)Lfw;")
-	public final ModelUnlit getWornModel(boolean gender) {
+	public final ModelUnlit getWearModelNoCheck(boolean gender) {
 		int wear1 = this.manwear;
 		int wear2 = this.manwear2;
 		int wear3 = this.manwear3;
@@ -579,14 +595,14 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelUnlit model = ModelUnlit.load(modelJs5, wear1, 0);
+		ModelUnlit model = ModelUnlit.load(models, wear1, 0);
 		if (wear2 != -1) {
-			ModelUnlit model2 = ModelUnlit.load(modelJs5, wear2, 0);
+			ModelUnlit model2 = ModelUnlit.load(models, wear2, 0);
 			if (wear3 == -1) {
 				ModelUnlit[] models = new ModelUnlit[] { model, model2 };
 				model = new ModelUnlit(models, 2);
 			} else {
-				ModelUnlit model3 = ModelUnlit.load(modelJs5, wear3, 0);
+				ModelUnlit model3 = ModelUnlit.load(models, wear3, 0);
 				ModelUnlit[] models = new ModelUnlit[] { model, model2, model3 };
 				model = new ModelUnlit(models, 3);
 			}
@@ -613,8 +629,9 @@ public class ObjType extends DoublyLinkable {
 		return model;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::CheckHeadModel
 	@ObfuscatedName("fj.f(ZB)Z")
-	public final boolean downloadHeadModel(boolean gender) {
+	public final boolean checkHeadModel(boolean gender) {
 		int head1 = this.manhead;
 		int head2 = this.manhead2;
 		if (gender) {
@@ -626,16 +643,17 @@ public class ObjType extends DoublyLinkable {
 		}
 
 		boolean status = true;
-		if (!modelJs5.requestDownload(head1, 0)) {
+		if (!models.requestDownload(head1, 0)) {
 			status = false;
-		} else if (head2 != -1 && !modelJs5.requestDownload(head2, 0)) {
+		} else if (head2 != -1 && !models.requestDownload(head2, 0)) {
 			status = false;
 		}
 		return status;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::GetHeadModelNoCheck
 	@ObfuscatedName("fj.k(ZI)Lfw;")
-	public final ModelUnlit getHeadModel(boolean gender) {
+	public final ModelUnlit getHeadModelNoCheck(boolean gender) {
 		int head1 = this.manhead;
 		int head2 = this.manhead2;
 		if (gender) {
@@ -647,9 +665,9 @@ public class ObjType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelUnlit model = ModelUnlit.load(modelJs5, head1, 0);
+		ModelUnlit model = ModelUnlit.load(models, head1, 0);
 		if (head2 != -1) {
-			ModelUnlit model2 = ModelUnlit.load(modelJs5, head2, 0);
+			ModelUnlit model2 = ModelUnlit.load(models, head2, 0);
 			ModelUnlit[] models = new ModelUnlit[] { model, model2 };
 			model = new ModelUnlit(models, 2);
 		}
@@ -668,22 +686,25 @@ public class ObjType extends DoublyLinkable {
 		return model;
 	}
 
+	// jag::oldscape::configdecoder::ObjType::ResetSpriteCache
 	@ObfuscatedName("da.o(S)V")
-	public static void clearCache() {
-		iconCache.clear();
+	public static void resetSpriteCache() {
+		spriteCache.clear();
 	}
 
-	public static void unpack(Js5Loader var32, Js5Loader var33, boolean var34, SoftwareFont var35) {
-		configJs5 = var32;
-		modelJs5 = var33;
-		membersWorld = var34;
-		configJs5.getFileIdLimit(10);
-		font = var35;
+	// jag::oldscape::configdecoder::ObjType::Init
+	public static void init(Js5Loader var32, Js5Loader var33, boolean var34, SoftwareFont var35) {
+		configClient = var32;
+		models = var33;
+		memServer = var34;
+		configClient.getFileIdLimit(10);
+		countFont = var35;
 	}
 
-	public static void unload() {
-		typeCache.clear();
+	// jag::oldscape::configdecoder::ObjType::ResetCache
+	public static void resetCache() {
+		recentUse.clear();
 		modelCache.clear();
-		iconCache.clear();
+		spriteCache.clear();
 	}
 }

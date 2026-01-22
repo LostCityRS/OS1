@@ -6,14 +6,16 @@ import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
+// jag::oldscape::configdecoder::FloType
 @ObfuscatedName("fb")
 public class FloType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::FloType::m_pConfigClient
 	@ObfuscatedName("by.n")
-	public static Js5 configJs5;
+	public static Js5 configClient;
 
 	@ObfuscatedName("fb.j")
-	public static LruCache cache = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
 	@ObfuscatedName("fb.z")
 	public int rgb = 0;
@@ -45,24 +47,26 @@ public class FloType extends DoublyLinkable {
 	@ObfuscatedName("fb.b")
 	public int mapLuminance;
 
+	// jag::oldscape::configdecoder::FloType::List
 	@ObfuscatedName("cj.z(II)Lfb;")
-	public static FloType get(int id) {
-		FloType cached = (FloType) cache.get(id);
+	public static FloType list(int id) {
+		FloType cached = (FloType) recentUse.get(id);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] data = configJs5.getFile(4, id);
+		byte[] data = configClient.getFile(4, id);
 		FloType type = new FloType();
 		if (data != null) {
 			type.decode(new Packet(data), id);
 		}
 		type.postDecode();
 
-		cache.put(type, id);
+		recentUse.put(type, id);
 		return type;
 	}
 
+	// jag::oldscape::configdecoder::FloType::PostDecode
 	@ObfuscatedName("fb.g(B)V")
 	public void postDecode() {
 		if (this.mapcolour != -1) {
@@ -75,6 +79,7 @@ public class FloType extends DoublyLinkable {
 		this.getHsl(this.rgb);
 	}
 
+	// jag::oldscape::configdecoder::FloType::Decode
 	@ObfuscatedName("fb.q(Lev;IB)V")
 	public void decode(Packet buf, int id) {
 		while (true) {
@@ -83,12 +88,13 @@ public class FloType extends DoublyLinkable {
 				return;
 			}
 
-			this.decodeInner(buf, code, id);
+			this.decode(buf, code, id);
 		}
 	}
 
+	// jag::oldscape::configdecoder::FloType::Decode
 	@ObfuscatedName("fb.i(Lev;III)V")
-	public void decodeInner(Packet buf, int code, int id) {
+	public void decode(Packet buf, int code, int id) {
 		if (code == 1) {
 			this.rgb = buf.g3();
 		} else if (code == 2) {
@@ -98,9 +104,11 @@ public class FloType extends DoublyLinkable {
 		} else if (code == 7) {
 			this.mapcolour = buf.g3();
 		} else if (code == 8) {
+			// default water = id
 		}
 	}
 
+	// jag::oldscape::configdecoder::FloType::GetHsl
 	@ObfuscatedName("fb.s(II)V")
 	public void getHsl(int arg0) {
 		double var2 = (double) (arg0 >> 16 & 0xFF) / 256.0D;
@@ -154,11 +162,11 @@ public class FloType extends DoublyLinkable {
 		}
 	}
 
-	public static void unpack(Js5 config) {
-		configJs5 = config;
+	public static void init(Js5 config) {
+		configClient = config;
 	}
 
-	public static void unload() {
-		cache.clear();
+	public static void resetCache() {
+		recentUse.clear();
 	}
 }

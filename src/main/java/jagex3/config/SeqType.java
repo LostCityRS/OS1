@@ -8,29 +8,35 @@ import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
+// jag::oldscape::configdecoder::SeqType
 @ObfuscatedName("eo")
 public class SeqType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::SeqType::m_pConfigClient
 	@ObfuscatedName("dz.n")
-	public static Js5 field1517;
+	public static Js5 configClient;
 
+	// jag::oldscape::configdecoder::SeqType::m_pAnims
 	@ObfuscatedName("ag.j")
-	public static Js5 field556;
+	public static Js5 anims;
 
+	// jag::oldscape::configdecoder::SeqType::m_pBases
 	@ObfuscatedName("eo.z")
-	public static Js5 field2361;
+	public static Js5 bases;
 
+	// jag::oldscape::configdecoder::SeqType::m_recentUse
 	@ObfuscatedName("eo.g")
-	public static LruCache field2362 = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
+	// jag::oldscape::configdecoder::SeqType::m_framesetCache
 	@ObfuscatedName("eo.q")
-	public static LruCache field2370 = new LruCache(100);
+	public static LruCache framesetCache = new LruCache(100);
 
 	@ObfuscatedName("eo.i")
 	public int[] frames;
 
 	@ObfuscatedName("eo.s")
-	public int[] field2365;
+	public int[] iframes;
 
 	@ObfuscatedName("eo.u")
 	public int[] delay;
@@ -68,29 +74,32 @@ public class SeqType extends DoublyLinkable {
 	@ObfuscatedName("eo.h")
 	public int duplicatebehavior = 2;
 
+	// jag::oldscape::configdecoder::SeqType::Init
 	@ObfuscatedName("ai.z(Lch;Lch;Lch;I)V")
-	public static void unpack(Js5 arg0, Js5 arg1, Js5 arg2) {
-		field1517 = arg0;
-		field556 = arg1;
-		field2361 = arg2;
+	public static void init(Js5 arg0, Js5 arg1, Js5 arg2) {
+		configClient = arg0;
+		anims = arg1;
+		bases = arg2;
 	}
 
+	// jag::oldscape::configdecoder::SeqType::List
 	@ObfuscatedName("i.g(IB)Leo;")
-	public static SeqType get(int arg0) {
-		SeqType var1 = (SeqType) field2362.get((long) arg0);
+	public static SeqType list(int arg0) {
+		SeqType var1 = (SeqType) recentUse.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = field1517.getFile(12, arg0);
+		byte[] var2 = configClient.getFile(12, arg0);
 		SeqType var3 = new SeqType();
 		if (var2 != null) {
 			var3.decode(new Packet(var2));
 		}
 		var3.postDecode();
-		field2362.put(var3, (long) arg0);
+		recentUse.put(var3, (long) arg0);
 		return var3;
 	}
 
+	// jag::oldscape::configdecoder::SeqType::Decode
 	@ObfuscatedName("eo.q(Lev;S)V")
 	public void decode(Packet arg0) {
 		while (true) {
@@ -98,12 +107,13 @@ public class SeqType extends DoublyLinkable {
 			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+			this.decode(arg0, var2);
 		}
 	}
 
+	// jag::oldscape::configdecoder::SeqType::Decode
 	@ObfuscatedName("eo.i(Lev;IB)V")
-	public void decodeInner(Packet arg0, int arg1) {
+	public void decode(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			int var3 = arg0.g2();
 			this.delay = new int[var3];
@@ -144,12 +154,12 @@ public class SeqType extends DoublyLinkable {
 			this.duplicatebehavior = arg0.g1();
 		} else if (arg1 == 12) {
 			int var9 = arg0.g1();
-			this.field2365 = new int[var9];
+			this.iframes = new int[var9];
 			for (int var10 = 0; var10 < var9; var10++) {
-				this.field2365[var10] = arg0.g2();
+				this.iframes[var10] = arg0.g2();
 			}
 			for (int var11 = 0; var11 < var9; var11++) {
-				this.field2365[var11] += arg0.g2() << 16;
+				this.iframes[var11] += arg0.g2() << 16;
 			}
 		} else if (arg1 == 13) {
 			int var12 = arg0.g1();
@@ -160,6 +170,7 @@ public class SeqType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::SeqType::PostDecode
 	@ObfuscatedName("eo.s(B)V")
 	public void postDecode() {
 		if (this.preanim_move == -1) {
@@ -178,10 +189,11 @@ public class SeqType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::SeqType::AnimateModel
 	@ObfuscatedName("eo.u(Lfo;II)Lfo;")
-	public ModelLit method2436(ModelLit arg0, int arg1) {
+	public ModelLit animateModel(ModelLit arg0, int arg1) {
 		int var3 = this.frames[arg1];
-		AnimFrameSet var4 = method760(var3 >> 16);
+		AnimFrameSet var4 = get(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
 			return arg0.copyForAnim(true);
@@ -192,10 +204,11 @@ public class SeqType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::SeqType::AnimateModel90
 	@ObfuscatedName("eo.v(Lfo;IIB)Lfo;")
-	public ModelLit method2419(ModelLit arg0, int arg1, int arg2) {
+	public ModelLit animateModel90(ModelLit arg0, int arg1, int arg2) {
 		int var4 = this.frames[arg1];
-		AnimFrameSet var5 = method760(var4 >> 16);
+		AnimFrameSet var5 = get(var4 >> 16);
 		int var6 = var4 & 0xFFFF;
 		if (var5 == null) {
 			return arg0.copyForAnim(true);
@@ -221,9 +234,9 @@ public class SeqType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("eo.w(Lfo;II)Lfo;")
-	public ModelLit method2439(ModelLit arg0, int arg1) {
+	public ModelLit animateModel2(ModelLit arg0, int arg1) {
 		int var3 = this.frames[arg1];
-		AnimFrameSet var4 = method760(var3 >> 16);
+		AnimFrameSet var4 = get(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
 			return arg0.copyForAnim2(true);
@@ -234,16 +247,17 @@ public class SeqType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::SeqType::SplitAnimateModel
 	@ObfuscatedName("eo.e(Lfo;ILeo;II)Lfo;")
-	public ModelLit method2421(ModelLit arg0, int arg1, SeqType arg2, int arg3) {
+	public ModelLit splitAnimateModel(ModelLit arg0, int arg1, SeqType arg2, int arg3) {
 		int var5 = this.frames[arg1];
-		AnimFrameSet var6 = method760(var5 >> 16);
+		AnimFrameSet var6 = get(var5 >> 16);
 		int var7 = var5 & 0xFFFF;
 		if (var6 == null) {
-			return arg2.method2436(arg0, arg3);
+			return arg2.animateModel(arg0, arg3);
 		}
 		int var8 = arg2.frames[arg3];
-		AnimFrameSet var9 = method760(var8 >> 16);
+		AnimFrameSet var9 = get(var8 >> 16);
 		int var10 = var8 & 0xFFFF;
 		if (var9 == null) {
 			ModelLit var11 = arg0.copyForAnim(!var6.getAnimateTransparencies(var7));
@@ -256,19 +270,20 @@ public class SeqType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::SeqType::AnimateModelWithExtra
 	@ObfuscatedName("eo.b(Lfo;IB)Lfo;")
-	public ModelLit method2430(ModelLit arg0, int arg1) {
+	public ModelLit animateModelWithExtra(ModelLit arg0, int arg1) {
 		int var3 = this.frames[arg1];
-		AnimFrameSet var4 = method760(var3 >> 16);
+		AnimFrameSet var4 = get(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
 			return arg0.copyForAnim(true);
 		}
 		AnimFrameSet var6 = null;
 		int var7 = 0;
-		if (this.field2365 != null && arg1 < this.field2365.length) {
-			int var8 = this.field2365[arg1];
-			var6 = method760(var8 >> 16);
+		if (this.iframes != null && arg1 < this.iframes.length) {
+			int var8 = this.iframes[arg1];
+			var6 = get(var8 >> 16);
 			var7 = var8 & 0xFFFF;
 		}
 		if (var6 == null || var7 == 65535) {
@@ -283,14 +298,17 @@ public class SeqType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::SeqType::Get
 	@ObfuscatedName("bi.y(IB)Lfr;")
-	public static AnimFrameSet method760(int arg0) {
-		AnimFrameSet var1 = (AnimFrameSet) field2370.get((long) arg0);
+	public static AnimFrameSet get(int arg0) {
+		AnimFrameSet var1 = (AnimFrameSet) framesetCache.get((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
-		Js5 var2 = field556;
-		Js5 var3 = field2361;
+
+		// todo: inlined method (AnimFrameSet::Load?)
+		Js5 var2 = anims;
+		Js5 var3 = bases;
 		boolean var4 = true;
 		int[] var5 = var2.getFileList(arg0);
 		for (int var6 = 0; var6 < var5.length; var6++) {
@@ -305,6 +323,7 @@ public class SeqType extends DoublyLinkable {
 				}
 			}
 		}
+
 		AnimFrameSet var10;
 		if (var4) {
 			try {
@@ -315,15 +334,17 @@ public class SeqType extends DoublyLinkable {
 		} else {
 			var10 = null;
 		}
+
 		if (var10 != null) {
-			field2370.put(var10, (long) arg0);
+			framesetCache.put(var10, (long) arg0);
 		}
 		return var10;
 	}
 
+	// jag::oldscape::configdecoder::SeqType::ResetCache
 	@ObfuscatedName("cu.t(I)V")
-	public static void unload() {
-		field2362.clear();
-		field2370.clear();
+	public static void resetCache() {
+		recentUse.clear();
+		framesetCache.clear();
 	}
 }

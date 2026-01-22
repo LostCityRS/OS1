@@ -2,7 +2,7 @@ package jagex3.dash3d;
 
 import deob.ObfuscatedName;
 import jagex3.config.SeqType;
-import jagex3.config.SpotAnimType;
+import jagex3.config.SpotType;
 
 // jag::oldscape::MapSpotAnim
 @ObfuscatedName("fn")
@@ -45,12 +45,12 @@ public class MapSpotAnim extends ModelSource {
 		this.z = arg3;
 		this.y = arg4;
 		this.startCycle = arg5 + arg6;
-		int var8 = SpotAnimType.list(this.type).anim;
+		int var8 = SpotType.list(this.type).anim;
 		if (var8 == -1) {
 			this.animComplete = true;
 		} else {
 			this.animComplete = false;
-			this.anim = SeqType.get(var8);
+			this.anim = SeqType.list(var8);
 		}
 	}
 
@@ -74,7 +74,7 @@ public class MapSpotAnim extends ModelSource {
 	// jag::oldscape::MapSpotAnim::GetTempModel
 	@ObfuscatedName("fn.g(I)Lfo;")
 	public final ModelLit getTempModel() {
-		SpotAnimType var1 = SpotAnimType.list(this.type);
+		SpotType var1 = SpotType.list(this.type);
 		ModelLit var2;
 		if (this.animComplete) {
 			var2 = var1.getTempModel2(-1);

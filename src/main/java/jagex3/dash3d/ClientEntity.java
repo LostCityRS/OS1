@@ -181,7 +181,7 @@ public abstract class ClientEntity extends ModelSource {
 	// jag::oldscape::ClientNpc::Teleport
 	@ObfuscatedName("fz.b(IIZB)V")
 	public final void teleport(int arg0, int arg1, boolean arg2) {
-		if (this.primarySeqId != -1 && SeqType.get(this.primarySeqId).postanim_move == 1) {
+		if (this.primarySeqId != -1 && SeqType.list(this.primarySeqId).postanim_move == 1) {
 			this.primarySeqId = -1;
 		}
 		if (!arg2) {
@@ -244,7 +244,7 @@ public abstract class ClientEntity extends ModelSource {
 			var3++;
 			var4--;
 		}
-		if (this.primarySeqId != -1 && SeqType.get(this.primarySeqId).postanim_move == 1) {
+		if (this.primarySeqId != -1 && SeqType.list(this.primarySeqId).postanim_move == 1) {
 			this.primarySeqId = -1;
 		}
 		if (this.routeLength < 9) {

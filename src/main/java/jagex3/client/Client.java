@@ -1719,19 +1719,19 @@ public class Client extends GameShell {
 				TitleScreen.loadString = Text.MAINLOAD70 + configJs5.getIndexLoadProgress() + "%";
 				TitleScreen.loadPos = 60;
 			} else {
-				FloType.unpack(configJs5);
-				FluType.unpack(configJs5);
-				IdkType.unpack(configJs5, modelJs5);
-				LocType.unpack(configJs5, modelJs5, lowMemory);
-				NpcType.unpack(configJs5, modelJs5);
-				ObjType.unpack(configJs5, modelJs5, members, fontPlain11);
-				SeqType.unpack(configJs5, animFrameJs5, animBaseJs5);
-				SpotAnimType.unpack(configJs5, modelJs5);
-				VarBitType.unpack(configJs5);
-				VarPlayerType.unpack(configJs5);
+				FloType.init(configJs5);
+				FluType.init(configJs5);
+				IdkType.init(configJs5, modelJs5);
+				LocType.init(configJs5, modelJs5, lowMemory);
+				NpcType.init(configJs5, modelJs5);
+				ObjType.init(configJs5, modelJs5, members, fontPlain11);
+				SeqType.init(configJs5, animFrameJs5, animBaseJs5);
+				SpotType.init(configJs5, modelJs5);
+				VarBitType.init(configJs5);
+				VarpType.init(configJs5);
 				IfType.unpack(interfaceJs5, modelJs5, spriteJs5, fontMetricJs5);
-				InvType.unpack(configJs5);
-				EnumType.unpack(configJs5);
+				InvType.resetCache(configJs5);
+				EnumType.init(configJs5);
 
 				TitleScreen.loadString = Text.MAINLOAD70B;
 				TitleScreen.loadPos = 60;
@@ -2203,8 +2203,8 @@ public class Client extends GameShell {
 		friendListStatus = 0;
 		friendCount = 0;
 
-		for (int var6 = 0; var6 < VarPlayerType.field2352; var6++) {
-			VarPlayerType var7 = VarPlayerType.get(var6);
+		for (int var6 = 0; var6 < VarpType.numDefinitions; var6++) {
+			VarpType var7 = VarpType.list(var6);
 			if (var7 != null && var7.clientcode == 0) {
 				VarCache.varServ[var6] = 0;
 				VarCache.var[var6] = 0;
@@ -2364,15 +2364,15 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("bh.da(B)V")
 	public static void clearCaches() {
-		FloType.unload();
-		FluType.unload();
-		IdkType.unload();
-		LocType.unload();
-		NpcType.unload();
-		ObjType.unload();
-		SeqType.unload();
-		SpotAnimType.unload();
-		VarPlayerType.unload();
+		FloType.resetCache();
+		FluType.resetCache();
+		IdkType.resetCache();
+		LocType.resetCache();
+		NpcType.resetCache();
+		ObjType.resetCache();
+		SeqType.resetCache();
+		SpotType.resetCache();
+		VarpType.resetCache();
 		PlayerModel.resetCache();
 		IfType.unload();
 		((WorldTextureProvider) Pix3D.textureProvider).method749();
@@ -2735,7 +2735,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::GlExactMove2
 	@ObfuscatedName("ap.dr(Lfz;I)V")
 	public static void exactMove2(ClientEntity entity) {
-		if (loopCycle == entity.exactMoveStart || entity.primarySeqId == -1 || entity.primarySeqDelay != 0 || entity.primarySeqCycle + 1 > SeqType.get(entity.primarySeqId).delay[entity.primarySeqFrame]) {
+		if (loopCycle == entity.exactMoveStart || entity.primarySeqId == -1 || entity.primarySeqDelay != 0 || entity.primarySeqCycle + 1 > SeqType.list(entity.primarySeqId).delay[entity.primarySeqFrame]) {
 			int var1 = entity.exactMoveStart - entity.exactMoveEnd;
 			int var2 = loopCycle - entity.exactMoveEnd;
 			int var3 = (entity.size * 64) + (entity.exactStartX * 128);
@@ -2770,7 +2770,7 @@ public class Client extends GameShell {
 			return;
 		}
 		if (entity.primarySeqId != -1 && entity.primarySeqDelay == 0) {
-			SeqType seq = SeqType.get(entity.primarySeqId);
+			SeqType seq = SeqType.list(entity.primarySeqId);
 			if (entity.preanimRouteLength > 0 && seq.preanim_move == 0) {
 				entity.animDelayMove++;
 				return;
@@ -2976,7 +2976,7 @@ public class Client extends GameShell {
 		entity.needsForwardDrawPadding = false;
 
 		if (entity.secondarySeqId != -1) {
-			SeqType var1 = SeqType.get(entity.secondarySeqId);
+			SeqType var1 = SeqType.list(entity.secondarySeqId);
 			if (var1 == null || var1.frames == null) {
 				entity.secondarySeqId = -1;
 			} else {
@@ -3001,11 +3001,11 @@ public class Client extends GameShell {
 				entity.spotanimFrame = 0;
 			}
 
-			int spotAnim = SpotAnimType.list(entity.spotanimId).anim;
+			int spotAnim = SpotType.list(entity.spotanimId).anim;
 			if (spotAnim == -1) {
 				entity.spotanimId = -1;
 			} else {
-				SeqType spotSeq = SeqType.get(spotAnim);
+				SeqType spotSeq = SeqType.list(spotAnim);
 				if (spotSeq == null || spotSeq.frames == null) {
 					entity.spotanimId = -1;
 				} else {
@@ -3025,7 +3025,7 @@ public class Client extends GameShell {
 		}
 
 		if (entity.primarySeqId != -1 && entity.primarySeqDelay <= 1) {
-			SeqType seq = SeqType.get(entity.primarySeqId);
+			SeqType seq = SeqType.list(entity.primarySeqId);
 			if (seq.preanim_move == 1 && entity.preanimRouteLength > 0 && entity.exactMoveEnd <= loopCycle && entity.exactMoveStart < loopCycle) {
 				entity.primarySeqDelay = 1;
 				return;
@@ -3033,7 +3033,7 @@ public class Client extends GameShell {
 		}
 
 		if (entity.primarySeqId != -1 && entity.primarySeqDelay == 0) {
-			SeqType seq = SeqType.get(entity.primarySeqId);
+			SeqType seq = SeqType.list(entity.primarySeqId);
 			if (seq == null || seq.frames == null) {
 				entity.primarySeqId = -1;
 			} else {
@@ -3071,7 +3071,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("co.dw(Lfi;III)V")
 	public static void triggerPlayerAnim(ClientPlayer arg0, int arg1, int arg2) {
 		if (arg0.primarySeqId == arg1 && arg1 != -1) {
-			int var3 = SeqType.get(arg1).duplicatebehavior;
+			int var3 = SeqType.list(arg1).duplicatebehavior;
 			if (var3 == 1) {
 				arg0.primarySeqFrame = 0;
 				arg0.primarySeqCycle = 0;
@@ -3081,7 +3081,7 @@ public class Client extends GameShell {
 			if (var3 == 2) {
 				arg0.field2647 = 0;
 			}
-		} else if (arg1 == -1 || arg0.primarySeqId == -1 || SeqType.get(arg1).priority >= SeqType.get(arg0.primarySeqId).priority) {
+		} else if (arg1 == -1 || arg0.primarySeqId == -1 || SeqType.list(arg1).priority >= SeqType.list(arg0.primarySeqId).priority) {
 			arg0.primarySeqId = arg1;
 			arg0.primarySeqFrame = 0;
 			arg0.primarySeqCycle = 0;
@@ -3182,7 +3182,7 @@ public class Client extends GameShell {
 		for (int var1 = 0; var1 < npcCount; var1++) {
 			ClientNpc var2 = npcs[npcIds[var1]];
 			int var3 = (npcIds[var1] << 14) + 0x20000000;
-			if (var2 == null || !var2.ready() || var2.type.alwaysontop != arg0 || !var2.type.isNotMulti()) {
+			if (var2 == null || !var2.ready() || var2.type.alwaysontop != arg0 || !var2.type.isMultiNpcVisible()) {
 				continue;
 			}
 			int var4 = var2.x >> 7;
@@ -3616,7 +3616,7 @@ public class Client extends GameShell {
 			int[] var10 = minimap.data;
 			int var11 = (103 - arg2) * 2048 + arg1 * 4 + 24624;
 			int var12 = var5 >> 14 & 0x7FFF;
-			LocType var13 = LocType.get(var12);
+			LocType var13 = LocType.list(var12);
 			if (var13.mapscene != -1) {
 				Pix8 var14 = mapscene[var13.mapscene];
 				if (var14 != null) {
@@ -3691,7 +3691,7 @@ public class Client extends GameShell {
 			int var19 = var18 >> 6 & 0x3;
 			int var20 = var18 & 0x1F;
 			int var21 = var17 >> 14 & 0x7FFF;
-			LocType var22 = LocType.get(var21);
+			LocType var22 = LocType.list(var21);
 			if (var22.mapscene != -1) {
 				Pix8 var23 = mapscene[var22.mapscene];
 				if (var23 != null) {
@@ -3723,7 +3723,7 @@ public class Client extends GameShell {
 		int var29 = world.gdType(arg0, arg1, arg2);
 		if (var29 != 0) {
 			int var30 = var29 >> 14 & 0x7FFF;
-			LocType var31 = LocType.get(var30);
+			LocType var31 = LocType.list(var30);
 			if (var31.mapscene != -1) {
 				Pix8 var32 = mapscene[var31.mapscene];
 				if (var32 != null) {
@@ -3747,7 +3747,7 @@ public class Client extends GameShell {
 		int angle = var4 >> 6 & 0x3;
 
 		if (shape == 10 || shape == 11 || shape == 22) {
-			LocType var7 = LocType.get(var3);
+			LocType var7 = LocType.list(var3);
 
 			int width;
 			int length;
@@ -4013,7 +4013,7 @@ public class Client extends GameShell {
 			}
 
 			if (player != null) {
-				LocType loc = LocType.get(locId);
+				LocType loc = LocType.list(locId);
 
 				int width;
 				int length;
@@ -4355,7 +4355,7 @@ public class Client extends GameShell {
 			int var14 = var11 >> 6 & 0x3;
 			if (layer == 0) {
 				world.delWall(arg0, arg2, arg3);
-				LocType var15 = LocType.get(var12);
+				LocType var15 = LocType.list(var12);
 				if (var15.blockwalk != 0) {
 					levelCollisionMap[arg0].delWall(arg2, arg3, var13, var14, var15.blockrange);
 				}
@@ -4365,7 +4365,7 @@ public class Client extends GameShell {
 			}
 			if (layer == 2) {
 				world.delLoc(arg0, arg2, arg3);
-				LocType var16 = LocType.get(var12);
+				LocType var16 = LocType.list(var12);
 				if (var16.width + arg2 > 103 || var16.width + arg3 > 103 || var16.length + arg2 > 103 || var16.length + arg3 > 103) {
 					return;
 				}
@@ -4375,7 +4375,7 @@ public class Client extends GameShell {
 			}
 			if (layer == 3) {
 				world.delGroundDecor(arg0, arg2, arg3);
-				LocType var17 = LocType.get(var12);
+				LocType var17 = LocType.list(var12);
 				if (var17.blockwalk == 1) {
 					levelCollisionMap[arg0].unblockGroundDecor(arg2, arg3);
 				}
@@ -4401,7 +4401,7 @@ public class Client extends GameShell {
 		int var3 = -99999999;
 		ClientObj var4 = null;
 		for (ClientObj var5 = (ClientObj) var2.head(); var5 != null; var5 = (ClientObj) var2.next()) {
-			ObjType var6 = ObjType.get(var5.id);
+			ObjType var6 = ObjType.list(var5.id);
 			int var7 = var6.cost;
 			if (var6.stackable == 1) {
 				var7 = (var5.count + 1) * var7;
@@ -4884,7 +4884,7 @@ public class Client extends GameShell {
 				}
 				int var8 = in.g1_alt1();
 				if (var2.primarySeqId == var7 && var7 != -1) {
-					int var9 = SeqType.get(var7).duplicatebehavior;
+					int var9 = SeqType.list(var7).duplicatebehavior;
 					if (var9 == 1) {
 						var2.primarySeqFrame = 0;
 						var2.primarySeqCycle = 0;
@@ -4894,7 +4894,7 @@ public class Client extends GameShell {
 					if (var9 == 2) {
 						var2.field2647 = 0;
 					}
-				} else if (var7 == -1 || var2.primarySeqId == -1 || SeqType.get(var7).priority >= SeqType.get(var2.primarySeqId).priority) {
+				} else if (var7 == -1 || var2.primarySeqId == -1 || SeqType.list(var7).priority >= SeqType.list(var2.primarySeqId).priority) {
 					var2.primarySeqId = var7;
 					var2.primarySeqFrame = 0;
 					var2.primarySeqCycle = 0;
@@ -5689,7 +5689,7 @@ public class Client extends GameShell {
 			field555 = a;
 			componentUpdated(var45);
 
-			field2078 = StringConstants.TAG_COLOUR(16748608) + ObjType.get(a).name + StringConstants.TAG_COLOUR(16777215);
+			field2078 = StringConstants.TAG_COLOUR(16748608) + ObjType.list(a).name + StringConstants.TAG_COLOUR(16777215);
 			if (field2078 == null) {
 				field2078 = "null";
 			}
@@ -5780,7 +5780,7 @@ public class Client extends GameShell {
 				out.p1Enc(49);
 				out.p2_alt1(a);
 			} else {
-				addChat(0, "", var48.linkObjCount[b] + " x " + ObjType.get(a).name);
+				addChat(0, "", var48.linkObjCount[b] + " x " + ObjType.list(a).name);
 			}
 
 			selectedCycle = 0;
@@ -6435,9 +6435,9 @@ public class Client extends GameShell {
 							if (var174 + 32 > arg2 && var174 < arg4 && var175 + 32 > arg3 && var175 < arg5 || objDragInterface == com && hoveredSlot == var171) {
 								Pix32 var179;
 								if (useMode == 1 && field557 == var171 && field502 == com.parentlayer) {
-									var179 = ObjType.getIcon(var178, com.linkObjCount[var171], 2, 0, false);
+									var179 = ObjType.getSprite(var178, com.linkObjCount[var171], 2, 0, false);
 								} else {
-									var179 = ObjType.getIcon(var178, com.linkObjCount[var171], 1, 3153952, false);
+									var179 = ObjType.getSprite(var178, com.linkObjCount[var171], 1, 3153952, false);
 								}
 								if (var179 == null) {
 									componentUpdated(com);
@@ -6543,7 +6543,7 @@ public class Client extends GameShell {
 						}
 					}
 					if (com.v3 && com.field1791 != -1) {
-						ObjType var190 = ObjType.get(com.field1791);
+						ObjType var190 = ObjType.list(com.field1791);
 						var188 = var190.name;
 						if (var188 == null) {
 							var188 = "null";
@@ -6570,7 +6570,7 @@ public class Client extends GameShell {
 					if (com.field1791 == -1) {
 						var192 = com.getSprite(false);
 					} else {
-						var192 = ObjType.getIcon(com.field1791, com.field1888, com.outline, com.graphicshadow, false);
+						var192 = ObjType.getSprite(com.field1791, com.field1888, com.outline, com.graphicshadow, false);
 					}
 					if (var192 != null) {
 						int var193 = var192.owi;
@@ -6625,15 +6625,15 @@ public class Client extends GameShell {
 				ModelLit var202 = null;
 				int var203 = 0;
 				if (com.field1791 != -1) {
-					ObjType var204 = ObjType.get(com.field1791);
+					ObjType var204 = ObjType.list(com.field1791);
 					if (var204 != null) {
-						ObjType var205 = var204.getObj(com.field1888);
-						var202 = var205.getModel(1);
-						if (var202 == null) {
-							componentUpdated(com);
-						} else {
+						ObjType var205 = var204.getStackSizeAlt(com.field1888);
+						var202 = var205.getModelLit(1);
+						if (var202 != null) {
 							var202.calcBoundingCylinder();
 							var203 = var202.minY / 2;
+						} else {
+							componentUpdated(com);
 						}
 					}
 				} else if (com.modelType == 5) {
@@ -6648,7 +6648,7 @@ public class Client extends GameShell {
 						componentUpdated(com);
 					}
 				} else {
-					SeqType var206 = SeqType.get(var201);
+					SeqType var206 = SeqType.list(var201);
 					var202 = com.method1802(var206, com.animFrame, var200, localPlayer.model);
 					if (var202 == null && IfType.loadingAsset) {
 						componentUpdated(com);
@@ -6682,7 +6682,7 @@ public class Client extends GameShell {
 				for (int var211 = 0; var211 < com.renderheight; var211++) {
 					for (int var212 = 0; var212 < com.renderwidth; var212++) {
 						if (com.linkObjType[var210] > 0) {
-							ObjType var213 = ObjType.get(com.linkObjType[var210] - 1);
+							ObjType var213 = ObjType.list(com.linkObjType[var210] - 1);
 							String var214;
 							if (var213.stackable != 1 && com.linkObjCount[var210] == 1) {
 								var214 = StringConstants.TAG_COLOUR(16748608) + var213.name + StringConstants.TAG_COLOURCLOSE;
@@ -6963,7 +6963,7 @@ public class Client extends GameShell {
 					int var10 = var9 + script[pc++];
 					IfType var11 = IfType.get(var10);
 					int var12 = script[pc++];
-					if (var12 != -1 && (!ObjType.get(var12).members || members)) {
+					if (var12 != -1 && (!ObjType.list(var12).members || members)) {
 						for (int var13 = 0; var13 < var11.linkObjType.length; var13++) {
 							if (var12 + 1 == var11.linkObjType[var13]) {
 								register += var11.linkObjCount[var13];
@@ -6989,7 +6989,7 @@ public class Client extends GameShell {
 					int var16 = var15 + script[pc++];
 					IfType var17 = IfType.get(var16);
 					int var18 = script[pc++];
-					if (var18 != -1 && (!ObjType.get(var18).members || members)) {
+					if (var18 != -1 && (!ObjType.list(var18).members || members)) {
 						for (int var19 = 0; var19 < var17.linkObjType.length; var19++) {
 							if (var18 + 1 == var17.linkObjType[var19]) {
 								register = 999999999;
@@ -7615,7 +7615,7 @@ public class Client extends GameShell {
 						var7 = com.modelAnim;
 					}
 					if (var7 != -1) {
-						SeqType var8 = SeqType.get(var7);
+						SeqType var8 = SeqType.list(var7);
 
 						com.animCycle += worldUpdateNum;
 
@@ -7657,7 +7657,7 @@ public class Client extends GameShell {
 		legacyUpdated();
 		BgSound.recalculateMultilocs();
 
-		int clientcode = VarPlayerType.get(varp).clientcode;
+		int clientcode = VarpType.list(varp).clientcode;
 		if (clientcode == 0) {
 			return;
 		}
@@ -7678,7 +7678,7 @@ public class Client extends GameShell {
 				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.6D);
 			}
 
-			ObjType.clearCache();
+			ObjType.resetSpriteCache();
 		} else if (clientcode == 3) {
 			short volume = 0;
 			if (value == 0) {
@@ -9570,8 +9570,8 @@ public class Client extends GameShell {
 				return true;
 			}
 			if (ptype == 129) {
-				for (int var197 = 0; var197 < VarPlayerType.field2352; var197++) {
-					VarPlayerType var198 = VarPlayerType.get(var197);
+				for (int var197 = 0; var197 < VarpType.numDefinitions; var197++) {
+					VarpType var198 = VarpType.list(var197);
 					if (var198 != null && var198.clientcode == 0) {
 						VarCache.varServ[var197] = 0;
 						VarCache.var[var197] = 0;
@@ -9835,7 +9835,7 @@ public class Client extends GameShell {
 				if (var265.v3) {
 					var265.field1791 = var263;
 					var265.field1888 = var264;
-					ObjType var267 = ObjType.get(var263);
+					ObjType var267 = ObjType.list(var263);
 					var265.modelXan = var267.xan2d;
 					var265.modelYan = var267.yan2d;
 					var265.zan = var267.zan2d;
@@ -9852,7 +9852,7 @@ public class Client extends GameShell {
 						ptype = -1;
 						return true;
 					}
-					ObjType var266 = ObjType.get(var263);
+					ObjType var266 = ObjType.list(var263);
 					var265.modelType = 4;
 					var265.modelId = var263;
 					var265.modelXan = var266.xan2d;
@@ -10502,7 +10502,7 @@ public class Client extends GameShell {
 								continue;
 							}
 							int var416 = var415 >> 14 & 0x7FFF;
-							int var417 = LocType.get(var416).mapfunction;
+							int var417 = LocType.list(var416).mapfunction;
 							if (var417 < 0) {
 								continue;
 							}
@@ -11063,7 +11063,7 @@ public class Client extends GameShell {
 						if (var10.linkObjType[var133] > 0) {
 							label1831:
 							{
-								ObjType var138 = ObjType.get(var10.linkObjType[var133] - 1);
+								ObjType var138 = ObjType.list(var10.linkObjType[var133] - 1);
 								if (useMode == 1) {
 									int var139 = getActive(var10);
 									boolean var140 = (var139 >> 30 & 0x1) != 0;
@@ -11562,7 +11562,7 @@ public class Client extends GameShell {
 			}
 			var100 = var102;
 			if (var105 == 2 && world.typecode2(minusedlevel, var103, var104, var102) >= 0) {
-				LocType var107 = LocType.get(var106);
+				LocType var107 = LocType.list(var106);
 				if (var107.multiloc != null) {
 					var107 = var107.getMultiLoc();
 				}
@@ -11646,7 +11646,7 @@ public class Client extends GameShell {
 					continue;
 				}
 				for (ClientObj var122 = (ClientObj) var121.tail(); var122 != null; var122 = (ClientObj) var121.prev()) {
-					ObjType var123 = ObjType.get(var122.id);
+					ObjType var123 = ObjType.list(var122.id);
 					if (useMode == 1) {
 						addMenuOption(Text.USE, field2078 + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + var123.name, 16, var122.id, var103, var104);
 					} else if (!targetMode) {

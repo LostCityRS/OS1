@@ -304,9 +304,9 @@ public class ClientBuild {
 					int var14 = arg1 + var12;
 					int var15 = arg2 + var11;
 					if (var14 > 0 && var15 > 0 && var14 < 103 && var15 < 103) {
-						LocType var16 = LocType.get(var5);
+						LocType var16 = LocType.list(var5);
 						if (var13 != 22 || !Client.lowMemory || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
-							if (!var16.checkModel()) {
+							if (!var16.checkModelAll()) {
 								Client.locModelLoadCount++;
 								var3 = false;
 							}
@@ -389,7 +389,7 @@ public class ClientBuild {
 				int var19 = var18 >> 2;
 				int var20 = var18 & 0x3;
 				if (arg4 == var17 && var16 >= arg5 && var16 < arg5 + 8 && var15 >= arg6 && var15 < arg6 + 8) {
-					LocType var21 = LocType.get(var11);
+					LocType var21 = LocType.list(var11);
 					int var22 = arg2 + RegionRotate.DX(var16 & 0x7, var15 & 0x7, arg7, var21.width, var21.length, var20);
 					int var23 = arg3 + RegionRotate.DZ(var16 & 0x7, var15 & 0x7, arg7, var21.width, var21.length, var20);
 					if (var22 > 0 && var23 > 0 && var22 < 103 && var23 < 103) {
@@ -430,7 +430,7 @@ public class ClientBuild {
 		if (arg0 < minusedlevel) {
 			minusedlevel = arg0;
 		}
-		LocType var9 = LocType.get(arg3);
+		LocType var9 = LocType.list(arg3);
 		int var10;
 		int var11;
 		if (arg4 == 1 || arg4 == 3) {
@@ -470,7 +470,7 @@ public class ClientBuild {
 		if (var9.raiseobject == 1) {
 			var21 += 256;
 		}
-		if (var9.hasSound()) {
+		if (var9.hasBgSound()) {
 			BgSound.method763(arg0, arg1, arg2, var9, arg4);
 		}
 		if (arg5 == 22) {
@@ -676,7 +676,7 @@ public class ClientBuild {
 			int var32 = 16;
 			int var33 = arg6.wallType(arg0, arg1, arg2);
 			if (var33 != 0) {
-				var32 = LocType.get(var33 >> 14 & 0x7FFF).wallwidth;
+				var32 = LocType.list(var33 >> 14 & 0x7FFF).wallwidth;
 			}
 			ModelSource var34;
 			if (var9.anim == -1 && var9.multiloc == null) {
@@ -689,7 +689,7 @@ public class ClientBuild {
 			int var35 = 8;
 			int var36 = arg6.wallType(arg0, arg1, arg2);
 			if (var36 != 0) {
-				var35 = LocType.get(var36 >> 14 & 0x7FFF).wallwidth / 2;
+				var35 = LocType.list(var36 >> 14 & 0x7FFF).wallwidth / 2;
 			}
 			ModelSource var37;
 			if (var9.anim == -1 && var9.multiloc == null) {
@@ -711,7 +711,7 @@ public class ClientBuild {
 			int var40 = 8;
 			int var41 = arg6.wallType(arg0, arg1, arg2);
 			if (var41 != 0) {
-				var40 = LocType.get(var41 >> 14 & 0x7FFF).wallwidth / 2;
+				var40 = LocType.list(var41 >> 14 & 0x7FFF).wallwidth / 2;
 			}
 			int var42 = arg4 + 2 & 0x3;
 			ModelSource var43;
@@ -790,7 +790,7 @@ public class ClientBuild {
 					if (var23 >= 0 && var23 < 104) {
 						int var24 = floort1[var6][var23][var22] & 0xFF;
 						if (var24 > 0) {
-							FluType var25 = FluType.get(var24 - 1);
+							FluType var25 = FluType.list(var24 - 1);
 							huetot[var22] += var25.chroma;
 							sattot[var22] += var25.hue;
 							ligtot[var22] += var25.saturation;
@@ -802,7 +802,7 @@ public class ClientBuild {
 					if (var26 >= 0 && var26 < 104) {
 						int var27 = floort1[var6][var26][var22] & 0xFF;
 						if (var27 > 0) {
-							FluType var28 = FluType.get(var27 - 1);
+							FluType var28 = FluType.list(var27 - 1);
 							huetot[var22] -= var28.chroma;
 							sattot[var22] -= var28.hue;
 							ligtot[var22] -= var28.saturation;
@@ -886,7 +886,7 @@ public class ClientBuild {
 									if (var38 == 0 && floors[var6][var21][var34] != 0) {
 										var55 = false;
 									}
-									if (var39 > 0 && !FloType.get(var39 - 1).occlude) {
+									if (var39 > 0 && !FloType.list(var39 - 1).occlude) {
 										var55 = false;
 									}
 									if (var55 && var40 == var41 && var40 == var42 && var40 == var43) {
@@ -902,7 +902,7 @@ public class ClientBuild {
 								} else {
 									int var57 = floors[var6][var21][var34] + 1;
 									byte var58 = floorr[var6][var21][var34];
-									FloType var59 = FloType.get(var39 - 1);
+									FloType var59 = FloType.list(var39 - 1);
 									int var60 = var59.texture;
 									int var61;
 									int var62;
@@ -1223,7 +1223,7 @@ public class ClientBuild {
 	// jag::oldscape::ClientBuild::ChangeLocAvailable
 	@ObfuscatedName("bk.y(III)Z")
 	public static boolean changeLocAvailable(int arg0, int arg1) {
-		LocType var2 = LocType.get(arg0);
+		LocType var2 = LocType.list(arg0);
 		if (arg1 == 11) {
 			arg1 = 10;
 		}
@@ -1236,7 +1236,7 @@ public class ClientBuild {
 	// jag::oldscape::ClientBuild::ChangeLocUnchecked
 	@ObfuscatedName("bc.t(IIIIIIILaq;Lck;I)V")
 	public static void changeLocUnchecked(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, World arg7, CollisionMap arg8) {
-		LocType var9 = LocType.get(arg4);
+		LocType var9 = LocType.list(arg4);
 		int var10;
 		int var11;
 		if (arg5 == 1 || arg5 == 3) {
@@ -1382,7 +1382,7 @@ public class ClientBuild {
 			int var32 = 16;
 			int var33 = arg7.wallType(arg0, arg2, arg3);
 			if (var33 != 0) {
-				var32 = LocType.get(var33 >> 14 & 0x7FFF).wallwidth;
+				var32 = LocType.list(var33 >> 14 & 0x7FFF).wallwidth;
 			}
 			ModelSource var34;
 			if (var9.anim == -1 && var9.multiloc == null) {
@@ -1395,7 +1395,7 @@ public class ClientBuild {
 			int var35 = 8;
 			int var36 = arg7.wallType(arg0, arg2, arg3);
 			if (var36 != 0) {
-				var35 = LocType.get(var36 >> 14 & 0x7FFF).wallwidth / 2;
+				var35 = LocType.list(var36 >> 14 & 0x7FFF).wallwidth / 2;
 			}
 			ModelSource var37;
 			if (var9.anim == -1 && var9.multiloc == null) {
@@ -1417,7 +1417,7 @@ public class ClientBuild {
 			int var40 = 8;
 			int var41 = arg7.wallType(arg0, arg2, arg3);
 			if (var41 != 0) {
-				var40 = LocType.get(var41 >> 14 & 0x7FFF).wallwidth / 2;
+				var40 = LocType.list(var41 >> 14 & 0x7FFF).wallwidth / 2;
 			}
 			int var42 = arg5 + 2 & 0x3;
 			ModelSource var43;

@@ -6,14 +6,16 @@ import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
+// jag::oldscape::configdecoder::FluType
 @ObfuscatedName("ec")
 public class FluType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::FluType::m_pConfigClient
 	@ObfuscatedName("ec.n")
-	public static Js5 configJs5;
+	public static Js5 configClient;
 
 	@ObfuscatedName("ec.j")
-	public static LruCache cache = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
 	@ObfuscatedName("ec.z")
 	public int rgb = 0;
@@ -30,34 +32,38 @@ public class FluType extends DoublyLinkable {
 	@ObfuscatedName("ec.s")
 	public int luminance;
 
+	// jag::oldscape::configdecoder::FluType::Init
 	@ObfuscatedName("u.z(Lch;I)V")
-	public static void unpack(Js5 config) {
-		configJs5 = config;
+	public static void init(Js5 config) {
+		configClient = config;
 	}
 
+	// jag::oldscape::configdecoder::FluType::List
 	@ObfuscatedName("bf.g(IB)Lec;")
-	public static FluType get(int id) {
-		FluType cached = (FluType) cache.get(id);
+	public static FluType list(int id) {
+		FluType cached = (FluType) recentUse.get(id);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] data = configJs5.getFile(1, id);
+		byte[] data = configClient.getFile(1, id);
 		FluType type = new FluType();
 		if (data != null) {
 			type.decode(new Packet(data), id);
 		}
 		type.postDecode();
 
-		cache.put(type, id);
+		recentUse.put(type, id);
 		return type;
 	}
 
+	// jag::oldscape::configdecoder::FluType::PostDecode
 	@ObfuscatedName("ec.q(I)V")
 	public void postDecode() {
 		this.getHsl(this.rgb);
 	}
 
+	// jag::oldscape::configdecoder::FluType::Decode
 	@ObfuscatedName("ec.i(Lev;II)V")
 	public void decode(Packet buf, int id) {
 		while (true) {
@@ -66,17 +72,19 @@ public class FluType extends DoublyLinkable {
 				return;
 			}
 
-			this.decodeInner(buf, code, id);
+			this.decode(buf, code, id);
 		}
 	}
 
+	// jag::oldscape::configdecoder::FluType::Decode
 	@ObfuscatedName("ec.s(Lev;III)V")
-	public void decodeInner(Packet buf, int code, int id) {
+	public void decode(Packet buf, int code, int id) {
 		if (code == 1) {
 			this.rgb = buf.g3();
 		}
 	}
 
+	// jag::oldscape::configdecoder::FluType::GetHsl
 	@ObfuscatedName("ec.u(IB)V")
 	public void getHsl(int arg0) {
 		double var2 = (double) (arg0 >> 16 & 0xFF) / 256.0D;
@@ -139,7 +147,7 @@ public class FluType extends DoublyLinkable {
 	}
 
 	@ObfuscatedName("fg.v(I)V")
-	public static void unload() {
-		cache.clear();
+	public static void resetCache() {
+		recentUse.clear();
 	}
 }

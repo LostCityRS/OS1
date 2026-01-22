@@ -7,26 +7,31 @@ import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
+// jag::oldscape::configdecoder::IdkType
 @ObfuscatedName("fd")
 public class IdkType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::IdkType::m_pConfigClient
 	@ObfuscatedName("fd.n")
-	public static Js5 configJs5;
+	public static Js5 configClient;
 
+	// jag::oldscape::configdecoder::IdkType::m_pModels
 	@ObfuscatedName("fd.j")
-	public static Js5 modelJs5;
+	public static Js5 models;
 
+	// jag::oldscape::configdecoder::IdkType::m_numDefinitions
 	@ObfuscatedName("dl.z")
-	public static int count;
+	public static int numDefinitions;
 
+	// jag::oldscape::configdecoder::IdkType::m_recentUse
 	@ObfuscatedName("fd.g")
-	public static LruCache cache = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
 	@ObfuscatedName("fd.q")
 	public int type = -1;
 
 	@ObfuscatedName("fd.i")
-	public int[] models;
+	public int[] model;
 
 	@ObfuscatedName("fd.s")
 	public short[] recol_s;
@@ -41,36 +46,39 @@ public class IdkType extends DoublyLinkable {
 	public short[] retex_d;
 
 	@ObfuscatedName("fd.e")
-	public int[] heads = new int[] { -1, -1, -1, -1, -1 };
+	public int[] head = new int[] { -1, -1, -1, -1, -1 };
 
 	@ObfuscatedName("fd.b")
 	public boolean disable = false;
 
+	// jag::oldscape::configdecoder::IdkType::Init
 	@ObfuscatedName("ct.z(Lch;Lch;I)V")
-	public static void unpack(Js5 config, Js5 model) {
-		configJs5 = config;
-		modelJs5 = model;
+	public static void init(Js5 config, Js5 model) {
+		configClient = config;
+		models = model;
 
-		count = configJs5.getFileIdLimit(3);
+		numDefinitions = configClient.getFileIdLimit(3);
 	}
 
+	// jag::oldscape::configdecoder::IdkType::List
 	@ObfuscatedName("p.g(II)Lfd;")
-	public static IdkType get(int arg0) {
-		IdkType cached = (IdkType) cache.get(arg0);
+	public static IdkType list(int arg0) {
+		IdkType cached = (IdkType) recentUse.get(arg0);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] data = configJs5.getFile(3, arg0);
+		byte[] data = configClient.getFile(3, arg0);
 		IdkType type = new IdkType();
 		if (data != null) {
 			type.decode(new Packet(data));
 		}
 
-		cache.put(type, arg0);
+		recentUse.put(type, arg0);
 		return type;
 	}
 
+	// jag::oldscape::configdecoder::IdkType::Decode
 	@ObfuscatedName("fd.q(Lev;I)V")
 	public void decode(Packet buf) {
 		while (true) {
@@ -79,21 +87,22 @@ public class IdkType extends DoublyLinkable {
 				return;
 			}
 
-			this.decodeInner(buf, code);
+			this.decode(buf, code);
 		}
 	}
 
+	// jag::oldscape::configdecoder::IdkType::Decode
 	@ObfuscatedName("fd.i(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
+	public void decode(Packet buf, int code) {
 		if (code == 1) {
 			this.type = buf.g1();
 		} else if (code == 2) {
 			int count = buf.g1();
 
-			this.models = new int[count];
+			this.model = new int[count];
 
 			for (int i = 0; i < count; i++) {
-				this.models[i] = buf.g2();
+				this.model[i] = buf.g2();
 			}
 		} else if (code == 3) {
 			this.disable = true;
@@ -118,19 +127,20 @@ public class IdkType extends DoublyLinkable {
 				this.retex_d[var8] = (short) buf.g2();
 			}
 		} else if (code >= 60 && code < 70) {
-			this.heads[code - 60] = buf.g2();
+			this.head[code - 60] = buf.g2();
 		}
 	}
 
+	// jag::oldscape::configdecoder::IdkType::CheckModel
 	@ObfuscatedName("fd.s(I)Z")
 	public boolean checkModel() {
-		if (this.models == null) {
+		if (this.model == null) {
 			return true;
 		}
 
 		boolean status = true;
-		for (int i = 0; i < this.models.length; i++) {
-			if (!modelJs5.requestDownload(this.models[i], 0)) {
+		for (int i = 0; i < this.model.length; i++) {
+			if (!models.requestDownload(this.model[i], 0)) {
 				status = false;
 			}
 		}
@@ -138,15 +148,16 @@ public class IdkType extends DoublyLinkable {
 		return status;
 	}
 
+	// jag::oldscape::configdecoder::IdkType::GetModelNoCheck
 	@ObfuscatedName("fd.u(S)Lfw;")
-	public ModelUnlit getModel() {
-		if (this.models == null) {
+	public ModelUnlit getModelNoCheck() {
+		if (this.model == null) {
 			return null;
 		}
 
-		ModelUnlit[] models = new ModelUnlit[this.models.length];
-		for (int i = 0; i < this.models.length; i++) {
-			models[i] = ModelUnlit.load(modelJs5, this.models[i], 0);
+		ModelUnlit[] models = new ModelUnlit[this.model.length];
+		for (int i = 0; i < this.model.length; i++) {
+			models[i] = ModelUnlit.load(IdkType.models, this.model[i], 0);
 		}
 
 		ModelUnlit model;
@@ -171,24 +182,26 @@ public class IdkType extends DoublyLinkable {
 		return model;
 	}
 
+	// jag::oldscape::configdecoder::IdkType::CheckHead
 	@ObfuscatedName("fd.v(B)Z")
 	public boolean checkHead() {
 		boolean status = true;
 		for (int i = 0; i < 5; i++) {
-			if (this.heads[i] != -1 && !modelJs5.requestDownload(this.heads[i], 0)) {
+			if (this.head[i] != -1 && !models.requestDownload(this.head[i], 0)) {
 				status = false;
 			}
 		}
 		return status;
 	}
 
+	// jag::oldscape::configdecoder::IdkType::GetHeadNoCheck
 	@ObfuscatedName("fd.w(B)Lfw;")
-	public ModelUnlit getHeadModel() {
+	public ModelUnlit getHeadNoCheck() {
 		ModelUnlit[] models = new ModelUnlit[5];
 		int modelCount = 0;
 		for (int i = 0; i < 5; i++) {
-			if (this.heads[i] != -1) {
-				models[modelCount++] = ModelUnlit.load(modelJs5, this.heads[i], 0);
+			if (this.head[i] != -1) {
+				models[modelCount++] = ModelUnlit.load(IdkType.models, this.head[i], 0);
 			}
 		}
 
@@ -208,7 +221,8 @@ public class IdkType extends DoublyLinkable {
 		return model;
 	}
 
-	public static void unload() {
-		cache.clear();
+	// jag::oldscape::configdecoder::IdkType::ResetCache
+	public static void resetCache() {
+		recentUse.clear();
 	}
 }

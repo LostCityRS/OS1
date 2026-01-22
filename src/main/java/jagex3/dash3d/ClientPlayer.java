@@ -5,7 +5,7 @@ import jagex3.client.Client;
 import jagex3.client.JagException;
 import jagex3.config.ObjType;
 import jagex3.config.SeqType;
-import jagex3.config.SpotAnimType;
+import jagex3.config.SpotType;
 import jagex3.io.Packet;
 
 // jag::oldscape::ClientPlayer
@@ -91,7 +91,7 @@ public class ClientPlayer extends ClientEntity {
 					break;
 				}
 				if (var4[var5] >= 512) {
-					int var8 = ObjType.get(var4[var5] - 512).team;
+					int var8 = ObjType.list(var4[var5] - 512).team;
 					if (var8 != 0) {
 						this.team = var8;
 					}
@@ -153,8 +153,8 @@ public class ClientPlayer extends ClientEntity {
 		if (this.model == null) {
 			return null;
 		}
-		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.get(this.primarySeqId) : null;
-		SeqType var2 = this.secondarySeqId == -1 || this.lowMemory || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.get(this.secondarySeqId);
+		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.list(this.primarySeqId) : null;
+		SeqType var2 = this.secondarySeqId == -1 || this.lowMemory || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.list(this.secondarySeqId);
 		ModelLit var3 = this.model.getTempModel(var1, this.primarySeqFrame, var2, this.field2641);
 		if (var3 == null) {
 			return null;
@@ -162,7 +162,7 @@ public class ClientPlayer extends ClientEntity {
 		var3.calcBoundingCylinder();
 		this.height = var3.minY;
 		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
-			ModelLit var4 = SpotAnimType.list(this.spotanimId).getTempModel2(this.spotanimFrame);
+			ModelLit var4 = SpotType.list(this.spotanimId).getTempModel2(this.spotanimFrame);
 			if (var4 != null) {
 				var4.translate(0, -this.field2629, 0);
 				ModelLit[] var5 = new ModelLit[] { var3, var4 };

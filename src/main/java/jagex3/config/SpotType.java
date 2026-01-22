@@ -9,23 +9,28 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5;
 import jagex3.js5.Js5Loader;
 
+// jag::oldscape::configdecoder::SpotType
 @ObfuscatedName("eu")
-public class SpotAnimType extends DoublyLinkable {
+public class SpotType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::SpotType::m_pConfigClient
 	@ObfuscatedName("eu.n")
-	public static Js5 configJs5;
+	public static Js5 configClient;
 
+	// jag::oldscape::configdecoder::SpotType::m_pModels
 	@ObfuscatedName("eu.j")
-	public static Js5 modelJs5;
+	public static Js5 models;
 
+	// jag::oldscape::configdecoder::SpotType::m_recentUse
 	@ObfuscatedName("eu.z")
-	public static LruCache field2379 = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
+	// jag::oldscape::configdecoder::SpotType::m_modelCache
 	@ObfuscatedName("eu.g")
-	public static LruCache field2392 = new LruCache(30);
+	public static LruCache modelCache = new LruCache(30);
 
 	@ObfuscatedName("eu.q")
-	public int field2382;
+	public int id;
 
 	@ObfuscatedName("eu.i")
 	public int model;
@@ -62,21 +67,22 @@ public class SpotAnimType extends DoublyLinkable {
 
 	// jag::oldscape::configdecoder::SpotType::List
 	@ObfuscatedName("cm.z(IB)Leu;")
-	public static SpotAnimType list(int arg0) {
-		SpotAnimType var1 = (SpotAnimType) field2379.get((long) arg0);
+	public static SpotType list(int id) {
+		SpotType var1 = (SpotType) recentUse.get((long) id);
 		if (var1 != null) {
 			return var1;
 		}
-		byte[] var2 = configJs5.getFile(13, arg0);
-		SpotAnimType var3 = new SpotAnimType();
-		var3.field2382 = arg0;
+		byte[] var2 = configClient.getFile(13, id);
+		SpotType var3 = new SpotType();
+		var3.id = id;
 		if (var2 != null) {
 			var3.decode(new Packet(var2));
 		}
-		field2379.put(var3, (long) arg0);
+		recentUse.put(var3, (long) id);
 		return var3;
 	}
 
+	// jag::oldscape::configdecoder::SpotType::Decode
 	@ObfuscatedName("eu.g(Lev;I)V")
 	public void decode(Packet arg0) {
 		while (true) {
@@ -84,12 +90,13 @@ public class SpotAnimType extends DoublyLinkable {
 			if (var2 == 0) {
 				return;
 			}
-			this.decodeInner(arg0, var2);
+			this.decode(arg0, var2);
 		}
 	}
 
+	// jag::oldscape::configdecoder::SpotType::Decode
 	@ObfuscatedName("eu.q(Lev;II)V")
-	public void decodeInner(Packet arg0, int arg1) {
+	public void decode(Packet arg0, int arg1) {
 		if (arg1 == 1) {
 			this.model = arg0.g2();
 		} else if (arg1 == 2) {
@@ -126,9 +133,9 @@ public class SpotAnimType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::SpotType::GetTempModel2
 	@ObfuscatedName("eu.i(IS)Lfo;")
 	public final ModelLit getTempModel2(int arg0) {
-		ModelLit var2 = (ModelLit) field2392.get((long) this.field2382);
+		ModelLit var2 = (ModelLit) modelCache.get((long) this.id);
 		if (var2 == null) {
-			ModelUnlit var3 = ModelUnlit.load(modelJs5, this.model, 0);
+			ModelUnlit var3 = ModelUnlit.load(models, this.model, 0);
 			if (var3 == null) {
 				return null;
 			}
@@ -143,13 +150,13 @@ public class SpotAnimType extends DoublyLinkable {
 				}
 			}
 			var2 = var3.light(this.ambient + 64, this.contrast + 850, -30, -50, -30);
-			field2392.put(var2, (long) this.field2382);
+			modelCache.put(var2, (long) this.id);
 		}
 		ModelLit var6;
 		if (this.anim == -1 || arg0 == -1) {
 			var6 = var2.copyForAnim2(true);
 		} else {
-			var6 = SeqType.get(this.anim).method2439(var2, arg0);
+			var6 = SeqType.list(this.anim).animateModel2(var2, arg0);
 		}
 		if (this.resizeh != 128 || this.resizev != 128) {
 			var6.resize(this.resizeh, this.resizev, this.resizeh);
@@ -171,13 +178,15 @@ public class SpotAnimType extends DoublyLinkable {
 		return var6;
 	}
 
-	public static void unpack(Js5Loader var36, Js5Loader var37) {
-		configJs5 = var36;
-		modelJs5 = var37;
+	// jag::oldscape::configdecoder::SpotType::Init
+	public static void init(Js5Loader var36, Js5Loader var37) {
+		configClient = var36;
+		models = var37;
 	}
 
-	public static void unload() {
-		field2379.clear();
-		field2392.clear();
+	// jag::oldscape::configdecoder::SpotType::ResetCache
+	public static void resetCache() {
+		recentUse.clear();
+		modelCache.clear();
 	}
 }

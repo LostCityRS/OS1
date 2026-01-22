@@ -1038,7 +1038,7 @@ public class IfType extends Linkable {
 					var7 = var8.light(64, 768, -50, -10, -50);
 				}
 				if (var5 == 2) {
-					ModelUnlit var9 = NpcType.list(var6).getHeadModel();
+					ModelUnlit var9 = NpcType.list(var6).getHead();
 					if (var9 == null) {
 						loadingAsset = true;
 						return null;
@@ -1057,8 +1057,8 @@ public class IfType extends Linkable {
 					var7 = var10.light(64, 768, -50, -10, -50);
 				}
 				if (var5 == 4) {
-					ObjType var11 = ObjType.get(var6);
-					ModelUnlit var12 = var11.getInvModel(10);
+					ObjType var11 = ObjType.list(var6);
+					ModelUnlit var12 = var11.getModelUnlit(10);
 					if (var12 == null) {
 						loadingAsset = true;
 						return null;
@@ -1068,7 +1068,7 @@ public class IfType extends Linkable {
 				field1850.put(var7, (long) ((var5 << 16) + var6));
 			}
 			if (arg0 != null) {
-				var7 = arg0.method2430(var7, arg1);
+				var7 = arg0.animateModelWithExtra(var7, arg1);
 			}
 			return var7;
 		}

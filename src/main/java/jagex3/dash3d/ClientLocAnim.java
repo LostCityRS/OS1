@@ -44,7 +44,7 @@ public class ClientLocAnim extends ModelSource {
 		this.x = arg4;
 		this.z = arg5;
 		if (arg6 != -1) {
-			this.anim = SeqType.get(arg6);
+			this.anim = SeqType.list(arg6);
 			this.animFrame = 0;
 			this.animCycle = Client.loopCycle - 1;
 			if (this.anim.duplicatebehavior == 0 && arg8 != null && arg8 instanceof ClientLocAnim) {
@@ -86,7 +86,7 @@ public class ClientLocAnim extends ModelSource {
 			}
 			this.animCycle = Client.loopCycle - var1;
 		}
-		LocType var2 = LocType.get(this.index);
+		LocType var2 = LocType.list(this.index);
 		if (var2.multiloc != null) {
 			var2 = var2.getMultiLoc();
 		}
@@ -110,6 +110,6 @@ public class ClientLocAnim extends ModelSource {
 		int var10 = var9[heightSW][heightNE] + var9[heightSE][heightNE] + var9[heightSW][heightNW] + var9[heightSE][heightNW] >> 2;
 		int var11 = (this.x << 7) + (var3 << 6);
 		int var12 = (this.z << 7) + (var4 << 6);
-		return var2.getModel(this.shape, this.angle, var9, var11, var10, var12, this.anim, this.animFrame);
+		return var2.getTempModel(this.shape, this.angle, var9, var11, var10, var12, this.anim, this.animFrame);
 	}
 }

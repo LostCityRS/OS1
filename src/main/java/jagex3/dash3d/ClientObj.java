@@ -16,6 +16,6 @@ public class ClientObj extends ModelSource {
 	// jag::oldscape::ClientObj::GetTempModel
 	@ObfuscatedName("fy.g(I)Lfo;")
 	public final ModelLit getTempModel() {
-		return ObjType.get(this.id).getModel(this.count);
+		return ObjType.list(this.id).getModelLit(this.count);
 	}
 }

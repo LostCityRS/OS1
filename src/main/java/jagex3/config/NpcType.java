@@ -10,18 +10,23 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5;
 import jagex3.jstring.Text;
 
+// jag::oldscape::configdecoder::NpcType
 @ObfuscatedName("em")
 public class NpcType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::NpcType::m_pConfigClient
 	@ObfuscatedName("em.n")
-	public static Js5 configJs5;
+	public static Js5 configClient;
 
+	// jag::oldscape::configdecoder::NpcType::m_pModels
 	@ObfuscatedName("dy.j")
-	public static Js5 modelJs5;
+	public static Js5 models;
 
+	// jag::oldscape::configdecoder::NpcType::m_recentUse
 	@ObfuscatedName("em.z")
-	public static LruCache configCache = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
+	// jag::oldscape::configdecoder::NpcType::m_modelCache
 	@ObfuscatedName("em.g")
 	public static LruCache modelCache = new LruCache(50);
 
@@ -35,10 +40,10 @@ public class NpcType extends DoublyLinkable {
 	public int size = 1;
 
 	@ObfuscatedName("em.u")
-	public int[] models;
+	public int[] model;
 
 	@ObfuscatedName("em.v")
-	public int[] heads;
+	public int[] head;
 
 	@ObfuscatedName("em.w")
 	public int readyanim = -1;
@@ -118,20 +123,22 @@ public class NpcType extends DoublyLinkable {
 	@ObfuscatedName("em.ab")
 	public boolean walksmoothing = true;
 
+	// jag::oldscape::configdecoder::NpcType::Init
 	@ObfuscatedName("by.z(Lch;Lch;B)V")
-	public static void unpack(Js5 config, Js5 model) {
-		configJs5 = config;
-		modelJs5 = model;
+	public static void init(Js5 config, Js5 model) {
+		configClient = config;
+		models = model;
 	}
 
+	// jag::oldscape::configdecoder::NpcType::List
 	@ObfuscatedName("f.g(IB)Lem;")
 	public static NpcType list(int id) {
-		NpcType cached = (NpcType) configCache.get(id);
+		NpcType cached = (NpcType) recentUse.get(id);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] buf = configJs5.getFile(9, id);
+		byte[] buf = configClient.getFile(9, id);
 		NpcType npc = new NpcType();
 		npc.index = id;
 		if (buf != null) {
@@ -139,14 +146,16 @@ public class NpcType extends DoublyLinkable {
 		}
 		npc.postDecode();
 
-		configCache.put(npc, id);
+		recentUse.put(npc, id);
 		return npc;
 	}
 
+	// jag::oldscape::configdecoder::NpcType::PostDecode
 	@ObfuscatedName("em.q(I)V")
 	public void postDecode() {
 	}
 
+	// jag::oldscape::configdecoder::NpcType::Decode
 	@ObfuscatedName("em.i(Lev;I)V")
 	public void decode(Packet buf) {
 		while (true) {
@@ -155,18 +164,19 @@ public class NpcType extends DoublyLinkable {
 				return;
 			}
 
-			this.decodeInner(buf, code);
+			this.decode(buf, code);
 		}
 	}
 
+	// jag::oldscape::configdecoder::NpcType::Decode
 	@ObfuscatedName("em.s(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
+	public void decode(Packet buf, int code) {
 		if (code == 1) {
 			int count = buf.g1();
-			this.models = new int[count];
+			this.model = new int[count];
 
 			for (int i = 0; i < count; i++) {
-				this.models[i] = buf.g2();
+				this.model[i] = buf.g2();
 			}
 		} else if (code == 2) {
 			this.name = buf.gjstr();
@@ -210,10 +220,10 @@ public class NpcType extends DoublyLinkable {
 			}
 		} else if (code == 60) {
 			int count = buf.g1();
-			this.heads = new int[count];
+			this.head = new int[count];
 
 			for (int i = 0; i < count; i++) {
-				this.heads[i] = buf.g2();
+				this.head[i] = buf.g2();
 			}
 		} else if (code == 93) {
 			this.minimap = false;
@@ -259,18 +269,19 @@ public class NpcType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::NpcType::GetTempMode
 	@ObfuscatedName("em.u(Leo;ILeo;IB)Lfo;")
-	public final ModelLit getModel(SeqType primaryAnim, int arg1, SeqType secondaryAnim, int arg3) {
+	public final ModelLit getTempModel(SeqType primaryAnim, int arg1, SeqType secondaryAnim, int arg3) {
 		if (this.multinpc != null) {
 			NpcType npc = this.getMultiNpc();
-			return npc == null ? null : npc.getModel(primaryAnim, arg1, secondaryAnim, arg3);
+			return npc == null ? null : npc.getTempModel(primaryAnim, arg1, secondaryAnim, arg3);
 		}
 
 		ModelLit cached = (ModelLit) modelCache.get(this.index);
 		if (cached == null) {
 			boolean needsModel = false;
-			for (int i = 0; i < this.models.length; i++) {
-				if (!modelJs5.requestDownload(this.models[i], 0)) {
+			for (int i = 0; i < this.model.length; i++) {
+				if (!models.requestDownload(this.model[i], 0)) {
 					needsModel = true;
 				}
 			}
@@ -279,9 +290,9 @@ public class NpcType extends DoublyLinkable {
 				return null;
 			}
 
-			ModelUnlit[] models = new ModelUnlit[this.models.length];
-			for (int i = 0; i < this.models.length; i++) {
-				models[i] = ModelUnlit.load(modelJs5, this.models[i], 0);
+			ModelUnlit[] models = new ModelUnlit[this.model.length];
+			for (int i = 0; i < this.model.length; i++) {
+				models[i] = ModelUnlit.load(NpcType.models, this.model[i], 0);
 			}
 
 			ModelUnlit model;
@@ -309,13 +320,13 @@ public class NpcType extends DoublyLinkable {
 
 		ModelLit model;
 		if (primaryAnim != null && secondaryAnim != null) {
-			model = primaryAnim.method2421(cached, arg1, secondaryAnim, arg3);
+			model = primaryAnim.splitAnimateModel(cached, arg1, secondaryAnim, arg3);
 		} else if (primaryAnim != null) {
-			model = primaryAnim.method2436(cached, arg1);
+			model = primaryAnim.animateModel(cached, arg1);
 		} else if (secondaryAnim == null) {
 			model = cached.copyForAnim(true);
 		} else {
-			model = secondaryAnim.method2436(cached, arg3);
+			model = secondaryAnim.animateModel(cached, arg3);
 		}
 
 		if (this.resizeh != 128 || this.resizev != 128) {
@@ -325,20 +336,21 @@ public class NpcType extends DoublyLinkable {
 		return model;
 	}
 
+	// jag::oldscape::configdecoder::NpcType::GetHead
 	@ObfuscatedName("em.v(I)Lfw;")
-	public final ModelUnlit getHeadModel() {
+	public final ModelUnlit getHead() {
 		if (this.multinpc != null) {
 			NpcType npc = this.getMultiNpc();
-			return npc == null ? null : npc.getHeadModel();
+			return npc == null ? null : npc.getHead();
 		}
 
-		if (this.heads == null) {
+		if (this.head == null) {
 			return null;
 		}
 
 		boolean needsModel = false;
-		for (int i = 0; i < this.heads.length; i++) {
-			if (!modelJs5.requestDownload(this.heads[i], 0)) {
+		for (int i = 0; i < this.head.length; i++) {
+			if (!models.requestDownload(this.head[i], 0)) {
 				needsModel = true;
 			}
 		}
@@ -347,9 +359,9 @@ public class NpcType extends DoublyLinkable {
 			return null;
 		}
 
-		ModelUnlit[] models = new ModelUnlit[this.heads.length];
-		for (int i = 0; i < this.heads.length; i++) {
-			models[i] = ModelUnlit.load(modelJs5, this.heads[i], 0);
+		ModelUnlit[] models = new ModelUnlit[this.head.length];
+		for (int i = 0; i < this.head.length; i++) {
+			models[i] = ModelUnlit.load(NpcType.models, this.head[i], 0);
 		}
 
 		ModelUnlit model;
@@ -374,6 +386,7 @@ public class NpcType extends DoublyLinkable {
 		return model;
 	}
 
+	// jag::oldscape::configdecoder::NpcType::GetMultiNpc
 	@ObfuscatedName("em.w(B)Lem;")
 	public final NpcType getMultiNpc() {
 		int value = -1;
@@ -390,8 +403,9 @@ public class NpcType extends DoublyLinkable {
 		return list(this.multinpc[value]);
 	}
 
+	// jag::oldscape::configdecoder::NpcType::IsMultiNpcVisible
 	@ObfuscatedName("em.e(I)Z")
-	public boolean isNotMulti() {
+	public boolean isMultiNpcVisible() {
 		if (this.multinpc == null) {
 			return true;
 		}
@@ -406,9 +420,10 @@ public class NpcType extends DoublyLinkable {
 		return value >= 0 && value < this.multinpc.length && this.multinpc[value] != -1;
 	}
 
+	// jag::oldscape::configdecoder::NpcType::ResetCache
 	@ObfuscatedName("df.b(I)V")
-	public static void unload() {
-		configCache.clear();
+	public static void resetCache() {
+		recentUse.clear();
 		modelCache.clear();
 	}
 }

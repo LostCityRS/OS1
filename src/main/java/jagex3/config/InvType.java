@@ -7,18 +7,22 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5;
 import jagex3.js5.Js5Loader;
 
+// jag::oldscape::configdecoder::InvType
 @ObfuscatedName("fp")
 public class InvType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::InvType::m_pConfigClient
 	@ObfuscatedName("fp.n")
-	public static Js5 configJs5;
+	public static Js5 configClient;
 
+	// jag::oldscape::configdecoder::InvType::m_recentUse
 	@ObfuscatedName("fp.j")
-	public static LruCache cache = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
 	@ObfuscatedName("fp.z")
 	public int size = 0;
 
+	// jag::oldscape::configdecoder::InvType::Decode
 	@ObfuscatedName("fp.z(Lev;I)V")
 	public void decode(Packet buf) {
 		while (true) {
@@ -27,34 +31,37 @@ public class InvType extends DoublyLinkable {
 				return;
 			}
 
-			this.decodeInner(buf, code);
+			this.decode(buf, code);
 		}
 	}
 
+	// jag::oldscape::configdecoder::InvType::Decode
 	@ObfuscatedName("fp.g(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
+	public void decode(Packet buf, int code) {
 		if (code == 2) {
 			this.size = buf.g2();
 		}
 	}
 
-	public static InvType get(int id) {
-		InvType cached = (InvType) cache.get(id);
+	// jag::oldscape::configdecoder::InvType::List
+	public static InvType list(int id) {
+		InvType cached = (InvType) recentUse.get(id);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] data = configJs5.getFile(5, id);
+		byte[] data = configClient.getFile(5, id);
 		InvType inv = new InvType();
 		if (data != null) {
 			inv.decode(new Packet(data));
 		}
 
-		cache.put(inv, id);
+		recentUse.put(inv, id);
 		return inv;
 	}
 
-	public static void unpack(Js5Loader config) {
-		configJs5 = config;
+	// jag::oldscape::configdecoder::InvType::ResetCache
+	public static void resetCache(Js5Loader config) {
+		configClient = config;
 	}
 }

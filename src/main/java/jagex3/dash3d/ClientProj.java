@@ -2,7 +2,7 @@ package jagex3.dash3d;
 
 import deob.ObfuscatedName;
 import jagex3.config.SeqType;
-import jagex3.config.SpotAnimType;
+import jagex3.config.SpotType;
 
 // jag::oldscape::ClientProj::ClientProj
 @ObfuscatedName("fh")
@@ -96,11 +96,11 @@ public class ClientProj extends ModelSource {
 		this.target = arg9;
 		this.h2 = arg10;
 		this.mobile = false;
-		int var12 = SpotAnimType.list(this.spotanim).anim;
+		int var12 = SpotType.list(this.spotanim).anim;
 		if (var12 == -1) {
 			this.anim = null;
 		} else {
-			this.anim = SeqType.get(var12);
+			this.anim = SeqType.list(var12);
 		}
 	}
 
@@ -156,7 +156,7 @@ public class ClientProj extends ModelSource {
 	// jag::oldscape::ClientProj::GetTempModel
 	@ObfuscatedName("fh.g(I)Lfo;")
 	public final ModelLit getTempModel() {
-		SpotAnimType var1 = SpotAnimType.list(this.spotanim);
+		SpotType var1 = SpotType.list(this.spotanim);
 		ModelLit var2 = var1.getTempModel2(this.animFrame);
 		if (var2 == null) {
 			return null;

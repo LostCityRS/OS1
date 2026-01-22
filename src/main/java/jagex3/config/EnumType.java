@@ -7,14 +7,17 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5;
 import jagex3.js5.Js5Loader;
 
+// jag::oldscape::configdecoder::EnumType
 @ObfuscatedName("fe")
 public class EnumType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::EnumType::m_pConfigClient
 	@ObfuscatedName("fe.n")
-	public static Js5 configJs5;
+	public static Js5 configClient;
 
+	// jag::oldscape::configdecoder::EnumType::m_recentUse
 	@ObfuscatedName("fe.j")
-	public static LruCache cache = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
 	@ObfuscatedName("fe.z")
 	public int inputtype;
@@ -41,22 +44,23 @@ public class EnumType extends DoublyLinkable {
 	public String[] stringValues;
 
 	@ObfuscatedName("ek.z(II)Lfe;")
-	public static EnumType get(int id) {
-		EnumType cached = (EnumType) cache.get(id);
+	public static EnumType list(int id) {
+		EnumType cached = (EnumType) recentUse.get(id);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] data = configJs5.getFile(8, id);
+		byte[] data = configClient.getFile(8, id);
 		EnumType type = new EnumType();
 		if (data != null) {
 			type.decode(new Packet(data));
 		}
 
-		cache.put(type, id);
+		recentUse.put(type, id);
 		return type;
 	}
 
+	// jag::oldscape::configdecoder::EnumType::Decode
 	@ObfuscatedName("fe.g(Lev;I)V")
 	public void decode(Packet buf) {
 		while (true) {
@@ -65,12 +69,13 @@ public class EnumType extends DoublyLinkable {
 				return;
 			}
 
-			this.decodeInner(buf, code);
+			this.decode(buf, code);
 		}
 	}
 
+	// jag::oldscape::configdecoder::EnumType::Decode
 	@ObfuscatedName("fe.q(Lev;IB)V")
-	public void decodeInner(Packet buf, int code) {
+	public void decode(Packet buf, int code) {
 		if (code == 1) {
 			this.inputtype = buf.g1();
 		} else if (code == 2) {
@@ -102,7 +107,8 @@ public class EnumType extends DoublyLinkable {
 		}
 	}
 
-	public static void unpack(Js5Loader config) {
-		configJs5 = config;
+	// jag::oldscape::configdecoder::EnumType::Init
+	public static void init(Js5Loader config) {
+		configClient = config;
 	}
 }

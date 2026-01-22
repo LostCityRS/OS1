@@ -232,7 +232,7 @@ public class ScriptRunner {
 						isp--;
 						int var21 = intStack[isp];
 
-						VarBitType var22 = VarBitType.get(var20);
+						VarBitType var22 = VarBitType.list(var20);
 						int var23 = var22.basevar;
 						int var24 = var22.startbit;
 						int var25 = var22.endbit;
@@ -791,7 +791,7 @@ public class ScriptRunner {
 
 						var66.field1791 = var67;
 						var66.field1888 = var68;
-						ObjType var69 = ObjType.get(var67);
+						ObjType var69 = ObjType.list(var67);
 						var66.modelXan = var69.xan2d;
 						var66.modelYan = var69.yan2d;
 						var66.zan = var69.zan2d;
@@ -1459,7 +1459,7 @@ public class ScriptRunner {
 						isp--;
 						int var125 = intStack[isp];
 
-						intStack[isp++] = InvType.get(var125).size;
+						intStack[isp++] = InvType.list(var125).size;
 						continue;
 					}
 					if (opcode == 3305) {
@@ -1596,7 +1596,7 @@ public class ScriptRunner {
 						int var151 = intStack[isp];
 						int var152 = intStack[isp + 1];
 
-						EnumType var153 = EnumType.get(var151);
+						EnumType var153 = EnumType.list(var151);
 						if (var153.outputtype != 's') {
 							// ?
 						}
@@ -1623,7 +1623,7 @@ public class ScriptRunner {
 						int var157 = intStack[isp + 2];
 						int var158 = intStack[isp + 3];
 
-						EnumType var159 = EnumType.get(var157);
+						EnumType var159 = EnumType.list(var157);
 						if (var159.inputtype == var155 && var159.outputtype == var156) {
 							for (int var160 = 0; var160 < var159.count; var160++) {
 								if (var159.keys[var160] == var158) {
@@ -2299,7 +2299,7 @@ public class ScriptRunner {
 						isp--;
 						int var323 = intStack[isp];
 
-						stringStack[ssp++] = ObjType.get(var323).name;
+						stringStack[ssp++] = ObjType.list(var323).name;
 						continue;
 					}
 					if (opcode == 4201) {
@@ -2308,7 +2308,7 @@ public class ScriptRunner {
 						int var324 = intStack[isp];
 						int var325 = intStack[isp + 1];
 
-						ObjType var326 = ObjType.get(var324);
+						ObjType var326 = ObjType.list(var324);
 						if (var325 >= 1 && var325 <= 5 && var326.op[var325 - 1] != null) {
 							stringStack[ssp++] = var326.op[var325 - 1];
 							continue;
@@ -2323,7 +2323,7 @@ public class ScriptRunner {
 						int var327 = intStack[isp];
 						int var328 = intStack[isp + 1];
 
-						ObjType var329 = ObjType.get(var327);
+						ObjType var329 = ObjType.list(var327);
 						if (var328 >= 1 && var328 <= 5 && var329.iop[var328 - 1] != null) {
 							stringStack[ssp++] = var329.iop[var328 - 1];
 							continue;
@@ -2337,7 +2337,7 @@ public class ScriptRunner {
 						isp--;
 						int var330 = intStack[isp];
 
-						intStack[isp++] = ObjType.get(var330).cost;
+						intStack[isp++] = ObjType.list(var330).cost;
 						continue;
 					}
 					if (opcode == 4204) {
@@ -2345,7 +2345,7 @@ public class ScriptRunner {
 						isp--;
 						int var331 = intStack[isp];
 
-						intStack[isp++] = ObjType.get(var331).stackable == 1 ? 1 : 0;
+						intStack[isp++] = ObjType.list(var331).stackable == 1 ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4205) {
@@ -2353,7 +2353,7 @@ public class ScriptRunner {
 						isp--;
 						int var332 = intStack[isp];
 
-						ObjType var333 = ObjType.get(var332);
+						ObjType var333 = ObjType.list(var332);
 						if (var333.certtemplate == -1 && var333.certlink >= 0) {
 							intStack[isp++] = var333.certlink;
 							continue;
@@ -2367,7 +2367,7 @@ public class ScriptRunner {
 						isp--;
 						int var334 = intStack[isp];
 
-						ObjType var335 = ObjType.get(var334);
+						ObjType var335 = ObjType.list(var334);
 						if (var335.certtemplate >= 0 && var335.certlink >= 0) {
 							intStack[isp++] = var335.certlink;
 							continue;
@@ -2381,7 +2381,7 @@ public class ScriptRunner {
 						isp--;
 						int var336 = intStack[isp];
 
-						intStack[isp++] = ObjType.get(var336).members ? 1 : 0;
+						intStack[isp++] = ObjType.list(var336).members ? 1 : 0;
 						continue;
 					}
 				} else if (opcode < 5100) {

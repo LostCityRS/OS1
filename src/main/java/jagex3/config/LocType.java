@@ -11,29 +11,37 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5;
 import jagex3.jstring.Text;
 
+// jag::oldscape::configdecoder::LocType
 @ObfuscatedName("ey")
 public class LocType extends DoublyLinkable {
 
+	// jag::oldscape::configdecoder::LocType::m_lowMem
 	@ObfuscatedName("ey.n")
-	public static boolean lowMemory = false;
+	public static boolean lowMem = false;
 
+	// jag::oldscape::configdecoder::LocType::m_pConfigClient
 	@ObfuscatedName("j.j")
-	public static Js5 configJs5;
+	public static Js5 clientConfig;
 
+	// jag::oldscape::configdecoder::LocType::m_pModels
 	@ObfuscatedName("ey.z")
-	public static Js5 modelJs5;
+	public static Js5 models;
 
+	// jag::oldscape::configdecoder::LocType::m_recentUse
 	@ObfuscatedName("ey.g")
-	public static LruCache cache = new LruCache(64);
+	public static LruCache recentUse = new LruCache(64);
 
+	// jag::oldscape::configdecoder::LocType::m_mc1
 	@ObfuscatedName("ey.q")
 	public static LruCache mc1 = new LruCache(500);
 
+	// jag::oldscape::configdecoder::LocType::m_mc2
 	@ObfuscatedName("ey.i")
 	public static LruCache mc2 = new LruCache(30);
 
+	// jag::oldscape::configdecoder::LocType::m_mc3
 	@ObfuscatedName("ey.s")
-	public static LruCache field2307 = new LruCache(30);
+	public static LruCache mc3 = new LruCache(30);
 
 	@ObfuscatedName("ey.u")
 	public static ModelUnlit[] temp = new ModelUnlit[4];
@@ -42,10 +50,10 @@ public class LocType extends DoublyLinkable {
 	public int id;
 
 	@ObfuscatedName("ey.w")
-	public int[] models;
+	public int[] model;
 
 	@ObfuscatedName("ey.e")
-	public int[] shapes;
+	public int[] shape;
 
 	@ObfuscatedName("ey.b")
 	public String name = "null";
@@ -167,21 +175,23 @@ public class LocType extends DoublyLinkable {
 	@ObfuscatedName("ey.bk")
 	public int[] bgsound_random;
 
+	// jag::oldscape::configdecoder::LocType::Init
 	@ObfuscatedName("av.z(Lch;Lch;ZI)V")
-	public static void unpack(Js5 config, Js5 model, boolean lowmem) {
-		configJs5 = config;
-		modelJs5 = model;
-		lowMemory = lowmem;
+	public static void init(Js5 config, Js5 model, boolean lowmem) {
+		clientConfig = config;
+		models = model;
+		lowMem = lowmem;
 	}
 
+	// jag::oldscape::configdecoder::LocType::List
 	@ObfuscatedName("fj.g(IB)Ley;")
-	public static LocType get(int id) {
-		LocType cached = (LocType) cache.get(id);
+	public static LocType list(int id) {
+		LocType cached = (LocType) recentUse.get(id);
 		if (cached != null) {
 			return cached;
 		}
 
-		byte[] data = configJs5.getFile(6, id);
+		byte[] data = clientConfig.getFile(6, id);
 		LocType type = new LocType();
 		type.id = id;
 		if (data != null) {
@@ -194,16 +204,17 @@ public class LocType extends DoublyLinkable {
 			type.blockrange = false;
 		}
 
-		cache.put(type, id);
+		recentUse.put(type, id);
 		return type;
 	}
 
+	// jag::oldscape::configdecoder::LocType::PostDecode
 	@ObfuscatedName("ey.q(B)V")
 	public void postDecode() {
 		if (this.active == -1) {
 			this.active = 0;
 
-			if (this.models != null && (this.shapes == null || this.shapes[0] == 10)) {
+			if (this.model != null && (this.shape == null || this.shape[0] == 10)) {
 				this.active = 1;
 			}
 
@@ -219,6 +230,7 @@ public class LocType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::LocType::Decode
 	@ObfuscatedName("ey.i(Lev;I)V")
 	public void decode(Packet buf) {
 		while (true) {
@@ -227,22 +239,23 @@ public class LocType extends DoublyLinkable {
 				return;
 			}
 
-			this.decodeInner(buf, code);
+			this.decode(buf, code);
 		}
 	}
 
+	// jag::oldscape::configdecoder::LocType::Decode
 	@ObfuscatedName("ey.s(Lev;II)V")
-	public void decodeInner(Packet buf, int code) {
+	public void decode(Packet buf, int code) {
 		if (code == 1) {
 			int count = buf.g1();
 			if (count > 0) {
-				if (this.models == null || lowMemory) {
-					this.shapes = new int[count];
-					this.models = new int[count];
+				if (this.model == null || lowMem) {
+					this.shape = new int[count];
+					this.model = new int[count];
 
 					for (int i = 0; i < count; i++) {
-						this.models[i] = buf.g2();
-						this.shapes[i] = buf.g1();
+						this.model[i] = buf.g2();
+						this.shape[i] = buf.g1();
 					}
 				} else {
 					buf.pos += count * 3;
@@ -253,12 +266,12 @@ public class LocType extends DoublyLinkable {
 		} else if (code == 5) {
 			int count = buf.g1();
 			if (count > 0) {
-				if (this.models == null || lowMemory) {
-					this.shapes = null;
-					this.models = new int[count];
+				if (this.model == null || lowMem) {
+					this.shape = null;
+					this.model = new int[count];
 
 					for (int i = 0; i < count; i++) {
-						this.models[i] = buf.g2();
+						this.model[i] = buf.g2();
 					}
 				} else {
 					buf.pos += count * 2;
@@ -387,19 +400,19 @@ public class LocType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::LocType::CheckModel
 	@ObfuscatedName("ey.u(II)Z")
 	public final boolean checkModel(int arg0) {
-		if (this.shapes != null) {
-			for (int var4 = 0; var4 < this.shapes.length; var4++) {
-				if (this.shapes[var4] == arg0) {
-					return modelJs5.requestDownload(this.models[var4] & 0xFFFF, 0);
+		if (this.shape != null) {
+			for (int var4 = 0; var4 < this.shape.length; var4++) {
+				if (this.shape[var4] == arg0) {
+					return models.requestDownload(this.model[var4] & 0xFFFF, 0);
 				}
 			}
 			return true;
-		} else if (this.models == null) {
+		} else if (this.model == null) {
 			return true;
 		} else if (arg0 == 10) {
 			boolean var2 = true;
-			for (int var3 = 0; var3 < this.models.length; var3++) {
-				var2 &= modelJs5.requestDownload(this.models[var3] & 0xFFFF, 0);
+			for (int var3 = 0; var3 < this.model.length; var3++) {
+				var2 &= models.requestDownload(this.model[var3] & 0xFFFF, 0);
 			}
 			return var2;
 		} else {
@@ -407,29 +420,31 @@ public class LocType extends DoublyLinkable {
 		}
 	}
 
+	// jag::oldscape::configdecoder::LocType::CheckModelAll
 	@ObfuscatedName("ey.v(I)Z")
-	public final boolean checkModel() {
-		if (this.models == null) {
+	public final boolean checkModelAll() {
+		if (this.model == null) {
 			return true;
 		}
 		boolean var1 = true;
-		for (int var2 = 0; var2 < this.models.length; var2++) {
-			var1 &= modelJs5.requestDownload(this.models[var2] & 0xFFFF, 0);
+		for (int var2 = 0; var2 < this.model.length; var2++) {
+			var1 &= models.requestDownload(this.model[var2] & 0xFFFF, 0);
 		}
 		return var1;
 	}
 
+	// jag::oldscape::configdecoder::LocType::GetModel
 	@ObfuscatedName("ey.w(II[[IIIII)Lfu;")
 	public final ModelSource getModel(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5) {
 		long var7;
-		if (this.shapes == null) {
+		if (this.shape == null) {
 			var7 = (this.id << 10) + arg1;
 		} else {
 			var7 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
 		ModelSource var9 = (ModelSource) mc2.get(var7);
 		if (var9 == null) {
-			ModelUnlit var10 = this.getModel(arg0, arg1);
+			ModelUnlit var10 = this.buildModel(arg0, arg1);
 			if (var10 == null) {
 				return null;
 			}
@@ -456,22 +471,23 @@ public class LocType extends DoublyLinkable {
 		return var9;
 	}
 
+	// jag::oldscape::configdecoder::LocType::GetModelLit
 	@ObfuscatedName("ey.e(II[[IIIII)Lfo;")
 	public final ModelLit getModelLit(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5) {
 		long var7;
-		if (this.shapes == null) {
+		if (this.shape == null) {
 			var7 = (this.id << 10) + arg1;
 		} else {
 			var7 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
-		ModelLit var9 = (ModelLit) field2307.get(var7);
+		ModelLit var9 = (ModelLit) mc3.get(var7);
 		if (var9 == null) {
-			ModelUnlit var10 = this.getModel(arg0, arg1);
+			ModelUnlit var10 = this.buildModel(arg0, arg1);
 			if (var10 == null) {
 				return null;
 			}
 			var9 = var10.light(this.ambient + 64, this.contrast + 768, -50, -10, -50);
-			field2307.put(var9, var7);
+			mc3.put(var9, var7);
 		}
 		if (this.skewType >= 0) {
 			var9 = var9.hillSkew(arg2, arg3, arg4, arg5, true, this.skewType);
@@ -479,22 +495,23 @@ public class LocType extends DoublyLinkable {
 		return var9;
 	}
 
+	// jag::oldscape::configdecoder::LocType::GetTempModel
 	@ObfuscatedName("ey.b(II[[IIIILeo;IB)Lfo;")
-	public final ModelLit getModel(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5, SeqType arg6, int arg7) {
+	public final ModelLit getTempModel(int arg0, int arg1, int[][] arg2, int arg3, int arg4, int arg5, SeqType arg6, int arg7) {
 		long var9;
-		if (this.shapes == null) {
+		if (this.shape == null) {
 			var9 = (this.id << 10) + arg1;
 		} else {
 			var9 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
-		ModelLit var11 = (ModelLit) field2307.get(var9);
+		ModelLit var11 = (ModelLit) mc3.get(var9);
 		if (var11 == null) {
-			ModelUnlit var12 = this.getModel(arg0, arg1);
+			ModelUnlit var12 = this.buildModel(arg0, arg1);
 			if (var12 == null) {
 				return null;
 			}
 			var11 = var12.light(this.ambient + 64, this.contrast + 768, -50, -10, -50);
-			field2307.put(var11, var9);
+			mc3.put(var11, var9);
 		}
 		if (arg6 == null && this.skewType == -1) {
 			return var11;
@@ -503,7 +520,7 @@ public class LocType extends DoublyLinkable {
 		if (arg6 == null) {
 			var13 = var11.copyForAnim(true);
 		} else {
-			var13 = arg6.method2419(var11, arg7, arg1);
+			var13 = arg6.animateModel90(var11, arg7, arg1);
 		}
 		if (this.skewType >= 0) {
 			var13 = var13.hillSkew(arg2, arg3, arg4, arg5, false, this.skewType);
@@ -511,29 +528,30 @@ public class LocType extends DoublyLinkable {
 		return var13;
 	}
 
+	// jag::oldscape::configdecoder::LocType::BuildModel
 	@ObfuscatedName("ey.y(IIB)Lfw;")
-	public final ModelUnlit getModel(int arg0, int arg1) {
+	public final ModelUnlit buildModel(int arg0, int arg1) {
 		ModelUnlit var3 = null;
-		if (this.shapes == null) {
+		if (this.shape == null) {
 			if (arg0 != 10) {
 				return null;
 			}
-			if (this.models == null) {
+			if (this.model == null) {
 				return null;
 			}
 			boolean var4 = this.mirror;
 			if (arg0 == 2 && arg1 > 3) {
 				var4 = !var4;
 			}
-			int var5 = this.models.length;
+			int var5 = this.model.length;
 			for (int var6 = 0; var6 < var5; var6++) {
-				int var7 = this.models[var6];
+				int var7 = this.model[var6];
 				if (var4) {
 					var7 += 65536;
 				}
 				var3 = (ModelUnlit) mc1.get((long) var7);
 				if (var3 == null) {
-					var3 = ModelUnlit.load(modelJs5, var7 & 0xFFFF, 0);
+					var3 = ModelUnlit.load(models, var7 & 0xFFFF, 0);
 					if (var3 == null) {
 						return null;
 					}
@@ -551,8 +569,8 @@ public class LocType extends DoublyLinkable {
 			}
 		} else {
 			int var8 = -1;
-			for (int var9 = 0; var9 < this.shapes.length; var9++) {
-				if (this.shapes[var9] == arg0) {
+			for (int var9 = 0; var9 < this.shape.length; var9++) {
+				if (this.shape[var9] == arg0) {
 					var8 = var9;
 					break;
 				}
@@ -560,14 +578,14 @@ public class LocType extends DoublyLinkable {
 			if (var8 == -1) {
 				return null;
 			}
-			int var10 = this.models[var8];
+			int var10 = this.model[var8];
 			boolean var11 = this.mirror ^ arg1 > 3;
 			if (var11) {
 				var10 += 65536;
 			}
 			var3 = (ModelUnlit) mc1.get((long) var10);
 			if (var3 == null) {
-				var3 = ModelUnlit.load(modelJs5, var10 & 0xFFFF, 0);
+				var3 = ModelUnlit.load(models, var10 & 0xFFFF, 0);
 				if (var3 == null) {
 					return null;
 				}
@@ -621,6 +639,7 @@ public class LocType extends DoublyLinkable {
 		return var14;
 	}
 
+	// jag::oldscape::configdecoder::LocType::GetMultiLoc(void)	000000010022BB20	P
 	@ObfuscatedName("ey.t(B)Ley;")
 	public final LocType getMultiLoc() {
 		int var1 = -1;
@@ -629,25 +648,27 @@ public class LocType extends DoublyLinkable {
 		} else if (this.multivarp != -1) {
 			var1 = VarCache.var[this.multivarp];
 		}
-		return var1 < 0 || var1 >= this.multiloc.length || this.multiloc[var1] == -1 ? null : get(this.multiloc[var1]);
+		return var1 < 0 || var1 >= this.multiloc.length || this.multiloc[var1] == -1 ? null : list(this.multiloc[var1]);
 	}
 
+	// jag::oldscape::configdecoder::LocType::ResetCache
 	@ObfuscatedName("ba.f(I)V")
-	public static void unload() {
-		cache.clear();
+	public static void resetCache() {
+		recentUse.clear();
 		mc1.clear();
 		mc2.clear();
-		field2307.clear();
+		mc3.clear();
 	}
 
+	// jag::oldscape::configdecoder::LocType::HasBgSound
 	@ObfuscatedName("ey.k(B)Z")
-	public boolean hasSound() {
+	public boolean hasBgSound() {
 		if (this.multiloc == null) {
 			return this.bgsound_sound != -1 || this.bgsound_random != null;
 		}
 		for (int var1 = 0; var1 < this.multiloc.length; var1++) {
 			if (this.multiloc[var1] != -1) {
-				LocType var2 = get(this.multiloc[var1]);
+				LocType var2 = list(this.multiloc[var1]);
 				if (var2.bgsound_sound != -1 || var2.bgsound_random != null) {
 					return true;
 				}

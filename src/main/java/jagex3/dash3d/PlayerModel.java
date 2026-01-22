@@ -61,8 +61,8 @@ public class PlayerModel {
 		if (arg0 == null) {
 			arg0 = new int[12];
 			for (int var5 = 0; var5 < 7; var5++) {
-				for (int var6 = 0; var6 < IdkType.count; var6++) {
-					IdkType var7 = IdkType.get(var6);
+				for (int var6 = 0; var6 < IdkType.numDefinitions; var6++) {
+					IdkType var7 = IdkType.list(var6);
 					if (var7 != null && !var7.disable && var7.type == var5 + (arg2 ? 7 : 0)) {
 						arg0[basePartMap[var5]] = var6 + 256;
 						break;
@@ -92,16 +92,16 @@ public class PlayerModel {
 		do {
 			if (arg1) {
 				var3++;
-				if (var3 >= IdkType.count) {
+				if (var3 >= IdkType.numDefinitions) {
 					var3 = 0;
 				}
 			} else {
 				var3--;
 				if (var3 < 0) {
-					var3 = IdkType.count - 1;
+					var3 = IdkType.numDefinitions - 1;
 				}
 			}
-			var4 = IdkType.get(var3);
+			var4 = IdkType.list(var3);
 		} while (var4 == null || var4.disable || var4.type != (this.gender ? 7 : 0) + arg0);
 		this.field1228[basePartMap[arg0]] = var3 + 256;
 		this.calcBaseId();
@@ -189,7 +189,7 @@ public class PlayerModel {
 	@ObfuscatedName("ct.j(Leo;ILeo;IB)Lfo;")
 	public ModelLit getTempModel(SeqType arg0, int arg1, SeqType arg2, int arg3) {
 		if (this.transmog != -1) {
-			return NpcType.list(this.transmog).getModel(arg0, arg1, arg2, arg3);
+			return NpcType.list(this.transmog).getTempModel(arg0, arg1, arg2, arg3);
 		}
 		long var5 = this.baseId;
 		int[] var7 = this.field1228;
@@ -212,10 +212,10 @@ public class PlayerModel {
 			boolean var10 = false;
 			for (int var11 = 0; var11 < 12; var11++) {
 				int var12 = var7[var11];
-				if (var12 >= 256 && var12 < 512 && !IdkType.get(var12 - 256).checkModel()) {
+				if (var12 >= 256 && var12 < 512 && !IdkType.list(var12 - 256).checkModel()) {
 					var10 = true;
 				}
-				if (var12 >= 512 && !ObjType.get(var12 - 512).downloadWornModel(this.gender)) {
+				if (var12 >= 512 && !ObjType.list(var12 - 512).checkWearModel(this.gender)) {
 					var10 = true;
 				}
 			}
@@ -233,13 +233,13 @@ public class PlayerModel {
 				for (int var15 = 0; var15 < 12; var15++) {
 					int var16 = var7[var15];
 					if (var16 >= 256 && var16 < 512) {
-						ModelUnlit var17 = IdkType.get(var16 - 256).getModel();
+						ModelUnlit var17 = IdkType.list(var16 - 256).getModelNoCheck();
 						if (var17 != null) {
 							var13[var14++] = var17;
 						}
 					}
 					if (var16 >= 512) {
-						ModelUnlit var18 = ObjType.get(var16 - 512).getWornModel(this.gender);
+						ModelUnlit var18 = ObjType.list(var16 - 512).getWearModelNoCheck(this.gender);
 						if (var18 != null) {
 							var13[var14++] = var18;
 						}
@@ -264,11 +264,11 @@ public class PlayerModel {
 		}
 		ModelLit var21;
 		if (arg0 != null && arg2 != null) {
-			var21 = arg0.method2421(var9, arg1, arg2, arg3);
+			var21 = arg0.splitAnimateModel(var9, arg1, arg2, arg3);
 		} else if (arg0 == null) {
-			var21 = arg2.method2436(var9, arg3);
+			var21 = arg2.animateModel(var9, arg3);
 		} else {
-			var21 = arg0.method2436(var9, arg1);
+			var21 = arg0.animateModel(var9, arg1);
 		}
 		return var21;
 	}
@@ -277,15 +277,15 @@ public class PlayerModel {
 	@ObfuscatedName("ct.z(I)Lfw;")
 	public ModelUnlit getHeadModel() {
 		if (this.transmog != -1) {
-			return NpcType.list(this.transmog).getHeadModel();
+			return NpcType.list(this.transmog).getHead();
 		}
 		boolean var1 = false;
 		for (int var2 = 0; var2 < 12; var2++) {
 			int var3 = this.field1228[var2];
-			if (var3 >= 256 && var3 < 512 && !IdkType.get(var3 - 256).checkHead()) {
+			if (var3 >= 256 && var3 < 512 && !IdkType.list(var3 - 256).checkHead()) {
 				var1 = true;
 			}
-			if (var3 >= 512 && !ObjType.get(var3 - 512).downloadHeadModel(this.gender)) {
+			if (var3 >= 512 && !ObjType.list(var3 - 512).checkHeadModel(this.gender)) {
 				var1 = true;
 			}
 		}
@@ -297,13 +297,13 @@ public class PlayerModel {
 		for (int var6 = 0; var6 < 12; var6++) {
 			int var7 = this.field1228[var6];
 			if (var7 >= 256 && var7 < 512) {
-				ModelUnlit var8 = IdkType.get(var7 - 256).getHeadModel();
+				ModelUnlit var8 = IdkType.list(var7 - 256).getHeadNoCheck();
 				if (var8 != null) {
 					var4[var5++] = var8;
 				}
 			}
 			if (var7 >= 512) {
-				ModelUnlit var9 = ObjType.get(var7 - 512).getHeadModel(this.gender);
+				ModelUnlit var9 = ObjType.list(var7 - 512).getHeadModelNoCheck(this.gender);
 				if (var9 != null) {
 					var4[var5++] = var9;
 				}

@@ -409,7 +409,6 @@ public class ModelLit extends ModelSource {
 		return this.copyForAnim(copyAlpha, tempModel, tempFTran);
 	}
 
-	// jag::oldscape::dash3d::ModelLitImpl::CopyForAnim
 	@ObfuscatedName("fo.t(Z)Lfo;")
 	public ModelLit copyForAnim2(boolean copyAlpha) {
 		if (!copyAlpha && tempFTran2.length < this.faceCount) {

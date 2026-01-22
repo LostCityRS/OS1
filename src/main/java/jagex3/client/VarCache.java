@@ -32,7 +32,7 @@ public class VarCache {
 
 	@ObfuscatedName("cc.r(II)I")
 	public static int getVarbit(int id) {
-		VarBitType varbit = VarBitType.get(id);
+		VarBitType varbit = VarBitType.list(id);
 		int basevar = varbit.basevar;
 		int startbit = varbit.startbit;
 		int endbit = varbit.endbit;
