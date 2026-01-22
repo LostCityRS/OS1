@@ -184,10 +184,10 @@ public class SeqType extends DoublyLinkable {
 		AnimFrameSet var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
-			return arg0.method2999(true);
+			return arg0.copyForAnim(true);
 		} else {
-			ModelLit var6 = arg0.method2999(!var4.getAnimateTransparencies(var5));
-			var6.method3005(var4, var5);
+			ModelLit var6 = arg0.copyForAnim(!var4.getAnimateTransparencies(var5));
+			var6.animate(var4, var5);
 			return var6;
 		}
 	}
@@ -198,24 +198,24 @@ public class SeqType extends DoublyLinkable {
 		AnimFrameSet var5 = method760(var4 >> 16);
 		int var6 = var4 & 0xFFFF;
 		if (var5 == null) {
-			return arg0.method2999(true);
+			return arg0.copyForAnim(true);
 		}
-		ModelLit var7 = arg0.method2999(!var5.getAnimateTransparencies(var6));
+		ModelLit var7 = arg0.copyForAnim(!var5.getAnimateTransparencies(var6));
 		int var8 = arg2 & 0x3;
 		if (var8 == 1) {
-			var7.method3010();
+			var7.rotate270();
 		} else if (var8 == 2) {
-			var7.method3009();
+			var7.rotate180();
 		} else if (var8 == 3) {
 			var7.rotate90();
 		}
-		var7.method3005(var5, var6);
+		var7.animate(var5, var6);
 		if (var8 == 1) {
 			var7.rotate90();
 		} else if (var8 == 2) {
-			var7.method3009();
+			var7.rotate180();
 		} else if (var8 == 3) {
-			var7.method3010();
+			var7.rotate270();
 		}
 		return var7;
 	}
@@ -226,10 +226,10 @@ public class SeqType extends DoublyLinkable {
 		AnimFrameSet var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
-			return arg0.method3040(true);
+			return arg0.copyForAnim2(true);
 		} else {
-			ModelLit var6 = arg0.method3040(!var4.getAnimateTransparencies(var5));
-			var6.method3005(var4, var5);
+			ModelLit var6 = arg0.copyForAnim2(!var4.getAnimateTransparencies(var5));
+			var6.animate(var4, var5);
 			return var6;
 		}
 	}
@@ -246,12 +246,12 @@ public class SeqType extends DoublyLinkable {
 		AnimFrameSet var9 = method760(var8 >> 16);
 		int var10 = var8 & 0xFFFF;
 		if (var9 == null) {
-			ModelLit var11 = arg0.method2999(!var6.getAnimateTransparencies(var7));
-			var11.method3005(var6, var7);
+			ModelLit var11 = arg0.copyForAnim(!var6.getAnimateTransparencies(var7));
+			var11.animate(var6, var7);
 			return var11;
 		} else {
-			ModelLit var12 = arg0.method2999(!var6.getAnimateTransparencies(var7) & !var9.getAnimateTransparencies(var10));
-			var12.method3006(var6, var7, var9, var10, this.walkmerge);
+			ModelLit var12 = arg0.copyForAnim(!var6.getAnimateTransparencies(var7) & !var9.getAnimateTransparencies(var10));
+			var12.maskAnimate(var6, var7, var9, var10, this.walkmerge);
 			return var12;
 		}
 	}
@@ -262,7 +262,7 @@ public class SeqType extends DoublyLinkable {
 		AnimFrameSet var4 = method760(var3 >> 16);
 		int var5 = var3 & 0xFFFF;
 		if (var4 == null) {
-			return arg0.method2999(true);
+			return arg0.copyForAnim(true);
 		}
 		AnimFrameSet var6 = null;
 		int var7 = 0;
@@ -272,13 +272,13 @@ public class SeqType extends DoublyLinkable {
 			var7 = var8 & 0xFFFF;
 		}
 		if (var6 == null || var7 == 65535) {
-			ModelLit var10 = arg0.method2999(!var4.getAnimateTransparencies(var5));
-			var10.method3005(var4, var5);
+			ModelLit var10 = arg0.copyForAnim(!var4.getAnimateTransparencies(var5));
+			var10.animate(var4, var5);
 			return var10;
 		} else {
-			ModelLit var9 = arg0.method2999(!var4.getAnimateTransparencies(var5) & !var6.getAnimateTransparencies(var7));
-			var9.method3005(var4, var5);
-			var9.method3005(var6, var7);
+			ModelLit var9 = arg0.copyForAnim(!var4.getAnimateTransparencies(var5) & !var6.getAnimateTransparencies(var7));
+			var9.animate(var4, var5);
+			var9.animate(var6, var7);
 			return var9;
 		}
 	}

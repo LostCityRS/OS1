@@ -5,17 +5,21 @@ import deob.ObfuscatedName;
 @ObfuscatedName("fo")
 public class ModelLit extends ModelSource {
 
+	// jag::oldscape::dash3d::ModelLitImpl::m_tempModel
 	@ObfuscatedName("fo.j")
-	public static ModelLit field2758 = new ModelLit();
+	public static ModelLit tempModel = new ModelLit();
 
+	// jag::oldscape::dash3d::ModelLitImpl::m_tempFTran
 	@ObfuscatedName("fo.z")
-	public static byte[] field2770 = new byte[1];
+	public static byte[] tempFTran = new byte[1];
 
+	// jag::oldscape::dash3d::ModelLitImpl::m_tempModel2
 	@ObfuscatedName("fo.g")
-	public static ModelLit field2720 = new ModelLit();
+	public static ModelLit tempModel2 = new ModelLit();
 
+	// jag::oldscape::dash3d::ModelLitImpl::m_tempFTran2
 	@ObfuscatedName("fo.q")
-	public static byte[] field2725 = new byte[1];
+	public static byte[] tempFTran2 = new byte[1];
 
 	@ObfuscatedName("fo.i")
 	public int vertexCount = 0;
@@ -30,7 +34,7 @@ public class ModelLit extends ModelSource {
 	public int[] vertexZ;
 
 	@ObfuscatedName("fo.w")
-	public int field2780 = 0;
+	public int faceCount = 0;
 
 	@ObfuscatedName("fo.e")
 	public int[] faceVertexA;
@@ -42,13 +46,13 @@ public class ModelLit extends ModelSource {
 	public int[] faceVertexC;
 
 	@ObfuscatedName("fo.t")
-	public int[] faceColorA;
+	public int[] faceColourA;
 
 	@ObfuscatedName("fo.f")
-	public int[] faceColorB;
+	public int[] faceColourB;
 
 	@ObfuscatedName("fo.k")
-	public int[] faceColorC;
+	public int[] faceColourC;
 
 	@ObfuscatedName("fo.o")
 	public byte[] facePriority;
@@ -78,19 +82,21 @@ public class ModelLit extends ModelSource {
 	public int[] field2765;
 
 	@ObfuscatedName("fo.am")
-	public int[][] field2742;
+	public int[][] labelVertices;
 
 	@ObfuscatedName("fo.ap")
 	public int[][] field2743;
 
+	// jag::oldscape::dash3d::ModelLit::m_useAABBMouseCheck
 	@ObfuscatedName("fo.av")
 	public boolean useAABBMouseCheck = false;
 
+	// jag::oldscape::dash3d::ModelLitImpl::ResetBoundingCalculations
 	@ObfuscatedName("fo.ak")
-	public int field2745;
+	public int boundingCalc;
 
 	@ObfuscatedName("fo.az")
-	public int field2746;
+	public int maxY;
 
 	@ObfuscatedName("fo.an")
 	public int radius;
@@ -153,16 +159,19 @@ public class ModelLit extends ModelSource {
 	public static int[] clippedY = new int[10];
 
 	@ObfuscatedName("fo.bg")
-	public static int[] clippedColor = new int[10];
+	public static int[] clippedColour = new int[10];
 
+	// jag::oldscape::dash3d::ModelLitImpl::m_oX
 	@ObfuscatedName("fo.bl")
-	public static int baseX;
+	public static int oX;
 
+	// jag::oldscape::dash3d::ModelLitImpl::m_oY
 	@ObfuscatedName("fo.bt")
-	public static int baseY;
+	public static int oY;
 
+	// jag::oldscape::dash3d::ModelLitImpl::m_oZ
 	@ObfuscatedName("fo.bw")
-	public static int baseZ;
+	public static int oZ;
 
 	// jag::oldscape::dash3d::MousePickingHelper::m_mouseCheck
 	@ObfuscatedName("fo.by")
@@ -191,7 +200,7 @@ public class ModelLit extends ModelSource {
 	public static int[] cosTable = Pix3D.cosTable;
 
 	@ObfuscatedName("fo.bz")
-	public static int[] palette = Pix3D.palette;
+	public static int[] palette = Pix3D.colourTable;
 
 	@ObfuscatedName("fo.bm")
 	public static int[] divTable2 = Pix3D.divTable2;
@@ -205,14 +214,14 @@ public class ModelLit extends ModelSource {
 		boolean var5 = false;
 		boolean var6 = false;
 		this.vertexCount = 0;
-		this.field2780 = 0;
+		this.faceCount = 0;
 		this.faceTextureCount = 0;
 		this.field2737 = -1;
 		for (int var7 = 0; var7 < count; var7++) {
 			ModelLit var8 = models[var7];
 			if (var8 != null) {
 				this.vertexCount += var8.vertexCount;
-				this.field2780 += var8.field2780;
+				this.faceCount += var8.faceCount;
 				this.faceTextureCount += var8.faceTextureCount;
 				if (var8.facePriority == null) {
 					if (this.field2737 == -1) {
@@ -232,23 +241,23 @@ public class ModelLit extends ModelSource {
 		this.vertexX = new int[this.vertexCount];
 		this.vertexY = new int[this.vertexCount];
 		this.vertexZ = new int[this.vertexCount];
-		this.faceVertexA = new int[this.field2780];
-		this.faceVertexB = new int[this.field2780];
-		this.faceVertexC = new int[this.field2780];
-		this.faceColorA = new int[this.field2780];
-		this.faceColorB = new int[this.field2780];
-		this.faceColorC = new int[this.field2780];
+		this.faceVertexA = new int[this.faceCount];
+		this.faceVertexB = new int[this.faceCount];
+		this.faceVertexC = new int[this.faceCount];
+		this.faceColourA = new int[this.faceCount];
+		this.faceColourB = new int[this.faceCount];
+		this.faceColourC = new int[this.faceCount];
 		if (var3) {
-			this.facePriority = new byte[this.field2780];
+			this.facePriority = new byte[this.faceCount];
 		}
 		if (var4) {
-			this.faceAlpha = new byte[this.field2780];
+			this.faceAlpha = new byte[this.faceCount];
 		}
 		if (var5) {
-			this.field2718 = new short[this.field2780];
+			this.field2718 = new short[this.faceCount];
 		}
 		if (var6) {
-			this.field2735 = new byte[this.field2780];
+			this.field2735 = new byte[this.faceCount];
 		}
 		if (this.faceTextureCount > 0) {
 			this.field2739 = new int[this.faceTextureCount];
@@ -256,43 +265,43 @@ public class ModelLit extends ModelSource {
 			this.field2765 = new int[this.faceTextureCount];
 		}
 		this.vertexCount = 0;
-		this.field2780 = 0;
+		this.faceCount = 0;
 		this.faceTextureCount = 0;
 		for (int var9 = 0; var9 < count; var9++) {
 			ModelLit var10 = models[var9];
 			if (var10 != null) {
-				for (int var11 = 0; var11 < var10.field2780; var11++) {
-					this.faceVertexA[this.field2780] = var10.faceVertexA[var11] + this.vertexCount;
-					this.faceVertexB[this.field2780] = var10.faceVertexB[var11] + this.vertexCount;
-					this.faceVertexC[this.field2780] = var10.faceVertexC[var11] + this.vertexCount;
-					this.faceColorA[this.field2780] = var10.faceColorA[var11];
-					this.faceColorB[this.field2780] = var10.faceColorB[var11];
-					this.faceColorC[this.field2780] = var10.faceColorC[var11];
+				for (int var11 = 0; var11 < var10.faceCount; var11++) {
+					this.faceVertexA[this.faceCount] = var10.faceVertexA[var11] + this.vertexCount;
+					this.faceVertexB[this.faceCount] = var10.faceVertexB[var11] + this.vertexCount;
+					this.faceVertexC[this.faceCount] = var10.faceVertexC[var11] + this.vertexCount;
+					this.faceColourA[this.faceCount] = var10.faceColourA[var11];
+					this.faceColourB[this.faceCount] = var10.faceColourB[var11];
+					this.faceColourC[this.faceCount] = var10.faceColourC[var11];
 					if (var3) {
 						if (var10.facePriority == null) {
-							this.facePriority[this.field2780] = var10.field2737;
+							this.facePriority[this.faceCount] = var10.field2737;
 						} else {
-							this.facePriority[this.field2780] = var10.facePriority[var11];
+							this.facePriority[this.faceCount] = var10.facePriority[var11];
 						}
 					}
 					if (var4 && var10.faceAlpha != null) {
-						this.faceAlpha[this.field2780] = var10.faceAlpha[var11];
+						this.faceAlpha[this.faceCount] = var10.faceAlpha[var11];
 					}
 					if (var5) {
 						if (var10.field2718 == null) {
-							this.field2718[this.field2780] = -1;
+							this.field2718[this.faceCount] = -1;
 						} else {
-							this.field2718[this.field2780] = var10.field2718[var11];
+							this.field2718[this.faceCount] = var10.field2718[var11];
 						}
 					}
 					if (var6) {
 						if (var10.field2735 == null || var10.field2735[var11] == -1) {
-							this.field2735[this.field2780] = -1;
+							this.field2735[this.faceCount] = -1;
 						} else {
-							this.field2735[this.field2780] = (byte) (var10.field2735[var11] + this.faceTextureCount);
+							this.field2735[this.faceCount] = (byte) (var10.field2735[var11] + this.faceTextureCount);
 						}
 					}
-					this.field2780++;
+					this.faceCount++;
 				}
 				for (int var12 = 0; var12 < var10.faceTextureCount; var12++) {
 					this.field2739[this.faceTextureCount] = var10.field2739[var12] + this.vertexCount;
@@ -310,9 +319,10 @@ public class ModelLit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::HillSkew
 	@ObfuscatedName("fo.b([[IIIIZI)Lfo;")
-	public ModelLit method3054(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
-		this.method3002();
+	public ModelLit hillSkew(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
+		this.calcBoundingCylinder();
 		int var7 = arg1 - this.radius;
 		int var8 = this.radius + arg1;
 		int var9 = arg3 - this.radius;
@@ -331,16 +341,16 @@ public class ModelLit extends ModelSource {
 		if (arg4) {
 			var15 = new ModelLit();
 			var15.vertexCount = this.vertexCount;
-			var15.field2780 = this.field2780;
+			var15.faceCount = this.faceCount;
 			var15.faceTextureCount = this.faceTextureCount;
 			var15.vertexX = this.vertexX;
 			var15.vertexZ = this.vertexZ;
 			var15.faceVertexA = this.faceVertexA;
 			var15.faceVertexB = this.faceVertexB;
 			var15.faceVertexC = this.faceVertexC;
-			var15.faceColorA = this.faceColorA;
-			var15.faceColorB = this.faceColorB;
-			var15.faceColorC = this.faceColorC;
+			var15.faceColourA = this.faceColourA;
+			var15.faceColourB = this.faceColourB;
+			var15.faceColourC = this.faceColourC;
 			var15.facePriority = this.facePriority;
 			var15.faceAlpha = this.faceAlpha;
 			var15.field2735 = this.field2735;
@@ -349,7 +359,7 @@ public class ModelLit extends ModelSource {
 			var15.field2739 = this.field2739;
 			var15.field2774 = this.field2774;
 			var15.field2765 = this.field2765;
-			var15.field2742 = this.field2742;
+			var15.labelVertices = this.labelVertices;
 			var15.field2743 = this.field2743;
 			var15.useAABBMouseCheck = this.useAABBMouseCheck;
 			var15.vertexY = new int[var15.vertexCount];
@@ -386,52 +396,59 @@ public class ModelLit extends ModelSource {
 				}
 			}
 		}
-		var15.field2745 = 0;
+		var15.boundingCalc = 0;
 		return var15;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::CopyForAnim
 	@ObfuscatedName("fo.y(Z)Lfo;")
-	public ModelLit method2999(boolean arg0) {
-		if (!arg0 && field2770.length < this.field2780) {
-			field2770 = new byte[this.field2780 + 100];
+	public ModelLit copyForAnim(boolean copyAlpha) {
+		if (!copyAlpha && tempFTran.length < this.faceCount) {
+			tempFTran = new byte[this.faceCount + 100];
 		}
-		return this.method3046(arg0, field2758, field2770);
+		return this.copyForAnim(copyAlpha, tempModel, tempFTran);
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::CopyForAnim
 	@ObfuscatedName("fo.t(Z)Lfo;")
-	public ModelLit method3040(boolean arg0) {
-		if (!arg0 && field2725.length < this.field2780) {
-			field2725 = new byte[this.field2780 + 100];
+	public ModelLit copyForAnim2(boolean copyAlpha) {
+		if (!copyAlpha && tempFTran2.length < this.faceCount) {
+			tempFTran2 = new byte[this.faceCount + 100];
 		}
-		return this.method3046(arg0, field2720, field2725);
+		return this.copyForAnim(copyAlpha, tempModel2, tempFTran2);
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::CopyForAnim
 	@ObfuscatedName("fo.f(ZLfo;[B)Lfo;")
-	public ModelLit method3046(boolean copyAlpha, ModelLit model, byte[] arg2) {
+	public ModelLit copyForAnim(boolean copyAlpha, ModelLit model, byte[] alpha) {
 		model.vertexCount = this.vertexCount;
-		model.field2780 = this.field2780;
+		model.faceCount = this.faceCount;
 		model.faceTextureCount = this.faceTextureCount;
+
 		if (model.vertexX == null || model.vertexX.length < this.vertexCount) {
 			model.vertexX = new int[this.vertexCount + 100];
 			model.vertexY = new int[this.vertexCount + 100];
 			model.vertexZ = new int[this.vertexCount + 100];
 		}
+
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
 			model.vertexX[var4] = this.vertexX[var4];
 			model.vertexY[var4] = this.vertexY[var4];
 			model.vertexZ[var4] = this.vertexZ[var4];
 		}
+
 		if (copyAlpha) {
 			model.faceAlpha = this.faceAlpha;
 		} else {
-			model.faceAlpha = arg2;
+			model.faceAlpha = alpha;
+
 			if (this.faceAlpha == null) {
-				for (int var5 = 0; var5 < this.field2780; var5++) {
-					model.faceAlpha[var5] = 0;
+				for (int f = 0; f < this.faceCount; f++) {
+					model.faceAlpha[f] = 0;
 				}
 			} else {
-				for (int var6 = 0; var6 < this.field2780; var6++) {
-					model.faceAlpha[var6] = this.faceAlpha[var6];
+				for (int f = 0; f < this.faceCount; f++) {
+					model.faceAlpha[f] = this.faceAlpha[f];
 				}
 			}
 		}
@@ -439,9 +456,9 @@ public class ModelLit extends ModelSource {
 		model.faceVertexA = this.faceVertexA;
 		model.faceVertexB = this.faceVertexB;
 		model.faceVertexC = this.faceVertexC;
-		model.faceColorA = this.faceColorA;
-		model.faceColorB = this.faceColorB;
-		model.faceColorC = this.faceColorC;
+		model.faceColourA = this.faceColourA;
+		model.faceColourB = this.faceColourB;
+		model.faceColourC = this.faceColourC;
 		model.facePriority = this.facePriority;
 		model.field2735 = this.field2735;
 		model.field2718 = this.field2718;
@@ -449,21 +466,22 @@ public class ModelLit extends ModelSource {
 		model.field2739 = this.field2739;
 		model.field2774 = this.field2774;
 		model.field2765 = this.field2765;
-		model.field2742 = this.field2742;
+		model.labelVertices = this.labelVertices;
 		model.field2743 = this.field2743;
 		model.useAABBMouseCheck = this.useAABBMouseCheck;
-		model.field2745 = 0;
+		model.boundingCalc = 0;
 		return model;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::CalcBoundingCylinder
 	@ObfuscatedName("fo.k()V")
-	public void method3002() {
-		if (this.field2745 == 1) {
+	public void calcBoundingCylinder() {
+		if (this.boundingCalc == 1) {
 			return;
 		}
-		this.field2745 = 1;
+		this.boundingCalc = 1;
 		this.minY = 0;
-		this.field2746 = 0;
+		this.maxY = 0;
 		this.radius = 0;
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexX[var1];
@@ -472,8 +490,8 @@ public class ModelLit extends ModelSource {
 			if (-var3 > this.minY) {
 				this.minY = -var3;
 			}
-			if (var3 > this.field2746) {
-				this.field2746 = var3;
+			if (var3 > this.maxY) {
+				this.maxY = var3;
 			}
 			int var5 = var2 * var2 + var4 * var4;
 			if (var5 > this.radius) {
@@ -482,15 +500,16 @@ public class ModelLit extends ModelSource {
 		}
 		this.radius = (int) (Math.sqrt((double) this.radius) + 0.99D);
 		this.minDepth = (int) (Math.sqrt((double) (this.minY * this.minY + this.radius * this.radius)) + 0.99D);
-		this.maxDepth = this.minDepth + (int) (Math.sqrt((double) (this.radius * this.radius + this.field2746 * this.field2746)) + 0.99D);
+		this.maxDepth = this.minDepth + (int) (Math.sqrt((double) (this.radius * this.radius + this.maxY * this.maxY)) + 0.99D);
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::CalcAABB
 	@ObfuscatedName("fo.o()V")
-	public void method3003() {
-		if (this.field2745 == 2) {
+	public void calcAABB() {
+		if (this.boundingCalc == 2) {
 			return;
 		}
-		this.field2745 = 2;
+		this.boundingCalc = 2;
 		this.radius = 0;
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexX[var1];
@@ -506,44 +525,47 @@ public class ModelLit extends ModelSource {
 		this.maxDepth = this.radius + this.radius;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::GetRadiusCylinder
 	@ObfuscatedName("fo.a()I")
-	public int method3004() {
-		this.method3002();
+	public int getRadiusCylinder() {
+		this.calcBoundingCylinder();
 		return this.radius;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::Animate
 	@ObfuscatedName("fo.h(Lfr;I)V")
-	public void method3005(AnimFrameSet arg0, int arg1) {
-		if (this.field2742 == null || arg1 == -1) {
+	public void animate(AnimFrameSet arg0, int arg1) {
+		if (this.labelVertices == null || arg1 == -1) {
 			return;
 		}
-		AnimFrame var3 = arg0.field2488[arg1];
+		AnimFrame var3 = arg0.list[arg1];
 		AnimBase var4 = var3.base;
-		baseX = 0;
-		baseY = 0;
-		baseZ = 0;
+		oX = 0;
+		oY = 0;
+		oZ = 0;
 		for (int var5 = 0; var5 < var3.size; var5++) {
 			int var6 = var3.ti[var5];
-			this.method3007(var4.type[var6], var4.labels[var6], var3.tx[var5], var3.ty[var5], var3.tz[var5]);
+			this.animate2(var4.type[var6], var4.labels[var6], var3.tx[var5], var3.ty[var5], var3.tz[var5]);
 		}
-		this.field2745 = 0;
+		this.boundingCalc = 0;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::MaskAnimate
 	@ObfuscatedName("fo.x(Lfr;ILfr;I[I)V")
-	public void method3006(AnimFrameSet arg0, int arg1, AnimFrameSet arg2, int arg3, int[] arg4) {
+	public void maskAnimate(AnimFrameSet arg0, int arg1, AnimFrameSet arg2, int arg3, int[] arg4) {
 		if (arg1 == -1) {
 			return;
 		}
 		if (arg4 == null || arg3 == -1) {
-			this.method3005(arg0, arg1);
+			this.animate(arg0, arg1);
 			return;
 		}
-		AnimFrame var6 = arg0.field2488[arg1];
-		AnimFrame var7 = arg2.field2488[arg3];
+		AnimFrame var6 = arg0.list[arg1];
+		AnimFrame var7 = arg2.list[arg3];
 		AnimBase var8 = var6.base;
-		baseX = 0;
-		baseY = 0;
-		baseZ = 0;
+		oX = 0;
+		oY = 0;
+		oZ = 0;
 		byte var9 = 0;
 		int var17 = var9 + 1;
 		int var10 = arg4[var9];
@@ -553,12 +575,12 @@ public class ModelLit extends ModelSource {
 				var10 = arg4[var17++];
 			}
 			if (var10 != var12 || var8.type[var12] == 0) {
-				this.method3007(var8.type[var12], var8.labels[var12], var6.tx[var11], var6.ty[var11], var6.tz[var11]);
+				this.animate2(var8.type[var12], var8.labels[var12], var6.tx[var11], var6.ty[var11], var6.tz[var11]);
 			}
 		}
-		baseX = 0;
-		baseY = 0;
-		baseZ = 0;
+		oX = 0;
+		oY = 0;
+		oZ = 0;
 		byte var13 = 0;
 		int var18 = var13 + 1;
 		int var14 = arg4[var13];
@@ -568,47 +590,48 @@ public class ModelLit extends ModelSource {
 				var14 = arg4[var18++];
 			}
 			if (var14 == var16 || var8.type[var16] == 0) {
-				this.method3007(var8.type[var16], var8.labels[var16], var7.tx[var15], var7.ty[var15], var7.tz[var15]);
+				this.animate2(var8.type[var16], var8.labels[var16], var7.tx[var15], var7.ty[var15], var7.tz[var15]);
 			}
 		}
-		this.field2745 = 0;
+		this.boundingCalc = 0;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::Animate2
 	@ObfuscatedName("fo.p(I[IIII)V")
-	public void method3007(int arg0, int[] arg1, int arg2, int arg3, int arg4) {
+	public void animate2(int arg0, int[] arg1, int arg2, int arg3, int arg4) {
 		int var6 = arg1.length;
 		if (arg0 == 0) {
 			int var7 = 0;
-			baseX = 0;
-			baseY = 0;
-			baseZ = 0;
+			oX = 0;
+			oY = 0;
+			oZ = 0;
 			for (int var8 = 0; var8 < var6; var8++) {
 				int var9 = arg1[var8];
-				if (var9 < this.field2742.length) {
-					int[] var10 = this.field2742[var9];
+				if (var9 < this.labelVertices.length) {
+					int[] var10 = this.labelVertices[var9];
 					for (int var11 = 0; var11 < var10.length; var11++) {
 						int var12 = var10[var11];
-						baseX += this.vertexX[var12];
-						baseY += this.vertexY[var12];
-						baseZ += this.vertexZ[var12];
+						oX += this.vertexX[var12];
+						oY += this.vertexY[var12];
+						oZ += this.vertexZ[var12];
 						var7++;
 					}
 				}
 			}
 			if (var7 > 0) {
-				baseX = baseX / var7 + arg2;
-				baseY = baseY / var7 + arg3;
-				baseZ = baseZ / var7 + arg4;
+				oX = oX / var7 + arg2;
+				oY = oY / var7 + arg3;
+				oZ = oZ / var7 + arg4;
 			} else {
-				baseX = arg2;
-				baseY = arg3;
-				baseZ = arg4;
+				oX = arg2;
+				oY = arg3;
+				oZ = arg4;
 			}
 		} else if (arg0 == 1) {
 			for (int var13 = 0; var13 < var6; var13++) {
 				int var14 = arg1[var13];
-				if (var14 < this.field2742.length) {
-					int[] var15 = this.field2742[var14];
+				if (var14 < this.labelVertices.length) {
+					int[] var15 = this.labelVertices[var14];
 					for (int var16 = 0; var16 < var15.length; var16++) {
 						int var17 = var15[var16];
 						this.vertexX[var17] += arg2;
@@ -620,13 +643,13 @@ public class ModelLit extends ModelSource {
 		} else if (arg0 == 2) {
 			for (int var18 = 0; var18 < var6; var18++) {
 				int var19 = arg1[var18];
-				if (var19 < this.field2742.length) {
-					int[] var20 = this.field2742[var19];
+				if (var19 < this.labelVertices.length) {
+					int[] var20 = this.labelVertices[var19];
 					for (int var21 = 0; var21 < var20.length; var21++) {
 						int var22 = var20[var21];
-						this.vertexX[var22] -= baseX;
-						this.vertexY[var22] -= baseY;
-						this.vertexZ[var22] -= baseZ;
+						this.vertexX[var22] -= oX;
+						this.vertexY[var22] -= oY;
+						this.vertexZ[var22] -= oZ;
 						int var23 = (arg2 & 0xFF) * 8;
 						int var24 = (arg3 & 0xFF) * 8;
 						int var25 = (arg4 & 0xFF) * 8;
@@ -651,28 +674,28 @@ public class ModelLit extends ModelSource {
 							this.vertexZ[var22] = this.vertexZ[var22] * var33 - this.vertexX[var22] * var32 >> 16;
 							this.vertexX[var22] = var34;
 						}
-						this.vertexX[var22] += baseX;
-						this.vertexY[var22] += baseY;
-						this.vertexZ[var22] += baseZ;
+						this.vertexX[var22] += oX;
+						this.vertexY[var22] += oY;
+						this.vertexZ[var22] += oZ;
 					}
 				}
 			}
 		} else if (arg0 == 3) {
 			for (int var35 = 0; var35 < var6; var35++) {
 				int var36 = arg1[var35];
-				if (var36 < this.field2742.length) {
-					int[] var37 = this.field2742[var36];
+				if (var36 < this.labelVertices.length) {
+					int[] var37 = this.labelVertices[var36];
 					for (int var38 = 0; var38 < var37.length; var38++) {
 						int var39 = var37[var38];
-						this.vertexX[var39] -= baseX;
-						this.vertexY[var39] -= baseY;
-						this.vertexZ[var39] -= baseZ;
+						this.vertexX[var39] -= oX;
+						this.vertexY[var39] -= oY;
+						this.vertexZ[var39] -= oZ;
 						this.vertexX[var39] = this.vertexX[var39] * arg2 / 128;
 						this.vertexY[var39] = this.vertexY[var39] * arg3 / 128;
 						this.vertexZ[var39] = this.vertexZ[var39] * arg4 / 128;
-						this.vertexX[var39] += baseX;
-						this.vertexY[var39] += baseY;
-						this.vertexZ[var39] += baseZ;
+						this.vertexX[var39] += oX;
+						this.vertexY[var39] += oY;
+						this.vertexZ[var39] += oZ;
 					}
 				}
 			}
@@ -696,6 +719,7 @@ public class ModelLit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::Rotate90
 	@ObfuscatedName("fo.ad()V")
 	public void rotate90() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
@@ -703,28 +727,31 @@ public class ModelLit extends ModelSource {
 			this.vertexX[var1] = this.vertexZ[var1];
 			this.vertexZ[var1] = -var2;
 		}
-		this.field2745 = 0;
+		this.boundingCalc = 0;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::Rotate180
 	@ObfuscatedName("fo.ac()V")
-	public void method3009() {
+	public void rotate180() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			this.vertexX[var1] = -this.vertexX[var1];
 			this.vertexZ[var1] = -this.vertexZ[var1];
 		}
-		this.field2745 = 0;
+		this.boundingCalc = 0;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::Rotate270
 	@ObfuscatedName("fo.aa()V")
-	public void method3010() {
+	public void rotate270() {
 		for (int var1 = 0; var1 < this.vertexCount; var1++) {
 			int var2 = this.vertexZ[var1];
 			this.vertexZ[var1] = this.vertexX[var1];
 			this.vertexX[var1] = -var2;
 		}
-		this.field2745 = 0;
+		this.boundingCalc = 0;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::RotateXAxis
 	@ObfuscatedName("fo.as(I)V")
 	public void rotateXAxis(int arg0) {
 		int var2 = sinTable[arg0];
@@ -734,9 +761,10 @@ public class ModelLit extends ModelSource {
 			this.vertexZ[var4] = this.vertexZ[var4] * var3 + this.vertexY[var4] * var2 >> 16;
 			this.vertexY[var4] = var5;
 		}
-		this.field2745 = 0;
+		this.boundingCalc = 0;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::Translate
 	@ObfuscatedName("fo.am(III)V")
 	public void translate(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
@@ -744,26 +772,29 @@ public class ModelLit extends ModelSource {
 			this.vertexY[var4] += arg1;
 			this.vertexZ[var4] += arg2;
 		}
-		this.field2745 = 0;
+		this.boundingCalc = 0;
 	}
 
+	// jag::oldscape::dash3d::ModelLitImpl::Resize
 	@ObfuscatedName("fo.ap(III)V")
-	public void scale(int arg0, int arg1, int arg2) {
+	public void resize(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.vertexCount; var4++) {
 			this.vertexX[var4] = this.vertexX[var4] * arg0 / 128;
 			this.vertexY[var4] = this.vertexY[var4] * arg1 / 128;
 			this.vertexZ[var4] = this.vertexZ[var4] * arg2 / 128;
 		}
-		this.field2745 = 0;
+		this.boundingCalc = 0;
 	}
 
 	// jag::oldscape::dash3d::SoftwareModelLitRenderer::ObjRender
 	@ObfuscatedName("fo.av(IIIIIII)V")
 	public final void objRender(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		tmpDepthFaceCount[0] = -1;
-		if (this.field2745 != 2 && this.field2745 != 1) {
-			this.method3003();
+
+		if (this.boundingCalc != 2 && this.boundingCalc != 1) {
+			this.calcAABB();
 		}
+
 		int var8 = Pix3D.originX;
 		int var9 = Pix3D.originY;
 		int var10 = sinTable[arg0];
@@ -814,11 +845,12 @@ public class ModelLit extends ModelSource {
 		}
 	}
 
+	// jag::oldscape::dash3d::SoftwareModelLitRenderer::ObjRenderOrthog
 	@ObfuscatedName("fo.ak(IIIIIIII)V")
-	public final void method3020(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public final void objRenderOrthog(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		tmpDepthFaceCount[0] = -1;
-		if (this.field2745 != 2 && this.field2745 != 1) {
-			this.method3003();
+		if (this.boundingCalc != 2 && this.boundingCalc != 1) {
+			this.calcAABB();
 		}
 		int var9 = Pix3D.originX;
 		int var10 = Pix3D.originY;
@@ -875,8 +907,8 @@ public class ModelLit extends ModelSource {
 	public void worldRender(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int typecode) {
 		tmpDepthFaceCount[0] = -1;
 
-		if (this.field2745 != 1) {
-			this.method3002();
+		if (this.boundingCalc != 1) {
+			this.calcBoundingCylinder();
 		}
 
 		int var10 = arg4 * arg7 - arg3 * arg5 >> 16;
@@ -1020,8 +1052,8 @@ public class ModelLit extends ModelSource {
 			tmpDepthFaceCount[i] = 0;
 		}
 
-		for (int f = 0; f < this.field2780; f++) {
-			if (this.faceColorC[f] != -2) {
+		for (int f = 0; f < this.faceCount; f++) {
+			if (this.faceColourC[f] != -2) {
 				int var6 = this.faceVertexA[f];
 				int var7 = this.faceVertexB[f];
 				int var8 = this.faceVertexC[f];
@@ -1257,15 +1289,15 @@ public class ModelLit extends ModelSource {
 				var7 = this.field2774[var5];
 				var8 = this.field2765[var5];
 			}
-			if (this.faceColorC[face] == -1) {
-				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorA[face], this.faceColorA[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
+			if (this.faceColourC[face] == -1) {
+				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
 			} else {
-				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorB[face], this.faceColorC[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
+				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourB[face], this.faceColourC[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.field2718[face]);
 			}
-		} else if (this.faceColorC[face] == -1) {
-			Pix3D.flatTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], palette[this.faceColorA[face]]);
+		} else if (this.faceColourC[face] == -1) {
+			Pix3D.flatTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], palette[this.faceColourA[face]]);
 		} else {
-			Pix3D.gouraudTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColorA[face], this.faceColorB[face], this.faceColorC[face]);
+			Pix3D.gouraudTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourB[face], this.faceColourC[face]);
 		}
 	}
 
@@ -1289,64 +1321,64 @@ public class ModelLit extends ModelSource {
 		if (var8 >= 50) {
 			clippedX[elements] = vertexScreenX[var5];
 			clippedY[elements] = vertexScreenY[var5];
-			clippedColor[elements++] = this.faceColorA[arg0];
+			clippedColour[elements++] = this.faceColourA[arg0];
 		} else {
 			int var11 = vertexViewSpaceX[var5];
 			int var12 = vertexViewSpaceY[var5];
-			int var13 = this.faceColorA[arg0];
+			int var13 = this.faceColourA[arg0];
 			if (var10 >= 50) {
 				int var14 = (50 - var8) * divTable2[var10 - var8];
 				clippedX[elements] = (((vertexViewSpaceX[var7] - var11) * var14 >> 16) + var11 << 9) / 50 + var2;
 				clippedY[elements] = (((vertexViewSpaceY[var7] - var12) * var14 >> 16) + var12 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorC[arg0] - var13) * var14 >> 16) + var13;
+				clippedColour[elements++] = ((this.faceColourC[arg0] - var13) * var14 >> 16) + var13;
 			}
 			if (var9 >= 50) {
 				int var15 = (50 - var8) * divTable2[var9 - var8];
 				clippedX[elements] = (((vertexViewSpaceX[var6] - var11) * var15 >> 16) + var11 << 9) / 50 + var2;
 				clippedY[elements] = (((vertexViewSpaceY[var6] - var12) * var15 >> 16) + var12 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorB[arg0] - var13) * var15 >> 16) + var13;
+				clippedColour[elements++] = ((this.faceColourB[arg0] - var13) * var15 >> 16) + var13;
 			}
 		}
 		if (var9 >= 50) {
 			clippedX[elements] = vertexScreenX[var6];
 			clippedY[elements] = vertexScreenY[var6];
-			clippedColor[elements++] = this.faceColorB[arg0];
+			clippedColour[elements++] = this.faceColourB[arg0];
 		} else {
 			int var16 = vertexViewSpaceX[var6];
 			int var17 = vertexViewSpaceY[var6];
-			int var18 = this.faceColorB[arg0];
+			int var18 = this.faceColourB[arg0];
 			if (var8 >= 50) {
 				int var19 = (50 - var9) * divTable2[var8 - var9];
 				clippedX[elements] = (((vertexViewSpaceX[var5] - var16) * var19 >> 16) + var16 << 9) / 50 + var2;
 				clippedY[elements] = (((vertexViewSpaceY[var5] - var17) * var19 >> 16) + var17 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorA[arg0] - var18) * var19 >> 16) + var18;
+				clippedColour[elements++] = ((this.faceColourA[arg0] - var18) * var19 >> 16) + var18;
 			}
 			if (var10 >= 50) {
 				int var20 = (50 - var9) * divTable2[var10 - var9];
 				clippedX[elements] = (((vertexViewSpaceX[var7] - var16) * var20 >> 16) + var16 << 9) / 50 + var2;
 				clippedY[elements] = (((vertexViewSpaceY[var7] - var17) * var20 >> 16) + var17 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorC[arg0] - var18) * var20 >> 16) + var18;
+				clippedColour[elements++] = ((this.faceColourC[arg0] - var18) * var20 >> 16) + var18;
 			}
 		}
 		if (var10 >= 50) {
 			clippedX[elements] = vertexScreenX[var7];
 			clippedY[elements] = vertexScreenY[var7];
-			clippedColor[elements++] = this.faceColorC[arg0];
+			clippedColour[elements++] = this.faceColourC[arg0];
 		} else {
 			int var21 = vertexViewSpaceX[var7];
 			int var22 = vertexViewSpaceY[var7];
-			int var23 = this.faceColorC[arg0];
+			int var23 = this.faceColourC[arg0];
 			if (var9 >= 50) {
 				int var24 = (50 - var10) * divTable2[var9 - var10];
 				clippedX[elements] = (((vertexViewSpaceX[var6] - var21) * var24 >> 16) + var21 << 9) / 50 + var2;
 				clippedY[elements] = (((vertexViewSpaceY[var6] - var22) * var24 >> 16) + var22 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorB[arg0] - var23) * var24 >> 16) + var23;
+				clippedColour[elements++] = ((this.faceColourB[arg0] - var23) * var24 >> 16) + var23;
 			}
 			if (var8 >= 50) {
 				int var25 = (50 - var10) * divTable2[var8 - var10];
 				clippedX[elements] = (((vertexViewSpaceX[var5] - var21) * var25 >> 16) + var21 << 9) / 50 + var2;
 				clippedY[elements] = (((vertexViewSpaceY[var5] - var22) * var25 >> 16) + var22 << 9) / 50 + var3;
-				clippedColor[elements++] = ((this.faceColorA[arg0] - var23) * var25 >> 16) + var23;
+				clippedColour[elements++] = ((this.faceColourA[arg0] - var23) * var25 >> 16) + var23;
 			}
 		}
 		int var26 = clippedX[0];
@@ -1374,15 +1406,15 @@ public class ModelLit extends ModelSource {
 					var34 = this.field2774[var32];
 					var35 = this.field2765[var32];
 				}
-				if (this.faceColorC[arg0] == -1) {
-					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
+				if (this.faceColourC[arg0] == -1) {
+					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, this.faceColourA[arg0], this.faceColourA[arg0], this.faceColourA[arg0], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
 				} else {
-					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
+					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, clippedColour[0], clippedColour[1], clippedColour[2], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.field2718[arg0]);
 				}
-			} else if (this.faceColorC[arg0] == -1) {
-				Pix3D.flatTriangle(var29, var30, var31, var26, var27, var28, palette[this.faceColorA[arg0]]);
+			} else if (this.faceColourC[arg0] == -1) {
+				Pix3D.flatTriangle(var29, var30, var31, var26, var27, var28, palette[this.faceColourA[arg0]]);
 			} else {
-				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
+				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColour[0], clippedColour[1], clippedColour[2]);
 			}
 		} else if (elements == 4) {
 			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.sizeX || var27 > Pix3D.sizeX || var28 > Pix3D.sizeX || clippedX[3] < 0 || clippedX[3] > Pix3D.sizeX) {
@@ -1403,20 +1435,20 @@ public class ModelLit extends ModelSource {
 					var39 = this.field2765[var36];
 				}
 				short var40 = this.field2718[arg0];
-				if (this.faceColorC[arg0] == -1) {
-					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-					Pix3D.textureTriangleAffine(var29, var31, clippedY[3], var26, var28, clippedX[3], this.faceColorA[arg0], this.faceColorA[arg0], this.faceColorA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+				if (this.faceColourC[arg0] == -1) {
+					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, this.faceColourA[arg0], this.faceColourA[arg0], this.faceColourA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.textureTriangleAffine(var29, var31, clippedY[3], var26, var28, clippedX[3], this.faceColourA[arg0], this.faceColourA[arg0], this.faceColourA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
 				} else {
-					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-					Pix3D.textureTriangleAffine(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.textureTriangleAffine(var29, var30, var31, var26, var27, var28, clippedColour[0], clippedColour[1], clippedColour[2], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.textureTriangleAffine(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColour[0], clippedColour[2], clippedColour[3], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
 				}
-			} else if (this.faceColorC[arg0] == -1) {
-				int var41 = palette[this.faceColorA[arg0]];
+			} else if (this.faceColourC[arg0] == -1) {
+				int var41 = palette[this.faceColourA[arg0]];
 				Pix3D.flatTriangle(var29, var30, var31, var26, var27, var28, var41);
 				Pix3D.flatTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], var41);
 			} else {
-				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColor[0], clippedColor[1], clippedColor[2]);
-				Pix3D.gouraudTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColor[0], clippedColor[2], clippedColor[3]);
+				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColour[0], clippedColour[1], clippedColour[2]);
+				Pix3D.gouraudTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColour[0], clippedColour[2], clippedColour[3]);
 			}
 		}
 	}

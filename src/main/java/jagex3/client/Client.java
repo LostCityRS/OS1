@@ -6632,7 +6632,7 @@ public class Client extends GameShell {
 						if (var202 == null) {
 							componentUpdated(com);
 						} else {
-							var202.method3002();
+							var202.calcBoundingCylinder();
 							var203 = var202.minY / 2;
 						}
 					}
@@ -6659,9 +6659,9 @@ public class Client extends GameShell {
 				int var208 = com.modelZoom * Pix3D.cosTable[com.modelXan] >> 16;
 				if (var202 != null) {
 					if (com.v3) {
-						var202.method3002();
+						var202.calcBoundingCylinder();
 						if (com.modelOrthographic) {
-							var202.method3020(0, com.modelYan, com.zan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208, com.modelZoom);
+							var202.objRenderOrthog(0, com.modelYan, com.zan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208, com.modelZoom);
 						} else {
 							var202.objRender(0, com.modelYan, com.zan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208);
 						}

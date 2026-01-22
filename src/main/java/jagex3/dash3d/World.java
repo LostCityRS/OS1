@@ -401,7 +401,7 @@ public class World {
 			for (int var12 = 0; var12 < var11.spriteCount; var12++) {
 				if ((var11.sprites[var12].typecode2 & 0x100) == 0x100 && var11.sprites[var12].model instanceof ModelLit) {
 					ModelLit var13 = (ModelLit) var11.sprites[var12].model;
-					var13.method3002();
+					var13.calcBoundingCylinder();
 					if (var13.minY > var10) {
 						var10 = var13.minY;
 					}

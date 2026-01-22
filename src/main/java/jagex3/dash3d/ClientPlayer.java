@@ -156,7 +156,7 @@ public class ClientPlayer extends ClientEntity {
 		if (var3 == null) {
 			return null;
 		}
-		var3.method3002();
+		var3.calcBoundingCylinder();
 		this.height = var3.minY;
 		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
 			ModelLit var4 = SpotAnimType.list(this.spotanimId).getTempModel2(this.spotanimFrame);

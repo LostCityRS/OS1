@@ -1516,9 +1516,9 @@ public class ModelUnlit extends ModelSource {
 		int var6 = (int) Math.sqrt(arg4 * arg4 + arg2 * arg2 + arg3 * arg3);
 		int var7 = arg1 * var6 >> 8;
 		ModelLit var8 = new ModelLit();
-		var8.faceColorA = new int[this.faceCount];
-		var8.faceColorB = new int[this.faceCount];
-		var8.faceColorC = new int[this.faceCount];
+		var8.faceColourA = new int[this.faceCount];
+		var8.faceColourB = new int[this.faceCount];
+		var8.faceColourC = new int[this.faceCount];
 		if (this.faceTextureCount > 0 && this.field2682 != null) {
 			int[] var9 = new int[this.faceTextureCount];
 			for (int var10 = 0; var10 < this.faceCount; var10++) {
@@ -1590,7 +1590,7 @@ public class ModelUnlit extends ModelSource {
 						var20 = this.field2685[this.faceVertexA[var15]];
 					}
 					int var21 = (var20.z * arg4 + var20.x * arg2 + var20.y * arg3) / (var20.w * var7) + arg0;
-					var8.faceColorA[var15] = method2943(var19, var21);
+					var8.faceColourA[var15] = method2943(var19, var21);
 					VertexNormal var22;
 					if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
 						var22 = this.vertexNormal[this.faceVertexB[var15]];
@@ -1598,7 +1598,7 @@ public class ModelUnlit extends ModelSource {
 						var22 = this.field2685[this.faceVertexB[var15]];
 					}
 					int var23 = (var22.z * arg4 + var22.x * arg2 + var22.y * arg3) / (var22.w * var7) + arg0;
-					var8.faceColorB[var15] = method2943(var19, var23);
+					var8.faceColourB[var15] = method2943(var19, var23);
 					VertexNormal var24;
 					if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
 						var24 = this.vertexNormal[this.faceVertexC[var15]];
@@ -1606,17 +1606,17 @@ public class ModelUnlit extends ModelSource {
 						var24 = this.field2685[this.faceVertexC[var15]];
 					}
 					int var25 = (var24.z * arg4 + var24.x * arg2 + var24.y * arg3) / (var24.w * var7) + arg0;
-					var8.faceColorC[var15] = method2943(var19, var25);
+					var8.faceColourC[var15] = method2943(var19, var25);
 				} else if (var16 == 1) {
 					FaceNormal var26 = this.faceNormal[var15];
 					int var27 = (var26.z * arg4 + var26.x * arg2 + var26.y * arg3) / (var7 / 2 + var7) + arg0;
-					var8.faceColorA[var15] = method2943(this.faceColour[var15] & 0xFFFF, var27);
-					var8.faceColorC[var15] = -1;
+					var8.faceColourA[var15] = method2943(this.faceColour[var15] & 0xFFFF, var27);
+					var8.faceColourC[var15] = -1;
 				} else if (var16 == 3) {
-					var8.faceColorA[var15] = 128;
-					var8.faceColorC[var15] = -1;
+					var8.faceColourA[var15] = 128;
+					var8.faceColourC[var15] = -1;
 				} else {
-					var8.faceColorC[var15] = -2;
+					var8.faceColourC[var15] = -2;
 				}
 			} else if (var16 == 0) {
 				VertexNormal var28;
@@ -1626,7 +1626,7 @@ public class ModelUnlit extends ModelSource {
 					var28 = this.field2685[this.faceVertexA[var15]];
 				}
 				int var29 = (var28.z * arg4 + var28.x * arg2 + var28.y * arg3) / (var28.w * var7) + arg0;
-				var8.faceColorA[var15] = method2939(var29);
+				var8.faceColourA[var15] = method2939(var29);
 				VertexNormal var30;
 				if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
 					var30 = this.vertexNormal[this.faceVertexB[var15]];
@@ -1634,7 +1634,7 @@ public class ModelUnlit extends ModelSource {
 					var30 = this.field2685[this.faceVertexB[var15]];
 				}
 				int var31 = (var30.z * arg4 + var30.x * arg2 + var30.y * arg3) / (var30.w * var7) + arg0;
-				var8.faceColorB[var15] = method2939(var31);
+				var8.faceColourB[var15] = method2939(var31);
 				VertexNormal var32;
 				if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
 					var32 = this.vertexNormal[this.faceVertexC[var15]];
@@ -1642,14 +1642,14 @@ public class ModelUnlit extends ModelSource {
 					var32 = this.field2685[this.faceVertexC[var15]];
 				}
 				int var33 = (var32.z * arg4 + var32.x * arg2 + var32.y * arg3) / (var32.w * var7) + arg0;
-				var8.faceColorC[var15] = method2939(var33);
+				var8.faceColourC[var15] = method2939(var33);
 			} else if (var16 == 1) {
 				FaceNormal var34 = this.faceNormal[var15];
 				int var35 = (var34.z * arg4 + var34.x * arg2 + var34.y * arg3) / (var7 / 2 + var7) + arg0;
-				var8.faceColorA[var15] = method2939(var35);
-				var8.faceColorC[var15] = -1;
+				var8.faceColourA[var15] = method2939(var35);
+				var8.faceColourC[var15] = -1;
 			} else {
-				var8.faceColorC[var15] = -2;
+				var8.faceColourC[var15] = -2;
 			}
 		}
 		this.method2929();
@@ -1657,14 +1657,14 @@ public class ModelUnlit extends ModelSource {
 		var8.vertexX = this.vertexX;
 		var8.vertexY = this.vertexY;
 		var8.vertexZ = this.vertexZ;
-		var8.field2780 = this.faceCount;
+		var8.faceCount = this.faceCount;
 		var8.faceVertexA = this.faceVertexA;
 		var8.faceVertexB = this.faceVertexB;
 		var8.faceVertexC = this.faceVertexC;
 		var8.facePriority = this.facePriority;
 		var8.faceAlpha = this.faceAlpha;
 		var8.field2737 = this.priority;
-		var8.field2742 = this.field2700;
+		var8.labelVertices = this.field2700;
 		var8.field2743 = this.field2701;
 		var8.field2718 = this.field2705;
 		return var8;

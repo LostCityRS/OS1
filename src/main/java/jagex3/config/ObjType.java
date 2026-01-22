@@ -489,7 +489,7 @@ public class ObjType extends DoublyLinkable {
 
 		int var19 = Pix3D.sinTable[obj.xan2d] * zoom >> 16;
 		int var20 = Pix3D.cosTable[obj.xan2d] * zoom >> 16;
-		model.method3002();
+		model.calcBoundingCylinder();
 		model.objRender(0, obj.yan2d, obj.zan2d, obj.xan2d, obj.xof2d, obj.yof2d + model.minY / 2 + var19, obj.yof2d + var20);
 
 		if (arg2 >= 1) {

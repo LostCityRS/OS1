@@ -7,6 +7,7 @@ import jagex3.graphics.Pix2D;
 @ObfuscatedName("fx")
 public class Pix3D extends Pix2D {
 
+	// jag::oldscape::dash3d::Pix3D::SetHClip
 	@ObfuscatedName("fx.u")
 	public static boolean hclip = false;
 
@@ -16,9 +17,11 @@ public class Pix3D extends Pix2D {
 	@ObfuscatedName("fx.w")
 	public static boolean lowMem = false;
 
+	// jag::oldscape::dash3d::Pix3D::SetLowDetail
 	@ObfuscatedName("fx.e")
 	public static boolean lowDetail = true;
 
+	// jag::oldscape::dash3d::Pix3D::SetTrans
 	@ObfuscatedName("fx.b")
 	public static int trans = 0;
 
@@ -49,21 +52,26 @@ public class Pix3D extends Pix2D {
 	@ObfuscatedName("fx.am")
 	public static int[] scanline = new int[1024];
 
+	// jag::oldscape::dash3d::Pix3D::m_colourTable
 	@ObfuscatedName("fx.ap")
-	public static int[] palette = new int[65536];
+	public static int[] colourTable = new int[65536];
 
 	@ObfuscatedName("fx.av")
 	public static TextureProvider textureProvider;
 
+	// jag::oldscape::dash3d::Pix3D::m_divTable
 	@ObfuscatedName("fx.ak")
 	public static int[] divTable = new int[512];
 
+	// jag::oldscape::dash3d::Pix3D::m_divTable2
 	@ObfuscatedName("fx.az")
 	public static int[] divTable2 = new int[2048];
 
+	// jag::oldscape::dash3d::Pix3D::m_sinTable
 	@ObfuscatedName("fx.an")
 	public static int[] sinTable = new int[2048];
 
+	// jag::oldscape::dash3d::Pix3D::m_cosTable
 	@ObfuscatedName("fx.ah")
 	public static int[] cosTable = new int[2048];
 
@@ -220,7 +228,7 @@ public class Pix3D extends Pix2D {
 				if (var35 == 0) {
 					var35 = 1;
 				}
-				palette[var6++] = var35;
+				colourTable[var6++] = var35;
 			}
 		}
 	}
@@ -721,7 +729,7 @@ public class Pix3D extends Pix2D {
 			int var27 = arg5 - arg4;
 			if (trans == 0) {
 				do {
-					arg0[var8++] = palette[var9 >> 8];
+					arg0[var8++] = colourTable[var9 >> 8];
 					var9 += arg7;
 					var27--;
 				} while (var27 > 0);
@@ -729,7 +737,7 @@ public class Pix3D extends Pix2D {
 				int var28 = trans;
 				int var29 = 256 - trans;
 				do {
-					int var30 = palette[var9 >> 8];
+					int var30 = colourTable[var9 >> 8];
 					var9 += arg7;
 					int var31 = ((var30 & 0xFF00FF) * var29 >> 8 & 0xFF00FF) + ((var30 & 0xFF00) * var29 >> 8 & 0xFF00);
 					int var32 = arg0[var8];
@@ -744,7 +752,7 @@ public class Pix3D extends Pix2D {
 		if (trans == 0) {
 			if (var10 > 0) {
 				do {
-					int var12 = palette[var9 >> 8];
+					int var12 = colourTable[var9 >> 8];
 					var9 += var11;
 					arg0[var8++] = var12;
 					arg0[var8++] = var12;
@@ -755,7 +763,7 @@ public class Pix3D extends Pix2D {
 			}
 			int var13 = arg5 - arg4 & 0x3;
 			if (var13 > 0) {
-				int var14 = palette[var9 >> 8];
+				int var14 = colourTable[var9 >> 8];
 				do {
 					arg0[var8++] = var14;
 					var13--;
@@ -767,7 +775,7 @@ public class Pix3D extends Pix2D {
 		int var16 = 256 - trans;
 		if (var10 > 0) {
 			do {
-				int var17 = palette[var9 >> 8];
+				int var17 = colourTable[var9 >> 8];
 				var9 += var11;
 				int var18 = ((var17 & 0xFF00FF) * var16 >> 8 & 0xFF00FF) + ((var17 & 0xFF00) * var16 >> 8 & 0xFF00);
 				int var19 = arg0[var8];
@@ -785,7 +793,7 @@ public class Pix3D extends Pix2D {
 		if (var23 <= 0) {
 			return;
 		}
-		int var24 = palette[var9 >> 8];
+		int var24 = colourTable[var9 >> 8];
 		int var25 = ((var24 & 0xFF00FF) * var16 >> 8 & 0xFF00FF) + ((var24 & 0xFF00) * var16 >> 8 & 0xFF00);
 		do {
 			int var26 = arg0[var8];

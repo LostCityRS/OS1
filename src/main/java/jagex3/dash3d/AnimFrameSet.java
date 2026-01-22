@@ -10,12 +10,12 @@ import jagex3.js5.Js5;
 public class AnimFrameSet extends DoublyLinkable {
 
 	@ObfuscatedName("fr.n")
-	public AnimFrame[] field2488;
+	public AnimFrame[] list;
 
 	public AnimFrameSet(Js5 arg0, Js5 arg1, int arg2, boolean arg3) {
 		LinkList var5 = new LinkList();
 		int var6 = arg0.getFileIdLimit(arg2);
-		this.field2488 = new AnimFrame[var6];
+		this.list = new AnimFrame[var6];
 		int[] var7 = arg0.getFileList(arg2);
 		for (int var8 = 0; var8 < var7.length; var8++) {
 			byte[] var9 = arg0.getFile(arg2, var7[var8]);
@@ -37,13 +37,13 @@ public class AnimFrameSet extends DoublyLinkable {
 				var10 = new AnimBase(var11, var13);
 				var5.push(var10);
 			}
-			this.field2488[var7[var8]] = new AnimFrame(var9, var10);
+			this.list[var7[var8]] = new AnimFrame(var9, var10);
 		}
 	}
 
 	// jag::oldscape::dash3d::AnimFrameSet::GetAnimateTransparencies
 	@ObfuscatedName("fr.z(IB)Z")
 	public boolean getAnimateTransparencies(int arg0) {
-		return this.field2488[arg0].hasAlpha;
+		return this.list[arg0].hasAlpha;
 	}
 }

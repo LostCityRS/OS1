@@ -448,7 +448,7 @@ public class LocType extends DoublyLinkable {
 		}
 		if (this.skewType >= 0) {
 			if (var9 instanceof ModelLit) {
-				var9 = ((ModelLit) var9).method3054(arg2, arg3, arg4, arg5, true, this.skewType);
+				var9 = ((ModelLit) var9).hillSkew(arg2, arg3, arg4, arg5, true, this.skewType);
 			} else if (var9 instanceof ModelUnlit) {
 				var9 = ((ModelUnlit) var9).method2928(arg2, arg3, arg4, arg5, true, this.skewType);
 			}
@@ -474,7 +474,7 @@ public class LocType extends DoublyLinkable {
 			field2307.put(var9, var7);
 		}
 		if (this.skewType >= 0) {
-			var9 = var9.method3054(arg2, arg3, arg4, arg5, true, this.skewType);
+			var9 = var9.hillSkew(arg2, arg3, arg4, arg5, true, this.skewType);
 		}
 		return var9;
 	}
@@ -501,12 +501,12 @@ public class LocType extends DoublyLinkable {
 		}
 		ModelLit var13;
 		if (arg6 == null) {
-			var13 = var11.method2999(true);
+			var13 = var11.copyForAnim(true);
 		} else {
 			var13 = arg6.method2419(var11, arg7, arg1);
 		}
 		if (this.skewType >= 0) {
-			var13 = var13.method3054(arg2, arg3, arg4, arg5, false, this.skewType);
+			var13 = var13.hillSkew(arg2, arg3, arg4, arg5, false, this.skewType);
 		}
 		return var13;
 	}

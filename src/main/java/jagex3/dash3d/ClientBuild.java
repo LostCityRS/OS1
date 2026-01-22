@@ -496,7 +496,7 @@ public class ClientBuild {
 			if (var45 != null && arg6.addScenery(arg0, arg1, arg2, var17, var10, var11, var45, arg5 == 11 ? 256 : 0, var20, var21) && var9.shadow) {
 				int var46 = 15;
 				if (var45 instanceof ModelLit) {
-					var46 = ((ModelLit) var45).method3004() / 4;
+					var46 = ((ModelLit) var45).getRadiusCylinder() / 4;
 					if (var46 > 30) {
 						var46 = 30;
 					}
@@ -895,7 +895,7 @@ public class ClientBuild {
 								}
 								int var56 = 0;
 								if (var49 != -1) {
-									var56 = Pix3D.palette[getUCol(var49, 96)];
+									var56 = Pix3D.colourTable[getUCol(var49, 96)];
 								}
 								if (var39 == 0) {
 									arg0.setGround(var6, var21, var34, 0, 0, -1, var40, var41, var42, var43, getUCol(var48, var44), getUCol(var48, var45), getUCol(var48, var46), getUCol(var48, var47), 0, 0, 0, 0, var56, 0);
@@ -926,7 +926,7 @@ public class ClientBuild {
 									}
 									int var65 = 0;
 									if (var61 != -2) {
-										var65 = Pix3D.palette[getOCol(var61, 96)];
+										var65 = Pix3D.colourTable[getOCol(var61, 96)];
 									}
 									if (var59.mapcolour != -1) {
 										int var66 = hueOff + var59.mapHue & 0xFF;
@@ -937,7 +937,7 @@ public class ClientBuild {
 											var67 = 255;
 										}
 										int var68 = getTable(var66, var59.mapSaturation, var67);
-										var65 = Pix3D.palette[getOCol(var68, 96)];
+										var65 = Pix3D.colourTable[getOCol(var68, 96)];
 									}
 									arg0.setGround(var6, var21, var34, var57, var58, var60, var40, var41, var42, var43, getUCol(var48, var44), getUCol(var48, var45), getUCol(var48, var46), getUCol(var48, var47), getOCol(var62, var44), getOCol(var62, var45), getOCol(var62, var46), getOCol(var62, var47), var56, var65);
 								}

@@ -313,13 +313,13 @@ public class NpcType extends DoublyLinkable {
 		} else if (primaryAnim != null) {
 			model = primaryAnim.method2436(cached, arg1);
 		} else if (secondaryAnim == null) {
-			model = cached.method2999(true);
+			model = cached.copyForAnim(true);
 		} else {
 			model = secondaryAnim.method2436(cached, arg3);
 		}
 
 		if (this.resizeh != 128 || this.resizev != 128) {
-			model.scale(this.resizeh, this.resizev, this.resizeh);
+			model.resize(this.resizeh, this.resizev, this.resizeh);
 		}
 
 		return model;
