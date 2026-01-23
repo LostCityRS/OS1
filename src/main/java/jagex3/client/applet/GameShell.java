@@ -9,7 +9,7 @@ import jagex3.datastruct.*;
 import jagex3.graphics.JavaPixMap;
 import jagex3.graphics.JavaSafePixMap;
 import jagex3.graphics.PixMap;
-import jagex3.jstring.StringUtil;
+import jagex3.jstring.StringTools;
 
 import java.applet.Applet;
 import java.awt.*;
@@ -40,6 +40,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("dj.n")
 	public boolean alreadyerrored = false;
 
+	// jag::oldscape::javapal::GameShell::m_updateCount
 	@ObfuscatedName("dj.j")
 	public static int updateCount;
 
@@ -55,12 +56,14 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("bc.i")
 	public static Timer timer;
 
+	// jag::oldscape::javapal::GameShell::m_drawTime
 	@ObfuscatedName("dj.u")
 	public static long[] drawTime = new long[32];
 
 	@ObfuscatedName("bm.v")
 	public static int field833;
 
+	// jag::oldscape::javapal::GameShell::m_updateTime
 	@ObfuscatedName("dj.w")
 	public static long[] updateTime = new long[32];
 
@@ -237,8 +240,8 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 						}
 
 						String var6 = version.substring(6, var3);
-						if (StringUtil.method62(var6)) {
-							int var7 = StringUtil.method91(var6, 10, true);
+						if (StringTools.method62(var6)) {
+							int var7 = StringTools.checkedParseInt(var6, 10, true);
 							if (var7 < 10) {
 								this.error("wrongjava");
 								return;
@@ -279,7 +282,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			timer = newTimer;
 
 			while (killtime == 0L || MonotonicTime.currentTime() < killtime) {
-				updateCount = timer.method380(deltime, mindel);
+				updateCount = timer.count(deltime, mindel);
 
 				for (int i = 0; i < updateCount; i++) {
 					this.mainloopwrapper();
@@ -384,7 +387,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	// com.jagex.game.runetek6.client.GameShell3.doneslowupdate
 	@ObfuscatedName("bk.v(B)V")
 	public static void doneslowupdate() {
-		timer.method381();
+		timer.reset();
 
 		for (int i = 0; i < 32; i++) {
 			drawTime[i] = 0L;
@@ -422,7 +425,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		}
 
 		killtime = MonotonicTime.currentTime();
-		PreciseSleep.sleep(5000L);
+		ThreadSleep.sleepPrecise(5000L);
 		this.shutdown();
 	}
 

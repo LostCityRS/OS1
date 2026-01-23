@@ -3,7 +3,7 @@ package jagex3.js5;
 import deob.ObfuscatedName;
 import jagex3.client.JagException;
 import jagex3.datastruct.LinkList;
-import jagex3.datastruct.PreciseSleep;
+import jagex3.datastruct.ThreadSleep;
 import jagex3.io.DataFile;
 
 // jag::oldscape::jagex3::Js5NetThread
@@ -55,7 +55,7 @@ public class Js5NetThread implements Runnable {
 				}
 
 				if (var2 == null) {
-					PreciseSleep.sleep(100L);
+					ThreadSleep.sleepPrecise(100L);
 					Object var10 = field1207;
 					synchronized (var10) {
 						if (field1205 <= 1) {

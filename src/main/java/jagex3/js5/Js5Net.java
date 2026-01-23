@@ -180,11 +180,11 @@ public class Js5Net {
 						int compressionType = incomingTransferHeader.g1();
 						int compressedSize = incomingTransferHeader.g4();
 						long key = ((long) archiveId << 16) + groupId;
-						Js5NetRequest request = (Js5NetRequest) urgentQueue.get(key);
+						Js5NetRequest request = (Js5NetRequest) urgentQueue.find(key);
 						incomingUrgentRequest = true;
 
 						if (request == null) {
-							request = (Js5NetRequest) prefetchQueue.get(key);
+							request = (Js5NetRequest) prefetchQueue.find(key);
 							incomingUrgentRequest = false;
 						}
 
@@ -388,20 +388,20 @@ public class Js5Net {
 	public static void queueRequest(Js5Loader provider, int archiveId, int groupId, int expectedCrc, byte padding, boolean urgent) {
 		long key = ((long) archiveId << 16) + groupId;
 
-		Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.get(key);
+		Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.find(key);
 		if (pendingUrgentRequest != null) {
 			return;
 		}
 
-		Js5NetRequest urgentRequest = (Js5NetRequest) urgentQueue.get(key);
+		Js5NetRequest urgentRequest = (Js5NetRequest) urgentQueue.find(key);
 		if (urgentRequest != null) {
 			return;
 		}
 
-		Js5NetRequest pendingPrefetchQueue = (Js5NetRequest) Js5Net.pendingPrefetchQueue.get(key);
+		Js5NetRequest pendingPrefetchQueue = (Js5NetRequest) Js5Net.pendingPrefetchQueue.find(key);
 		if (pendingPrefetchQueue == null) {
 			if (!urgent) {
-				Js5NetRequest prefetchRequest = (Js5NetRequest) prefetchQueue.get(key);
+				Js5NetRequest prefetchRequest = (Js5NetRequest) prefetchQueue.find(key);
 				if (prefetchRequest != null) {
 					return;
 				}
@@ -432,7 +432,7 @@ public class Js5Net {
 	@ObfuscatedName("ab.c(IIS)V")
 	public static void updateCacheHint(int archiveId, int groupId) {
 		long key = ((long) archiveId << 16) + groupId;
-		Js5NetRequest request = (Js5NetRequest) pendingPrefetchQueue.get(key);
+		Js5NetRequest request = (Js5NetRequest) pendingPrefetchQueue.find(key);
 		if (request != null) {
 			requestQueue.addHead(request);
 		}

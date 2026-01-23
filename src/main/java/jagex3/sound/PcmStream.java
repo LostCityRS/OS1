@@ -19,11 +19,13 @@ public abstract class PcmStream extends Linkable {
 	@ObfuscatedName("dx.j")
 	public volatile boolean active = true;
 
+	// jag::oldscape::sound::PCMStream::Priority
 	@ObfuscatedName("dx.c()I")
 	public int priority() {
 		return 255;
 	}
 
+	// jag::oldscape::sound::PCMStream::MaybeMix
 	@ObfuscatedName("dx.g([III)V")
 	public final void maybeMix(int[] arg0, int arg1, int arg2) {
 		if (this.active) {
@@ -34,13 +36,13 @@ public abstract class PcmStream extends Linkable {
 	}
 
 	@ObfuscatedName("dx.n()Ldx;")
-	public abstract PcmStream method1516();
+	public abstract PcmStream substreamStart();
 
 	@ObfuscatedName("dx.j()Ldx;")
-	public abstract PcmStream method1517();
+	public abstract PcmStream substreamNext();
 
 	@ObfuscatedName("dx.z()I")
-	public abstract int method1518();
+	public abstract int selfMixCost();
 
 	@ObfuscatedName("dx.q([III)V")
 	public abstract void doMix(int[] arg0, int arg1, int arg2);

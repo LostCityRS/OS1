@@ -31,7 +31,7 @@ public class HashTable {
 	}
 
 	@ObfuscatedName("cf.r(J)Ldg;")
-	public Linkable get(long arg0) {
+	public Linkable find(long arg0) {
 		Linkable var3 = this.buckets[(int) (arg0 & (long) (this.bucketCount - 1))];
 		for (this.sentinel = var3.next; this.sentinel != var3; this.sentinel = this.sentinel.next) {
 			if (this.sentinel.key == arg0) {
@@ -76,11 +76,11 @@ public class HashTable {
 	@ObfuscatedName("cf.m()Ldg;")
 	public Linkable first() {
 		this.field1499 = 0;
-		return this.next();
+		return this.findnext();
 	}
 
 	@ObfuscatedName("cf.c()Ldg;")
-	public Linkable next() {
+	public Linkable findnext() {
 		if (this.field1499 > 0 && this.buckets[this.field1499 - 1] != this.field1495) {
 			Linkable var1 = this.field1495;
 			this.field1495 = var1.next;

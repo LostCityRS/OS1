@@ -106,26 +106,27 @@ public class MidiPlayer extends PcmStream {
 		return this.globalVolume;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::LoadAndQueuePatches
 	@ObfuscatedName("ed.ac(Lei;Lch;La;IB)Z")
-	public synchronized boolean method2196(MidiFile arg0, Js5 arg1, WaveCache arg2, int arg3) {
+	public synchronized boolean loadAndQueuePatches(MidiFile arg0, Js5 arg1, WaveCache arg2, int arg3) {
 		arg0.method1773();
 		boolean var5 = true;
 		int[] var6 = null;
 		if (arg3 > 0) {
 			var6 = new int[] { arg3 };
 		}
-		for (ByteArrayNode patch = (ByteArrayNode) arg0.patches.first(); patch != null; patch = (ByteArrayNode) arg0.patches.next()) {
+		for (ByteArrayNode patch = (ByteArrayNode) arg0.patches.first(); patch != null; patch = (ByteArrayNode) arg0.patches.findnext()) {
 			int var8 = (int) patch.key;
-			Patch var9 = (Patch) this.patches.get((long) var8);
+			Patch var9 = (Patch) this.patches.find((long) var8);
 			if (var9 == null) {
-				var9 = Patch.method49(arg1, var8);
+				var9 = Patch.load(arg1, var8);
 				if (var9 == null) {
 					var5 = false;
 					continue;
 				}
 				this.patches.put(var9, (long) var8);
 			}
-			if (!var9.method1784(arg2, patch.data, var6)) {
+			if (!var9.loadWaves(arg2, patch.data, var6)) {
 				var5 = false;
 			}
 		}
@@ -137,14 +138,14 @@ public class MidiPlayer extends PcmStream {
 
 	@ObfuscatedName("ed.aa(B)V")
 	public synchronized void method2220() {
-		for (Patch patch = (Patch) this.patches.first(); patch != null; patch = (Patch) this.patches.next()) {
+		for (Patch patch = (Patch) this.patches.first(); patch != null; patch = (Patch) this.patches.findnext()) {
 			patch.method1781();
 		}
 	}
 
 	@ObfuscatedName("ed.as(I)V")
 	public synchronized void method2289() {
-		for (Patch patch = (Patch) this.patches.first(); patch != null; patch = (Patch) this.patches.next()) {
+		for (Patch patch = (Patch) this.patches.first(); patch != null; patch = (Patch) this.patches.findnext()) {
 			patch.unlink();
 		}
 	}
@@ -222,7 +223,7 @@ public class MidiPlayer extends PcmStream {
 				}
 			}
 		}
-		Patch var6 = (Patch) this.patches.get((long) this.channelPatch[arg0]);
+		Patch var6 = (Patch) this.patches.find((long) this.channelPatch[arg0]);
 		if (var6 == null) {
 			return;
 		}
@@ -327,14 +328,18 @@ public class MidiPlayer extends PcmStream {
 			if (arg0 < 0 || var2.channel == arg0) {
 				if (var2.stream != null) {
 					var2.stream.rampOut(PcmPlayer.frequency / 100);
+
 					if (var2.stream.isRamping()) {
 						this.patchStream.mixer.playStream(var2.stream);
 					}
+
 					var2.dropData();
 				}
+
 				if (var2.releaseProgress < 0) {
 					this.channelNotes[var2.channel][var2.noteKey] = null;
 				}
+
 				var2.unlink();
 			}
 		}
@@ -635,17 +640,17 @@ public class MidiPlayer extends PcmStream {
 	}
 
 	@ObfuscatedName("ed.n()Ldx;")
-	public synchronized PcmStream method1516() {
+	public synchronized PcmStream substreamStart() {
 		return this.patchStream;
 	}
 
 	@ObfuscatedName("ed.j()Ldx;")
-	public synchronized PcmStream method1517() {
+	public synchronized PcmStream substreamNext() {
 		return null;
 	}
 
 	@ObfuscatedName("ed.z()I")
-	public synchronized int method1518() {
+	public synchronized int selfMixCost() {
 		return 0;
 	}
 

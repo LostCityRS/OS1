@@ -357,7 +357,7 @@ public class MidiFile extends Linkable {
 						int var18 = var9 >> 16 & 0x7F;
 						if (var18 > 0) {
 							int var19 = var2[var16];
-							ByteArrayNode var20 = (ByteArrayNode) this.patches.get((long) var19);
+							ByteArrayNode var20 = (ByteArrayNode) this.patches.find((long) var19);
 							if (var20 == null) {
 								var20 = new ByteArrayNode(new byte[128]);
 								this.patches.put(var20, (long) var19);

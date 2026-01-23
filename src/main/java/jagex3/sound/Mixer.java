@@ -65,17 +65,17 @@ public class Mixer extends PcmStream {
 	}
 
 	@ObfuscatedName("ee.n()Ldx;")
-	public PcmStream method1516() {
+	public PcmStream substreamStart() {
 		return (PcmStream) this.streams.head();
 	}
 
 	@ObfuscatedName("ee.j()Ldx;")
-	public PcmStream method1517() {
+	public PcmStream substreamNext() {
 		return (PcmStream) this.streams.next();
 	}
 
 	@ObfuscatedName("ee.z()I")
-	public int method1518() {
+	public int selfMixCost() {
 		return 0;
 	}
 

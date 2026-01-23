@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.client.SignLink;
 import jagex3.datastruct.ArrayUtil;
 import jagex3.datastruct.MonotonicTime;
-import jagex3.datastruct.PreciseSleep;
+import jagex3.datastruct.ThreadSleep;
 
 import java.awt.*;
 
@@ -252,7 +252,7 @@ public class PcmPlayer {
 			if (var1) {
 				thread.shutdown = true;
 				while (thread.running) {
-					PreciseSleep.sleep(50L);
+					ThreadSleep.sleepPrecise(50L);
 				}
 				thread = null;
 			}
@@ -312,7 +312,7 @@ public class PcmPlayer {
 								PcmStreamable var12 = var11.sound;
 								if (var12 == null || var12.position <= var8) {
 									var11.active = true;
-									int var13 = var11.method1518();
+									int var13 = var11.selfMixCost();
 									var4 += var13;
 									if (var12 != null) {
 										var12.position += var13;
@@ -320,13 +320,13 @@ public class PcmPlayer {
 									if (var4 >= this.field256) {
 										break label105;
 									}
-									PcmStream var14 = var11.method1516();
+									PcmStream var14 = var11.substreamStart();
 									if (var14 != null) {
 										// todo: for loop
 										int var15 = var11.field1646;
 										while (var14 != null) {
 											this.method212(var14, var15 * var14.priority() >> 8);
-											var14 = var11.method1517();
+											var14 = var11.substreamNext();
 										}
 									}
 									PcmStream var16 = var11.stream;
@@ -380,7 +380,7 @@ public class PcmPlayer {
 		if (arg0.sound != null) {
 			arg0.sound.position = 0;
 		}
-		for (PcmStream var1 = arg0.method1516(); var1 != null; var1 = arg0.method1517()) {
+		for (PcmStream var1 = arg0.substreamStart(); var1 != null; var1 = arg0.substreamNext()) {
 			method815(var1);
 		}
 	}

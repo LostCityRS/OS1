@@ -24,20 +24,22 @@ public class MidiMixer extends PcmStream {
 		this.midiPlayer = arg0;
 	}
 
+	// jag::oldscape::midi2::MidiMixer::SubstreamStart
 	@ObfuscatedName("ex.n()Ldx;")
-	public PcmStream method1516() {
+	public PcmStream substreamStart() {
 		MidiNote var1 = (MidiNote) this.queue.head();
 		if (var1 == null) {
 			return null;
 		} else if (var1.stream == null) {
-			return this.method1517();
+			return this.substreamNext();
 		} else {
 			return var1.stream;
 		}
 	}
 
+	// jag::oldscape::midi2::MidiMixer::SubstreamNext
 	@ObfuscatedName("ex.j()Ldx;")
-	public PcmStream method1517() {
+	public PcmStream substreamNext() {
 		MidiNote var1;
 		do {
 			var1 = (MidiNote) this.queue.next();
@@ -48,8 +50,9 @@ public class MidiMixer extends PcmStream {
 		return var1.stream;
 	}
 
+	// jag::oldscape::midi2::MidiMixer::SelfMixCost
 	@ObfuscatedName("ex.z()I")
-	public int method1518() {
+	public int selfMixCost() {
 		return 0;
 	}
 

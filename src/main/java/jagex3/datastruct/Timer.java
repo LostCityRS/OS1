@@ -6,8 +6,8 @@ import deob.ObfuscatedName;
 public abstract class Timer {
 
 	@ObfuscatedName("aa.d(IIB)I")
-	public abstract int method380(int arg0, int arg1);
+	public abstract int count(int arg0, int arg1);
 
 	@ObfuscatedName("aa.r(I)V")
-	public abstract void method381();
+	public abstract void reset();
 }

@@ -297,17 +297,17 @@ public class WaveStream extends PcmStream {
 	}
 
 	@ObfuscatedName("et.n()Ldx;")
-	public PcmStream method1516() {
+	public PcmStream substreamStart() {
 		return null;
 	}
 
 	@ObfuscatedName("et.j()Ldx;")
-	public PcmStream method1517() {
+	public PcmStream substreamNext() {
 		return null;
 	}
 
 	@ObfuscatedName("et.z()I")
-	public int method1518() {
+	public int selfMixCost() {
 		return this.volume == 0 && this.volumeChangeDelta == 0 ? 0 : 1;
 	}
 

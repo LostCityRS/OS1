@@ -9,7 +9,7 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5Loader;
 import jagex3.js5.Js5Net;
 import jagex3.jstring.StringConstants;
-import jagex3.jstring.StringUtil;
+import jagex3.jstring.StringTools;
 import jagex3.jstring.Text;
 import jagex3.midi.MidiManager;
 
@@ -438,13 +438,13 @@ public class TitleScreen {
 			String user;
 			for (user = loginUser; arg0.stringWid(user) > y; user = user.substring(0, user.length() - 1)) {
 			}
-			arg0.drawString(PixFont.method2844(user), 312, y, 16777215, 0);
+			arg0.drawString(PixFont.escape(user), 312, y, 16777215, 0);
 			y = y + 15;
 
 			// todo: inlined method?
 			String var8 = Text.PASSWORDPROMPT;
 			String var9 = loginPass;
-			String var10 = StringUtil.method946('*', var9.length());
+			String var10 = StringTools.method946('*', var9.length());
 			arg0.drawString(var8 + var10, 274, y, 16777215, 0);
 			y += 15;
 		}
@@ -486,13 +486,13 @@ public class TitleScreen {
 				for (user = loginUser; arg0.stringWid(user) > y; user = user.substring(1)) {
 				}
 
-				arg0.drawString(PixFont.method2844(user) + (field150 == 0 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 312, y, 16777215, 0);
+				arg0.drawString(PixFont.escape(user) + (field150 == 0 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 312, y, 16777215, 0);
 				y += 15;
 
 				// todo: inlined method?
 				String var19 = Text.PASSWORDPROMPT;
 				String var20 = loginPass;
-				String var21 = StringUtil.method946('*', var20.length());
+				String var21 = StringTools.method946('*', var20.length());
 				arg0.drawString(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 274, y, 16777215, 0);
 				y += 15;
 

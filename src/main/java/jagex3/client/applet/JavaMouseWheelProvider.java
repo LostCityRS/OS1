@@ -13,12 +13,12 @@ public class JavaMouseWheelProvider extends MouseWheelProvider implements MouseW
 	public int field1557 = 0;
 
 	@ObfuscatedName("dh.d(Ljava/awt/Component;I)V")
-	public void method360(Component arg0) {
+	public void addListeners(Component arg0) {
 		arg0.addMouseWheelListener(this);
 	}
 
 	@ObfuscatedName("dh.l(Ljava/awt/Component;B)V")
-	public void method361(Component arg0) {
+	public void removeListeners(Component arg0) {
 		arg0.removeMouseWheelListener(this);
 	}
 

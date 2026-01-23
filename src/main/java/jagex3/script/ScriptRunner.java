@@ -18,7 +18,7 @@ import jagex3.graphics.SoftwareFont;
 import jagex3.io.Packet;
 import jagex3.jstring.JString;
 import jagex3.jstring.StringConstants;
-import jagex3.jstring.StringUtil;
+import jagex3.jstring.StringTools;
 import jagex3.jstring.Text;
 import jagex3.wordenc.WordPack;
 
@@ -292,7 +292,7 @@ public class ScriptRunner {
 						int var28 = intOperands[pc];
 
 						ssp -= var28;
-						String var29 = StringUtil.method1785(stringStack, ssp, var28);
+						String var29 = StringTools.method1785(stringStack, ssp, var28);
 
 						stringStack[ssp++] = var29;
 						continue;
@@ -1269,7 +1269,7 @@ public class ScriptRunner {
 						isp--;
 						int var90 = intStack[isp];
 
-						SubInterface var91 = (SubInterface) Client.subinterfaces.get(var90);
+						SubInterface var91 = (SubInterface) Client.subinterfaces.find(var90);
 						if (var91 == null) {
 							intStack[isp++] = 0;
 						} else {
@@ -1335,8 +1335,8 @@ public class ScriptRunner {
 						String var96 = stringStack[ssp];
 
 						int var97 = 0;
-						if (StringUtil.method62(var96)) {
-							int var98 = StringUtil.method91(var96, 10, true);
+						if (StringTools.method62(var96)) {
+							int var98 = StringTools.checkedParseInt(var96, 10, true);
 							var97 = var98;
 						}
 
@@ -2091,7 +2091,7 @@ public class ScriptRunner {
 						isp--;
 						int var234 = intStack[isp];
 
-						stringStack[ssp++] = var233 + StringUtil.method903(var234, true);
+						stringStack[ssp++] = var233 + StringTools.method903(var234, true);
 						continue;
 					}
 					if (opcode == 4103) {
@@ -2141,7 +2141,7 @@ public class ScriptRunner {
 						// compare
 						ssp -= 2;
 
-						intStack[isp++] = StringUtil.compare(stringStack[ssp], stringStack[ssp + 1]);
+						intStack[isp++] = StringTools.compare(stringStack[ssp], stringStack[ssp + 1]);
 						continue;
 					}
 					if (opcode == 4108) {
@@ -2155,7 +2155,7 @@ public class ScriptRunner {
 
 						byte[] var284 = Client.fontMetrics.getFile(var283, 0);
 						SoftwareFont var285 = new SoftwareFont(var284);
-						intStack[isp++] = var285.method2889(var281, var282);
+						intStack[isp++] = var285.predictLinesMultiline(var281, var282);
 						continue;
 					}
 					if (opcode == 4109) {
@@ -2169,7 +2169,7 @@ public class ScriptRunner {
 
 						byte[] var289 = Client.fontMetrics.getFile(var288, 0);
 						SoftwareFont var290 = new SoftwareFont(var289);
-						intStack[isp++] = var290.method2818(var286, var287);
+						intStack[isp++] = var290.predictWidthMultiline(var286, var287);
 						continue;
 					}
 					if (opcode == 4110) {
@@ -2191,7 +2191,7 @@ public class ScriptRunner {
 						ssp--;
 						String var293 = stringStack[ssp];
 
-						stringStack[ssp++] = PixFont.method2844(var293);
+						stringStack[ssp++] = PixFont.escape(var293);
 						continue;
 					}
 					if (opcode == 4112) {
@@ -2210,7 +2210,7 @@ public class ScriptRunner {
 						isp--;
 						int var296 = intStack[isp];
 
-						intStack[isp++] = StringUtil.isPrintable((char) var296) ? 1 : 0;
+						intStack[isp++] = StringTools.isPrintable((char) var296) ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4114) {
@@ -2218,7 +2218,7 @@ public class ScriptRunner {
 						isp--;
 						int var301 = intStack[isp];
 
-						intStack[isp++] = StringUtil.isAlphaNumeric((char) var301) ? 1 : 0;
+						intStack[isp++] = StringTools.isAlphaNumeric((char) var301) ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4115) {
@@ -2226,7 +2226,7 @@ public class ScriptRunner {
 						isp--;
 						int var306 = intStack[isp];
 
-						intStack[isp++] = StringUtil.isAlpha((char) var306) ? 1 : 0;
+						intStack[isp++] = StringTools.isAlpha((char) var306) ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4116) {
@@ -2234,7 +2234,7 @@ public class ScriptRunner {
 						isp--;
 						int var307 = intStack[isp];
 
-						intStack[isp++] = StringUtil.isNumeric((char) var307) ? 1 : 0;
+						intStack[isp++] = StringTools.isNumeric((char) var307) ? 1 : 0;
 						continue;
 					}
 					if (opcode == 4117) {

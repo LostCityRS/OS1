@@ -25,11 +25,11 @@ public abstract class PixMap {
 	}
 
 	@ObfuscatedName("ab.l(Ljava/awt/Graphics;III)V")
-	public abstract void draw(Graphics arg0, int arg1, int arg2);
+	public abstract void draw(Graphics g, int x, int y);
 
 	@ObfuscatedName("ab.m(Ljava/awt/Graphics;IIIII)V")
-	public abstract void draw(Graphics arg0, int arg1, int arg2, int arg3, int arg4);
+	public abstract void draw(Graphics g, int x, int y, int w, int h);
 
 	@ObfuscatedName("ab.r(IILjava/awt/Component;I)V")
-	public abstract void create(int arg0, int arg1, Component arg2);
+	public abstract void create(int w, int h, Component c);
 }

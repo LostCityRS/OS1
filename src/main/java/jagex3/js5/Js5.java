@@ -7,7 +7,7 @@ import jagex3.datastruct.IntHashTable;
 import jagex3.io.BZip2;
 import jagex3.io.GZip;
 import jagex3.io.Packet;
-import jagex3.jstring.StringUtil;
+import jagex3.jstring.StringTools;
 
 // jag::oldscape::jagex3::Js5
 // com.jagex.js5.js5
@@ -491,7 +491,7 @@ public abstract class Js5 {
 	@ObfuscatedName("ch.y(Ljava/lang/String;I)I")
 	public int getGroupId(String group) {
 		String lower = group.toLowerCase();
-		return this.groupNameHashTable.get(StringUtil.hashCode(lower));
+		return this.groupNameHashTable.get(StringTools.hashCode(lower));
 	}
 
 	// jag::oldscape::jagex3::Js5::GetFileId
@@ -499,7 +499,7 @@ public abstract class Js5 {
 	@ObfuscatedName("ch.t(ILjava/lang/String;B)I")
 	public int getFileId(int groupId, String file) {
 		String lower = file.toLowerCase();
-		return this.fileNameHashTables[groupId].get(StringUtil.hashCode(lower));
+		return this.fileNameHashTables[groupId].get(StringTools.hashCode(lower));
 	}
 
 	// jag::oldscape::jagex3::Js5::GetFile
@@ -507,8 +507,8 @@ public abstract class Js5 {
 	public byte[] getFile(String group, String file) {
 		String groupLower = group.toLowerCase();
 		String fileLower = file.toLowerCase();
-		int groupId = this.groupNameHashTable.get(StringUtil.hashCode(groupLower));
-		int fileId = this.fileNameHashTables[groupId].get(StringUtil.hashCode(fileLower));
+		int groupId = this.groupNameHashTable.get(StringTools.hashCode(groupLower));
+		int fileId = this.fileNameHashTables[groupId].get(StringTools.hashCode(fileLower));
 		return this.getFile(groupId, fileId);
 	}
 
@@ -517,8 +517,8 @@ public abstract class Js5 {
 	public boolean requestDownload(String group, String file) {
 		String groupLower = group.toLowerCase();
 		String fileLower = file.toLowerCase();
-		int groupId = this.groupNameHashTable.get(StringUtil.hashCode(groupLower));
-		int fileId = this.fileNameHashTables[groupId].get(StringUtil.hashCode(fileLower));
+		int groupId = this.groupNameHashTable.get(StringTools.hashCode(groupLower));
+		int fileId = this.fileNameHashTables[groupId].get(StringTools.hashCode(fileLower));
 		return this.requestDownload(groupId, fileId);
 	}
 
@@ -526,7 +526,7 @@ public abstract class Js5 {
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
 	public void updateCacheHint(String group) {
 		String lower = group.toLowerCase();
-		int groupId = this.groupNameHashTable.get(StringUtil.hashCode(lower));
+		int groupId = this.groupNameHashTable.get(StringTools.hashCode(lower));
 		if (groupId >= 0) {
 			this.updateCacheHint(groupId);
 		}

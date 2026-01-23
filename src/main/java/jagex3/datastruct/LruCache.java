@@ -31,7 +31,7 @@ public class LruCache {
 
 	@ObfuscatedName("ce.r(J)Len;")
 	public DoublyLinkable get(long arg0) {
-		DoublyLinkable var3 = (DoublyLinkable) this.hashTable.get(arg0);
+		DoublyLinkable var3 = (DoublyLinkable) this.hashTable.find(arg0);
 		if (var3 != null) {
 			this.history.push(var3);
 		}
@@ -40,7 +40,7 @@ public class LruCache {
 
 	@ObfuscatedName("ce.d(J)V")
 	public void remove(long arg0) {
-		DoublyLinkable var3 = (DoublyLinkable) this.hashTable.get(arg0);
+		DoublyLinkable var3 = (DoublyLinkable) this.hashTable.find(arg0);
 		if (var3 != null) {
 			var3.unlink();
 			var3.unlink2();

@@ -3,7 +3,7 @@ package jagex3.sound;
 import deob.ObfuscatedName;
 import jagex3.client.JagException;
 import jagex3.client.SignLink;
-import jagex3.datastruct.PreciseSleep;
+import jagex3.datastruct.ThreadSleep;
 
 @ObfuscatedName("f")
 public class AudioThread implements Runnable {
@@ -30,7 +30,7 @@ public class AudioThread implements Runnable {
 						var2.cycle();
 					}
 				}
-				PreciseSleep.sleep(10L);
+				ThreadSleep.sleepPrecise(10L);
 				SignLink.flushEvents(signLink, null);
 			}
 		} catch (Exception ex) {

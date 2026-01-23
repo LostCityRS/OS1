@@ -25,7 +25,7 @@ import jagex3.js5.Js5NetThread;
 import jagex3.js5.Js5WorkerRequest;
 import jagex3.jstring.JString;
 import jagex3.jstring.StringConstants;
-import jagex3.jstring.StringUtil;
+import jagex3.jstring.StringTools;
 import jagex3.jstring.Text;
 import jagex3.midi.MidiManager;
 import jagex3.midi.MidiPlayer;
@@ -918,7 +918,7 @@ public class Client extends GameShell {
 	public static int field44; // todo
 
 	@ObfuscatedName("az.lu")
-	public static MouseWheelProvider field484; // todo
+	public static MouseWheelProvider mouseWheel; // todo
 
 	@ObfuscatedName("client.mw")
 	public static int componentDrawCount = 0;
@@ -1272,11 +1272,11 @@ public class Client extends GameShell {
 		PlayerModel.recol2s = RecolsRunescape.recol2s;
 		PlayerModel.recol2d = RecolsRunescape.recol2d;
 		JavaKeyboardProvider.imethod1();
-		JavaKeyboardProvider.method53(GameShell.canvas);
+		JavaKeyboardProvider.addListeners(GameShell.canvas);
 		JavaMouseProvider.addListeners(GameShell.canvas);
-		field484 = MouseWheelProvider.method779();
-		if (field484 != null) {
-			field484.method360(GameShell.canvas);
+		mouseWheel = MouseWheelProvider.method779();
+		if (mouseWheel != null) {
+			mouseWheel.addListeners(GameShell.canvas);
 		}
 		masterIndex = new DataFile(255, GameShellCache.cacheDat, GameShellCache.masterIndex, 500000);
 		if (modewhere != 0) {
@@ -1288,7 +1288,7 @@ public class Client extends GameShell {
 	public final void mainloop() {
 		loopCycle++;
 
-		this.js5update();
+		this.serviceNetClient();
 
 		imethod1();
 		MidiManager.method825();
@@ -1297,17 +1297,17 @@ public class Client extends GameShell {
 		JavaKeyboardProvider.imethod4();
 		JavaMouseProvider.imethod3();
 
-		if (field484 != null) {
-			int var10 = field484.method362();
+		if (mouseWheel != null) {
+			int var10 = mouseWheel.method362();
 			mouseWheelRotation = var10;
 		}
 
 		if (state == 0) {
-			mainload();
+			mainLoad();
 			GameShell.doneslowupdate();
 		} else if (state == 5) {
 			TitleScreen.loop(this);
-			mainload();
+			mainLoad();
 			GameShell.doneslowupdate();
 		} else if (state == 10) {
 			TitleScreen.loop(this);
@@ -1323,25 +1323,30 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::MainRedraw
 	@ObfuscatedName("client.b(I)V")
 	public final void mainredraw() {
 		boolean var1 = MidiManager.method511();
 		if (var1 && field2189 && midiPcmPlayer != null) {
 			midiPcmPlayer.play();
 		}
+
 		if (canvasReplaceRecommended) {
-			JavaKeyboardProvider.method1143(GameShell.canvas);
+			JavaKeyboardProvider.removeListeners(GameShell.canvas);
 			JavaMouseProvider.removeListeners(GameShell.canvas);
-			if (field484 != null) {
-				field484.method361(GameShell.canvas);
+			if (mouseWheel != null) {
+				mouseWheel.removeListeners(GameShell.canvas);
 			}
+
 			this.addcanvas();
-			JavaKeyboardProvider.method53(GameShell.canvas);
+
+			JavaKeyboardProvider.addListeners(GameShell.canvas);
 			JavaMouseProvider.addListeners(GameShell.canvas);
-			if (field484 != null) {
-				field484.method360(GameShell.canvas);
+			if (mouseWheel != null) {
+				mouseWheel.addListeners(GameShell.canvas);
 			}
 		}
+
 		if (state == 0) {
 			GameShell.drawProgress(TitleScreen.loadPos, TitleScreen.loadString, null);
 		} else if (state == 5) {
@@ -1355,12 +1360,14 @@ public class Client extends GameShell {
 				if (mapLoadCount > mapLoadPrevCount) {
 					mapLoadPrevCount = mapLoadCount;
 				}
+
 				int var12 = (mapLoadPrevCount * 50 - mapLoadCount * 50) / mapLoadPrevCount;
 				messageBox(Text.LOADING + StringConstants.TAG_BREAK + StringConstants.OPEN_BRACKET + var12 + "%" + StringConstants.CLOSE_BRACKET, false);
 			} else if (mapLoadingStage == 2) {
 				if (locModelLoadCount > locModelLoadPrevCount) {
 					locModelLoadPrevCount = locModelLoadCount;
 				}
+
 				int var13 = (locModelLoadPrevCount * 50 - locModelLoadCount * 50) / locModelLoadPrevCount + 50;
 				messageBox(Text.LOADING + StringConstants.TAG_BREAK + StringConstants.OPEN_BRACKET + var13 + "%" + StringConstants.CLOSE_BRACKET, false);
 			} else {
@@ -1374,25 +1381,25 @@ public class Client extends GameShell {
 
 		if (state == 30 && componentDrawMode == 0 && !fullredraw) {
 			try {
-				Graphics var43 = GameShell.canvas.getGraphics();
-				for (int var44 = 0; var44 < componentDrawCount; var44++) {
-					if (componentRedrawRequested2[var44]) {
-						GameShell.drawArea.draw(var43, componentDrawX[var44], componentDrawY[var44], componentDrawWidth[var44], componentDrawHeight[var44]);
-						componentRedrawRequested2[var44] = false;
+				Graphics g = GameShell.canvas.getGraphics();
+				for (int i = 0; i < componentDrawCount; i++) {
+					if (componentRedrawRequested2[i]) {
+						GameShell.drawArea.draw(g, componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i]);
+						componentRedrawRequested2[i] = false;
 					}
 				}
-			} catch (Exception var52) {
+			} catch (Exception ex) {
 				GameShell.canvas.repaint();
 			}
 		} else if (state > 0) {
 			try {
-				Graphics var46 = GameShell.canvas.getGraphics();
-				GameShell.drawArea.draw(var46, 0, 0);
+				Graphics g = GameShell.canvas.getGraphics();
+				GameShell.drawArea.draw(g, 0, 0);
 				fullredraw = false;
-				for (int var47 = 0; var47 < componentDrawCount; var47++) {
-					componentRedrawRequested2[var47] = false;
+				for (int i = 0; i < componentDrawCount; i++) {
+					componentRedrawRequested2[i] = false;
 				}
-			} catch (Exception var51) {
+			} catch (Exception ex) {
 				GameShell.canvas.repaint();
 			}
 		}
@@ -1410,7 +1417,7 @@ public class Client extends GameShell {
 		}
 		JavaKeyboardProvider.method1502();
 		JavaMouseProvider.imethod2();
-		field484 = null;
+		mouseWheel = null;
 		if (midiPcmPlayer != null) {
 			midiPcmPlayer.shutdown();
 		}
@@ -1463,8 +1470,9 @@ public class Client extends GameShell {
 		state = newState;
 	}
 
+	// jag::oldscape::Client::ServiceNetClient
 	@ObfuscatedName("client.ci(I)V")
-	public void js5update() {
+	public void serviceNetClient() {
 		if (state != 1000) {
 			boolean var1 = Js5Net.loop();
 			if (!var1) {
@@ -1583,8 +1591,9 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::MainLoad
 	@ObfuscatedName("bv.cg(B)V")
-	public static void mainload() {
+	public static void mainLoad() {
 		if (loadingStep == 0) {
 			world = new World(4, 104, 104, ClientBuild.groundh);
 			for (int level = 0; level < 4; level++) {
@@ -2238,7 +2247,7 @@ public class Client extends GameShell {
 			}
 		}
 
-		for (SubInterface var12 = (SubInterface) subinterfaces.first(); var12 != null; var12 = (SubInterface) subinterfaces.next()) {
+		for (SubInterface var12 = (SubInterface) subinterfaces.first(); var12 != null; var12 = (SubInterface) subinterfaces.findnext()) {
 			closeSubInterface(var12, true);
 		}
 
@@ -2355,10 +2364,13 @@ public class Client extends GameShell {
 		}
 
 		System.gc();
+
 		MidiManager.stop2();
 		previousSong = -1;
 		field2189 = false;
+
 		BgSound.reset();
+
 		setMainState(10);
 	}
 
@@ -3097,8 +3109,8 @@ public class Client extends GameShell {
 		byte var2 = 4;
 		int var3 = var2 + 6;
 		int var4 = var2 + 6;
-		int var5 = p12.method2818(arg0, 250);
-		int var6 = p12.method2889(arg0, 250) * 13;
+		int var5 = p12.predictWidthMultiline(arg0, 250);
+		int var6 = p12.predictLinesMultiline(arg0, 250) * 13;
 
 		Pix2D.fillRect(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2, 0);
 		Pix2D.drawRect(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2, 0xffffff);
@@ -3294,7 +3306,7 @@ public class Client extends GameShell {
 		if (showFps) {
 			int var6 = arg0 + 512 - 5;
 			int var7 = arg1 + 20;
-			p12.drawStringRight("Fps:" + fps, var6, var7, 0xffff00, -1);
+			p12.rightString("Fps:" + fps, var6, var7, 0xffff00, -1);
 
 			int var11 = var7 + 15;
 			Runtime var8 = Runtime.getRuntime();
@@ -3306,7 +3318,7 @@ public class Client extends GameShell {
 			if (var9 > 65536 && !lowMemory) {
 				var10 = 0xff0000;
 			}
-			p12.drawStringRight("Mem:" + var9 + "k", var6, var11, var10, -1);
+			p12.rightString("Mem:" + var9 + "k", var6, var11, var10, -1);
 			var7 = var11 + 15;
 		}
 	}
@@ -4621,7 +4633,7 @@ public class Client extends GameShell {
 					field2016.pos = 0;
 					in.gdata(field2016.data, 0, var30);
 					field2016.pos = 0;
-					String var33 = PixFont.method2844(StringUtil.method54(WordPack.unpack(field2016)));
+					String var33 = PixFont.escape(StringTools.method54(WordPack.unpack(field2016)));
 					var26.chat = var33.trim();
 					var26.field2652 = var28 >> 8;
 					var26.field2670 = var28 & 0xFF;
@@ -6406,7 +6418,7 @@ public class Client extends GameShell {
 					drawLayer(com.subcomponents, com.parentlayer, var19, var20, var21, var22, var12 - com.scrollX, var13 - com.scrollY, var11);
 				}
 
-				SubInterface var164 = (SubInterface) subinterfaces.get((long) com.parentlayer);
+				SubInterface var164 = (SubInterface) subinterfaces.find((long) com.parentlayer);
 				if (var164 != null) {
 					if (var164.type == 0 && JavaMouseProvider.mouseX >= var19 && JavaMouseProvider.mouseY >= var20 && JavaMouseProvider.mouseX < var21 && JavaMouseProvider.mouseY < var22 && !isMenuOpen && !field2092) {
 						menuVerb[0] = Text.CANCEL;
@@ -6706,7 +6718,7 @@ public class Client extends GameShell {
 							} else if (com.halign == 1) {
 								var209.centreString(var214, com.renderwidth / 2 + var215, var216, com.colour, com.shadowed ? 0 : -1);
 							} else {
-								var209.drawStringRight(var214, com.renderwidth + var215 - 1, var216, com.colour, com.shadowed ? 0 : -1);
+								var209.rightString(var214, com.renderwidth + var215 - 1, var216, com.colour, com.shadowed ? 0 : -1);
 							}
 						}
 						var210++;
@@ -6832,7 +6844,7 @@ public class Client extends GameShell {
 
 				String var5 = "";
 				if (field170 != null) {
-					var5 = StringUtil.formatIPv4(field170.intArg);
+					var5 = StringTools.formatIPv4(field170.intArg);
 					if (field170.result != null) {
 						var5 = (String) field170.result;
 					}
@@ -7140,7 +7152,7 @@ public class Client extends GameShell {
 						loopLayer(var9.subcomponents, var9.parentlayer, var12, var13, var14, var15, var10 - var9.scrollX, var11 - var9.scrollY);
 					}
 
-					SubInterface var24 = (SubInterface) subinterfaces.get((long) var9.parentlayer);
+					SubInterface var24 = (SubInterface) subinterfaces.find((long) var9.parentlayer);
 					if (var24 != null) {
 						loopInterface(var24.id, var12, var13, var14, var15, var10, var11);
 					}
@@ -7448,7 +7460,7 @@ public class Client extends GameShell {
 					runHookLayer(com.subcomponents, arg1);
 				}
 
-				SubInterface sub = (SubInterface) subinterfaces.get((long) com.parentlayer);
+				SubInterface sub = (SubInterface) subinterfaces.find((long) com.parentlayer);
 				if (sub != null) {
 					runHookImmediate(sub.id, arg1);
 				}
@@ -7503,7 +7515,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::LegacyUpdated
 	@ObfuscatedName("g.fn(B)V")
 	public static void legacyUpdated() {
-		for (SubInterface sub = (SubInterface) subinterfaces.first(); sub != null; sub = (SubInterface) subinterfaces.next()) {
+		for (SubInterface sub = (SubInterface) subinterfaces.first(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
 			int id = sub.id;
 
 			if (IfType.openInterface(id)) {
@@ -7610,7 +7622,7 @@ public class Client extends GameShell {
 					animateLayer(com.subcomponents, com.parentlayer);
 				}
 
-				SubInterface var4 = (SubInterface) subinterfaces.get(com.parentlayer);
+				SubInterface var4 = (SubInterface) subinterfaces.find(com.parentlayer);
 				if (var4 != null) {
 					animateInterface(var4.id);
 				}
@@ -8276,7 +8288,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::PurgeServerActive
 	@ObfuscatedName("s.gt(II)V")
 	public static void purgeServerActive(int comId) {
-		for (ServerActive active = (ServerActive) serverActive.first(); active != null; active = (ServerActive) serverActive.next()) {
+		for (ServerActive active = (ServerActive) serverActive.first(); active != null; active = (ServerActive) serverActive.findnext()) {
 			if ((long) comId == (active.key >> 48 & 0xFFFFL)) {
 				active.unlink();
 			}
@@ -8286,7 +8298,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::GetActive
 	@ObfuscatedName("dn.gg(Leg;B)I")
 	public static int getActive(IfType com) {
-		ServerActive active = (ServerActive) serverActive.get(((long) com.parentlayer << 32) + (long) com.subid);
+		ServerActive active = (ServerActive) serverActive.find(((long) com.parentlayer << 32) + (long) com.subid);
 		return active == null ? com.events : active.events;
 	}
 
@@ -8644,6 +8656,7 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::GameLoop
 	public static void gameLoop() {
 		if (rebootTimer > 1) {
 			rebootTimer--;
@@ -9159,7 +9172,7 @@ public class Client extends GameShell {
 			if (ptype == 168) {
 				// MESSAGE_PRIVATE_ECHO
 				String var83 = in.gjstr();
-				String var91 = PixFont.method2844(StringUtil.method54(WordPack.unpack2(in)));
+				String var91 = PixFont.escape(StringTools.method54(WordPack.unpack2(in)));
 				addChat(6, var83, var91);
 
 				ptype = -1;
@@ -9169,7 +9182,7 @@ public class Client extends GameShell {
 			if (ptype == 87) {
 				// IF_CLOSESUB
 				int var92 = in.g4();
-				SubInterface var93 = (SubInterface) subinterfaces.get((long) var92);
+				SubInterface var93 = (SubInterface) subinterfaces.find((long) var92);
 				if (var93 != null) {
 					closeSubInterface(var93, true);
 				}
@@ -9353,7 +9366,7 @@ public class Client extends GameShell {
 				if (!var123 && overrideChat == 0) {
 					field2148[field2149] = var121;
 					field2149 = (field2149 + 1) % 100;
-					String var132 = PixFont.method2844(StringUtil.method54(WordPack.unpack2(in)));
+					String var132 = PixFont.escape(StringTools.method54(WordPack.unpack2(in)));
 					if (var120 == 2 || var120 == 3) {
 						addChat(7, StringConstants.TAG_IMG(1) + var115, var132);
 					} else if (var120 == 1) {
@@ -9372,7 +9385,7 @@ public class Client extends GameShell {
 				int var133 = in.g1_alt2();
 				int var134 = in.g2_alt2();
 				int var135 = in.g4_alt1();
-				SubInterface var136 = (SubInterface) subinterfaces.get((long) var135);
+				SubInterface var136 = (SubInterface) subinterfaces.find((long) var135);
 				if (var136 != null) {
 					closeSubInterface(var136, var136.id != var134);
 				}
@@ -9523,7 +9536,7 @@ public class Client extends GameShell {
 				}
 				for (int var164 = var163; var164 <= var161; var164++) {
 					long var165 = ((long) var162 << 32) + (long) var164;
-					Linkable var167 = serverActive.get(var165);
+					Linkable var167 = serverActive.find(var165);
 					if (var167 != null) {
 						var167.unlink();
 					}
@@ -9630,7 +9643,7 @@ public class Client extends GameShell {
 					int var182 = in.g4();
 					int var183 = in.g2();
 					int var184 = in.g1();
-					SubInterface var185 = (SubInterface) subinterfaces.get((long) var182);
+					SubInterface var185 = (SubInterface) subinterfaces.find((long) var182);
 					if (var185 != null && var185.id != var183) {
 						closeSubInterface(var185, true);
 						var185 = null;
@@ -9640,7 +9653,7 @@ public class Client extends GameShell {
 					}
 					var185.field1599 = true;
 				}
-				for (SubInterface var186 = (SubInterface) subinterfaces.first(); var186 != null; var186 = (SubInterface) subinterfaces.next()) {
+				for (SubInterface var186 = (SubInterface) subinterfaces.first(); var186 != null; var186 = (SubInterface) subinterfaces.findnext()) {
 					if (var186.field1599) {
 						var186.field1599 = false;
 					} else {
@@ -10047,7 +10060,7 @@ public class Client extends GameShell {
 				if (!var278 && overrideChat == 0) {
 					field2148[field2149] = var276;
 					field2149 = (field2149 + 1) % 100;
-					String var287 = PixFont.method2844(StringUtil.method54(WordPack.unpack2(in)));
+					String var287 = PixFont.escape(StringTools.method54(WordPack.unpack2(in)));
 					if (var275 == 2 || var275 == 3) {
 						addChat(9, StringConstants.TAG_IMG(1) + var268, var287, JString.fromBase37Upper(var269));
 					} else if (var275 == 1) {
@@ -10243,7 +10256,7 @@ public class Client extends GameShell {
 					}
 				}
 
-				ClientInvCache inv = (ClientInvCache) ClientInvCache.invList.get((long) invId);
+				ClientInvCache inv = (ClientInvCache) ClientInvCache.invList.find((long) invId);
 				if (inv != null) {
 					for (int i = 0; i < inv.objId.length; i++) {
 						inv.objId[i] = -1;
@@ -10693,7 +10706,7 @@ public class Client extends GameShell {
 			var26 = var26 + StringConstants.TAG_COLOUR(0xffffff) + " " + '/' + " " + (menuNumEntries - 2) + Text.MOREOPTIONS;
 		}
 
-		b12.method2828(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
+		b12.drawStringAntiMacro(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
 	}
 
 	// jag::oldscape::Client::GlCheckMinimap
@@ -11633,10 +11646,10 @@ public class Client extends GameShell {
 					b12.centerStringWave(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
 				}
 				if (chatEffect[var82] == 2) {
-					b12.method2826(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
+					b12.centreStringWave2(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
 				}
 				if (chatEffect[var82] == 3) {
-					b12.method2827(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle, 150 - chatTimer[var82]);
+					b12.centreStringWave3(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle, 150 - chatTimer[var82]);
 				}
 				if (chatEffect[var82] == 4) {
 					int var94 = (150 - chatTimer[var82]) * (b12.stringWid(var89) + 100) / 150;
@@ -12013,7 +12026,7 @@ public class Client extends GameShell {
 		// CLOSE_MODAL
 		out.p1Enc(129);
 
-		for (SubInterface sub = (SubInterface) subinterfaces.first(); sub != null; sub = (SubInterface) subinterfaces.next()) {
+		for (SubInterface sub = (SubInterface) subinterfaces.first(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
 			if (sub.type == 0 || sub.type == 3) {
 				closeSubInterface(sub, true);
 			}

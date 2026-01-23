@@ -17,10 +17,10 @@ public abstract class MouseWheelProvider {
 	}
 
 	@ObfuscatedName("ac.d(Ljava/awt/Component;I)V")
-	public abstract void method360(Component arg0);
+	public abstract void addListeners(Component arg0);
 
 	@ObfuscatedName("ac.l(Ljava/awt/Component;B)V")
-	public abstract void method361(Component arg0);
+	public abstract void removeListeners(Component arg0);
 
 	@ObfuscatedName("ac.m(I)I")
 	public abstract int method362();

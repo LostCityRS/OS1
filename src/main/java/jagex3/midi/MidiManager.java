@@ -164,7 +164,7 @@ public class MidiManager {
 					field1586 = new WaveCache(jagFX, vorbis);
 				}
 
-				if (midiPlayer.method2196(field1113, patches, field1586, 22050)) {
+				if (midiPlayer.loadAndQueuePatches(field1113, patches, field1586, 22050)) {
 					midiPlayer.method2220();
 					midiPlayer.setGlobalVolume(field1120);
 					midiPlayer.start(field1113, field1625);

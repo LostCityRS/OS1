@@ -30,14 +30,14 @@ public class MillisTimer extends Timer {
 	}
 
 	@ObfuscatedName("dc.r(I)V")
-	public void method381() {
+	public void reset() {
 		for (int var1 = 0; var1 < 10; var1++) {
 			this.field1561[var1] = 0L;
 		}
 	}
 
 	@ObfuscatedName("dc.d(IIB)I")
-	public int method380(int arg0, int arg1) {
+	public int count(int arg0, int arg1) {
 		int var3 = this.field1559;
 		int var4 = this.field1560;
 		this.field1559 = 300;
@@ -71,7 +71,7 @@ public class MillisTimer extends Timer {
 		if (this.field1560 < arg1) {
 			this.field1560 = arg1;
 		}
-		PreciseSleep.sleep((long) this.field1560);
+		ThreadSleep.sleepPrecise((long) this.field1560);
 		int var6 = 0;
 		while (this.field1562 < 256) {
 			var6++;

@@ -21,7 +21,7 @@ public class ClientInvCache extends Linkable {
 	// jag::oldscape::ClientInvCache::GetCount
 	@ObfuscatedName("r.c(III)I")
 	public static int getCount(int arg0, int arg1) {
-		ClientInvCache var2 = (ClientInvCache) invList.get(arg0);
+		ClientInvCache var2 = (ClientInvCache) invList.find(arg0);
 		if (var2 == null) {
 			return 0;
 		}
@@ -34,7 +34,7 @@ public class ClientInvCache extends Linkable {
 	// jag::oldscape::ClientInvCache::InvTotal
 	@ObfuscatedName("dj.n(IIB)I")
 	public static int invTotal(int arg0, int arg1) {
-		ClientInvCache var2 = (ClientInvCache) invList.get(arg0);
+		ClientInvCache var2 = (ClientInvCache) invList.find(arg0);
 		if (var2 == null) {
 			return 0;
 		}
@@ -53,7 +53,7 @@ public class ClientInvCache extends Linkable {
 	// jag::oldscape::ClientInvCache::Set
 	@ObfuscatedName("fh.j(IIIII)V")
 	public static void method2901(int arg0, int arg1, int arg2, int arg3) {
-		ClientInvCache var4 = (ClientInvCache) invList.get(arg0);
+		ClientInvCache var4 = (ClientInvCache) invList.find(arg0);
 		if (var4 == null) {
 			var4 = new ClientInvCache();
 			invList.put(var4, (long) arg0);
@@ -79,7 +79,7 @@ public class ClientInvCache extends Linkable {
 	// jag::oldscape::ClientInvCache::Delete
 	@ObfuscatedName("n.z(IB)V")
 	public static void delete(int arg0) {
-		ClientInvCache var1 = (ClientInvCache) invList.get(arg0);
+		ClientInvCache var1 = (ClientInvCache) invList.find(arg0);
 		if (var1 != null) {
 			var1.unlink();
 		}
@@ -87,7 +87,7 @@ public class ClientInvCache extends Linkable {
 
 	// jag::oldscape::ClientInvCache::GetType
 	public static int getType(int var141, int var142) {
-		ClientInvCache var145 = (ClientInvCache) ClientInvCache.invList.get(var141);
+		ClientInvCache var145 = (ClientInvCache) ClientInvCache.invList.find(var141);
 		if (var145 == null) {
 			return -1;
 		}

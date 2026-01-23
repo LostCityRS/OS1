@@ -1,7 +1,7 @@
 package jagex3.graphics;
 
 import deob.ObfuscatedName;
-import jagex3.jstring.StringUtil;
+import jagex3.jstring.StringTools;
 
 import java.util.Random;
 
@@ -42,36 +42,47 @@ public abstract class PixFont extends Pix2D {
 	@ObfuscatedName("fs.a")
 	public byte[] field2547;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_strikeout
 	@ObfuscatedName("fs.h")
-	public static int field2555 = -1;
+	public static int strikeout = -1;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_underline
 	@ObfuscatedName("fs.x")
-	public static int field2559 = -1;
+	public static int underline = -1;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_defaultShadow
 	@ObfuscatedName("fs.p")
-	public static int field2557 = -1;
+	public static int defaultShadow = -1;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_currentShadow
 	@ObfuscatedName("fs.ad")
-	public static int field2558 = -1;
+	public static int currentShadow = -1;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_defaultCol
 	@ObfuscatedName("fs.ac")
-	public static int field2545 = 0;
+	public static int defaultCol = 0;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_currentCol
 	@ObfuscatedName("fs.aa")
-	public static int field2560 = 0;
+	public static int currentCol = 0;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_alpha
 	@ObfuscatedName("fs.as")
-	public static int field2561 = 256;
+	public static int alpha = 256;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_extraSpaceWidth
 	@ObfuscatedName("fs.am")
-	public static int field2562 = 0;
+	public static int extraSpaceWidth = 0;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_extraSpacePos
 	@ObfuscatedName("fs.ap")
-	public static int field2563 = 0;
+	public static int extraSpacePos = 0;
 
+	// jag::oldscape::jstring::PixfontGeneric::m_rand
 	@ObfuscatedName("fs.av")
-	public static Random field2564 = new Random();
+	public static Random rand = new Random();
 
+	// jag::oldscape::jstring::PixfontGeneric::m_lines
 	@ObfuscatedName("fs.ak")
 	public static String[] lines = new String[100];
 
@@ -80,7 +91,7 @@ public abstract class PixFont extends Pix2D {
 		this.field2549 = arg2;
 		this.field2548 = arg3;
 		this.field2551 = arg4;
-		this.method2859(arg0);
+		this.unpackMetrics(arg0);
 		this.field2556 = arg6;
 		int var8 = Integer.MAX_VALUE;
 		int var9 = Integer.MIN_VALUE;
@@ -96,65 +107,75 @@ public abstract class PixFont extends Pix2D {
 		this.field2546 = var9 - this.field2550;
 	}
 
-	public PixFont(byte[] arg0) {
-		this.method2859(arg0);
+	public PixFont(byte[] src) {
+		this.unpackMetrics(src);
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::UnpackMetrics
 	@ObfuscatedName("fs.bm([B)V")
-	public void method2859(byte[] arg0) {
+	public void unpackMetrics(byte[] src) {
 		this.field2554 = new int[256];
-		if (arg0.length == 257) {
+
+		if (src.length == 257) {
 			for (int var2 = 0; var2 < this.field2554.length; var2++) {
-				this.field2554[var2] = arg0[var2] & 0xFF;
+				this.field2554[var2] = src[var2] & 0xFF;
 			}
-			this.field2550 = arg0[256] & 0xFF;
+			this.field2550 = src[256] & 0xFF;
 			return;
 		}
+
 		int var3 = 0;
 		for (int var4 = 0; var4 < 256; var4++) {
-			this.field2554[var4] = arg0[var3++] & 0xFF;
+			this.field2554[var4] = src[var3++] & 0xFF;
 		}
+
 		int[] var5 = new int[256];
 		int[] var6 = new int[256];
 		for (int var7 = 0; var7 < 256; var7++) {
-			var5[var7] = arg0[var3++] & 0xFF;
+			var5[var7] = src[var3++] & 0xFF;
 		}
 		for (int var8 = 0; var8 < 256; var8++) {
-			var6[var8] = arg0[var3++] & 0xFF;
+			var6[var8] = src[var3++] & 0xFF;
 		}
+
 		byte[][] var9 = new byte[256][];
 		for (int var10 = 0; var10 < 256; var10++) {
 			var9[var10] = new byte[var5[var10]];
 			byte var11 = 0;
 			for (int var12 = 0; var12 < var9[var10].length; var12++) {
-				var11 += arg0[var3++];
+				var11 += src[var3++];
 				var9[var10][var12] = var11;
 			}
 		}
+
 		byte[][] var13 = new byte[256][];
 		for (int var14 = 0; var14 < 256; var14++) {
 			var13[var14] = new byte[var5[var14]];
 			byte var15 = 0;
 			for (int var16 = 0; var16 < var13[var14].length; var16++) {
-				var15 += arg0[var3++];
+				var15 += src[var3++];
 				var13[var14][var16] = var15;
 			}
 		}
+
 		this.field2547 = new byte[65536];
+
 		for (int var17 = 0; var17 < 256; var17++) {
 			if (var17 != 32 && var17 != 160) {
 				for (int var18 = 0; var18 < 256; var18++) {
 					if (var18 != 32 && var18 != 160) {
-						this.field2547[(var17 << 8) + var18] = (byte) method2835(var9, var13, var6, this.field2554, var5, var17, var18);
+						this.field2547[(var17 << 8) + var18] = (byte) kernPair(var9, var13, var6, this.field2554, var5, var17, var18);
 					}
 				}
 			}
 		}
+
 		this.field2550 = var5[32] + var6[32];
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::KernPair
 	@ObfuscatedName("fs.bn([[B[[B[I[I[III)I")
-	public static int method2835(byte[][] arg0, byte[][] arg1, int[] arg2, int[] arg3, int[] arg4, int arg5, int arg6) {
+	public static int kernPair(byte[][] arg0, byte[][] arg1, int[] arg2, int[] arg3, int[] arg4, int arg5, int arg6) {
 		int var7 = arg2[arg5];
 		int var8 = arg4[arg5] + var7;
 		int var9 = arg2[arg6];
@@ -184,14 +205,16 @@ public abstract class PixFont extends Pix2D {
 		return -var13;
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::CharWid
 	@ObfuscatedName("fs.be(I)I")
-	public int method2815(int arg0) {
+	public int charWid(int arg0) {
 		if (arg0 == 160) {
 			arg0 = 32;
 		}
 		return this.field2554[arg0 & 0xFF];
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::StringWid
 	@ObfuscatedName("fs.bp(Ljava/lang/String;)I")
 	public int stringWid(String arg0) {
 		if (arg0 == null) {
@@ -215,7 +238,7 @@ public abstract class PixFont extends Pix2D {
 							if (var7.startsWith("img=")) {
 								try {
 									String var8 = var7.substring(4);
-									int var9 = StringUtil.method91(var8, 10, true);
+									int var9 = StringTools.checkedParseInt(var8, 10, true);
 									var4 += modicons[var9].owi;
 									var3 = -1;
 								} catch (Exception var12) {
@@ -241,6 +264,7 @@ public abstract class PixFont extends Pix2D {
 		return var4;
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::SplitString
 	@ObfuscatedName("fs.ba(Ljava/lang/String;[I[Ljava/lang/String;)I")
 	public int splitString(String arg0, int[] arg1, String[] arg2) {
 		if (arg0 == null) {
@@ -275,13 +299,13 @@ public abstract class PixFont extends Pix2D {
 						var7 = -1;
 						var11 = 0;
 					} else if (var16.equals("lt")) {
-						var4 += this.method2815(60);
+						var4 += this.charWid(60);
 						if (this.field2547 != null && var11 != -1) {
 							var4 += this.field2547[(var11 << 8) + 60];
 						}
 						var11 = '<';
 					} else if (var16.equals("gt")) {
-						var4 += this.method2815(62);
+						var4 += this.charWid(62);
 						if (this.field2547 != null && var11 != -1) {
 							var4 += this.field2547[(var11 << 8) + 62];
 						}
@@ -289,7 +313,7 @@ public abstract class PixFont extends Pix2D {
 					} else if (var16.startsWith("img=")) {
 						try {
 							String var17 = var16.substring(4);
-							int var18 = StringUtil.method91(var17, 10, true);
+							int var18 = StringTools.checkedParseInt(var17, 10, true);
 							var4 += modicons[var18].owi;
 							var11 = 0;
 						} catch (Exception var22) {
@@ -300,7 +324,7 @@ public abstract class PixFont extends Pix2D {
 				if (var10 == -1) {
 					if (var15 != -1) {
 						var6.append(var15);
-						var4 += this.method2815(var15);
+						var4 += this.charWid(var15);
 						if (this.field2547 != null && var11 != -1) {
 							var4 += this.field2547[(var11 << 8) + var15];
 						}
@@ -334,8 +358,9 @@ public abstract class PixFont extends Pix2D {
 		return var12;
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::PredictWidthMultiline
 	@ObfuscatedName("fs.bc(Ljava/lang/String;I)I")
-	public int method2818(String arg0, int arg1) {
+	public int predictWidthMultiline(String arg0, int arg1) {
 		int var3 = this.splitString(arg0, new int[] { arg1 }, lines);
 		int var4 = 0;
 		for (int var5 = 0; var5 < var3; var5++) {
@@ -347,13 +372,15 @@ public abstract class PixFont extends Pix2D {
 		return var4;
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::PredictLinesMultiline
 	@ObfuscatedName("fs.br(Ljava/lang/String;I)I")
-	public int method2889(String arg0, int arg1) {
+	public int predictLinesMultiline(String arg0, int arg1) {
 		return this.splitString(arg0, new int[] { arg1 }, lines);
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::Escape
 	@ObfuscatedName("fs.bb(Ljava/lang/String;)Ljava/lang/String;")
-	public static String method2844(String arg0) {
+	public static String escape(String arg0) {
 		int var1 = arg0.length();
 		int var2 = 0;
 		for (int var3 = 0; var3 < var1; var3++) {
@@ -376,6 +403,7 @@ public abstract class PixFont extends Pix2D {
 		return var5.toString();
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::DrawString
 	@ObfuscatedName("fs.bd(Ljava/lang/String;IIII)V")
 	public void drawString(String str, int x, int y, int rgb, int arg4) {
 		if (str == null) {
@@ -383,17 +411,18 @@ public abstract class PixFont extends Pix2D {
 		}
 
 		this.resetState(rgb, arg4);
-		this.drawString(str, x, y);
+		this.drawStringInner(str, x, y);
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::RightString
 	@ObfuscatedName("fs.cr(Ljava/lang/String;IIII)V")
-	public void drawStringRight(String str, int x, int y, int rgb, int arg4) {
+	public void rightString(String str, int x, int y, int rgb, int arg4) {
 		if (str == null) {
 			return;
 		}
 
 		this.resetState(rgb, arg4);
-		this.drawString(str, x - this.stringWid(str), y);
+		this.drawStringInner(str, x - this.stringWid(str), y);
 	}
 
 	// jag::oldscape::jstring::PixfontGeneric::CentreString
@@ -404,7 +433,7 @@ public abstract class PixFont extends Pix2D {
 		}
 
 		this.resetState(rgb, arg4);
-		this.drawString(str, x - this.stringWid(str) / 2, y);
+		this.drawStringInner(str, x - this.stringWid(str) / 2, y);
 	}
 
 	// jag::oldscape::jstring::PixfontGeneric::DrawStringMultiline
@@ -442,23 +471,24 @@ public abstract class PixFont extends Pix2D {
 		}
 		for (int var15 = 0; var15 < var12; var15++) {
 			if (arg7 == 0) {
-				this.drawString(lines[var15], arg1, var13);
+				this.drawStringInner(lines[var15], arg1, var13);
 			} else if (arg7 == 1) {
-				this.drawString(lines[var15], arg1 + (arg3 - this.stringWid(lines[var15])) / 2, var13);
+				this.drawStringInner(lines[var15], arg1 + (arg3 - this.stringWid(lines[var15])) / 2, var13);
 			} else if (arg7 == 2) {
-				this.drawString(lines[var15], arg1 + arg3 - this.stringWid(lines[var15]), var13);
+				this.drawStringInner(lines[var15], arg1 + arg3 - this.stringWid(lines[var15]), var13);
 			} else if (var12 - 1 == var15) {
-				this.drawString(lines[var15], arg1, var13);
+				this.drawStringInner(lines[var15], arg1, var13);
 			} else {
-				this.method2831(lines[var15], arg3);
-				this.drawString(lines[var15], arg1, var13);
-				field2562 = 0;
+				this.calculateSpaceWidth(lines[var15], arg3);
+				this.drawStringInner(lines[var15], arg1, var13);
+				extraSpaceWidth = 0;
 			}
 			var13 += arg9;
 		}
 		return var12;
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::CentreStringWave
 	@ObfuscatedName("fs.cl(Ljava/lang/String;IIIII)V")
 	public void centerStringWave(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg0 == null) {
@@ -469,11 +499,12 @@ public abstract class PixFont extends Pix2D {
 		for (int var8 = 0; var8 < arg0.length(); var8++) {
 			var7[var8] = (int) (Math.sin((double) arg5 / 5.0D + (double) var8 / 2.0D) * 5.0D);
 		}
-		this.method2833(arg0, arg1 - this.stringWid(arg0) / 2, arg2, null, var7);
+		this.drawStringInnerCustomOffsetsAndColours(arg0, arg1 - this.stringWid(arg0) / 2, arg2, null, var7);
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::CentreStringWave2
 	@ObfuscatedName("fs.cp(Ljava/lang/String;IIIII)V")
-	public void method2826(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public void centreStringWave2(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg0 == null) {
 			return;
 		}
@@ -484,11 +515,12 @@ public abstract class PixFont extends Pix2D {
 			var7[var9] = (int) (Math.sin((double) arg5 / 5.0D + (double) var9 / 5.0D) * 5.0D);
 			var8[var9] = (int) (Math.sin((double) arg5 / 5.0D + (double) var9 / 3.0D) * 5.0D);
 		}
-		this.method2833(arg0, arg1 - this.stringWid(arg0) / 2, arg2, var7, var8);
+		this.drawStringInnerCustomOffsetsAndColours(arg0, arg1 - this.stringWid(arg0) / 2, arg2, var7, var8);
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::CentreStringWave3
 	@ObfuscatedName("fs.ca(Ljava/lang/String;IIIIII)V")
-	public void method2827(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public void centreStringWave3(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		if (arg0 == null) {
 			return;
 		}
@@ -501,76 +533,79 @@ public abstract class PixFont extends Pix2D {
 		for (int var11 = 0; var11 < arg0.length(); var11++) {
 			var10[var11] = (int) (Math.sin((double) arg5 / 1.0D + (double) var11 / 1.5D) * var8);
 		}
-		this.method2833(arg0, arg1 - this.stringWid(arg0) / 2, arg2, null, var10);
+		this.drawStringInnerCustomOffsetsAndColours(arg0, arg1 - this.stringWid(arg0) / 2, arg2, null, var10);
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::DrawstringAntiMacro
 	@ObfuscatedName("fs.co(Ljava/lang/String;IIIII)V")
-	public void method2828(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public void drawStringAntiMacro(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg0 == null) {
 			return;
 		}
 		this.resetState(arg3, arg4);
-		field2564.setSeed((long) arg5);
-		field2561 = (field2564.nextInt() & 0x1F) + 192;
+		rand.setSeed((long) arg5);
+		alpha = (rand.nextInt() & 0x1F) + 192;
 		int[] var7 = new int[arg0.length()];
 		int var8 = 0;
 		for (int var9 = 0; var9 < arg0.length(); var9++) {
 			var7[var9] = var8;
-			if ((field2564.nextInt() & 0x3) == 0) {
+			if ((rand.nextInt() & 0x3) == 0) {
 				var8++;
 			}
 		}
-		this.method2833(arg0, arg1, arg2, var7, null);
+		this.drawStringInnerCustomOffsetsAndColours(arg0, arg1, arg2, var7, null);
 	}
 
 	// jag::oldscape::jstring::PixfontGeneric::ResetState
 	@ObfuscatedName("fs.ch(II)V")
 	public void resetState(int arg0, int arg1) {
-		field2555 = -1;
-		field2559 = -1;
-		field2557 = arg1;
-		field2558 = arg1;
-		field2545 = arg0;
-		field2560 = arg0;
-		field2561 = 256;
-		field2562 = 0;
-		field2563 = 0;
+		strikeout = -1;
+		underline = -1;
+		defaultShadow = arg1;
+		currentShadow = arg1;
+		defaultCol = arg0;
+		currentCol = arg0;
+		alpha = 256;
+		extraSpaceWidth = 0;
+		extraSpacePos = 0;
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::UpdateState
 	@ObfuscatedName("fs.cu(Ljava/lang/String;)V")
-	public void method2832(String arg0) {
+	public void updateState(String arg0) {
 		try {
 			if (arg0.startsWith("col=")) {
-				field2560 = StringUtil.method557(arg0.substring(4), 16);
+				currentCol = StringTools.checkedParseInt(arg0.substring(4), 16);
 			} else if (arg0.equals("/col")) {
-				field2560 = field2545;
+				currentCol = defaultCol;
 			} else if (arg0.startsWith("str=")) {
-				field2555 = StringUtil.method557(arg0.substring(4), 16);
+				strikeout = StringTools.checkedParseInt(arg0.substring(4), 16);
 			} else if (arg0.equals("str")) {
-				field2555 = 8388608;
+				strikeout = 8388608;
 			} else if (arg0.equals("/str")) {
-				field2555 = -1;
+				strikeout = -1;
 			} else if (arg0.startsWith("u=")) {
-				field2559 = StringUtil.method557(arg0.substring(2), 16);
+				underline = StringTools.checkedParseInt(arg0.substring(2), 16);
 			} else if (arg0.equals("u")) {
-				field2559 = 0;
+				underline = 0;
 			} else if (arg0.equals("/u")) {
-				field2559 = -1;
+				underline = -1;
 			} else if (arg0.startsWith("shad=")) {
-				field2558 = StringUtil.method557(arg0.substring(5), 16);
+				currentShadow = StringTools.checkedParseInt(arg0.substring(5), 16);
 			} else if (arg0.equals("shad")) {
-				field2558 = 0;
+				currentShadow = 0;
 			} else if (arg0.equals("/shad")) {
-				field2558 = field2557;
+				currentShadow = defaultShadow;
 			} else if (arg0.equals("br")) {
-				this.resetState(field2545, field2557);
+				this.resetState(defaultCol, defaultShadow);
 			}
 		} catch (Exception var3) {
 		}
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::CalculateSpaceWidth
 	@ObfuscatedName("fs.cc(Ljava/lang/String;I)V")
-	public void method2831(String arg0, int arg1) {
+	public void calculateSpaceWidth(String arg0, int arg1) {
 		int var3 = 0;
 		boolean var4 = false;
 		for (int var5 = 0; var5 < arg0.length(); var5++) {
@@ -584,12 +619,13 @@ public abstract class PixFont extends Pix2D {
 			}
 		}
 		if (var3 > 0) {
-			field2562 = (arg1 - this.stringWid(arg0) << 8) / var3;
+			extraSpaceWidth = (arg1 - this.stringWid(arg0) << 8) / var3;
 		}
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::DrawStringInner
 	@ObfuscatedName("fs.cm(Ljava/lang/String;II)V")
-	public void drawString(String arg0, int arg1, int arg2) {
+	public void drawStringInner(String arg0, int arg1, int arg2) {
 		int var4 = arg2 - this.field2550;
 		int var5 = -1;
 		int var6 = -1;
@@ -597,74 +633,85 @@ public abstract class PixFont extends Pix2D {
 			char var8 = arg0.charAt(var7);
 			if (var8 == '<') {
 				var5 = var7;
-			} else {
-				if (var8 == '>' && var5 != -1) {
-					String var9 = arg0.substring(var5 + 1, var7);
-					var5 = -1;
-					if (var9.equals("lt")) {
-						var8 = '<';
-					} else {
-						if (!var9.equals("gt")) {
-							if (var9.startsWith("img=")) {
-								try {
-									String var10 = var9.substring(4);
-									int var11 = StringUtil.method91(var10, 10, true);
-									Pix8 var13 = modicons[var11];
-									var13.plotSprite(arg1, this.field2550 + var4 - var13.ohi);
-									arg1 += var13.owi;
-									var6 = -1;
-								} catch (Exception var18) {
-								}
-							} else {
-								this.method2832(var9);
+				continue;
+			}
+
+			if (var8 == '>' && var5 != -1) {
+				String var9 = arg0.substring(var5 + 1, var7);
+				var5 = -1;
+				if (var9.equals("lt")) {
+					var8 = '<';
+				} else {
+					if (!var9.equals("gt")) {
+						if (var9.startsWith("img=")) {
+							try {
+								String var10 = var9.substring(4);
+								int var11 = StringTools.checkedParseInt(var10, 10, true);
+								Pix8 var13 = modicons[var11];
+								var13.plotSprite(arg1, this.field2550 + var4 - var13.ohi);
+								arg1 += var13.owi;
+								var6 = -1;
+							} catch (Exception ignore) {
 							}
-							continue;
+						} else {
+							this.updateState(var9);
 						}
-						var8 = '>';
+
+						continue;
 					}
+
+					var8 = '>';
 				}
-				if (var8 == 160) {
-					var8 = ' ';
+			}
+
+			if (var8 == 160) {
+				var8 = ' ';
+			}
+
+			if (var5 == -1) {
+				if (this.field2547 != null && var6 != -1) {
+					arg1 += this.field2547[(var6 << 8) + var8];
 				}
-				if (var5 == -1) {
-					if (this.field2547 != null && var6 != -1) {
-						arg1 += this.field2547[(var6 << 8) + var8];
+
+				int var15 = this.field2548[var8];
+				int var16 = this.field2551[var8];
+				if (var8 == ' ') {
+					if (extraSpaceWidth > 0) {
+						extraSpacePos += extraSpaceWidth;
+						arg1 += extraSpacePos >> 8;
+						extraSpacePos &= 0xFF;
 					}
-					int var15 = this.field2548[var8];
-					int var16 = this.field2551[var8];
-					if (var8 == ' ') {
-						if (field2562 > 0) {
-							field2563 += field2562;
-							arg1 += field2563 >> 8;
-							field2563 &= 0xFF;
-						}
-					} else if (field2561 == 256) {
-						if (field2558 != -1) {
-							method2836(this.field2556[var8], this.field2544[var8] + arg1 + 1, this.field2549[var8] + var4 + 1, var15, var16, field2558);
-						}
-						this.method2823(this.field2556[var8], this.field2544[var8] + arg1, this.field2549[var8] + var4, var15, var16, field2560);
-					} else {
-						if (field2558 != -1) {
-							method2838(this.field2556[var8], this.field2544[var8] + arg1 + 1, this.field2549[var8] + var4 + 1, var15, var16, field2558, field2561);
-						}
-						this.method2883(this.field2556[var8], this.field2544[var8] + arg1, this.field2549[var8] + var4, var15, var16, field2560, field2561);
+				} else if (alpha == 256) {
+					if (currentShadow != -1) {
+						plotLetter(this.field2556[var8], this.field2544[var8] + arg1 + 1, this.field2549[var8] + var4 + 1, var15, var16, currentShadow);
 					}
-					int var17 = this.field2554[var8];
-					if (field2555 != -1) {
-						hline(arg1, (int) ((double) this.field2550 * 0.7D) + var4, var17, field2555);
+
+					this.plotLetterScanline(this.field2556[var8], this.field2544[var8] + arg1, this.field2549[var8] + var4, var15, var16, currentCol);
+				} else {
+					if (currentShadow != -1) {
+						plotLetterTrans(this.field2556[var8], this.field2544[var8] + arg1 + 1, this.field2549[var8] + var4 + 1, var15, var16, currentShadow, alpha);
 					}
-					if (field2559 != -1) {
-						hline(arg1, this.field2550 + var4 + 1, var17, field2559);
-					}
-					arg1 += var17;
-					var6 = var8;
+
+					this.plotLetterTransScanline(this.field2556[var8], this.field2544[var8] + arg1, this.field2549[var8] + var4, var15, var16, currentCol, alpha);
 				}
+
+				int var17 = this.field2554[var8];
+				if (strikeout != -1) {
+					hline(arg1, (int) ((double) this.field2550 * 0.7D) + var4, var17, strikeout);
+				}
+				if (underline != -1) {
+					hline(arg1, this.field2550 + var4 + 1, var17, underline);
+				}
+
+				arg1 += var17;
+				var6 = var8;
 			}
 		}
 	}
 
+	// jag::oldscape::jstring::PixfontGeneric::DrawStringInnerCustomOffsetsAndColours
 	@ObfuscatedName("fs.cw(Ljava/lang/String;II[I[I)V")
-	public void method2833(String arg0, int arg1, int arg2, int[] arg3, int[] arg4) {
+	public void drawStringInnerCustomOffsetsAndColours(String arg0, int arg1, int arg2, int[] arg3, int[] arg4) {
 		int var6 = arg2 - this.field2550;
 		int var7 = -1;
 		int var8 = -1;
@@ -673,100 +720,110 @@ public abstract class PixFont extends Pix2D {
 			char var11 = arg0.charAt(var10);
 			if (var11 == '<') {
 				var7 = var10;
-			} else {
-				if (var11 == '>' && var7 != -1) {
-					String var12 = arg0.substring(var7 + 1, var10);
-					var7 = -1;
-					if (var12.equals("lt")) {
-						var11 = '<';
-					} else {
-						if (!var12.equals("gt")) {
-							if (var12.startsWith("img=")) {
-								try {
-									int var13;
-									if (arg3 == null) {
-										var13 = 0;
-									} else {
-										var13 = arg3[var9];
-									}
-									int var14;
-									if (arg4 == null) {
-										var14 = 0;
-									} else {
-										var14 = arg4[var9];
-									}
-									var9++;
-									String var15 = var12.substring(4);
-									int var16 = StringUtil.method91(var15, 10, true);
-									Pix8 var18 = modicons[var16];
-									var18.plotSprite(arg1 + var13, this.field2550 + var6 - var18.ohi + var14);
-									arg1 += var18.owi;
-									var8 = -1;
-								} catch (Exception var25) {
+				continue;
+			}
+
+			if (var11 == '>' && var7 != -1) {
+				String var12 = arg0.substring(var7 + 1, var10);
+				var7 = -1;
+				if (var12.equals("lt")) {
+					var11 = '<';
+				} else {
+					if (!var12.equals("gt")) {
+						if (var12.startsWith("img=")) {
+							try {
+								int var13;
+								if (arg3 == null) {
+									var13 = 0;
+								} else {
+									var13 = arg3[var9];
 								}
-							} else {
-								this.method2832(var12);
+								int var14;
+								if (arg4 == null) {
+									var14 = 0;
+								} else {
+									var14 = arg4[var9];
+								}
+								var9++;
+								String var15 = var12.substring(4);
+								int var16 = StringTools.checkedParseInt(var15, 10, true);
+								Pix8 var18 = modicons[var16];
+								var18.plotSprite(arg1 + var13, this.field2550 + var6 - var18.ohi + var14);
+								arg1 += var18.owi;
+								var8 = -1;
+							} catch (Exception ignore) {
 							}
-							continue;
+						} else {
+							this.updateState(var12);
 						}
-						var11 = '>';
+
+						continue;
 					}
+
+					var11 = '>';
 				}
-				if (var11 == 160) {
-					var11 = ' ';
+			}
+
+			if (var11 == 160) {
+				var11 = ' ';
+			}
+
+			if (var7 == -1) {
+				if (this.field2547 != null && var8 != -1) {
+					arg1 += this.field2547[(var8 << 8) + var11];
 				}
-				if (var7 == -1) {
-					if (this.field2547 != null && var8 != -1) {
-						arg1 += this.field2547[(var8 << 8) + var11];
-					}
-					int var20 = this.field2548[var11];
-					int var21 = this.field2551[var11];
-					int var22;
-					if (arg3 == null) {
-						var22 = 0;
-					} else {
-						var22 = arg3[var9];
-					}
-					int var23;
-					if (arg4 == null) {
-						var23 = 0;
-					} else {
-						var23 = arg4[var9];
-					}
-					var9++;
-					if (var11 == ' ') {
-						if (field2562 > 0) {
-							field2563 += field2562;
-							arg1 += field2563 >> 8;
-							field2563 &= 0xFF;
-						}
-					} else if (field2561 == 256) {
-						if (field2558 != -1) {
-							method2836(this.field2556[var11], this.field2544[var11] + arg1 + 1 + var22, this.field2549[var11] + var6 + 1 + var23, var20, var21, field2558);
-						}
-						this.method2823(this.field2556[var11], this.field2544[var11] + arg1 + var22, this.field2549[var11] + var6 + var23, var20, var21, field2560);
-					} else {
-						if (field2558 != -1) {
-							method2838(this.field2556[var11], this.field2544[var11] + arg1 + 1 + var22, this.field2549[var11] + var6 + 1 + var23, var20, var21, field2558, field2561);
-						}
-						this.method2883(this.field2556[var11], this.field2544[var11] + arg1 + var22, this.field2549[var11] + var6 + var23, var20, var21, field2560, field2561);
-					}
-					int var24 = this.field2554[var11];
-					if (field2555 != -1) {
-						hline(arg1, (int) ((double) this.field2550 * 0.7D) + var6, var24, field2555);
-					}
-					if (field2559 != -1) {
-						hline(arg1, this.field2550 + var6, var24, field2559);
-					}
-					arg1 += var24;
-					var8 = var11;
+
+				int var20 = this.field2548[var11];
+				int var21 = this.field2551[var11];
+				int var22;
+				if (arg3 == null) {
+					var22 = 0;
+				} else {
+					var22 = arg3[var9];
 				}
+				int var23;
+				if (arg4 == null) {
+					var23 = 0;
+				} else {
+					var23 = arg4[var9];
+				}
+				var9++;
+				if (var11 == ' ') {
+					if (extraSpaceWidth > 0) {
+						extraSpacePos += extraSpaceWidth;
+						arg1 += extraSpacePos >> 8;
+						extraSpacePos &= 0xFF;
+					}
+				} else if (alpha == 256) {
+					if (currentShadow != -1) {
+						plotLetter(this.field2556[var11], this.field2544[var11] + arg1 + 1 + var22, this.field2549[var11] + var6 + 1 + var23, var20, var21, currentShadow);
+					}
+
+					this.plotLetterScanline(this.field2556[var11], this.field2544[var11] + arg1 + var22, this.field2549[var11] + var6 + var23, var20, var21, currentCol);
+				} else {
+					if (currentShadow != -1) {
+						plotLetterTrans(this.field2556[var11], this.field2544[var11] + arg1 + 1 + var22, this.field2549[var11] + var6 + 1 + var23, var20, var21, currentShadow, alpha);
+					}
+
+					this.plotLetterTransScanline(this.field2556[var11], this.field2544[var11] + arg1 + var22, this.field2549[var11] + var6 + var23, var20, var21, currentCol, alpha);
+				}
+
+				int var24 = this.field2554[var11];
+				if (strikeout != -1) {
+					hline(arg1, (int) ((double) this.field2550 * 0.7D) + var6, var24, strikeout);
+				}
+				if (underline != -1) {
+					hline(arg1, this.field2550 + var6, var24, underline);
+				}
+
+				arg1 += var24;
+				var8 = var11;
 			}
 		}
 	}
 
 	@ObfuscatedName("fs.ct([BIIIII)V")
-	public static void method2836(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public static void plotLetter(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		int var6 = Pix2D.width * arg2 + arg1;
 		int var7 = Pix2D.width - arg3;
 		int var8 = 0;
@@ -797,12 +854,12 @@ public abstract class PixFont extends Pix2D {
 			var7 += var12;
 		}
 		if (arg3 > 0 && arg4 > 0) {
-			method2834(Pix2D.pixels, arg0, arg5, var9, var6, arg3, arg4, var7, var8);
+			plot(Pix2D.pixels, arg0, arg5, var9, var6, arg3, arg4, var7, var8);
 		}
 	}
 
 	@ObfuscatedName("fs.ck([I[BIIIIIII)V")
-	public static void method2834(int[] arg0, byte[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static void plot(int[] arg0, byte[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		int var9 = -(arg5 >> 2);
 		int var10 = -(arg5 & 0x3);
 		for (int var11 = -arg6; var11 < 0; var11++) {
@@ -841,7 +898,7 @@ public abstract class PixFont extends Pix2D {
 	}
 
 	@ObfuscatedName("fs.cy([BIIIIII)V")
-	public static void method2838(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public static void plotLetterTrans(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		int var7 = Pix2D.width * arg2 + arg1;
 		int var8 = Pix2D.width - arg3;
 		int var9 = 0;
@@ -872,12 +929,12 @@ public abstract class PixFont extends Pix2D {
 			var8 += var13;
 		}
 		if (arg3 > 0 && arg4 > 0) {
-			method2839(Pix2D.pixels, arg0, arg5, var10, var7, arg3, arg4, var8, var9, arg6);
+			plotTrans(Pix2D.pixels, arg0, arg5, var10, var7, arg3, arg4, var8, var9, arg6);
 		}
 	}
 
 	@ObfuscatedName("fs.cq([I[BIIIIIIII)V")
-	public static void method2839(int[] arg0, byte[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
+	public static void plotTrans(int[] arg0, byte[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
 		int var10 = ((arg2 & 0xFF00FF) * arg9 & 0xFF00FF00) + ((arg2 & 0xFF00) * arg9 & 0xFF0000) >> 8;
 		int var11 = 256 - arg9;
 		for (int var12 = -arg6; var12 < 0; var12++) {
@@ -895,8 +952,8 @@ public abstract class PixFont extends Pix2D {
 	}
 
 	@ObfuscatedName("fs.cz([BIIIII)V")
-	public abstract void method2823(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
+	public abstract void plotLetterScanline(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
 
 	@ObfuscatedName("fs.cv([BIIIIII)V")
-	public abstract void method2883(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+	public abstract void plotLetterTransScanline(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
 }

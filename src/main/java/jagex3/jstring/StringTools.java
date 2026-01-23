@@ -3,10 +3,11 @@ package jagex3.jstring;
 import deob.ObfuscatedName;
 import jagex3.client.Client;
 
+// jag::oldscape::core::stringtools::general::StringTools
 @ObfuscatedName("cl")
-public class StringUtil {
+public class StringTools {
 
-	public StringUtil() throws Throwable {
+	public StringTools() throws Throwable {
 		throw new Error();
 	}
 
@@ -103,13 +104,15 @@ public class StringUtil {
 		return var7;
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::CheckedParseInt
 	@ObfuscatedName("ao.m(Ljava/lang/CharSequence;II)I")
-	public static int method557(CharSequence arg0, int arg1) {
-		return method91(arg0, arg1, true);
+	public static int checkedParseInt(CharSequence arg0, int arg1) {
+		return checkedParseInt(arg0, arg1, true);
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::CheckedParseInt
 	@ObfuscatedName("g.c(Ljava/lang/CharSequence;IZB)I")
-	public static int method91(CharSequence arg0, int arg1, boolean arg2) {
+	public static int checkedParseInt(CharSequence arg0, int arg1, boolean arg2) {
 		if (arg1 < 2 || arg1 > 36) {
 			throw new IllegalArgumentException("");
 		}

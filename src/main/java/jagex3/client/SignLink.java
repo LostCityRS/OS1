@@ -1,7 +1,7 @@
 package jagex3.client;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.PreciseSleep;
+import jagex3.datastruct.ThreadSleep;
 import jagex3.sound.AudioSource;
 
 import java.awt.*;
@@ -166,7 +166,7 @@ public class SignLink implements Runnable {
 		}
 
 		for (int i = 0; i < 50 && handler.eventQueue.peekEvent() != null; i++) {
-			PreciseSleep.sleep(1L);
+			ThreadSleep.sleepPrecise(1L);
 		}
 
 		if (source != null) {

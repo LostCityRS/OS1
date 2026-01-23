@@ -1,7 +1,7 @@
 package jagex3.client.applet;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.PreciseSleep;
+import jagex3.datastruct.ThreadSleep;
 
 @ObfuscatedName("j")
 public class MouseTracking implements Runnable {
@@ -31,7 +31,7 @@ public class MouseTracking implements Runnable {
 					this.length++;
 				}
 			}
-			PreciseSleep.sleep(50L);
+			ThreadSleep.sleepPrecise(50L);
 		}
 	}
 }

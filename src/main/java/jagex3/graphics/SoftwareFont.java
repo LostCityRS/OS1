@@ -9,12 +9,12 @@ public class SoftwareFont extends PixFont {
 		super(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 	}
 
-	public SoftwareFont(byte[] arg0) {
-		super(arg0);
+	public SoftwareFont(byte[] src) {
+		super(src);
 	}
 
 	@ObfuscatedName("fm.cz([BIIIII)V")
-	public final void method2823(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public final void plotLetterScanline(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		int var7 = Pix2D.width * arg2 + arg1;
 		int var8 = Pix2D.width - arg3;
 		int var9 = 0;
@@ -45,12 +45,12 @@ public class SoftwareFont extends PixFont {
 			var8 += var13;
 		}
 		if (arg3 > 0 && arg4 > 0) {
-			method2834(Pix2D.pixels, arg0, arg5, var10, var7, arg3, arg4, var8, var9);
+			plot(Pix2D.pixels, arg0, arg5, var10, var7, arg3, arg4, var8, var9);
 		}
 	}
 
 	@ObfuscatedName("fm.cv([BIIIIII)V")
-	public final void method2883(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+	public final void plotLetterTransScanline(byte[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
 		int var8 = Pix2D.width * arg2 + arg1;
 		int var9 = Pix2D.width - arg3;
 		int var10 = 0;
@@ -81,7 +81,7 @@ public class SoftwareFont extends PixFont {
 			var9 += var14;
 		}
 		if (arg3 > 0 && arg4 > 0) {
-			method2839(Pix2D.pixels, arg0, arg5, var11, var8, arg3, arg4, var9, var10, arg6);
+			plotTrans(Pix2D.pixels, arg0, arg5, var11, var8, arg3, arg4, var9, var10, arg6);
 		}
 	}
 }

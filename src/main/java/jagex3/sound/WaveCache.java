@@ -32,7 +32,7 @@ public class WaveCache {
 		int var5 = var4 | arg0 << 16;
 		long var6 = (long) var5;
 
-		Wave var8 = (Wave) this.waveCache.get(var6);
+		Wave var8 = (Wave) this.waveCache.find(var6);
 		if (var8 != null) {
 			return var8;
 		} else if (arg2 == null || arg2[0] > 0) {
@@ -58,11 +58,11 @@ public class WaveCache {
 		int var5 = var4 | arg0 << 16;
 		long var6 = (long) var5 ^ 0x100000000L;
 
-		Wave var8 = (Wave) this.waveCache.get(var6);
+		Wave var8 = (Wave) this.waveCache.find(var6);
 		if (var8 != null) {
 			return var8;
 		} else if (arg2 == null || arg2[0] > 0) {
-			JagVorbis var9 = (JagVorbis) this.vorbisCache.get(var6);
+			JagVorbis var9 = (JagVorbis) this.vorbisCache.find(var6);
 			if (var9 == null) {
 				var9 = JagVorbis.decode(this.vorbisArchive, arg0, arg1);
 				if (var9 == null) {

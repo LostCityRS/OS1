@@ -15,34 +15,38 @@ public class JavaSafePixMap extends PixMap implements ImageProducer, ImageObserv
 	public ImageConsumer consumer;
 
 	@ObfuscatedName("dm.r(IILjava/awt/Component;I)V")
-	public final void create(int arg0, int arg1, Component arg2) {
-		this.width = arg0;
-		this.height = arg1;
-		this.data = new int[arg0 * arg1 + 1];
+	public final void create(int w, int h, Component c) {
+		this.width = w;
+		this.height = h;
+		this.data = new int[w * h + 1];
 		this.colorModel = new DirectColorModel(32, 16711680, 65280, 255);
-		this.image = arg2.createImage(this);
+		this.image = c.createImage(this);
+
 		this.setPixels();
-		arg2.prepareImage(this.image, this);
+		c.prepareImage(this.image, this);
+
 		this.setPixels();
-		arg2.prepareImage(this.image, this);
+		c.prepareImage(this.image, this);
+
 		this.setPixels();
-		arg2.prepareImage(this.image, this);
+		c.prepareImage(this.image, this);
+
 		this.bind();
 	}
 
 	@ObfuscatedName("dm.l(Ljava/awt/Graphics;III)V")
-	public final void draw(Graphics arg0, int arg1, int arg2) {
+	public final void draw(Graphics g, int x, int y) {
 		this.setPixels();
-		arg0.drawImage(this.image, arg1, arg2, this);
+		g.drawImage(this.image, x, y, this);
 	}
 
 	@ObfuscatedName("dm.m(Ljava/awt/Graphics;IIIII)V")
-	public final void draw(Graphics arg0, int arg1, int arg2, int arg3, int arg4) {
-		this.setPixels(arg1, arg2, arg3, arg4);
-		Shape var6 = arg0.getClip();
-		arg0.clipRect(arg1, arg2, arg3, arg4);
-		arg0.drawImage(this.image, 0, 0, this);
-		arg0.setClip(var6);
+	public final void draw(Graphics g, int x, int y, int w, int h) {
+		this.setPixels(x, y, w, h);
+		Shape save = g.getClip();
+		g.clipRect(x, y, w, h);
+		g.drawImage(this.image, 0, 0, this);
+		g.setClip(save);
 	}
 
 	public synchronized void addConsumer(ImageConsumer arg0) {
