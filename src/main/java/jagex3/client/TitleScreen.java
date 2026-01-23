@@ -405,14 +405,13 @@ public class TitleScreen {
 
 		if (Client.state == 0 || Client.state == 5) {
 			int y = 20;
-
 			arg0.centreString(Text.LOADING_TITLE, 382, 245 - y, 16777215, -1);
 
-			y = 253 - y;
-			Pix2D.drawRect(230, y, 304, 34, 9179409);
-			Pix2D.drawRect(231, y + 1, 302, 32, 0);
-			Pix2D.fillRect(232, y + 2, loadPos * 3, 30, 9179409);
-			Pix2D.fillRect(loadPos * 3 + 232, y + 2, 300 - loadPos * 3, 30, 0);
+			int barY = 253 - y;
+			Pix2D.drawRect(230, barY, 304, 34, 9179409);
+			Pix2D.drawRect(231, barY + 1, 302, 32, 0);
+			Pix2D.fillRect(232, barY + 2, loadPos * 3, 30, 9179409);
+			Pix2D.fillRect(loadPos * 3 + 232, barY + 2, 300 - loadPos * 3, 30, 0);
 			arg0.centreString(loadString, 382, 276 - y, 16777215, -1);
 		}
 
@@ -420,7 +419,6 @@ public class TitleScreen {
 			titleBox.plotSprite(382 - titleBox.wi / 2, 271 - titleBox.hi / 2);
 
 			int y = 211;
-
 			arg0.centreString(loginMes1, 382, y, 16776960, 0);
 			y += 15;
 
@@ -433,13 +431,13 @@ public class TitleScreen {
 			y += 10;
 			arg0.drawString(Text.USERNAMEPROMPT, 272, y, 16777215, 0);
 
-			y = 200;
-
+			int var16 = 200;
 			String user;
-			for (user = loginUser; arg0.stringWid(user) > y; user = user.substring(0, user.length() - 1)) {
+			for (user = loginUser; arg0.stringWid(user) > var16; user = user.substring(0, user.length() - 1)) {
 			}
+
 			arg0.drawString(PixFont.escape(user), 312, y, 16777215, 0);
-			y = y + 15;
+			y += 15;
 
 			// todo: inlined method?
 			String var8 = Text.PASSWORDPROMPT;
@@ -454,7 +452,6 @@ public class TitleScreen {
 
 			if (loginscreen == 0) {
 				int y = 251;
-
 				arg0.centreString(Text.WELCOMETORUNESCAPE, 382, y, 16776960, 0);
 				y += 30;
 
@@ -468,7 +465,6 @@ public class TitleScreen {
 				arg0.drawStringMultiline(Text.EXISTINGUSER, x - 73, y - 20, 144, 40, 16777215, 0, 1, 1, 0);
 			} else if (loginscreen == 2) {
 				int y = 211;
-
 				arg0.centreString(loginMes1, 382, y, 16776960, 0);
 				y += 15;
 
@@ -481,9 +477,9 @@ public class TitleScreen {
 				y += 10;
 				arg0.drawString(Text.USERNAMEPROMPT, 272, y, 16777215, 0);
 
-				y = 200;
+				int var16 = 200;
 				String user;
-				for (user = loginUser; arg0.stringWid(user) > y; user = user.substring(1)) {
+				for (user = loginUser; arg0.stringWid(user) > var16; user = user.substring(1)) {
 				}
 
 				arg0.drawString(PixFont.escape(user) + (field150 == 0 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 312, y, 16777215, 0);
@@ -506,11 +502,9 @@ public class TitleScreen {
 				arg0.centreString(Text.CANCEL, x, y + 5, 16777215, 0);
 			} else if (loginscreen == 3) {
 				int y = 211;
-
 				arg0.centreString(Text.NEWUSER1, 382, y, 16776960, 0);
 
 				y = 236;
-
 				arg0.centreString(Text.NEWUSER2, 382, y, 16777215, 0);
 				y += 15;
 
