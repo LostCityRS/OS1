@@ -31,19 +31,26 @@ public class MidiParser {
 	@ObfuscatedName("cs.g")
 	public long baseTime;
 
+	// jag::oldscape::midi2::MidiParser::m_msgLen
 	@ObfuscatedName("cs.q")
-	public static final byte[] STATUS_DATA_SIZES = new byte[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	public static final byte[] msgLen = new byte[] {
+		2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+		2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+		2, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	};
 
 	public MidiParser() {
 	}
 
-	public MidiParser(byte[] arg0) {
-		this.setMidi(arg0);
+	public MidiParser(byte[] src) {
+		this.setMidi(src);
 	}
 
+	// jag::oldscape::midi2::MidiParser::SetMidi
 	@ObfuscatedName("cs.r([B)V")
-	public void setMidi(byte[] arg0) {
-		this.packet.data = arg0;
+	public void setMidi(byte[] src) {
+		this.packet.data = src;
 		this.packet.pos = 10;
 		int var2 = this.packet.g2();
 		this.division = this.packet.g2();
@@ -68,8 +75,9 @@ public class MidiParser {
 		this.trackCurrentStatus = new int[var2];
 	}
 
+	// jag::oldscape::midi2::MidiParser::DropMidi
 	@ObfuscatedName("cs.d()V")
-	public void clear() {
+	public void dropMidi() {
 		this.packet.data = null;
 		this.trackStartPos = null;
 		this.trackCurrentPos = null;
@@ -77,8 +85,9 @@ public class MidiParser {
 		this.trackCurrentStatus = null;
 	}
 
+	// jag::oldscape::midi2::MidiParser::GotMidi
 	@ObfuscatedName("cs.l()Z")
-	public boolean loaded() {
+	public boolean gotMidi() {
 		return this.packet.data != null;
 	}
 
@@ -87,34 +96,40 @@ public class MidiParser {
 		return this.trackCurrentPos.length;
 	}
 
+	// jag::oldscape::midi2::MidiParser::SetTrack
 	@ObfuscatedName("cs.c(I)V")
-	public void enterTrack(int arg0) {
+	public void setTrack(int arg0) {
 		this.packet.pos = this.trackCurrentPos[arg0];
 	}
 
+	// jag::oldscape::midi2::MidiParser::UnsetTrack
 	@ObfuscatedName("cs.n(I)V")
-	public void leaveTrack(int arg0) {
+	public void unsetTrack(int arg0) {
 		this.trackCurrentPos[arg0] = this.packet.pos;
 	}
 
+	// jag::oldscape::midi2::MidiParser::FinishTrack
 	@ObfuscatedName("cs.j()V")
-	public void stopTrack() {
+	public void finishTrack() {
 		this.packet.pos = -1;
 	}
 
+	// jag::oldscape::midi2::MidiParser::ProcessDeltaTime
 	@ObfuscatedName("cs.z(I)V")
-	public void readDelay(int arg0) {
+	public void processDeltaTime(int arg0) {
 		int var2 = this.packet.gMidiVarLen();
 		this.trackCurrentTick[arg0] += var2;
 	}
 
+	// jag::oldscape::midi2::MidiParser::GetEvent
 	@ObfuscatedName("cs.g(I)I")
-	public int readMessage(int arg0) {
-		return this.readMessageInner(arg0);
+	public int getEvent(int arg0) {
+		return this.getEvent2(arg0);
 	}
 
+	// jag::oldscape::midi2::MidiParser::GetEvent2
 	@ObfuscatedName("cs.q(I)I")
-	public int readMessageInner(int arg0) {
+	public int getEvent2(int arg0) {
 		byte var2 = this.packet.data[this.packet.pos];
 		int var3;
 		if (var2 < 0) {
@@ -125,7 +140,7 @@ public class MidiParser {
 			var3 = this.trackCurrentStatus[arg0];
 		}
 		if (var3 != 240 && var3 != 247) {
-			return this.readMessageData(arg0, var3);
+			return this.getEvent3(arg0, var3);
 		}
 		int var4 = this.packet.gMidiVarLen();
 		if (var3 == 247 && var4 > 0) {
@@ -133,17 +148,18 @@ public class MidiParser {
 			if (var5 >= 241 && var5 <= 243 || var5 == 246 || var5 == 248 || var5 >= 250 && var5 <= 252 || var5 == 254) {
 				this.packet.pos++;
 				this.trackCurrentStatus[arg0] = var5;
-				return this.readMessageData(arg0, var5);
+				return this.getEvent3(arg0, var5);
 			}
 		}
 		this.packet.pos += var4;
 		return 0;
 	}
 
+	// jag::oldscape::midi2::MidiParser::GetEvent3
 	@ObfuscatedName("cs.i(II)I")
-	public int readMessageData(int arg0, int arg1) {
+	public int getEvent3(int arg0, int arg1) {
 		if (arg1 != 255) {
-			byte var7 = STATUS_DATA_SIZES[arg1 - 128];
+			byte var7 = msgLen[arg1 - 128];
 			int var8 = arg1;
 			if (var7 >= 1) {
 				var8 = arg1 | this.packet.g1() << 8;
@@ -172,13 +188,15 @@ public class MidiParser {
 		}
 	}
 
+	// jag::oldscape::midi2::MidiParser::TimeFromTick
 	@ObfuscatedName("cs.s(I)J")
-	public long computeTime(int arg0) {
+	public long timeFromTick(int arg0) {
 		return (long) this.tempo * (long) arg0 + this.baseTime;
 	}
 
+	// jag::oldscape::midi2::MidiParser::NextTrackToPlay
 	@ObfuscatedName("cs.u()I")
-	public int getNextTrackToPlay() {
+	public int nextTrackToPlay() {
 		int var1 = this.trackCurrentPos.length;
 		int var2 = -1;
 		int var3 = Integer.MAX_VALUE;
@@ -191,8 +209,9 @@ public class MidiParser {
 		return var2;
 	}
 
+	// jag::oldscape::midi2::MidiParser::AllTracksFinished
 	@ObfuscatedName("cs.v()Z")
-	public boolean isFinished() {
+	public boolean allTracksFinished() {
 		int var1 = this.trackCurrentPos.length;
 		for (int var2 = 0; var2 < var1; var2++) {
 			if (this.trackCurrentPos[var2] >= 0) {
@@ -202,15 +221,16 @@ public class MidiParser {
 		return true;
 	}
 
+	// jag::oldscape::midi2::MidiParser::Restart
 	@ObfuscatedName("cs.w(J)V")
-	public void startTrack(long arg0) {
+	public void restart(long arg0) {
 		this.baseTime = arg0;
 		int var3 = this.trackCurrentPos.length;
 		for (int var4 = 0; var4 < var3; var4++) {
 			this.trackCurrentTick[var4] = 0;
 			this.trackCurrentStatus[var4] = 0;
 			this.packet.pos = this.trackStartPos[var4];
-			this.readDelay(var4);
+			this.processDeltaTime(var4);
 			this.trackCurrentPos[var4] = this.packet.pos;
 		}
 	}

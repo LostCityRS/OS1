@@ -317,21 +317,21 @@ public class MidiFile extends Linkable {
 		MidiParser var4 = new MidiParser(this.midi);
 		int var5 = var4.getTrackCount();
 		for (int var6 = 0; var6 < var5; var6++) {
-			var4.enterTrack(var6);
-			var4.readDelay(var6);
-			var4.leaveTrack(var6);
+			var4.setTrack(var6);
+			var4.processDeltaTime(var6);
+			var4.unsetTrack(var6);
 		}
 		label52:
 		do {
 			while (true) {
-				int var7 = var4.getNextTrackToPlay();
+				int var7 = var4.nextTrackToPlay();
 				int var8 = var4.trackCurrentTick[var7];
 				while (var4.trackCurrentTick[var7] == var8) {
-					var4.enterTrack(var7);
-					int var9 = var4.readMessage(var7);
+					var4.setTrack(var7);
+					int var9 = var4.getEvent(var7);
 					if (var9 == 1) {
-						var4.stopTrack();
-						var4.leaveTrack(var7);
+						var4.finishTrack();
+						var4.unsetTrack(var7);
 						continue label52;
 					}
 					int var10 = var9 & 0xF0;
@@ -365,11 +365,11 @@ public class MidiFile extends Linkable {
 							var20.data[var17] = 1;
 						}
 					}
-					var4.readDelay(var7);
-					var4.leaveTrack(var7);
+					var4.processDeltaTime(var7);
+					var4.unsetTrack(var7);
 				}
 			}
-		} while (!var4.isFinished());
+		} while (!var4.allTracksFinished());
 	}
 
 	@ObfuscatedName("ei.j()V")

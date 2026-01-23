@@ -12,6 +12,7 @@ import java.awt.*;
 @ObfuscatedName("y")
 public class PcmPlayer {
 
+	// jag::oldscape::sound::PCMPlayer::m_frequency
 	@ObfuscatedName("y.r")
 	public static int frequency;
 

@@ -14,7 +14,7 @@ public class MidiPlayer extends PcmStream {
 	public HashTable patches = new HashTable(128);
 
 	@ObfuscatedName("ed.g")
-	public int volume = 256;
+	public int globalVolume = 256;
 
 	@ObfuscatedName("ed.q")
 	public int field2235 = 1000000;
@@ -96,13 +96,14 @@ public class MidiPlayer extends PcmStream {
 	}
 
 	@ObfuscatedName("ed.p(II)V")
-	public synchronized void setVolume(int arg0) {
-		this.volume = arg0;
+	public synchronized void setGlobalVolume(int arg0) {
+		this.globalVolume = arg0;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::GetGlobalVolume
 	@ObfuscatedName("ed.ad(B)I")
-	public int getVolume() {
-		return this.volume;
+	public int getGlobalVolume() {
+		return this.globalVolume;
 	}
 
 	@ObfuscatedName("ed.ac(Lei;Lch;La;IB)Z")
@@ -113,8 +114,8 @@ public class MidiPlayer extends PcmStream {
 		if (arg3 > 0) {
 			var6 = new int[] { arg3 };
 		}
-		for (ByteArrayNode var7 = (ByteArrayNode) arg0.patches.first(); var7 != null; var7 = (ByteArrayNode) arg0.patches.next()) {
-			int var8 = (int) var7.key;
+		for (ByteArrayNode patch = (ByteArrayNode) arg0.patches.first(); patch != null; patch = (ByteArrayNode) arg0.patches.next()) {
+			int var8 = (int) patch.key;
 			Patch var9 = (Patch) this.patches.get((long) var8);
 			if (var9 == null) {
 				var9 = Patch.method49(arg1, var8);
@@ -124,7 +125,7 @@ public class MidiPlayer extends PcmStream {
 				}
 				this.patches.put(var9, (long) var8);
 			}
-			if (!var9.method1784(arg2, var7.data, var6)) {
+			if (!var9.method1784(arg2, patch.data, var6)) {
 				var5 = false;
 			}
 		}
@@ -136,44 +137,47 @@ public class MidiPlayer extends PcmStream {
 
 	@ObfuscatedName("ed.aa(B)V")
 	public synchronized void method2220() {
-		for (Patch var1 = (Patch) this.patches.first(); var1 != null; var1 = (Patch) this.patches.next()) {
-			var1.method1781();
+		for (Patch patch = (Patch) this.patches.first(); patch != null; patch = (Patch) this.patches.next()) {
+			patch.method1781();
 		}
 	}
 
 	@ObfuscatedName("ed.as(I)V")
 	public synchronized void method2289() {
-		for (Patch var1 = (Patch) this.patches.first(); var1 != null; var1 = (Patch) this.patches.next()) {
-			var1.unlink();
+		for (Patch patch = (Patch) this.patches.first(); patch != null; patch = (Patch) this.patches.next()) {
+			patch.unlink();
 		}
 	}
 
 	@ObfuscatedName("ed.am(Lei;ZB)V")
 	public synchronized void start(MidiFile arg0, boolean arg1) {
 		this.stop();
+
 		this.parser.setMidi(arg0.midi);
 		this.loop = arg1;
 		this.trackPreviousTime = 0L;
+
 		int var3 = this.parser.getTrackCount();
 		for (int var4 = 0; var4 < var3; var4++) {
-			this.parser.enterTrack(var4);
-			this.parser.readDelay(var4);
-			this.parser.leaveTrack(var4);
+			this.parser.setTrack(var4);
+			this.parser.processDeltaTime(var4);
+			this.parser.unsetTrack(var4);
 		}
-		this.track = this.parser.getNextTrackToPlay();
+
+		this.track = this.parser.nextTrackToPlay();
 		this.trackCurrentTick = this.parser.trackCurrentTick[this.track];
-		this.trackCurrentTime = this.parser.computeTime(this.trackCurrentTick);
+		this.trackCurrentTime = this.parser.timeFromTick(this.trackCurrentTick);
 	}
 
 	@ObfuscatedName("ed.ap(B)V")
 	public synchronized void stop() {
-		this.parser.clear();
+		this.parser.dropMidi();
 		this.reset();
 	}
 
 	@ObfuscatedName("ed.av(I)Z")
 	public synchronized boolean loaded() {
-		return this.parser.loaded();
+		return this.parser.gotMidi();
 	}
 
 	@ObfuscatedName("ed.ak(III)V")
@@ -185,22 +189,25 @@ public class MidiPlayer extends PcmStream {
 	public void method2217(int arg0, int arg1) {
 		this.channelDefaultPatch[arg0] = arg1;
 		this.channelBank[arg0] = arg1 & 0xFFFFFF80;
-		this.setChannelPatch(arg0, arg1);
+		this.setInst(arg0, arg1);
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::SetInst
 	@ObfuscatedName("ed.an(III)V")
-	public void setChannelPatch(int arg0, int arg1) {
-		if (this.channelPatch[arg0] != arg1) {
-			this.channelPatch[arg0] = arg1;
-			for (int var3 = 0; var3 < 128; var3++) {
-				this.channelSecondaryNotes[arg0][var3] = null;
-			}
+	public void setInst(int arg0, int arg1) {
+		if (this.channelPatch[arg0] == arg1) {
+			return;
+		}
+		this.channelPatch[arg0] = arg1;
+		for (int var3 = 0; var3 < 128; var3++) {
+			this.channelSecondaryNotes[arg0][var3] = null;
 		}
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::PlayNote
 	@ObfuscatedName("ed.ah(IIII)V")
-	public void turnOnNote(int arg0, int arg1, int arg2) {
-		this.turnOffNote(arg0, arg1, 64);
+	public void playNote(int arg0, int arg1, int arg2) {
+		this.stopNote(arg0, arg1, 64);
 		if ((this.channelEffects[arg0] & 0x2) != 0) {
 			for (MidiNote var4 = (MidiNote) this.patchStream.queue.tail(); var4 != null; var4 = (MidiNote) this.patchStream.queue.prev()) {
 				if (var4.channel == arg0 && var4.releaseProgress < 0) {
@@ -239,10 +246,10 @@ public class MidiPlayer extends PcmStream {
 		var8.releaseProgress = -1;
 		var8.releaseEnvelopeProgress = 0;
 		if (this.channelCustom1[arg0] == 0) {
-			var8.stream = WaveStream.create(var7, this.computeNotePitch(var8), this.computeNoteVolume(var8), this.computeNotePan(var8));
+			var8.stream = WaveStream.newRateFineVolPan(var7, this.getRateRaw(var8), this.getVolume(var8), this.getPan(var8));
 		} else {
-			var8.stream = WaveStream.create(var7, this.computeNotePitch(var8), 0, this.computeNotePan(var8));
-			this.method2205(var8, var6.notePitch[arg1] < 0);
+			var8.stream = WaveStream.newRateFineVolPan(var7, this.getRateRaw(var8), 0, this.getPan(var8));
+			this.setSampleOffset(var8, var6.notePitch[arg1] < 0);
 		}
 		if (var6.notePitch[arg1] < 0) {
 			var8.stream.setLoopCount(-1);
@@ -259,8 +266,9 @@ public class MidiPlayer extends PcmStream {
 		this.channelNotes[arg0][arg1] = var8;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::SetSampleOffset
 	@ObfuscatedName("ed.ay(Lej;ZI)V")
-	public void method2205(MidiNote arg0, boolean arg1) {
+	public void setSampleOffset(MidiNote arg0, boolean arg1) {
 		int var3 = arg0.sound.samples.length;
 		int var5;
 		if (arg1 && arg0.sound.loopReversed) {
@@ -277,8 +285,9 @@ public class MidiPlayer extends PcmStream {
 		arg0.stream.setPosition(var5);
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::StopNote
 	@ObfuscatedName("ed.al(IIII)V")
-	public void turnOffNote(int arg0, int arg1, int arg2) {
+	public void stopNote(int arg0, int arg1, int arg2) {
 		MidiNote var4 = this.channelNotes[arg0][arg1];
 		if (var4 == null) {
 			return;
@@ -300,22 +309,25 @@ public class MidiPlayer extends PcmStream {
 	public void setPolyphonicKeyPressure(int arg0, int arg1, int arg2) {
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::ChannelPressure
 	@ObfuscatedName("ed.ao(III)V")
-	public void setChannelPressure(int arg0, int arg1) {
+	public void channelPressure(int arg0, int arg1) {
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::PitchWheel
 	@ObfuscatedName("ed.ag(IIS)V")
-	public void setChannelPitchBend(int arg0, int arg1) {
+	public void pitchWheel(int arg0, int arg1) {
 		this.channelPitchBend[arg0] = arg1;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::AllSoundOff
 	@ObfuscatedName("ed.ar(IB)V")
-	public void controlAllSoundOff(int arg0) {
+	public void allSoundOff(int arg0) {
 		for (MidiNote var2 = (MidiNote) this.patchStream.queue.head(); var2 != null; var2 = (MidiNote) this.patchStream.queue.next()) {
 			if (arg0 < 0 || var2.channel == arg0) {
 				if (var2.stream != null) {
-					var2.stream.fadeOut(PcmPlayer.frequency / 100);
-					if (var2.stream.isVolumeChanging()) {
+					var2.stream.rampOut(PcmPlayer.frequency / 100);
+					if (var2.stream.isRamping()) {
 						this.patchStream.mixer.playStream(var2.stream);
 					}
 					var2.dropData();
@@ -328,31 +340,34 @@ public class MidiPlayer extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::AllControllersOff
 	@ObfuscatedName("ed.aq(II)V")
-	public void resetChannelControls(int arg0) {
+	public void allControllersOff(int arg0) {
 		if (arg0 < 0) {
 			for (int var2 = 0; var2 < 16; var2++) {
-				this.resetChannelControls(var2);
+				this.allControllersOff(var2);
 			}
 			return;
 		}
+
 		this.channelExpression[arg0] = 12800;
 		this.channelPan[arg0] = 8192;
 		this.channelVolume[arg0] = 16383;
 		this.channelPitchBend[arg0] = 8192;
 		this.channelModulation[arg0] = 0;
 		this.channelPortamentoTime[arg0] = 8192;
-		this.resetPortamento(arg0);
-		this.resetCustomEffect(arg0);
+		this.cleanPorta(arg0);
+		this.cleanRetrig(arg0);
 		this.channelEffects[arg0] = 0;
 		this.channelParameterNumber[arg0] = 32767;
 		this.channelPitchBendRange[arg0] = 256;
 		this.channelCustom1[arg0] = 0;
-		this.setChannelCustom2(arg0, 8192);
+		this.setRetrigRate(arg0, 8192);
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::AllNotesOff
 	@ObfuscatedName("ed.at(II)V")
-	public void controlAllNotesOff(int arg0) {
+	public void allNotesOff(int arg0) {
 		for (MidiNote var2 = (MidiNote) this.patchStream.queue.head(); var2 != null; var2 = (MidiNote) this.patchStream.queue.next()) {
 			if ((arg0 < 0 || var2.channel == arg0) && var2.releaseProgress < 0) {
 				this.channelNotes[var2.channel][var2.noteKey] = null;
@@ -361,10 +376,11 @@ public class MidiPlayer extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::Reset
 	@ObfuscatedName("ed.ae(B)V")
 	public void reset() {
-		this.controlAllSoundOff(-1);
-		this.resetChannelControls(-1);
+		this.allSoundOff(-1);
+		this.allControllersOff(-1);
 		for (int var1 = 0; var1 < 16; var1++) {
 			this.channelPatch[var1] = this.channelDefaultPatch[var1];
 		}
@@ -373,8 +389,9 @@ public class MidiPlayer extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::CleanPorta
 	@ObfuscatedName("ed.au(IB)V")
-	public void resetPortamento(int arg0) {
+	public void cleanPorta(int arg0) {
 		if ((this.channelEffects[arg0] & 0x2) == 0) {
 			return;
 		}
@@ -385,8 +402,9 @@ public class MidiPlayer extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::CleanRetrig
 	@ObfuscatedName("ed.ax(IB)V")
-	public void resetCustomEffect(int arg0) {
+	public void cleanRetrig(int arg0) {
 		if ((this.channelEffects[arg0] & 0x4) == 0) {
 			return;
 		}
@@ -397,22 +415,23 @@ public class MidiPlayer extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::ProcessMidi
 	@ObfuscatedName("ed.ai(II)V")
-	public void processMessage(int arg0) {
+	public void processMidi(int arg0) {
 		int var2 = arg0 & 0xF0;
 		if (var2 == 128) {
 			int var3 = arg0 & 0xF;
 			int var4 = arg0 >> 8 & 0x7F;
 			int var5 = arg0 >> 16 & 0x7F;
-			this.turnOffNote(var3, var4, var5);
+			this.stopNote(var3, var4, var5);
 		} else if (var2 == 144) {
 			int var6 = arg0 & 0xF;
 			int var7 = arg0 >> 8 & 0x7F;
 			int var8 = arg0 >> 16 & 0x7F;
 			if (var8 > 0) {
-				this.turnOnNote(var6, var7, var8);
+				this.playNote(var6, var7, var8);
 			} else {
-				this.turnOffNote(var6, var7, 64);
+				this.stopNote(var6, var7, 64);
 			}
 		} else if (var2 == 160) {
 			int var9 = arg0 & 0xF;
@@ -470,7 +489,7 @@ public class MidiPlayer extends PcmStream {
 				if (var14 >= 64) {
 					this.channelEffects[var12] |= 0x2;
 				} else {
-					this.resetPortamento(var12);
+					this.cleanPorta(var12);
 					this.channelEffects[var12] &= 0xFFFFFFFD;
 				}
 			}
@@ -487,13 +506,13 @@ public class MidiPlayer extends PcmStream {
 				this.channelParameterNumber[var12] = (this.channelParameterNumber[var12] & 0x3F80) + 16384 + var14;
 			}
 			if (var13 == 120) {
-				this.controlAllSoundOff(var12);
+				this.allSoundOff(var12);
 			}
 			if (var13 == 121) {
-				this.resetChannelControls(var12);
+				this.allControllersOff(var12);
 			}
 			if (var13 == 123) {
-				this.controlAllNotesOff(var12);
+				this.allNotesOff(var12);
 			}
 			if (var13 == 6) {
 				int var15 = this.channelParameterNumber[var12];
@@ -517,28 +536,28 @@ public class MidiPlayer extends PcmStream {
 				if (var14 >= 64) {
 					this.channelEffects[var12] |= 0x4;
 				} else {
-					this.resetCustomEffect(var12);
+					this.cleanRetrig(var12);
 					this.channelEffects[var12] &= 0xFFFFFFFB;
 				}
 			}
 			if (var13 == 17) {
-				this.setChannelCustom2(var12, (var14 << 7) + (this.channelCustom2[var12] & 0xFFFFC07F));
+				this.setRetrigRate(var12, (var14 << 7) + (this.channelCustom2[var12] & 0xFFFFC07F));
 			}
 			if (var13 == 49) {
-				this.setChannelCustom2(var12, (this.channelCustom2[var12] & 0xFFFFFF80) + var14);
+				this.setRetrigRate(var12, (this.channelCustom2[var12] & 0xFFFFFF80) + var14);
 			}
 		} else if (var2 == 192) {
 			int var17 = arg0 & 0xF;
 			int var18 = arg0 >> 8 & 0x7F;
-			this.setChannelPatch(var17, this.channelBank[var17] + var18);
+			this.setInst(var17, this.channelBank[var17] + var18);
 		} else if (var2 == 208) {
 			int var19 = arg0 & 0xF;
 			int var20 = arg0 >> 8 & 0x7F;
-			this.setChannelPressure(var19, var20);
+			this.channelPressure(var19, var20);
 		} else if (var2 == 224) {
 			int var21 = arg0 & 0xF;
 			int var22 = (arg0 >> 8 & 0x7F) + (arg0 >> 9 & 0x3F80);
-			this.setChannelPitchBend(var21, var22);
+			this.pitchWheel(var21, var22);
 		} else {
 			int var23 = arg0 & 0xFF;
 			if (var23 == 255) {
@@ -547,14 +566,16 @@ public class MidiPlayer extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::SetRetrigRate
 	@ObfuscatedName("ed.aj(III)V")
-	public void setChannelCustom2(int arg0, int arg1) {
+	public void setRetrigRate(int arg0, int arg1) {
 		this.channelCustom2[arg0] = arg1;
 		this.channelCustom3[arg0] = (int) (Math.pow(2.0D, (double) arg1 * 5.4931640625E-4D) * 2097152.0D + 0.5D);
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::GetRateRaw
 	@ObfuscatedName("ed.aw(Lej;I)I")
-	public int computeNotePitch(MidiNote arg0) {
+	public int getRateRaw(MidiNote arg0) {
 		int var2 = (arg0.portamentoAmount * arg0.portamentoDelta >> 12) + arg0.pitch;
 		int var3 = ((this.channelPitchBend[arg0.channel] - 8192) * this.channelPitchBendRange[arg0.channel] >> 12) + var2;
 		EnvelopeSet var4 = arg0.envelope;
@@ -572,13 +593,14 @@ public class MidiPlayer extends PcmStream {
 		return var10 < 1 ? 1 : var10;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::GetVolume
 	@ObfuscatedName("ed.af(Lej;I)I")
-	public int computeNoteVolume(MidiNote arg0) {
+	public int getVolume(MidiNote arg0) {
 		EnvelopeSet var2 = arg0.envelope;
 		int var3 = this.channelVolume[arg0.channel] * this.channelExpression[arg0.channel] + 4096 >> 13;
 		int var4 = var3 * var3 + 16384 >> 15;
 		int var5 = arg0.volume * var4 + 16384 >> 15;
-		int var6 = this.volume * var5 + 128 >> 8;
+		int var6 = this.globalVolume * var5 + 128 >> 8;
 		if (var2.decayVolume > 0) {
 			var6 = (int) ((double) var6 * Math.pow(0.5D, (double) arg0.decayProgress * 1.953125E-5D * (double) var2.decayVolume) + 0.5D);
 		}
@@ -605,8 +627,9 @@ public class MidiPlayer extends PcmStream {
 		return var6;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::GetPan
 	@ObfuscatedName("ed.bh(Lej;I)I")
-	public int computeNotePan(MidiNote arg0) {
+	public int getPan(MidiNote arg0) {
 		int var2 = this.channelPan[arg0.channel];
 		return var2 < 8192 ? arg0.pan * var2 + 32 >> 6 : 16384 - ((128 - arg0.pan) * (16384 - var2) + 32 >> 6);
 	}
@@ -626,9 +649,10 @@ public class MidiPlayer extends PcmStream {
 		return 0;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::DoMix
 	@ObfuscatedName("ed.q([III)V")
 	public synchronized void doMix(int[] arg0, int arg1, int arg2) {
-		if (this.parser.loaded()) {
+		if (this.parser.gotMidi()) {
 			int var4 = this.field2235 * this.parser.division / PcmPlayer.frequency;
 			do {
 				long var5 = (long) arg2 * (long) var4 + this.trackPreviousTime;
@@ -636,20 +660,24 @@ public class MidiPlayer extends PcmStream {
 					this.trackPreviousTime = var5;
 					break;
 				}
+
 				int var7 = (int) ((this.trackCurrentTime - this.trackPreviousTime + (long) var4 - 1L) / (long) var4);
 				this.trackPreviousTime += (long) var4 * (long) var7;
 				this.patchStream.doMix(arg0, arg1, var7);
+
 				arg1 += var7;
 				arg2 -= var7;
-				this.processMessages();
-			} while (this.parser.loaded());
+				this.updateMidi();
+			} while (this.parser.gotMidi());
 		}
+
 		this.patchStream.doMix(arg0, arg1, arg2);
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::PretendToMix
 	@ObfuscatedName("ed.i(I)V")
 	public synchronized void pretendToMix(int arg0) {
-		if (this.parser.loaded()) {
+		if (this.parser.gotMidi()) {
 			int var2 = this.field2235 * this.parser.division / PcmPlayer.frequency;
 			do {
 				long var3 = (long) arg0 * (long) var2 + this.trackPreviousTime;
@@ -657,79 +685,98 @@ public class MidiPlayer extends PcmStream {
 					this.trackPreviousTime = var3;
 					break;
 				}
+
 				int var5 = (int) ((this.trackCurrentTime - this.trackPreviousTime + (long) var2 - 1L) / (long) var2);
 				this.trackPreviousTime += (long) var2 * (long) var5;
 				this.patchStream.pretendToMix(var5);
+
 				arg0 -= var5;
-				this.processMessages();
-			} while (this.parser.loaded());
+				this.updateMidi();
+			} while (this.parser.gotMidi());
 		}
+
 		this.patchStream.pretendToMix(arg0);
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::UpdateMidi
 	@ObfuscatedName("ed.bi(I)V")
-	public void processMessages() {
+	public void updateMidi() {
 		// todo: for loop
 		int var1 = this.track;
 		int var2 = this.trackCurrentTick;
 		long var3 = this.trackCurrentTime;
+
 		while (this.trackCurrentTick == var2) {
 			while (this.parser.trackCurrentTick[var1] == var2) {
-				this.parser.enterTrack(var1);
-				int var5 = this.parser.readMessage(var1);
+				this.parser.setTrack(var1);
+
+				int var5 = this.parser.getEvent(var1);
 				if (var5 == 1) {
-					this.parser.stopTrack();
-					this.parser.leaveTrack(var1);
-					if (this.parser.isFinished()) {
+					this.parser.finishTrack();
+					this.parser.unsetTrack(var1);
+					if (this.parser.allTracksFinished()) {
 						if (!this.loop || var2 == 0) {
 							this.reset();
-							this.parser.clear();
+							this.parser.dropMidi();
 							return;
 						}
-						this.parser.startTrack(var3);
+						this.parser.restart(var3);
 					}
 					break;
 				}
+
 				if ((var5 & 0x80) != 0) {
-					this.processMessage(var5);
+					this.processMidi(var5);
 				}
-				this.parser.readDelay(var1);
-				this.parser.leaveTrack(var1);
+
+				this.parser.processDeltaTime(var1);
+				this.parser.unsetTrack(var1);
 			}
-			var1 = this.parser.getNextTrackToPlay();
+
+			var1 = this.parser.nextTrackToPlay();
 			var2 = this.parser.trackCurrentTick[var1];
-			var3 = this.parser.computeTime(var2);
+			var3 = this.parser.timeFromTick(var2);
 		}
+
 		this.track = var1;
 		this.trackCurrentTick = var2;
 		this.trackCurrentTime = var3;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::UpdateStreamlessNote
 	@ObfuscatedName("ed.bs(Lej;B)Z")
-	public boolean removeFinishedNote(MidiNote arg0) {
-		if (arg0.stream != null) {
+	public boolean updateStreamlessNote(MidiNote note) {
+		if (note.stream != null) {
 			return false;
 		}
-		if (arg0.releaseProgress >= 0) {
-			arg0.unlink();
-			if (arg0.secondaryNote > 0 && this.channelSecondaryNotes[arg0.channel][arg0.secondaryNote] == arg0) {
-				this.channelSecondaryNotes[arg0.channel][arg0.secondaryNote] = null;
+
+		if (note.releaseProgress >= 0) {
+			note.unlink();
+
+			if (note.secondaryNote > 0 && this.channelSecondaryNotes[note.channel][note.secondaryNote] == note) {
+				this.channelSecondaryNotes[note.channel][note.secondaryNote] = null;
 			}
 		}
+
 		return true;
 	}
 
+	// jag::oldscape::midi2::MidiPlayer::UpdateNote
 	@ObfuscatedName("ed.bk(Lej;[IIIB)Z")
-	public boolean progressNote(MidiNote arg0, int[] arg1, int arg2, int arg3) {
+	public boolean updateNote(MidiNote arg0, int[] arg1, int arg2, int arg3) {
 		arg0.volumeChangeDuration = PcmPlayer.frequency / 100;
-		if (arg0.releaseProgress >= 0 && (arg0.stream == null || arg0.stream.method2161())) {
+
+		if (arg0.releaseProgress >= 0 && (arg0.stream == null || arg0.stream.isFinished())) {
 			arg0.dropData();
 			arg0.unlink();
+
 			if (arg0.secondaryNote > 0 && this.channelSecondaryNotes[arg0.channel][arg0.secondaryNote] == arg0) {
 				this.channelSecondaryNotes[arg0.channel][arg0.secondaryNote] = null;
 			}
+
 			return true;
 		}
+
 		int var5 = arg0.portamentoAmount;
 		if (var5 > 0) {
 			int var6 = var5 - (int) (Math.pow(2.0D, (double) this.channelPortamentoTime[arg0.channel] * 4.921259842519685E-4D) * 16.0D + 0.5D);
@@ -738,11 +785,15 @@ public class MidiPlayer extends PcmStream {
 			}
 			arg0.portamentoAmount = var6;
 		}
-		arg0.stream.setPitch(this.computeNotePitch(arg0));
+
+		arg0.stream.setRateRaw(this.getRateRaw(arg0));
+
 		EnvelopeSet var7 = arg0.envelope;
 		boolean var8 = false;
+
 		arg0.vibratoRampProgress++;
 		arg0.vibratoProgress += var7.vibratoFrequency;
+
 		double var9 = (double) ((arg0.noteKey - 60 << 8) + (arg0.portamentoAmount * arg0.portamentoDelta >> 12)) * 5.086263020833333E-6D;
 		if (var7.decayVolume > 0) {
 			if (var7.decaySpeed > 0) {
@@ -751,6 +802,7 @@ public class MidiPlayer extends PcmStream {
 				arg0.decayProgress += 128;
 			}
 		}
+
 		if (var7.attackVolume != null) {
 			if (var7.attackSpeed > 0) {
 				arg0.attackProgress += (int) (Math.pow(2.0D, (double) var7.attackSpeed * var9) * 128.0D + 0.5D);
@@ -764,6 +816,7 @@ public class MidiPlayer extends PcmStream {
 				var8 = true;
 			}
 		}
+
 		if (arg0.releaseProgress >= 0 && var7.releaseVolume != null && (this.channelEffects[arg0.channel] & 0x1) == 0 && (arg0.secondaryNote < 0 || this.channelSecondaryNotes[arg0.channel][arg0.secondaryNote] != arg0)) {
 			if (var7.releaseSpeed > 0) {
 				arg0.releaseProgress += (int) (Math.pow(2.0D, (double) var7.releaseSpeed * var9) * 128.0D + 0.5D);
@@ -777,26 +830,33 @@ public class MidiPlayer extends PcmStream {
 				var8 = true;
 			}
 		}
+
 		if (!var8) {
-			arg0.stream.changeVolumeSmooth(arg0.volumeChangeDuration, this.computeNoteVolume(arg0), this.computeNotePan(arg0));
+			arg0.stream.rampVolPanFine(arg0.volumeChangeDuration, this.getVolume(arg0), this.getPan(arg0));
 			return false;
 		}
-		arg0.stream.fadeOut(arg0.volumeChangeDuration);
+
+		arg0.stream.rampOut(arg0.volumeChangeDuration);
+
 		if (arg1 == null) {
 			arg0.stream.pretendToMix(arg3);
 		} else {
 			arg0.stream.doMix(arg1, arg2, arg3);
 		}
-		if (arg0.stream.isVolumeChanging()) {
+
+		if (arg0.stream.isRamping()) {
 			this.patchStream.mixer.playStream(arg0.stream);
 		}
+
 		arg0.dropData();
+
 		if (arg0.releaseProgress >= 0) {
 			arg0.unlink();
 			if (arg0.secondaryNote > 0 && this.channelSecondaryNotes[arg0.channel][arg0.secondaryNote] == arg0) {
 				this.channelSecondaryNotes[arg0.channel][arg0.secondaryNote] = null;
 			}
 		}
+
 		return true;
 	}
 }

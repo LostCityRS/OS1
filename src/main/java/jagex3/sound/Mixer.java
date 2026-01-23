@@ -20,6 +20,7 @@ public class Mixer extends PcmStream {
 	@ObfuscatedName("ee.i")
 	public int field2220 = -1;
 
+	// jag::oldscape::sound::Mixer::PlayStream
 	@ObfuscatedName("ee.p(Ldx;)V")
 	public final synchronized void playStream(PcmStream arg0) {
 		this.streams.addHead(arg0);

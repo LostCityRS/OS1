@@ -8,9 +8,9 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.URL;
 
-// jag::oldscape::GameWorld (?)
+// jag::http::HTTPRequest::HTTPRequest
 @ObfuscatedName("i")
-public class WorldList {
+public class HTTPRequest {
 
 	@ObfuscatedName("i.r")
 	public int stage;
@@ -36,14 +36,15 @@ public class WorldList {
 	@ObfuscatedName("i.z")
 	public long timeout;
 
-	public WorldList(SignLink sign, URL url) {
+	public HTTPRequest(SignLink sign, URL url) {
 		this.req = sign.urlreq(url);
 		this.stage = 0;
 		this.timeout = MonotonicTime.currentTime() + 30000L;
 	}
 
+	// jag::http::HTTPRequest::GetData
 	@ObfuscatedName("i.r(I)[B")
-	public byte[] getWorldList() throws IOException {
+	public byte[] getData() throws IOException {
 		if (MonotonicTime.currentTime() > this.timeout) {
 			throw new IOException();
 		}

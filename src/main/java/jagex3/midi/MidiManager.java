@@ -2,7 +2,6 @@ package jagex3.midi;
 
 import deob.ObfuscatedName;
 import jagex3.js5.Js5;
-import jagex3.js5.Js5Loader;
 import jagex3.sound.WaveCache;
 
 // jag::oldscape::midi2::MidiManager
@@ -21,11 +20,12 @@ public class MidiManager {
 	@ObfuscatedName("bd.l")
 	public static Js5 jagFX;
 
+	// jag::oldscape::midi2::MidiManager::m_midiPlayers
 	@ObfuscatedName("bd.m")
 	public static MidiPlayer midiPlayer;
 
 	@ObfuscatedName("bd.c")
-	public static int field1117 = 0;
+	public static int state = 0;
 
 	@ObfuscatedName("bd.n")
 	public static Js5 field1118;
@@ -55,6 +55,7 @@ public class MidiManager {
 		throw new Error();
 	}
 
+	// jag::oldscape::midi2::MidiManager::Init
 	@ObfuscatedName("dl.r(Lch;Lch;Lch;Led;B)Z")
 	public static boolean init(Js5 arg0, Js5 arg1, Js5 arg2, MidiPlayer arg3) {
 		patches = arg0;
@@ -64,9 +65,10 @@ public class MidiManager {
 		return true;
 	}
 
+	// jag::oldscape::midi2::MidiManager::Play
 	@ObfuscatedName("cu.d(Lch;IIIZI)V")
-	public static void method1125(Js5 arg0, int arg1, int arg2, int arg3, boolean arg4) {
-		field1117 = 1;
+	public static void play(Js5 arg0, int arg1, int arg2, int arg3, boolean arg4) {
+		state = 1;
 		field1118 = arg0;
 		field349 = arg1;
 		field1121 = arg2;
@@ -75,10 +77,11 @@ public class MidiManager {
 		field1152 = 10000;
 	}
 
+	// jag::oldscape::midi2::MidiManager::SetVolume
 	@ObfuscatedName("i.l(II)V")
-	public static void method105(int arg0) {
-		if (field1117 == 0) {
-			midiPlayer.setVolume(arg0);
+	public static void setVolume(int arg0) {
+		if (state == 0) {
+			midiPlayer.setGlobalVolume(arg0);
 		} else {
 			field1120 = arg0;
 		}
@@ -88,14 +91,14 @@ public class MidiManager {
 	@ObfuscatedName("bc.m(B)V")
 	public static void stop() {
 		midiPlayer.stop();
-		field1117 = 1;
+		state = 1;
 		field1118 = null;
 	}
 
-	// jag::oldscape::midi2::MidiManager::Play
+	// jag::oldscape::midi2::MidiManager::SwapSongs
 	@ObfuscatedName("q.c(ILch;IIIZI)V")
-	public static void play(int arg0, Js5 arg1, int arg2, int arg3, int arg4, boolean arg5) {
-		field1117 = 1;
+	public static void swapSongs(int arg0, Js5 arg1, int arg2, int arg3, int arg4, boolean arg5) {
+		state = 1;
 		field1118 = arg1;
 		field349 = arg2;
 		field1121 = arg3;
@@ -104,38 +107,42 @@ public class MidiManager {
 		field1152 = arg0;
 	}
 
+	// jag::oldscape::midi2::MidiManager::IsInitialised
 	@ObfuscatedName("eu.n(I)Z")
-	public static boolean method2456() {
-		return field1117 == 0 ? midiPlayer.loaded() : true;
+	public static boolean isInitialised() {
+		return state == 0 ? midiPlayer.loaded() : true;
 	}
 
 	@ObfuscatedName("by.j(I)V")
 	public static void method825() {
 		try {
-			if (field1117 == 1) {
-				int var0 = midiPlayer.getVolume();
+			if (state == 1) {
+				int var0 = midiPlayer.getGlobalVolume();
 				if (var0 > 0 && midiPlayer.loaded()) {
 					int var1 = var0 - field1152;
 					if (var1 < 0) {
 						var1 = 0;
 					}
-					midiPlayer.setVolume(var1);
+					midiPlayer.setGlobalVolume(var1);
 					return;
 				}
+
 				midiPlayer.stop();
 				midiPlayer.method2289();
+
 				if (field1118 == null) {
-					field1117 = 0;
+					state = 0;
 				} else {
-					field1117 = 2;
+					state = 2;
 				}
+
 				field1113 = null;
 				field1586 = null;
 			}
-		} catch (Exception var3) {
-			var3.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			midiPlayer.stop();
-			field1117 = 0;
+			state = 0;
 			field1113 = null;
 			field1586 = null;
 			field1118 = null;
@@ -145,47 +152,44 @@ public class MidiManager {
 	@ObfuscatedName("ay.z(I)Z")
 	public static boolean method511() {
 		try {
-			if (field1117 == 2) {
+			if (state == 2) {
 				if (field1113 == null) {
 					field1113 = MidiFile.decode(field1118, field349, field1121);
 					if (field1113 == null) {
 						return false;
 					}
 				}
+
 				if (field1586 == null) {
 					field1586 = new WaveCache(jagFX, vorbis);
 				}
+
 				if (midiPlayer.method2196(field1113, patches, field1586, 22050)) {
 					midiPlayer.method2220();
-					midiPlayer.setVolume(field1120);
+					midiPlayer.setGlobalVolume(field1120);
 					midiPlayer.start(field1113, field1625);
-					field1117 = 0;
+					state = 0;
 					field1113 = null;
 					field1586 = null;
 					field1118 = null;
 					return true;
 				}
 			}
-		} catch (Exception var1) {
-			var1.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			midiPlayer.stop();
-			field1117 = 0;
+			state = 0;
 			field1113 = null;
 			field1586 = null;
 			field1118 = null;
 		}
-		return false;
-	}
 
-	public static void imethod1(Js5Loader var17) {
-		int var18 = var17.getGroupId("scape main");
-		int var19 = var17.getFileId(var18, "");
-		play(2, var17, var18, var19, 255, false);
+		return false;
 	}
 
 	// jag::oldscape::midi2::MidiManager::Stop
 	public static void stop2() {
-		field1117 = 1;
+		state = 1;
 		field1118 = null;
 		field349 = -1;
 		field1121 = -1;

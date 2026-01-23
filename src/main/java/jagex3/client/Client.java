@@ -1702,8 +1702,8 @@ public class Client extends GameShell {
 				loadingStep = 60;
 			}
 		} else if (loadingStep == 60) {
-			int var27 = imethod48(binary, sprites);
-			int var30 = TitleScreen.method162();
+			int var27 = TitleScreen.ready(binary, sprites);
+			int var30 = TitleScreen.readyMax();
 
 			if (var27 < var30) {
 				TitleScreen.loadString = Text.MAINLOAD60 + var27 * 100 / var30 + "%";
@@ -2436,7 +2436,7 @@ public class Client extends GameShell {
 		if (id == -1 && !field2189) {
 			MidiManager.stop();
 		} else if (id != -1 && previousSong != id && midiVolume != 0 && !field2189) {
-			MidiManager.play(2, songs, id, 0, midiVolume, false);
+			MidiManager.swapSongs(2, songs, id, 0, midiVolume, false);
 		}
 
 		previousSong = id;
@@ -7706,13 +7706,13 @@ public class Client extends GameShell {
 
 			if (midiVolume != volume) {
 				if (midiVolume == 0 && previousSong != -1) {
-					MidiManager.method1125(songs, previousSong, 0, volume, false);
+					MidiManager.play(songs, previousSong, 0, volume, false);
 					field2189 = false;
 				} else if (volume == 0) {
 					MidiManager.stop();
 					field2189 = false;
 				} else {
-					MidiManager.method105(volume);
+					MidiManager.setVolume(volume);
 				}
 
 				midiVolume = volume;
@@ -10887,9 +10887,9 @@ public class Client extends GameShell {
 			}
 		}
 
-		if (field2189 && !MidiManager.method2456()) {
+		if (field2189 && !MidiManager.isInitialised()) {
 			if (midiVolume != 0 && previousSong != -1) {
-				MidiManager.method1125(songs, previousSong, 0, midiVolume, false);
+				MidiManager.play(songs, previousSong, 0, midiVolume, false);
 			}
 
 			field2189 = false;
@@ -11990,7 +11990,7 @@ public class Client extends GameShell {
 			return;
 		}
 
-		MidiManager.method1125(jingles, var113, 0, midiVolume, false);
+		MidiManager.play(jingles, var113, 0, midiVolume, false);
 		field2189 = true;
 	}
 
@@ -12023,34 +12023,6 @@ public class Client extends GameShell {
 			componentUpdated(resumedPauseButton);
 			resumedPauseButton = null;
 		}
-	}
-
-	public static int imethod48(Js5Loader var25, Js5Loader var26) {
-		int var27 = 0;
-		if (var25.requestDownload("title.jpg", "")) {
-			var27++;
-		}
-		if (var26.requestDownload("logo", "")) {
-			var27++;
-		}
-		if (var26.requestDownload("titlebox", "")) {
-			var27++;
-		}
-		if (var26.requestDownload("titlebutton", "")) {
-			var27++;
-		}
-		if (var26.requestDownload("runes", "")) {
-			var27++;
-		}
-		if (var26.requestDownload("title_mute", "")) {
-			var27++;
-		}
-		var26.requestDownload("sl_back", "");
-		var26.requestDownload("sl_flags", "");
-		var26.requestDownload("sl_arrows", "");
-		var26.requestDownload("sl_stars", "");
-		var26.requestDownload("sl_button", "");
-		return var27;
 	}
 
 	public static void prepareMinimap() {

@@ -103,8 +103,9 @@ public class WaveStream extends PcmStream {
 		return arg0.samples == null || arg0.samples.length == 0 ? null : new WaveStream(arg0, (int) ((long) arg0.samplingFrequency * 256L * (long) arg1 / (long) (PcmPlayer.frequency * 100)), arg2 << 6);
 	}
 
+	// jag::oldscape::sound::WaveStream::NewRateRawFineVolPan
 	@ObfuscatedName("et.aa(Leq;III)Let;")
-	public static WaveStream create(Wave arg0, int arg1, int arg2, int arg3) {
+	public static WaveStream newRateFineVolPan(Wave arg0, int arg1, int arg2, int arg3) {
 		return arg0.samples == null || arg0.samples.length == 0 ? null : new WaveStream(arg0, arg1, arg2, arg3);
 	}
 
@@ -123,12 +124,12 @@ public class WaveStream extends PcmStream {
 
 	@ObfuscatedName("et.ap(I)V")
 	public synchronized void method2090(int arg0) {
-		this.setVolume(arg0 << 6, this.getPan());
+		this.setVolume(arg0 << 6, this.getPanFine());
 	}
 
 	@ObfuscatedName("et.av(I)V")
 	public synchronized void setVolume(int arg0) {
-		this.setVolume(arg0, this.getPan());
+		this.setVolume(arg0, this.getPanFine());
 	}
 
 	@ObfuscatedName("et.ak(II)V")
@@ -139,13 +140,15 @@ public class WaveStream extends PcmStream {
 		this.computeChannelVolumes();
 	}
 
+	// jag::oldscape::sound::WaveStream::GetVolumeFine
 	@ObfuscatedName("et.az()I")
-	public synchronized int getVolume() {
+	public synchronized int getVolumeFine() {
 		return this.volume == Integer.MIN_VALUE ? 0 : this.volume;
 	}
 
+	// jag::oldscape::sound::WaveStream::GetPanFine
 	@ObfuscatedName("et.an()I")
-	public synchronized int getPan() {
+	public synchronized int getPanFine() {
 		return this.pan < 0 ? -1 : this.pan;
 	}
 
@@ -182,12 +185,13 @@ public class WaveStream extends PcmStream {
 	}
 
 	@ObfuscatedName("et.ab(II)V")
-	public synchronized void changeVolumeSmooth(int arg0, int arg1) {
-		this.changeVolumeSmooth(arg0, arg1, this.getPan());
+	public synchronized void rampVolFine(int arg0, int arg1) {
+		this.rampVolPanFine(arg0, arg1, this.getPanFine());
 	}
 
+	// jag::oldscape::sound::WaveStream::RampVolPanFine
 	@ObfuscatedName("et.ao(III)V")
-	public synchronized void changeVolumeSmooth(int arg0, int arg1, int arg2) {
+	public synchronized void rampVolPanFine(int arg0, int arg1, int arg2) {
 		if (arg0 == 0) {
 			this.setVolume(arg1, arg2);
 			return;
@@ -225,8 +229,9 @@ public class WaveStream extends PcmStream {
 		this.volumeChangeSpeedStereoRight = (var5 - this.volumeStereoRight) / arg0;
 	}
 
+	// jag::oldscape::sound::WaveStream::RampOut
 	@ObfuscatedName("et.ag(I)V")
-	public synchronized void fadeOut(int arg0) {
+	public synchronized void rampOut(int arg0) {
 		if (arg0 == 0) {
 			this.setVolume(0);
 			this.unlink();
@@ -263,8 +268,9 @@ public class WaveStream extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::sound::WaveStream::SetRateRaw
 	@ObfuscatedName("et.ar(I)V")
-	public synchronized void setPitch(int arg0) {
+	public synchronized void setRateRaw(int arg0) {
 		if (this.pitch < 0) {
 			this.pitch = -arg0;
 		} else {
@@ -272,18 +278,21 @@ public class WaveStream extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::sound::WaveStream::GetRateRaw
 	@ObfuscatedName("et.aq()I")
-	public synchronized int getPitch() {
+	public synchronized int getRateRaw() {
 		return this.pitch < 0 ? -this.pitch : this.pitch;
 	}
 
+	// jag::oldscape::sound::WaveStream::Isfinished
 	@ObfuscatedName("et.at()Z")
-	public boolean method2161() {
+	public boolean isFinished() {
 		return this.position < 0 || this.position >= ((Wave) this.sound).samples.length << 8;
 	}
 
+	// jag::oldscape::sound::WaveStream::Isramping
 	@ObfuscatedName("et.ae()Z")
-	public boolean isVolumeChanging() {
+	public boolean isRamping() {
 		return this.volumeChangeDelta != 0;
 	}
 

@@ -19,10 +19,10 @@ public class Pix32 extends Pix2D {
 	public int hi;
 
 	@ObfuscatedName("fq.e")
-	public int yof;
+	public int xof;
 
 	@ObfuscatedName("fq.b")
-	public int xof;
+	public int yof;
 
 	@ObfuscatedName("fq.y")
 	public int owi;
@@ -37,8 +37,8 @@ public class Pix32 extends Pix2D {
 		this.data = new int[arg0 * arg1];
 		this.wi = this.owi = arg0;
 		this.hi = this.ohi = arg1;
-		this.xof = 0;
 		this.yof = 0;
+		this.xof = 0;
 	}
 
 	public Pix32(byte[] arg0, Component arg1) {
@@ -51,8 +51,8 @@ public class Pix32 extends Pix2D {
 			this.hi = var3.getHeight(arg1);
 			this.owi = this.wi;
 			this.ohi = this.hi;
-			this.yof = 0;
 			this.xof = 0;
+			this.yof = 0;
 			this.data = new int[this.wi * this.hi];
 			PixelGrabber var5 = new PixelGrabber(var3, 0, 0, this.wi, this.hi, this.data, 0, this.wi);
 			var5.grabPixels();
@@ -66,8 +66,8 @@ public class Pix32 extends Pix2D {
 		Pix32 var1 = new Pix32(this.wi, this.hi);
 		var1.owi = this.owi;
 		var1.ohi = this.ohi;
-		var1.yof = this.owi - this.wi - this.yof;
-		var1.xof = this.xof;
+		var1.xof = this.owi - this.wi - this.xof;
+		var1.yof = this.yof;
 		for (int var2 = 0; var2 < this.hi; var2++) {
 			for (int var3 = 0; var3 < this.wi; var3++) {
 				var1.data[this.wi * var2 + var3] = this.data[this.wi * var2 + this.wi - 1 - var3];
@@ -120,14 +120,14 @@ public class Pix32 extends Pix2D {
 		int[] var1 = new int[this.ohi * this.owi];
 		for (int var2 = 0; var2 < this.hi; var2++) {
 			for (int var3 = 0; var3 < this.wi; var3++) {
-				var1[(this.xof + var2) * this.owi + this.yof + var3] = this.data[this.wi * var2 + var3];
+				var1[(this.yof + var2) * this.owi + this.xof + var3] = this.data[this.wi * var2 + var3];
 			}
 		}
 		this.data = var1;
 		this.wi = this.owi;
 		this.hi = this.ohi;
-		this.yof = 0;
 		this.xof = 0;
+		this.yof = 0;
 	}
 
 	// jag::oldscape::graphics::Pix32::Untrim
@@ -137,20 +137,20 @@ public class Pix32 extends Pix2D {
 			return;
 		}
 		int var2 = arg0;
-		if (arg0 > this.yof) {
-			var2 = this.yof;
+		if (arg0 > this.xof) {
+			var2 = this.xof;
 		}
 		int var3 = arg0;
-		if (this.yof + arg0 + this.wi > this.owi) {
-			var3 = this.owi - this.yof - this.wi;
+		if (this.xof + arg0 + this.wi > this.owi) {
+			var3 = this.owi - this.xof - this.wi;
 		}
 		int var4 = arg0;
-		if (arg0 > this.xof) {
-			var4 = this.xof;
+		if (arg0 > this.yof) {
+			var4 = this.yof;
 		}
 		int var5 = arg0;
-		if (this.xof + arg0 + this.hi > this.ohi) {
-			var5 = this.ohi - this.xof - this.hi;
+		if (this.yof + arg0 + this.hi > this.ohi) {
+			var5 = this.ohi - this.yof - this.hi;
 		}
 		int var6 = this.wi + var2 + var3;
 		int var7 = this.hi + var4 + var5;
@@ -163,8 +163,8 @@ public class Pix32 extends Pix2D {
 		this.data = var8;
 		this.wi = var6;
 		this.hi = var7;
-		this.yof -= var2;
-		this.xof -= var4;
+		this.xof -= var2;
+		this.yof -= var4;
 	}
 
 	// ag::oldscape::graphics::Pix32::HFlip
@@ -178,7 +178,7 @@ public class Pix32 extends Pix2D {
 			}
 		}
 		this.data = var1;
-		this.yof = this.owi - this.wi - this.yof;
+		this.xof = this.owi - this.wi - this.xof;
 	}
 
 	// ag::oldscape::graphics::Pix32::VFlip
@@ -192,7 +192,7 @@ public class Pix32 extends Pix2D {
 			}
 		}
 		this.data = var1;
-		this.xof = this.ohi - this.hi - this.xof;
+		this.yof = this.ohi - this.hi - this.yof;
 	}
 
 	// jag::oldscape::graphics::Pix32::AddOutline
@@ -234,9 +234,9 @@ public class Pix32 extends Pix2D {
 	}
 
 	@ObfuscatedName("fq.cr(II)V")
-	public void method2667(int arg0, int arg1) {
-		int var3 = this.yof + arg0;
-		int var4 = this.xof + arg1;
+	public void quickPlotSprite(int x, int arg1) {
+		int var3 = this.xof + x;
+		int var4 = this.yof + arg1;
 		int var5 = Pix2D.width * var4 + var3;
 		int var6 = 0;
 		int var7 = this.hi;
@@ -269,12 +269,12 @@ public class Pix32 extends Pix2D {
 			var9 += var13;
 		}
 		if (var8 > 0 && var7 > 0) {
-			method2670(Pix2D.pixels, this.data, var6, var5, var8, var7, var9, var10);
+			plotQuick(Pix2D.pixels, this.data, var6, var5, var8, var7, var9, var10);
 		}
 	}
 
 	@ObfuscatedName("fq.cs([I[IIIIIII)V")
-	public static void method2670(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+	public static void plotQuick(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		for (int var8 = -arg5; var8 < 0; var8++) {
 			int var9 = arg3 + arg4 - 3;
 			while (arg3 < var9) {
@@ -294,8 +294,8 @@ public class Pix32 extends Pix2D {
 
 	@ObfuscatedName("fq.cj(II)V")
 	public void plotSprite(int arg0, int arg1) {
-		int var3 = this.yof + arg0;
-		int var4 = this.xof + arg1;
+		int var3 = this.xof + arg0;
+		int var4 = this.yof + arg1;
 		int var5 = Pix2D.width * var4 + var3;
 		int var6 = 0;
 		int var7 = this.hi;
@@ -328,12 +328,12 @@ public class Pix32 extends Pix2D {
 			var9 += var13;
 		}
 		if (var8 > 0 && var7 > 0) {
-			method2732(Pix2D.pixels, this.data, 0, var6, var5, var8, var7, var9, var10);
+			plot(Pix2D.pixels, this.data, 0, var6, var5, var8, var7, var9, var10);
 		}
 	}
 
 	@ObfuscatedName("fq.cl([I[IIIIIIII)V")
-	public static void method2732(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static void plot(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		int var9 = -(arg5 >> 2);
 		int var10 = -(arg5 & 0x3);
 		for (int var11 = -arg6; var11 < 0; var11++) {
@@ -389,15 +389,15 @@ public class Pix32 extends Pix2D {
 		int var10 = this.ohi;
 		int var11 = (var9 << 16) / arg2;
 		int var12 = (var10 << 16) / arg3;
-		if (this.yof > 0) {
-			int var13 = ((this.yof << 16) + var11 - 1) / var11;
-			arg0 += var13;
-			var7 += var11 * var13 - (this.yof << 16);
-		}
 		if (this.xof > 0) {
-			int var14 = ((this.xof << 16) + var12 - 1) / var12;
+			int var13 = ((this.xof << 16) + var11 - 1) / var11;
+			arg0 += var13;
+			var7 += var11 * var13 - (this.xof << 16);
+		}
+		if (this.yof > 0) {
+			int var14 = ((this.yof << 16) + var12 - 1) / var12;
 			arg1 += var14;
-			var8 += var12 * var14 - (this.xof << 16);
+			var8 += var12 * var14 - (this.yof << 16);
 		}
 		if (var5 < var9) {
 			arg2 = ((var5 << 16) - var7 + var11 - 1) / var11;
@@ -457,8 +457,8 @@ public class Pix32 extends Pix2D {
 			this.plotSprite(arg0, arg1);
 			return;
 		}
-		int var5 = this.yof + arg0;
-		int var6 = this.xof + arg1;
+		int var5 = this.xof + arg0;
+		int var6 = this.yof + arg1;
 		int var7 = Pix2D.width * var6 + var5;
 		int var8 = 0;
 		int var9 = this.hi;
@@ -519,8 +519,8 @@ public class Pix32 extends Pix2D {
 
 	@ObfuscatedName("fq.cu(III)V")
 	public void transPlotSprite(int arg0, int arg1, int arg2) {
-		int var4 = this.yof + arg0;
-		int var5 = this.xof + arg1;
+		int var4 = this.xof + arg0;
+		int var5 = this.yof + arg1;
 		int var6 = Pix2D.width * var5 + var4;
 		int var7 = 0;
 		int var8 = this.hi;
@@ -553,12 +553,12 @@ public class Pix32 extends Pix2D {
 			var10 += var14;
 		}
 		if (var9 > 0 && var8 > 0) {
-			method2677(Pix2D.pixels, this.data, 0, var7, var6, var9, var8, var10, var11, arg2);
+			tranSprite(Pix2D.pixels, this.data, 0, var7, var6, var9, var8, var10, var11, arg2);
 		}
 	}
 
 	@ObfuscatedName("fq.cc([I[IIIIIIIII)V")
-	public static void method2677(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
+	public static void tranSprite(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
 		int var10 = 256 - arg9;
 		for (int var11 = -arg6; var11 < 0; var11++) {
 			for (int var12 = -arg5; var12 < 0; var12++) {
@@ -588,15 +588,15 @@ public class Pix32 extends Pix2D {
 		int var11 = this.ohi;
 		int var12 = (var10 << 16) / arg2;
 		int var13 = (var11 << 16) / arg3;
-		if (this.yof > 0) {
-			int var14 = ((this.yof << 16) + var12 - 1) / var12;
-			arg0 += var14;
-			var8 += var12 * var14 - (this.yof << 16);
-		}
 		if (this.xof > 0) {
-			int var15 = ((this.xof << 16) + var13 - 1) / var13;
+			int var14 = ((this.xof << 16) + var12 - 1) / var12;
+			arg0 += var14;
+			var8 += var12 * var14 - (this.xof << 16);
+		}
+		if (this.yof > 0) {
+			int var15 = ((this.yof << 16) + var13 - 1) / var13;
 			arg1 += var15;
-			var9 += var13 * var15 - (this.xof << 16);
+			var9 += var13 * var15 - (this.yof << 16);
 		}
 		if (var6 < var10) {
 			arg2 = ((var6 << 16) - var8 + var12 - 1) / var12;
@@ -726,8 +726,8 @@ public class Pix32 extends Pix2D {
 		if (arg5 == 0) {
 			return;
 		}
-		int var7 = arg0 - (this.yof << 4);
-		int var8 = arg1 - (this.xof << 4);
+		int var7 = arg0 - (this.xof << 4);
+		int var8 = arg1 - (this.yof << 4);
 		double var9 = (double) (arg4 & 0xFFFF) * 9.587379924285257E-5D;
 		int var11 = (int) Math.floor(Math.sin(var9) * (double) arg5 + 0.5D);
 		int var12 = (int) Math.floor(Math.cos(var9) * (double) arg5 + 0.5D);
@@ -1172,8 +1172,8 @@ public class Pix32 extends Pix2D {
 		if (clipMaxX - clipMinX != arg0.wi || clipMaxY - clipMinY != arg0.hi) {
 			throw new IllegalStateException();
 		}
-		int var4 = this.yof + arg1;
-		int var5 = this.xof + arg2;
+		int var4 = this.xof + arg1;
+		int var5 = this.yof + arg2;
 		int var6 = Pix2D.width * var5 + var4;
 		int var7 = 0;
 		int var8 = this.hi;
@@ -1208,12 +1208,12 @@ public class Pix32 extends Pix2D {
 		if (var9 > 0 && var8 > 0) {
 			int var15 = (var5 - clipMinY) * arg0.wi + (var4 - clipMinX);
 			int var16 = arg0.wi - var9;
-			method2688(Pix2D.pixels, this.data, 0, var7, var6, var15, var9, var8, var10, var11, var16, arg0.data);
+			scanlinePlot(Pix2D.pixels, this.data, 0, var7, var6, var15, var9, var8, var10, var11, var16, arg0.data);
 		}
 	}
 
 	@ObfuscatedName("fq.cq([I[IIIIIIIIII[B)V")
-	public static void method2688(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, byte[] arg11) {
+	public static void scanlinePlot(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, byte[] arg11) {
 		int var12 = -(arg6 >> 2);
 		int var13 = -(arg6 & 0x3);
 		for (int var14 = -arg7; var14 < 0; var14++) {

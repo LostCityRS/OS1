@@ -95,8 +95,8 @@ public class PixLoader {
 				Pix32 var8 = var6[var7] = new Pix32();
 				var8.owi = field533;
 				var8.ohi = field530;
-				var8.yof = field531[var7];
-				var8.xof = field532[var7];
+				var8.xof = field531[var7];
+				var8.yof = field532[var7];
 				var8.wi = field41[var7];
 				var8.hi = field1151[var7];
 				int var9 = var8.wi * var8.hi;
@@ -175,8 +175,8 @@ public class PixLoader {
 		Pix32 var0 = new Pix32();
 		var0.owi = field533;
 		var0.ohi = field530;
-		var0.yof = field531[0];
-		var0.xof = field532[0];
+		var0.xof = field531[0];
+		var0.yof = field532[0];
 		var0.wi = field41[0];
 		var0.hi = field1151[0];
 		int var1 = var0.wi * var0.hi;
