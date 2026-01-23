@@ -89,7 +89,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 			field494 = arg0.getX();
 			field495 = arg0.getY();
 			field496 = MonotonicTime.currentTime();
-			if (arg0.isMetaDown()) {
+			if (arg0.getButton() == MouseEvent.BUTTON3) {
 				field485 = 2;
 				field487 = 2;
 			} else {
