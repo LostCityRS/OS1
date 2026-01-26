@@ -6,48 +6,49 @@ import deob.ObfuscatedName;
 public class ChatLinkList {
 
 	@ObfuscatedName("cb.r")
-	public ChatLinkable field1493 = new ChatLinkable();
+	public ChatLinkable sentinel = new ChatLinkable();
 
 	@ObfuscatedName("cb.d")
-	public ChatLinkable field1494;
+	public ChatLinkable cursor;
 
 	public ChatLinkList() {
-		this.field1493.field1502 = this.field1493;
-		this.field1493.field1503 = this.field1493;
+		this.sentinel.next = this.sentinel;
+		this.sentinel.prev = this.sentinel;
 	}
 
 	@ObfuscatedName("cb.r(Ldd;)V")
-	public void method1267(ChatLinkable arg0) {
-		if (arg0.field1503 != null) {
-			arg0.method1322();
+	public void push(ChatLinkable node) {
+		if (node.prev != null) {
+			node.unlink();
 		}
-		arg0.field1503 = this.field1493.field1503;
-		arg0.field1502 = this.field1493;
-		arg0.field1503.field1502 = arg0;
-		arg0.field1502.field1503 = arg0;
+
+		node.prev = this.sentinel.prev;
+		node.next = this.sentinel;
+		node.prev.next = node;
+		node.next.prev = node;
 	}
 
 	@ObfuscatedName("cb.d()Ldd;")
-	public ChatLinkable method1268() {
-		ChatLinkable var1 = this.field1493.field1502;
-		if (this.field1493 == var1) {
-			this.field1494 = null;
+	public ChatLinkable head() {
+		ChatLinkable node = this.sentinel.next;
+		if (this.sentinel == node) {
+			this.cursor = null;
 			return null;
 		} else {
-			this.field1494 = var1.field1502;
-			return var1;
+			this.cursor = node.next;
+			return node;
 		}
 	}
 
 	@ObfuscatedName("cb.l()Ldd;")
-	public ChatLinkable method1274() {
-		ChatLinkable var1 = this.field1494;
-		if (this.field1493 == var1) {
-			this.field1494 = null;
+	public ChatLinkable next() {
+		ChatLinkable node = this.cursor;
+		if (this.sentinel == node) {
+			this.cursor = null;
 			return null;
 		} else {
-			this.field1494 = var1.field1502;
-			return var1;
+			this.cursor = node.next;
+			return node;
 		}
 	}
 }

@@ -13,53 +13,63 @@ public class DoublyLinkList {
 		this.sentinel.prev2 = this.sentinel;
 	}
 
+	// add to tail
 	@ObfuscatedName("ci.r(Len;)V")
-	public void push(DoublyLinkable arg0) {
-		if (arg0.prev2 != null) {
-			arg0.unlink2();
+	public void push(DoublyLinkable node) {
+		if (node.prev2 != null) {
+			node.unlink2();
 		}
-		arg0.prev2 = this.sentinel.prev2;
-		arg0.next2 = this.sentinel;
-		arg0.prev2.next2 = arg0;
-		arg0.next2.prev2 = arg0;
+
+		node.prev2 = this.sentinel.prev2;
+		node.next2 = this.sentinel;
+		node.prev2.next2 = node;
+		node.next2.prev2 = node;
 	}
 
+	// add to head
 	@ObfuscatedName("ci.d(Len;)V")
-	public void addHead(DoublyLinkable arg0) {
-		if (arg0.prev2 != null) {
-			arg0.unlink2();
+	public void unshift(DoublyLinkable node) {
+		if (node.prev2 != null) {
+			node.unlink2();
 		}
-		arg0.prev2 = this.sentinel;
-		arg0.next2 = this.sentinel.next2;
-		arg0.prev2.next2 = arg0;
-		arg0.next2.prev2 = arg0;
+
+		node.prev2 = this.sentinel;
+		node.next2 = this.sentinel.next2;
+		node.prev2.next2 = node;
+		node.next2.prev2 = node;
 	}
 
+	// remove from head
 	@ObfuscatedName("ci.l()Len;")
-	public DoublyLinkable pop() {
-		DoublyLinkable var1 = this.sentinel.next2;
-		if (this.sentinel == var1) {
+	public DoublyLinkable shift() {
+		DoublyLinkable node = this.sentinel.next2;
+		if (this.sentinel == node) {
 			return null;
 		} else {
-			var1.unlink2();
-			return var1;
+			node.unlink2();
+			return node;
 		}
 	}
 
 	@ObfuscatedName("ci.m()Len;")
-	public DoublyLinkable head() {
-		DoublyLinkable var1 = this.sentinel.next2;
-		return this.sentinel == var1 ? null : var1;
+	public DoublyLinkable next() {
+		DoublyLinkable node = this.sentinel.next2;
+		if (this.sentinel == node) {
+			return null;
+		} else {
+			return node;
+		}
 	}
 
 	@ObfuscatedName("ci.c()V")
 	public void clear() {
 		while (true) {
-			DoublyLinkable var1 = this.sentinel.next2;
-			if (this.sentinel == var1) {
+			DoublyLinkable node = this.sentinel.next2;
+			if (this.sentinel == node) {
 				return;
 			}
-			var1.unlink2();
+
+			node.unlink2();
 		}
 	}
 }

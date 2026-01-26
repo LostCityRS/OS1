@@ -1235,7 +1235,7 @@ public class World {
 									while (true) {
 										while (true) {
 											do {
-												var3 = (Square) fillQueue.pop();
+												var3 = (Square) fillQueue.shift();
 												if (var3 == null) {
 													return;
 												}

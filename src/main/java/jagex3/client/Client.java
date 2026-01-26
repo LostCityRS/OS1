@@ -4437,7 +4437,7 @@ public class Client extends GameShell {
 			world.delObj(minusedlevel, arg0, arg1);
 			return;
 		}
-		var2.addHead(var4);
+		var2.unshift(var4);
 		ClientObj var8 = null;
 		ClientObj var9 = null;
 		for (ClientObj var10 = (ClientObj) var2.head(); var10 != null; var10 = (ClientObj) var2.next()) {
@@ -8351,7 +8351,7 @@ public class Client extends GameShell {
 			LinkList var1 = Js5NetThread.requestQueue;
 			Js5WorkerRequest var2;
 			synchronized (var1) {
-				var2 = (Js5WorkerRequest) Js5NetThread.field1206.pop();
+				var2 = (Js5WorkerRequest) Js5NetThread.field1206.shift();
 			}
 			if (var2 == null) {
 				return;
@@ -8907,7 +8907,7 @@ public class Client extends GameShell {
 		IfType var451;
 
 		do {
-			var449 = (HookReq) hookRequestsTimer.pop();
+			var449 = (HookReq) hookRequestsTimer.shift();
 			if (var449 == null) {
 				break;
 			}
@@ -8925,7 +8925,7 @@ public class Client extends GameShell {
 		}
 
 		do {
-			var449 = (HookReq) hookRequestsMouseStop.pop();
+			var449 = (HookReq) hookRequestsMouseStop.shift();
 			if (var449 == null) {
 				break;
 			}
@@ -8943,7 +8943,7 @@ public class Client extends GameShell {
 		}
 
 		do {
-			var449 = (HookReq) hookRequests.pop();
+			var449 = (HookReq) hookRequests.shift();
 			if (var449 == null) {
 				break;
 			}
@@ -10103,19 +10103,19 @@ public class Client extends GameShell {
 						} else if (var289.equals(var297.name)) {
 							if (var297.field174 != var291) {
 								boolean var298 = true;
-								for (TimestampMessage var299 = (TimestampMessage) field2193.method1268(); var299 != null; var299 = (TimestampMessage) field2193.method1274()) {
+								for (TimestampMessage var299 = (TimestampMessage) field2193.head(); var299 != null; var299 = (TimestampMessage) field2193.next()) {
 									if (var299.field1584.equals(var289)) {
 										if (var291 != 0 && var299.field1583 == 0) {
-											var299.method1322();
+											var299.unlink();
 											var298 = false;
 										} else if (var291 == 0 && var299.field1583 != 0) {
-											var299.method1322();
+											var299.unlink();
 											var298 = false;
 										}
 									}
 								}
 								if (var298) {
-									field2193.method1267(new TimestampMessage(var289, var291));
+									field2193.push(new TimestampMessage(var289, var291));
 								}
 								var297.field174 = var291;
 							}

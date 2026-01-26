@@ -23,7 +23,7 @@ public class Mixer extends PcmStream {
 	// jag::oldscape::sound::Mixer::PlayStream
 	@ObfuscatedName("ee.p(Ldx;)V")
 	public final synchronized void playStream(PcmStream arg0) {
-		this.streams.addHead(arg0);
+		this.streams.unshift(arg0);
 	}
 
 	@ObfuscatedName("ee.ad(Ldx;)V")
@@ -48,7 +48,7 @@ public class Mixer extends PcmStream {
 		while (this.field2221.sentinel != arg0 && ((MixerListener) arg0).field1681 <= arg1.field1681) {
 			arg0 = arg0.next;
 		}
-		LinkList.method1294(arg1, arg0);
+		LinkList.insertBefore(arg1, arg0);
 		this.field2220 = ((MixerListener) this.field2221.sentinel.next).field1681;
 	}
 

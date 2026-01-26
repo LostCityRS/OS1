@@ -51,11 +51,11 @@ public class LruCache {
 	@ObfuscatedName("ce.l(Len;J)V")
 	public void put(DoublyLinkable arg0, long arg1) {
 		if (this.available == 0) {
-			DoublyLinkable var4 = this.history.pop();
+			DoublyLinkable var4 = this.history.shift();
 			var4.unlink();
 			var4.unlink2();
 			if (this.field1487 == var4) {
-				DoublyLinkable var5 = this.history.pop();
+				DoublyLinkable var5 = this.history.shift();
 				var5.unlink();
 				var5.unlink2();
 			}

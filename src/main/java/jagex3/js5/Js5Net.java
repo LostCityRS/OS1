@@ -124,7 +124,7 @@ public class Js5Net {
 			}
 
 			while (prefetchQueueSize < 20 && pendingPrefetchQueueSize > 0) {
-				Js5NetRequest pendingPrefetchRequest = (Js5NetRequest) requestQueue.head();
+				Js5NetRequest pendingPrefetchRequest = (Js5NetRequest) requestQueue.next();
 				Packet packet = new Packet(4);
 				packet.p1(0);
 				packet.p3((int) pendingPrefetchRequest.key);
@@ -371,7 +371,7 @@ public class Js5Net {
 						return;
 					}
 
-					requestQueue.addHead(prefetch);
+					requestQueue.unshift(prefetch);
 					pendingPrefetchQueue.put(prefetch, prefetch.key);
 					pendingPrefetchQueueSize++;
 					prefetchQueueSize--;
@@ -434,7 +434,7 @@ public class Js5Net {
 		long key = ((long) archiveId << 16) + groupId;
 		Js5NetRequest request = (Js5NetRequest) pendingPrefetchQueue.find(key);
 		if (request != null) {
-			requestQueue.addHead(request);
+			requestQueue.unshift(request);
 		}
 	}
 

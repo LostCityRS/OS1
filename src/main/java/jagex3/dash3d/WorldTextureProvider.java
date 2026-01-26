@@ -57,19 +57,19 @@ public class WorldTextureProvider implements TextureProvider {
 		Texture var2 = this.field719[textureId];
 		if (var2 != null) {
 			if (var2.field1694 != null) {
-				this.field722.addHead(var2);
+				this.field722.unshift(var2);
 				var2.field1689 = true;
 				return var2.field1694;
 			}
 			boolean var3 = var2.method1571(this.brightness, this.resolution, this.spriteJs5);
 			if (var3) {
 				if (this.field718 == 0) {
-					Texture var4 = (Texture) this.field722.removeTail();
+					Texture var4 = (Texture) this.field722.pop();
 					var4.method1572();
 				} else {
 					this.field718--;
 				}
-				this.field722.addHead(var2);
+				this.field722.unshift(var2);
 				var2.field1689 = true;
 				return var2.field1694;
 			}

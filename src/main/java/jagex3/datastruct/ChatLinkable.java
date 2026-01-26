@@ -6,18 +6,18 @@ import deob.ObfuscatedName;
 public class ChatLinkable {
 
 	@ObfuscatedName("dd.r")
-	public ChatLinkable field1502;
+	public ChatLinkable next;
 
 	@ObfuscatedName("dd.d")
-	public ChatLinkable field1503;
+	public ChatLinkable prev;
 
 	@ObfuscatedName("dd.r()V")
-	public void method1322() {
-		if (this.field1503 != null) {
-			this.field1503.field1502 = this.field1502;
-			this.field1502.field1503 = this.field1503;
-			this.field1502 = null;
-			this.field1503 = null;
+	public void unlink() {
+		if (this.prev != null) {
+			this.prev.next = this.next;
+			this.next.prev = this.prev;
+			this.next = null;
+			this.prev = null;
 		}
 	}
 }
