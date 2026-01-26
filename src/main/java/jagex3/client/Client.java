@@ -1267,18 +1267,24 @@ public class Client extends GameShell {
 		loginGamePort = modewhere == 0 ? 43594 : worldid + 40000;
 		loginJs5Port = modewhere == 0 ? 443 : worldid + 50000;
 		loginPort = loginGamePort;
+
 		PlayerModel.recol1s = RecolsRunescape.recol1s;
 		PlayerModel.recol1d = RecolsRunescape.recol1d;
 		PlayerModel.recol2s = RecolsRunescape.recol2s;
 		PlayerModel.recol2d = RecolsRunescape.recol2d;
-		JavaKeyboardProvider.imethod1();
+
+		JavaKeyboardProvider.setupKeyCodeMap();
 		JavaKeyboardProvider.addListeners(GameShell.canvas);
+
 		JavaMouseProvider.addListeners(GameShell.canvas);
-		mouseWheel = MouseWheelProvider.method779();
+
+		mouseWheel = MouseWheelProvider.getProvider();
 		if (mouseWheel != null) {
 			mouseWheel.addListeners(GameShell.canvas);
 		}
+
 		masterIndex = new DataFile(255, GameShellCache.cacheDat, GameShellCache.masterIndex, 500000);
+
 		if (modewhere != 0) {
 			showFps = true;
 		}
@@ -1294,12 +1300,13 @@ public class Client extends GameShell {
 		MidiManager.method825();
 
 		doAudio();
-		JavaKeyboardProvider.imethod4();
-		JavaMouseProvider.imethod3();
+		JavaKeyboardProvider.cycle();
+		JavaMouseProvider.cycle();
 
 		if (mouseWheel != null) {
-			int var10 = mouseWheel.method362();
-			mouseWheelRotation = var10;
+			// todo: inlined? why two lines...
+			int rotation = mouseWheel.getRotation();
+			mouseWheelRotation = rotation;
 		}
 
 		if (state == 0) {
@@ -1411,22 +1418,28 @@ public class Client extends GameShell {
 			mouseTracking.active = false;
 		}
 		mouseTracking = null;
+
 		if (loginStream != null) {
 			loginStream.close();
 			loginStream = null;
 		}
-		JavaKeyboardProvider.method1502();
-		JavaMouseProvider.imethod2();
+
+		JavaKeyboardProvider.shutdown();
+		JavaMouseProvider.shutdown();
 		mouseWheel = null;
+
 		if (midiPcmPlayer != null) {
 			midiPcmPlayer.shutdown();
 		}
+
 		if (soundPcmPlayer != null) {
 			soundPcmPlayer.shutdown();
 		}
+
 		if (Js5Net.stream != null) {
 			Js5Net.stream.close();
 		}
+
 		Js5NetThread.method781();
 		GameShellCache.method1141();
 	}
@@ -2160,7 +2173,7 @@ public class Client extends GameShell {
 		menuNumEntries = 0;
 		isMenuOpen = false;
 
-		JavaMouseProvider.setIdleCycles(0);
+		JavaMouseProvider.setIdleTimer(0);
 
 		for (int var0 = 0; var0 < 100; var0++) {
 			messageText[var0] = null;
@@ -3986,7 +3999,7 @@ public class Client extends GameShell {
 			}
 
 			out.p2_alt3(mapBuildBaseZ + var34);
-			out.p1(JavaKeyboardProvider.actionKey[82] ? 1 : 0);
+			out.p1(JavaKeyboardProvider.keyHeld[82] ? 1 : 0);
 			out.p2(mapBuildBaseX + var33);
 			return true;
 		} else if (arg10 == 1) {
@@ -8745,6 +8758,7 @@ public class Client extends GameShell {
 				}
 			}
 		}
+
 		if (JavaMouseProvider.mouseClickButton != 0) {
 			long var395 = (JavaMouseProvider.mouseClickTime - prevMouseClickTime) / 50L;
 			if (var395 > 4095L) {
@@ -8773,12 +8787,15 @@ public class Client extends GameShell {
 			out.p1Enc(161);
 			out.p4_alt2((var400 << 19) + (var401 << 20) + var399);
 		}
+
 		if (sendCameraDelay > 0) {
 			sendCameraDelay--;
 		}
-		if (JavaKeyboardProvider.actionKey[96] || JavaKeyboardProvider.actionKey[97] || JavaKeyboardProvider.actionKey[98] || JavaKeyboardProvider.actionKey[99]) {
+
+		if (JavaKeyboardProvider.keyHeld[96] || JavaKeyboardProvider.keyHeld[97] || JavaKeyboardProvider.keyHeld[98] || JavaKeyboardProvider.keyHeld[99]) {
 			sendCamera = true;
 		}
+
 		if (sendCamera && sendCameraDelay <= 0) {
 			sendCameraDelay = 20;
 			sendCamera = false;
@@ -8787,6 +8804,7 @@ public class Client extends GameShell {
 			out.p2_alt1(orbitCameraPitch);
 			out.p2_alt2(orbitCameraYaw);
 		}
+
 		if (GameShell.focus && !focusIn) {
 			focusIn = true;
 			// EVENT_APPLET_FOCUS
@@ -8799,27 +8817,35 @@ public class Client extends GameShell {
 			out.p1Enc(178);
 			out.p1(0);
 		}
+
 		checkMinimap();
+
 		if (state != 30) {
 			return;
 		}
+
 		locChangeDoQueue();
 		soundsDoQueue();
+
 		timeoutTimer++;
 		if (timeoutTimer > 750) {
 			lostCon();
 			return;
 		}
+
 		movePlayers();
 		moveNpcs();
 		timeoutChat();
+
 		worldUpdateNum++;
+
 		if (crossMode != 0) {
 			crossCycle += 20;
 			if (crossCycle >= 400) {
 				crossMode = 0;
 			}
 		}
+
 		if (selectedArea != null) {
 			selectedCycle++;
 			if (selectedCycle >= 15) {
@@ -8827,12 +8853,15 @@ public class Client extends GameShell {
 				selectedArea = null;
 			}
 		}
+
 		if (objDragInterface != null) {
 			componentUpdated(objDragInterface);
 			objDragCycles++;
+
 			if (JavaMouseProvider.mouseX > objGrabX + 5 || JavaMouseProvider.mouseX < objGrabX - 5 || JavaMouseProvider.mouseY > objGrabY + 5 || JavaMouseProvider.mouseY < objGrabY - 5) {
 				objGrabThreshold = true;
 			}
+
 			if (JavaMouseProvider.mouseButton == 0) {
 				if (objGrabThreshold && objDragCycles >= 5) {
 					if (objDragInterface == hoveredSlotParent && objDragSlot != hoveredSlot) {
@@ -8844,6 +8873,7 @@ public class Client extends GameShell {
 						if (var436.linkObjType[objDragSlot] <= 0) {
 							var437 = 0;
 						}
+
 						int var438 = getActive(var436);
 						boolean var439 = (var438 >> 29 & 0x1) != 0;
 						if (var439) {
@@ -8868,6 +8898,7 @@ public class Client extends GameShell {
 						} else {
 							var436.swapSlots(objDragSlot, hoveredSlot);
 						}
+
 						// INV_BUTTOND
 						out.p1Enc(2);
 						out.p4_alt2(objDragInterface.parentlayer);
@@ -8880,11 +8911,14 @@ public class Client extends GameShell {
 				} else if (menuNumEntries > 0) {
 					doAction(menuNumEntries - 1);
 				}
+
 				selectedCycle = 10;
 				JavaMouseProvider.mouseClickButton = 0;
 				objDragInterface = null;
 			}
 		}
+
+		// todo: inlined method?
 		IfType var444 = field37;
 		IfType var445 = field654;
 		field37 = null;
@@ -8892,12 +8926,14 @@ public class Client extends GameShell {
 		dropComponent = null;
 		dragging = false;
 		dragParentFound = false;
+
 		field2151 = 0;
-		while (JavaKeyboardProvider.imethod2() && field2151 < 128) {
-			keypressKeycodes[field2151] = JavaKeyboardProvider.field114;
-			keypressKeychars[field2151] = JavaKeyboardProvider.field1162;
+		while (JavaKeyboardProvider.pollKey() && field2151 < 128) {
+			keypressKeycodes[field2151] = JavaKeyboardProvider.code;
+			keypressKeychars[field2151] = JavaKeyboardProvider.ch;
 			field2151++;
 		}
+
 		loopInterface(toplevelinterface, 0, 0, 765, 503, 0, 0);
 		interfaceUpdateNum++;
 
@@ -8919,7 +8955,6 @@ public class Client extends GameShell {
 
 			var451 = IfType.get(var450.layerid);
 		} while (var451 == null || var451.subcomponents == null || var450.subid >= var451.subcomponents.length || var451.subcomponents[var450.subid] != var450);
-
 		if (var449 != null) {
 			ScriptRunner.executeScript(var449);
 		}
@@ -8937,7 +8972,6 @@ public class Client extends GameShell {
 
 			var451 = IfType.get(var450.layerid);
 		} while (var451 == null || var451.subcomponents == null || var450.subid >= var451.subcomponents.length || var451.subcomponents[var450.subid] != var450);
-
 		if (var449 != null) {
 			ScriptRunner.executeScript(var449);
 		}
@@ -8955,7 +8989,6 @@ public class Client extends GameShell {
 
 			var451 = IfType.get(var450.layerid);
 		} while (var451 == null || var451.subcomponents == null || var450.subid >= var451.subcomponents.length || var451.subcomponents[var450.subid] != var450);
-
 		if (var449 != null) {
 			ScriptRunner.executeScript(var449);
 		}
@@ -8976,7 +9009,9 @@ public class Client extends GameShell {
 				crossCycle = 0;
 			}
 		}
+
 		handleMouseInput();
+
 		if (field37 != var444) {
 			if (var444 != null) {
 				componentUpdated(var444);
@@ -8985,6 +9020,7 @@ public class Client extends GameShell {
 				componentUpdated(field37);
 			}
 		}
+
 		if (field654 != var445 && field2076 == field1995) {
 			if (var445 != null) {
 				componentUpdated(var445);
@@ -8993,6 +9029,7 @@ public class Client extends GameShell {
 				componentUpdated(field654);
 			}
 		}
+
 		if (field654 == null) {
 			if (field1995 > 0) {
 				field1995--;
@@ -9003,19 +9040,22 @@ public class Client extends GameShell {
 				componentUpdated(field654);
 			}
 		}
+
 		followCamera();
+
 		if (cinemaCam) {
 			cinemaCamera();
 		}
+
 		for (int var504 = 0; var504 < 5; var504++) {
 			int var10002 = camShakeCycle[var504]++;
 		}
 
-		int var505 = JavaMouseProvider.getIdleCycles();
-		int var507 = JavaKeyboardProvider.getIdleCycles();
-		if (var505 > 15000 && var507 > 15000) {
+		int mouseIdle = JavaMouseProvider.getIdleTimer();
+		int keyIdle = JavaKeyboardProvider.getIdleTimer();
+		if (mouseIdle > 15000 && keyIdle > 15000) {
 			logoutTimer = 250;
-			JavaMouseProvider.setIdleCycles(14500); // 10s backoff
+			JavaMouseProvider.setIdleTimer(14500); // 10s backoff
 
 			// IDLE_TIMER
 			out.p1Enc(38);
@@ -9035,24 +9075,28 @@ public class Client extends GameShell {
 				macroCameraAngle += macroCameraAngleModifier;
 			}
 		}
+
 		if (macroCameraX < -50) {
 			macroCameraXModifier = 2;
 		}
 		if (macroCameraX > 50) {
 			macroCameraXModifier = -2;
 		}
+
 		if (macroCameraZ < -55) {
 			macroCameraZModifier = 2;
 		}
 		if (macroCameraZ > 55) {
 			macroCameraZModifier = -2;
 		}
+
 		if (macroCameraAngle < -40) {
 			macroCameraAngleModifier = 1;
 		}
 		if (macroCameraAngle > 40) {
 			macroCameraAngleModifier = -1;
 		}
+
 		macroMinimapCycle++;
 		if (macroMinimapCycle > 500) {
 			macroMinimapCycle = 0;
@@ -9064,12 +9108,14 @@ public class Client extends GameShell {
 				macroMinimapZoom += macroMinimapZoomModifier;
 			}
 		}
+
 		if (macroMinimapAngle < -60) {
 			macroMinimapAngleModifier = 2;
 		}
 		if (macroMinimapAngle > 60) {
 			macroMinimapAngleModifier = -2;
 		}
+
 		if (macroMinimapZoom < -20) {
 			macroMinimapZoomModifier = 1;
 		}
@@ -11099,16 +11145,16 @@ public class Client extends GameShell {
 		if (orbitCameraZ != var494) {
 			orbitCameraZ += (var494 - orbitCameraZ) / 16;
 		}
-		if (JavaKeyboardProvider.actionKey[96]) {
+		if (JavaKeyboardProvider.keyHeld[96]) {
 			orbitCameraYawVelocity += (-24 - orbitCameraYawVelocity) / 2;
-		} else if (JavaKeyboardProvider.actionKey[97]) {
+		} else if (JavaKeyboardProvider.keyHeld[97]) {
 			orbitCameraYawVelocity += (24 - orbitCameraYawVelocity) / 2;
 		} else {
 			orbitCameraYawVelocity /= 2;
 		}
-		if (JavaKeyboardProvider.actionKey[98]) {
+		if (JavaKeyboardProvider.keyHeld[98]) {
 			orbitCameraPitchVelocity += (12 - orbitCameraPitchVelocity) / 2;
-		} else if (JavaKeyboardProvider.actionKey[99]) {
+		} else if (JavaKeyboardProvider.keyHeld[99]) {
 			orbitCameraPitchVelocity += (-12 - orbitCameraPitchVelocity) / 2;
 		} else {
 			orbitCameraPitchVelocity /= 2;

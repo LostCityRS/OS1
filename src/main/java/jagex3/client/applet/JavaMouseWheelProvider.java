@@ -10,26 +10,26 @@ import java.awt.event.MouseWheelListener;
 public class JavaMouseWheelProvider extends MouseWheelProvider implements MouseWheelListener {
 
 	@ObfuscatedName("dh.r")
-	public int field1557 = 0;
+	public int rotation = 0;
 
 	@ObfuscatedName("dh.d(Ljava/awt/Component;I)V")
-	public void addListeners(Component arg0) {
-		arg0.addMouseWheelListener(this);
+	public void addListeners(Component c) {
+		c.addMouseWheelListener(this);
 	}
 
 	@ObfuscatedName("dh.l(Ljava/awt/Component;B)V")
-	public void removeListeners(Component arg0) {
-		arg0.removeMouseWheelListener(this);
+	public void removeListeners(Component c) {
+		c.removeMouseWheelListener(this);
 	}
 
-	public synchronized void mouseWheelMoved(MouseWheelEvent arg0) {
-		this.field1557 += arg0.getWheelRotation();
+	public synchronized void mouseWheelMoved(MouseWheelEvent e) {
+		this.rotation += e.getWheelRotation();
 	}
 
 	@ObfuscatedName("dh.m(I)I")
-	public synchronized int method362() {
-		int var1 = this.field1557;
-		this.field1557 = 0;
-		return var1;
+	public synchronized int getRotation() {
+		int total = this.rotation;
+		this.rotation = 0;
+		return total;
 	}
 }

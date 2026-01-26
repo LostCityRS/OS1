@@ -8,20 +8,20 @@ import java.awt.*;
 public abstract class MouseWheelProvider {
 
 	@ObfuscatedName("bv.r(I)Lac;")
-	public static MouseWheelProvider method779() {
+	public static MouseWheelProvider getProvider() {
 		try {
 			return new JavaMouseWheelProvider();
-		} catch (Throwable var1) {
+		} catch (Throwable ex) {
 			return null;
 		}
 	}
 
 	@ObfuscatedName("ac.d(Ljava/awt/Component;I)V")
-	public abstract void addListeners(Component arg0);
+	public abstract void addListeners(Component c);
 
 	@ObfuscatedName("ac.l(Ljava/awt/Component;B)V")
-	public abstract void removeListeners(Component arg0);
+	public abstract void removeListeners(Component c);
 
 	@ObfuscatedName("ac.m(I)I")
-	public abstract int method362();
+	public abstract int getRotation();
 }

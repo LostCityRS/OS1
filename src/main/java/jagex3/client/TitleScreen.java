@@ -341,33 +341,33 @@ public class TitleScreen {
 				loginPass = "";
 			}
 
-			while (JavaKeyboardProvider.imethod2()) {
+			while (JavaKeyboardProvider.pollKey()) {
 				boolean var21 = false;
 				for (int var22 = 0; var22 < charList.length(); var22++) {
-					if (JavaKeyboardProvider.field1162 == charList.charAt(var22)) {
+					if (JavaKeyboardProvider.ch == charList.charAt(var22)) {
 						var21 = true;
 						break;
 					}
 				}
 
 				if (field150 == 0) {
-					if (JavaKeyboardProvider.field114 == 85 && loginUser.length() > 0) {
+					if (JavaKeyboardProvider.code == 85 && loginUser.length() > 0) {
 						loginUser = loginUser.substring(0, loginUser.length() - 1);
 					}
-					if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
+					if (JavaKeyboardProvider.code == 84 || JavaKeyboardProvider.code == 80) {
 						field150 = 1;
 					}
 					if (var21 && loginUser.length() < 320) {
-						loginUser += JavaKeyboardProvider.field1162;
+						loginUser += JavaKeyboardProvider.ch;
 					}
 				} else if (field150 == 1) {
-					if (JavaKeyboardProvider.field114 == 85 && loginPass.length() > 0) {
+					if (JavaKeyboardProvider.code == 85 && loginPass.length() > 0) {
 						loginPass = loginPass.substring(0, loginPass.length() - 1);
 					}
-					if (JavaKeyboardProvider.field114 == 84 || JavaKeyboardProvider.field114 == 80) {
+					if (JavaKeyboardProvider.code == 84 || JavaKeyboardProvider.code == 80) {
 						field150 = 0;
 					}
-					if (Client.modewhere == 2 && JavaKeyboardProvider.field114 == 84) {
+					if (Client.modewhere == 2 && JavaKeyboardProvider.code == 84) {
 						loginUser = loginUser.trim();
 						if (loginUser.length() == 0) {
 							loginMes(Text.field978, Text.field979, Text.field980);
@@ -382,7 +382,7 @@ public class TitleScreen {
 						break;
 					}
 					if (var21 && loginPass.length() < 20) {
-						loginPass += JavaKeyboardProvider.field1162;
+						loginPass += JavaKeyboardProvider.ch;
 					}
 				}
 			}
