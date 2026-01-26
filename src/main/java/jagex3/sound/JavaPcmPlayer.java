@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.IntUtil;
+import jagex3.datastruct.MathTool;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -40,7 +40,7 @@ public class JavaPcmPlayer extends PcmPlayer {
 			this.line.start();
 			this.lineCapacity = arg0;
 		} catch (LineUnavailableException var11) {
-			if (IntUtil.bitCount(arg0) == 1) {
+			if (MathTool.bitCount(arg0) == 1) {
 				this.line = null;
 				throw var11;
 			}

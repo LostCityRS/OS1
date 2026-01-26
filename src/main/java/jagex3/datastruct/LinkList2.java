@@ -3,19 +3,19 @@ package jagex3.datastruct;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("ci")
-public class DoublyLinkList {
+public class LinkList2 {
 
 	@ObfuscatedName("ci.r")
-	public DoublyLinkable sentinel = new DoublyLinkable();
+	public Linkable2 sentinel = new Linkable2();
 
-	public DoublyLinkList() {
+	public LinkList2() {
 		this.sentinel.next2 = this.sentinel;
 		this.sentinel.prev2 = this.sentinel;
 	}
 
 	// add to tail
 	@ObfuscatedName("ci.r(Len;)V")
-	public void push(DoublyLinkable node) {
+	public void push(Linkable2 node) {
 		if (node.prev2 != null) {
 			node.unlink2();
 		}
@@ -28,7 +28,7 @@ public class DoublyLinkList {
 
 	// add to head
 	@ObfuscatedName("ci.d(Len;)V")
-	public void unshift(DoublyLinkable node) {
+	public void unshift(Linkable2 node) {
 		if (node.prev2 != null) {
 			node.unlink2();
 		}
@@ -41,8 +41,8 @@ public class DoublyLinkList {
 
 	// remove from head
 	@ObfuscatedName("ci.l()Len;")
-	public DoublyLinkable shift() {
-		DoublyLinkable node = this.sentinel.next2;
+	public Linkable2 shift() {
+		Linkable2 node = this.sentinel.next2;
 		if (this.sentinel == node) {
 			return null;
 		} else {
@@ -52,8 +52,8 @@ public class DoublyLinkList {
 	}
 
 	@ObfuscatedName("ci.m()Len;")
-	public DoublyLinkable next() {
-		DoublyLinkable node = this.sentinel.next2;
+	public Linkable2 next() {
+		Linkable2 node = this.sentinel.next2;
 		if (this.sentinel == node) {
 			return null;
 		} else {
@@ -64,7 +64,7 @@ public class DoublyLinkList {
 	@ObfuscatedName("ci.c()V")
 	public void clear() {
 		while (true) {
-			DoublyLinkable node = this.sentinel.next2;
+			Linkable2 node = this.sentinel.next2;
 			if (this.sentinel == node) {
 				return;
 			}

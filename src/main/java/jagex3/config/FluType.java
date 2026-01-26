@@ -1,14 +1,14 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
 // jag::oldscape::configdecoder::FluType
 @ObfuscatedName("ec")
-public class FluType extends DoublyLinkable {
+public class FluType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::FluType::m_pConfigClient
 	@ObfuscatedName("ec.n")
@@ -41,7 +41,7 @@ public class FluType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::FluType::List
 	@ObfuscatedName("bf.g(IB)Lec;")
 	public static FluType list(int id) {
-		FluType cached = (FluType) recentUse.get(id);
+		FluType cached = (FluType) recentUse.find(id);
 		if (cached != null) {
 			return cached;
 		}

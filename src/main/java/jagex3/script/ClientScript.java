@@ -2,13 +2,13 @@ package jagex3.script;
 
 import deob.ObfuscatedName;
 import jagex3.client.Client;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 
 // jag::oldscape::ClientScript
 @ObfuscatedName("ep")
-public class ClientScript extends DoublyLinkable {
+public class ClientScript extends Linkable2 {
 
 	@ObfuscatedName("ep.n")
 	public static LruCache cache = new LruCache(128);
@@ -39,7 +39,7 @@ public class ClientScript extends DoublyLinkable {
 
 	@ObfuscatedName("bq.z(II)Lep;")
 	public static ClientScript get(int id) {
-		ClientScript cached = (ClientScript) cache.get(id);
+		ClientScript cached = (ClientScript) cache.find(id);
 		if (cached != null) {
 			return cached;
 		}

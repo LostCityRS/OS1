@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.IntUtil;
+import jagex3.datastruct.MathTool;
 
 // jag::oldscape::sound::Decimator
 @ObfuscatedName("p")
@@ -18,7 +18,7 @@ public class Decimator {
 
 	public Decimator(int arg0, int arg1) {
 		if (arg0 != arg1) {
-			int var3 = IntUtil.method430(arg0, arg1);
+			int var3 = MathTool.hcf(arg0, arg1);
 			int var4 = arg0 / var3;
 			int var5 = arg1 / var3;
 			this.field329 = var4;

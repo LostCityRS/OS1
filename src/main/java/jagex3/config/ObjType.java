@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.Pix3D;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.graphics.Pix2D;
 import jagex3.graphics.Pix32;
@@ -16,7 +16,7 @@ import jagex3.jstring.Text;
 
 // jag::oldscape::configdecoder::ObjType
 @ObfuscatedName("fj")
-public class ObjType extends DoublyLinkable {
+public class ObjType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::ObjType::m_pConfigClient
 	@ObfuscatedName("fj.n")
@@ -166,7 +166,7 @@ public class ObjType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::ObjType::List
 	@ObfuscatedName("bb.z(II)Lfj;")
 	public static ObjType list(int id) {
-		ObjType cached = (ObjType) recentUse.get(id);
+		ObjType cached = (ObjType) recentUse.find(id);
 		if (cached != null) {
 			return cached;
 		}
@@ -392,7 +392,7 @@ public class ObjType extends DoublyLinkable {
 			}
 		}
 
-		ModelLit cached = (ModelLit) modelCache.get(this.index);
+		ModelLit cached = (ModelLit) modelCache.find(this.index);
 		if (cached != null) {
 			return cached;
 		}
@@ -448,7 +448,7 @@ public class ObjType extends DoublyLinkable {
 	public static Pix32 getSprite(int id, int count, int arg2, int arg3, boolean outlineRgb) {
 		long key = ((long) arg3 << 40) + ((long) arg2 << 38) + ((long) count << 16) + (long) id;
 		if (!outlineRgb) {
-			Pix32 cached = (Pix32) spriteCache.get(key);
+			Pix32 cached = (Pix32) spriteCache.find(key);
 			if (cached != null) {
 				return cached;
 			}

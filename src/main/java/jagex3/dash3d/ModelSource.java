@@ -1,11 +1,11 @@
 package jagex3.dash3d;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 
 // jag::oldscape::dash3d::ModelSource
 @ObfuscatedName("fu")
-public abstract class ModelSource extends DoublyLinkable {
+public abstract class ModelSource extends Linkable2 {
 
 	@ObfuscatedName("fu.n")
 	public int minY = 1000;

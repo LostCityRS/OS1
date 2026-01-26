@@ -1,7 +1,7 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
@@ -9,7 +9,7 @@ import jagex3.js5.Js5Loader;
 
 // jag::oldscape::configdecoder::EnumType
 @ObfuscatedName("fe")
-public class EnumType extends DoublyLinkable {
+public class EnumType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::EnumType::m_pConfigClient
 	@ObfuscatedName("fe.n")
@@ -45,7 +45,7 @@ public class EnumType extends DoublyLinkable {
 
 	@ObfuscatedName("ek.z(II)Lfe;")
 	public static EnumType list(int id) {
-		EnumType cached = (EnumType) recentUse.get(id);
+		EnumType cached = (EnumType) recentUse.find(id);
 		if (cached != null) {
 			return cached;
 		}

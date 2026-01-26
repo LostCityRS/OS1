@@ -1,7 +1,7 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
@@ -9,7 +9,7 @@ import jagex3.js5.Js5Loader;
 
 // jag::oldscape::configdecoder::InvType
 @ObfuscatedName("fp")
-public class InvType extends DoublyLinkable {
+public class InvType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::InvType::m_pConfigClient
 	@ObfuscatedName("fp.n")
@@ -45,7 +45,7 @@ public class InvType extends DoublyLinkable {
 
 	// jag::oldscape::configdecoder::InvType::List
 	public static InvType list(int id) {
-		InvType cached = (InvType) recentUse.get(id);
+		InvType cached = (InvType) recentUse.find(id);
 		if (cached != null) {
 			return cached;
 		}

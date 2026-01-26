@@ -1,7 +1,7 @@
 package jagex3.js5;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkList;
+import jagex3.datastruct.LinkList2;
 import jagex3.datastruct.HashTable;
 import jagex3.datastruct.MonotonicTime;
 import jagex3.io.ClientStream;
@@ -35,7 +35,7 @@ public class Js5Net {
 	public static int urgentQueueSize = 0;
 
 	@ObfuscatedName("cu.z")
-	public static DoublyLinkList requestQueue = new DoublyLinkList();
+	public static LinkList2 requestQueue = new LinkList2();
 
 	@ObfuscatedName("cu.g")
 	public static HashTable pendingPrefetchQueue = new HashTable(4096);
@@ -113,7 +113,7 @@ public class Js5Net {
 			}
 
 			while (urgentQueueSize < 20 && pendingUrgentQueueSize > 0) {
-				Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.first();
+				Js5NetRequest pendingUrgentRequest = (Js5NetRequest) pendingUrgentQueue.search();
 				Packet packet = new Packet(4);
 				packet.p1(1);
 				packet.p3((int) pendingUrgentRequest.key);
@@ -343,10 +343,10 @@ public class Js5Net {
 		incomingChunkPos = 0;
 
 		while (true) {
-			Js5NetRequest request = (Js5NetRequest) urgentQueue.first();
+			Js5NetRequest request = (Js5NetRequest) urgentQueue.search();
 			if (request == null) {
 				while (true) {
-					Js5NetRequest prefetch = (Js5NetRequest) prefetchQueue.first();
+					Js5NetRequest prefetch = (Js5NetRequest) prefetchQueue.search();
 					if (prefetch == null) {
 						if (xorKey != 0) {
 							try {

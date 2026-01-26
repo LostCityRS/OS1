@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.IntUtil;
+import jagex3.datastruct.MathTool;
 
 // jag::oldscape::sound::Floor
 @ObfuscatedName("e")
@@ -291,7 +291,7 @@ public class Floor {
 			field223[var3] = this.Xlist[var3];
 		}
 		int var4 = field219[this.floor1_multiplier - 1];
-		int var5 = IntUtil.ilog(var4 - 1);
+		int var5 = MathTool.bitsRequired(var4 - 1);
 		post[0] = JagVorbis.read_bits(var5);
 		post[1] = JagVorbis.read_bits(var5);
 		int var6 = 2;

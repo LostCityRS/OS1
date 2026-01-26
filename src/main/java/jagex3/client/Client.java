@@ -2247,8 +2247,8 @@ public class Client extends GameShell {
 			}
 		}
 
-		for (SubInterface var12 = (SubInterface) subinterfaces.first(); var12 != null; var12 = (SubInterface) subinterfaces.findnext()) {
-			closeSubInterface(var12, true);
+		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
+			closeSubInterface(sub, true);
 		}
 
 		toplevelinterface = -1;
@@ -7515,7 +7515,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::LegacyUpdated
 	@ObfuscatedName("g.fn(B)V")
 	public static void legacyUpdated() {
-		for (SubInterface sub = (SubInterface) subinterfaces.first(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
+		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
 			int id = sub.id;
 
 			if (IfType.openInterface(id)) {
@@ -8288,7 +8288,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::PurgeServerActive
 	@ObfuscatedName("s.gt(II)V")
 	public static void purgeServerActive(int comId) {
-		for (ServerActive active = (ServerActive) serverActive.first(); active != null; active = (ServerActive) serverActive.findnext()) {
+		for (ServerActive active = (ServerActive) serverActive.search(); active != null; active = (ServerActive) serverActive.findnext()) {
 			if ((long) comId == (active.key >> 48 & 0xFFFFL)) {
 				active.unlink();
 			}
@@ -9653,7 +9653,7 @@ public class Client extends GameShell {
 					}
 					var185.field1599 = true;
 				}
-				for (SubInterface var186 = (SubInterface) subinterfaces.first(); var186 != null; var186 = (SubInterface) subinterfaces.findnext()) {
+				for (SubInterface var186 = (SubInterface) subinterfaces.search(); var186 != null; var186 = (SubInterface) subinterfaces.findnext()) {
 					if (var186.field1599) {
 						var186.field1599 = false;
 					} else {
@@ -12026,7 +12026,7 @@ public class Client extends GameShell {
 		// CLOSE_MODAL
 		out.p1Enc(129);
 
-		for (SubInterface sub = (SubInterface) subinterfaces.first(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
+		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
 			if (sub.type == 0 || sub.type == 3) {
 				closeSubInterface(sub, true);
 			}

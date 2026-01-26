@@ -6,7 +6,7 @@ import deob.ObfuscatedName;
 public class LruCache {
 
 	@ObfuscatedName("ce.r")
-	public DoublyLinkable field1487 = new DoublyLinkable();
+	public Linkable2 sentinel = new Linkable2();
 
 	@ObfuscatedName("ce.d")
 	public int capacity;
@@ -15,62 +15,66 @@ public class LruCache {
 	public int available;
 
 	@ObfuscatedName("ce.m")
-	public HashTable hashTable;
+	public HashTable cache;
 
 	@ObfuscatedName("ce.c")
-	public DoublyLinkList history = new DoublyLinkList();
+	public LinkList2 order = new LinkList2();
 
-	public LruCache(int arg0) {
-		this.capacity = arg0;
-		this.available = arg0;
-		int var2;
-		for (var2 = 1; var2 + var2 < arg0; var2 += var2) {
+	public LruCache(int capacity) {
+		this.capacity = capacity;
+		this.available = capacity;
+
+		int bucketCount;
+		for (bucketCount = 1; bucketCount + bucketCount < capacity; bucketCount += bucketCount) {
 		}
-		this.hashTable = new HashTable(var2);
+
+		this.cache = new HashTable(bucketCount);
 	}
 
 	@ObfuscatedName("ce.r(J)Len;")
-	public DoublyLinkable get(long arg0) {
-		DoublyLinkable var3 = (DoublyLinkable) this.hashTable.find(arg0);
-		if (var3 != null) {
-			this.history.push(var3);
+	public Linkable2 find(long key) {
+		Linkable2 node = (Linkable2) this.cache.find(key);
+		if (node != null) {
+			this.order.push(node);
 		}
-		return var3;
+		return node;
 	}
 
 	@ObfuscatedName("ce.d(J)V")
-	public void remove(long arg0) {
-		DoublyLinkable var3 = (DoublyLinkable) this.hashTable.find(arg0);
-		if (var3 != null) {
-			var3.unlink();
-			var3.unlink2();
+	public void remove(long key) {
+		Linkable2 node = (Linkable2) this.cache.find(key);
+		if (node != null) {
+			node.unlink();
+			node.unlink2();
 			this.available++;
 		}
 	}
 
 	@ObfuscatedName("ce.l(Len;J)V")
-	public void put(DoublyLinkable arg0, long arg1) {
+	public void put(Linkable2 node, long key) {
 		if (this.available == 0) {
-			DoublyLinkable var4 = this.history.shift();
-			var4.unlink();
-			var4.unlink2();
-			if (this.field1487 == var4) {
-				DoublyLinkable var5 = this.history.shift();
-				var5.unlink();
-				var5.unlink2();
+			Linkable2 first = this.order.shift();
+			first.unlink();
+			first.unlink2();
+
+			if (this.sentinel == first) {
+				Linkable2 second = this.order.shift();
+				second.unlink();
+				second.unlink2();
 			}
 		} else {
 			this.available--;
 		}
-		this.hashTable.put(arg0, arg1);
-		this.history.push(arg0);
+
+		this.cache.put(node, key);
+		this.order.push(node);
 	}
 
 	@ObfuscatedName("ce.m()V")
 	public void clear() {
-		this.history.clear();
-		this.hashTable.clear();
-		this.field1487 = new DoublyLinkable();
+		this.order.clear();
+		this.cache.clear();
+		this.sentinel = new Linkable2();
 		this.available = this.capacity;
 	}
 }

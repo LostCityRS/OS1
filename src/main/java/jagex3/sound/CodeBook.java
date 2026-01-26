@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.IntUtil;
+import jagex3.datastruct.MathTool;
 
 // jag::oldscape::sound::CodeBook
 @ObfuscatedName("x")
@@ -64,7 +64,7 @@ public class CodeBook {
 			int current_length = JagVorbis.read_bits(5) + 1;
 
 			while (current_entry < this.entries) {
-				int n = JagVorbis.read_bits(IntUtil.ilog(this.entries - current_entry));
+				int n = JagVorbis.read_bits(MathTool.bitsRequired(this.entries - current_entry));
 
 				for (int i = 0; i < n; i++) {
 					this.lengths[current_entry++] = current_length;

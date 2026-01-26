@@ -12,88 +12,95 @@ public class HashTable {
 	public Linkable[] buckets;
 
 	@ObfuscatedName("cf.l")
-	public Linkable sentinel;
+	public Linkable searchCursor;
 
 	@ObfuscatedName("cf.m")
-	public Linkable field1495;
+	public Linkable iteratorCursor;
 
 	@ObfuscatedName("cf.c")
-	public int field1499 = 0;
+	public int iteratorBucket = 0;
 
-	public HashTable(int arg0) {
-		this.bucketCount = arg0;
-		this.buckets = new Linkable[arg0];
-		for (int var2 = 0; var2 < arg0; var2++) {
-			Linkable var3 = this.buckets[var2] = new Linkable();
-			var3.next = var3;
-			var3.prev = var3;
+	public HashTable(int bucketCount) {
+		this.bucketCount = bucketCount;
+		this.buckets = new Linkable[bucketCount];
+		for (int i = 0; i < bucketCount; i++) {
+			Linkable sentinel = this.buckets[i] = new Linkable();
+			sentinel.next = sentinel;
+			sentinel.prev = sentinel;
 		}
 	}
 
 	@ObfuscatedName("cf.r(J)Ldg;")
-	public Linkable find(long arg0) {
-		Linkable var3 = this.buckets[(int) (arg0 & (long) (this.bucketCount - 1))];
-		for (this.sentinel = var3.next; this.sentinel != var3; this.sentinel = this.sentinel.next) {
-			if (this.sentinel.key == arg0) {
-				Linkable var4 = this.sentinel;
-				this.sentinel = this.sentinel.next;
-				return var4;
+	public Linkable find(long key) {
+		Linkable sentinel = this.buckets[(int) (key & (long) (this.bucketCount - 1))];
+		for (this.searchCursor = sentinel.next; this.searchCursor != sentinel; this.searchCursor = this.searchCursor.next) {
+			if (this.searchCursor.key == key) {
+				Linkable value = this.searchCursor;
+				this.searchCursor = this.searchCursor.next;
+				return value;
 			}
 		}
-		this.sentinel = null;
+
+		this.searchCursor = null;
 		return null;
 	}
 
 	@ObfuscatedName("cf.d(Ldg;J)V")
-	public void put(Linkable arg0, long arg1) {
-		if (arg0.prev != null) {
-			arg0.unlink();
+	public void put(Linkable node, long key) {
+		if (node.prev != null) {
+			node.unlink();
 		}
-		Linkable var4 = this.buckets[(int) (arg1 & (long) (this.bucketCount - 1))];
-		arg0.prev = var4.prev;
-		arg0.next = var4;
-		arg0.prev.next = arg0;
-		arg0.next.prev = arg0;
-		arg0.key = arg1;
+
+		Linkable sentinel = this.buckets[(int) (key & (long) (this.bucketCount - 1))];
+		node.prev = sentinel.prev;
+		node.next = sentinel;
+		node.prev.next = node;
+		node.next.prev = node;
+		node.key = key;
 	}
 
 	@ObfuscatedName("cf.l()V")
 	public void clear() {
-		for (int var1 = 0; var1 < this.bucketCount; var1++) {
-			Linkable var2 = this.buckets[var1];
+		for (int i = 0; i < this.bucketCount; i++) {
+			Linkable sentinel = this.buckets[i];
 			while (true) {
-				Linkable var3 = var2.next;
-				if (var2 == var3) {
+				Linkable node = sentinel.next;
+				if (sentinel == node) {
 					break;
 				}
-				var3.unlink();
+
+				node.unlink();
 			}
 		}
-		this.sentinel = null;
-		this.field1495 = null;
+
+		this.searchCursor = null;
+		this.iteratorCursor = null;
 	}
 
 	@ObfuscatedName("cf.m()Ldg;")
-	public Linkable first() {
-		this.field1499 = 0;
+	public Linkable search() {
+		this.iteratorBucket = 0;
 		return this.findnext();
 	}
 
 	@ObfuscatedName("cf.c()Ldg;")
 	public Linkable findnext() {
-		if (this.field1499 > 0 && this.buckets[this.field1499 - 1] != this.field1495) {
-			Linkable var1 = this.field1495;
-			this.field1495 = var1.next;
-			return var1;
+		if (this.iteratorBucket > 0 && this.buckets[this.iteratorBucket - 1] != this.iteratorCursor) {
+			Linkable node = this.iteratorCursor;
+			this.iteratorCursor = node.next;
+			return node;
 		}
-		Linkable var2;
+
+		Linkable node;
 		do {
-			if (this.field1499 >= this.bucketCount) {
+			if (this.iteratorBucket >= this.bucketCount) {
 				return null;
 			}
-			var2 = this.buckets[this.field1499++].next;
-		} while (this.buckets[this.field1499 - 1] == var2);
-		this.field1495 = var2.next;
-		return var2;
+
+			node = this.buckets[this.iteratorBucket++].next;
+		} while (this.buckets[this.iteratorBucket - 1] == node);
+
+		this.iteratorCursor = node.next;
+		return node;
 	}
 }

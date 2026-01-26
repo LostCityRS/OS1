@@ -2,14 +2,14 @@ package jagex3.config;
 
 import deob.ObfuscatedName;
 import jagex3.dash3d.ModelUnlit;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
 // jag::oldscape::configdecoder::IdkType
 @ObfuscatedName("fd")
-public class IdkType extends DoublyLinkable {
+public class IdkType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::IdkType::m_pConfigClient
 	@ObfuscatedName("fd.n")
@@ -63,7 +63,7 @@ public class IdkType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::IdkType::List
 	@ObfuscatedName("p.g(II)Lfd;")
 	public static IdkType list(int arg0) {
-		IdkType cached = (IdkType) recentUse.get(arg0);
+		IdkType cached = (IdkType) recentUse.find(arg0);
 		if (cached != null) {
 			return cached;
 		}

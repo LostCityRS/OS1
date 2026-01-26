@@ -3,7 +3,7 @@ package jagex3.config;
 import deob.ObfuscatedName;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
@@ -11,7 +11,7 @@ import jagex3.js5.Js5Loader;
 
 // jag::oldscape::configdecoder::SpotType
 @ObfuscatedName("eu")
-public class SpotType extends DoublyLinkable {
+public class SpotType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::SpotType::m_pConfigClient
 	@ObfuscatedName("eu.n")
@@ -68,7 +68,7 @@ public class SpotType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::SpotType::List
 	@ObfuscatedName("cm.z(IB)Leu;")
 	public static SpotType list(int id) {
-		SpotType var1 = (SpotType) recentUse.get((long) id);
+		SpotType var1 = (SpotType) recentUse.find((long) id);
 		if (var1 != null) {
 			return var1;
 		}
@@ -133,7 +133,7 @@ public class SpotType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::SpotType::GetTempModel2
 	@ObfuscatedName("eu.i(IS)Lfo;")
 	public final ModelLit getTempModel2(int arg0) {
-		ModelLit var2 = (ModelLit) modelCache.get((long) this.id);
+		ModelLit var2 = (ModelLit) modelCache.find((long) this.id);
 		if (var2 == null) {
 			ModelUnlit var3 = ModelUnlit.load(models, this.model, 0);
 			if (var3 == null) {

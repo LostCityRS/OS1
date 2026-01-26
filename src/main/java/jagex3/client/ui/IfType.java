@@ -926,7 +926,7 @@ public class IfType extends Linkable {
 		}
 
 		long var3 = ((long) this.graphicshadow << 40) + ((this.hflip ? 1L : 0L) << 39) + ((this.vflip ? 1L : 0L) << 38) + ((long) this.outline << 36) + (long) var2;
-		Pix32 var5 = (Pix32) spriteCache.get(var3);
+		Pix32 var5 = (Pix32) spriteCache.find(var3);
 		if (var5 != null) {
 			return var5;
 		}
@@ -975,7 +975,7 @@ public class IfType extends Linkable {
 		if (this.font == -1) {
 			return null;
 		}
-		SoftwareFont var1 = (SoftwareFont) fontCache.get((long) this.font);
+		SoftwareFont var1 = (SoftwareFont) fontCache.find((long) this.font);
 		if (var1 != null) {
 			return var1;
 		}
@@ -1008,7 +1008,7 @@ public class IfType extends Linkable {
 		if (var2 == -1) {
 			return null;
 		}
-		Pix32 var3 = (Pix32) spriteCache.get((long) var2);
+		Pix32 var3 = (Pix32) spriteCache.find((long) var2);
 		if (var3 != null) {
 			return var3;
 		}
@@ -1046,7 +1046,7 @@ public class IfType extends Linkable {
 		} else if (type == 1 && id == -1) {
 			return null;
 		} else {
-			ModelLit var7 = (ModelLit) modelCache.get((long) ((type << 16) + id));
+			ModelLit var7 = (ModelLit) modelCache.find((long) ((type << 16) + id));
 			if (var7 == null) {
 				if (type == 1) {
 					ModelUnlit var8 = ModelUnlit.load(models, id, 0);

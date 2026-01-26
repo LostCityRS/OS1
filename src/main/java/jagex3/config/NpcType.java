@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.client.VarCache;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
@@ -12,7 +12,7 @@ import jagex3.jstring.Text;
 
 // jag::oldscape::configdecoder::NpcType
 @ObfuscatedName("em")
-public class NpcType extends DoublyLinkable {
+public class NpcType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::NpcType::m_pConfigClient
 	@ObfuscatedName("em.n")
@@ -133,7 +133,7 @@ public class NpcType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::NpcType::List
 	@ObfuscatedName("f.g(IB)Lem;")
 	public static NpcType list(int id) {
-		NpcType cached = (NpcType) recentUse.get(id);
+		NpcType cached = (NpcType) recentUse.find(id);
 		if (cached != null) {
 			return cached;
 		}
@@ -277,7 +277,7 @@ public class NpcType extends DoublyLinkable {
 			return npc == null ? null : npc.getTempModel(primaryAnim, arg1, secondaryAnim, arg3);
 		}
 
-		ModelLit cached = (ModelLit) modelCache.get(this.index);
+		ModelLit cached = (ModelLit) modelCache.find(this.index);
 		if (cached == null) {
 			boolean needsModel = false;
 			for (int i = 0; i < this.model.length; i++) {

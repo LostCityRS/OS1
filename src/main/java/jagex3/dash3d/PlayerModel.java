@@ -207,7 +207,7 @@ public class PlayerModel {
 				var7[3] = arg0.replaceheldright;
 			}
 		}
-		ModelLit var9 = (ModelLit) modelCache.get(var5);
+		ModelLit var9 = (ModelLit) modelCache.find(var5);
 		if (var9 == null) {
 			boolean var10 = false;
 			for (int var11 = 0; var11 < 12; var11++) {
@@ -221,7 +221,7 @@ public class PlayerModel {
 			}
 			if (var10) {
 				if (this.headModelHashToModelCacheID != -1L) {
-					var9 = (ModelLit) modelCache.get(this.headModelHashToModelCacheID);
+					var9 = (ModelLit) modelCache.find(this.headModelHashToModelCacheID);
 				}
 				if (var9 == null) {
 					return null;

@@ -1,14 +1,14 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
 // jag::oldscape::configdecoder::VarpType
 @ObfuscatedName("fg")
-public class VarpType extends DoublyLinkable {
+public class VarpType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::VarpType::m_pConfigClient
 	@ObfuscatedName("al.n")
@@ -35,7 +35,7 @@ public class VarpType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::VarpType::List
 	@ObfuscatedName("ez.g(II)Lfg;")
 	public static VarpType list(int arg0) {
-		VarpType var1 = (VarpType) recentUse.get((long) arg0);
+		VarpType var1 = (VarpType) recentUse.find((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}

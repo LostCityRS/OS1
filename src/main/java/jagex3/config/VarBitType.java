@@ -1,7 +1,7 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
@@ -9,7 +9,7 @@ import jagex3.js5.Js5Loader;
 
 // jag::oldscape::configdecoder::VarBitType
 @ObfuscatedName("fc")
-public class VarBitType extends DoublyLinkable {
+public class VarBitType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::VarBitType::m_pConfigClient
 	@ObfuscatedName("fc.n")
@@ -31,7 +31,7 @@ public class VarBitType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::VarBitType::List
 	@ObfuscatedName("q.z(II)Lfc;")
 	public static VarBitType list(int arg0) {
-		VarBitType var1 = (VarBitType) recentUse.get((long) arg0);
+		VarBitType var1 = (VarBitType) recentUse.find((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}

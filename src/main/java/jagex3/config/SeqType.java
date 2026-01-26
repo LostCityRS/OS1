@@ -3,14 +3,14 @@ package jagex3.config;
 import deob.ObfuscatedName;
 import jagex3.dash3d.AnimFrameSet;
 import jagex3.dash3d.ModelLit;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
 // jag::oldscape::configdecoder::SeqType
 @ObfuscatedName("eo")
-public class SeqType extends DoublyLinkable {
+public class SeqType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::SeqType::m_pConfigClient
 	@ObfuscatedName("dz.n")
@@ -85,7 +85,7 @@ public class SeqType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::SeqType::List
 	@ObfuscatedName("i.g(IB)Leo;")
 	public static SeqType list(int arg0) {
-		SeqType var1 = (SeqType) recentUse.get((long) arg0);
+		SeqType var1 = (SeqType) recentUse.find((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}
@@ -301,7 +301,7 @@ public class SeqType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::SeqType::Get
 	@ObfuscatedName("bi.y(IB)Lfr;")
 	public static AnimFrameSet get(int arg0) {
-		AnimFrameSet var1 = (AnimFrameSet) framesetCache.get((long) arg0);
+		AnimFrameSet var1 = (AnimFrameSet) framesetCache.find((long) arg0);
 		if (var1 != null) {
 			return var1;
 		}

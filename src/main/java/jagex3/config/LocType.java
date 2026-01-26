@@ -5,7 +5,7 @@ import jagex3.client.VarCache;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelSource;
 import jagex3.dash3d.ModelUnlit;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
@@ -13,7 +13,7 @@ import jagex3.jstring.Text;
 
 // jag::oldscape::configdecoder::LocType
 @ObfuscatedName("ey")
-public class LocType extends DoublyLinkable {
+public class LocType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::LocType::m_lowMem
 	@ObfuscatedName("ey.n")
@@ -186,7 +186,7 @@ public class LocType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::LocType::List
 	@ObfuscatedName("fj.g(IB)Ley;")
 	public static LocType list(int id) {
-		LocType cached = (LocType) recentUse.get(id);
+		LocType cached = (LocType) recentUse.find(id);
 		if (cached != null) {
 			return cached;
 		}
@@ -442,7 +442,7 @@ public class LocType extends DoublyLinkable {
 		} else {
 			var7 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
-		ModelSource var9 = (ModelSource) mc2.get(var7);
+		ModelSource var9 = (ModelSource) mc2.find(var7);
 		if (var9 == null) {
 			ModelUnlit var10 = this.buildModel(arg0, arg1);
 			if (var10 == null) {
@@ -480,7 +480,7 @@ public class LocType extends DoublyLinkable {
 		} else {
 			var7 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
-		ModelLit var9 = (ModelLit) mc3.get(var7);
+		ModelLit var9 = (ModelLit) mc3.find(var7);
 		if (var9 == null) {
 			ModelUnlit var10 = this.buildModel(arg0, arg1);
 			if (var10 == null) {
@@ -504,7 +504,7 @@ public class LocType extends DoublyLinkable {
 		} else {
 			var9 = (this.id << 10) + (arg0 << 3) + arg1;
 		}
-		ModelLit var11 = (ModelLit) mc3.get(var9);
+		ModelLit var11 = (ModelLit) mc3.find(var9);
 		if (var11 == null) {
 			ModelUnlit var12 = this.buildModel(arg0, arg1);
 			if (var12 == null) {
@@ -549,7 +549,7 @@ public class LocType extends DoublyLinkable {
 				if (var4) {
 					var7 += 65536;
 				}
-				var3 = (ModelUnlit) mc1.get((long) var7);
+				var3 = (ModelUnlit) mc1.find((long) var7);
 				if (var3 == null) {
 					var3 = ModelUnlit.load(models, var7 & 0xFFFF, 0);
 					if (var3 == null) {
@@ -583,7 +583,7 @@ public class LocType extends DoublyLinkable {
 			if (var11) {
 				var10 += 65536;
 			}
-			var3 = (ModelUnlit) mc1.get((long) var10);
+			var3 = (ModelUnlit) mc1.find((long) var10);
 			if (var3 == null) {
 				var3 = ModelUnlit.load(models, var10 & 0xFFFF, 0);
 				if (var3 == null) {

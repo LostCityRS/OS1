@@ -2,7 +2,7 @@ package jagex3.js5;
 
 import deob.ObfuscatedName;
 import jagex3.client.JagException;
-import jagex3.datastruct.ByteArrayCopier;
+import jagex3.datastruct.ByteArrayWrapper;
 import jagex3.datastruct.IntHashTable;
 import jagex3.io.BZip2;
 import jagex3.io.GZip;
@@ -232,7 +232,7 @@ public abstract class Js5 {
 			}
 		}
 
-		byte[] data = ByteArrayCopier.method108(this.unpacked[groupId][fileId], false);
+		byte[] data = ByteArrayWrapper.unwrap(this.unpacked[groupId][fileId], false);
 		if (this.discardUnpacked) {
 			this.unpacked[groupId][fileId] = null;
 		}
@@ -319,7 +319,7 @@ public abstract class Js5 {
 			}
 		}
 
-		return ByteArrayCopier.method108(this.unpacked[groupId][fileId], false);
+		return ByteArrayWrapper.unwrap(this.unpacked[groupId][fileId], false);
 	}
 
 	// jag::oldscape::jagex3::Js5::PeekFile
@@ -403,9 +403,9 @@ public abstract class Js5 {
 
 		byte[] var8;
 		if (key == null || key[0] == 0 && key[1] == 0 && key[2] == 0 && key[3] == 0) {
-			var8 = ByteArrayCopier.method108(this.packed[groupId], false);
+			var8 = ByteArrayWrapper.unwrap(this.packed[groupId], false);
 		} else {
-			var8 = ByteArrayCopier.method108(this.packed[groupId], true);
+			var8 = ByteArrayWrapper.unwrap(this.packed[groupId], true);
 			Packet var9 = new Packet(var8);
 			var9.tinydec(key, 5, var9.data.length);
 		}
@@ -476,13 +476,13 @@ public abstract class Js5 {
 				if (this.discardUnpacked) {
 					var5[var4[var42]] = var36[var42];
 				} else {
-					var5[var4[var42]] = ByteArrayCopier.method1131(var36[var42], false);
+					var5[var4[var42]] = ByteArrayWrapper.wrap(var36[var42], false);
 				}
 			}
 		} else if (this.discardUnpacked) {
 			var5[var4[0]] = var10;
 		} else {
-			var5[var4[0]] = ByteArrayCopier.method1131(var10, false);
+			var5[var4[0]] = ByteArrayWrapper.wrap(var10, false);
 		}
 		return true;
 	}
@@ -491,7 +491,7 @@ public abstract class Js5 {
 	@ObfuscatedName("ch.y(Ljava/lang/String;I)I")
 	public int getGroupId(String group) {
 		String lower = group.toLowerCase();
-		return this.groupNameHashTable.get(StringTools.hashCode(lower));
+		return this.groupNameHashTable.find(StringTools.hashCode(lower));
 	}
 
 	// jag::oldscape::jagex3::Js5::GetFileId
@@ -499,7 +499,7 @@ public abstract class Js5 {
 	@ObfuscatedName("ch.t(ILjava/lang/String;B)I")
 	public int getFileId(int groupId, String file) {
 		String lower = file.toLowerCase();
-		return this.fileNameHashTables[groupId].get(StringTools.hashCode(lower));
+		return this.fileNameHashTables[groupId].find(StringTools.hashCode(lower));
 	}
 
 	// jag::oldscape::jagex3::Js5::GetFile
@@ -507,8 +507,8 @@ public abstract class Js5 {
 	public byte[] getFile(String group, String file) {
 		String groupLower = group.toLowerCase();
 		String fileLower = file.toLowerCase();
-		int groupId = this.groupNameHashTable.get(StringTools.hashCode(groupLower));
-		int fileId = this.fileNameHashTables[groupId].get(StringTools.hashCode(fileLower));
+		int groupId = this.groupNameHashTable.find(StringTools.hashCode(groupLower));
+		int fileId = this.fileNameHashTables[groupId].find(StringTools.hashCode(fileLower));
 		return this.getFile(groupId, fileId);
 	}
 
@@ -517,8 +517,8 @@ public abstract class Js5 {
 	public boolean requestDownload(String group, String file) {
 		String groupLower = group.toLowerCase();
 		String fileLower = file.toLowerCase();
-		int groupId = this.groupNameHashTable.get(StringTools.hashCode(groupLower));
-		int fileId = this.fileNameHashTables[groupId].get(StringTools.hashCode(fileLower));
+		int groupId = this.groupNameHashTable.find(StringTools.hashCode(groupLower));
+		int fileId = this.fileNameHashTables[groupId].find(StringTools.hashCode(fileLower));
 		return this.requestDownload(groupId, fileId);
 	}
 
@@ -526,7 +526,7 @@ public abstract class Js5 {
 	@ObfuscatedName("ch.o(Ljava/lang/String;I)V")
 	public void updateCacheHint(String group) {
 		String lower = group.toLowerCase();
-		int groupId = this.groupNameHashTable.get(StringTools.hashCode(lower));
+		int groupId = this.groupNameHashTable.find(StringTools.hashCode(lower));
 		if (groupId >= 0) {
 			this.updateCacheHint(groupId);
 		}

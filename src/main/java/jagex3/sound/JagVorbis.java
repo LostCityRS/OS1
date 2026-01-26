@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.IntUtil;
+import jagex3.datastruct.MathTool;
 import jagex3.datastruct.Linkable;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
@@ -218,7 +218,7 @@ public class JagVorbis extends Linkable {
 				var10[var11 * 2 + 1] = -((float) Math.sin((double) (var11 * 4 + 2) * 3.141592653589793D / (double) var2));
 			}
 			int[] var12 = new int[var5];
-			int var13 = IntUtil.ilog(var5 - 1);
+			int var13 = MathTool.bitsRequired(var5 - 1);
 			for (int var14 = 0; var14 < var5; var14++) {
 				int var17 = var14;
 				int var18 = var13;
@@ -288,7 +288,7 @@ public class JagVorbis extends Linkable {
 	public float[] method1541(int arg0) {
 		method1536(this.field1674[arg0], 0);
 		read_bool();
-		int var2 = read_bits(IntUtil.ilog(mapping.length - 1));
+		int var2 = read_bits(MathTool.bitsRequired(mapping.length - 1));
 		boolean var3 = blockflag[var2];
 		int var4 = var3 ? field1657 : field1650;
 		boolean var5 = false;
@@ -376,7 +376,7 @@ public class JagVorbis extends Linkable {
 				var28[var40 * 4 + 3] = (var41 - var43) * var45 - (var42 - var44) * var46;
 				var28[var40 * 4 + 1] = (var41 - var43) * var46 + (var42 - var44) * var45;
 			}
-			int var47 = IntUtil.ilog(var4 - 1);
+			int var47 = MathTool.bitsRequired(var4 - 1);
 			for (int var48 = 0; var48 < var47 - 3; var48++) {
 				int var49 = var4 >> var48 + 2;
 				int var50 = 0x8 << var48;

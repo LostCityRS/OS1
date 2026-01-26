@@ -3,13 +3,13 @@ package jagex3.datastruct;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("en")
-public class DoublyLinkable extends Linkable {
+public class Linkable2 extends Linkable {
 
 	@ObfuscatedName("en.m")
-	public DoublyLinkable next2;
+	public Linkable2 next2;
 
 	@ObfuscatedName("en.c")
-	public DoublyLinkable prev2;
+	public Linkable2 prev2;
 
 	@ObfuscatedName("en.c()V")
 	public void unlink2() {

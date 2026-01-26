@@ -1,13 +1,13 @@
 package jagex3.dash3d;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LinkList;
 import jagex3.js5.Js5;
 
 // jag::oldscape::dash3d::AnimFrameSet
 @ObfuscatedName("fr")
-public class AnimFrameSet extends DoublyLinkable {
+public class AnimFrameSet extends Linkable2 {
 
 	@ObfuscatedName("fr.n")
 	public AnimFrame[] list;

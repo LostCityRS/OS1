@@ -264,26 +264,34 @@ public class PcmPlayer {
 	@ObfuscatedName("y.z(II)V")
 	public final void skip(int arg0) {
 		this.field259 -= arg0;
+
 		if (this.field259 < 0) {
 			this.field259 = 0;
 		}
+
 		if (this.stream != null) {
 			this.stream.pretendToMix(arg0);
 		}
 	}
 
+	// jag::oldscape::sound::PCMPlayer::Generate
 	@ObfuscatedName("y.g([II)V")
 	public final void generate(int[] arg0, int arg1) {
 		int var3 = arg1;
 		if (stereo) {
 			var3 = arg1 << 1;
 		}
+
 		ArrayUtil.clear(arg0, 0, var3);
+
 		this.field259 -= arg1;
+
 		if (this.stream != null && this.field259 <= 0) {
 			this.field259 += frequency >> 4;
+
 			method815(this.stream);
 			this.method212(this.stream, this.stream.priority());
+
 			int var4 = 0;
 			int var5 = 255;
 			int var6 = 7;
@@ -298,6 +306,7 @@ public class PcmPlayer {
 					var7 = var6;
 					var8 = 0;
 				}
+
 				for (int var9 = var5 >>> var7 & 0x11111111; var9 != 0; var9 >>>= 0x4) {
 					if ((var9 & 0x1) != 0) {
 						var5 &= ~(0x1 << var7);
@@ -353,6 +362,7 @@ public class PcmPlayer {
 				}
 				var6--;
 			}
+
 			for (int var17 = 0; var17 < 8; var17++) {
 				PcmStream var18 = this.field240[var17];
 				PcmStream[] var19 = this.field240;
@@ -365,12 +375,15 @@ public class PcmPlayer {
 				}
 			}
 		}
+
 		if (this.field259 < 0) {
 			this.field259 = 0;
 		}
+
 		if (this.stream != null) {
 			this.stream.doMix(arg0, 0, arg1);
 		}
+
 		this.lastPlayTime = MonotonicTime.currentTime();
 	}
 

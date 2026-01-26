@@ -2,7 +2,7 @@ package jagex3.js5;
 
 import deob.ObfuscatedName;
 import jagex3.client.applet.GameShell;
-import jagex3.datastruct.ByteArrayCopier;
+import jagex3.datastruct.ByteArrayWrapper;
 import jagex3.datastruct.LinkList;
 import jagex3.io.DataFile;
 import jagex3.io.Packet;
@@ -131,7 +131,7 @@ public class Js5Loader extends Js5 {
 				this.loadedGroups[arg0] = true;
 			}
 			if (arg3) {
-				this.packed[arg0] = ByteArrayCopier.method1131(arg1, false);
+				this.packed[arg0] = ByteArrayWrapper.wrap(arg1, false);
 			}
 			return;
 		}
@@ -188,7 +188,7 @@ public class Js5Loader extends Js5 {
 			}
 			this.loadedGroups[arg1] = true;
 			if (arg3) {
-				this.packed[arg1] = ByteArrayCopier.method1131(src, false);
+				this.packed[arg1] = ByteArrayWrapper.wrap(src, false);
 			}
 			return;
 		}

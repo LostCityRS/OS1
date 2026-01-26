@@ -115,7 +115,7 @@ public class MidiPlayer extends PcmStream {
 		if (arg3 > 0) {
 			var6 = new int[] { arg3 };
 		}
-		for (ByteArrayNode patch = (ByteArrayNode) arg0.patches.first(); patch != null; patch = (ByteArrayNode) arg0.patches.findnext()) {
+		for (ByteArrayNode patch = (ByteArrayNode) arg0.patches.search(); patch != null; patch = (ByteArrayNode) arg0.patches.findnext()) {
 			int var8 = (int) patch.key;
 			Patch var9 = (Patch) this.patches.find((long) var8);
 			if (var9 == null) {
@@ -138,14 +138,14 @@ public class MidiPlayer extends PcmStream {
 
 	@ObfuscatedName("ed.aa(B)V")
 	public synchronized void method2220() {
-		for (Patch patch = (Patch) this.patches.first(); patch != null; patch = (Patch) this.patches.findnext()) {
+		for (Patch patch = (Patch) this.patches.search(); patch != null; patch = (Patch) this.patches.findnext()) {
 			patch.method1781();
 		}
 	}
 
 	@ObfuscatedName("ed.as(I)V")
 	public synchronized void method2289() {
-		for (Patch patch = (Patch) this.patches.first(); patch != null; patch = (Patch) this.patches.findnext()) {
+		for (Patch patch = (Patch) this.patches.search(); patch != null; patch = (Patch) this.patches.findnext()) {
 			patch.unlink();
 		}
 	}

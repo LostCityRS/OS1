@@ -1,14 +1,14 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.DoublyLinkable;
+import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
 // jag::oldscape::configdecoder::FloType
 @ObfuscatedName("fb")
-public class FloType extends DoublyLinkable {
+public class FloType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::FloType::m_pConfigClient
 	@ObfuscatedName("by.n")
@@ -50,7 +50,7 @@ public class FloType extends DoublyLinkable {
 	// jag::oldscape::configdecoder::FloType::List
 	@ObfuscatedName("cj.z(II)Lfb;")
 	public static FloType list(int id) {
-		FloType cached = (FloType) recentUse.get(id);
+		FloType cached = (FloType) recentUse.find(id);
 		if (cached != null) {
 			return cached;
 		}

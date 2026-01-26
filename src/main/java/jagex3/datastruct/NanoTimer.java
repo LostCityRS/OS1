@@ -6,30 +6,36 @@ import deob.ObfuscatedName;
 public class NanoTimer extends Timer {
 
 	@ObfuscatedName("dp.r")
-	public long field1565 = System.nanoTime();
+	public long ntime = System.nanoTime();
 
 	@ObfuscatedName("dp.r(I)V")
 	public void reset() {
-		this.field1565 = System.nanoTime();
+		this.ntime = System.nanoTime();
 	}
 
 	@ObfuscatedName("dp.d(IIB)I")
-	public int count(int arg0, int arg1) {
-		long var3 = (long) arg1 * 1000000L;
-		long var5 = this.field1565 - System.nanoTime();
-		if (var5 < var3) {
-			var5 = var3;
+	public int count(int deltime, int mindel) {
+		long mindelNs = (long) mindel * 1000000L;
+		long delta = this.ntime - System.nanoTime();
+
+		if (delta < mindelNs) {
+			delta = mindelNs;
 		}
-		ThreadSleep.sleepPrecise(var5 / 1000000L);
-		long var7 = System.nanoTime();
-		int var9 = 0;
-		while (var9 < 10 && (var9 < 1 || this.field1565 < var7)) {
-			var9++;
-			this.field1565 += (long) arg0 * 1000000L;
+
+		ThreadSleep.sleepPrecise(delta / 1000000L);
+
+		long now = System.nanoTime();
+
+		int loops = 0;
+		while (loops < 10 && (loops < 1 || this.ntime < now)) {
+			loops++;
+			this.ntime += (long) deltime * 1000000L;
 		}
-		if (this.field1565 < var7) {
-			this.field1565 = var7;
+
+		if (this.ntime < now) {
+			this.ntime = now;
 		}
-		return var9;
+
+		return loops;
 	}
 }
