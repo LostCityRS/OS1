@@ -44,9 +44,6 @@ import java.net.URL;
 @ObfuscatedName("client")
 public class Client extends GameShell {
 
-	@ObfuscatedName("cd.ad")
-	public static Image progressBar;
-
 	@ObfuscatedName("client.ak")
 	public static boolean mouseTracked = true;
 
@@ -603,7 +600,7 @@ public class Client extends GameShell {
 	public static IfType hoveredSlotParent;
 
 	@ObfuscatedName("client.hq")
-	public static int hoveredSlot = 0;
+	public static int objDragSlot = 0;
 
 	@ObfuscatedName("client.hh")
 	public static int objGrabX = 0;
@@ -612,7 +609,7 @@ public class Client extends GameShell {
 	public static int objGrabY = 0;
 
 	@ObfuscatedName("client.hc")
-	public static int objDragSlot = 0;
+	public static int hoveredSlot = 0;
 
 	@ObfuscatedName("client.hp")
 	public static boolean objGrabThreshold = false;
@@ -666,7 +663,7 @@ public class Client extends GameShell {
 	public static int[] field1941 = new int[] { 768, 1024, 1280, 512, 1536, 256, 0, 1792 };
 
 	@ObfuscatedName("an.ix")
-	public static int field502; // todo
+	public static int objSelectedLayerId; // todo
 
 	@ObfuscatedName("cr.ii")
 	public static ClientPlayer localPlayer; // todo
@@ -678,7 +675,7 @@ public class Client extends GameShell {
 	public static int field555; // todo
 
 	@ObfuscatedName("client.ir")
-	public static LinkList[][][] objStacks = new LinkList[4][104][104];
+	public static LinkList[][][] groundObj = new LinkList[4][104][104];
 
 	@ObfuscatedName("client.iv")
 	public static LinkList locChanges = new LinkList();
@@ -690,7 +687,7 @@ public class Client extends GameShell {
 	public static LinkList spotanims = new LinkList();
 
 	@ObfuscatedName("client.it")
-	public static String field2078 = null; // todo
+	public static String objSelectedName = null; // todo
 
 	@ObfuscatedName("client.iw")
 	public static int[] skillLevel = new int[25];
@@ -765,7 +762,7 @@ public class Client extends GameShell {
 	public static int menuWidth; // todo
 
 	@ObfuscatedName("ag.jb")
-	public static int field557; // todo
+	public static int objSelectedSlot; // todo
 
 	@ObfuscatedName("at.jq")
 	public static IfType field654; // todo
@@ -810,7 +807,7 @@ public class Client extends GameShell {
 	public static boolean field2092 = false;
 
 	@ObfuscatedName("client.km")
-	public static boolean field2001 = false;
+	public static boolean showOpIndex = false;
 
 	@ObfuscatedName("client.ke")
 	public static IfType dragComponent = null;
@@ -2216,7 +2213,7 @@ public class Client extends GameShell {
 		for (int var3 = 0; var3 < 4; var3++) {
 			for (int var4 = 0; var4 < 104; var4++) {
 				for (int var5 = 0; var5 < 104; var5++) {
-					objStacks[var3][var4][var5] = null;
+					groundObj[var3][var4][var5] = null;
 				}
 			}
 		}
@@ -3571,9 +3568,9 @@ public class Client extends GameShell {
 				int var26 = var8 + var24;
 				for (int var27 = 0; var27 < 4; var27++) {
 					if (var25 >= 0 && var26 >= 0 && var25 < 104 && var26 < 104) {
-						objStacks[var27][var23][var24] = objStacks[var27][var25][var26];
+						groundObj[var27][var23][var24] = groundObj[var27][var25][var26];
 					} else {
-						objStacks[var27][var23][var24] = null;
+						groundObj[var27][var23][var24] = null;
 					}
 				}
 			}
@@ -4091,7 +4088,7 @@ public class Client extends GameShell {
 			int var32 = (var31 >> 4 & 0x7) + baseX;
 			int var33 = (var31 & 0x7) + baseZ;
 			if (var32 >= 0 && var33 >= 0 && var32 < 104 && var33 < 104) {
-				LinkList var34 = objStacks[minusedlevel][var32][var33];
+				LinkList var34 = groundObj[minusedlevel][var32][var33];
 				if (var34 != null) {
 					for (ClientObj var35 = (ClientObj) var34.head(); var35 != null; var35 = (ClientObj) var34.next()) {
 						if ((var30 & 0x7FFF) == var35.id) {
@@ -4100,7 +4097,7 @@ public class Client extends GameShell {
 						}
 					}
 					if (var34.head() == null) {
-						objStacks[minusedlevel][var32][var33] = null;
+						groundObj[minusedlevel][var32][var33] = null;
 					}
 					showObject(var32, var33);
 				}
@@ -4192,10 +4189,10 @@ public class Client extends GameShell {
 				ClientObj var64 = new ClientObj();
 				var64.id = var63;
 				var64.count = var62;
-				if (objStacks[minusedlevel][var60][var61] == null) {
-					objStacks[minusedlevel][var60][var61] = new LinkList();
+				if (groundObj[minusedlevel][var60][var61] == null) {
+					groundObj[minusedlevel][var60][var61] = new LinkList();
 				}
-				objStacks[minusedlevel][var60][var61].push(var64);
+				groundObj[minusedlevel][var60][var61].push(var64);
 				showObject(var60, var61);
 			}
 		} else if (ptype == 106) {
@@ -4207,7 +4204,7 @@ public class Client extends GameShell {
 			int var69 = in.g2();
 			int var70 = in.g2();
 			if (var66 >= 0 && var67 >= 0 && var66 < 104 && var67 < 104) {
-				LinkList var71 = objStacks[minusedlevel][var66][var67];
+				LinkList var71 = groundObj[minusedlevel][var66][var67];
 				if (var71 != null) {
 					for (ClientObj var72 = (ClientObj) var71.head(); var72 != null; var72 = (ClientObj) var71.next()) {
 						if ((var68 & 0x7FFF) == var72.id && var72.count == var69) {
@@ -4281,10 +4278,10 @@ public class Client extends GameShell {
 				ClientObj var114 = new ClientObj();
 				var114.id = var113;
 				var114.count = var112;
-				if (objStacks[minusedlevel][var109][var110] == null) {
-					objStacks[minusedlevel][var109][var110] = new LinkList();
+				if (groundObj[minusedlevel][var109][var110] == null) {
+					groundObj[minusedlevel][var109][var110] = new LinkList();
 				}
-				objStacks[minusedlevel][var109][var110].push(var114);
+				groundObj[minusedlevel][var109][var110].push(var114);
 				showObject(var109, var110);
 			}
 		} else if (ptype == 7) {
@@ -4428,7 +4425,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::ShowObject
 	@ObfuscatedName("dr.et(III)V")
 	public static void showObject(int arg0, int arg1) {
-		LinkList var2 = objStacks[minusedlevel][arg0][arg1];
+		LinkList var2 = groundObj[minusedlevel][arg0][arg1];
 		if (var2 == null) {
 			world.delObj(minusedlevel, arg0, arg1);
 			return;
@@ -5131,10 +5128,10 @@ public class Client extends GameShell {
 			out.p1Enc(70);
 			out.p2_alt1(a);
 			out.p2_alt1(field555);
-			out.p2(field557);
+			out.p2(objSelectedSlot);
 			out.p4(c);
 			out.p2_alt1(b);
-			out.p4_alt1(field502);
+			out.p4_alt1(objSelectedLayerId);
 
 			selectedCycle = 0;
 			selectedArea = IfType.get(c);
@@ -5245,9 +5242,9 @@ public class Client extends GameShell {
 				// OPPLAYERU
 				out.p1Enc(226);
 				out.p2_alt2(field555);
-				out.p2_alt1(field557);
+				out.p2_alt1(objSelectedSlot);
 				out.p2_alt2(a);
-				out.p4_alt2(field502);
+				out.p4_alt2(objSelectedLayerId);
 			}
 		}
 
@@ -5338,8 +5335,8 @@ public class Client extends GameShell {
 			if (interactWithLoc(b, c, a)) {
 				// OPLOCU
 				out.p1Enc(241);
-				out.p4_alt1(field502);
-				out.p2(field557);
+				out.p4_alt1(objSelectedLayerId);
+				out.p2(objSelectedSlot);
 				out.p2(a >> 14 & 0x7FFF);
 				out.p2_alt2(mapBuildBaseX + b);
 				out.p2_alt1(field555);
@@ -5419,9 +5416,9 @@ public class Client extends GameShell {
 			out.p2(mapBuildBaseZ + c);
 			out.p2_alt2(field555);
 			out.p2_alt1(mapBuildBaseX + b);
-			out.p4(field502);
+			out.p4(objSelectedLayerId);
 			out.p2_alt1(a);
-			out.p2_alt1(field557);
+			out.p2_alt1(objSelectedSlot);
 		}
 
 		if (action == 1001) {
@@ -5491,11 +5488,11 @@ public class Client extends GameShell {
 		if (action == 24) {
 			IfType var29 = IfType.get(c);
 
-			boolean var30 = true;
+			boolean transmit = true;
 			if (var29.clientCode > 0) {
-				var30 = clientButton(var29);
+				transmit = clientButton(var29);
 			}
-			if (var30) {
+			if (transmit) {
 				// IF_BUTTON
 				out.p1Enc(155);
 				out.p4(c);
@@ -5719,14 +5716,14 @@ public class Client extends GameShell {
 
 			IfType var45 = IfType.get(c);
 			useMode = 1;
-			field557 = b;
-			field502 = c;
+			objSelectedSlot = b;
+			objSelectedLayerId = c;
 			field555 = a;
 			componentUpdated(var45);
 
-			field2078 = StringConstants.TAG_COLOUR(16748608) + ObjType.list(a).name + StringConstants.TAG_COLOUR(16777215);
-			if (field2078 == null) {
-				field2078 = "null";
+			objSelectedName = StringConstants.TAG_COLOUR(16748608) + ObjType.list(a).name + StringConstants.TAG_COLOUR(16777215);
+			if (objSelectedName == null) {
+				objSelectedName = "null";
 			}
 
 			return;
@@ -5835,8 +5832,8 @@ public class Client extends GameShell {
 
 				// OPNPCU
 				out.p1Enc(106);
-				out.p2_alt2(field557);
-				out.p4(field502);
+				out.p2_alt2(objSelectedSlot);
+				out.p4(objSelectedLayerId);
 				out.p2_alt1(a);
 				out.p2_alt3(field555);
 			}
@@ -5874,7 +5871,7 @@ public class Client extends GameShell {
 
 		if (useMode != 0) {
 			useMode = 0;
-			componentUpdated(IfType.get(field502));
+			componentUpdated(IfType.get(objSelectedLayerId));
 		}
 
 		if (targetMode) {
@@ -5950,77 +5947,75 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::IfButtonX
 	@ObfuscatedName("bd.eu(IIILjava/lang/String;I)V")
-	public static void ifButtonX(int arg0, int arg1, int arg2, String arg3) {
-		IfType var4 = IfType.get(arg1, arg2);
-		if (var4 == null) {
+	public static void ifButtonX(int opindex, int arg1, int arg2, String opbase) {
+		IfType com = IfType.get(arg1, arg2);
+		if (com == null) {
 			return;
 		}
-		if (var4.onop != null) {
-			HookReq var5 = new HookReq();
-			var5.component = var4;
-			var5.opindex = arg0;
-			var5.opbase = arg3;
-			var5.onop = var4.onop;
-			ScriptRunner.executeScript(var5);
+		if (com.onop != null) {
+			HookReq hook = new HookReq();
+			hook.component = com;
+			hook.opindex = opindex;
+			hook.opbase = opbase;
+			hook.onop = com.onop;
+			ScriptRunner.executeScript(hook);
 		}
-		boolean var6 = true;
-		if (var4.clientCode > 0) {
-			var6 = clientButton(var4);
-		}
-		if (!var6) {
-			return;
-		}
-		int var7 = getActive(var4);
-		int var8 = arg0 - 1;
 
-		boolean var9 = (var7 >> var8 + 1 & 0x1) != 0;
-		if (var9) {
-			if (arg0 == 1) {
+		boolean transmit = true;
+		if (com.clientCode > 0) {
+			transmit = clientButton(com);
+		}
+		if (!transmit) {
+			return;
+		}
+
+		if (ServerActive.hasOp(getActive(com), opindex - 1)) {
+			if (opindex == 1) {
 				// IF_BUTTON1
 				out.p1Enc(63);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 2) {
+			} else if (opindex == 2) {
 				// IF_BUTTON2
 				out.p1Enc(87);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 3) {
+			} else if (opindex == 3) {
 				// IF_BUTTON3
 				out.p1Enc(238);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 4) {
+			} else if (opindex == 4) {
 				// IF_BUTTON4
 				out.p1Enc(240);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 5) {
+			} else if (opindex == 5) {
 				// IF_BUTTON5
 				out.p1Enc(153);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 6) {
+			} else if (opindex == 6) {
 				// IF_BUTTON6
 				out.p1Enc(232);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 7) {
+			} else if (opindex == 7) {
 				// IF_BUTTON7
 				out.p1Enc(168);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 8) {
+			} else if (opindex == 8) {
 				// IF_BUTTON8
 				out.p1Enc(239);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 9) {
+			} else if (opindex == 9) {
 				// IF_BUTTON9
 				out.p1Enc(254);
 				out.p4(arg1);
 				out.p2(arg2);
-			} else if (arg0 == 10) {
+			} else if (opindex == 10) {
 				// IF_BUTTON10
 				out.p1Enc(169);
 				out.p4(arg1);
@@ -6052,119 +6047,121 @@ public class Client extends GameShell {
 
 	// jag::oldscape::minimenu::Minimenu::AddNpcOptions
 	@ObfuscatedName("z.fc(Lem;IIII)V")
-	public static void addNpcOptions(NpcType arg0, int arg1, int arg2, int arg3) {
+	public static void addNpcOptions(NpcType npc, int arg1, int arg2, int arg3) {
 		if (menuNumEntries >= 400) {
 			return;
 		}
 
-		if (arg0.multinpc != null) {
-			arg0 = arg0.getMultiNpc();
+		if (npc.multinpc != null) {
+			npc = npc.getMultiNpc();
 		}
 
-		if (arg0 == null || !arg0.active) {
+		if (npc == null || !npc.active) {
 			return;
 		}
 
-		String var4 = arg0.name;
-		if (arg0.vislevel != 0) {
-			int var6 = arg0.vislevel;
-			int var7 = localPlayer.combatLevel;
-			int var8 = var7 - var6;
-			String var9;
-			if (var8 < -9) {
-				var9 = StringConstants.TAG_COLOUR(16711680);
-			} else if (var8 < -6) {
-				var9 = StringConstants.TAG_COLOUR(16723968);
-			} else if (var8 < -3) {
-				var9 = StringConstants.TAG_COLOUR(16740352);
-			} else if (var8 < 0) {
-				var9 = StringConstants.TAG_COLOUR(16756736);
-			} else if (var8 > 9) {
-				var9 = StringConstants.TAG_COLOUR(65280);
-			} else if (var8 > 6) {
-				var9 = StringConstants.TAG_COLOUR(4259584);
-			} else if (var8 > 3) {
-				var9 = StringConstants.TAG_COLOUR(8453888);
-			} else if (var8 > 0) {
-				var9 = StringConstants.TAG_COLOUR(12648192);
+		String name = npc.name;
+		if (npc.vislevel != 0) {
+			// todo: inlined method (combatColourCode)
+			int otherLevel = npc.vislevel;
+			int viewerLevel = localPlayer.combatLevel;
+			int delta = viewerLevel - otherLevel;
+			String tag;
+			if (delta < -9) {
+				tag = StringConstants.TAG_COLOUR(16711680);
+			} else if (delta < -6) {
+				tag = StringConstants.TAG_COLOUR(16723968);
+			} else if (delta < -3) {
+				tag = StringConstants.TAG_COLOUR(16740352);
+			} else if (delta < 0) {
+				tag = StringConstants.TAG_COLOUR(16756736);
+			} else if (delta > 9) {
+				tag = StringConstants.TAG_COLOUR(65280);
+			} else if (delta > 6) {
+				tag = StringConstants.TAG_COLOUR(4259584);
+			} else if (delta > 3) {
+				tag = StringConstants.TAG_COLOUR(8453888);
+			} else if (delta > 0) {
+				tag = StringConstants.TAG_COLOUR(12648192);
 			} else {
-				var9 = StringConstants.TAG_COLOUR(16776960);
+				tag = StringConstants.TAG_COLOUR(16776960);
 			}
-			var4 = var4 + var9 + " " + StringConstants.OPEN_BRACKET + Text.LEVEL + arg0.vislevel + StringConstants.CLOSE_BRACKET;
+
+			name = name + tag + " " + StringConstants.OPEN_BRACKET + Text.LEVEL + npc.vislevel + StringConstants.CLOSE_BRACKET;
 		}
 
 		if (useMode == 1) {
-			addMenuOption(Text.USE, field2078 + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16776960) + var4, 7, arg1, arg2, arg3);
+			addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16776960) + name, 7, arg1, arg2, arg3);
 		} else if (targetMode) {
 			if ((targetMask & 0x2) == 2) {
-				addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16776960) + var4, 8, arg1, arg2, arg3);
+				addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16776960) + name, 8, arg1, arg2, arg3);
 			}
 		} else {
-			String[] op = arg0.op;
-			if (field2001) {
-				op = method726(op);
+			String[] op = npc.op;
+			if (showOpIndex) {
+				op = prependOpIndex(op);
 			}
 
 			if (op != null) {
-				for (int var11 = 4; var11 >= 0; var11--) {
-					if (op[var11] == null || op[var11].equalsIgnoreCase(Text.ATTACK)) {
+				for (int index = 4; index >= 0; index--) {
+					if (op[index] == null || op[index].equalsIgnoreCase(Text.ATTACK)) {
 						continue;
 					}
 
-					byte var12 = 0;
-					if (var11 == 0) {
-						var12 = 9;
+					int action = 0;
+					if (index == 0) {
+						action = 9;
 					}
-					if (var11 == 1) {
-						var12 = 10;
+					if (index == 1) {
+						action = 10;
 					}
-					if (var11 == 2) {
-						var12 = 11;
+					if (index == 2) {
+						action = 11;
 					}
-					if (var11 == 3) {
-						var12 = 12;
+					if (index == 3) {
+						action = 12;
 					}
-					if (var11 == 4) {
-						var12 = 13;
+					if (index == 4) {
+						action = 13;
 					}
 
-					addMenuOption(op[var11], StringConstants.TAG_COLOUR(16776960) + var4, var12, arg1, arg2, arg3);
+					addMenuOption(op[index], StringConstants.TAG_COLOUR(16776960) + name, action, arg1, arg2, arg3);
 				}
 			}
 
 			if (op != null) {
-				for (int var13 = 4; var13 >= 0; var13--) {
-					if (op[var13] == null || !op[var13].equalsIgnoreCase(Text.ATTACK)) {
+				for (int index = 4; index >= 0; index--) {
+					if (op[index] == null || !op[index].equalsIgnoreCase(Text.ATTACK)) {
 						continue;
 					}
 
-					short var14 = 0;
-					if (arg0.vislevel > localPlayer.combatLevel) {
-						var14 = 2000;
+					int priority = 0;
+					if (npc.vislevel > localPlayer.combatLevel) {
+						priority = 2000;
 					}
 
-					int var15 = 0;
-					if (var13 == 0) {
-						var15 = var14 + 9;
+					int action = 0;
+					if (index == 0) {
+						action = priority + 9;
 					}
-					if (var13 == 1) {
-						var15 = var14 + 10;
+					if (index == 1) {
+						action = priority + 10;
 					}
-					if (var13 == 2) {
-						var15 = var14 + 11;
+					if (index == 2) {
+						action = priority + 11;
 					}
-					if (var13 == 3) {
-						var15 = var14 + 12;
+					if (index == 3) {
+						action = priority + 12;
 					}
-					if (var13 == 4) {
-						var15 = var14 + 13;
+					if (index == 4) {
+						action = priority + 13;
 					}
 
-					addMenuOption(op[var13], StringConstants.TAG_COLOUR(16776960) + var4, var15, arg1, arg2, arg3);
+					addMenuOption(op[index], StringConstants.TAG_COLOUR(16776960) + name, action, arg1, arg2, arg3);
 				}
 			}
 
-			addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16776960) + var4, 1003, arg1, arg2, arg3);
+			addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16776960) + name, 1003, arg1, arg2, arg3);
 		}
 	}
 
@@ -6175,42 +6172,44 @@ public class Client extends GameShell {
 			return;
 		}
 
-		String var9;
+		String name;
 		if (player.skillLevel == 0) {
-			String var4 = player.name;
-			int var5 = player.combatLevel;
-			int var6 = localPlayer.combatLevel;
-			int var7 = var6 - var5;
-			String var8;
-			if (var7 < -9) {
-				var8 = StringConstants.TAG_COLOUR(16711680);
-			} else if (var7 < -6) {
-				var8 = StringConstants.TAG_COLOUR(16723968);
-			} else if (var7 < -3) {
-				var8 = StringConstants.TAG_COLOUR(16740352);
-			} else if (var7 < 0) {
-				var8 = StringConstants.TAG_COLOUR(16756736);
-			} else if (var7 > 9) {
-				var8 = StringConstants.TAG_COLOUR(65280);
-			} else if (var7 > 6) {
-				var8 = StringConstants.TAG_COLOUR(4259584);
-			} else if (var7 > 3) {
-				var8 = StringConstants.TAG_COLOUR(8453888);
-			} else if (var7 > 0) {
-				var8 = StringConstants.TAG_COLOUR(12648192);
+			// todo: inlined method (combatColourCode)
+			String playerName = player.name;
+			int otherLevel = player.combatLevel;
+			int viewerLevel = localPlayer.combatLevel;
+			int delta = viewerLevel - otherLevel;
+			String tag;
+			if (delta < -9) {
+				tag = StringConstants.TAG_COLOUR(16711680);
+			} else if (delta < -6) {
+				tag = StringConstants.TAG_COLOUR(16723968);
+			} else if (delta < -3) {
+				tag = StringConstants.TAG_COLOUR(16740352);
+			} else if (delta < 0) {
+				tag = StringConstants.TAG_COLOUR(16756736);
+			} else if (delta > 9) {
+				tag = StringConstants.TAG_COLOUR(65280);
+			} else if (delta > 6) {
+				tag = StringConstants.TAG_COLOUR(4259584);
+			} else if (delta > 3) {
+				tag = StringConstants.TAG_COLOUR(8453888);
+			} else if (delta > 0) {
+				tag = StringConstants.TAG_COLOUR(12648192);
 			} else {
-				var8 = StringConstants.TAG_COLOUR(16776960);
+				tag = StringConstants.TAG_COLOUR(16776960);
 			}
-			var9 = var4 + var8 + " " + StringConstants.OPEN_BRACKET + Text.LEVEL + player.combatLevel + StringConstants.CLOSE_BRACKET;
+
+			name = playerName + tag + " " + StringConstants.OPEN_BRACKET + Text.LEVEL + player.combatLevel + StringConstants.CLOSE_BRACKET;
 		} else {
-			var9 = player.name + " " + StringConstants.OPEN_BRACKET + Text.SKILL + player.skillLevel + StringConstants.CLOSE_BRACKET;
+			name = player.name + " " + StringConstants.OPEN_BRACKET + Text.SKILL + player.skillLevel + StringConstants.CLOSE_BRACKET;
 		}
 
 		if (useMode == 1) {
-			addMenuOption(Text.USE, field2078 + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16777215) + var9, 14, arg1, arg2, arg3);
+			addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16777215) + name, 14, arg1, arg2, arg3);
 		} else if (targetMode) {
 			if ((targetMask & 0x8) == 8) {
-				addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16777215) + var9, 15, arg1, arg2, arg3);
+				addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16777215) + name, 15, arg1, arg2, arg3);
 			}
 		} else {
 			for (int i = 7; i >= 0; i--) {
@@ -6235,14 +6234,14 @@ public class Client extends GameShell {
 					priority = 2000;
 				}
 
-				int var13 = MENUACTION_PLAYER[i] + priority;
-				addMenuOption(playerOp[i], StringConstants.TAG_COLOUR(16777215) + var9, var13, arg1, arg2, arg3);
+				int action = MENUACTION_PLAYER[i] + priority;
+				addMenuOption(playerOp[i], StringConstants.TAG_COLOUR(16777215) + name, action, arg1, arg2, arg3);
 			}
 		}
 
-		for (int var14 = 0; var14 < menuNumEntries; var14++) {
-			if (menuAction[var14] == 23) {
-				menuSubject[var14] = StringConstants.TAG_COLOUR(16777215) + var9;
+		for (int i = 0; i < menuNumEntries; i++) {
+			if (menuAction[i] == 23) {
+				menuSubject[i] = StringConstants.TAG_COLOUR(16777215) + name;
 				break;
 			}
 		}
@@ -6407,7 +6406,7 @@ public class Client extends GameShell {
 			int var128 = JavaMouseProvider.mouseY;
 
 			if (!isMenuOpen && var127 >= var19 && var128 >= var20 && var127 < var21 && var128 < var22) {
-				imethod35(com, var127 - var12, var128 - var13);
+				addComponentOptions(com, var127 - var12, var128 - var13);
 			}
 
 			if (com.type == 0) {
@@ -6467,16 +6466,16 @@ public class Client extends GameShell {
 						}
 						if (com.linkObjType[var171] > 0) {
 							int var178 = com.linkObjType[var171] - 1;
-							if (var174 + 32 > arg2 && var174 < arg4 && var175 + 32 > arg3 && var175 < arg5 || objDragInterface == com && hoveredSlot == var171) {
+							if (var174 + 32 > arg2 && var174 < arg4 && var175 + 32 > arg3 && var175 < arg5 || objDragInterface == com && objDragSlot == var171) {
 								Pix32 var179;
-								if (useMode == 1 && field557 == var171 && field502 == com.parentlayer) {
+								if (useMode == 1 && objSelectedSlot == var171 && objSelectedLayerId == com.parentlayer) {
 									var179 = ObjType.getSprite(var178, com.linkObjCount[var171], 2, 0, false);
 								} else {
 									var179 = ObjType.getSprite(var178, com.linkObjCount[var171], 1, 3153952, false);
 								}
 								if (var179 == null) {
 									componentUpdated(com);
-								} else if (objDragInterface == com && hoveredSlot == var171) {
+								} else if (objDragInterface == com && objDragSlot == var171) {
 									int var180 = JavaMouseProvider.mouseX - objGrabX;
 									int var181 = JavaMouseProvider.mouseY - objGrabY;
 									if (var180 < 5 && var180 > -5) {
@@ -7194,9 +7193,7 @@ public class Client extends GameShell {
 					}
 
 					if (dragComponent != null && dragComponent != var9 && var25) {
-						int var28 = getActive(var9);
-						boolean var29 = (var28 >> 20 & 0x1) != 0;
-						if (var29) {
+						if (ServerActive.isDragTarget(getActive(var9))) {
 							dropComponent = var9;
 						}
 					}
@@ -7587,15 +7584,17 @@ public class Client extends GameShell {
 	}
 
 	@ObfuscatedName("ai.fw([Ljava/lang/String;B)[Ljava/lang/String;")
-	public static String[] method726(String[] arg0) {
-		String[] var1 = new String[5];
-		for (int var2 = 0; var2 < 5; var2++) {
-			var1[var2] = var2 + ": ";
-			if (arg0 != null && arg0[var2] != null) {
-				var1[var2] = var1[var2] + arg0[var2];
+	public static String[] prependOpIndex(String[] op) {
+		String[] tmp = new String[5];
+		for (int i = 0; i < 5; i++) {
+			tmp[i] = i + ": ";
+
+			if (op != null && op[i] != null) {
+				tmp[i] = tmp[i] + op[i];
 			}
 		}
-		return var1;
+
+		return tmp;
 	}
 
 	// jag::oldscape::Client::IfAnimReset
@@ -7943,7 +7942,7 @@ public class Client extends GameShell {
 			}
 			for (int var9 = 0; var9 < 104; var9++) {
 				for (int var10 = 0; var10 < 104; var10++) {
-					LinkList var11 = objStacks[minusedlevel][var9][var10];
+					LinkList var11 = groundObj[minusedlevel][var9][var10];
 					if (var11 != null) {
 						int var12 = var9 * 4 + 2 - localPlayer.x / 32;
 						int var13 = var10 * 4 + 2 - localPlayer.z / 32;
@@ -8312,7 +8311,10 @@ public class Client extends GameShell {
 	@ObfuscatedName("dn.gg(Leg;B)I")
 	public static int getActive(IfType com) {
 		ServerActive active = (ServerActive) serverActive.find(((long) com.parentlayer << 32) + (long) com.subid);
-		return active == null ? com.events : active.events;
+		if (active == null) {
+			return com.events;
+		}
+		return active.events;
 	}
 
 	// jag::oldscape::Client::Hide
@@ -8331,17 +8333,15 @@ public class Client extends GameShell {
 		return com.hide;
 	}
 
+	// jag::oldscape::minimenu::Minimenu::GetIftypeOpName
 	@ObfuscatedName("ay.gu(Leg;II)Ljava/lang/String;")
-	public static String method513(IfType com, int arg1) {
-		int var2 = getActive(com);
-		boolean var3 = (var2 >> arg1 + 1 & 0x1) != 0;
-
-		if (!var3 && com.onop == null) {
+	public static String getIfTypeOpName(IfType com, int opindex) {
+		if (!ServerActive.hasOp(getActive(com), opindex) && com.onop == null) {
 			return null;
-		} else if (com.ops == null || com.ops.length <= arg1 || com.ops[arg1] == null || com.ops[arg1].trim().length() == 0) {
+		} else if (com.ops == null || com.ops.length <= opindex || com.ops[opindex] == null || com.ops[opindex].trim().length() == 0) {
 			return null;
 		} else {
-			return com.ops[arg1];
+			return com.ops[opindex];
 		}
 	}
 
@@ -8864,47 +8864,48 @@ public class Client extends GameShell {
 
 			if (JavaMouseProvider.mouseButton == 0) {
 				if (objGrabThreshold && objDragCycles >= 5) {
-					if (objDragInterface == hoveredSlotParent && objDragSlot != hoveredSlot) {
-						IfType var436 = objDragInterface;
-						byte var437 = 0;
-						if (bankArrangeMode == 1 && var436.clientCode == 206) {
-							var437 = 1;
+					if (objDragInterface == hoveredSlotParent && hoveredSlot != objDragSlot) {
+						IfType com = objDragInterface;
+
+						int mode = 0;
+						if (bankArrangeMode == 1 && com.clientCode == 206) {
+							mode = 1;
 						}
-						if (var436.linkObjType[objDragSlot] <= 0) {
-							var437 = 0;
+						if (com.linkObjType[hoveredSlot] <= 0) {
+							mode = 0;
 						}
 
-						int var438 = getActive(var436);
-						boolean var439 = (var438 >> 29 & 0x1) != 0;
-						if (var439) {
-							int var440 = hoveredSlot;
-							int var441 = objDragSlot;
-							var436.linkObjType[var441] = var436.linkObjType[var440];
-							var436.linkObjCount[var441] = var436.linkObjCount[var440];
-							var436.linkObjType[var440] = -1;
-							var436.linkObjCount[var440] = 0;
-						} else if (var437 == 1) {
-							int var442 = hoveredSlot;
-							int var443 = objDragSlot;
-							while (var442 != var443) {
-								if (var442 > var443) {
-									var436.swapSlots(var442 - 1, var442);
-									var442--;
-								} else if (var442 < var443) {
-									var436.swapSlots(var442 + 1, var442);
-									var442++;
+						if (ServerActive.objSwappable(getActive(com))) {
+							int src = objDragSlot;
+							int dst = hoveredSlot;
+
+							com.linkObjType[dst] = com.linkObjType[src];
+							com.linkObjCount[dst] = com.linkObjCount[src];
+							com.linkObjType[src] = -1;
+							com.linkObjCount[src] = 0;
+						} else if (mode == 1) {
+							int src = objDragSlot;
+							int dst = hoveredSlot;
+
+							while (src != dst) {
+								if (src > dst) {
+									com.swapSlots(src - 1, src);
+									src--;
+								} else if (src < dst) {
+									com.swapSlots(src + 1, src);
+									src++;
 								}
 							}
 						} else {
-							var436.swapSlots(objDragSlot, hoveredSlot);
+							com.swapSlots(hoveredSlot, objDragSlot);
 						}
 
 						// INV_BUTTOND
 						out.p1Enc(2);
 						out.p4_alt2(objDragInterface.parentlayer);
-						out.p2_alt3(objDragSlot);
-						out.p1_alt1(var437);
-						out.p2_alt1(hoveredSlot);
+						out.p2_alt3(hoveredSlot);
+						out.p1_alt1(mode);
+						out.p2_alt1(objDragSlot);
 					}
 				} else if ((oneMouseButton == 1 || isAddFriendOption(menuNumEntries - 1)) && menuNumEntries > 2) {
 					openMenu();
@@ -9796,8 +9797,8 @@ public class Client extends GameShell {
 
 				for (int x = baseX; x < baseX + 8; x++) {
 					for (int z = baseZ; z < baseZ + 8; z++) {
-						if (objStacks[minusedlevel][x][z] != null) {
-							objStacks[minusedlevel][x][z] = null;
+						if (groundObj[minusedlevel][x][z] != null) {
+							groundObj[minusedlevel][x][z] = null;
 							showObject(x, z);
 						}
 					}
@@ -10741,7 +10742,7 @@ public class Client extends GameShell {
 
 		String var26;
 		if (useMode == 1 && menuNumEntries < 2) {
-			var26 = Text.USE + Text.MINISEPARATOR + field2078 + " " + StringConstants.TAG_ARROW;
+			var26 = Text.USE + Text.MINISEPARATOR + objSelectedName + " " + StringConstants.TAG_ARROW;
 		} else if (targetMode && menuNumEntries < 2) {
 			var26 = targetVerb + Text.MINISEPARATOR + targetOp + " " + StringConstants.TAG_ARROW;
 		} else {
@@ -11110,7 +11111,7 @@ public class Client extends GameShell {
 							componentUpdated(objDragInterface);
 						}
 						objDragInterface = IfType.get(comId);
-						hoveredSlot = slot;
+						objDragSlot = slot;
 						objGrabX = JavaMouseProvider.mouseClickX;
 						objGrabY = JavaMouseProvider.mouseClickY;
 						componentUpdated(objDragInterface);
@@ -11312,178 +11313,189 @@ public class Client extends GameShell {
 		}
 	}
 
-	public static void imethod35(IfType var10, int var129, int var130) {
-		if (var10.buttonType == 1) {
-			addMenuOption(var10.option, "", 24, 0, 0, var10.parentlayer);
+	// jag::oldscape::minimenu::Minimenu::AddComponent
+	public static void addComponentOptions(IfType com, int mouseX, int mouseY) {
+		if (com.buttonType == 1) {
+			addMenuOption(com.option, "", 24, 0, 0, com.parentlayer);
 		}
-		if (var10.buttonType == 2 && !targetMode) {
+
+		if (com.buttonType == 2 && !targetMode) {
 			String var131;
-			if (ServerActive.targetMask(getActive(var10)) == 0) {
+			if (ServerActive.targetMask(getActive(com)) == 0) {
 				var131 = null;
-			} else if (var10.targetVerb == null || var10.targetVerb.trim().length() == 0) {
+			} else if (com.targetVerb == null || com.targetVerb.trim().length() == 0) {
 				var131 = null;
 			} else {
-				var131 = var10.targetVerb;
+				var131 = com.targetVerb;
 			}
+
 			if (var131 != null) {
-				addMenuOption(var131, StringConstants.TAG_COLOUR(65280) + var10.targetText, 25, 0, -1, var10.parentlayer);
+				addMenuOption(var131, StringConstants.TAG_COLOUR(65280) + com.targetText, 25, 0, -1, com.parentlayer);
 			}
 		}
-		if (var10.buttonType == 3) {
-			addMenuOption(Text.CLOSE, "", 26, 0, 0, var10.parentlayer);
+
+		if (com.buttonType == 3) {
+			addMenuOption(Text.CLOSE, "", 26, 0, 0, com.parentlayer);
 		}
-		if (var10.buttonType == 4) {
-			addMenuOption(var10.option, "", 28, 0, 0, var10.parentlayer);
+
+		if (com.buttonType == 4) {
+			addMenuOption(com.option, "", 28, 0, 0, com.parentlayer);
 		}
-		if (var10.buttonType == 5) {
-			addMenuOption(var10.option, "", 29, 0, 0, var10.parentlayer);
+
+		if (com.buttonType == 5) {
+			addMenuOption(com.option, "", 29, 0, 0, com.parentlayer);
 		}
-		if (var10.buttonType == 6 && resumedPauseButton == null) {
-			addMenuOption(var10.option, "", 30, 0, -1, var10.parentlayer);
+
+		if (com.buttonType == 6 && resumedPauseButton == null) {
+			addMenuOption(com.option, "", 30, 0, -1, com.parentlayer);
 		}
-		if (var10.type == 2) {
-			int var133 = 0;
-			for (int var134 = 0; var134 < var10.renderheight; var134++) {
-				for (int var135 = 0; var135 < var10.renderwidth; var135++) {
-					int var136 = (var10.marginX + 32) * var135;
-					int var137 = (var10.marginY + 32) * var134;
-					if (var133 < 20) {
-						var136 += var10.invBackgroundX[var133];
-						var137 += var10.invBackgroundY[var133];
+
+		if (com.type == 2) {
+			int slot = 0;
+			for (int row = 0; row < com.renderheight; row++) {
+				for (int col = 0; col < com.renderwidth; col++) {
+					int slotX = (com.marginX + 32) * col;
+					int slotY = (com.marginY + 32) * row;
+
+					if (slot < 20) {
+						slotX += com.invBackgroundX[slot];
+						slotY += com.invBackgroundY[slot];
 					}
-					if (var129 >= var136 && var130 >= var137 && var129 < var136 + 32 && var130 < var137 + 32) {
-						objDragSlot = var133;
-						hoveredSlotParent = var10;
-						if (var10.linkObjType[var133] > 0) {
-							label1831:
-							{
-								ObjType var138 = ObjType.list(var10.linkObjType[var133] - 1);
-								if (useMode == 1) {
-									int var139 = getActive(var10);
-									boolean var140 = (var139 >> 30 & 0x1) != 0;
-									if (var140) {
-										if (field502 != var10.parentlayer || field557 != var133) {
-											addMenuOption(Text.USE, field2078 + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + var138.name, 31, var138.index, var133, var10.parentlayer);
-										}
-										break label1831;
+
+					if (mouseX < slotX || mouseY < slotY || mouseX >= slotX + 32 || mouseY >= slotY + 32) {
+						slot++;
+						continue;
+					}
+
+					hoveredSlot = slot;
+					hoveredSlotParent = com;
+
+					if (com.linkObjType[slot] <= 0) {
+						slot++;
+						continue;
+					}
+
+					ObjType obj = ObjType.list(com.linkObjType[slot] - 1);
+
+					if (useMode == 1 && ServerActive.objOperable(getActive(com))) {
+						if (objSelectedLayerId != com.parentlayer || objSelectedSlot != slot) {
+							addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + obj.name, 31, obj.index, slot, com.parentlayer);
+						}
+					} else if (targetMode && ServerActive.objOperable(getActive(com))) {
+						if ((targetMask & 0x10) == 16) {
+							addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + obj.name, 32, obj.index, slot, com.parentlayer);
+						}
+					} else {
+						String[] objIop = obj.iop;
+						if (showOpIndex) {
+							objIop = prependOpIndex(objIop);
+						}
+
+						if (ServerActive.objOperable(getActive(com))) {
+							for (int index = 4; index >= 3; index--) {
+								if (objIop != null && objIop[index] != null) {
+									int action;
+									if (index == 3) {
+										action = 36;
+									} else {
+										action = 37;
 									}
+
+									addMenuOption(objIop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentlayer);
+								} else if (index == 4) {
+									addMenuOption(Text.DROP, StringConstants.TAG_COLOUR(16748608) + obj.name, 37, obj.index, slot, com.parentlayer);
 								}
-								if (targetMode) {
-									int var141 = getActive(var10);
-									boolean var142 = (var141 >> 30 & 0x1) != 0;
-									if (var142) {
-										if ((targetMask & 0x10) == 16) {
-											addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + var138.name, 32, var138.index, var133, var10.parentlayer);
-										}
-										break label1831;
-									}
-								}
-								String[] var143 = var138.iop;
-								if (field2001) {
-									var143 = method726(var143);
-								}
-								int var144 = getActive(var10);
-								boolean var145 = (var144 >> 30 & 0x1) != 0;
-								if (var145) {
-									for (int var146 = 4; var146 >= 3; var146--) {
-										if (var143 != null && var143[var146] != null) {
-											byte var147;
-											if (var146 == 3) {
-												var147 = 36;
-											} else {
-												var147 = 37;
-											}
-											addMenuOption(var143[var146], StringConstants.TAG_COLOUR(16748608) + var138.name, var147, var138.index, var133, var10.parentlayer);
-										} else if (var146 == 4) {
-											addMenuOption(Text.DROP, StringConstants.TAG_COLOUR(16748608) + var138.name, 37, var138.index, var133, var10.parentlayer);
-										}
-									}
-								}
-								int var148 = getActive(var10);
-								boolean var149 = (var148 >> 31 & 0x1) != 0;
-								if (var149) {
-									addMenuOption(Text.USE, StringConstants.TAG_COLOUR(16748608) + var138.name, 38, var138.index, var133, var10.parentlayer);
-								}
-								int var150 = getActive(var10);
-								boolean var151 = (var150 >> 30 & 0x1) != 0;
-								if (var151 && var143 != null) {
-									for (int var152 = 2; var152 >= 0; var152--) {
-										if (var143[var152] != null) {
-											byte var153 = 0;
-											if (var152 == 0) {
-												var153 = 33;
-											}
-											if (var152 == 1) {
-												var153 = 34;
-											}
-											if (var152 == 2) {
-												var153 = 35;
-											}
-											addMenuOption(var143[var152], StringConstants.TAG_COLOUR(16748608) + var138.name, var153, var138.index, var133, var10.parentlayer);
-										}
-									}
-								}
-								String[] var154 = var10.iop;
-								if (field2001) {
-									var154 = method726(var154);
-								}
-								if (var154 != null) {
-									for (int var155 = 4; var155 >= 0; var155--) {
-										if (var154[var155] != null) {
-											byte var156 = 0;
-											if (var155 == 0) {
-												var156 = 39;
-											}
-											if (var155 == 1) {
-												var156 = 40;
-											}
-											if (var155 == 2) {
-												var156 = 41;
-											}
-											if (var155 == 3) {
-												var156 = 42;
-											}
-											if (var155 == 4) {
-												var156 = 43;
-											}
-											addMenuOption(var154[var155], StringConstants.TAG_COLOUR(16748608) + var138.name, var156, var138.index, var133, var10.parentlayer);
-										}
-									}
-								}
-								addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16748608) + var138.name, 1005, var138.index, var133, var10.parentlayer);
 							}
 						}
+
+						if (ServerActive.objUsable(getActive(com))) {
+							addMenuOption(Text.USE, StringConstants.TAG_COLOUR(16748608) + obj.name, 38, obj.index, slot, com.parentlayer);
+						}
+
+						if (ServerActive.objOperable(getActive(com)) && objIop != null) {
+							for (int index = 2; index >= 0; index--) {
+								if (objIop[index] != null) {
+									int action = 0;
+									if (index == 0) {
+										action = 33;
+									}
+									if (index == 1) {
+										action = 34;
+									}
+									if (index == 2) {
+										action = 35;
+									}
+
+									addMenuOption(objIop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentlayer);
+								}
+							}
+						}
+
+						String[] iop = com.iop;
+						if (showOpIndex) {
+							iop = prependOpIndex(iop);
+						}
+
+						if (iop != null) {
+							for (int index = 4; index >= 0; index--) {
+								if (iop[index] != null) {
+									int action = 0;
+									if (index == 0) {
+										action = 39;
+									}
+									if (index == 1) {
+										action = 40;
+									}
+									if (index == 2) {
+										action = 41;
+									}
+									if (index == 3) {
+										action = 42;
+									}
+									if (index == 4) {
+										action = 43;
+									}
+
+									addMenuOption(iop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentlayer);
+								}
+							}
+						}
+
+						addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16748608) + obj.name, 1005, obj.index, slot, com.parentlayer);
 					}
-					var133++;
+
+					slot++;
 				}
 			}
 		}
-		if (var10.v3) {
+
+		if (com.v3) {
 			if (targetMode) {
-				int var157 = getActive(var10);
-				boolean var158 = (var157 >> 21 & 0x1) != 0;
-				if (var158 && (targetMask & 0x20) == 32) {
-					addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + var10.opbase, 58, 0, var10.subid, var10.parentlayer);
+				if (ServerActive.isUseTarget(getActive(com)) && (targetMask & 0x20) == 32) {
+					addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + com.opbase, 58, 0, com.subid, com.parentlayer);
 				}
 			} else {
 				for (int var159 = 9; var159 >= 5; var159--) {
-					String var160 = method513(var10, var159);
+					String var160 = getIfTypeOpName(com, var159);
 					if (var160 != null) {
-						addMenuOption(var160, var10.opbase, 1007, var159 + 1, var10.subid, var10.parentlayer);
+						addMenuOption(var160, com.opbase, 1007, var159 + 1, com.subid, com.parentlayer);
 					}
 				}
-				String var161 = targetVerb(var10);
+
+				String var161 = targetVerb(com);
 				if (var161 != null) {
-					addMenuOption(var161, var10.opbase, 25, 0, var10.subid, var10.parentlayer);
+					addMenuOption(var161, com.opbase, 25, 0, com.subid, com.parentlayer);
 				}
+
 				for (int var162 = 4; var162 >= 0; var162--) {
-					String var163 = method513(var10, var162);
+					String var163 = getIfTypeOpName(com, var162);
 					if (var163 != null) {
-						addMenuOption(var163, var10.opbase, 57, var162 + 1, var10.subid, var10.parentlayer);
+						addMenuOption(var163, com.opbase, 57, var162 + 1, com.subid, com.parentlayer);
 					}
 				}
-				if (ServerActive.pauseButton(getActive(var10))) {
-					addMenuOption(Text.CONTINUE, "", 30, 0, var10.subid, var10.parentlayer);
+
+				if (ServerActive.pauseButton(getActive(com))) {
+					addMenuOption(Text.CONTINUE, "", 30, 0, com.subid, com.parentlayer);
 				}
 			}
 		}
@@ -11844,112 +11856,139 @@ public class Client extends GameShell {
 		if (useMode == 0 && !targetMode) {
 			addMenuOption(Text.WALKHERE, "", 23, 0, var72 - var12, var73 - var13);
 		}
-		int var100 = -1;
-		for (int var101 = 0; var101 < ModelLit.pickedCount; var101++) {
-			int var102 = ModelLit.pickedEntityTypecode[var101];
-			int var103 = var102 & 0x7F;
-			int var104 = var102 >> 7 & 0x7F;
-			int var105 = var102 >> 29 & 0x3;
-			int var106 = var102 >> 14 & 0x7FFF;
-			if (var100 == var102) {
+
+		int lastTypecode = -1;
+		for (int i = 0; i < ModelLit.pickedCount; i++) {
+			int typecode = ModelLit.pickedEntityTypecode[i];
+
+			int x = typecode & 0x7F;
+			int z = typecode >> 7 & 0x7F;
+			int entityType = typecode >> 29 & 0x3;
+			int id = typecode >> 14 & 0x7FFF;
+
+			if (lastTypecode == typecode) {
 				continue;
 			}
-			var100 = var102;
-			if (var105 == 2 && world.typecode2(minusedlevel, var103, var104, var102) >= 0) {
-				LocType var107 = LocType.list(var106);
-				if (var107.multiloc != null) {
-					var107 = var107.getMultiLoc();
+
+			lastTypecode = typecode;
+
+			if (entityType == 2 && world.typecode2(minusedlevel, x, z, typecode) >= 0) {
+				LocType loc = LocType.list(id);
+				if (loc.multiloc != null) {
+					loc = loc.getMultiLoc();
 				}
-				if (var107 == null) {
+				if (loc == null) {
 					continue;
 				}
+
 				if (useMode == 1) {
-					addMenuOption(Text.USE, field2078 + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(65535) + var107.name, 1, var102, var103, var104);
-				} else if (!targetMode) {
-					String[] var108 = var107.op;
-					if (field2001) {
-						var108 = method726(var108);
+					addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(65535) + loc.name, 1, typecode, x, z);
+				} else if (targetMode) {
+					if ((targetMask & 0x4) == 4) {
+						addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(65535) + loc.name, 2, typecode, x, z);
 					}
-					if (var108 != null) {
-						for (int var109 = 4; var109 >= 0; var109--) {
-							if (var108[var109] != null) {
-								short var110 = 0;
-								if (var109 == 0) {
-									var110 = 3;
+				} else {
+					String[] op = loc.op;
+					if (showOpIndex) {
+						op = prependOpIndex(op);
+					}
+
+					if (op != null) {
+						for (int index = 4; index >= 0; index--) {
+							if (op[index] != null) {
+								short action = 0;
+								if (index == 0) {
+									action = 3;
 								}
-								if (var109 == 1) {
-									var110 = 4;
+								if (index == 1) {
+									action = 4;
 								}
-								if (var109 == 2) {
-									var110 = 5;
+								if (index == 2) {
+									action = 5;
 								}
-								if (var109 == 3) {
-									var110 = 6;
+								if (index == 3) {
+									action = 6;
 								}
-								if (var109 == 4) {
-									var110 = 1001;
+								if (index == 4) {
+									action = 1001;
 								}
-								addMenuOption(var108[var109], StringConstants.TAG_COLOUR(65535) + var107.name, var110, var102, var103, var104);
+
+								addMenuOption(op[index], StringConstants.TAG_COLOUR(65535) + loc.name, action, typecode, x, z);
 							}
 						}
 					}
-					addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(65535) + var107.name, 1002, var107.id << 14, var103, var104);
-				} else if ((targetMask & 0x4) == 4) {
-					addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(65535) + var107.name, 2, var102, var103, var104);
+
+					addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(65535) + loc.name, 1002, loc.id << 14, x, z);
 				}
 			}
-			if (var105 == 1) {
-				ClientNpc var111 = npcs[var106];
-				if (var111.type.size == 1 && (var111.x & 0x7F) == 64 && (var111.z & 0x7F) == 64) {
-					for (int var112 = 0; var112 < npcCount; var112++) {
-						ClientNpc var113 = npcs[npcIds[var112]];
-						if (var113 != null && var111 != var113 && var113.type.size == 1 && var111.x == var113.x && var111.z == var113.z) {
-							addNpcOptions(var113.type, npcIds[var112], var103, var104);
+
+			if (entityType == 1) {
+				ClientNpc npc = npcs[id];
+
+				if (npc.type.size == 1 && (npc.x & 0x7F) == 64 && (npc.z & 0x7F) == 64) {
+					for (int n = 0; n < npcCount; n++) {
+						ClientNpc other = npcs[npcIds[n]];
+						if (other != null && npc != other && other.type.size == 1 && npc.x == other.x && npc.z == other.z) {
+							addNpcOptions(other.type, npcIds[n], x, z);
 						}
 					}
-					for (int var114 = 0; var114 < playerCount; var114++) {
-						ClientPlayer var115 = players[playerIds[var114]];
-						if (var115 != null && var111.x == var115.x && var111.z == var115.z) {
-							addPlayerOptions(var115, playerIds[var114], var103, var104);
-						}
-					}
-				}
-				addNpcOptions(var111.type, var106, var103, var104);
-			}
-			if (var105 == 0) {
-				ClientPlayer var116 = players[var106];
-				if ((var116.x & 0x7F) == 64 && (var116.z & 0x7F) == 64) {
-					for (int var117 = 0; var117 < npcCount; var117++) {
-						ClientNpc var118 = npcs[npcIds[var117]];
-						if (var118 != null && var118.type.size == 1 && var116.x == var118.x && var116.z == var118.z) {
-							addNpcOptions(var118.type, npcIds[var117], var103, var104);
-						}
-					}
-					for (int var119 = 0; var119 < playerCount; var119++) {
-						ClientPlayer var120 = players[playerIds[var119]];
-						if (var120 != null && var116 != var120 && var116.x == var120.x && var116.z == var120.z) {
-							addPlayerOptions(var120, playerIds[var119], var103, var104);
+
+					for (int p = 0; p < playerCount; p++) {
+						ClientPlayer player = players[playerIds[p]];
+						if (player != null && npc.x == player.x && npc.z == player.z) {
+							addPlayerOptions(player, playerIds[p], x, z);
 						}
 					}
 				}
-				addPlayerOptions(var116, var106, var103, var104);
+
+				addNpcOptions(npc.type, id, x, z);
 			}
-			if (var105 == 3) {
-				LinkList var121 = objStacks[minusedlevel][var103][var104];
-				if (var121 == null) {
+
+			if (entityType == 0) {
+				ClientPlayer player = players[id];
+
+				if ((player.x & 0x7F) == 64 && (player.z & 0x7F) == 64) {
+					for (int n = 0; n < npcCount; n++) {
+						ClientNpc npc = npcs[npcIds[n]];
+						if (npc != null && npc.type.size == 1 && player.x == npc.x && player.z == npc.z) {
+							addNpcOptions(npc.type, npcIds[n], x, z);
+						}
+					}
+
+					for (int p = 0; p < playerCount; p++) {
+						ClientPlayer other = players[playerIds[p]];
+						if (other != null && player != other && player.x == other.x && player.z == other.z) {
+							addPlayerOptions(other, playerIds[p], x, z);
+						}
+					}
+				}
+
+				addPlayerOptions(player, id, x, z);
+			}
+
+			if (entityType == 3) {
+				LinkList objs = groundObj[minusedlevel][x][z];
+				if (objs == null) {
 					continue;
 				}
-				for (ClientObj var122 = (ClientObj) var121.tail(); var122 != null; var122 = (ClientObj) var121.prev()) {
-					ObjType var123 = ObjType.list(var122.id);
+
+				for (ClientObj obj = (ClientObj) objs.tail(); obj != null; obj = (ClientObj) objs.prev()) {
+					ObjType type = ObjType.list(obj.id);
+
 					if (useMode == 1) {
-						addMenuOption(Text.USE, field2078 + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + var123.name, 16, var122.id, var103, var104);
-					} else if (!targetMode) {
-						String[] var124 = var123.op;
-						if (field2001) {
-							var124 = method726(var124);
+						addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + type.name, 16, obj.id, x, z);
+					} else if (targetMode) {
+						if ((targetMask & 0x1) == 1) {
+							addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + type.name, 17, obj.id, x, z);
 						}
+					} else {
+						String[] op = type.op;
+						if (showOpIndex) {
+							op = prependOpIndex(op);
+						}
+
 						for (int var125 = 4; var125 >= 0; var125--) {
-							if (var124 != null && var124[var125] != null) {
+							if (op != null && op[var125] != null) {
 								byte var126 = 0;
 								if (var125 == 0) {
 									var126 = 18;
@@ -11966,14 +12005,13 @@ public class Client extends GameShell {
 								if (var125 == 4) {
 									var126 = 22;
 								}
-								addMenuOption(var124[var125], StringConstants.TAG_COLOUR(16748608) + var123.name, var126, var122.id, var103, var104);
+								addMenuOption(op[var125], StringConstants.TAG_COLOUR(16748608) + type.name, var126, obj.id, x, z);
 							} else if (var125 == 2) {
-								addMenuOption(Text.TAKE, StringConstants.TAG_COLOUR(16748608) + var123.name, 20, var122.id, var103, var104);
+								addMenuOption(Text.TAKE, StringConstants.TAG_COLOUR(16748608) + type.name, 20, obj.id, x, z);
 							}
 						}
-						addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16748608) + var123.name, 1004, var122.id, var103, var104);
-					} else if ((targetMask & 0x1) == 1) {
-						addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + var123.name, 17, var122.id, var103, var104);
+
+						addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16748608) + type.name, 1004, obj.id, x, z);
 					}
 				}
 			}

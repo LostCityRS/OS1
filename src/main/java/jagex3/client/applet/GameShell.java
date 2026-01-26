@@ -2,7 +2,6 @@ package jagex3.client.applet;
 
 import deob.ObfuscatedName;
 import deob.Settings;
-import jagex3.client.Client;
 import jagex3.client.JagException;
 import jagex3.client.SignLink;
 import jagex3.datastruct.*;
@@ -75,6 +74,9 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 	@ObfuscatedName("ao.t")
 	public static int canvasHei;
+
+	@ObfuscatedName("cd.ad")
+	public static Image progressBar;
 
 	@ObfuscatedName("ca.f")
 	public static Font progressFont;
@@ -527,45 +529,57 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static void drawProgress(int progress, String message, Color color) {
 		try {
 			Graphics g = canvas.getGraphics();
+
 			if (progressFont == null) {
 				progressFont = new Font("Helvetica", Font.BOLD, 13);
 				progressFontMetrics = canvas.getFontMetrics(progressFont);
 			}
+
 			if (fullredraw) {
 				fullredraw = false;
 				g.setColor(Color.black);
 				g.fillRect(0, 0, canvasWid, canvasHei);
 			}
+
 			if (color == null) {
 				color = new Color(140, 17, 17);
 			}
+
 			try {
-				if (Client.progressBar == null) {
-					Client.progressBar = canvas.createImage(304, 34);
+				if (progressBar == null) {
+					progressBar = canvas.createImage(304, 34);
 				}
-				Graphics bar = Client.progressBar.getGraphics();
+
+				Graphics bar = progressBar.getGraphics();
+
 				bar.setColor(color);
 				bar.drawRect(0, 0, 303, 33);
 				bar.fillRect(2, 2, progress * 3, 30);
+
 				bar.setColor(Color.black);
 				bar.drawRect(1, 1, 301, 31);
 				bar.fillRect(progress * 3 + 2, 2, 300 - progress * 3, 30);
+
 				bar.setFont(progressFont);
 				bar.setColor(Color.white);
 				bar.drawString(message, (304 - progressFontMetrics.stringWidth(message)) / 2, 22);
-				g.drawImage(Client.progressBar, canvasWid / 2 - 152, canvasHei / 2 - 18, null);
+
+				g.drawImage(progressBar, canvasWid / 2 - 152, canvasHei / 2 - 18, null);
 			} catch (Exception ex) {
-				int var9 = canvasWid / 2 - 152;
-				int var10 = canvasHei / 2 - 18;
+				int x = canvasWid / 2 - 152;
+				int y = canvasHei / 2 - 18;
+
 				g.setColor(color);
-				g.drawRect(var9, var10, 303, 33);
-				g.fillRect(var9 + 2, var10 + 2, progress * 3, 30);
+				g.drawRect(x, y, 303, 33);
+				g.fillRect(x + 2, y + 2, progress * 3, 30);
+
 				g.setColor(Color.black);
-				g.drawRect(var9 + 1, var10 + 1, 301, 31);
-				g.fillRect(progress * 3 + var9 + 2, var10 + 2, 300 - progress * 3, 30);
+				g.drawRect(x + 1, y + 1, 301, 31);
+				g.fillRect(progress * 3 + x + 2, y + 2, 300 - progress * 3, 30);
+
 				g.setFont(progressFont);
 				g.setColor(Color.white);
-				g.drawString(message, var9 + (304 - progressFontMetrics.stringWidth(message)) / 2, var10 + 22);
+				g.drawString(message, x + (304 - progressFontMetrics.stringWidth(message)) / 2, y + 22);
 			}
 		} catch (Exception ex) {
 			canvas.repaint();
@@ -573,7 +587,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	}
 
 	public static void resetProgress() {
-		Client.progressBar = null;
+		progressBar = null;
 		progressFont = null;
 		progressFontMetrics = null;
 	}
