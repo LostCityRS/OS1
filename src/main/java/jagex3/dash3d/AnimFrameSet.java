@@ -1,8 +1,8 @@
 package jagex3.dash3d;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LinkList;
+import jagex3.datastruct.Linkable2;
 import jagex3.js5.Js5;
 
 // jag::oldscape::dash3d::AnimFrameSet

@@ -1,12 +1,12 @@
 package jagex3.js5;
 
 import deob.ObfuscatedName;
-import jagex3.client.JagException;
-import jagex3.datastruct.ByteArrayWrapper;
+import jagex3.callstack.JagException;
 import jagex3.datastruct.IntHashTable;
-import jagex3.io.BZip2;
-import jagex3.io.GZip;
 import jagex3.io.Packet;
+import jagex3.io.wrap.ByteArrayWrapper;
+import jagex3.js5.compress.BZip2;
+import jagex3.js5.compress.GZip;
 import jagex3.jstring.StringTools;
 
 // jag::oldscape::jagex3::Js5

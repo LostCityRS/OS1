@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import deob.Settings;
 import jagex3.datastruct.Linkable;
 import jagex3.jstring.Cp1252;
-import jagex3.jstring.Utf8;
+import jagex3.jstring.utf8.Utf8;
 
 import java.math.BigInteger;
 

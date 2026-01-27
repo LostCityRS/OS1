@@ -1,14 +1,14 @@
 package jagex3.config;
 
 import deob.ObfuscatedName;
-import jagex3.client.VarCache;
+import jagex3.constants.Text;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
 import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
-import jagex3.jstring.Text;
+import jagex3.var.VarCache;
 
 // jag::oldscape::configdecoder::NpcType
 @ObfuscatedName("em")

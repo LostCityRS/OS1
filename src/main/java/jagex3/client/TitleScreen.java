@@ -1,21 +1,25 @@
 package jagex3.client;
 
 import deob.ObfuscatedName;
-import jagex3.client.applet.GameShell;
-import jagex3.client.applet.ClientKeyboardListener;
-import jagex3.client.applet.ClientMouseListener;
-import jagex3.graphics.*;
+import jagex3.client.input.keyboard.ClientKeyboardListener;
+import jagex3.client.input.mouse.ClientMouseListener;
+import jagex3.constants.Text;
+import jagex3.graphics.Pix2D;
+import jagex3.graphics.Pix32;
+import jagex3.graphics.Pix8;
+import jagex3.graphics.PixLoader;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Loader;
 import jagex3.js5.Js5Net;
-import jagex3.jstring.StringConstants;
+import jagex3.jstring.PixFont;
+import jagex3.jstring.PixFontGeneric;
 import jagex3.jstring.StringTools;
-import jagex3.jstring.Text;
-import jagex3.midi.MidiManager;
+import jagex3.midi2.MidiManager;
 
 import java.awt.*;
 import java.net.URL;
 
+// jag::oldscape::TitleScreen
 @ObfuscatedName("g")
 public class TitleScreen {
 

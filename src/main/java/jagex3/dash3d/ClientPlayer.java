@@ -1,11 +1,12 @@
 package jagex3.dash3d;
 
 import deob.ObfuscatedName;
+import jagex3.callstack.JagException;
 import jagex3.client.Client;
-import jagex3.client.JagException;
 import jagex3.config.ObjType;
 import jagex3.config.SeqType;
 import jagex3.config.SpotType;
+import jagex3.dash3d.player.PlayerModel;
 import jagex3.io.Packet;
 
 // jag::oldscape::ClientPlayer

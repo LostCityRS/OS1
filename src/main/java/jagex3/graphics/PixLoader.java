@@ -3,7 +3,9 @@ package jagex3.graphics;
 import deob.ObfuscatedName;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
+import jagex3.jstring.PixFontGeneric;
 
+// jag::oldscape::graphics::pixloader
 @ObfuscatedName("al")
 public class PixLoader {
 

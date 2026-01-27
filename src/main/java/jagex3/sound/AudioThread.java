@@ -1,9 +1,9 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.client.JagException;
-import jagex3.client.SignLink;
-import jagex3.datastruct.ThreadSleep;
+import jagex3.callstack.JagException;
+import jagex3.client.applet.SignLink;
+import jagex3.util.ThreadSleep;
 
 @ObfuscatedName("f")
 public class AudioThread implements Runnable {

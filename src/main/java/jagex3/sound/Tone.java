@@ -1,8 +1,8 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.ArrayUtil;
 import jagex3.io.Packet;
+import jagex3.util.ArrayUtil;
 
 import java.util.Random;
 

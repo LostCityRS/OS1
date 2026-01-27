@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.MathTool;
+import jagex3.util.MathTool;
 
 // jag::oldscape::sound::CodeBook
 @ObfuscatedName("x")

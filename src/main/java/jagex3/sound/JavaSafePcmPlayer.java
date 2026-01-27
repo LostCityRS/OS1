@@ -1,7 +1,7 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.client.SignLink;
+import jagex3.client.applet.SignLink;
 
 import java.awt.*;
 

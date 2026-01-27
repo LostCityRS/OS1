@@ -1,10 +1,10 @@
 package jagex3.sound;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.MathTool;
 import jagex3.datastruct.Linkable;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
+import jagex3.util.MathTool;
 
 // jag::oldscape::sound::JagVorbis
 @ObfuscatedName("dt")

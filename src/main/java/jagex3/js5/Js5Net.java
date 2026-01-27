@@ -1,11 +1,11 @@
 package jagex3.js5;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.LinkList2;
 import jagex3.datastruct.HashTable;
-import jagex3.datastruct.MonotonicTime;
-import jagex3.io.ClientStream;
+import jagex3.datastruct.LinkList2;
 import jagex3.io.Packet;
+import jagex3.io.net.ClientStream;
+import jagex3.util.time.MonotonicTime;
 
 import java.io.IOException;
 import java.util.zip.CRC32;

@@ -1,8 +1,10 @@
 package jagex3.client;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.MonotonicTime;
+import jagex3.client.applet.PrivilegedRequest;
+import jagex3.client.applet.SignLink;
 import jagex3.io.Packet;
+import jagex3.util.time.MonotonicTime;
 
 import java.io.DataInputStream;
 import java.io.IOException;
