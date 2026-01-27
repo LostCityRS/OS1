@@ -406,16 +406,16 @@ public class IfType extends Linkable {
 	public boolean clickTrigger = false;
 
 	@ObfuscatedName("eg.dl")
-	public int updateNum = -1;
+	public int transmitNum = -1;
 
 	@ObfuscatedName("eg.dn")
-	public int field1895 = 0;
+	public int varTransmitNum = 0;
 
 	@ObfuscatedName("eg.do")
-	public int field1879 = 0;
+	public int invTransmitNum = 0;
 
 	@ObfuscatedName("eg.dx")
-	public int field1897 = 0;
+	public int statTransmitNum = 0;
 
 	@ObfuscatedName("eg.dt")
 	public int drawCount = -1;

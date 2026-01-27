@@ -690,13 +690,13 @@ public class Client extends GameShell {
 	public static String objSelectedName = null; // todo
 
 	@ObfuscatedName("client.iw")
-	public static int[] skillLevel = new int[25];
+	public static int[] statEffectiveLevel = new int[25];
 
 	@ObfuscatedName("client.iu")
-	public static int[] skillBaseLevel = new int[25];
+	public static int[] statBaseLevel = new int[25];
 
 	@ObfuscatedName("client.jc")
-	public static int[] skillExperience = new int[25];
+	public static int[] statXP = new int[25];
 
 	@ObfuscatedName("client.je")
 	public static int oneMouseButton = 0;
@@ -849,37 +849,37 @@ public class Client extends GameShell {
 	public static int targetMask; // todo
 
 	@ObfuscatedName("client.lg")
-	public static int interfaceUpdateNum = 1;
+	public static int transmitNum = 1;
 
 	@ObfuscatedName("client.lp")
-	public static int[] field2110 = new int[32];
+	public static int[] varTransmit = new int[32];
 
 	@ObfuscatedName("client.lq")
-	public static int field2084 = 0;
+	public static int varTransmitNum = 0;
 
 	@ObfuscatedName("client.lk")
-	public static int[] field2112 = new int[32];
+	public static int[] invTransmit = new int[32];
 
 	@ObfuscatedName("client.lm")
-	public static int field2050 = 0;
+	public static int invTransmitNum = 0;
 
 	@ObfuscatedName("client.lb")
-	public static int[] field1999 = new int[32];
+	public static int[] statTransmit = new int[32];
 
 	@ObfuscatedName("client.ln")
-	public static int field1982 = 0;
+	public static int statTransmitNum = 0;
 
 	@ObfuscatedName("client.li")
 	public static int chatTransmitNum = 0;
 
 	@ObfuscatedName("client.lc")
-	public static int friendSystemUpdateNum = 0;
+	public static int friendTransmitNum = 0;
 
 	@ObfuscatedName("client.lw")
-	public static int friendChatUpdateNum = 0;
+	public static int clanTransmitNum = 0;
 
 	@ObfuscatedName("client.lv")
-	public static int field2119 = 0;
+	public static int miscTransmitNum = 0;
 
 	@ObfuscatedName("client.lx")
 	public static int[] field2120 = new int[2000];
@@ -7045,11 +7045,11 @@ public class Client extends GameShell {
 				}
 
 				if (opcode == 1) {
-					register = skillLevel[script[pc++]];
+					register = statEffectiveLevel[script[pc++]];
 				} else if (opcode == 2) {
-					register = skillBaseLevel[script[pc++]];
+					register = statBaseLevel[script[pc++]];
 				} else if (opcode == 3) {
-					register = skillExperience[script[pc++]];
+					register = statXP[script[pc++]];
 				} else if (opcode == 4) {
 					int var9 = script[pc++] << 16;
 					int var10 = var9 + script[pc++];
@@ -7065,15 +7065,15 @@ public class Client extends GameShell {
 				} else if (opcode == 5) {
 					register = VarCache.var[script[pc++]];
 				} else if (opcode == 6) {
-					register = PlayerSkillXPTable.levelExperience[skillBaseLevel[script[pc++]] - 1];
+					register = Skills.skillxp[statBaseLevel[script[pc++]] - 1];
 				} else if (opcode == 7) {
 					register = VarCache.var[script[pc++]] * 100 / 46875;
 				} else if (opcode == 8) {
 					register = localPlayer.combatLevel;
 				} else if (opcode == 9) {
 					for (int var14 = 0; var14 < 25; var14++) {
-						if (PlayerSkillXPTable.enabled[var14]) {
-							register += skillBaseLevel[var14];
+						if (Skills.used[var14]) {
+							register += statBaseLevel[var14];
 						}
 					}
 				} else if (opcode == 10) {
@@ -7364,16 +7364,16 @@ public class Client extends GameShell {
 							hookRequestsTimer.push(req);
 						}
 
-						if (var9.onvartransmit != null && field2084 > var9.field1895) {
-							if (var9.onvartransmitlist == null || field2084 - var9.field1895 > 32) {
+						if (var9.onvartransmit != null && varTransmitNum > var9.varTransmitNum) {
+							if (var9.onvartransmitlist == null || varTransmitNum - var9.varTransmitNum > 32) {
 								HookReq req = new HookReq();
 								req.component = var9;
 								req.onop = var9.onvartransmit;
 								hookRequests.push(req);
 							} else {
 								label383:
-								for (int var39 = var9.field1895; var39 < field2084; var39++) {
-									int var40 = field2110[var39 & 0x1F];
+								for (int var39 = var9.varTransmitNum; var39 < varTransmitNum; var39++) {
+									int var40 = varTransmit[var39 & 0x1F];
 									for (int var41 = 0; var41 < var9.onvartransmitlist.length; var41++) {
 										if (var9.onvartransmitlist[var41] == var40) {
 											HookReq req = new HookReq();
@@ -7386,19 +7386,19 @@ public class Client extends GameShell {
 								}
 							}
 
-							var9.field1895 = field2084;
+							var9.varTransmitNum = varTransmitNum;
 						}
 
-						if (var9.oninvtransmit != null && field2050 > var9.field1879) {
-							if (var9.oninvtransmitlist == null || field2050 - var9.field1879 > 32) {
+						if (var9.oninvtransmit != null && invTransmitNum > var9.invTransmitNum) {
+							if (var9.oninvtransmitlist == null || invTransmitNum - var9.invTransmitNum > 32) {
 								HookReq req = new HookReq();
 								req.component = var9;
 								req.onop = var9.oninvtransmit;
 								hookRequests.push(req);
 							} else {
 								label363:
-								for (int var44 = var9.field1879; var44 < field2050; var44++) {
-									int var45 = field2112[var44 & 0x1F];
+								for (int var44 = var9.invTransmitNum; var44 < invTransmitNum; var44++) {
+									int var45 = invTransmit[var44 & 0x1F];
 									for (int var46 = 0; var46 < var9.oninvtransmitlist.length; var46++) {
 										if (var9.oninvtransmitlist[var46] == var45) {
 											HookReq req = new HookReq();
@@ -7411,19 +7411,19 @@ public class Client extends GameShell {
 								}
 							}
 
-							var9.field1879 = field2050;
+							var9.invTransmitNum = invTransmitNum;
 						}
 
-						if (var9.onstattransmit != null && field1982 > var9.field1897) {
-							if (var9.onstattransmitlist == null || field1982 - var9.field1897 > 32) {
+						if (var9.onstattransmit != null && statTransmitNum > var9.statTransmitNum) {
+							if (var9.onstattransmitlist == null || statTransmitNum - var9.statTransmitNum > 32) {
 								HookReq req = new HookReq();
 								req.component = var9;
 								req.onop = var9.onstattransmit;
 								hookRequests.push(req);
 							} else {
 								label343:
-								for (int var49 = var9.field1897; var49 < field1982; var49++) {
-									int var50 = field1999[var49 & 0x1F];
+								for (int var49 = var9.statTransmitNum; var49 < statTransmitNum; var49++) {
+									int var50 = statTransmit[var49 & 0x1F];
 									for (int var51 = 0; var51 < var9.onstattransmitlist.length; var51++) {
 										if (var9.onstattransmitlist[var51] == var50) {
 											HookReq req = new HookReq();
@@ -7436,38 +7436,38 @@ public class Client extends GameShell {
 								}
 							}
 
-							var9.field1897 = field1982;
+							var9.statTransmitNum = statTransmitNum;
 						}
 
-						if (chatTransmitNum > var9.updateNum && var9.onchattransmit != null) {
+						if (chatTransmitNum > var9.transmitNum && var9.onchattransmit != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
 							req.onop = var9.onchattransmit;
 							hookRequests.push(req);
 						}
 
-						if (friendSystemUpdateNum > var9.updateNum && var9.onfriendtransmit != null) {
+						if (friendTransmitNum > var9.transmitNum && var9.onfriendtransmit != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
 							req.onop = var9.onfriendtransmit;
 							hookRequests.push(req);
 						}
 
-						if (friendChatUpdateNum > var9.updateNum && var9.onclantransmit != null) {
+						if (clanTransmitNum > var9.transmitNum && var9.onclantransmit != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
 							req.onop = var9.onclantransmit;
 							hookRequests.push(req);
 						}
 
-						if (field2119 > var9.updateNum && var9.onmisctransmit != null) {
+						if (miscTransmitNum > var9.transmitNum && var9.onmisctransmit != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
 							req.onop = var9.onmisctransmit;
 							hookRequests.push(req);
 						}
 
-						var9.updateNum = interfaceUpdateNum;
+						var9.transmitNum = transmitNum;
 
 						if (var9.onkey != null) {
 							for (int var58 = 0; var58 < keypresses; var58++) {
@@ -8151,7 +8151,7 @@ public class Client extends GameShell {
 		field2173[0] = arg3;
 
 		chatHistoryLength++;
-		chatTransmitNum = interfaceUpdateNum;
+		chatTransmitNum = transmitNum;
 	}
 
 	// jag::oldscape::FriendSystem::IsFriend
@@ -8325,7 +8325,7 @@ public class Client extends GameShell {
 				for (int var7 = var2; var7 < friendCount; var7++) {
 					friendList[var7] = friendList[var7 + 1];
 				}
-				friendSystemUpdateNum = interfaceUpdateNum;
+				friendTransmitNum = transmitNum;
 				// FRIENDLIST_DEL
 				out.p1Enc(41);
 				out.p1(Packet.pjstrlen(arg0));
@@ -8995,7 +8995,7 @@ public class Client extends GameShell {
 		}
 
 		loopInterface(toplevelinterface, 0, 0, 765, 503, 0, 0);
-		interfaceUpdateNum++;
+		transmitNum++;
 
 		// todo: revisit this code if something is broken -- tried to flatten the do { } while () blocks
 		HookReq req;
@@ -9270,7 +9270,7 @@ public class Client extends GameShell {
 					VarCache.var[var81] = var82;
 					clientVar(var81);
 				}
-				field2110[++field2084 - 1 & 0x1F] = var81;
+				varTransmit[++varTransmitNum - 1 & 0x1F] = var81;
 
 				ptype = -1;
 				return true;
@@ -9409,7 +9409,7 @@ public class Client extends GameShell {
 					VarCache.var[var113] = var114;
 					clientVar(var113);
 				}
-				field2110[++field2084 - 1 & 0x1F] = var113;
+				varTransmit[++varTransmitNum - 1 & 0x1F] = var113;
 
 				ptype = -1;
 				return true;
@@ -9447,7 +9447,7 @@ public class Client extends GameShell {
 				// UPDATE_RUNENERGY
 				legacyUpdated();
 				runEnergy = in.g1();
-				field2119 = interfaceUpdateNum;
+				miscTransmitNum = transmitNum;
 
 				ptype = -1;
 				return true;
@@ -9623,7 +9623,7 @@ public class Client extends GameShell {
 				// UPDATE_RUNWEIGHT
 				legacyUpdated();
 				runWeight = in.g2b();
-				field2119 = interfaceUpdateNum;
+				miscTransmitNum = transmitNum;
 
 				ptype = -1;
 				return true;
@@ -9727,7 +9727,7 @@ public class Client extends GameShell {
 				}
 
 				legacyUpdated();
-				field2112[++field2050 - 1 & 0x1F] = invId & 0x7FFF;
+				invTransmit[++invTransmitNum - 1 & 0x1F] = invId & 0x7FFF;
 
 				ptype = -1;
 				return true;
@@ -9823,7 +9823,7 @@ public class Client extends GameShell {
 					}
 				}
 				legacyUpdated();
-				field2084 += 32;
+				varTransmitNum += 32;
 
 				ptype = -1;
 				return true;
@@ -9892,18 +9892,22 @@ public class Client extends GameShell {
 			if (ptype == 208) {
 				// UPDATE_STAT
 				legacyUpdated();
-				int var209 = in.g1_alt1();
-				int var210 = in.g1_alt1();
-				int var211 = in.g4();
-				skillExperience[var210] = var211;
-				skillLevel[var210] = var209;
-				skillBaseLevel[var210] = 1;
-				for (int var212 = 0; var212 < 98; var212++) {
-					if (var211 >= PlayerSkillXPTable.levelExperience[var212]) {
-						skillBaseLevel[var210] = var212 + 2;
+
+				int level = in.g1_alt1();
+				int stat = in.g1_alt1();
+				int xp = in.g4();
+
+				statXP[stat] = xp;
+				statEffectiveLevel[stat] = level;
+				statBaseLevel[stat] = 1;
+
+				for (int l = 0; l < 98; l++) {
+					if (xp >= Skills.skillxp[l]) {
+						statBaseLevel[stat] = l + 2;
 					}
 				}
-				field1999[++field1982 - 1 & 0x1F] = var210;
+
+				statTransmit[++statTransmitNum - 1 & 0x1F] = stat;
 
 				ptype = -1;
 				return true;
@@ -9912,7 +9916,7 @@ public class Client extends GameShell {
 			if (ptype == 95) {
 				// FRIENDLIST_LOADED
 				friendListStatus = 1;
-				friendSystemUpdateNum = interfaceUpdateNum;
+				friendTransmitNum = transmitNum;
 
 				ptype = -1;
 				return true;
@@ -9955,7 +9959,7 @@ public class Client extends GameShell {
 				// UPDATE_INV_STOPTRANSMIT
 				int var219 = in.g2_alt2();
 				ClientInvCache.delete(var219);
-				field2112[++field2050 - 1 & 0x1F] = var219 & 0x7FFF;
+				invTransmit[++invTransmitNum - 1 & 0x1F] = var219 & 0x7FFF;
 
 				ptype = -1;
 				return true;
@@ -10011,7 +10015,7 @@ public class Client extends GameShell {
 							if (var225.equals(localPlayer.name)) {
 								chatRank = var227;
 							}
-							friendChatUpdateNum = interfaceUpdateNum;
+							clanTransmitNum = transmitNum;
 							ptype = -1;
 							return true;
 						}
@@ -10035,7 +10039,7 @@ public class Client extends GameShell {
 						chatRank = var227;
 					}
 				}
-				friendChatUpdateNum = interfaceUpdateNum;
+				clanTransmitNum = transmitNum;
 
 				ptype = -1;
 				return true;
@@ -10247,7 +10251,7 @@ public class Client extends GameShell {
 					}
 				}
 				friendListStatus = 2;
-				friendSystemUpdateNum = interfaceUpdateNum;
+				friendTransmitNum = transmitNum;
 				boolean var301 = false;
 				int var302 = friendCount;
 				while (var302 > 0) {
@@ -10287,7 +10291,7 @@ public class Client extends GameShell {
 
 			if (ptype == 120) {
 				// UPDATE_FRIENDCHAT_CHANNEL_FULL
-				friendChatUpdateNum = interfaceUpdateNum;
+				clanTransmitNum = transmitNum;
 				if (psize == 0) {
 					chatDisplayName = null;
 					field2155 = null;
@@ -10392,7 +10396,7 @@ public class Client extends GameShell {
 				}
 
 				legacyUpdated();
-				field2112[++field2050 - 1 & 0x1F] = invId & 0x7FFF;
+				invTransmit[++invTransmitNum - 1 & 0x1F] = invId & 0x7FFF;
 
 				ptype = -1;
 				return true;
@@ -10491,7 +10495,7 @@ public class Client extends GameShell {
 			if (ptype == 97) {
 				// UPDATE_REBOOT_TIMER
 				rebootTimer = in.g2_alt2() * 30;
-				field2119 = interfaceUpdateNum;
+				miscTransmitNum = transmitNum;
 
 				ptype = -1;
 				return true;
@@ -10555,7 +10559,7 @@ public class Client extends GameShell {
 						ignoreCount++;
 					}
 				}
-				friendSystemUpdateNum = interfaceUpdateNum;
+				friendTransmitNum = transmitNum;
 
 				ptype = -1;
 				return true;
@@ -10615,9 +10619,10 @@ public class Client extends GameShell {
 					if (VarCache.varServ[i] != VarCache.var[i]) {
 						VarCache.var[i] = VarCache.varServ[i];
 						clientVar(i);
-						field2110[++field2084 - 1 & 0x1F] = i;
+						varTransmit[++varTransmitNum - 1 & 0x1F] = i;
 					}
 				}
+
 				ptype = -1;
 				return true;
 			}
@@ -12127,7 +12132,7 @@ public class Client extends GameShell {
 					ignoreList[var176] = ignoreList[var176 + 1];
 				}
 
-				friendSystemUpdateNum = interfaceUpdateNum;
+				friendTransmitNum = transmitNum;
 				// IGNORELIST_DEL
 				out.p1Enc(248);
 				out.p1(Packet.pjstrlen(var169));

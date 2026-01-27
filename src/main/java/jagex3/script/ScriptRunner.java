@@ -1470,7 +1470,7 @@ public class ScriptRunner {
 						isp--;
 						int var132 = intStack[isp];
 
-						intStack[isp++] = Client.skillLevel[var132];
+						intStack[isp++] = Client.statEffectiveLevel[var132];
 						continue;
 					}
 					if (opcode == 3306) {
@@ -1478,7 +1478,7 @@ public class ScriptRunner {
 						isp--;
 						int var133 = intStack[isp];
 
-						intStack[isp++] = Client.skillBaseLevel[var133];
+						intStack[isp++] = Client.statBaseLevel[var133];
 						continue;
 					}
 					if (opcode == 3307) {
@@ -1486,7 +1486,7 @@ public class ScriptRunner {
 						isp--;
 						int var134 = intStack[isp];
 
-						intStack[isp++] = Client.skillExperience[var134];
+						intStack[isp++] = Client.statXP[var134];
 						continue;
 					}
 					if (opcode == 3308) {
