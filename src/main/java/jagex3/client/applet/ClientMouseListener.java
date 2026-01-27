@@ -6,11 +6,12 @@ import jagex3.datastruct.MonotonicTime;
 import java.awt.*;
 import java.awt.event.*;
 
+// jag::oldscape::input::ClientMouseListener
 @ObfuscatedName("an")
-public class JavaMouseProvider implements MouseListener, MouseMotionListener, FocusListener {
+public class ClientMouseListener implements MouseListener, MouseMotionListener, FocusListener {
 
 	@ObfuscatedName("an.r")
-	public static JavaMouseProvider instance = new JavaMouseProvider();
+	public static ClientMouseListener instance = new ClientMouseListener();
 
 	@ObfuscatedName("an.d")
 	public static volatile int idleTimer = 0;
@@ -70,7 +71,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 	}
 
 	public static void cycle() {
-		JavaMouseProvider lock = instance;
+		ClientMouseListener lock = instance;
 		synchronized (lock) {
 			mouseButton = nextMouseButton;
 			mouseX = nextMouseX;
@@ -179,7 +180,7 @@ public class JavaMouseProvider implements MouseListener, MouseMotionListener, Fo
 
 	public static void shutdown() {
 		if (instance != null) {
-			JavaMouseProvider lock = instance;
+			ClientMouseListener lock = instance;
 			synchronized (lock) {
 				instance = null;
 			}

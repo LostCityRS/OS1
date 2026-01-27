@@ -16,39 +16,44 @@ public class StringTools {
 		return (arg0 >> 24 & 0xFF) + "." + (arg0 >> 16 & 0xFF) + "." + (arg0 >> 8 & 0xFF) + "." + (arg0 & 0xFF);
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::Join
 	@ObfuscatedName("ef.d([Ljava/lang/CharSequence;III)Ljava/lang/String;")
-	public static String method1785(CharSequence[] arg0, int arg1, int arg2) {
-		if (arg2 == 0) {
+	public static String join(CharSequence[] src, int off, int len) {
+		if (len == 0) {
 			return "";
-		} else if (arg2 == 1) {
-			CharSequence var3 = arg0[arg1];
-			return var3 == null ? "null" : var3.toString();
-		} else {
-			int var4 = arg1 + arg2;
-			int var5 = 0;
-			for (int var6 = arg1; var6 < var4; var6++) {
-				CharSequence var7 = arg0[var6];
-				if (var7 == null) {
-					var5 += 4;
-				} else {
-					var5 += var7.length();
-				}
-			}
-			StringBuilder var8 = new StringBuilder(var5);
-			for (int var9 = arg1; var9 < var4; var9++) {
-				CharSequence var10 = arg0[var9];
-				if (var10 == null) {
-					var8.append("null");
-				} else {
-					var8.append(var10);
-				}
-			}
-			return var8.toString();
 		}
+
+		if (len == 1) {
+			CharSequence var3 = src[off];
+			return var3 == null ? "null" : var3.toString();
+		}
+
+		int var4 = off + len;
+		int var5 = 0;
+		for (int var6 = off; var6 < var4; var6++) {
+			CharSequence var7 = src[var6];
+			if (var7 == null) {
+				var5 += 4;
+			} else {
+				var5 += var7.length();
+			}
+		}
+
+		StringBuilder var8 = new StringBuilder(var5);
+		for (int var9 = off; var9 < var4; var9++) {
+			CharSequence var10 = src[var9];
+			if (var10 == null) {
+				var8.append("null");
+			} else {
+				var8.append(var10);
+			}
+		}
+		return var8.toString();
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::IsInt
 	@ObfuscatedName("j.l(Ljava/lang/CharSequence;I)Z")
-	public static boolean method62(CharSequence arg0) {
+	public static boolean isInt(CharSequence arg0) {
 		boolean var1 = false;
 		boolean var2 = false;
 		int var3 = 0;
@@ -160,8 +165,9 @@ public class StringTools {
 		return var5;
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::FromInt
 	@ObfuscatedName("bn.n(IZI)Ljava/lang/String;")
-	public static String method903(int arg0, boolean arg1) {
+	public static String fromInt(int arg0, boolean arg1) {
 		if (!arg1 || arg0 < 0) {
 			return Integer.toString(arg0);
 		}
@@ -193,12 +199,13 @@ public class StringTools {
 		return var9;
 	}
 
+	// jag::oldscape::core::stringtools::general::CP1252Tools::ComputeLowerCp1252HashFromUtf8
 	@ObfuscatedName("ck.j(Ljava/lang/CharSequence;I)I")
-	public static int hashCode(CharSequence arg0) {
+	public static int computeCp1252HashFromUtf8(CharSequence arg0) {
 		int var1 = arg0.length();
 		int var2 = 0;
 		for (int var3 = 0; var3 < var1; var3++) {
-			var2 = (var2 << 5) - var2 + Cp1252.method796(arg0.charAt(var3));
+			var2 = (var2 << 5) - var2 + Cp1252.wideToCp1252(arg0.charAt(var3));
 		}
 		return var2;
 	}
@@ -291,7 +298,7 @@ public class StringTools {
 						char var273 = Character.toLowerCase(var271);
 						char var274 = Character.toLowerCase(var272);
 						if (var273 != var274) {
-							var256 = StringComparator.method1018(var273, lang) - StringComparator.method1018(var274, lang);
+							var256 = StringComparator.getCharSortKey(var273, lang) - StringComparator.getCharSortKey(var274, lang);
 							break label2100;
 						}
 					}
@@ -302,7 +309,7 @@ public class StringTools {
 						char var277 = s1.charAt(var276);
 						char var278 = s2.charAt(var276);
 						if (var277 != var278) {
-							var256 = StringComparator.method1018(var277, lang) - StringComparator.method1018(var278, lang);
+							var256 = StringComparator.getCharSortKey(var277, lang) - StringComparator.getCharSortKey(var278, lang);
 							break label2100;
 						}
 					}
@@ -364,13 +371,13 @@ public class StringTools {
 				var262 = 0;
 			}
 			var255 = var262;
-			char var263 = StringComparator.method342(var257, lang);
-			char var264 = StringComparator.method342(var259, lang);
+			char var263 = StringComparator.removeAccents(var257, lang);
+			char var264 = StringComparator.removeAccents(var259, lang);
 			if (var263 != var264 && Character.toUpperCase(var263) != Character.toUpperCase(var264)) {
 				char var265 = Character.toLowerCase(var263);
 				char var266 = Character.toLowerCase(var264);
 				if (var265 != var266) {
-					var256 = StringComparator.method1018(var265, lang) - StringComparator.method1018(var266, lang);
+					var256 = StringComparator.getCharSortKey(var265, lang) - StringComparator.getCharSortKey(var266, lang);
 					break;
 				}
 			}

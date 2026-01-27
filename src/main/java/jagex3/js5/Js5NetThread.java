@@ -24,7 +24,7 @@ public class Js5NetThread implements Runnable {
 
 	// jag::oldscape::jagex3::Js5LocalCache::BlockingFetchFromMainThread?
 	@ObfuscatedName("cu.m(ILap;Ldq;I)V")
-	public static void requestGroup(int key, DataFile fs, Js5Loader loader) {
+	public static void queueRequest(int key, DataFile fs, Js5Loader loader) {
 		byte[] data = null;
 		LinkList var4 = requestQueue;
 		synchronized (var4) {
@@ -38,9 +38,9 @@ public class Js5NetThread implements Runnable {
 
 		if (data == null) {
 			byte[] src = fs.readFromFile(key);
-			loader.method1468(fs, key, src, true);
+			loader.loadIndex(fs, key, src, true);
 		} else {
-			loader.method1468(fs, key, data, true);
+			loader.loadIndex(fs, key, data, true);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class Js5NetThread implements Runnable {
 	}
 
 	@ObfuscatedName("bv.c(B)V")
-	public static void method781() {
+	public static void shutdown() {
 		Object var0 = field1207;
 		synchronized (var0) {
 			if (field1205 != 0) {

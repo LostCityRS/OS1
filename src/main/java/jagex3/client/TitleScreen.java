@@ -2,8 +2,8 @@ package jagex3.client;
 
 import deob.ObfuscatedName;
 import jagex3.client.applet.GameShell;
-import jagex3.client.applet.JavaKeyboardProvider;
-import jagex3.client.applet.JavaMouseProvider;
+import jagex3.client.applet.ClientKeyboardListener;
+import jagex3.client.applet.ClientMouseListener;
 import jagex3.graphics.*;
 import jagex3.io.Packet;
 import jagex3.js5.Js5Loader;
@@ -247,7 +247,7 @@ public class TitleScreen {
 			return;
 		}
 
-		if (JavaMouseProvider.mouseClickButton == 1 && JavaMouseProvider.mouseClickX >= 715 && JavaMouseProvider.mouseClickY >= 453) {
+		if (ClientMouseListener.mouseClickButton == 1 && ClientMouseListener.mouseClickX >= 715 && ClientMouseListener.mouseClickY >= 453) {
 			mute = !mute;
 
 			if (mute) {
@@ -272,12 +272,12 @@ public class TitleScreen {
 		}
 
 		if (Client.lang == 0) {
-			if (JavaMouseProvider.mouseClickButton == 1) {
+			if (ClientMouseListener.mouseClickButton == 1) {
 				byte var4 = 5;
 				short var5 = 463;
 				byte var6 = 100;
 				byte var7 = 35;
-				if (JavaMouseProvider.mouseClickX >= var4 && JavaMouseProvider.mouseClickX <= var4 + var6 && JavaMouseProvider.mouseClickY >= var5 && JavaMouseProvider.mouseClickY <= var5 + var7) {
+				if (ClientMouseListener.mouseClickX >= var4 && ClientMouseListener.mouseClickX <= var4 + var6 && ClientMouseListener.mouseClickY >= var5 && ClientMouseListener.mouseClickY <= var5 + var7) {
 					listFetch();
 					return;
 				}
@@ -287,9 +287,9 @@ public class TitleScreen {
 			}
 		}
 
-		int var8 = JavaMouseProvider.mouseClickButton;
-		int var9 = JavaMouseProvider.mouseClickX;
-		int var10 = JavaMouseProvider.mouseClickY;
+		int var8 = ClientMouseListener.mouseClickButton;
+		int var9 = ClientMouseListener.mouseClickX;
+		int var10 = ClientMouseListener.mouseClickY;
 
 		if (loginscreen == 0) {
 			short var11 = 302;
@@ -341,33 +341,33 @@ public class TitleScreen {
 				loginPass = "";
 			}
 
-			while (JavaKeyboardProvider.pollKey()) {
+			while (ClientKeyboardListener.pollKey()) {
 				boolean var21 = false;
 				for (int var22 = 0; var22 < charList.length(); var22++) {
-					if (JavaKeyboardProvider.ch == charList.charAt(var22)) {
+					if (ClientKeyboardListener.ch == charList.charAt(var22)) {
 						var21 = true;
 						break;
 					}
 				}
 
 				if (field150 == 0) {
-					if (JavaKeyboardProvider.code == 85 && loginUser.length() > 0) {
+					if (ClientKeyboardListener.code == 85 && loginUser.length() > 0) {
 						loginUser = loginUser.substring(0, loginUser.length() - 1);
 					}
-					if (JavaKeyboardProvider.code == 84 || JavaKeyboardProvider.code == 80) {
+					if (ClientKeyboardListener.code == 84 || ClientKeyboardListener.code == 80) {
 						field150 = 1;
 					}
 					if (var21 && loginUser.length() < 320) {
-						loginUser += JavaKeyboardProvider.ch;
+						loginUser += ClientKeyboardListener.ch;
 					}
 				} else if (field150 == 1) {
-					if (JavaKeyboardProvider.code == 85 && loginPass.length() > 0) {
+					if (ClientKeyboardListener.code == 85 && loginPass.length() > 0) {
 						loginPass = loginPass.substring(0, loginPass.length() - 1);
 					}
-					if (JavaKeyboardProvider.code == 84 || JavaKeyboardProvider.code == 80) {
+					if (ClientKeyboardListener.code == 84 || ClientKeyboardListener.code == 80) {
 						field150 = 0;
 					}
-					if (Client.modewhere == 2 && JavaKeyboardProvider.code == 84) {
+					if (Client.modewhere == 2 && ClientKeyboardListener.code == 84) {
 						loginUser = loginUser.trim();
 						if (loginUser.length() == 0) {
 							loginMes(Text.field978, Text.field979, Text.field980);
@@ -382,7 +382,7 @@ public class TitleScreen {
 						break;
 					}
 					if (var21 && loginPass.length() < 20) {
-						loginPass += JavaKeyboardProvider.ch;
+						loginPass += ClientKeyboardListener.ch;
 					}
 				}
 			}
@@ -956,7 +956,7 @@ public class TitleScreen {
 					var21 = false;
 				}
 
-				if (JavaMouseProvider.mouseX >= var17 && JavaMouseProvider.mouseY >= var16 && JavaMouseProvider.mouseX < var6 + var17 && JavaMouseProvider.mouseY < var7 + var16 && var21) {
+				if (ClientMouseListener.mouseX >= var17 && ClientMouseListener.mouseY >= var16 && ClientMouseListener.mouseX < var6 + var17 && ClientMouseListener.mouseY < var7 + var16 && var21) {
 					slLastWorld = var19;
 					slBack[var20.members ? 1 : 0].litPlotSprite(var17, var16, 128, 0xffffff);
 				} else {
@@ -991,51 +991,51 @@ public class TitleScreen {
 	// jag::oldscape::TitleScreen::WorldSwitchLoop
 	@ObfuscatedName("cm.g(Ldj;I)V")
 	public static void worldSwitchLoop(GameShell shell) {
-		if (JavaMouseProvider.mouseClickButton != 1) {
+		if (ClientMouseListener.mouseClickButton != 1) {
 			return;
 		}
 
 		short var1 = 280;
-		if (JavaMouseProvider.mouseClickX >= var1 && JavaMouseProvider.mouseClickX <= var1 + 14 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
+		if (ClientMouseListener.mouseClickX >= var1 && ClientMouseListener.mouseClickX <= var1 + 14 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickY <= 18) {
 			listReorder(0, 0);
 			return;
 		}
-		if (JavaMouseProvider.mouseClickX >= var1 + 15 && JavaMouseProvider.mouseClickX <= var1 + 80 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
+		if (ClientMouseListener.mouseClickX >= var1 + 15 && ClientMouseListener.mouseClickX <= var1 + 80 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickY <= 18) {
 			listReorder(0, 1);
 			return;
 		}
 
 		short var2 = 390;
-		if (JavaMouseProvider.mouseClickX >= var2 && JavaMouseProvider.mouseClickX <= var2 + 14 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
+		if (ClientMouseListener.mouseClickX >= var2 && ClientMouseListener.mouseClickX <= var2 + 14 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickY <= 18) {
 			listReorder(1, 0);
 			return;
 		}
-		if (JavaMouseProvider.mouseClickX >= var2 + 15 && JavaMouseProvider.mouseClickX <= var2 + 80 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
+		if (ClientMouseListener.mouseClickX >= var2 + 15 && ClientMouseListener.mouseClickX <= var2 + 80 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickY <= 18) {
 			listReorder(1, 1);
 			return;
 		}
 
 		short var3 = 500;
-		if (JavaMouseProvider.mouseClickX >= var3 && JavaMouseProvider.mouseClickX <= var3 + 14 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
+		if (ClientMouseListener.mouseClickX >= var3 && ClientMouseListener.mouseClickX <= var3 + 14 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickY <= 18) {
 			listReorder(2, 0);
 			return;
 		}
-		if (JavaMouseProvider.mouseClickX >= var3 + 15 && JavaMouseProvider.mouseClickX <= var3 + 80 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
+		if (ClientMouseListener.mouseClickX >= var3 + 15 && ClientMouseListener.mouseClickX <= var3 + 80 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickY <= 18) {
 			listReorder(2, 1);
 			return;
 		}
 
 		short var4 = 610;
-		if (JavaMouseProvider.mouseClickX >= var4 && JavaMouseProvider.mouseClickX <= var4 + 14 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
+		if (ClientMouseListener.mouseClickX >= var4 && ClientMouseListener.mouseClickX <= var4 + 14 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickY <= 18) {
 			listReorder(3, 0);
 			return;
 		}
-		if (JavaMouseProvider.mouseClickX >= var4 + 15 && JavaMouseProvider.mouseClickX <= var4 + 80 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickY <= 18) {
+		if (ClientMouseListener.mouseClickX >= var4 + 15 && ClientMouseListener.mouseClickX <= var4 + 80 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickY <= 18) {
 			listReorder(3, 1);
 			return;
 		}
 
-		if (JavaMouseProvider.mouseClickX >= 708 && JavaMouseProvider.mouseClickY >= 4 && JavaMouseProvider.mouseClickX <= 758 && JavaMouseProvider.mouseClickY <= 20) {
+		if (ClientMouseListener.mouseClickX >= 708 && ClientMouseListener.mouseClickY >= 4 && ClientMouseListener.mouseClickX <= 758 && ClientMouseListener.mouseClickY <= 20) {
 			switchScreen = false;
 			titleBack.quickPlotSprite(0, 0);
 			titleBack2.quickPlotSprite(382, 0);

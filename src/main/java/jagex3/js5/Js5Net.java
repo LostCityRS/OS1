@@ -243,7 +243,7 @@ public class Js5Net {
 								masterIndexBuffer.pos = j * 8 + 5;
 								int indexCrc = masterIndexBuffer.g4();
 								int indexVersion = masterIndexBuffer.g4();
-								provider.method1476(indexCrc, indexVersion);
+								provider.requestIndex(indexCrc, indexVersion);
 							}
 						} else {
 							crc32.reset();

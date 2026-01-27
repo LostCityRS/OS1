@@ -5,12 +5,12 @@ import deob.ObfuscatedName;
 import java.awt.*;
 
 @ObfuscatedName("ac")
-public abstract class MouseWheelProvider {
+public abstract class MouseWheelInterface {
 
 	@ObfuscatedName("bv.r(I)Lac;")
-	public static MouseWheelProvider getProvider() {
+	public static MouseWheelInterface getProvider() {
 		try {
-			return new JavaMouseWheelProvider();
+			return new ClientMouseWheelListener();
 		} catch (Throwable ex) {
 			return null;
 		}

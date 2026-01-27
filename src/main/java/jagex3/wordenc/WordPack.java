@@ -25,7 +25,7 @@ public class WordPack {
 	@ObfuscatedName("bp.d(Lev;Ljava/lang/String;B)I")
 	public static int pack(Packet dst, String str) {
 		int start = dst.pos;
-		byte[] src = Cp1252.utf8ToCP1252(str);
+		byte[] src = Cp1252.utf8ToCp1252(str);
 		dst.psmart(src.length);
 		dst.pos += huffman.encode(src, 0, src.length, dst.data, dst.pos);
 		return dst.pos - start;
@@ -42,7 +42,7 @@ public class WordPack {
 
 			byte[] var2 = new byte[len];
 			buf.pos += huffman.decode(buf.data, buf.pos, var2, 0, len);
-			return Cp1252.decode(var2, 0, len);
+			return Cp1252.cp1252ToUtf8(var2, 0, len);
 		} catch (Exception ex) {
 			return "Cabbage";
 		}
@@ -58,7 +58,7 @@ public class WordPack {
 
 			byte[] src = new byte[len];
 			buf.pos += huffman.decode(buf.data, buf.pos, src, 0, len);
-			return Cp1252.decode(src, 0, len);
+			return Cp1252.cp1252ToUtf8(src, 0, len);
 		} catch (Exception ex) {
 			return "Cabbage";
 		}

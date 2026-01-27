@@ -268,7 +268,7 @@ public class GameShellCache {
 	}
 
 	@ObfuscatedName("cw.c(I)V")
-	public static void method1141() {
+	public static void shutdown() {
 		try {
 			cacheDat.close();
 			for (int var0 = 0; var0 < archiveCount; var0++) {
@@ -350,13 +350,13 @@ public class GameShellCache {
 					var26++;
 				}
 			}
-			CacheUtil.method61(cacheDirectory);
+			CacheUtil.setCacheDir(cacheDirectory);
 			openUID();
-			cacheDat = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.dat2"), "rw", 1048576000L), 5200, 0);
-			masterIndex = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx255"), "rw", 1048576L), 6000, 0);
+			cacheDat = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.getFile("main_file_cache.dat2"), "rw", 1048576000L), 5200, 0);
+			masterIndex = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.getFile("main_file_cache.idx255"), "rw", 1048576L), 6000, 0);
 			cacheIndex = new BufferedRandomAccessFile[archiveCount];
 			for (int i = 0; i < archiveCount; i++) {
-				cacheIndex[i] = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.method1039("main_file_cache.idx" + i), "rw", 1048576L), 6000, 0);
+				cacheIndex[i] = new BufferedRandomAccessFile(new FileOnDisk(CacheUtil.getFile("main_file_cache.idx" + i), "rw", 1048576L), 6000, 0);
 			}
 		} catch (Exception ex) {
 			JagException.report(null, ex);

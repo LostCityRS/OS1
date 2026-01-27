@@ -36,10 +36,10 @@ public class ScriptRunner {
 	public static String[] stringLocals;
 
 	@ObfuscatedName("s.m")
-	public static int[] field193 = new int[5];
+	public static int[] arrayLengths = new int[5];
 
 	@ObfuscatedName("s.c")
-	public static int[][] field192 = new int[5][5000];
+	public static int[][] arrays = new int[5][5000];
 
 	@ObfuscatedName("s.n")
 	public static int[] intStack = new int[1000];
@@ -60,10 +60,10 @@ public class ScriptRunner {
 	public static IfType activeComponent2;
 
 	@ObfuscatedName("s.s")
-	public static Calendar field197 = Calendar.getInstance();
+	public static Calendar calendar = Calendar.getInstance();
 
 	@ObfuscatedName("s.u")
-	public static final String[] field190 = new String[] {
+	public static final String[] months = new String[] {
 		"Jan", "Feb", "Mar",
 		"Apr", "May", "Jun",
 		"Jul", "Aug", "Sep",
@@ -297,7 +297,7 @@ public class ScriptRunner {
 						int var28 = intOperands[pc];
 
 						ssp -= var28;
-						String var29 = StringTools.method1785(stringStack, ssp, var28);
+						String var29 = StringTools.join(stringStack, ssp, var28);
 
 						stringStack[ssp++] = var29;
 						continue;
@@ -371,7 +371,7 @@ public class ScriptRunner {
 							throw new RuntimeException();
 						}
 
-						field193[var37] = var39;
+						arrayLengths[var37] = var39;
 
 						byte var40 = -1;
 						if (var38 == 105) {
@@ -379,7 +379,7 @@ public class ScriptRunner {
 						}
 
 						for (int var41 = 0; var41 < var39; var41++) {
-							field192[var37][var41] = var40;
+							arrays[var37][var41] = var40;
 						}
 
 						continue;
@@ -391,11 +391,11 @@ public class ScriptRunner {
 						isp--;
 						int var43 = intStack[isp];
 
-						if (var43 < 0 || var43 >= field193[var42]) {
+						if (var43 < 0 || var43 >= arrayLengths[var42]) {
 							throw new RuntimeException();
 						}
 
-						intStack[isp++] = field192[var42][var43];
+						intStack[isp++] = arrays[var42][var43];
 						continue;
 
 					}
@@ -406,11 +406,11 @@ public class ScriptRunner {
 						isp -= 2;
 						int var45 = intStack[isp];
 
-						if (var45 < 0 || var45 >= field193[var44]) {
+						if (var45 < 0 || var45 >= arrayLengths[var44]) {
 							throw new RuntimeException();
 						}
 
-						field192[var44][var45] = intStack[isp + 1];
+						arrays[var44][var45] = intStack[isp + 1];
 						continue;
 					}
 					if (opcode == 47) {
@@ -1343,7 +1343,7 @@ public class ScriptRunner {
 						String var96 = stringStack[ssp];
 
 						int var97 = 0;
-						if (StringTools.method62(var96)) {
+						if (StringTools.isInt(var96)) {
 							int var98 = StringTools.checkedParseInt(var96, 10, true);
 							var97 = var98;
 						}
@@ -2099,7 +2099,7 @@ public class ScriptRunner {
 						isp--;
 						int var234 = intStack[isp];
 
-						stringStack[ssp++] = var233 + StringTools.method903(var234, true);
+						stringStack[ssp++] = var233 + StringTools.fromInt(var234, true);
 						continue;
 					}
 					if (opcode == 4103) {
@@ -2115,12 +2115,16 @@ public class ScriptRunner {
 						isp--;
 						int var236 = intStack[isp];
 
+						// jag::game::TimeTools::TimeFromRuneDay
 						long var237 = ((long) var236 + 11745L) * 86400000L;
-						field197.setTime(new Date(var237));
-						int var239 = field197.get(Calendar.DATE);
-						int var240 = field197.get(Calendar.MONTH);
-						int var241 = field197.get(Calendar.YEAR);
-						stringStack[ssp++] = var239 + "-" + field190[var240] + "-" + var241;
+
+						// jag::game::TimeTools::FormatRealDate
+						calendar.setTime(new Date(var237));
+						int var239 = calendar.get(Calendar.DATE);
+						int var240 = calendar.get(Calendar.MONTH);
+						int var241 = calendar.get(Calendar.YEAR);
+
+						stringStack[ssp++] = var239 + "-" + months[var240] + "-" + var241;
 						continue;
 					}
 					if (opcode == 4105) {

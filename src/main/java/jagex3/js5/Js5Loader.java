@@ -26,7 +26,7 @@ public class Js5Loader extends Js5 {
 	public volatile boolean loadStatus = false;
 
 	@ObfuscatedName("dq.h")
-	public boolean field1576 = false;
+	public boolean remoteEnabled = false;
 
 	@ObfuscatedName("dq.x")
 	public volatile boolean[] loadedGroups;
@@ -43,13 +43,13 @@ public class Js5Loader extends Js5 {
 	@ObfuscatedName("dq.aa")
 	public int field1581 = -1;
 
-	public Js5Loader(DataFile arg0, DataFile arg1, int archive, boolean discardPacked, boolean discardUnpacked, boolean arg5) {
+	public Js5Loader(DataFile dat, DataFile idx, int archive, boolean discardPacked, boolean discardUnpacked, boolean arg5) {
 		super(discardPacked, discardUnpacked);
 
-		this.dataFile = arg0;
-		this.indexDataFile = arg1;
+		this.dataFile = dat;
+		this.indexDataFile = idx;
 		this.archive = archive;
-		this.field1576 = arg5;
+		this.remoteEnabled = arg5;
 
 		int var8 = this.archive;
 		if (Js5Net.masterIndexBuffer == null) {
@@ -57,9 +57,10 @@ public class Js5Loader extends Js5 {
 			Js5Net.field1200[var8] = this;
 		} else {
 			Js5Net.masterIndexBuffer.pos = var8 * 8 + 5;
-			int var9 = Js5Net.masterIndexBuffer.g4();
-			int var10 = Js5Net.masterIndexBuffer.g4();
-			this.method1476(var9, var10);
+
+			int crc = Js5Net.masterIndexBuffer.g4();
+			int version = Js5Net.masterIndexBuffer.g4();
+			this.requestIndex(crc, version);
 		}
 	}
 
@@ -89,18 +90,19 @@ public class Js5Loader extends Js5 {
 		if (this.dataFile == null || this.loadedGroups == null || !this.loadedGroups[groupId]) {
 			Js5Net.queueRequest(this, this.archive, groupId, this.groupChecksums[groupId], (byte) 2, true);
 		} else {
-			Js5NetThread.requestGroup(groupId, this.dataFile, this);
+			Js5NetThread.queueRequest(groupId, this.dataFile, this);
 		}
 	}
 
 	@ObfuscatedName("dq.bq(III)V")
-	public void method1476(int arg0, int arg1) {
-		this.indexCrc = arg0;
-		this.indexVersion = arg1;
+	public void requestIndex(int crc, int version) {
+		this.indexCrc = crc;
+		this.indexVersion = version;
+
 		if (this.indexDataFile == null) {
 			Js5Net.queueRequest(this, 255, this.archive, this.indexCrc, (byte) 0, true);
 		} else {
-			Js5NetThread.requestGroup(this.archive, this.indexDataFile, this);
+			Js5NetThread.queueRequest(this.archive, this.indexDataFile, this);
 		}
 	}
 
@@ -162,34 +164,40 @@ public class Js5Loader extends Js5 {
 		this.loadAllLocal();
 	}
 
+	// jag::oldscape::jagex3::Js5Loader::Js5ForLoader::LoadIndex
 	@ObfuscatedName("dq.bz(Lap;I[BZI)V")
-	public void method1468(DataFile arg0, int arg1, byte[] src, boolean arg3) {
-		if (this.indexDataFile != arg0) {
-			if (!arg3 && this.field1581 == arg1) {
+	public void loadIndex(DataFile idx, int groupId, byte[] src, boolean urgent) {
+		if (this.indexDataFile != idx) {
+			if (!urgent && this.field1581 == groupId) {
 				this.loadStatus = true;
 			}
+
 			if (src == null || src.length <= 2) {
-				this.loadedGroups[arg1] = false;
-				if (this.field1576 || arg3) {
-					Js5Net.queueRequest(this, this.archive, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
+				this.loadedGroups[groupId] = false;
+				if (this.remoteEnabled || urgent) {
+					Js5Net.queueRequest(this, this.archive, groupId, this.groupChecksums[groupId], (byte) 2, urgent);
 				}
 				return;
 			}
+
 			crc32.reset();
 			crc32.update(src, 0, src.length - 2);
+
 			int var9 = (int) crc32.getValue();
 			int var10 = ((src[src.length - 2] & 0xFF) << 8) + (src[src.length - 1] & 0xFF);
-			if (this.groupChecksums[arg1] != var9 || this.groupVersions[arg1] != var10) {
-				this.loadedGroups[arg1] = false;
-				if (this.field1576 || arg3) {
-					Js5Net.queueRequest(this, this.archive, arg1, this.groupChecksums[arg1], (byte) 2, arg3);
+
+			if (this.groupChecksums[groupId] != var9 || this.groupVersions[groupId] != var10) {
+				this.loadedGroups[groupId] = false;
+				if (this.remoteEnabled || urgent) {
+					Js5Net.queueRequest(this, this.archive, groupId, this.groupChecksums[groupId], (byte) 2, urgent);
 				}
-				return;
+			} else {
+				this.loadedGroups[groupId] = true;
+				if (urgent) {
+					this.packed[groupId] = ByteArrayWrapper.wrap(src, false);
+				}
 			}
-			this.loadedGroups[arg1] = true;
-			if (arg3) {
-				this.packed[arg1] = ByteArrayWrapper.wrap(src, false);
-			}
+
 			return;
 		}
 

@@ -95,17 +95,17 @@ public class Packet extends Linkable {
 			throw new IllegalArgumentException("");
 		}
 
-		this.pos += Cp1252.method744(s, 0, s.length(), this.data, this.pos);
+		this.pos += Cp1252.encodeStringToCp1252(s, 0, s.length(), this.data, this.pos);
 		this.data[++this.pos - 1] = 0;
 	}
 
 	// jag::oldscape::javapal::Packet_pUTF8
 	@ObfuscatedName("ev.s(Ljava/lang/CharSequence;I)V")
 	public void pUTF8(CharSequence arg0) {
-		int var2 = Utf8.method1581(arg0);
+		int var2 = Utf8.getUtf8Length(arg0);
 		this.data[++this.pos - 1] = 0;
 		this.pMidiVarLen(var2);
-		this.pos += Utf8.method1142(this.data, this.pos, arg0);
+		this.pos += Utf8.encodeUtf8(this.data, this.pos, arg0);
 	}
 
 	// jag::PacketT::pArrayBuffer
@@ -229,7 +229,7 @@ public class Packet extends Linkable {
 		while (this.data[++this.pos - 1] != 0) {
 		}
 		int var2 = this.pos - var1 - 1;
-		return var2 == 0 ? "" : Cp1252.decode(this.data, var1, var2);
+		return var2 == 0 ? "" : Cp1252.cp1252ToUtf8(this.data, var1, var2);
 	}
 
 	@ObfuscatedName("ev.ac(B)Ljava/lang/String;")
@@ -242,7 +242,7 @@ public class Packet extends Linkable {
 		while (this.data[++this.pos - 1] != 0) {
 		}
 		int var3 = this.pos - var2 - 1;
-		return var3 == 0 ? "" : Cp1252.decode(this.data, var2, var3);
+		return var3 == 0 ? "" : Cp1252.cp1252ToUtf8(this.data, var2, var3);
 	}
 
 	@ObfuscatedName("ev.aa(I)Ljava/lang/String;")

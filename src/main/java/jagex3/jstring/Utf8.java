@@ -10,7 +10,7 @@ public class Utf8 {
 	}
 
 	@ObfuscatedName("es.r(Ljava/lang/CharSequence;I)I")
-	public static int method1581(CharSequence arg0) {
+	public static int getUtf8Length(CharSequence arg0) {
 		int var1 = arg0.length();
 		int var2 = 0;
 		for (int var3 = 0; var3 < var1; var3++) {
@@ -27,7 +27,7 @@ public class Utf8 {
 	}
 
 	@ObfuscatedName("cw.d([BILjava/lang/CharSequence;I)I")
-	public static int method1142(byte[] arg0, int arg1, CharSequence arg2) {
+	public static int encodeUtf8(byte[] arg0, int arg1, CharSequence arg2) {
 		int var3 = arg2.length();
 		int var4 = arg1;
 		for (int var5 = 0; var5 < var3; var5++) {

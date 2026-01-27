@@ -10,11 +10,12 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+// jag::oldscape::input::ClientKeyboardListener
 @ObfuscatedName("az")
-public class JavaKeyboardProvider implements KeyListener, FocusListener {
+public class ClientKeyboardListener implements KeyListener, FocusListener {
 
 	@ObfuscatedName("az.r")
-	public static JavaKeyboardProvider instance = new JavaKeyboardProvider();
+	public static ClientKeyboardListener instance = new ClientKeyboardListener();
 
 	@ObfuscatedName("az.cu")
 	public static boolean[] keyHeld = new boolean[112];
@@ -94,7 +95,7 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 	@ObfuscatedName("dw.l(I)V")
 	public static void shutdown() {
 		if (instance != null) {
-			JavaKeyboardProvider lock = instance;
+			ClientKeyboardListener lock = instance;
 			synchronized (lock) {
 				instance = null;
 			}
@@ -102,7 +103,7 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 	}
 
 	public static void cycle() {
-		JavaKeyboardProvider lock = instance;
+		ClientKeyboardListener lock = instance;
 		synchronized (lock) {
 			idleTimer++;
 
@@ -198,10 +199,11 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 		e.consume();
 	}
 
+	// jag::oldscape::input::ClientKeyboardListener::HandleKeyChar
 	public final void keyTyped(KeyEvent e) {
 		if (instance != null) {
 			char ch = e.getKeyChar();
-			if (ch != 0 && ch != 65535 && Cp1252.method767(ch)) {
+			if (ch != 0 && ch != 65535 && Cp1252.canEncodeToCp1252(ch)) {
 				int next = keyWritePos + 1 & 0x7F;
 				if (keyReadPos != next) {
 					keyCodeBuffer[keyWritePos] = -1;
@@ -254,7 +256,7 @@ public class JavaKeyboardProvider implements KeyListener, FocusListener {
 	}
 
 	public static boolean pollKey() {
-		JavaKeyboardProvider lock = instance;
+		ClientKeyboardListener lock = instance;
 		synchronized (lock) {
 			if (keyReadPos == lastKeyWritePos) {
 				return false;

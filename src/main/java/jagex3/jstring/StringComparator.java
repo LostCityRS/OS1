@@ -10,7 +10,7 @@ public class StringComparator {
 	}
 
 	@ObfuscatedName("p.r(CII)C")
-	public static char method342(char arg0, int arg1) {
+	public static char removeAccents(char arg0, int arg1) {
 		if (arg0 >= 192 && arg0 <= 255) {
 			if (arg0 >= 192 && arg0 <= 198) {
 				return 'A';
@@ -70,7 +70,7 @@ public class StringComparator {
 	}
 
 	@ObfuscatedName("cl.d(CIB)I")
-	public static int method1018(char arg0, int arg1) {
+	public static int getCharSortKey(char arg0, int arg1) {
 		int var2 = arg0 << 4;
 		if (Character.isUpperCase(arg0) || Character.isTitleCase(arg0)) {
 			char var3 = Character.toLowerCase(arg0);

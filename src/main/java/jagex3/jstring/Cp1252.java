@@ -6,18 +6,22 @@ import deob.ObfuscatedName;
 public class Cp1252 {
 
 	@ObfuscatedName("ca.r")
-	public static final char[] field1158 = new char[] {
-		'€', '\u0000', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹',
-		'Œ', '\u0000', 'Ž', '\u0000', '\u0000', '‘', '’', '“', '”', '•',
-		'–', '—', '˜', '™', 'š', '›', 'œ', '\u0000', 'ž', 'Ÿ'
+	public static final char[] CP1252_EXTENDED = new char[] {
+		'€', '\u0000',
+		'‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', '\u0000',
+		'Ž', '\u0000',
+		'\u0000',
+		'‘', '’', '“', '”', '•', '–', '—', '˜', '™', 'š', '›', 'œ', '\u0000',
+		'ž', 'Ÿ'
 	};
 
 	public Cp1252() throws Throwable {
 		throw new Error();
 	}
 
+	// jag::stringtools::WideToCP1252
 	@ObfuscatedName("bl.r(CI)B")
-	public static byte method796(char arg0) {
+	public static byte wideToCp1252(char arg0) {
 		byte var1;
 		if (arg0 > 0 && arg0 < 128 || !(arg0 < 160 || arg0 > 255)) {
 			var1 = (byte) arg0;
@@ -81,13 +85,14 @@ public class Cp1252 {
 		return var1;
 	}
 
+	// jag::oldscape::core::stringtools::general::CP1252Tools::CanEncodeToCP1252
 	@ObfuscatedName("bk.d(CI)Z")
-	public static boolean method767(char arg0) {
+	public static boolean canEncodeToCp1252(char arg0) {
 		if (arg0 > 0 && arg0 < 128 || !(arg0 < 160 || arg0 > 255)) {
 			return true;
 		}
 		if (arg0 != 0) {
-			char[] var1 = field1158;
+			char[] var1 = CP1252_EXTENDED;
 			for (int var2 = 0; var2 < var1.length; var2++) {
 				char var3 = var1[var2];
 				if (arg0 == var3) {
@@ -100,7 +105,7 @@ public class Cp1252 {
 
 	// jag::stringtools::UTF8ToCP1252
 	@ObfuscatedName("ck.m(Ljava/lang/CharSequence;I)[B")
-	public static byte[] utf8ToCP1252(CharSequence arg0) {
+	public static byte[] utf8ToCp1252(CharSequence arg0) {
 		int var1 = arg0.length();
 		byte[] var2 = new byte[var1];
 		for (int var3 = 0; var3 < var1; var3++) {
@@ -168,9 +173,8 @@ public class Cp1252 {
 		return var2;
 	}
 
-	// jag::stringtools::WideToCP1252
 	@ObfuscatedName("bh.c(Ljava/lang/CharSequence;II[BII)I")
-	public static int method744(CharSequence arg0, int arg1, int arg2, byte[] arg3, int arg4) {
+	public static int encodeStringToCp1252(CharSequence arg0, int arg1, int arg2, byte[] arg3, int arg4) {
 		int var5 = arg2 - arg1;
 		for (int var6 = 0; var6 < var5; var6++) {
 			char var7 = arg0.charAt(arg1 + var6);
@@ -237,15 +241,16 @@ public class Cp1252 {
 		return var5;
 	}
 
+	// jag::stringtools::CP1252ToUTF8
 	@ObfuscatedName("ey.n([BIIB)Ljava/lang/String;")
-	public static String decode(byte[] arg0, int arg1, int arg2) {
+	public static String cp1252ToUtf8(byte[] arg0, int arg1, int arg2) {
 		char[] var3 = new char[arg2];
 		int var4 = 0;
 		for (int var5 = 0; var5 < arg2; var5++) {
 			int var6 = arg0[arg1 + var5] & 0xFF;
 			if (var6 != 0) {
 				if (var6 >= 128 && var6 < 160) {
-					char var7 = field1158[var6 - 128];
+					char var7 = CP1252_EXTENDED[var6 - 128];
 					if (var7 == 0) {
 						var7 = '?';
 					}

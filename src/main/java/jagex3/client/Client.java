@@ -669,13 +669,13 @@ public class Client extends GameShell {
 	public static int[] field1941 = new int[] { 768, 1024, 1280, 512, 1536, 256, 0, 1792 };
 
 	@ObfuscatedName("an.ix")
-	public static int objSelectedLayerId; // todo
+	public static int objSelectedLayerId;
 
 	@ObfuscatedName("cr.ii")
-	public static ClientPlayer localPlayer; // todo
+	public static ClientPlayer localPlayer;
 
 	@ObfuscatedName("al.in")
-	public static int minusedlevel; // todo
+	public static int minusedlevel;
 
 	@ObfuscatedName("ag.iz")
 	public static int field555; // todo
@@ -693,7 +693,7 @@ public class Client extends GameShell {
 	public static LinkList spotanims = new LinkList();
 
 	@ObfuscatedName("client.it")
-	public static String objSelectedName = null; // todo
+	public static String objSelectedName = null;
 
 	@ObfuscatedName("client.iw")
 	public static int[] statEffectiveLevel = new int[25];
@@ -753,28 +753,28 @@ public class Client extends GameShell {
 	public static int targetSub = -1;
 
 	@ObfuscatedName("ca.jf")
-	public static int menuX; // todo
+	public static int menuX;
 
 	@ObfuscatedName("l.jy")
-	public static IfType hoveredCom; // todo
+	public static IfType hoveredCom;
 
 	@ObfuscatedName("m.jd")
-	public static int menuHeight; // todo
+	public static int menuHeight;
 
 	@ObfuscatedName("m.jv")
-	public static int targetCom; // todo
+	public static int targetCom;
 
 	@ObfuscatedName("al.jt")
-	public static int menuWidth; // todo
+	public static int menuWidth;
 
 	@ObfuscatedName("ag.jb")
-	public static int objSelectedSlot; // todo
+	public static int objSelectedSlot;
 
 	@ObfuscatedName("at.jq")
 	public static IfType field654; // todo
 
 	@ObfuscatedName("bk.ji")
-	public static int menuY; // todo
+	public static int menuY;
 
 	@ObfuscatedName("client.kn")
 	public static String targetVerb = null;
@@ -852,7 +852,7 @@ public class Client extends GameShell {
 	public static boolean dragAlive = false;
 
 	@ObfuscatedName("ak.kt")
-	public static int targetMask; // todo
+	public static int targetMask;
 
 	@ObfuscatedName("client.lg")
 	public static int transmitNum = 1;
@@ -909,7 +909,7 @@ public class Client extends GameShell {
 	public static HashTable serverActive = new HashTable(512);
 
 	@ObfuscatedName("cv.ll")
-	public static int dragTime; // todo
+	public static int dragTime;
 
 	@ObfuscatedName("dz.lj")
 	public static IfType[] field1516; // todo
@@ -921,7 +921,7 @@ public class Client extends GameShell {
 	public static int field44; // todo
 
 	@ObfuscatedName("az.lu")
-	public static MouseWheelProvider mouseWheel; // todo
+	public static MouseWheelInterface mouseWheel;
 
 	@ObfuscatedName("client.mw")
 	public static int componentDrawCount = 0;
@@ -990,7 +990,7 @@ public class Client extends GameShell {
 	public static int[] keypressKeychars = new int[128];
 
 	@ObfuscatedName("au.mg")
-	public static ChatFilterPrivacy privateChatFilter; // todo
+	public static ChatFilterPrivacy privateChatFilter;
 
 	@ObfuscatedName("client.ne")
 	public static int[] keypressKeycodes = new int[128];
@@ -1038,16 +1038,16 @@ public class Client extends GameShell {
 	public static int waveVolume = 127;
 
 	@ObfuscatedName("cz.ny")
-	public static byte chatRank; // todo
+	public static byte chatRank;
 
 	@ObfuscatedName("cv.nm")
 	public static int field1220; // todo
 
 	@ObfuscatedName("df.nr")
-	public static byte chatMinKick; // todo
+	public static byte chatMinKick;
 
 	@ObfuscatedName("dl.ns")
-	public static Pix32 minimap; // todo
+	public static Pix32 minimap;
 
 	@ObfuscatedName("eh.nd")
 	public static FriendChatUser[] field1774; // todo
@@ -1083,46 +1083,46 @@ public class Client extends GameShell {
 	public static int[] camShakeAxis = new int[5];
 
 	@ObfuscatedName("br.om")
-	public static int cutsceneSrcLocalTileZ; // todo
+	public static int cutsceneSrcLocalTileZ;
 
 	@ObfuscatedName("co.op")
-	public static int cutsceneMoveAcceleration; // todo
+	public static int cutsceneMoveAcceleration;
 
 	@ObfuscatedName("ct.or")
-	public static int cutsceneDstLocalTileX; // todo
+	public static int cutsceneDstLocalTileX;
 
 	@ObfuscatedName("cq.oc")
-	public static Mixer soundMixer; // todo
+	public static Mixer soundMixer;
 
 	@ObfuscatedName("cq.ob")
-	public static int cutsceneDstHeight; // todo
+	public static int cutsceneDstHeight;
 
 	@ObfuscatedName("df.ou")
-	public static int cutsceneRotateAcceleration; // todo
+	public static int cutsceneRotateAcceleration;
 
 	@ObfuscatedName("de.oy")
-	public static int cutsceneRotateSpeed; // todo
+	public static int cutsceneRotateSpeed;
 
 	@ObfuscatedName("ev.od")
-	public static Decimator soundDecimator; // todo
+	public static Decimator soundDecimator;
 
 	@ObfuscatedName("l.on")
-	public static PcmPlayer midiPcmPlayer; // todo
+	public static PcmPlayer midiPcmPlayer;
 
 	@ObfuscatedName("be.ox")
-	public static int cutsceneSrcLocalTileX; // todo
+	public static int cutsceneSrcLocalTileX;
 
 	@ObfuscatedName("bp.og")
-	public static int cutsceneDstLocalTileZ; // todo
+	public static int cutsceneDstLocalTileZ;
 
 	@ObfuscatedName("dq.oq")
-	public static int cutsceneSrcHeight; // todo
+	public static int cutsceneSrcHeight;
 
 	@ObfuscatedName("du.oh")
-	public static int cutsceneMoveSpeed; // todo
+	public static int cutsceneMoveSpeed;
 
 	@ObfuscatedName("dr.oi")
-	public static PcmPlayer soundPcmPlayer; // todo
+	public static PcmPlayer soundPcmPlayer;
 
 	@ObfuscatedName("client.pk")
 	public static int[] camShakeRan = new int[5];
@@ -1276,12 +1276,12 @@ public class Client extends GameShell {
 		PlayerModel.recol2s = RecolsRunescape.recol2s;
 		PlayerModel.recol2d = RecolsRunescape.recol2d;
 
-		JavaKeyboardProvider.setupKeyCodeMap();
-		JavaKeyboardProvider.addListeners(GameShell.canvas);
+		ClientKeyboardListener.setupKeyCodeMap();
+		ClientKeyboardListener.addListeners(GameShell.canvas);
 
-		JavaMouseProvider.addListeners(GameShell.canvas);
+		ClientMouseListener.addListeners(GameShell.canvas);
 
-		mouseWheel = MouseWheelProvider.getProvider();
+		mouseWheel = MouseWheelInterface.getProvider();
 		if (mouseWheel != null) {
 			mouseWheel.addListeners(GameShell.canvas);
 		}
@@ -1303,8 +1303,8 @@ public class Client extends GameShell {
 		MidiManager.method825();
 
 		doAudio();
-		JavaKeyboardProvider.cycle();
-		JavaMouseProvider.cycle();
+		ClientKeyboardListener.cycle();
+		ClientMouseListener.cycle();
 
 		if (mouseWheel != null) {
 			// todo: inlined? why two lines...
@@ -1342,16 +1342,16 @@ public class Client extends GameShell {
 		}
 
 		if (canvasReplaceRecommended) {
-			JavaKeyboardProvider.removeListeners(GameShell.canvas);
-			JavaMouseProvider.removeListeners(GameShell.canvas);
+			ClientKeyboardListener.removeListeners(GameShell.canvas);
+			ClientMouseListener.removeListeners(GameShell.canvas);
 			if (mouseWheel != null) {
 				mouseWheel.removeListeners(GameShell.canvas);
 			}
 
 			this.addcanvas();
 
-			JavaKeyboardProvider.addListeners(GameShell.canvas);
-			JavaMouseProvider.addListeners(GameShell.canvas);
+			ClientKeyboardListener.addListeners(GameShell.canvas);
+			ClientMouseListener.addListeners(GameShell.canvas);
 			if (mouseWheel != null) {
 				mouseWheel.addListeners(GameShell.canvas);
 			}
@@ -1427,8 +1427,8 @@ public class Client extends GameShell {
 			loginStream = null;
 		}
 
-		JavaKeyboardProvider.shutdown();
-		JavaMouseProvider.shutdown();
+		ClientKeyboardListener.shutdown();
+		ClientMouseListener.shutdown();
 		mouseWheel = null;
 
 		if (midiPcmPlayer != null) {
@@ -1443,8 +1443,8 @@ public class Client extends GameShell {
 			Js5Net.stream.close();
 		}
 
-		Js5NetThread.method781();
-		GameShellCache.method1141();
+		Js5NetThread.shutdown();
+		GameShellCache.shutdown();
 	}
 
 	// jag::oldscape::Client::SetMainState
@@ -1928,12 +1928,12 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::OpenJs5
 	@ObfuscatedName("u.dd(IZZZB)Ldq;")
-	public static Js5Loader openJs5(int archive, boolean arg1, boolean arg2, boolean arg3) {
+	public static Js5Loader openJs5(int archive, boolean arg1, boolean arg2, boolean remoteEnabled) {
 		DataFile stream = null;
 		if (GameShellCache.cacheDat != null) {
 			stream = new DataFile(archive, GameShellCache.cacheDat, GameShellCache.cacheIndex[archive], 1000000);
 		}
-		return new Js5Loader(stream, masterIndex, archive, arg1, arg2, arg3);
+		return new Js5Loader(stream, masterIndex, archive, arg1, arg2, remoteEnabled);
 	}
 
 	// jag::oldscape::Client::LoginPoll
@@ -2176,7 +2176,7 @@ public class Client extends GameShell {
 		menuNumEntries = 0;
 		isMenuOpen = false;
 
-		JavaMouseProvider.setIdleTimer(0);
+		ClientMouseListener.setIdleTimer(0);
 
 		for (int var0 = 0; var0 < 100; var0++) {
 			messageText[var0] = null;
@@ -2403,7 +2403,7 @@ public class Client extends GameShell {
 		VarpType.resetCache();
 		PlayerModel.resetCache();
 		IfType.resetCache();
-		((WorldTextureProvider) Pix3D.textureProvider).method749();
+		((WorldTextureProvider) Pix3D.textureProvider).reset();
 		ClientScript.cache.clear();
 
 		anims.discardAllFiles();
@@ -2477,9 +2477,9 @@ public class Client extends GameShell {
 			return;
 		}
 
-		if (JavaMouseProvider.mouseClickButton == 1) {
-			int x = JavaMouseProvider.mouseClickX - 25 - offsetX;
-			int y = JavaMouseProvider.mouseClickY - 5 - offsetY;
+		if (ClientMouseListener.mouseClickButton == 1) {
+			int x = ClientMouseListener.mouseClickX - 25 - offsetX;
+			int y = ClientMouseListener.mouseClickY - 5 - offsetY;
 
 			if (x < 0 || y < 0 || x >= 146 || y >= 151) {
 				return;
@@ -3797,8 +3797,8 @@ public class Client extends GameShell {
 			tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], arg0, arg1, true, shape + 1, angle, 0, 0, 0, 2);
 		}
 
-		crossX = JavaMouseProvider.mouseClickX;
-		crossY = JavaMouseProvider.mouseClickY;
+		crossX = ClientMouseListener.mouseClickX;
+		crossY = ClientMouseListener.mouseClickY;
 		crossMode = 2;
 		crossCycle = 0;
 		return true;
@@ -4002,7 +4002,7 @@ public class Client extends GameShell {
 			}
 
 			out.p2_alt3(mapBuildBaseZ + var34);
-			out.p1(JavaKeyboardProvider.keyHeld[82] ? 1 : 0);
+			out.p1(ClientKeyboardListener.keyHeld[82] ? 1 : 0);
 			out.p2(mapBuildBaseX + var33);
 			return true;
 		} else if (arg10 == 1) {
@@ -4995,7 +4995,7 @@ public class Client extends GameShell {
 
 		int height = menuNumEntries * 15 + 21;
 
-		int var4 = JavaMouseProvider.mouseClickX - width / 2;
+		int var4 = ClientMouseListener.mouseClickX - width / 2;
 		if (width + var4 > 765) {
 			var4 = 765 - width;
 		}
@@ -5003,7 +5003,7 @@ public class Client extends GameShell {
 			var4 = 0;
 		}
 
-		int var5 = JavaMouseProvider.mouseClickY;
+		int var5 = ClientMouseListener.mouseClickY;
 		if (height + var5 > 503) {
 			var5 = 503 - height;
 		}
@@ -5052,8 +5052,8 @@ public class Client extends GameShell {
 			if (var5 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var5.routeX[0], var5.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5079,8 +5079,8 @@ public class Client extends GameShell {
 			ClientNpc var6 = npcs[a];
 			if (var6 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var6.routeX[0], var6.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5097,8 +5097,8 @@ public class Client extends GameShell {
 			if (var7 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var7.routeX[0], var7.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5122,8 +5122,8 @@ public class Client extends GameShell {
 		}
 
 		if (action == 1002) {
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5148,8 +5148,8 @@ public class Client extends GameShell {
 		}
 
 		if (action == 1004) {
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5163,8 +5163,8 @@ public class Client extends GameShell {
 			if (var10 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var10.routeX[0], var10.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5193,8 +5193,8 @@ public class Client extends GameShell {
 			if (var11 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var11.routeX[0], var11.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5210,8 +5210,8 @@ public class Client extends GameShell {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
 			}
 
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5227,8 +5227,8 @@ public class Client extends GameShell {
 			if (var14 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var14.routeX[0], var14.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5243,8 +5243,8 @@ public class Client extends GameShell {
 			if (var15 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var15.routeX[0], var15.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5286,8 +5286,8 @@ public class Client extends GameShell {
 			if (var16 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var16.routeX[0], var16.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5317,8 +5317,8 @@ public class Client extends GameShell {
 			if (var19 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var19.routeX[0], var19.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5368,8 +5368,8 @@ public class Client extends GameShell {
 			if (var20 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var20.routeX[0], var20.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5387,8 +5387,8 @@ public class Client extends GameShell {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
 			}
 
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5415,8 +5415,8 @@ public class Client extends GameShell {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
 			}
 
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5465,8 +5465,8 @@ public class Client extends GameShell {
 			if (var26 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var26.routeX[0], var26.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5482,8 +5482,8 @@ public class Client extends GameShell {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
 			}
 
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5513,8 +5513,8 @@ public class Client extends GameShell {
 			if (var31 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var31.routeX[0], var31.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5529,8 +5529,8 @@ public class Client extends GameShell {
 			if (var32 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var32.routeX[0], var32.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5604,8 +5604,8 @@ public class Client extends GameShell {
 			if (var38 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var38.routeX[0], var38.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5640,8 +5640,8 @@ public class Client extends GameShell {
 		}
 
 		if (action == 1003) {
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5663,8 +5663,8 @@ public class Client extends GameShell {
 			if (var41 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var41.routeX[0], var41.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5679,8 +5679,8 @@ public class Client extends GameShell {
 			if (var42 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var42.routeX[0], var42.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5696,8 +5696,8 @@ public class Client extends GameShell {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
 			}
 
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5791,8 +5791,8 @@ public class Client extends GameShell {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
 			}
 
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -5834,8 +5834,8 @@ public class Client extends GameShell {
 			if (var49 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var49.routeX[0], var49.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 2;
 				crossCycle = 0;
 
@@ -5854,8 +5854,8 @@ public class Client extends GameShell {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
 			}
 
-			crossX = JavaMouseProvider.mouseClickX;
-			crossY = JavaMouseProvider.mouseClickY;
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
 			crossMode = 2;
 			crossCycle = 0;
 
@@ -6323,8 +6323,8 @@ public class Client extends GameShell {
 				}
 
 				if (dragAlive && dragParentFound) {
-					int var15 = JavaMouseProvider.mouseX;
-					int var16 = JavaMouseProvider.mouseY;
+					int var15 = ClientMouseListener.mouseX;
+					int var16 = ClientMouseListener.mouseY;
 
 					int var17 = var15 - dragPickupX;
 					int var18 = var16 - dragPickupY;
@@ -6413,8 +6413,8 @@ public class Client extends GameShell {
 				}
 			}
 
-			int mouseX = JavaMouseProvider.mouseX;
-			int mouseY = JavaMouseProvider.mouseY;
+			int mouseX = ClientMouseListener.mouseX;
+			int mouseY = ClientMouseListener.mouseY;
 
 			if (!isMenuOpen && mouseX >= var19 && mouseY >= var20 && mouseX < var21 && mouseY < var22) {
 				addComponentOptions(com, mouseX - renderx, mouseY - rendery);
@@ -6443,7 +6443,7 @@ public class Client extends GameShell {
 
 				SubInterface sub = (SubInterface) subinterfaces.find(com.parentId);
 				if (sub != null) {
-					if (sub.type == 0 && JavaMouseProvider.mouseX >= var19 && JavaMouseProvider.mouseY >= var20 && JavaMouseProvider.mouseX < var21 && JavaMouseProvider.mouseY < var22 && !isMenuOpen && !field2092) {
+					if (sub.type == 0 && ClientMouseListener.mouseX >= var19 && ClientMouseListener.mouseY >= var20 && ClientMouseListener.mouseX < var21 && ClientMouseListener.mouseY < var22 && !isMenuOpen && !field2092) {
 						menuVerb[0] = Text.CANCEL;
 						menuSubject[0] = "";
 						menuAction[0] = 1006;
@@ -6492,8 +6492,8 @@ public class Client extends GameShell {
 								if (sprite == null) {
 									componentUpdated(com);
 								} else if (objDragInterface == com && objDragSlot == slot) {
-									int dx = JavaMouseProvider.mouseX - objGrabX;
-									int dy = JavaMouseProvider.mouseY - objGrabY;
+									int dx = ClientMouseListener.mouseX - objGrabX;
+									int dy = ClientMouseListener.mouseY - objGrabY;
 
 									if (dx < 5 && dx > -5) {
 										dx = 0;
@@ -6860,7 +6860,7 @@ public class Client extends GameShell {
 				if (com.lineWidth == 1) {
 					Pix2D.line(renderx, rendery, com.width + renderx, com.height + rendery, com.colour);
 				} else {
-					// todo: inlined method? (DrawLineWithStrokeWidth)
+					// todo: inlined method (DrawLineWithStrokeWidth?)
 					int var232 = com.width >= 0 ? com.width : -com.width;
 					int var233 = com.height >= 0 ? com.height : -com.height;
 					int var234 = var232;
@@ -6962,7 +6962,7 @@ public class Client extends GameShell {
 
 		scrollGrabbed = false;
 
-		if (JavaMouseProvider.mouseButton != 0) {
+		if (ClientMouseListener.mouseButton != 0) {
 			if (x >= left && x < left + 16 && y >= top && y < top + 16) {
 				com.scrollPosY -= 4;
 				componentUpdated(com);
@@ -7240,24 +7240,24 @@ public class Client extends GameShell {
 
 				if (var9.v3) {
 					boolean var25;
-					if (JavaMouseProvider.mouseX >= var12 && JavaMouseProvider.mouseY >= var13 && JavaMouseProvider.mouseX < var14 && JavaMouseProvider.mouseY < var15) {
+					if (ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
 						var25 = true;
 					} else {
 						var25 = false;
 					}
 
 					boolean var26 = false;
-					if (JavaMouseProvider.mouseButton == 1 && var25) {
+					if (ClientMouseListener.mouseButton == 1 && var25) {
 						var26 = true;
 					}
 
 					boolean var27 = false;
-					if (JavaMouseProvider.mouseClickButton == 1 && JavaMouseProvider.mouseClickX >= var12 && JavaMouseProvider.mouseClickY >= var13 && JavaMouseProvider.mouseClickX < var14 && JavaMouseProvider.mouseClickY < var15) {
+					if (ClientMouseListener.mouseClickButton == 1 && ClientMouseListener.mouseClickX >= var12 && ClientMouseListener.mouseClickY >= var13 && ClientMouseListener.mouseClickX < var14 && ClientMouseListener.mouseClickY < var15) {
 						var27 = true;
 					}
 
 					if (var27) {
-						dragTryPickup(var9, JavaMouseProvider.mouseClickX - var10, JavaMouseProvider.mouseClickY - var11);
+						dragTryPickup(var9, ClientMouseListener.mouseClickX - var10, ClientMouseListener.mouseClickY - var11);
 					}
 
 					if (dragComponent != null && dragComponent != var9 && var25) {
@@ -7293,8 +7293,8 @@ public class Client extends GameShell {
 							if (var9.onclick != null) {
 								HookReq req = new HookReq();
 								req.component = var9;
-								req.mouseX = JavaMouseProvider.mouseClickX - var10;
-								req.mouseY = JavaMouseProvider.mouseClickY - var11;
+								req.mouseX = ClientMouseListener.mouseClickX - var10;
+								req.mouseY = ClientMouseListener.mouseClickY - var11;
 								req.onop = var9.onclick;
 								hookRequests.push(req);
 							}
@@ -7303,8 +7303,8 @@ public class Client extends GameShell {
 						if (var9.clickTrigger && var26 && var9.onclickrepeat != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
-							req.mouseX = JavaMouseProvider.mouseX - var10;
-							req.mouseY = JavaMouseProvider.mouseY - var11;
+							req.mouseX = ClientMouseListener.mouseX - var10;
+							req.mouseY = ClientMouseListener.mouseY - var11;
 							req.onop = var9.onclickrepeat;
 							hookRequests.push(req);
 						}
@@ -7315,8 +7315,8 @@ public class Client extends GameShell {
 							if (var9.onrelease != null) {
 								HookReq req = new HookReq();
 								req.component = var9;
-								req.mouseX = JavaMouseProvider.mouseX - var10;
-								req.mouseY = JavaMouseProvider.mouseY - var11;
+								req.mouseX = ClientMouseListener.mouseX - var10;
+								req.mouseY = ClientMouseListener.mouseY - var11;
 								req.onop = var9.onrelease;
 								hookRequestsMouseStop.push(req);
 							}
@@ -7325,8 +7325,8 @@ public class Client extends GameShell {
 						if (var26 && var9.onhold != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
-							req.mouseX = JavaMouseProvider.mouseX - var10;
-							req.mouseY = JavaMouseProvider.mouseY - var11;
+							req.mouseX = ClientMouseListener.mouseX - var10;
+							req.mouseY = ClientMouseListener.mouseY - var11;
 							req.onop = var9.onhold;
 							hookRequests.push(req);
 						}
@@ -7337,8 +7337,8 @@ public class Client extends GameShell {
 							if (var9.onmouseover != null) {
 								HookReq req = new HookReq();
 								req.component = var9;
-								req.mouseX = JavaMouseProvider.mouseX - var10;
-								req.mouseY = JavaMouseProvider.mouseY - var11;
+								req.mouseX = ClientMouseListener.mouseX - var10;
+								req.mouseY = ClientMouseListener.mouseY - var11;
 								req.onop = var9.onmouseover;
 								hookRequests.push(req);
 							}
@@ -7347,8 +7347,8 @@ public class Client extends GameShell {
 						if (var9.mouseTrigger && var25 && var9.onmouserepeat != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
-							req.mouseX = JavaMouseProvider.mouseX - var10;
-							req.mouseY = JavaMouseProvider.mouseY - var11;
+							req.mouseX = ClientMouseListener.mouseX - var10;
+							req.mouseY = ClientMouseListener.mouseY - var11;
 							req.onop = var9.onmouserepeat;
 							hookRequests.push(req);
 						}
@@ -7359,8 +7359,8 @@ public class Client extends GameShell {
 							if (var9.onmouseleave != null) {
 								HookReq req = new HookReq();
 								req.component = var9;
-								req.mouseX = JavaMouseProvider.mouseX - var10;
-								req.mouseY = JavaMouseProvider.mouseY - var11;
+								req.mouseX = ClientMouseListener.mouseX - var10;
+								req.mouseY = ClientMouseListener.mouseY - var11;
 								req.onop = var9.onmouseleave;
 								hookRequestsMouseStop.push(req);
 							}
@@ -7496,7 +7496,7 @@ public class Client extends GameShell {
 						return;
 					}
 
-					if ((var9.overLayerId >= 0 || var9.colourOver != 0) && JavaMouseProvider.mouseX >= var12 && JavaMouseProvider.mouseY >= var13 && JavaMouseProvider.mouseX < var14 && JavaMouseProvider.mouseY < var15) {
+					if ((var9.overLayerId >= 0 || var9.colourOver != 0) && ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
 						if (var9.overLayerId >= 0) {
 							hoveredCom = arg0[var9.overLayerId];
 						} else {
@@ -7504,12 +7504,12 @@ public class Client extends GameShell {
 						}
 					}
 
-					if (var9.type == 8 && JavaMouseProvider.mouseX >= var12 && JavaMouseProvider.mouseY >= var13 && JavaMouseProvider.mouseX < var14 && JavaMouseProvider.mouseY < var15) {
+					if (var9.type == 8 && ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
 						field654 = var9;
 					}
 
 					if (var9.scrollHeight > var9.height) {
-						doScrollbar(var9, var9.width + var10, var11, var9.height, var9.scrollHeight, JavaMouseProvider.mouseX, JavaMouseProvider.mouseY);
+						doScrollbar(var9, var9.width + var10, var11, var9.height, var9.scrollHeight, ClientMouseListener.mouseX, ClientMouseListener.mouseY);
 					}
 				}
 			}
@@ -8444,15 +8444,17 @@ public class Client extends GameShell {
 
 	public static void imethod1() {
 		while (true) {
-			LinkList var1 = Js5NetThread.requestQueue;
-			Js5WorkerRequest var2;
-			synchronized (var1) {
-				var2 = (Js5WorkerRequest) Js5NetThread.field1206.popFront();
+			LinkList lock = Js5NetThread.requestQueue;
+
+			Js5WorkerRequest req;
+			synchronized (lock) {
+				req = (Js5WorkerRequest) Js5NetThread.field1206.popFront();
 			}
-			if (var2 == null) {
+			if (req == null) {
 				return;
 			}
-			var2.field1773.method1468(var2.fs, (int) var2.key, var2.data, false);
+
+			req.field1773.loadIndex(req.fs, (int) req.key, req.data, false);
 		}
 	}
 
@@ -8782,7 +8784,7 @@ public class Client extends GameShell {
 		synchronized (var384) {
 			if (!mouseTracked) {
 				mouseTracking.length = 0;
-			} else if (JavaMouseProvider.mouseClickButton != 0 || mouseTracking.length >= 40) {
+			} else if (ClientMouseListener.mouseClickButton != 0 || mouseTracking.length >= 40) {
 				// EVENT_MOUSE_MOVE
 				out.p1Enc(72);
 				out.p1(0);
@@ -8842,19 +8844,19 @@ public class Client extends GameShell {
 			}
 		}
 
-		if (JavaMouseProvider.mouseClickButton != 0) {
-			long var395 = (JavaMouseProvider.mouseClickTime - prevMouseClickTime) / 50L;
+		if (ClientMouseListener.mouseClickButton != 0) {
+			long var395 = (ClientMouseListener.mouseClickTime - prevMouseClickTime) / 50L;
 			if (var395 > 4095L) {
 				var395 = 4095L;
 			}
-			prevMouseClickTime = JavaMouseProvider.mouseClickTime;
-			int var397 = JavaMouseProvider.mouseClickY;
+			prevMouseClickTime = ClientMouseListener.mouseClickTime;
+			int var397 = ClientMouseListener.mouseClickY;
 			if (var397 < 0) {
 				var397 = 0;
 			} else if (var397 > 502) {
 				var397 = 502;
 			}
-			int var398 = JavaMouseProvider.mouseClickX;
+			int var398 = ClientMouseListener.mouseClickX;
 			if (var398 < 0) {
 				var398 = 0;
 			} else if (var398 > 764) {
@@ -8862,7 +8864,7 @@ public class Client extends GameShell {
 			}
 			int var399 = var397 * 765 + var398;
 			byte var400 = 0;
-			if (JavaMouseProvider.mouseClickButton == 2) {
+			if (ClientMouseListener.mouseClickButton == 2) {
 				var400 = 1;
 			}
 			int var401 = (int) var395;
@@ -8875,7 +8877,7 @@ public class Client extends GameShell {
 			sendCameraDelay--;
 		}
 
-		if (JavaKeyboardProvider.keyHeld[96] || JavaKeyboardProvider.keyHeld[97] || JavaKeyboardProvider.keyHeld[98] || JavaKeyboardProvider.keyHeld[99]) {
+		if (ClientKeyboardListener.keyHeld[96] || ClientKeyboardListener.keyHeld[97] || ClientKeyboardListener.keyHeld[98] || ClientKeyboardListener.keyHeld[99]) {
 			sendCamera = true;
 		}
 
@@ -8941,11 +8943,11 @@ public class Client extends GameShell {
 			componentUpdated(objDragInterface);
 			objDragCycles++;
 
-			if (JavaMouseProvider.mouseX > objGrabX + 5 || JavaMouseProvider.mouseX < objGrabX - 5 || JavaMouseProvider.mouseY > objGrabY + 5 || JavaMouseProvider.mouseY < objGrabY - 5) {
+			if (ClientMouseListener.mouseX > objGrabX + 5 || ClientMouseListener.mouseX < objGrabX - 5 || ClientMouseListener.mouseY > objGrabY + 5 || ClientMouseListener.mouseY < objGrabY - 5) {
 				objGrabThreshold = true;
 			}
 
-			if (JavaMouseProvider.mouseButton == 0) {
+			if (ClientMouseListener.mouseButton == 0) {
 				if (objGrabThreshold && objDragCycles >= 5) {
 					if (objDragInterface == hoveredSlotParent && hoveredSlot != objDragSlot) {
 						IfType com = objDragInterface;
@@ -8997,7 +8999,7 @@ public class Client extends GameShell {
 				}
 
 				selectedCycle = 10;
-				JavaMouseProvider.mouseClickButton = 0;
+				ClientMouseListener.mouseClickButton = 0;
 				objDragInterface = null;
 			}
 		}
@@ -9012,9 +9014,9 @@ public class Client extends GameShell {
 		dragParentFound = false;
 
 		keypresses = 0;
-		while (JavaKeyboardProvider.pollKey() && keypresses < 128) {
-			keypressKeycodes[keypresses] = JavaKeyboardProvider.code;
-			keypressKeychars[keypresses] = JavaKeyboardProvider.ch;
+		while (ClientKeyboardListener.pollKey() && keypresses < 128) {
+			keypressKeycodes[keypresses] = ClientKeyboardListener.code;
+			keypressKeychars[keypresses] = ClientKeyboardListener.ch;
 			keypresses++;
 		}
 
@@ -9088,8 +9090,8 @@ public class Client extends GameShell {
 			World.groundX = -1;
 
 			if (success) {
-				crossX = JavaMouseProvider.mouseClickX;
-				crossY = JavaMouseProvider.mouseClickY;
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
 				crossMode = 1;
 				crossCycle = 0;
 			}
@@ -9136,11 +9138,11 @@ public class Client extends GameShell {
 			int var10002 = camShakeCycle[var504]++;
 		}
 
-		int mouseIdle = JavaMouseProvider.getIdleTimer();
-		int keyIdle = JavaKeyboardProvider.getIdleTimer();
+		int mouseIdle = ClientMouseListener.getIdleTimer();
+		int keyIdle = ClientKeyboardListener.getIdleTimer();
 		if (mouseIdle > 15000 && keyIdle > 15000) {
 			logoutTimer = 250;
-			JavaMouseProvider.setIdleTimer(14500); // 10s backoff
+			ClientMouseListener.setIdleTimer(14500); // 10s backoff
 
 			// IDLE_TIMER
 			out.p1Enc(38);
@@ -10802,8 +10804,8 @@ public class Client extends GameShell {
 		Pix2D.fillRect(var27 + 1, var28 + 1, var29 - 2, 16, 0);
 		Pix2D.drawRect(var27 + 1, var28 + 18, var29 - 2, var30 - 19, 0);
 		b12.drawString(Text.CHOOSEOPTION, var27 + 3, var28 + 14, var31, -1);
-		int var32 = JavaMouseProvider.mouseX;
-		int var33 = JavaMouseProvider.mouseY;
+		int var32 = ClientMouseListener.mouseX;
+		int var33 = ClientMouseListener.mouseY;
 		for (int var34 = 0; var34 < menuNumEntries; var34++) {
 			int var35 = (menuNumEntries - 1 - var34) * 15 + var28 + 31;
 			int var36 = 0xffffff;
@@ -11051,8 +11053,8 @@ public class Client extends GameShell {
 		dragTime++;
 
 		if (dragging && dragParentFound) {
-			int var458 = JavaMouseProvider.mouseX;
-			int var459 = JavaMouseProvider.mouseY;
+			int var458 = ClientMouseListener.mouseX;
+			int var459 = ClientMouseListener.mouseY;
 
 			int var460 = var458 - dragPickupX;
 			int var461 = var459 - dragPickupY;
@@ -11090,7 +11092,7 @@ public class Client extends GameShell {
 				ScriptRunner.executeScript(req);
 			}
 
-			if (JavaMouseProvider.mouseButton == 0) {
+			if (ClientMouseListener.mouseButton == 0) {
 				if (dragAlive) {
 					if (dragComponent.ondragcomplete != null) {
 						HookReq req = new HookReq();
@@ -11153,15 +11155,15 @@ public class Client extends GameShell {
 			return;
 		}
 
-		int button = JavaMouseProvider.mouseClickButton;
+		int button = ClientMouseListener.mouseClickButton;
 
 		if (isMenuOpen) {
 			if (button == 1) {
 				int x = menuX;
 				int y = menuY;
 				int width = menuWidth;
-				int clickX = JavaMouseProvider.mouseClickX;
-				int clickY = JavaMouseProvider.mouseClickY;
+				int clickX = ClientMouseListener.mouseClickX;
+				int clickY = ClientMouseListener.mouseClickY;
 
 				int option = -1;
 				for (int i = 0; i < menuNumEntries; i++) {
@@ -11178,8 +11180,8 @@ public class Client extends GameShell {
 				isMenuOpen = false;
 				dirtyArea(menuX, menuY, menuWidth, menuHeight);
 			} else {
-				int x = JavaMouseProvider.mouseX;
-				int y = JavaMouseProvider.mouseY;
+				int x = ClientMouseListener.mouseX;
+				int y = ClientMouseListener.mouseY;
 
 				if (x < menuX - 10 || x > menuWidth + menuX + 10 || y < menuY - 10 || y > menuY + menuHeight + 10) {
 					isMenuOpen = false;
@@ -11205,8 +11207,8 @@ public class Client extends GameShell {
 
 						objDragInterface = IfType.get(comId);
 						objDragSlot = slot;
-						objGrabX = JavaMouseProvider.mouseClickX;
-						objGrabY = JavaMouseProvider.mouseClickY;
+						objGrabX = ClientMouseListener.mouseClickX;
+						objGrabY = ClientMouseListener.mouseClickY;
 
 						componentUpdated(objDragInterface);
 						return;
@@ -11240,16 +11242,16 @@ public class Client extends GameShell {
 		if (orbitCameraZ != var494) {
 			orbitCameraZ += (var494 - orbitCameraZ) / 16;
 		}
-		if (JavaKeyboardProvider.keyHeld[96]) {
+		if (ClientKeyboardListener.keyHeld[96]) {
 			orbitCameraYawVelocity += (-24 - orbitCameraYawVelocity) / 2;
-		} else if (JavaKeyboardProvider.keyHeld[97]) {
+		} else if (ClientKeyboardListener.keyHeld[97]) {
 			orbitCameraYawVelocity += (24 - orbitCameraYawVelocity) / 2;
 		} else {
 			orbitCameraYawVelocity /= 2;
 		}
-		if (JavaKeyboardProvider.keyHeld[98]) {
+		if (ClientKeyboardListener.keyHeld[98]) {
 			orbitCameraPitchVelocity += (12 - orbitCameraPitchVelocity) / 2;
-		} else if (JavaKeyboardProvider.keyHeld[99]) {
+		} else if (ClientKeyboardListener.keyHeld[99]) {
 			orbitCameraPitchVelocity += (-12 - orbitCameraPitchVelocity) / 2;
 		} else {
 			orbitCameraPitchVelocity /= 2;
@@ -11360,14 +11362,14 @@ public class Client extends GameShell {
 			}
 		}
 
-		int var72 = JavaMouseProvider.mouseX;
-		int var73 = JavaMouseProvider.mouseY;
+		int var72 = ClientMouseListener.mouseX;
+		int var73 = ClientMouseListener.mouseY;
 
 		if (var72 >= var12 && var72 < var12 + var31 && var73 >= var13 && var73 < var13 + var32) {
 			ModelLit.checkHover = true;
 			ModelLit.pickedCount = 0;
-			ModelLit.mouseX = JavaMouseProvider.mouseX - var12;
-			ModelLit.mouseY = JavaMouseProvider.mouseY - var13;
+			ModelLit.mouseX = ClientMouseListener.mouseX - var12;
+			ModelLit.mouseY = ClientMouseListener.mouseY - var13;
 		} else {
 			ModelLit.checkHover = false;
 			ModelLit.pickedCount = 0;

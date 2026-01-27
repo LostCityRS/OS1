@@ -10,37 +10,37 @@ import java.util.Hashtable;
 public class CacheUtil {
 
 	@ObfuscatedName("av.r")
-	public static boolean field370 = false;
+	public static boolean cacheDirSet = false;
 
 	@ObfuscatedName("av.d")
-	public static File field369;
+	public static File cacheDir;
 
 	@ObfuscatedName("av.l")
-	public static Hashtable field371 = new Hashtable(16);
+	public static Hashtable openFiles = new Hashtable(16);
 
 	public CacheUtil() throws Throwable {
 		throw new Error();
 	}
 
 	@ObfuscatedName("j.r(Ljava/io/File;I)V")
-	public static void method61(File arg0) {
-		field369 = arg0;
-		if (!field369.exists()) {
+	public static void setCacheDir(File arg0) {
+		cacheDir = arg0;
+		if (!cacheDir.exists()) {
 			throw new RuntimeException("");
 		}
-		field370 = true;
+		cacheDirSet = true;
 	}
 
 	@ObfuscatedName("co.d(Ljava/lang/String;I)Ljava/io/File;")
-	public static File method1039(String arg0) {
-		if (!field370) {
+	public static File getFile(String arg0) {
+		if (!cacheDirSet) {
 			throw new RuntimeException("");
 		}
-		File var1 = (File) field371.get(arg0);
+		File var1 = (File) openFiles.get(arg0);
 		if (var1 != null) {
 			return var1;
 		}
-		File var2 = new File(field369, arg0);
+		File var2 = new File(cacheDir, arg0);
 		RandomAccessFile var3 = null;
 		try {
 			File var4 = new File(var2.getParent());
@@ -53,7 +53,7 @@ public class CacheUtil {
 			var3.write(var5);
 			var3.seek(0L);
 			var3.close();
-			field371.put(arg0, var2);
+			openFiles.put(arg0, var2);
 			return var2;
 		} catch (Exception var10) {
 			try {

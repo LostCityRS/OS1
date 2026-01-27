@@ -242,7 +242,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 						}
 
 						String var6 = version.substring(6, var3);
-						if (StringTools.method62(var6)) {
+						if (StringTools.isInt(var6)) {
 							int var7 = StringTools.checkedParseInt(var6, 10, true);
 							if (var7 < 10) {
 								this.error("wrongjava");

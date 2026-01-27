@@ -19,14 +19,14 @@ public class JagException extends RuntimeException {
 	public static int revision;
 
 	@ObfuscatedName("fa.m")
-	public String field2494;
+	public String message;
 
 	@ObfuscatedName("fa.c")
-	public Throwable field2498;
+	public Throwable cause;
 
 	public JagException(Throwable arg0, String arg1) {
-		this.field2494 = arg1;
-		this.field2498 = arg0;
+		this.message = arg1;
+		this.cause = arg0;
 	}
 
 	@ObfuscatedName("dy.r(Ljava/lang/String;Ljava/lang/Throwable;I)V")
@@ -38,8 +38,8 @@ public class JagException extends RuntimeException {
 				String var5;
 				if (arg1 instanceof JagException) {
 					JagException var4 = (JagException) arg1;
-					var5 = var4.field2494 + " | ";
-					var3 = var4.field2498;
+					var5 = var4.message + " | ";
+					var3 = var4.cause;
 				} else {
 					var5 = "";
 				}
@@ -102,7 +102,7 @@ public class JagException extends RuntimeException {
 		JagException var2;
 		if (arg0 instanceof JagException) {
 			var2 = (JagException) arg0;
-			var2.field2494 = var2.field2494 + ' ' + arg1;
+			var2.message = var2.message + ' ' + arg1;
 		} else {
 			var2 = new JagException(arg0, arg1);
 		}

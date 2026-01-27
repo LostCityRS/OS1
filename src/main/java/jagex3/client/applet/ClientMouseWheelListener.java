@@ -7,7 +7,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 @ObfuscatedName("dh")
-public class JavaMouseWheelProvider extends MouseWheelProvider implements MouseWheelListener {
+public class ClientMouseWheelListener extends MouseWheelInterface implements MouseWheelListener {
 
 	@ObfuscatedName("dh.r")
 	public int rotation = 0;
