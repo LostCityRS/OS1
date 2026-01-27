@@ -2,7 +2,7 @@ package jagex3.js5;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
-import jagex3.io.net.DataFile;
+import jagex3.io.DataFile;
 
 @ObfuscatedName("eh")
 public class Js5WorkerRequest extends Linkable {

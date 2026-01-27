@@ -8,11 +8,7 @@ import jagex3.graphics.JavaPixMap;
 import jagex3.graphics.JavaSafePixMap;
 import jagex3.graphics.PixMap;
 import jagex3.jstring.StringTools;
-import jagex3.util.ThreadSleep;
-import jagex3.util.time.MonotonicTime;
-import jagex3.util.timer.MillisTimer;
-import jagex3.util.timer.NanoTimer;
-import jagex3.util.timer.Timer;
+import jagex3.util.*;
 
 import java.applet.Applet;
 import java.awt.*;

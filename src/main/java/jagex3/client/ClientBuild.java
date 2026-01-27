@@ -5,9 +5,7 @@ import jagex3.config.FloType;
 import jagex3.config.FluType;
 import jagex3.config.LocType;
 import jagex3.dash3d.*;
-import jagex3.dash3d.util.RegionRotate;
 import jagex3.io.Packet;
-import jagex3.movement.CollisionMap;
 import jagex3.sound.BgSound;
 
 // jag::oldscape::ClientBuild

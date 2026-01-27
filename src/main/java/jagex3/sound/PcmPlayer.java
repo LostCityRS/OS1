@@ -3,8 +3,8 @@ package jagex3.sound;
 import deob.ObfuscatedName;
 import jagex3.client.applet.SignLink;
 import jagex3.util.ArrayUtil;
+import jagex3.util.MonotonicTime;
 import jagex3.util.ThreadSleep;
-import jagex3.util.time.MonotonicTime;
 
 import java.awt.*;
 

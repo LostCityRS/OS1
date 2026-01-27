@@ -7,14 +7,14 @@ import jagex3.config.SeqType;
 import jagex3.constants.Text;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
-import jagex3.dash3d.player.PlayerModel;
+import jagex3.dash3d.PixFontGeneric;
+import jagex3.dash3d.PlayerModel;
 import jagex3.datastruct.Linkable;
 import jagex3.datastruct.LruCache;
 import jagex3.graphics.Pix32;
 import jagex3.graphics.PixLoader;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
-import jagex3.jstring.PixFontGeneric;
 
 // jag::oldscape::rs2lib::IfType
 @ObfuscatedName("eg")

@@ -2,7 +2,7 @@ package jagex3.friends;
 
 import deob.ObfuscatedName;
 import jagex3.datastruct.ChatLinkable;
-import jagex3.util.time.MonotonicTime;
+import jagex3.util.MonotonicTime;
 
 @ObfuscatedName("dr")
 public class TimestampMessage extends ChatLinkable {

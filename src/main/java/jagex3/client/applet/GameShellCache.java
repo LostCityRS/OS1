@@ -2,10 +2,10 @@ package jagex3.client.applet;
 
 import deob.ObfuscatedName;
 import jagex3.callstack.JagException;
+import jagex3.io.BufferedRandomAccessFile;
+import jagex3.io.CacheUtil;
+import jagex3.io.FileOnDisk;
 import jagex3.io.Packet;
-import jagex3.io.net.CacheUtil;
-import jagex3.js5.io.BufferedRandomAccessFile;
-import jagex3.js5.io.FileOnDisk;
 
 import java.io.File;
 import java.io.IOException;

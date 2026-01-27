@@ -1,7 +1,7 @@
 package jagex3.client.input.mouse;
 
 import deob.ObfuscatedName;
-import jagex3.util.time.MonotonicTime;
+import jagex3.util.MonotonicTime;
 
 import java.awt.*;
 import java.awt.event.*;

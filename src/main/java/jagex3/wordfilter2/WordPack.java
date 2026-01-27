@@ -4,7 +4,6 @@ import deob.ObfuscatedName;
 import jagex3.io.Packet;
 import jagex3.io.PacketBit;
 import jagex3.jstring.Cp1252;
-import jagex3.wordfilter2.huffman.Huffman;
 
 // jag::game::WordPack
 @ObfuscatedName("dz")

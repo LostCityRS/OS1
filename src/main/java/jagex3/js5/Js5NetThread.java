@@ -3,7 +3,7 @@ package jagex3.js5;
 import deob.ObfuscatedName;
 import jagex3.callstack.JagException;
 import jagex3.datastruct.LinkList;
-import jagex3.io.net.DataFile;
+import jagex3.io.DataFile;
 import jagex3.util.ThreadSleep;
 
 // jag::oldscape::jagex3::Js5NetThread

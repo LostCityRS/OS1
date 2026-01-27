@@ -3,9 +3,9 @@ package jagex3.js5;
 import deob.ObfuscatedName;
 import jagex3.client.GameShell;
 import jagex3.datastruct.LinkList;
+import jagex3.io.ByteArrayWrapper;
+import jagex3.io.DataFile;
 import jagex3.io.Packet;
-import jagex3.io.net.DataFile;
-import jagex3.io.wrap.ByteArrayWrapper;
 
 import java.util.zip.CRC32;
 
