@@ -10,37 +10,37 @@ import java.util.Random;
 public abstract class PixFont extends Pix2D {
 
 	@ObfuscatedName("fs.u")
-	public byte[][] field2556 = new byte[256][];
+	public byte[][] glyphs = new byte[256][];
 
 	@ObfuscatedName("fs.v")
-	public int[] field2554;
+	public int[] charAdvance;
 
 	@ObfuscatedName("fs.w")
-	public int[] field2548;
+	public int[] glyphWidth;
 
 	@ObfuscatedName("fs.e")
-	public int[] field2551;
+	public int[] glyphHeight;
 
 	@ObfuscatedName("fs.b")
-	public int[] field2544;
+	public int[] glyphOffsetX;
 
 	@ObfuscatedName("fs.y")
-	public int[] field2549;
+	public int[] glyphOffsetY;
 
 	@ObfuscatedName("fs.t")
-	public int field2550 = 0;
+	public int ascent = 0;
 
 	@ObfuscatedName("fs.f")
-	public int field2552;
+	public int maxAscent;
 
 	@ObfuscatedName("fs.k")
-	public int field2546;
+	public int maxDescent;
 
 	@ObfuscatedName("fs.o")
 	public static Pix8[] modicons;
 
 	@ObfuscatedName("fs.a")
-	public byte[] field2547;
+	public byte[] kerningPairs;
 
 	// jag::oldscape::jstring::PixfontGeneric::m_strikeout
 	@ObfuscatedName("fs.h")
@@ -87,24 +87,24 @@ public abstract class PixFont extends Pix2D {
 	public static String[] lines = new String[100];
 
 	public PixFont(byte[] arg0, int[] arg1, int[] arg2, int[] arg3, int[] arg4, int[] arg5, byte[][] arg6) {
-		this.field2544 = arg1;
-		this.field2549 = arg2;
-		this.field2548 = arg3;
-		this.field2551 = arg4;
+		this.glyphOffsetX = arg1;
+		this.glyphOffsetY = arg2;
+		this.glyphWidth = arg3;
+		this.glyphHeight = arg4;
 		this.unpackMetrics(arg0);
-		this.field2556 = arg6;
+		this.glyphs = arg6;
 		int var8 = Integer.MAX_VALUE;
 		int var9 = Integer.MIN_VALUE;
 		for (int var10 = 0; var10 < 256; var10++) {
-			if (this.field2549[var10] < var8 && this.field2551[var10] != 0) {
-				var8 = this.field2549[var10];
+			if (this.glyphOffsetY[var10] < var8 && this.glyphHeight[var10] != 0) {
+				var8 = this.glyphOffsetY[var10];
 			}
-			if (this.field2551[var10] + this.field2549[var10] > var9) {
-				var9 = this.field2551[var10] + this.field2549[var10];
+			if (this.glyphHeight[var10] + this.glyphOffsetY[var10] > var9) {
+				var9 = this.glyphHeight[var10] + this.glyphOffsetY[var10];
 			}
 		}
-		this.field2552 = this.field2550 - var8;
-		this.field2546 = var9 - this.field2550;
+		this.maxAscent = this.ascent - var8;
+		this.maxDescent = var9 - this.ascent;
 	}
 
 	public PixFont(byte[] src) {
@@ -114,19 +114,19 @@ public abstract class PixFont extends Pix2D {
 	// jag::oldscape::jstring::PixfontGeneric::UnpackMetrics
 	@ObfuscatedName("fs.bm([B)V")
 	public void unpackMetrics(byte[] src) {
-		this.field2554 = new int[256];
+		this.charAdvance = new int[256];
 
 		if (src.length == 257) {
-			for (int var2 = 0; var2 < this.field2554.length; var2++) {
-				this.field2554[var2] = src[var2] & 0xFF;
+			for (int var2 = 0; var2 < this.charAdvance.length; var2++) {
+				this.charAdvance[var2] = src[var2] & 0xFF;
 			}
-			this.field2550 = src[256] & 0xFF;
+			this.ascent = src[256] & 0xFF;
 			return;
 		}
 
 		int var3 = 0;
 		for (int var4 = 0; var4 < 256; var4++) {
-			this.field2554[var4] = src[var3++] & 0xFF;
+			this.charAdvance[var4] = src[var3++] & 0xFF;
 		}
 
 		int[] var5 = new int[256];
@@ -158,19 +158,18 @@ public abstract class PixFont extends Pix2D {
 			}
 		}
 
-		this.field2547 = new byte[65536];
-
+		this.kerningPairs = new byte[65536];
 		for (int var17 = 0; var17 < 256; var17++) {
 			if (var17 != 32 && var17 != 160) {
 				for (int var18 = 0; var18 < 256; var18++) {
 					if (var18 != 32 && var18 != 160) {
-						this.field2547[(var17 << 8) + var18] = (byte) kernPair(var9, var13, var6, this.field2554, var5, var17, var18);
+						this.kerningPairs[(var17 << 8) + var18] = (byte) kernPair(var9, var13, var6, this.charAdvance, var5, var17, var18);
 					}
 				}
 			}
 		}
 
-		this.field2550 = var5[32] + var6[32];
+		this.ascent = var5[32] + var6[32];
 	}
 
 	// jag::oldscape::jstring::PixfontGeneric::KernPair
@@ -211,7 +210,7 @@ public abstract class PixFont extends Pix2D {
 		if (arg0 == 160) {
 			arg0 = 32;
 		}
-		return this.field2554[arg0 & 0xFF];
+		return this.charAdvance[arg0 & 0xFF];
 	}
 
 	// jag::oldscape::jstring::PixfontGeneric::StringWid
@@ -253,9 +252,9 @@ public abstract class PixFont extends Pix2D {
 					var6 = ' ';
 				}
 				if (var2 == -1) {
-					var4 += this.field2554[var6];
-					if (this.field2547 != null && var3 != -1) {
-						var4 += this.field2547[(var3 << 8) + var6];
+					var4 += this.charAdvance[var6];
+					if (this.kerningPairs != null && var3 != -1) {
+						var4 += this.kerningPairs[(var3 << 8) + var6];
 					}
 					var3 = var6;
 				}
@@ -300,14 +299,14 @@ public abstract class PixFont extends Pix2D {
 						var11 = 0;
 					} else if (var16.equals("lt")) {
 						var4 += this.charWid(60);
-						if (this.field2547 != null && var11 != -1) {
-							var4 += this.field2547[(var11 << 8) + 60];
+						if (this.kerningPairs != null && var11 != -1) {
+							var4 += this.kerningPairs[(var11 << 8) + 60];
 						}
 						var11 = '<';
 					} else if (var16.equals("gt")) {
 						var4 += this.charWid(62);
-						if (this.field2547 != null && var11 != -1) {
-							var4 += this.field2547[(var11 << 8) + 62];
+						if (this.kerningPairs != null && var11 != -1) {
+							var4 += this.kerningPairs[(var11 << 8) + 62];
 						}
 						var11 = '>';
 					} else if (var16.startsWith("img=")) {
@@ -325,8 +324,8 @@ public abstract class PixFont extends Pix2D {
 					if (var15 != -1) {
 						var6.append(var15);
 						var4 += this.charWid(var15);
-						if (this.field2547 != null && var11 != -1) {
-							var4 += this.field2547[(var11 << 8) + var15];
+						if (this.kerningPairs != null && var11 != -1) {
+							var4 += this.kerningPairs[(var11 << 8) + var15];
 						}
 						var11 = var15;
 					}
@@ -444,10 +443,10 @@ public abstract class PixFont extends Pix2D {
 		}
 		this.resetState(arg5, arg6);
 		if (arg9 == 0) {
-			arg9 = this.field2550;
+			arg9 = this.ascent;
 		}
 		int[] var11 = new int[] { arg3 };
-		if (arg4 < this.field2552 + this.field2546 + arg9 && arg4 < arg9 + arg9) {
+		if (arg4 < this.maxAscent + this.maxDescent + arg9 && arg4 < arg9 + arg9) {
 			var11 = null;
 		}
 		int var12 = this.splitString(arg0, var11, lines);
@@ -456,17 +455,17 @@ public abstract class PixFont extends Pix2D {
 		}
 		int var13;
 		if (arg8 == 0) {
-			var13 = this.field2552 + arg2;
+			var13 = this.maxAscent + arg2;
 		} else if (arg8 == 1) {
-			var13 = (arg4 - this.field2552 - this.field2546 - (var12 - 1) * arg9) / 2 + this.field2552 + arg2;
+			var13 = (arg4 - this.maxAscent - this.maxDescent - (var12 - 1) * arg9) / 2 + this.maxAscent + arg2;
 		} else if (arg8 == 2) {
-			var13 = arg2 + arg4 - this.field2546 - (var12 - 1) * arg9;
+			var13 = arg2 + arg4 - this.maxDescent - (var12 - 1) * arg9;
 		} else {
-			int var14 = (arg4 - this.field2552 - this.field2546 - (var12 - 1) * arg9) / (var12 + 1);
+			int var14 = (arg4 - this.maxAscent - this.maxDescent - (var12 - 1) * arg9) / (var12 + 1);
 			if (var14 < 0) {
 				var14 = 0;
 			}
-			var13 = this.field2552 + arg2 + var14;
+			var13 = this.maxAscent + arg2 + var14;
 			arg9 += var14;
 		}
 		for (int var15 = 0; var15 < var12; var15++) {
@@ -626,7 +625,7 @@ public abstract class PixFont extends Pix2D {
 	// jag::oldscape::jstring::PixfontGeneric::DrawStringInner
 	@ObfuscatedName("fs.cm(Ljava/lang/String;II)V")
 	public void drawStringInner(String arg0, int arg1, int arg2) {
-		int var4 = arg2 - this.field2550;
+		int var4 = arg2 - this.ascent;
 		int var5 = -1;
 		int var6 = -1;
 		for (int var7 = 0; var7 < arg0.length(); var7++) {
@@ -648,7 +647,7 @@ public abstract class PixFont extends Pix2D {
 								String var10 = var9.substring(4);
 								int var11 = StringTools.checkedParseInt(var10, 10, true);
 								Pix8 var13 = modicons[var11];
-								var13.plotSprite(arg1, this.field2550 + var4 - var13.ohi);
+								var13.plotSprite(arg1, this.ascent + var4 - var13.ohi);
 								arg1 += var13.owi;
 								var6 = -1;
 							} catch (Exception ignore) {
@@ -669,12 +668,12 @@ public abstract class PixFont extends Pix2D {
 			}
 
 			if (var5 == -1) {
-				if (this.field2547 != null && var6 != -1) {
-					arg1 += this.field2547[(var6 << 8) + var8];
+				if (this.kerningPairs != null && var6 != -1) {
+					arg1 += this.kerningPairs[(var6 << 8) + var8];
 				}
 
-				int var15 = this.field2548[var8];
-				int var16 = this.field2551[var8];
+				int var15 = this.glyphWidth[var8];
+				int var16 = this.glyphHeight[var8];
 				if (var8 == ' ') {
 					if (extraSpaceWidth > 0) {
 						extraSpacePos += extraSpaceWidth;
@@ -683,24 +682,24 @@ public abstract class PixFont extends Pix2D {
 					}
 				} else if (alpha == 256) {
 					if (currentShadow != -1) {
-						plotLetter(this.field2556[var8], this.field2544[var8] + arg1 + 1, this.field2549[var8] + var4 + 1, var15, var16, currentShadow);
+						plotLetter(this.glyphs[var8], this.glyphOffsetX[var8] + arg1 + 1, this.glyphOffsetY[var8] + var4 + 1, var15, var16, currentShadow);
 					}
 
-					this.plotLetterScanline(this.field2556[var8], this.field2544[var8] + arg1, this.field2549[var8] + var4, var15, var16, currentCol);
+					this.plotLetterScanline(this.glyphs[var8], this.glyphOffsetX[var8] + arg1, this.glyphOffsetY[var8] + var4, var15, var16, currentCol);
 				} else {
 					if (currentShadow != -1) {
-						plotLetterTrans(this.field2556[var8], this.field2544[var8] + arg1 + 1, this.field2549[var8] + var4 + 1, var15, var16, currentShadow, alpha);
+						plotLetterTrans(this.glyphs[var8], this.glyphOffsetX[var8] + arg1 + 1, this.glyphOffsetY[var8] + var4 + 1, var15, var16, currentShadow, alpha);
 					}
 
-					this.plotLetterTransScanline(this.field2556[var8], this.field2544[var8] + arg1, this.field2549[var8] + var4, var15, var16, currentCol, alpha);
+					this.plotLetterTransScanline(this.glyphs[var8], this.glyphOffsetX[var8] + arg1, this.glyphOffsetY[var8] + var4, var15, var16, currentCol, alpha);
 				}
 
-				int var17 = this.field2554[var8];
+				int var17 = this.charAdvance[var8];
 				if (strikeout != -1) {
-					hline(arg1, (int) ((double) this.field2550 * 0.7D) + var4, var17, strikeout);
+					hline(arg1, (int) ((double) this.ascent * 0.7D) + var4, var17, strikeout);
 				}
 				if (underline != -1) {
-					hline(arg1, this.field2550 + var4 + 1, var17, underline);
+					hline(arg1, this.ascent + var4 + 1, var17, underline);
 				}
 
 				arg1 += var17;
@@ -712,7 +711,7 @@ public abstract class PixFont extends Pix2D {
 	// jag::oldscape::jstring::PixfontGeneric::DrawStringInnerCustomOffsetsAndColours
 	@ObfuscatedName("fs.cw(Ljava/lang/String;II[I[I)V")
 	public void drawStringInnerCustomOffsetsAndColours(String arg0, int arg1, int arg2, int[] arg3, int[] arg4) {
-		int var6 = arg2 - this.field2550;
+		int var6 = arg2 - this.ascent;
 		int var7 = -1;
 		int var8 = -1;
 		int var9 = 0;
@@ -748,7 +747,7 @@ public abstract class PixFont extends Pix2D {
 								String var15 = var12.substring(4);
 								int var16 = StringTools.checkedParseInt(var15, 10, true);
 								Pix8 var18 = modicons[var16];
-								var18.plotSprite(arg1 + var13, this.field2550 + var6 - var18.ohi + var14);
+								var18.plotSprite(arg1 + var13, this.ascent + var6 - var18.ohi + var14);
 								arg1 += var18.owi;
 								var8 = -1;
 							} catch (Exception ignore) {
@@ -769,12 +768,12 @@ public abstract class PixFont extends Pix2D {
 			}
 
 			if (var7 == -1) {
-				if (this.field2547 != null && var8 != -1) {
-					arg1 += this.field2547[(var8 << 8) + var11];
+				if (this.kerningPairs != null && var8 != -1) {
+					arg1 += this.kerningPairs[(var8 << 8) + var11];
 				}
 
-				int var20 = this.field2548[var11];
-				int var21 = this.field2551[var11];
+				int var20 = this.glyphWidth[var11];
+				int var21 = this.glyphHeight[var11];
 				int var22;
 				if (arg3 == null) {
 					var22 = 0;
@@ -796,24 +795,24 @@ public abstract class PixFont extends Pix2D {
 					}
 				} else if (alpha == 256) {
 					if (currentShadow != -1) {
-						plotLetter(this.field2556[var11], this.field2544[var11] + arg1 + 1 + var22, this.field2549[var11] + var6 + 1 + var23, var20, var21, currentShadow);
+						plotLetter(this.glyphs[var11], this.glyphOffsetX[var11] + arg1 + 1 + var22, this.glyphOffsetY[var11] + var6 + 1 + var23, var20, var21, currentShadow);
 					}
 
-					this.plotLetterScanline(this.field2556[var11], this.field2544[var11] + arg1 + var22, this.field2549[var11] + var6 + var23, var20, var21, currentCol);
+					this.plotLetterScanline(this.glyphs[var11], this.glyphOffsetX[var11] + arg1 + var22, this.glyphOffsetY[var11] + var6 + var23, var20, var21, currentCol);
 				} else {
 					if (currentShadow != -1) {
-						plotLetterTrans(this.field2556[var11], this.field2544[var11] + arg1 + 1 + var22, this.field2549[var11] + var6 + 1 + var23, var20, var21, currentShadow, alpha);
+						plotLetterTrans(this.glyphs[var11], this.glyphOffsetX[var11] + arg1 + 1 + var22, this.glyphOffsetY[var11] + var6 + 1 + var23, var20, var21, currentShadow, alpha);
 					}
 
-					this.plotLetterTransScanline(this.field2556[var11], this.field2544[var11] + arg1 + var22, this.field2549[var11] + var6 + var23, var20, var21, currentCol, alpha);
+					this.plotLetterTransScanline(this.glyphs[var11], this.glyphOffsetX[var11] + arg1 + var22, this.glyphOffsetY[var11] + var6 + var23, var20, var21, currentCol, alpha);
 				}
 
-				int var24 = this.field2554[var11];
+				int var24 = this.charAdvance[var11];
 				if (strikeout != -1) {
-					hline(arg1, (int) ((double) this.field2550 * 0.7D) + var6, var24, strikeout);
+					hline(arg1, (int) ((double) this.ascent * 0.7D) + var6, var24, strikeout);
 				}
 				if (underline != -1) {
-					hline(arg1, this.field2550 + var6, var24, underline);
+					hline(arg1, this.ascent + var6, var24, underline);
 				}
 
 				arg1 += var24;

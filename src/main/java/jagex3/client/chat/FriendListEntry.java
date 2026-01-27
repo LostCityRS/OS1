@@ -9,17 +9,17 @@ public class FriendListEntry {
 	public String name;
 
 	@ObfuscatedName("q.d")
-	public String field177;
+	public String previousName;
 
 	@ObfuscatedName("q.l")
-	public int field174;
+	public int worldId;
 
 	@ObfuscatedName("q.m")
-	public int field175;
+	public int rank;
 
 	@ObfuscatedName("q.c")
-	public boolean field172;
+	public boolean referrer;
 
 	@ObfuscatedName("q.n")
-	public boolean field176;
+	public boolean referred;
 }

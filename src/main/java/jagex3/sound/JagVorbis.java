@@ -11,32 +11,32 @@ import jagex3.js5.Js5;
 public class JagVorbis extends Linkable {
 
 	@ObfuscatedName("dt.m")
-	public byte[][] field1674;
+	public byte[][] audioPackets;
 
 	@ObfuscatedName("dt.c")
-	public int field1648;
+	public int sampleRate;
 
 	@ObfuscatedName("dt.n")
-	public int field1670;
+	public int sampleCount;
 
 	@ObfuscatedName("dt.j")
-	public int field1676;
+	public int loopStart;
 
 	@ObfuscatedName("dt.z")
-	public int field1677;
+	public int loopEnd;
 
 	@ObfuscatedName("dt.g")
-	public boolean field1652;
+	public boolean hasLoop;
 
 	// jag::oldscape::sound::JagVorbis::m_staticUnpacker
 	@ObfuscatedName("dt.q")
 	public static byte[] staticUnpacker;
 
 	@ObfuscatedName("dt.i")
-	public static int field1654;
+	public static int bytePos;
 
 	@ObfuscatedName("dt.s")
-	public static int field1655;
+	public static int bitPos;
 
 	// jag::oldscape::sound::JagVorbis::m_blocksize0
 	@ObfuscatedName("dt.u")
@@ -70,52 +70,52 @@ public class JagVorbis extends Linkable {
 	public static boolean gotHeaders = false;
 
 	@ObfuscatedName("dt.o")
-	public float[] field1665;
+	public float[] previousWindow;
 
 	@ObfuscatedName("dt.a")
-	public int field1666;
+	public int previousWindowSize;
 
 	@ObfuscatedName("dt.h")
-	public int field1667;
+	public int previousWindowRightStart;
 
 	@ObfuscatedName("dt.x")
-	public boolean field1651;
+	public boolean previousWindowUnused;
 
 	@ObfuscatedName("dt.p")
-	public static float[] field1649;
+	public static float[] workBuffer;
 
 	@ObfuscatedName("dt.ad")
-	public static float[] field1669;
+	public static float[] imdctPrevShort;
 
 	@ObfuscatedName("dt.ac")
-	public static float[] field1671;
+	public static float[] imdctStepShort;
 
 	@ObfuscatedName("dt.aa")
-	public static float[] field1672;
+	public static float[] imdctPostShort;
 
 	@ObfuscatedName("dt.as")
-	public static float[] field1673;
+	public static float[] imdctPrevLong;
 
 	@ObfuscatedName("dt.am")
-	public static float[] field1678;
+	public static float[] imdctStepLong;
 
 	@ObfuscatedName("dt.ap")
-	public static float[] field1675;
+	public static float[] imdctPostLong;
 
 	@ObfuscatedName("dt.av")
-	public static int[] field1656;
+	public static int[] bitReverseShort;
 
 	@ObfuscatedName("dt.ak")
-	public static int[] field1647;
+	public static int[] bitReverseLong;
 
 	@ObfuscatedName("dt.az")
-	public byte[] field1660;
+	public byte[] pcmData;
 
 	@ObfuscatedName("dt.an")
-	public int field1679;
+	public int pcmWritePosition;
 
 	@ObfuscatedName("dt.ah")
-	public int field1680;
+	public int currentPacketIndex;
 
 	// jag::oldscape::sound::JagVorbis::Float32Unpack
 	@ObfuscatedName("dt.c(I)F")
@@ -133,17 +133,17 @@ public class JagVorbis extends Linkable {
 	@ObfuscatedName("dt.n([BI)V")
 	public static void setBitPos(byte[] arg0, int arg1) {
 		staticUnpacker = arg0;
-		field1654 = arg1;
-		field1655 = 0;
+		bytePos = arg1;
+		bitPos = 0;
 	}
 
 	// jag::oldscape::sound::BitUnpacker::ReadBit
 	@ObfuscatedName("dt.j()I")
 	public static int readBit() {
-		int var0 = staticUnpacker[field1654] >> field1655 & 0x1;
-		field1655++;
-		field1654 += field1655 >> 3;
-		field1655 &= 0x7;
+		int var0 = staticUnpacker[bytePos] >> bitPos & 0x1;
+		bitPos++;
+		bytePos += bitPos >> 3;
+		bitPos &= 0x7;
 		return var0;
 	}
 
@@ -153,20 +153,20 @@ public class JagVorbis extends Linkable {
 		int var1 = 0;
 		int var2 = 0;
 
-		while (n >= 8 - field1655) {
-			int var3 = 8 - field1655;
+		while (n >= 8 - bitPos) {
+			int var3 = 8 - bitPos;
 			int var4 = (0x1 << var3) - 1;
-			var1 += (staticUnpacker[field1654] >> field1655 & var4) << var2;
-			field1655 = 0;
-			field1654++;
+			var1 += (staticUnpacker[bytePos] >> bitPos & var4) << var2;
+			bitPos = 0;
+			bytePos++;
 			var2 += var3;
 			n -= var3;
 		}
 
 		if (n > 0) {
 			int var5 = (0x1 << n) - 1;
-			var1 += (staticUnpacker[field1654] >> field1655 & var5) << var2;
-			field1655 += n;
+			var1 += (staticUnpacker[bytePos] >> bitPos & var5) << var2;
+			bitPos += n;
 		}
 
 		return var1;
@@ -176,16 +176,16 @@ public class JagVorbis extends Linkable {
 	@ObfuscatedName("dt.g([B)V")
 	public void decodeJagVorbis(byte[] arg0) {
 		Packet var2 = new Packet(arg0);
-		this.field1648 = var2.g4();
-		this.field1670 = var2.g4();
-		this.field1676 = var2.g4();
-		this.field1677 = var2.g4();
-		if (this.field1677 < 0) {
-			this.field1677 = ~this.field1677;
-			this.field1652 = true;
+		this.sampleRate = var2.g4();
+		this.sampleCount = var2.g4();
+		this.loopStart = var2.g4();
+		this.loopEnd = var2.g4();
+		if (this.loopEnd < 0) {
+			this.loopEnd = ~this.loopEnd;
+			this.hasLoop = true;
 		}
 		int var3 = var2.g4();
-		this.field1674 = new byte[var3][];
+		this.audioPackets = new byte[var3][];
 		for (int var4 = 0; var4 < var3; var4++) {
 			int var5 = 0;
 			int var6;
@@ -195,7 +195,7 @@ public class JagVorbis extends Linkable {
 			} while (var6 >= 255);
 			byte[] var7 = new byte[var5];
 			var2.gdata(var7, 0, var5);
-			this.field1674[var4] = var7;
+			this.audioPackets[var4] = var7;
 		}
 	}
 
@@ -205,7 +205,7 @@ public class JagVorbis extends Linkable {
 		setBitPos(src, 0);
 		blocksize0 = 0x1 << readBits(4);
 		blocksize1 = 0x1 << readBits(4);
-		field1649 = new float[blocksize1];
+		workBuffer = new float[blocksize1];
 
 		for (int var1 = 0; var1 < 2; var1++) {
 			int var2 = var1 == 0 ? blocksize0 : blocksize1;
@@ -241,15 +241,15 @@ public class JagVorbis extends Linkable {
 				var12[var14] = var19;
 			}
 			if (var1 == 0) {
-				field1669 = var6;
-				field1671 = var8;
-				field1672 = var10;
-				field1656 = var12;
+				imdctPrevShort = var6;
+				imdctStepShort = var8;
+				imdctPostShort = var10;
+				bitReverseShort = var12;
 			} else {
-				field1673 = var6;
-				field1678 = var8;
-				field1675 = var10;
-				field1647 = var12;
+				imdctPrevLong = var6;
+				imdctStepLong = var8;
+				imdctPostLong = var10;
+				bitReverseLong = var12;
 			}
 		}
 
@@ -297,7 +297,7 @@ public class JagVorbis extends Linkable {
 	// jag::oldscape::sound::JagVorbis::DecodeAudioPacket
 	@ObfuscatedName("dt.i(I)[F")
 	public float[] decodeAudioPacket(int arg0) {
-		setBitPos(this.field1674[arg0], 0);
+		setBitPos(this.audioPackets[arg0], 0);
 		readBit();
 		int var2 = readBits(MathTool.bitsRequired(mapping.length - 1));
 
@@ -343,33 +343,33 @@ public class JagVorbis extends Linkable {
 		boolean var18 = var17;
 		for (int var19 = 0; var19 < var14.submaps; var19++) {
 			Residue var20 = residue_config[var14.submap_residue[var19]];
-			float[] var21 = field1649;
+			float[] var21 = workBuffer;
 			var20.packetDecode(var21, var4 >> 1, var18);
 		}
 		if (!var17) {
 			int var22 = var14.mux;
 			int var23 = var14.submap_floor[var22];
-			floor_config[var23].synthMul(field1649, var4 >> 1);
+			floor_config[var23].synthMul(workBuffer, var4 >> 1);
 		}
 		if (var17) {
 			for (int var24 = var4 >> 1; var24 < var4; var24++) {
-				field1649[var24] = 0.0F;
+				workBuffer[var24] = 0.0F;
 			}
 		} else {
 			int var25 = var4 >> 1;
 			int var26 = var4 >> 2;
 			int var27 = var4 >> 3;
-			float[] var28 = field1649;
+			float[] var28 = workBuffer;
 			for (int var29 = 0; var29 < var25; var29++) {
 				var28[var29] *= 0.5F;
 			}
 			for (int var30 = var25; var30 < var4; var30++) {
 				var28[var30] = -var28[var4 - var30 - 1];
 			}
-			float[] var31 = var3 ? field1673 : field1669;
-			float[] var32 = var3 ? field1678 : field1671;
-			float[] var33 = var3 ? field1675 : field1672;
-			int[] var34 = var3 ? field1647 : field1656;
+			float[] var31 = var3 ? imdctPrevLong : imdctPrevShort;
+			float[] var32 = var3 ? imdctStepLong : imdctStepShort;
+			float[] var33 = var3 ? imdctPostLong : imdctPostShort;
+			int[] var34 = var3 ? bitReverseLong : bitReverseShort;
 			for (int var35 = 0; var35 < var26; var35++) {
 				float var36 = var28[var35 * 4] - var28[var4 - var35 * 4 - 1];
 				float var37 = var28[var35 * 4 + 2] - var28[var4 - var35 * 4 - 3];
@@ -472,36 +472,36 @@ public class JagVorbis extends Linkable {
 			}
 			for (int var86 = var8; var86 < var9; var86++) {
 				float var87 = (float) Math.sin(((double) (var86 - var8) + 0.5D) / (double) var10 * 0.5D * 3.141592653589793D);
-				field1649[var86] *= (float) Math.sin((double) var87 * 1.5707963267948966D * (double) var87);
+				workBuffer[var86] *= (float) Math.sin((double) var87 * 1.5707963267948966D * (double) var87);
 			}
 			for (int var88 = var11; var88 < var12; var88++) {
 				float var89 = (float) Math.sin(((double) (var88 - var11) + 0.5D) / (double) var13 * 0.5D * 3.141592653589793D + 1.5707963267948966D);
-				field1649[var88] *= (float) Math.sin((double) var89 * 1.5707963267948966D * (double) var89);
+				workBuffer[var88] *= (float) Math.sin((double) var89 * 1.5707963267948966D * (double) var89);
 			}
 		}
 		float[] var90 = null;
-		if (this.field1666 > 0) {
-			int var91 = this.field1666 + var4 >> 2;
+		if (this.previousWindowSize > 0) {
+			int var91 = this.previousWindowSize + var4 >> 2;
 			var90 = new float[var91];
-			if (!this.field1651) {
-				for (int var92 = 0; var92 < this.field1667; var92++) {
-					int var93 = (this.field1666 >> 1) + var92;
-					var90[var92] += this.field1665[var93];
+			if (!this.previousWindowUnused) {
+				for (int var92 = 0; var92 < this.previousWindowRightStart; var92++) {
+					int var93 = (this.previousWindowSize >> 1) + var92;
+					var90[var92] += this.previousWindow[var93];
 				}
 			}
 			if (!var17) {
 				for (int var94 = var8; var94 < var4 >> 1; var94++) {
 					int var95 = var90.length - (var4 >> 1) + var94;
-					var90[var95] += field1649[var94];
+					var90[var95] += workBuffer[var94];
 				}
 			}
 		}
-		float[] var96 = this.field1665;
-		this.field1665 = field1649;
-		field1649 = var96;
-		this.field1666 = var4;
-		this.field1667 = var12 - (var4 >> 1);
-		this.field1651 = var17;
+		float[] var96 = this.previousWindow;
+		this.previousWindow = workBuffer;
+		workBuffer = var96;
+		this.previousWindowSize = var4;
+		this.previousWindowRightStart = var12 - (var4 >> 1);
+		this.previousWindowUnused = var17;
 		return var90;
 	}
 
@@ -541,41 +541,41 @@ public class JagVorbis extends Linkable {
 		if (arg0 != null && arg0[0] <= 0) {
 			return null;
 		}
-		if (this.field1660 == null) {
-			this.field1666 = 0;
-			this.field1665 = new float[blocksize1];
-			this.field1660 = new byte[this.field1670];
-			this.field1679 = 0;
-			this.field1680 = 0;
+		if (this.pcmData == null) {
+			this.previousWindowSize = 0;
+			this.previousWindow = new float[blocksize1];
+			this.pcmData = new byte[this.sampleCount];
+			this.pcmWritePosition = 0;
+			this.currentPacketIndex = 0;
 		}
-		while (this.field1680 < this.field1674.length) {
+		while (this.currentPacketIndex < this.audioPackets.length) {
 			if (arg0 != null && arg0[0] <= 0) {
 				return null;
 			}
-			float[] var2 = this.decodeAudioPacket(this.field1680);
+			float[] var2 = this.decodeAudioPacket(this.currentPacketIndex);
 			if (var2 != null) {
-				int var3 = this.field1679;
+				int var3 = this.pcmWritePosition;
 				int var4 = var2.length;
-				if (var4 > this.field1670 - var3) {
-					var4 = this.field1670 - var3;
+				if (var4 > this.sampleCount - var3) {
+					var4 = this.sampleCount - var3;
 				}
 				for (int var5 = 0; var5 < var4; var5++) {
 					int var6 = (int) (var2[var5] * 128.0F + 128.0F);
 					if ((var6 & 0xFFFFFF00) != 0) {
 						var6 = ~var6 >> 31;
 					}
-					this.field1660[var3++] = (byte) (var6 - 128);
+					this.pcmData[var3++] = (byte) (var6 - 128);
 				}
 				if (arg0 != null) {
-					arg0[0] -= var3 - this.field1679;
+					arg0[0] -= var3 - this.pcmWritePosition;
 				}
-				this.field1679 = var3;
+				this.pcmWritePosition = var3;
 			}
-			this.field1680++;
+			this.currentPacketIndex++;
 		}
-		this.field1665 = null;
-		byte[] var7 = this.field1660;
-		this.field1660 = null;
-		return new Wave(this.field1648, var7, this.field1676, this.field1677, this.field1652);
+		this.previousWindow = null;
+		byte[] var7 = this.pcmData;
+		this.pcmData = null;
+		return new Wave(this.sampleRate, var7, this.loopStart, this.loopEnd, this.hasLoop);
 	}
 }

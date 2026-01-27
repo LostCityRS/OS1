@@ -32,7 +32,7 @@ public class ModelUnlit extends ModelSource {
 	public int[] faceVertexC;
 
 	@ObfuscatedName("fw.w")
-	public byte[] field2679;
+	public byte[] faceRenderType;
 
 	@ObfuscatedName("fw.e")
 	public byte[] facePriority;
@@ -41,13 +41,13 @@ public class ModelUnlit extends ModelSource {
 	public byte[] faceAlpha;
 
 	@ObfuscatedName("fw.y")
-	public byte[] field2682;
+	public byte[] faceTextureAxis;
 
 	@ObfuscatedName("fw.t")
 	public short[] faceColour;
 
 	@ObfuscatedName("fw.f")
-	public short[] field2705;
+	public short[] faceTextureId;
 
 	@ObfuscatedName("fw.k")
 	public byte priority = 0;
@@ -56,7 +56,7 @@ public class ModelUnlit extends ModelSource {
 	public int faceTextureCount;
 
 	@ObfuscatedName("fw.a")
-	public byte[] field2687;
+	public byte[] textureRenderType;
 
 	@ObfuscatedName("fw.h")
 	public short[] faceTextureP;
@@ -68,25 +68,25 @@ public class ModelUnlit extends ModelSource {
 	public short[] faceTextureN;
 
 	@ObfuscatedName("fw.ad")
-	public short[] field2691;
+	public short[] textureScaleX;
 
 	@ObfuscatedName("fw.ac")
-	public short[] field2692;
+	public short[] textureScaleY;
 
 	@ObfuscatedName("fw.aa")
-	public short[] field2693;
+	public short[] textureScaleZ;
 
 	@ObfuscatedName("fw.as")
-	public short[] field2694;
+	public short[] textureRotation;
 
 	@ObfuscatedName("fw.am")
-	public short[] field2695;
+	public short[] textureSpeed;
 
 	@ObfuscatedName("fw.ap")
-	public short[] field2696;
+	public short[] textureDirection;
 
 	@ObfuscatedName("fw.av")
-	public byte[] field2697;
+	public byte[] textureTranslation;
 
 	@ObfuscatedName("fw.ak")
 	public int[] vertexLabel;
@@ -107,7 +107,7 @@ public class ModelUnlit extends ModelSource {
 	public PointNormal[] vertexNormal;
 
 	@ObfuscatedName("fw.ab")
-	public PointNormal[] field2685;
+	public PointNormal[] sharedVertexNormals;
 
 	@ObfuscatedName("fw.ao")
 	public short ambient;
@@ -134,10 +134,10 @@ public class ModelUnlit extends ModelSource {
 	public int maxZ;
 
 	@ObfuscatedName("fw.ai")
-	public static int[] field2683 = new int[10000];
+	public static int[] shareTickA = new int[10000];
 
 	@ObfuscatedName("fw.aj")
-	public static int[] field2714 = new int[10000];
+	public static int[] shareTickB = new int[10000];
 
 	// jag::oldscape::dash3d::ModelUnlitImpl::m_shareTic
 	@ObfuscatedName("fw.aw")
@@ -198,11 +198,11 @@ public class ModelUnlit extends ModelSource {
 		int var24 = 0;
 		int var25 = 0;
 		if (var11 > 0) {
-			this.field2687 = new byte[var11];
+			this.textureRenderType = new byte[var11];
 			var1.pos = 0;
 
 			for (int var26 = 0; var26 < var11; var26++) {
-				byte var27 = this.field2687[var26] = var1.g1b();
+				byte var27 = this.textureRenderType[var26] = var1.g1b();
 				if (var27 == 0) {
 					var23++;
 				}
@@ -275,7 +275,7 @@ public class ModelUnlit extends ModelSource {
 		}
 
 		if (var12 == 1) {
-			this.field2679 = new byte[var10];
+			this.faceRenderType = new byte[var10];
 		}
 
 		if (hasPriorities == 255) {
@@ -293,11 +293,11 @@ public class ModelUnlit extends ModelSource {
 		}
 
 		if (var16 == 1) {
-			this.field2705 = new short[var10];
+			this.faceTextureId = new short[var10];
 		}
 
 		if (var16 == 1 && var11 > 0) {
-			this.field2682 = new byte[var10];
+			this.faceTextureAxis = new byte[var10];
 		}
 
 		this.faceColour = new short[var10];
@@ -305,23 +305,27 @@ public class ModelUnlit extends ModelSource {
 			this.faceTextureP = new short[var11];
 			this.faceTextureM = new short[var11];
 			this.faceTextureN = new short[var11];
+
 			if (var24 > 0) {
-				this.field2691 = new short[var24];
-				this.field2692 = new short[var24];
-				this.field2693 = new short[var24];
-				this.field2694 = new short[var24];
-				this.field2697 = new byte[var24];
-				this.field2695 = new short[var24];
+				this.textureScaleX = new short[var24];
+				this.textureScaleY = new short[var24];
+				this.textureScaleZ = new short[var24];
+				this.textureRotation = new short[var24];
+				this.textureTranslation = new byte[var24];
+				this.textureSpeed = new short[var24];
 			}
+
 			if (var25 > 0) {
-				this.field2696 = new short[var25];
+				this.textureDirection = new short[var25];
 			}
 		}
+
 		var1.pos = var11;
 		var3.pos = var44;
 		var4.pos = var46;
 		var5.pos = var48;
 		var6.pos = var36;
+
 		int var64 = 0;
 		int var65 = 0;
 		int var66 = 0;
@@ -339,16 +343,20 @@ public class ModelUnlit extends ModelSource {
 			if ((var68 & 0x4) != 0) {
 				var71 = var5.gsmarts();
 			}
+
 			this.vertexX[var67] = var64 + var69;
 			this.vertexY[var67] = var65 + var70;
 			this.vertexZ[var67] = var66 + var71;
+
 			var64 = this.vertexX[var67];
 			var65 = this.vertexY[var67];
 			var66 = this.vertexZ[var67];
+
 			if (var17 == 1) {
 				this.vertexLabel[var67] = var6.g1();
 			}
 		}
+
 		var1.pos = var42;
 		var3.pos = var31;
 		var4.pos = var34;
@@ -356,29 +364,38 @@ public class ModelUnlit extends ModelSource {
 		var6.pos = var35;
 		var7.pos = var40;
 		var8.pos = var39;
+
 		for (int var72 = 0; var72 < var10; var72++) {
 			this.faceColour[var72] = (short) var1.g2();
+
 			if (var12 == 1) {
-				this.field2679[var72] = var3.g1b();
+				this.faceRenderType[var72] = var3.g1b();
 			}
+
 			if (hasPriorities == 255) {
 				this.facePriority[var72] = var4.g1b();
 			}
+
 			if (var14 == 1) {
 				this.faceAlpha[var72] = var5.g1b();
 			}
+
 			if (var15 == 1) {
 				this.faceLabel[var72] = var6.g1();
 			}
+
 			if (var16 == 1) {
-				this.field2705[var72] = (short) (var7.g2() - 1);
+				this.faceTextureId[var72] = (short) (var7.g2() - 1);
 			}
-			if (this.field2682 != null && this.field2705[var72] != -1) {
-				this.field2682[var72] = (byte) (var8.g1() - 1);
+
+			if (this.faceTextureAxis != null && this.faceTextureId[var72] != -1) {
+				this.faceTextureAxis[var72] = (byte) (var8.g1() - 1);
 			}
 		}
+
 		var1.pos = var33;
 		var3.pos = var30;
+
 		int var73 = 0;
 		int var74 = 0;
 		int var75 = 0;
@@ -421,14 +438,16 @@ public class ModelUnlit extends ModelSource {
 				this.faceVertexC[var77] = var75;
 			}
 		}
+
 		var1.pos = var50;
 		var3.pos = var52;
 		var4.pos = var54;
 		var5.pos = var56;
 		var6.pos = var58;
 		var7.pos = var60;
+
 		for (int var82 = 0; var82 < var11; var82++) {
-			int var83 = this.field2687[var82] & 0xFF;
+			int var83 = this.textureRenderType[var82] & 0xFF;
 			if (var83 == 0) {
 				this.faceTextureP[var82] = (short) var1.g2();
 				this.faceTextureM[var82] = (short) var1.g2();
@@ -438,37 +457,38 @@ public class ModelUnlit extends ModelSource {
 				this.faceTextureP[var82] = (short) var3.g2();
 				this.faceTextureM[var82] = (short) var3.g2();
 				this.faceTextureN[var82] = (short) var3.g2();
-				this.field2691[var82] = (short) var4.g2();
-				this.field2692[var82] = (short) var4.g2();
-				this.field2693[var82] = (short) var4.g2();
-				this.field2694[var82] = (short) var5.g2();
-				this.field2697[var82] = var6.g1b();
-				this.field2695[var82] = (short) var7.g2();
+				this.textureScaleX[var82] = (short) var4.g2();
+				this.textureScaleY[var82] = (short) var4.g2();
+				this.textureScaleZ[var82] = (short) var4.g2();
+				this.textureRotation[var82] = (short) var5.g2();
+				this.textureTranslation[var82] = var6.g1b();
+				this.textureSpeed[var82] = (short) var7.g2();
 			}
 			if (var83 == 2) {
 				this.faceTextureP[var82] = (short) var3.g2();
 				this.faceTextureM[var82] = (short) var3.g2();
 				this.faceTextureN[var82] = (short) var3.g2();
-				this.field2691[var82] = (short) var4.g2();
-				this.field2692[var82] = (short) var4.g2();
-				this.field2693[var82] = (short) var4.g2();
-				this.field2694[var82] = (short) var5.g2();
-				this.field2697[var82] = var6.g1b();
-				this.field2695[var82] = (short) var7.g2();
-				this.field2696[var82] = (short) var7.g2();
+				this.textureScaleX[var82] = (short) var4.g2();
+				this.textureScaleY[var82] = (short) var4.g2();
+				this.textureScaleZ[var82] = (short) var4.g2();
+				this.textureRotation[var82] = (short) var5.g2();
+				this.textureTranslation[var82] = var6.g1b();
+				this.textureSpeed[var82] = (short) var7.g2();
+				this.textureDirection[var82] = (short) var7.g2();
 			}
 			if (var83 == 3) {
 				this.faceTextureP[var82] = (short) var3.g2();
 				this.faceTextureM[var82] = (short) var3.g2();
 				this.faceTextureN[var82] = (short) var3.g2();
-				this.field2691[var82] = (short) var4.g2();
-				this.field2692[var82] = (short) var4.g2();
-				this.field2693[var82] = (short) var4.g2();
-				this.field2694[var82] = (short) var5.g2();
-				this.field2697[var82] = var6.g1b();
-				this.field2695[var82] = (short) var7.g2();
+				this.textureScaleX[var82] = (short) var4.g2();
+				this.textureScaleY[var82] = (short) var4.g2();
+				this.textureScaleZ[var82] = (short) var4.g2();
+				this.textureRotation[var82] = (short) var5.g2();
+				this.textureTranslation[var82] = var6.g1b();
+				this.textureSpeed[var82] = (short) var7.g2();
 			}
 		}
+
 		var1.pos = var62;
 		int var84 = var1.g1();
 		if (var84 != 0) {
@@ -569,7 +589,7 @@ public class ModelUnlit extends ModelSource {
 		this.faceVertexC = new int[faceCount];
 
 		if (faceTextureCount > 0) {
-			this.field2687 = new byte[faceTextureCount];
+			this.textureRenderType = new byte[faceTextureCount];
 			this.faceTextureP = new short[faceTextureCount];
 			this.faceTextureM = new short[faceTextureCount];
 			this.faceTextureN = new short[faceTextureCount];
@@ -580,9 +600,9 @@ public class ModelUnlit extends ModelSource {
 		}
 
 		if (hasFaceInfo == 1) {
-			this.field2679 = new byte[faceCount];
-			this.field2682 = new byte[faceCount];
-			this.field2705 = new short[faceCount];
+			this.faceRenderType = new byte[faceCount];
+			this.faceTextureAxis = new byte[faceCount];
+			this.faceTextureId = new short[faceCount];
 		}
 
 		if (priority == 255) {
@@ -671,21 +691,21 @@ public class ModelUnlit extends ModelSource {
 			if (hasFaceInfo == 1) {
 				int var52 = face2.g1();
 				if ((var52 & 0x1) == 1) {
-					this.field2679[f] = 1;
+					this.faceRenderType[f] = 1;
 					var2 = true;
 				} else {
-					this.field2679[f] = 0;
+					this.faceRenderType[f] = 0;
 				}
 				if ((var52 & 0x2) == 2) {
-					this.field2682[f] = (byte) (var52 >> 2);
-					this.field2705[f] = this.faceColour[f];
+					this.faceTextureAxis[f] = (byte) (var52 >> 2);
+					this.faceTextureId[f] = this.faceColour[f];
 					this.faceColour[f] = 127;
-					if (this.field2705[f] != -1) {
+					if (this.faceTextureId[f] != -1) {
 						var3 = true;
 					}
 				} else {
-					this.field2682[f] = -1;
-					this.field2705[f] = -1;
+					this.faceTextureAxis[f] = -1;
+					this.faceTextureId[f] = -1;
 				}
 			}
 
@@ -745,35 +765,35 @@ public class ModelUnlit extends ModelSource {
 		axis.pos = faceTextureAxisOffset;
 
 		for (int f = 0; f < faceTextureCount; f++) {
-			this.field2687[f] = 0;
+			this.textureRenderType[f] = 0;
 			this.faceTextureP[f] = (short) axis.g2();
 			this.faceTextureM[f] = (short) axis.g2();
 			this.faceTextureN[f] = (short) axis.g2();
 		}
 
-		if (this.field2682 != null) {
+		if (this.faceTextureAxis != null) {
 			boolean var63 = false;
 			for (int var64 = 0; var64 < faceCount; var64++) {
-				int var65 = this.field2682[var64] & 0xFF;
+				int var65 = this.faceTextureAxis[var64] & 0xFF;
 				if (var65 != 255) {
 					if ((this.faceTextureP[var65] & 0xFFFF) == this.faceVertexA[var64] && (this.faceTextureM[var65] & 0xFFFF) == this.faceVertexB[var64] && (this.faceTextureN[var65] & 0xFFFF) == this.faceVertexC[var64]) {
-						this.field2682[var64] = -1;
+						this.faceTextureAxis[var64] = -1;
 					} else {
 						var63 = true;
 					}
 				}
 			}
 			if (!var63) {
-				this.field2682 = null;
+				this.faceTextureAxis = null;
 			}
 		}
 
 		if (!var3) {
-			this.field2705 = null;
+			this.faceTextureId = null;
 		}
 
 		if (!var2) {
-			this.field2679 = null;
+			this.faceRenderType = null;
 		}
 	}
 
@@ -804,11 +824,11 @@ public class ModelUnlit extends ModelSource {
 				} else {
 					var4 = true;
 				}
-				var3 |= var10.field2679 != null;
+				var3 |= var10.faceRenderType != null;
 				var5 |= var10.faceAlpha != null;
 				var6 |= var10.faceLabel != null;
-				var7 |= var10.field2705 != null;
-				var8 |= var10.field2682 != null;
+				var7 |= var10.faceTextureId != null;
+				var8 |= var10.faceTextureAxis != null;
 			}
 		}
 		this.vertexX = new int[this.vertexCount];
@@ -819,7 +839,7 @@ public class ModelUnlit extends ModelSource {
 		this.faceVertexB = new int[this.faceCount];
 		this.faceVertexC = new int[this.faceCount];
 		if (var3) {
-			this.field2679 = new byte[this.faceCount];
+			this.faceRenderType = new byte[this.faceCount];
 		}
 		if (var4) {
 			this.facePriority = new byte[this.faceCount];
@@ -831,24 +851,24 @@ public class ModelUnlit extends ModelSource {
 			this.faceLabel = new int[this.faceCount];
 		}
 		if (var7) {
-			this.field2705 = new short[this.faceCount];
+			this.faceTextureId = new short[this.faceCount];
 		}
 		if (var8) {
-			this.field2682 = new byte[this.faceCount];
+			this.faceTextureAxis = new byte[this.faceCount];
 		}
 		this.faceColour = new short[this.faceCount];
 		if (this.faceTextureCount > 0) {
-			this.field2687 = new byte[this.faceTextureCount];
+			this.textureRenderType = new byte[this.faceTextureCount];
 			this.faceTextureP = new short[this.faceTextureCount];
 			this.faceTextureM = new short[this.faceTextureCount];
 			this.faceTextureN = new short[this.faceTextureCount];
-			this.field2691 = new short[this.faceTextureCount];
-			this.field2692 = new short[this.faceTextureCount];
-			this.field2693 = new short[this.faceTextureCount];
-			this.field2694 = new short[this.faceTextureCount];
-			this.field2697 = new byte[this.faceTextureCount];
-			this.field2695 = new short[this.faceTextureCount];
-			this.field2696 = new short[this.faceTextureCount];
+			this.textureScaleX = new short[this.faceTextureCount];
+			this.textureScaleY = new short[this.faceTextureCount];
+			this.textureScaleZ = new short[this.faceTextureCount];
+			this.textureRotation = new short[this.faceTextureCount];
+			this.textureTranslation = new byte[this.faceTextureCount];
+			this.textureSpeed = new short[this.faceTextureCount];
+			this.textureDirection = new short[this.faceTextureCount];
 		}
 		this.vertexCount = 0;
 		this.faceCount = 0;
@@ -857,8 +877,8 @@ public class ModelUnlit extends ModelSource {
 			ModelUnlit var12 = arg0[var11];
 			if (var12 != null) {
 				for (int var13 = 0; var13 < var12.faceCount; var13++) {
-					if (var3 && var12.field2679 != null) {
-						this.field2679[this.faceCount] = var12.field2679[var13];
+					if (var3 && var12.faceRenderType != null) {
+						this.faceRenderType[this.faceCount] = var12.faceRenderType[var13];
 					}
 					if (var4) {
 						if (var12.facePriority == null) {
@@ -874,17 +894,17 @@ public class ModelUnlit extends ModelSource {
 						this.faceLabel[this.faceCount] = var12.faceLabel[var13];
 					}
 					if (var7) {
-						if (var12.field2705 == null) {
-							this.field2705[this.faceCount] = -1;
+						if (var12.faceTextureId == null) {
+							this.faceTextureId[this.faceCount] = -1;
 						} else {
-							this.field2705[this.faceCount] = var12.field2705[var13];
+							this.faceTextureId[this.faceCount] = var12.faceTextureId[var13];
 						}
 					}
 					if (var8) {
-						if (var12.field2682 == null || var12.field2682[var13] == -1) {
-							this.field2682[this.faceCount] = -1;
+						if (var12.faceTextureAxis == null || var12.faceTextureAxis[var13] == -1) {
+							this.faceTextureAxis[this.faceCount] = -1;
 						} else {
-							this.field2682[this.faceCount] = (byte) (var12.field2682[var13] + this.faceTextureCount);
+							this.faceTextureAxis[this.faceCount] = (byte) (var12.faceTextureAxis[var13] + this.faceTextureCount);
 						}
 					}
 					this.faceColour[this.faceCount] = var12.faceColour[var13];
@@ -894,7 +914,7 @@ public class ModelUnlit extends ModelSource {
 					this.faceCount++;
 				}
 				for (int var14 = 0; var14 < var12.faceTextureCount; var14++) {
-					byte var15 = this.field2687[this.faceTextureCount] = var12.field2687[var14];
+					byte var15 = this.textureRenderType[this.faceTextureCount] = var12.textureRenderType[var14];
 					if (var15 == 0) {
 						this.faceTextureP[this.faceTextureCount] = (short) this.addPoint(var12, var12.faceTextureP[var14]);
 						this.faceTextureM[this.faceTextureCount] = (short) this.addPoint(var12, var12.faceTextureM[var14]);
@@ -904,15 +924,15 @@ public class ModelUnlit extends ModelSource {
 						this.faceTextureP[this.faceTextureCount] = var12.faceTextureP[var14];
 						this.faceTextureM[this.faceTextureCount] = var12.faceTextureM[var14];
 						this.faceTextureN[this.faceTextureCount] = var12.faceTextureN[var14];
-						this.field2691[this.faceTextureCount] = var12.field2691[var14];
-						this.field2692[this.faceTextureCount] = var12.field2692[var14];
-						this.field2693[this.faceTextureCount] = var12.field2693[var14];
-						this.field2694[this.faceTextureCount] = var12.field2694[var14];
-						this.field2697[this.faceTextureCount] = var12.field2697[var14];
-						this.field2695[this.faceTextureCount] = var12.field2695[var14];
+						this.textureScaleX[this.faceTextureCount] = var12.textureScaleX[var14];
+						this.textureScaleY[this.faceTextureCount] = var12.textureScaleY[var14];
+						this.textureScaleZ[this.faceTextureCount] = var12.textureScaleZ[var14];
+						this.textureRotation[this.faceTextureCount] = var12.textureRotation[var14];
+						this.textureTranslation[this.faceTextureCount] = var12.textureTranslation[var14];
+						this.textureSpeed[this.faceTextureCount] = var12.textureSpeed[var14];
 					}
 					if (var15 == 2) {
-						this.field2696[this.faceTextureCount] = var12.field2696[var14];
+						this.textureDirection[this.faceTextureCount] = var12.textureDirection[var14];
 					}
 					this.faceTextureCount++;
 				}
@@ -971,12 +991,12 @@ public class ModelUnlit extends ModelSource {
 				this.faceColour[var7] = arg0.faceColour[var7];
 			}
 		}
-		if (arg3 || arg0.field2705 == null) {
-			this.field2705 = arg0.field2705;
+		if (arg3 || arg0.faceTextureId == null) {
+			this.faceTextureId = arg0.faceTextureId;
 		} else {
-			this.field2705 = new short[this.faceCount];
+			this.faceTextureId = new short[this.faceCount];
 			for (int var8 = 0; var8 < this.faceCount; var8++) {
-				this.field2705[var8] = arg0.field2705[var8];
+				this.faceTextureId[var8] = arg0.faceTextureId[var8];
 			}
 		}
 		if (arg4) {
@@ -996,28 +1016,28 @@ public class ModelUnlit extends ModelSource {
 		this.faceVertexA = arg0.faceVertexA;
 		this.faceVertexB = arg0.faceVertexB;
 		this.faceVertexC = arg0.faceVertexC;
-		this.field2679 = arg0.field2679;
+		this.faceRenderType = arg0.faceRenderType;
 		this.facePriority = arg0.facePriority;
-		this.field2682 = arg0.field2682;
+		this.faceTextureAxis = arg0.faceTextureAxis;
 		this.priority = arg0.priority;
-		this.field2687 = arg0.field2687;
+		this.textureRenderType = arg0.textureRenderType;
 		this.faceTextureP = arg0.faceTextureP;
 		this.faceTextureM = arg0.faceTextureM;
 		this.faceTextureN = arg0.faceTextureN;
-		this.field2691 = arg0.field2691;
-		this.field2692 = arg0.field2692;
-		this.field2693 = arg0.field2693;
-		this.field2694 = arg0.field2694;
-		this.field2697 = arg0.field2697;
-		this.field2695 = arg0.field2695;
-		this.field2696 = arg0.field2696;
+		this.textureScaleX = arg0.textureScaleX;
+		this.textureScaleY = arg0.textureScaleY;
+		this.textureScaleZ = arg0.textureScaleZ;
+		this.textureRotation = arg0.textureRotation;
+		this.textureTranslation = arg0.textureTranslation;
+		this.textureSpeed = arg0.textureSpeed;
+		this.textureDirection = arg0.textureDirection;
 		this.vertexLabel = arg0.vertexLabel;
 		this.faceLabel = arg0.faceLabel;
 		this.labelVertices = arg0.labelVertices;
 		this.labelFaces = arg0.labelFaces;
 		this.vertexNormal = arg0.vertexNormal;
 		this.faceNormal = arg0.faceNormal;
-		this.field2685 = arg0.field2685;
+		this.sharedVertexNormals = arg0.sharedVertexNormals;
 		this.ambient = arg0.ambient;
 		this.contrast = arg0.contrast;
 	}
@@ -1026,10 +1046,10 @@ public class ModelUnlit extends ModelSource {
 	@ObfuscatedName("fw.k()Lfw;")
 	public ModelUnlit copyForShareLight() {
 		ModelUnlit var1 = new ModelUnlit();
-		if (this.field2679 != null) {
-			var1.field2679 = new byte[this.faceCount];
+		if (this.faceRenderType != null) {
+			var1.faceRenderType = new byte[this.faceCount];
 			for (int var2 = 0; var2 < this.faceCount; var2++) {
-				var1.field2679[var2] = this.field2679[var2];
+				var1.faceRenderType[var2] = this.faceRenderType[var2];
 			}
 		}
 		var1.vertexCount = this.vertexCount;
@@ -1043,21 +1063,21 @@ public class ModelUnlit extends ModelSource {
 		var1.faceVertexC = this.faceVertexC;
 		var1.facePriority = this.facePriority;
 		var1.faceAlpha = this.faceAlpha;
-		var1.field2682 = this.field2682;
+		var1.faceTextureAxis = this.faceTextureAxis;
 		var1.faceColour = this.faceColour;
-		var1.field2705 = this.field2705;
+		var1.faceTextureId = this.faceTextureId;
 		var1.priority = this.priority;
-		var1.field2687 = this.field2687;
+		var1.textureRenderType = this.textureRenderType;
 		var1.faceTextureP = this.faceTextureP;
 		var1.faceTextureM = this.faceTextureM;
 		var1.faceTextureN = this.faceTextureN;
-		var1.field2691 = this.field2691;
-		var1.field2692 = this.field2692;
-		var1.field2693 = this.field2693;
-		var1.field2694 = this.field2694;
-		var1.field2697 = this.field2697;
-		var1.field2695 = this.field2695;
-		var1.field2696 = this.field2696;
+		var1.textureScaleX = this.textureScaleX;
+		var1.textureScaleY = this.textureScaleY;
+		var1.textureScaleZ = this.textureScaleZ;
+		var1.textureRotation = this.textureRotation;
+		var1.textureTranslation = this.textureTranslation;
+		var1.textureSpeed = this.textureSpeed;
+		var1.textureDirection = this.textureDirection;
 		var1.vertexLabel = this.vertexLabel;
 		var1.faceLabel = this.faceLabel;
 		var1.labelVertices = this.labelVertices;
@@ -1098,24 +1118,24 @@ public class ModelUnlit extends ModelSource {
 			var15.faceVertexA = this.faceVertexA;
 			var15.faceVertexB = this.faceVertexB;
 			var15.faceVertexC = this.faceVertexC;
-			var15.field2679 = this.field2679;
+			var15.faceRenderType = this.faceRenderType;
 			var15.facePriority = this.facePriority;
 			var15.faceAlpha = this.faceAlpha;
-			var15.field2682 = this.field2682;
+			var15.faceTextureAxis = this.faceTextureAxis;
 			var15.faceColour = this.faceColour;
-			var15.field2705 = this.field2705;
+			var15.faceTextureId = this.faceTextureId;
 			var15.priority = this.priority;
-			var15.field2687 = this.field2687;
+			var15.textureRenderType = this.textureRenderType;
 			var15.faceTextureP = this.faceTextureP;
 			var15.faceTextureM = this.faceTextureM;
 			var15.faceTextureN = this.faceTextureN;
-			var15.field2691 = this.field2691;
-			var15.field2692 = this.field2692;
-			var15.field2693 = this.field2693;
-			var15.field2694 = this.field2694;
-			var15.field2697 = this.field2697;
-			var15.field2695 = this.field2695;
-			var15.field2696 = this.field2696;
+			var15.textureScaleX = this.textureScaleX;
+			var15.textureScaleY = this.textureScaleY;
+			var15.textureScaleZ = this.textureScaleZ;
+			var15.textureRotation = this.textureRotation;
+			var15.textureTranslation = this.textureTranslation;
+			var15.textureSpeed = this.textureSpeed;
+			var15.textureDirection = this.textureDirection;
 			var15.vertexLabel = this.vertexLabel;
 			var15.faceLabel = this.faceLabel;
 			var15.labelVertices = this.labelVertices;
@@ -1279,12 +1299,12 @@ public class ModelUnlit extends ModelSource {
 	// jag::oldscape::dash3d::ModelUnlitImpl::Retexture
 	@ObfuscatedName("fw.as(SS)V")
 	public void retexture(short arg0, short arg1) {
-		if (this.field2705 == null) {
+		if (this.faceTextureId == null) {
 			return;
 		}
 		for (int var3 = 0; var3 < this.faceCount; var3++) {
-			if (this.field2705[var3] == arg0) {
-				this.field2705[var3] = arg1;
+			if (this.faceTextureId[var3] == arg0) {
+				this.faceTextureId[var3] = arg1;
 			}
 		}
 	}
@@ -1357,10 +1377,10 @@ public class ModelUnlit extends ModelSource {
 			int var18 = nz * 256 / length;
 
 			byte var19;
-			if (this.field2679 == null) {
+			if (this.faceRenderType == null) {
 				var19 = 0;
 			} else {
-				var19 = this.field2679[f];
+				var19 = this.faceRenderType[f];
 			}
 
 			if (var19 == 0) {
@@ -1398,7 +1418,7 @@ public class ModelUnlit extends ModelSource {
 	@ObfuscatedName("fw.ak()V")
 	public void geometryChanged() {
 		this.vertexNormal = null;
-		this.field2685 = null;
+		this.sharedVertexNormals = null;
 		this.faceNormal = null;
 		this.boundsCalculated = false;
 	}
@@ -1482,19 +1502,19 @@ public class ModelUnlit extends ModelSource {
 					if (var7[var14] != var12 || arg1.vertexZ[var14] != var13 || arg1.vertexY[var14] != var11 || var15.w == 0) {
 						continue;
 					}
-					if (arg0.field2685 == null) {
-						arg0.field2685 = new PointNormal[arg0.vertexCount];
+					if (arg0.sharedVertexNormals == null) {
+						arg0.sharedVertexNormals = new PointNormal[arg0.vertexCount];
 					}
-					if (arg1.field2685 == null) {
-						arg1.field2685 = new PointNormal[var8];
+					if (arg1.sharedVertexNormals == null) {
+						arg1.sharedVertexNormals = new PointNormal[var8];
 					}
-					PointNormal var16 = arg0.field2685[var9];
+					PointNormal var16 = arg0.sharedVertexNormals[var9];
 					if (var16 == null) {
-						var16 = arg0.field2685[var9] = new PointNormal(var10);
+						var16 = arg0.sharedVertexNormals[var9] = new PointNormal(var10);
 					}
-					PointNormal var17 = arg1.field2685[var14];
+					PointNormal var17 = arg1.sharedVertexNormals[var14];
 					if (var17 == null) {
-						var17 = arg1.field2685[var14] = new PointNormal(var15);
+						var17 = arg1.sharedVertexNormals[var14] = new PointNormal(var15);
 					}
 					var16.x += var15.x;
 					var16.y += var15.y;
@@ -1505,26 +1525,26 @@ public class ModelUnlit extends ModelSource {
 					var17.z += var10.z;
 					var17.w += var10.w;
 					var6++;
-					field2683[var9] = shareTic;
-					field2714[var14] = shareTic;
+					shareTickA[var9] = shareTic;
+					shareTickB[var14] = shareTic;
 				}
 			}
 		}
 		if (var6 >= 3 && arg5) {
 			for (int var18 = 0; var18 < arg0.faceCount; var18++) {
-				if (field2683[arg0.faceVertexA[var18]] == shareTic && field2683[arg0.faceVertexB[var18]] == shareTic && field2683[arg0.faceVertexC[var18]] == shareTic) {
-					if (arg0.field2679 == null) {
-						arg0.field2679 = new byte[arg0.faceCount];
+				if (shareTickA[arg0.faceVertexA[var18]] == shareTic && shareTickA[arg0.faceVertexB[var18]] == shareTic && shareTickA[arg0.faceVertexC[var18]] == shareTic) {
+					if (arg0.faceRenderType == null) {
+						arg0.faceRenderType = new byte[arg0.faceCount];
 					}
-					arg0.field2679[var18] = 2;
+					arg0.faceRenderType[var18] = 2;
 				}
 			}
 			for (int var19 = 0; var19 < arg1.faceCount; var19++) {
-				if (field2714[arg1.faceVertexA[var19]] == shareTic && field2714[arg1.faceVertexB[var19]] == shareTic && field2714[arg1.faceVertexC[var19]] == shareTic) {
-					if (arg1.field2679 == null) {
-						arg1.field2679 = new byte[arg1.faceCount];
+				if (shareTickB[arg1.faceVertexA[var19]] == shareTic && shareTickB[arg1.faceVertexB[var19]] == shareTic && shareTickB[arg1.faceVertexC[var19]] == shareTic) {
+					if (arg1.faceRenderType == null) {
+						arg1.faceRenderType = new byte[arg1.faceCount];
 					}
-					arg1.field2679[var19] = 2;
+					arg1.faceRenderType[var19] = 2;
 				}
 			}
 		}
@@ -1540,48 +1560,48 @@ public class ModelUnlit extends ModelSource {
 		var8.faceColourA = new int[this.faceCount];
 		var8.faceColourB = new int[this.faceCount];
 		var8.faceColourC = new int[this.faceCount];
-		if (this.faceTextureCount > 0 && this.field2682 != null) {
+		if (this.faceTextureCount > 0 && this.faceTextureAxis != null) {
 			int[] var9 = new int[this.faceTextureCount];
 			for (int var10 = 0; var10 < this.faceCount; var10++) {
-				if (this.field2682[var10] != -1) {
-					var9[this.field2682[var10] & 0xFF]++;
+				if (this.faceTextureAxis[var10] != -1) {
+					var9[this.faceTextureAxis[var10] & 0xFF]++;
 				}
 			}
 			var8.faceTextureCount = 0;
 			for (int var11 = 0; var11 < this.faceTextureCount; var11++) {
-				if (var9[var11] > 0 && this.field2687[var11] == 0) {
+				if (var9[var11] > 0 && this.textureRenderType[var11] == 0) {
 					var8.faceTextureCount++;
 				}
 			}
-			var8.field2739 = new int[var8.faceTextureCount];
-			var8.field2774 = new int[var8.faceTextureCount];
-			var8.field2765 = new int[var8.faceTextureCount];
+			var8.textureVertexX = new int[var8.faceTextureCount];
+			var8.textureVertexY = new int[var8.faceTextureCount];
+			var8.textureVertexZ = new int[var8.faceTextureCount];
 			int var12 = 0;
 			for (int var13 = 0; var13 < this.faceTextureCount; var13++) {
-				if (var9[var13] > 0 && this.field2687[var13] == 0) {
-					var8.field2739[var12] = this.faceTextureP[var13] & 0xFFFF;
-					var8.field2774[var12] = this.faceTextureM[var13] & 0xFFFF;
-					var8.field2765[var12] = this.faceTextureN[var13] & 0xFFFF;
+				if (var9[var13] > 0 && this.textureRenderType[var13] == 0) {
+					var8.textureVertexX[var12] = this.faceTextureP[var13] & 0xFFFF;
+					var8.textureVertexY[var12] = this.faceTextureM[var13] & 0xFFFF;
+					var8.textureVertexZ[var12] = this.faceTextureN[var13] & 0xFFFF;
 					var9[var13] = var12++;
 				} else {
 					var9[var13] = -1;
 				}
 			}
-			var8.field2735 = new byte[this.faceCount];
+			var8.faceTextureIndex = new byte[this.faceCount];
 			for (int var14 = 0; var14 < this.faceCount; var14++) {
-				if (this.field2682[var14] == -1) {
-					var8.field2735[var14] = -1;
+				if (this.faceTextureAxis[var14] == -1) {
+					var8.faceTextureIndex[var14] = -1;
 				} else {
-					var8.field2735[var14] = (byte) var9[this.field2682[var14] & 0xFF];
+					var8.faceTextureIndex[var14] = (byte) var9[this.faceTextureAxis[var14] & 0xFF];
 				}
 			}
 		}
 		for (int var15 = 0; var15 < this.faceCount; var15++) {
 			byte var16;
-			if (this.field2679 == null) {
+			if (this.faceRenderType == null) {
 				var16 = 0;
 			} else {
-				var16 = this.field2679[var15];
+				var16 = this.faceRenderType[var15];
 			}
 			byte var17;
 			if (this.faceAlpha == null) {
@@ -1590,10 +1610,10 @@ public class ModelUnlit extends ModelSource {
 				var17 = this.faceAlpha[var15];
 			}
 			short var18;
-			if (this.field2705 == null) {
+			if (this.faceTextureId == null) {
 				var18 = -1;
 			} else {
-				var18 = this.field2705[var15];
+				var18 = this.faceTextureId[var15];
 			}
 			if (var17 == -2) {
 				var16 = 3;
@@ -1605,26 +1625,26 @@ public class ModelUnlit extends ModelSource {
 				if (var16 == 0) {
 					int var19 = this.faceColour[var15] & 0xFFFF;
 					PointNormal var20;
-					if (this.field2685 == null || this.field2685[this.faceVertexA[var15]] == null) {
+					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexA[var15]] == null) {
 						var20 = this.vertexNormal[this.faceVertexA[var15]];
 					} else {
-						var20 = this.field2685[this.faceVertexA[var15]];
+						var20 = this.sharedVertexNormals[this.faceVertexA[var15]];
 					}
 					int var21 = (var20.z * arg4 + var20.x * arg2 + var20.y * arg3) / (var20.w * var7) + arg0;
 					var8.faceColourA[var15] = getColour(var19, var21);
 					PointNormal var22;
-					if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
+					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexB[var15]] == null) {
 						var22 = this.vertexNormal[this.faceVertexB[var15]];
 					} else {
-						var22 = this.field2685[this.faceVertexB[var15]];
+						var22 = this.sharedVertexNormals[this.faceVertexB[var15]];
 					}
 					int var23 = (var22.z * arg4 + var22.x * arg2 + var22.y * arg3) / (var22.w * var7) + arg0;
 					var8.faceColourB[var15] = getColour(var19, var23);
 					PointNormal var24;
-					if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
+					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexC[var15]] == null) {
 						var24 = this.vertexNormal[this.faceVertexC[var15]];
 					} else {
-						var24 = this.field2685[this.faceVertexC[var15]];
+						var24 = this.sharedVertexNormals[this.faceVertexC[var15]];
 					}
 					int var25 = (var24.z * arg4 + var24.x * arg2 + var24.y * arg3) / (var24.w * var7) + arg0;
 					var8.faceColourC[var15] = getColour(var19, var25);
@@ -1641,26 +1661,26 @@ public class ModelUnlit extends ModelSource {
 				}
 			} else if (var16 == 0) {
 				PointNormal var28;
-				if (this.field2685 == null || this.field2685[this.faceVertexA[var15]] == null) {
+				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexA[var15]] == null) {
 					var28 = this.vertexNormal[this.faceVertexA[var15]];
 				} else {
-					var28 = this.field2685[this.faceVertexA[var15]];
+					var28 = this.sharedVertexNormals[this.faceVertexA[var15]];
 				}
 				int var29 = (var28.z * arg4 + var28.x * arg2 + var28.y * arg3) / (var28.w * var7) + arg0;
 				var8.faceColourA[var15] = getTexLight(var29);
 				PointNormal var30;
-				if (this.field2685 == null || this.field2685[this.faceVertexB[var15]] == null) {
+				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexB[var15]] == null) {
 					var30 = this.vertexNormal[this.faceVertexB[var15]];
 				} else {
-					var30 = this.field2685[this.faceVertexB[var15]];
+					var30 = this.sharedVertexNormals[this.faceVertexB[var15]];
 				}
 				int var31 = (var30.z * arg4 + var30.x * arg2 + var30.y * arg3) / (var30.w * var7) + arg0;
 				var8.faceColourB[var15] = getTexLight(var31);
 				PointNormal var32;
-				if (this.field2685 == null || this.field2685[this.faceVertexC[var15]] == null) {
+				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexC[var15]] == null) {
 					var32 = this.vertexNormal[this.faceVertexC[var15]];
 				} else {
-					var32 = this.field2685[this.faceVertexC[var15]];
+					var32 = this.sharedVertexNormals[this.faceVertexC[var15]];
 				}
 				int var33 = (var32.z * arg4 + var32.x * arg2 + var32.y * arg3) / (var32.w * var7) + arg0;
 				var8.faceColourC[var15] = getTexLight(var33);
@@ -1684,10 +1704,10 @@ public class ModelUnlit extends ModelSource {
 		var8.faceVertexC = this.faceVertexC;
 		var8.facePriority = this.facePriority;
 		var8.faceAlpha = this.faceAlpha;
-		var8.field2737 = this.priority;
+		var8.priority = this.priority;
 		var8.labelVertices = this.labelVertices;
-		var8.field2743 = this.labelFaces;
-		var8.field2718 = this.field2705;
+		var8.labelFaces = this.labelFaces;
+		var8.faceTextureId = this.faceTextureId;
 		return var8;
 	}
 

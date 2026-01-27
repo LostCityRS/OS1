@@ -21,7 +21,7 @@ public class SignLink implements Runnable {
 	public static String javaVersion;
 
 	@ObfuscatedName("ak.l")
-	public AudioSource field376;
+	public AudioSource audio;
 
 	@ObfuscatedName("ak.m")
 	public PrivilegedRequest current = null;
@@ -156,8 +156,8 @@ public class SignLink implements Runnable {
 	}
 
 	@ObfuscatedName("ak.q(I)Lw;")
-	public final AudioSource method440() {
-		return this.field376;
+	public final AudioSource getAudio() {
+		return this.audio;
 	}
 
 	public static void flushEvents(SignLink handler, Object source) {

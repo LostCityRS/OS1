@@ -32,7 +32,7 @@ public class PcmPlayer {
 	public PcmStream stream;
 
 	@ObfuscatedName("y.g")
-	public int field256 = 32;
+	public int maxMixCost = 32;
 
 	@ObfuscatedName("y.q")
 	public long lastPlayTime = MonotonicTime.currentTime();
@@ -65,13 +65,13 @@ public class PcmPlayer {
 	public boolean skipAcceptedCheck = true;
 
 	@ObfuscatedName("y.x")
-	public int field259 = 0;
+	public int samplesUntilMix = 0;
 
 	@ObfuscatedName("y.p")
-	public PcmStream[] field240 = new PcmStream[8];
+	public PcmStream[] priorityQueueHeads = new PcmStream[8];
 
 	@ObfuscatedName("y.ad")
-	public PcmStream[] field261 = new PcmStream[8];
+	public PcmStream[] priorityQueueTails = new PcmStream[8];
 
 	@ObfuscatedName("bx.r(IZII)V")
 	public static void init(int arg0, boolean arg1, int arg2) {
@@ -222,7 +222,7 @@ public class PcmPlayer {
 	}
 
 	@ObfuscatedName("y.c(B)V")
-	public final void method207() {
+	public final void skipNextAcceptedCheck() {
 		this.skipAcceptedCheck = true;
 	}
 
@@ -263,10 +263,10 @@ public class PcmPlayer {
 
 	@ObfuscatedName("y.z(II)V")
 	public final void skip(int arg0) {
-		this.field259 -= arg0;
+		this.samplesUntilMix -= arg0;
 
-		if (this.field259 < 0) {
-			this.field259 = 0;
+		if (this.samplesUntilMix < 0) {
+			this.samplesUntilMix = 0;
 		}
 
 		if (this.stream != null) {
@@ -284,13 +284,13 @@ public class PcmPlayer {
 
 		ArrayUtil.clear(arg0, 0, var3);
 
-		this.field259 -= arg1;
+		this.samplesUntilMix -= arg1;
 
-		if (this.stream != null && this.field259 <= 0) {
-			this.field259 += frequency >> 4;
+		if (this.stream != null && this.samplesUntilMix <= 0) {
+			this.samplesUntilMix += frequency >> 4;
 
-			method815(this.stream);
-			this.method212(this.stream, this.stream.priority());
+			resetStreamState(this.stream);
+			this.enqueueStream(this.stream, this.stream.priority());
 
 			int var4 = 0;
 			int var5 = 255;
@@ -311,7 +311,7 @@ public class PcmPlayer {
 					if ((var9 & 0x1) != 0) {
 						var5 &= ~(0x1 << var7);
 						PcmStream var10 = null;
-						PcmStream var11 = this.field240[var7];
+						PcmStream var11 = this.priorityQueueHeads[var7];
 						label99:
 						while (true) {
 							while (true) {
@@ -326,7 +326,7 @@ public class PcmPlayer {
 									if (var12 != null) {
 										var12.position += var13;
 									}
-									if (var4 >= this.field256) {
+									if (var4 >= this.maxMixCost) {
 										break label105;
 									}
 									PcmStream var14 = var11.substreamStart();
@@ -334,19 +334,19 @@ public class PcmPlayer {
 										// todo: for loop
 										int var15 = var11.field1646;
 										while (var14 != null) {
-											this.method212(var14, var15 * var14.priority() >> 8);
+											this.enqueueStream(var14, var15 * var14.priority() >> 8);
 											var14 = var11.substreamNext();
 										}
 									}
 									PcmStream var16 = var11.stream;
 									var11.stream = null;
 									if (var10 == null) {
-										this.field240[var7] = var16;
+										this.priorityQueueHeads[var7] = var16;
 									} else {
 										var10.stream = var16;
 									}
 									if (var16 == null) {
-										this.field261[var7] = var10;
+										this.priorityQueueTails[var7] = var10;
 									}
 									var11 = var16;
 								} else {
@@ -364,9 +364,9 @@ public class PcmPlayer {
 			}
 
 			for (int var17 = 0; var17 < 8; var17++) {
-				PcmStream var18 = this.field240[var17];
-				PcmStream[] var19 = this.field240;
-				this.field261[var17] = null;
+				PcmStream var18 = this.priorityQueueHeads[var17];
+				PcmStream[] var19 = this.priorityQueueHeads;
+				this.priorityQueueTails[var17] = null;
 				var19[var17] = null;
 				while (var18 != null) {
 					PcmStream var21 = var18.stream;
@@ -376,8 +376,8 @@ public class PcmPlayer {
 			}
 		}
 
-		if (this.field259 < 0) {
-			this.field259 = 0;
+		if (this.samplesUntilMix < 0) {
+			this.samplesUntilMix = 0;
 		}
 
 		if (this.stream != null) {
@@ -388,26 +388,26 @@ public class PcmPlayer {
 	}
 
 	@ObfuscatedName("bw.q(Ldx;I)V")
-	public static void method815(PcmStream arg0) {
+	public static void resetStreamState(PcmStream arg0) {
 		arg0.active = false;
 		if (arg0.sound != null) {
 			arg0.sound.position = 0;
 		}
 		for (PcmStream var1 = arg0.substreamStart(); var1 != null; var1 = arg0.substreamNext()) {
-			method815(var1);
+			resetStreamState(var1);
 		}
 	}
 
 	@ObfuscatedName("y.i(Ldx;II)V")
-	public final void method212(PcmStream arg0, int arg1) {
+	public final void enqueueStream(PcmStream arg0, int arg1) {
 		int var3 = arg1 >> 5;
-		PcmStream var4 = this.field261[var3];
+		PcmStream var4 = this.priorityQueueTails[var3];
 		if (var4 == null) {
-			this.field240[var3] = arg0;
+			this.priorityQueueHeads[var3] = arg0;
 		} else {
 			var4.stream = arg0;
 		}
-		this.field261[var3] = arg0;
+		this.priorityQueueTails[var3] = arg0;
 		arg0.field1646 = arg1;
 	}
 

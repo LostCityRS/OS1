@@ -17,7 +17,7 @@ public class MidiPlayer extends PcmStream {
 	public int globalVolume = 256;
 
 	@ObfuscatedName("ed.q")
-	public int field2235 = 1000000;
+	public int tempoMicroseconds = 1000000;
 
 	@ObfuscatedName("ed.i")
 	public int[] channelExpression = new int[16];
@@ -137,14 +137,14 @@ public class MidiPlayer extends PcmStream {
 	}
 
 	@ObfuscatedName("ed.aa(B)V")
-	public synchronized void method2220() {
+	public synchronized void finalizePatches() {
 		for (Patch patch = (Patch) this.patches.search(); patch != null; patch = (Patch) this.patches.findnext()) {
 			patch.method1781();
 		}
 	}
 
 	@ObfuscatedName("ed.as(I)V")
-	public synchronized void method2289() {
+	public synchronized void clearPatches() {
 		for (Patch patch = (Patch) this.patches.search(); patch != null; patch = (Patch) this.patches.findnext()) {
 			patch.unlink();
 		}
@@ -183,11 +183,11 @@ public class MidiPlayer extends PcmStream {
 
 	@ObfuscatedName("ed.ak(III)V")
 	public synchronized void setChannelDefaultPatch(int arg0, int arg1) {
-		this.method2217(arg0, arg1);
+		this.setPatchAndBank(arg0, arg1);
 	}
 
 	@ObfuscatedName("ed.az(III)V")
-	public void method2217(int arg0, int arg1) {
+	public void setPatchAndBank(int arg0, int arg1) {
 		this.channelDefaultPatch[arg0] = arg1;
 		this.channelBank[arg0] = arg1 & 0xFFFFFF80;
 		this.setInst(arg0, arg1);
@@ -658,7 +658,7 @@ public class MidiPlayer extends PcmStream {
 	@ObfuscatedName("ed.q([III)V")
 	public synchronized void doMix(int[] arg0, int arg1, int arg2) {
 		if (this.parser.gotMidi()) {
-			int var4 = this.field2235 * this.parser.division / PcmPlayer.frequency;
+			int var4 = this.tempoMicroseconds * this.parser.division / PcmPlayer.frequency;
 			do {
 				long var5 = (long) arg2 * (long) var4 + this.trackPreviousTime;
 				if (this.trackCurrentTime - var5 >= 0L) {
@@ -683,7 +683,7 @@ public class MidiPlayer extends PcmStream {
 	@ObfuscatedName("ed.i(I)V")
 	public synchronized void pretendToMix(int arg0) {
 		if (this.parser.gotMidi()) {
-			int var2 = this.field2235 * this.parser.division / PcmPlayer.frequency;
+			int var2 = this.tempoMicroseconds * this.parser.division / PcmPlayer.frequency;
 			do {
 				long var3 = (long) arg0 * (long) var2 + this.trackPreviousTime;
 				if (this.trackCurrentTime - var3 >= 0L) {

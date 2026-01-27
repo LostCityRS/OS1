@@ -102,13 +102,13 @@ public class Floor {
 	public int[][] subclass_books;
 
 	@ObfuscatedName("e.q")
-	public static int[] field223;
+	public static int[] sortedX;
 
 	@ObfuscatedName("e.i")
 	public static int[] post;
 
 	@ObfuscatedName("e.s")
-	public static boolean[] field230;
+	public static boolean[] stepFlags;
 
 	// jag::oldscape::sound::Floor::LowNeighbour
 	@ObfuscatedName("e.r([II)I")
@@ -194,25 +194,25 @@ public class Floor {
 		}
 
 		int var3 = arg0;
-		int var4 = field223[arg0];
+		int var4 = sortedX[arg0];
 		int var5 = post[arg0];
-		boolean var6 = field230[arg0];
+		boolean var6 = stepFlags[arg0];
 		for (int var7 = arg0 + 1; var7 <= arg1; var7++) {
-			int var8 = field223[var7];
+			int var8 = sortedX[var7];
 			if (var8 < var4) {
-				field223[var3] = var8;
+				sortedX[var3] = var8;
 				post[var3] = post[var7];
-				field230[var3] = field230[var7];
+				stepFlags[var3] = stepFlags[var7];
 				var3++;
-				field223[var7] = field223[var3];
+				sortedX[var7] = sortedX[var3];
 				post[var7] = post[var3];
-				field230[var7] = field230[var3];
+				stepFlags[var7] = stepFlags[var3];
 			}
 		}
 
-		field223[var3] = var4;
+		sortedX[var3] = var4;
 		post[var3] = var5;
-		field230[var3] = var6;
+		stepFlags[var3] = var6;
 
 		this.quickSort(arg0, var3 - 1);
 		this.quickSort(var3 + 1, arg1);
@@ -280,10 +280,10 @@ public class Floor {
 			}
 		}
 
-		if (field223 == null || field223.length < values) {
-			field223 = new int[values];
+		if (sortedX == null || sortedX.length < values) {
+			sortedX = new int[values];
 			post = new int[values];
-			field230 = new boolean[values];
+			stepFlags = new boolean[values];
 		}
 	}
 
@@ -297,7 +297,7 @@ public class Floor {
 
 		int var2 = this.Xlist.length;
 		for (int var3 = 0; var3 < var2; var3++) {
-			field223[var3] = this.Xlist[var3];
+			sortedX[var3] = this.Xlist[var3];
 		}
 
 		int var4 = rangeVector[this.floor1_multiplier - 1];
@@ -330,25 +330,25 @@ public class Floor {
 		int var3 = this.Xlist.length;
 		int var4 = rangeVector[this.floor1_multiplier - 1];
 
-		boolean[] var5 = field230;
-		field230[1] = true;
+		boolean[] var5 = stepFlags;
+		stepFlags[1] = true;
 		var5[0] = true;
 
 		for (int var6 = 2; var6 < var3; var6++) {
-			int var7 = lowNeighbour(field223, var6);
-			int var8 = highNeighbour(field223, var6);
-			int var9 = this.renderPoint(field223[var7], post[var7], field223[var8], post[var8], field223[var6]);
+			int var7 = lowNeighbour(sortedX, var6);
+			int var8 = highNeighbour(sortedX, var6);
+			int var9 = this.renderPoint(sortedX[var7], post[var7], sortedX[var8], post[var8], sortedX[var6]);
 			int var10 = post[var6];
 			int var11 = var4 - var9;
 			int var13 = (var11 < var9 ? var11 : var9) << 1;
 			if (var10 == 0) {
-				field230[var6] = false;
+				stepFlags[var6] = false;
 				post[var6] = var9;
 			} else {
-				boolean[] var14 = field230;
-				field230[var8] = true;
+				boolean[] var14 = stepFlags;
+				stepFlags[var8] = true;
 				var14[var7] = true;
-				field230[var6] = true;
+				stepFlags[var6] = true;
 				if (var10 >= var13) {
 					post[var6] = var11 > var9 ? var10 - var9 + var9 : var9 - var10 + var11 - 1;
 				} else {
@@ -363,8 +363,8 @@ public class Floor {
 		int var17 = post[0] * this.floor1_multiplier;
 
 		for (int var18 = 1; var18 < var3; var18++) {
-			if (field230[var18]) {
-				int var19 = field223[var18];
+			if (stepFlags[var18]) {
+				int var19 = sortedX[var18];
 				int var20 = post[var18] * this.floor1_multiplier;
 				this.renderLine(var16, var17, var19, var20, arg0, arg1);
 

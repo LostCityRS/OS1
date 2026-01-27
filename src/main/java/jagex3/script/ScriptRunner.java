@@ -4,7 +4,7 @@ import deob.ObfuscatedName;
 import jagex3.client.Client;
 import jagex3.client.JagException;
 import jagex3.client.VarCache;
-import jagex3.client.chat.ChatFilterPrivacy;
+import jagex3.client.chat.PrivateChatFilter;
 import jagex3.client.ui.ClientInvCache;
 import jagex3.client.ui.IfType;
 import jagex3.client.ui.ServerActive;
@@ -348,7 +348,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 42) {
 						// push_varc_int
-						intStack[isp++] = Client.field2120[intOperands[pc]];
+						intStack[isp++] = Client.varcInt[intOperands[pc]];
 						continue;
 					}
 					if (opcode == 43) {
@@ -356,7 +356,7 @@ public class ScriptRunner {
 						int var10001 = intOperands[pc];
 
 						isp--;
-						Client.field2120[var10001] = intStack[isp];
+						Client.varcInt[var10001] = intStack[isp];
 						continue;
 					}
 					if (opcode == 44) {
@@ -415,7 +415,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 47) {
 						// push_varc_str
-						String var46 = Client.field1996[intOperands[pc]];
+						String var46 = Client.varcStr[intOperands[pc]];
 						if (var46 == null) {
 							var46 = "null";
 						}
@@ -428,7 +428,7 @@ public class ScriptRunner {
 						int var10001 = intOperands[pc];
 
 						ssp--;
-						Client.field1996[var10001] = stringStack[ssp];
+						Client.varcStr[var10001] = stringStack[ssp];
 						continue;
 					}
 				}
@@ -1695,7 +1695,7 @@ public class ScriptRunner {
 
 						int var162 = intStack[isp];
 						if (Client.friendListStatus == 2 && var162 < Client.friendCount) {
-							intStack[isp++] = Client.friendList[var162].field174;
+							intStack[isp++] = Client.friendList[var162].worldId;
 							continue;
 						}
 
@@ -1708,7 +1708,7 @@ public class ScriptRunner {
 						int var163 = intStack[isp];
 
 						if (Client.friendListStatus == 2 && var163 < Client.friendCount) {
-							intStack[isp++] = Client.friendList[var163].field175;
+							intStack[isp++] = Client.friendList[var163].rank;
 							continue;
 						}
 
@@ -2406,9 +2406,9 @@ public class ScriptRunner {
 						// chat_setfilter
 						isp -= 3;
 						Client.publicChatFilter = intStack[isp];
-						Client.privateChatFilter = ChatFilterPrivacy.get(intStack[isp + 1]);
+						Client.privateChatFilter = PrivateChatFilter.get(intStack[isp + 1]);
 						if (Client.privateChatFilter == null) {
-							Client.privateChatFilter = ChatFilterPrivacy.field1106;
+							Client.privateChatFilter = PrivateChatFilter.FRIENDS;
 						}
 						Client.tradeChatFilter = intStack[isp + 2];
 

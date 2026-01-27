@@ -8,9 +8,6 @@ public class BZip2 {
 	@ObfuscatedName("bu.z")
 	public static final BZip2State state = new BZip2State();
 
-	@ObfuscatedName("bg.x")
-	public static int[] tt;
-
 	public BZip2() throws Throwable {
 		throw new Error();
 	}
@@ -18,36 +15,38 @@ public class BZip2 {
 	@ObfuscatedName("bu.r([BI[BII)I")
 	public static int decompress(byte[] arg0, int arg1, byte[] arg2, int arg3, int arg4) {
 		synchronized (state) {
-			state.field753 = arg2;
-			state.field758 = arg4;
-			state.field760 = arg0;
-			state.field761 = 0;
-			state.field754 = arg1;
-			state.field767 = 0;
-			state.field766 = 0;
-			state.field759 = 0;
-			state.field763 = 0;
+			state.stream = arg2;
+			state.next_in = arg4;
+			state.decompressed = arg0;
+			state.next_out = 0;
+			state.avail_out = arg1;
+			state.bsLive = 0;
+			state.bsBuff = 0;
+			state.total_in_lo32 = 0;
+			state.total_out_lo32 = 0;
+
 			decompress(state);
-			int var6 = arg1 - state.field754;
-			state.field753 = null;
-			state.field760 = null;
+
+			int var6 = arg1 - state.avail_out;
+			state.stream = null;
+			state.decompressed = null;
 			return var6;
 		}
 	}
 
 	@ObfuscatedName("bu.d(Lbg;)V")
 	public static void finish(BZip2State arg0) {
-		byte var1 = arg0.field755;
-		int var2 = arg0.field765;
-		int var3 = arg0.field762;
-		int var4 = arg0.field771;
-		int[] var5 = tt;
-		int var6 = arg0.field770;
-		byte[] var7 = arg0.field760;
-		int var8 = arg0.field761;
-		int var9 = arg0.field754;
+		byte var1 = arg0.state_out_ch;
+		int var2 = arg0.state_out_len;
+		int var3 = arg0.c_nblock_used;
+		int var4 = arg0.k0;
+		int[] var5 = BZip2State.tt;
+		int var6 = arg0.tPos;
+		byte[] var7 = arg0.decompressed;
+		int var8 = arg0.next_out;
+		int var9 = arg0.avail_out;
 		int var10 = var9;
-		int var11 = arg0.field785 + 1;
+		int var11 = arg0.save_nblock + 1;
 		label66:
 		while (true) {
 			if (var2 > 0) {
@@ -136,19 +135,21 @@ public class BZip2 {
 				}
 			}
 		}
-		int var15 = arg0.field763;
-		arg0.field763 += var10 - var9;
-		if (arg0.field763 < var15) {
+
+		int var15 = arg0.total_out_lo32;
+		arg0.total_out_lo32 += var10 - var9;
+		if (arg0.total_out_lo32 < var15) {
 		}
-		arg0.field755 = var1;
-		arg0.field765 = var2;
-		arg0.field762 = var3;
-		arg0.field771 = var4;
-		tt = var5;
-		arg0.field770 = var6;
-		arg0.field760 = var7;
-		arg0.field761 = var8;
-		arg0.field754 = var9;
+
+		arg0.state_out_ch = var1;
+		arg0.state_out_len = var2;
+		arg0.c_nblock_used = var3;
+		arg0.k0 = var4;
+		BZip2State.tt = var5;
+		arg0.tPos = var6;
+		arg0.decompressed = var7;
+		arg0.next_out = var8;
+		arg0.avail_out = var9;
 	}
 
 	@ObfuscatedName("bu.l(Lbg;)V")
@@ -171,13 +172,14 @@ public class BZip2 {
 		boolean var16 = false;
 		boolean var17 = false;
 		boolean var18 = false;
+
 		int var19 = 0;
 		int[] var20 = null;
 		int[] var21 = null;
 		int[] var22 = null;
-		arg0.field768 = 1;
-		if (tt == null) {
-			tt = new int[arg0.field768 * 100000];
+		arg0.blockSize100k = 1;
+		if (BZip2State.tt == null) {
+			BZip2State.tt = new int[arg0.blockSize100k * 100000];
 		}
 		boolean var23 = true;
 		while (true) {
@@ -195,39 +197,42 @@ public class BZip2 {
 				byte var31 = getUnsignedChar(arg0);
 				byte var32 = getUnsignedChar(arg0);
 				byte var33 = getUnsignedChar(arg0);
+
 				byte var34 = getBit(arg0);
 				if (var34 != 0) {
 				}
-				arg0.field769 = 0;
+
+				arg0.origPtr = 0;
 				byte var35 = getUnsignedChar(arg0);
-				arg0.field769 = arg0.field769 << 8 | var35 & 0xFF;
+				arg0.origPtr = arg0.origPtr << 8 | var35 & 0xFF;
 				byte var36 = getUnsignedChar(arg0);
-				arg0.field769 = arg0.field769 << 8 | var36 & 0xFF;
+				arg0.origPtr = arg0.origPtr << 8 | var36 & 0xFF;
 				byte var37 = getUnsignedChar(arg0);
-				arg0.field769 = arg0.field769 << 8 | var37 & 0xFF;
+				arg0.origPtr = arg0.origPtr << 8 | var37 & 0xFF;
+
 				for (int var38 = 0; var38 < 16; var38++) {
 					byte var39 = getBit(arg0);
 					if (var39 == 1) {
-						arg0.field778[var38] = true;
+						arg0.inUse16[var38] = true;
 					} else {
-						arg0.field778[var38] = false;
+						arg0.inUse16[var38] = false;
 					}
 				}
 				for (int var40 = 0; var40 < 256; var40++) {
-					arg0.field777[var40] = false;
+					arg0.inUse[var40] = false;
 				}
 				for (int var41 = 0; var41 < 16; var41++) {
-					if (arg0.field778[var41]) {
+					if (arg0.inUse16[var41]) {
 						for (int var42 = 0; var42 < 16; var42++) {
 							byte var43 = getBit(arg0);
 							if (var43 == 1) {
-								arg0.field777[var41 * 16 + var42] = true;
+								arg0.inUse[var41 * 16 + var42] = true;
 							}
 						}
 					}
 				}
 				makeMaps(arg0);
-				int var44 = arg0.field776 + 2;
+				int var44 = arg0.nInUse + 2;
 				int var45 = getBits(3, arg0);
 				int var46 = getBits(15, arg0);
 				for (int var47 = 0; var47 < var46; var47++) {
@@ -235,7 +240,7 @@ public class BZip2 {
 					while (true) {
 						byte var49 = getBit(arg0);
 						if (var49 == 0) {
-							arg0.field772[var47] = (byte) var48;
+							arg0.selectorMtf[var47] = (byte) var48;
 							break;
 						}
 						var48++;
@@ -247,14 +252,14 @@ public class BZip2 {
 					var50[var51] = var51++;
 				}
 				for (int var52 = 0; var52 < var46; var52++) {
-					byte var53 = arg0.field772[var52];
+					byte var53 = arg0.selectorMtf[var52];
 					byte var54 = var50[var53];
 					while (var53 > 0) {
 						var50[var53] = var50[var53 - 1];
 						var53--;
 					}
 					var50[0] = var54;
-					arg0.field780[var52] = var54;
+					arg0.selector[var52] = var54;
 				}
 				for (int var55 = 0; var55 < var45; var55++) {
 					int var56 = getBits(5, arg0);
@@ -262,7 +267,7 @@ public class BZip2 {
 						while (true) {
 							byte var58 = getBit(arg0);
 							if (var58 == 0) {
-								arg0.field782[var55][var57] = (byte) var56;
+								arg0.len[var55][var57] = (byte) var56;
 								break;
 							}
 							byte var59 = getBit(arg0);
@@ -278,39 +283,39 @@ public class BZip2 {
 					byte var61 = 32;
 					byte var62 = 0;
 					for (int var63 = 0; var63 < var44; var63++) {
-						if (arg0.field782[var60][var63] > var62) {
-							var62 = arg0.field782[var60][var63];
+						if (arg0.len[var60][var63] > var62) {
+							var62 = arg0.len[var60][var63];
 						}
-						if (arg0.field782[var60][var63] < var61) {
-							var61 = arg0.field782[var60][var63];
+						if (arg0.len[var60][var63] < var61) {
+							var61 = arg0.len[var60][var63];
 						}
 					}
-					createDecodeTables(arg0.field757[var60], arg0.field786[var60], arg0.field787[var60], arg0.field782[var60], var61, var62, var44);
-					arg0.field788[var60] = var61;
+					createDecodeTables(arg0.limit[var60], arg0.base[var60], arg0.perm[var60], arg0.len[var60], var61, var62, var44);
+					arg0.minLens[var60] = var61;
 				}
-				int var64 = arg0.field776 + 1;
+				int var64 = arg0.nInUse + 1;
 				int var65 = -1;
 				byte var66 = 0;
 				for (int var67 = 0; var67 <= 255; var67++) {
-					arg0.field751[var67] = 0;
+					arg0.unzftab[var67] = 0;
 				}
 				int var68 = 4095;
 				for (int var69 = 15; var69 >= 0; var69--) {
 					for (int var70 = 15; var70 >= 0; var70--) {
-						arg0.field789[var68] = (byte) (var69 * 16 + var70);
+						arg0.mtfa[var68] = (byte) (var69 * 16 + var70);
 						var68--;
 					}
-					arg0.field781[var69] = var68 + 1;
+					arg0.mtfbase[var69] = var68 + 1;
 				}
 				int var71 = 0;
 				if (var66 == 0) {
 					var65++;
 					var66 = 50;
-					byte var72 = arg0.field780[var65];
-					var19 = arg0.field788[var72];
-					var20 = arg0.field757[var72];
-					var22 = arg0.field787[var72];
-					var21 = arg0.field786[var72];
+					byte var72 = arg0.selector[var65];
+					var19 = arg0.minLens[var72];
+					var20 = arg0.limit[var72];
+					var22 = arg0.perm[var72];
+					var21 = arg0.base[var72];
 				}
 				int var103 = var66 - 1;
 				int var73 = var19;
@@ -336,11 +341,11 @@ public class BZip2 {
 								if (var103 == 0) {
 									var65++;
 									var103 = 50;
-									byte var97 = arg0.field780[var65];
-									var19 = arg0.field788[var97];
-									var20 = arg0.field757[var97];
-									var22 = arg0.field787[var97];
-									var21 = arg0.field786[var97];
+									byte var97 = arg0.selector[var65];
+									var19 = arg0.minLens[var97];
+									var20 = arg0.limit[var97];
+									var22 = arg0.perm[var97];
+									var21 = arg0.base[var97];
 								}
 								var103--;
 								int var98 = var19;
@@ -353,10 +358,10 @@ public class BZip2 {
 								var75 = var22[var99 - var21[var98]];
 							} while (var75 == 0 || var75 == 1);
 							var95++;
-							byte var100 = arg0.field779[arg0.field789[arg0.field781[0]] & 0xFF];
-							arg0.field751[var100 & 0xFF] += var95;
+							byte var100 = arg0.seqToUnseq[arg0.mtfa[arg0.mtfbase[0]] & 0xFF];
+							arg0.unzftab[var100 & 0xFF] += var95;
 							while (var95 > 0) {
-								tt[var71] = var100 & 0xFF;
+								BZip2State.tt[var71] = var100 & 0xFF;
 								var71++;
 								var95--;
 							}
@@ -364,60 +369,60 @@ public class BZip2 {
 							int var81 = var75 - 1;
 							byte var83;
 							if (var81 < 16) {
-								int var82 = arg0.field781[0];
-								var83 = arg0.field789[var81 + var82];
+								int var82 = arg0.mtfbase[0];
+								var83 = arg0.mtfa[var81 + var82];
 								while (var81 > 3) {
 									int var84 = var81 + var82;
-									arg0.field789[var84] = arg0.field789[var84 - 1];
-									arg0.field789[var84 - 1] = arg0.field789[var84 - 2];
-									arg0.field789[var84 - 2] = arg0.field789[var84 - 3];
-									arg0.field789[var84 - 3] = arg0.field789[var84 - 4];
+									arg0.mtfa[var84] = arg0.mtfa[var84 - 1];
+									arg0.mtfa[var84 - 1] = arg0.mtfa[var84 - 2];
+									arg0.mtfa[var84 - 2] = arg0.mtfa[var84 - 3];
+									arg0.mtfa[var84 - 3] = arg0.mtfa[var84 - 4];
 									var81 -= 4;
 								}
 								while (var81 > 0) {
-									arg0.field789[var81 + var82] = arg0.field789[var81 + var82 - 1];
+									arg0.mtfa[var81 + var82] = arg0.mtfa[var81 + var82 - 1];
 									var81--;
 								}
-								arg0.field789[var82] = var83;
+								arg0.mtfa[var82] = var83;
 							} else {
 								int var85 = var81 / 16;
 								int var86 = var81 % 16;
-								int var87 = arg0.field781[var85] + var86;
-								var83 = arg0.field789[var87];
-								while (var87 > arg0.field781[var85]) {
-									arg0.field789[var87] = arg0.field789[var87 - 1];
+								int var87 = arg0.mtfbase[var85] + var86;
+								var83 = arg0.mtfa[var87];
+								while (var87 > arg0.mtfbase[var85]) {
+									arg0.mtfa[var87] = arg0.mtfa[var87 - 1];
 									var87--;
 								}
-								int var10002 = arg0.field781[var85]++;
+								int var10002 = arg0.mtfbase[var85]++;
 								while (var85 > 0) {
-									var10002 = arg0.field781[var85]--;
-									arg0.field789[arg0.field781[var85]] = arg0.field789[arg0.field781[var85 - 1] + 16 - 1];
+									var10002 = arg0.mtfbase[var85]--;
+									arg0.mtfa[arg0.mtfbase[var85]] = arg0.mtfa[arg0.mtfbase[var85 - 1] + 16 - 1];
 									var85--;
 								}
-								var10002 = arg0.field781[0]--;
-								arg0.field789[arg0.field781[0]] = var83;
-								if (arg0.field781[0] == 0) {
+								var10002 = arg0.mtfbase[0]--;
+								arg0.mtfa[arg0.mtfbase[0]] = var83;
+								if (arg0.mtfbase[0] == 0) {
 									int var88 = 4095;
 									for (int var89 = 15; var89 >= 0; var89--) {
 										for (int var90 = 15; var90 >= 0; var90--) {
-											arg0.field789[var88] = arg0.field789[arg0.field781[var89] + var90];
+											arg0.mtfa[var88] = arg0.mtfa[arg0.mtfbase[var89] + var90];
 											var88--;
 										}
-										arg0.field781[var89] = var88 + 1;
+										arg0.mtfbase[var89] = var88 + 1;
 									}
 								}
 							}
-							arg0.field751[arg0.field779[var83 & 0xFF] & 0xFF]++;
-							tt[var71] = arg0.field779[var83 & 0xFF] & 0xFF;
+							arg0.unzftab[arg0.seqToUnseq[var83 & 0xFF] & 0xFF]++;
+							BZip2State.tt[var71] = arg0.seqToUnseq[var83 & 0xFF] & 0xFF;
 							var71++;
 							if (var103 == 0) {
 								var65++;
 								var103 = 50;
-								byte var91 = arg0.field780[var65];
-								var19 = arg0.field788[var91];
-								var20 = arg0.field757[var91];
-								var22 = arg0.field787[var91];
-								var21 = arg0.field786[var91];
+								byte var91 = arg0.selector[var65];
+								var19 = arg0.minLens[var91];
+								var20 = arg0.limit[var91];
+								var22 = arg0.perm[var91];
+								var21 = arg0.base[var91];
 							}
 							var103--;
 							int var92 = var19;
@@ -430,29 +435,29 @@ public class BZip2 {
 							var75 = var22[var93 - var21[var92]];
 						}
 					}
-					arg0.field765 = 0;
-					arg0.field755 = 0;
-					arg0.field774[0] = 0;
+					arg0.state_out_len = 0;
+					arg0.state_out_ch = 0;
+					arg0.cftab[0] = 0;
 					for (int var76 = 1; var76 <= 256; var76++) {
-						arg0.field774[var76] = arg0.field751[var76 - 1];
+						arg0.cftab[var76] = arg0.unzftab[var76 - 1];
 					}
 					for (int var77 = 1; var77 <= 256; var77++) {
-						arg0.field774[var77] += arg0.field774[var77 - 1];
+						arg0.cftab[var77] += arg0.cftab[var77 - 1];
 					}
 					for (int var78 = 0; var78 < var71; var78++) {
-						byte var79 = (byte) (tt[var78] & 0xFF);
-						tt[arg0.field774[var79 & 0xFF]] |= var78 << 8;
-						arg0.field774[var79 & 0xFF]++;
+						byte var79 = (byte) (BZip2State.tt[var78] & 0xFF);
+						BZip2State.tt[arg0.cftab[var79 & 0xFF]] |= var78 << 8;
+						arg0.cftab[var79 & 0xFF]++;
 					}
-					arg0.field770 = tt[arg0.field769] >> 8;
-					arg0.field762 = 0;
-					arg0.field770 = tt[arg0.field770];
-					arg0.field771 = (byte) (arg0.field770 & 0xFF);
-					arg0.field770 >>= 0x8;
-					arg0.field762++;
-					arg0.field785 = var71;
+					arg0.tPos = BZip2State.tt[arg0.origPtr] >> 8;
+					arg0.c_nblock_used = 0;
+					arg0.tPos = BZip2State.tt[arg0.tPos];
+					arg0.k0 = (byte) (arg0.tPos & 0xFF);
+					arg0.tPos >>= 0x8;
+					arg0.c_nblock_used++;
+					arg0.save_nblock = var71;
 					finish(arg0);
-					if (arg0.field762 == arg0.field785 + 1 && arg0.field765 == 0) {
+					if (arg0.c_nblock_used == arg0.save_nblock + 1 && arg0.state_out_len == 0) {
 						var23 = true;
 						break;
 					}
@@ -476,26 +481,26 @@ public class BZip2 {
 
 	@ObfuscatedName("bu.n(ILbg;)I")
 	public static int getBits(int arg0, BZip2State arg1) {
-		while (arg1.field767 < arg0) {
-			arg1.field766 = arg1.field766 << 8 | arg1.field753[arg1.field758] & 0xFF;
-			arg1.field767 += 8;
-			arg1.field758++;
-			arg1.field759++;
-			if (arg1.field759 == 0) {
+		while (arg1.bsLive < arg0) {
+			arg1.bsBuff = arg1.bsBuff << 8 | arg1.stream[arg1.next_in] & 0xFF;
+			arg1.bsLive += 8;
+			arg1.next_in++;
+			arg1.total_in_lo32++;
+			if (arg1.total_in_lo32 == 0) {
 			}
 		}
-		int var2 = arg1.field766 >> arg1.field767 - arg0 & (0x1 << arg0) - 1;
-		arg1.field767 -= arg0;
+		int var2 = arg1.bsBuff >> arg1.bsLive - arg0 & (0x1 << arg0) - 1;
+		arg1.bsLive -= arg0;
 		return var2;
 	}
 
 	@ObfuscatedName("bu.j(Lbg;)V")
 	public static void makeMaps(BZip2State arg0) {
-		arg0.field776 = 0;
+		arg0.nInUse = 0;
 		for (int var1 = 0; var1 < 256; var1++) {
-			if (arg0.field777[var1]) {
-				arg0.field779[arg0.field776] = (byte) var1;
-				arg0.field776++;
+			if (arg0.inUse[var1]) {
+				arg0.seqToUnseq[arg0.nInUse] = (byte) var1;
+				arg0.nInUse++;
 			}
 		}
 	}
@@ -537,6 +542,8 @@ public class BZip2 {
 	@ObfuscatedName("bg")
 	public static class BZip2State {
 
+		@ObfuscatedName("bg.x")
+		public static int[] tt;
 		@ObfuscatedName("bg.r")
 		public final int MTFA_SIZE = 4096;
 
@@ -556,99 +563,99 @@ public class BZip2 {
 		public final int BZ_MAX_SELECTORS = 18002;
 
 		@ObfuscatedName("bg.j")
-		public byte[] field753;
+		public byte[] stream;
 
 		@ObfuscatedName("bg.z")
-		public int field758 = 0;
+		public int next_in = 0;
 
 		@ObfuscatedName("bg.g")
-		public int field759;
+		public int total_in_lo32;
 
 		@ObfuscatedName("bg.q")
-		public byte[] field760;
+		public byte[] decompressed;
 
 		@ObfuscatedName("bg.i")
-		public int field761 = 0;
+		public int next_out = 0;
 
 		@ObfuscatedName("bg.s")
-		public int field754;
+		public int avail_out;
 
 		@ObfuscatedName("bg.u")
-		public int field763;
+		public int total_out_lo32;
 
 		@ObfuscatedName("bg.v")
-		public byte field755;
+		public byte state_out_ch;
 
 		@ObfuscatedName("bg.w")
-		public int field765;
+		public int state_out_len;
 
 		@ObfuscatedName("bg.e")
-		public int field766;
+		public int bsBuff;
 
 		@ObfuscatedName("bg.b")
-		public int field767;
+		public int bsLive;
 
 		@ObfuscatedName("bg.y")
-		public int field768;
+		public int blockSize100k;
 
 		@ObfuscatedName("bg.t")
-		public int field769;
+		public int origPtr;
 
 		@ObfuscatedName("bg.f")
-		public int field770;
+		public int tPos;
 
 		@ObfuscatedName("bg.k")
-		public int field771;
+		public int k0;
 
 		@ObfuscatedName("bg.o")
-		public int[] field751 = new int[256];
+		public int[] unzftab = new int[256];
 
 		@ObfuscatedName("bg.a")
-		public int field762;
+		public int c_nblock_used;
 
 		@ObfuscatedName("bg.h")
-		public int[] field774 = new int[257];
+		public int[] cftab = new int[257];
 
 		@ObfuscatedName("bg.p")
-		public int field776;
+		public int nInUse;
 
 		@ObfuscatedName("bg.ad")
-		public boolean[] field777 = new boolean[256];
+		public boolean[] inUse = new boolean[256];
 
 		@ObfuscatedName("bg.ac")
-		public boolean[] field778 = new boolean[16];
+		public boolean[] inUse16 = new boolean[16];
 
 		@ObfuscatedName("bg.aa")
-		public byte[] field779 = new byte[256];
+		public byte[] seqToUnseq = new byte[256];
 
 		@ObfuscatedName("bg.as")
-		public byte[] field789 = new byte[4096];
+		public byte[] mtfa = new byte[4096];
 
 		@ObfuscatedName("bg.am")
-		public int[] field781 = new int[16];
+		public int[] mtfbase = new int[16];
 
 		@ObfuscatedName("bg.ap")
-		public byte[] field780 = new byte[18002];
+		public byte[] selector = new byte[18002];
 
 		@ObfuscatedName("bg.av")
-		public byte[] field772 = new byte[18002];
+		public byte[] selectorMtf = new byte[18002];
 
 		@ObfuscatedName("bg.ak")
-		public byte[][] field782 = new byte[6][258];
+		public byte[][] len = new byte[6][258];
 
 		@ObfuscatedName("bg.az")
-		public int[][] field757 = new int[6][258];
+		public int[][] limit = new int[6][258];
 
 		@ObfuscatedName("bg.an")
-		public int[][] field786 = new int[6][258];
+		public int[][] base = new int[6][258];
 
 		@ObfuscatedName("bg.ah")
-		public int[][] field787 = new int[6][258];
+		public int[][] perm = new int[6][258];
 
 		@ObfuscatedName("bg.ay")
-		public int[] field788 = new int[6];
+		public int[] minLens = new int[6];
 
 		@ObfuscatedName("bg.al")
-		public int field785;
+		public int save_nblock;
 	}
 }

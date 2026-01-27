@@ -344,22 +344,22 @@ public class Text {
 	public static String LOGIN27_C = "";
 
 	@ObfuscatedName("ba.ds")
-	public static String field978 = "";
+	public static String LOGIN_USER_LENGTH_A = "";
 
 	@ObfuscatedName("ba.dh")
-	public static String field979 = "Please enter your username/email address.";
+	public static String LOGIN_USER_LENGTH_B = "Please enter your username/email address.";
 
 	@ObfuscatedName("ba.dc")
-	public static String field980 = "";
+	public static String LOGIN_USER_LENGTH_C = "";
 
 	@ObfuscatedName("ba.dp")
-	public static String field981 = "";
+	public static String LOGIN_PASS_LENGTH_A = "";
 
 	@ObfuscatedName("ba.dm")
-	public static String field982 = "Please enter your password.";
+	public static String LOGIN_PASS_LENGTH_B = "Please enter your password.";
 
 	@ObfuscatedName("ba.di")
-	public static String field983 = "";
+	public static String LOGIN_PASS_LENGTH_C = "";
 
 	@ObfuscatedName("ba.db")
 	public static String LOGIN31_A = "Your account must have a displayname set";

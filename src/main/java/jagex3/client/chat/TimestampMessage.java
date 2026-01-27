@@ -8,14 +8,14 @@ import jagex3.datastruct.MonotonicTime;
 public class TimestampMessage extends ChatLinkable {
 
 	@ObfuscatedName("dr.l")
-	public String field1584;
+	public String message;
 
 	@ObfuscatedName("dr.m")
-	public short field1583;
+	public short worldId;
 
 	public TimestampMessage(String arg0, int arg1) {
 		MonotonicTime.currentTime();
-		this.field1584 = arg0;
-		this.field1583 = (short) arg1;
+		this.message = arg0;
+		this.worldId = (short) arg1;
 	}
 }

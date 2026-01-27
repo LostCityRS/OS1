@@ -55,7 +55,7 @@ public class TitleScreen {
 	public static boolean mute = false;
 
 	@ObfuscatedName("g.w")
-	public static int[] field139 = new int[256];
+	public static int[] flameLineOffset = new int[256];
 
 	@ObfuscatedName("g.e")
 	public static int[] flameGradient;
@@ -91,13 +91,13 @@ public class TitleScreen {
 	public static int flameCycle0 = 0;
 
 	@ObfuscatedName("g.ad")
-	public static int field128 = 0;
+	public static int flameSparks = 0;
 
 	@ObfuscatedName("g.ac")
-	public static int field147 = 0;
+	public static int flameCycle = 0;
 
 	@ObfuscatedName("g.aa")
-	public static int field148 = 0;
+	public static int loopCycle = 0;
 
 	// jag::oldscape::TitleScreen::m_loadPos
 	@ObfuscatedName("g.as")
@@ -131,8 +131,9 @@ public class TitleScreen {
 	@ObfuscatedName("g.ah")
 	public static String loginPass = "";
 
+	// // jag::oldscape::TitleScreen::m_loginSelect
 	@ObfuscatedName("g.ay")
-	public static int field150 = 0;
+	public static int loginSelect = 0;
 
 	// jag::oldscape::TitleScreen::m_charList
 	@ObfuscatedName("g.al")
@@ -229,12 +230,12 @@ public class TitleScreen {
 
 		// todo: inlined method (MidiManager.stop?)
 		MidiManager.state = 1;
-		MidiManager.field1118 = null;
-		MidiManager.field349 = -1;
-		MidiManager.field1121 = -1;
-		MidiManager.field1120 = 0;
-		MidiManager.field1625 = false;
-		MidiManager.field1152 = 2;
+		MidiManager.midis = null;
+		MidiManager.pendingGroupId = -1;
+		MidiManager.pendingFileId = -1;
+		MidiManager.pendingVolume = 0;
+		MidiManager.pendingLoop = false;
+		MidiManager.fadeOutRate = 2;
 
 		Js5Net.sendLoginLogoutPacket(true);
 		open = false;
@@ -265,7 +266,7 @@ public class TitleScreen {
 			return;
 		}
 
-		field147++;
+		flameCycle++;
 
 		if (Client.state != 10) {
 			return;
@@ -296,7 +297,7 @@ public class TitleScreen {
 			short var12 = 291;
 			if (var8 == 1 && var9 >= var11 - 75 && var9 <= var11 + 75 && var10 >= var12 - 20 && var10 <= var12 + 20) {
 				loginscreen = 3;
-				field150 = 0;
+				loginSelect = 0;
 			}
 			short var13 = 462;
 			if (var8 == 1 && var9 >= var13 - 75 && var9 <= var13 + 75 && var10 >= var12 - 20 && var10 <= var12 + 20) {
@@ -304,17 +305,17 @@ public class TitleScreen {
 				loginMes2 = Text.PLEASELOGIN2;
 				loginMes3 = Text.PLEASELOGIN3;
 				loginscreen = 2;
-				field150 = 0;
+				loginSelect = 0;
 			}
 		} else if (loginscreen == 2) {
 			short var14 = 231;
 			int var26 = var14 + 30;
 			if (var8 == 1 && var10 >= var26 - 15 && var10 < var26) {
-				field150 = 0;
+				loginSelect = 0;
 			}
 			var26 += 15;
 			if (var8 == 1 && var10 >= var26 - 15 && var10 < var26) {
-				field150 = 1;
+				loginSelect = 1;
 			}
 			var26 += 15;
 			short var15 = 302;
@@ -322,11 +323,11 @@ public class TitleScreen {
 			if (var8 == 1 && var9 >= var15 - 75 && var9 <= var15 + 75 && var10 >= var16 - 20 && var10 <= var16 + 20) {
 				loginUser = loginUser.trim();
 				if (loginUser.length() == 0) {
-					loginMes(Text.field978, Text.field979, Text.field980);
+					loginMes(Text.LOGIN_USER_LENGTH_A, Text.LOGIN_USER_LENGTH_B, Text.LOGIN_USER_LENGTH_C);
 					return;
 				}
 				if (loginPass.length() == 0) {
-					loginMes(Text.field981, Text.field982, Text.field983);
+					loginMes(Text.LOGIN_PASS_LENGTH_A, Text.LOGIN_PASS_LENGTH_B, Text.LOGIN_PASS_LENGTH_C);
 					return;
 				}
 				loginMes(Text.CONNECTING1, Text.CONNECTING2, Text.CONNECTING3);
@@ -350,31 +351,31 @@ public class TitleScreen {
 					}
 				}
 
-				if (field150 == 0) {
+				if (loginSelect == 0) {
 					if (ClientKeyboardListener.code == 85 && loginUser.length() > 0) {
 						loginUser = loginUser.substring(0, loginUser.length() - 1);
 					}
 					if (ClientKeyboardListener.code == 84 || ClientKeyboardListener.code == 80) {
-						field150 = 1;
+						loginSelect = 1;
 					}
 					if (var21 && loginUser.length() < 320) {
 						loginUser += ClientKeyboardListener.ch;
 					}
-				} else if (field150 == 1) {
+				} else if (loginSelect == 1) {
 					if (ClientKeyboardListener.code == 85 && loginPass.length() > 0) {
 						loginPass = loginPass.substring(0, loginPass.length() - 1);
 					}
 					if (ClientKeyboardListener.code == 84 || ClientKeyboardListener.code == 80) {
-						field150 = 0;
+						loginSelect = 0;
 					}
 					if (Client.modewhere == 2 && ClientKeyboardListener.code == 84) {
 						loginUser = loginUser.trim();
 						if (loginUser.length() == 0) {
-							loginMes(Text.field978, Text.field979, Text.field980);
+							loginMes(Text.LOGIN_USER_LENGTH_A, Text.LOGIN_USER_LENGTH_B, Text.LOGIN_USER_LENGTH_C);
 							break;
 						}
 						if (loginPass.length() == 0) {
-							loginMes(Text.field981, Text.field982, Text.field983);
+							loginMes(Text.LOGIN_PASS_LENGTH_A, Text.LOGIN_PASS_LENGTH_B, Text.LOGIN_PASS_LENGTH_C);
 							break;
 						}
 						loginMes(Text.CONNECTING1, Text.CONNECTING2, Text.CONNECTING3);
@@ -482,14 +483,14 @@ public class TitleScreen {
 				for (user = loginUser; arg0.stringWid(user) > var16; user = user.substring(1)) {
 				}
 
-				arg0.drawString(PixFont.escape(user) + (field150 == 0 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 312, y, 16777215, 0);
+				arg0.drawString(PixFont.escape(user) + (loginSelect == 0 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 312, y, 16777215, 0);
 				y += 15;
 
 				// todo: inlined method?
 				String var19 = Text.PASSWORDPROMPT;
 				String var20 = loginPass;
 				String var21 = StringTools.getRepeatedCharacter('*', var20.length());
-				arg0.drawString(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 274, y, 16777215, 0);
+				arg0.drawString(var19 + var21 + (loginSelect == 1 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 274, y, 16777215, 0);
 				y += 15;
 
 				int x = 302;
@@ -524,8 +525,8 @@ public class TitleScreen {
 			}
 		}
 
-		if (field147 > 0) {
-			int var28 = field147;
+		if (flameCycle > 0) {
+			int var28 = flameCycle;
 
 			short var29 = 256;
 			flameCycle0 += var28 * 128;
@@ -579,25 +580,25 @@ public class TitleScreen {
 			}
 
 			for (int var41 = 0; var41 < var29 - var28; var41++) {
-				field139[var41] = field139[var28 + var41];
+				flameLineOffset[var41] = flameLineOffset[var28 + var41];
 			}
 
 			for (int var42 = var29 - var28; var42 < var29; var42++) {
-				field139[var42] = (int) (Math.sin((double) field148 / 14.0D) * 16.0D + Math.sin((double) field148 / 15.0D) * 14.0D + Math.sin((double) field148 / 16.0D) * 12.0D);
-				field148++;
+				flameLineOffset[var42] = (int) (Math.sin((double) loopCycle / 14.0D) * 16.0D + Math.sin((double) loopCycle / 15.0D) * 14.0D + Math.sin((double) loopCycle / 16.0D) * 12.0D);
+				loopCycle++;
 			}
 
-			field128 += var28 * 381703395;
+			flameSparks += var28;
 			int var43 = ((Client.loopCycle & 0x1) + var28) / 2;
 
 			if (var43 > 0) {
-				for (int var44 = 0; var44 < field128 * 1196724044; var44++) {
+				for (int var44 = 0; var44 < flameSparks * 100; var44++) {
 					int var45 = (int) (Math.random() * 124.0D) + 2;
 					int var46 = (int) (Math.random() * 128.0D) + 128;
 					flameBuffer2[(var46 << 7) + var45] = 192;
 				}
 
-				field128 = 0;
+				flameSparks = 0;
 
 				int var47 = 0;
 				label286:
@@ -640,7 +641,7 @@ public class TitleScreen {
 					var47++;
 				}
 			}
-			field147 = 0;
+			flameCycle = 0;
 		}
 
 		short var55 = 256;
@@ -676,7 +677,7 @@ public class TitleScreen {
 		int var59 = 0;
 		int var60 = 6885;
 		for (int var61 = 1; var61 < var55 - 1; var61++) {
-			int var62 = (var55 - var61) * field139[var61] / var55;
+			int var62 = (var55 - var61) * flameLineOffset[var61] / var55;
 			int var63 = var62 + 22;
 			if (var63 < 0) {
 				var63 = 0;
@@ -702,7 +703,7 @@ public class TitleScreen {
 		int var70 = 0;
 		int var71 = 7546;
 		for (int var72 = 1; var72 < var55 - 1; var72++) {
-			int var73 = (var55 - var72) * field139[var72] / var55;
+			int var73 = (var55 - var72) * flameLineOffset[var72] / var55;
 			int var74 = 103 - var73;
 			int var75 = var71 + var73;
 			for (int var76 = 0; var76 < var74; var76++) {

@@ -19,8 +19,8 @@ public class MidiFile extends Linkable {
 
 	// jag::oldscape::midi2::MidiFile::Load
 	@ObfuscatedName("ei.c(Lch;II)Lei;")
-	public static MidiFile load(Js5 arg0, int arg1, int arg2) {
-		byte[] var3 = arg0.getFile(arg1, arg2);
+	public static MidiFile load(Js5 arg0, int groupId, int fileId) {
+		byte[] var3 = arg0.getFile(groupId, fileId);
 		return var3 == null ? null : new MidiFile(new Packet(var3));
 	}
 
