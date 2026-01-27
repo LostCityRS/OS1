@@ -13,7 +13,6 @@ public class LinkList2 {
 		this.sentinel.prev2 = this.sentinel;
 	}
 
-	// add to tail
 	@ObfuscatedName("ci.r(Len;)V")
 	public void push(Linkable2 node) {
 		if (node.prev2 != null) {
@@ -26,9 +25,8 @@ public class LinkList2 {
 		node.next2.prev2 = node;
 	}
 
-	// add to head
 	@ObfuscatedName("ci.d(Len;)V")
-	public void unshift(Linkable2 node) {
+	public void pushFront(Linkable2 node) {
 		if (node.prev2 != null) {
 			node.unlink2();
 		}
@@ -39,9 +37,8 @@ public class LinkList2 {
 		node.next2.prev2 = node;
 	}
 
-	// remove from head
 	@ObfuscatedName("ci.l()Len;")
-	public Linkable2 shift() {
+	public Linkable2 popFront() {
 		Linkable2 node = this.sentinel.next2;
 		if (this.sentinel == node) {
 			return null;

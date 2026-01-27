@@ -56,7 +56,7 @@ public class Pix32 extends Pix2D {
 			this.data = new int[this.wi * this.hi];
 			PixelGrabber var5 = new PixelGrabber(var3, 0, 0, this.wi, this.hi, this.data, 0, this.wi);
 			var5.grabPixels();
-		} catch (InterruptedException var7) {
+		} catch (InterruptedException ignore) {
 		}
 	}
 
@@ -81,6 +81,7 @@ public class Pix32 extends Pix2D {
 		setPixels(this.data, this.wi, this.hi);
 	}
 
+	// jag::oldscape::graphics::Pix32::RgbAdjust
 	@ObfuscatedName("fq.be(III)V")
 	public void rgbAdjust(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.data.length; var4++) {
@@ -112,6 +113,7 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::Pix32::Trim
 	@ObfuscatedName("fq.bp()V")
 	public void trim() {
 		if (this.wi == this.owi && this.ohi == this.hi) {
@@ -233,10 +235,11 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::QuickPlotSprite
 	@ObfuscatedName("fq.cr(II)V")
-	public void quickPlotSprite(int x, int arg1) {
+	public void quickPlotSprite(int x, int y) {
 		int var3 = this.xof + x;
-		int var4 = this.yof + arg1;
+		int var4 = this.yof + y;
 		int var5 = Pix2D.width * var4 + var3;
 		int var6 = 0;
 		int var7 = this.hi;
@@ -273,6 +276,7 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::PlotQuick
 	@ObfuscatedName("fq.cs([I[IIIIIII)V")
 	public static void plotQuick(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		for (int var8 = -arg5; var8 < 0; var8++) {
@@ -292,6 +296,7 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::PlotSprite
 	@ObfuscatedName("fq.cj(II)V")
 	public void plotSprite(int arg0, int arg1) {
 		int var3 = this.xof + arg0;
@@ -328,12 +333,13 @@ public class Pix32 extends Pix2D {
 			var9 += var13;
 		}
 		if (var8 > 0 && var7 > 0) {
-			plot(Pix2D.pixels, this.data, 0, var6, var5, var8, var7, var9, var10);
+			plotSprite(Pix2D.pixels, this.data, 0, var6, var5, var8, var7, var9, var10);
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::PlotSprite
 	@ObfuscatedName("fq.cl([I[IIIIIIII)V")
-	public static void plot(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static void plotSprite(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		int var9 = -(arg5 >> 2);
 		int var10 = -(arg5 & 0x3);
 		for (int var11 = -arg6; var11 < 0; var11++) {
@@ -376,8 +382,9 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::ScalePlotSprite
 	@ObfuscatedName("fq.cp(IIII)V")
-	public void method2664(int arg0, int arg1, int arg2, int arg3) {
+	public void scalePlotSprite(int arg0, int arg1, int arg2, int arg3) {
 		if (arg2 <= 0 || arg3 <= 0) {
 			return;
 		}
@@ -428,11 +435,12 @@ public class Pix32 extends Pix2D {
 			var7 += var11 * var19;
 			var16 += var19;
 		}
-		method2674(Pix2D.pixels, this.data, 0, var7, var8, var15, var16, arg2, arg3, var11, var12, var5);
+		plotScale(Pix2D.pixels, this.data, 0, var7, var8, var15, var16, arg2, arg3, var11, var12, var5);
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::PlotScale
 	@ObfuscatedName("fq.ca([I[IIIIIIIIIII)V")
-	public static void method2674(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+	public static void plotScale(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
 		int var12 = arg3;
 		for (int var13 = -arg8; var13 < 0; var13++) {
 			int var14 = (arg4 >> 16) * arg11;
@@ -451,8 +459,9 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::LitPlotSprite
 	@ObfuscatedName("fq.co(IIII)V")
-	public void method2699(int arg0, int arg1, int arg2, int arg3) {
+	public void litPlotSprite(int arg0, int arg1, int arg2, int arg3) {
 		if (arg2 == 256) {
 			this.plotSprite(arg0, arg1);
 			return;
@@ -491,12 +500,13 @@ public class Pix32 extends Pix2D {
 			var11 += var15;
 		}
 		if (var10 > 0 && var9 > 0) {
-			method2675(Pix2D.pixels, this.data, 0, var8, var7, var10, var9, var11, var12, arg2, arg3);
+			litSprite(Pix2D.pixels, this.data, 0, var8, var7, var10, var9, var11, var12, arg2, arg3);
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::LitSprite
 	@ObfuscatedName("fq.ch([I[IIIIIIIIII)V")
-	public static void method2675(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
+	public static void litSprite(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
 		int var11 = 256 - arg9;
 		int var12 = (arg10 & 0xFF00FF) * var11 & 0xFF00FF00;
 		int var13 = (arg10 & 0xFF00) * var11 & 0xFF0000;
@@ -517,6 +527,7 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::TransPlotSprite
 	@ObfuscatedName("fq.cu(III)V")
 	public void transPlotSprite(int arg0, int arg1, int arg2) {
 		int var4 = this.xof + arg0;
@@ -557,6 +568,7 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::TranSprite
 	@ObfuscatedName("fq.cc([I[IIIIIIIII)V")
 	public static void tranSprite(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
 		int var10 = 256 - arg9;
@@ -575,8 +587,9 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::TransScalePlotSprite
 	@ObfuscatedName("fq.cm(IIIII)V")
-	public void method2678(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public void transScalePlotSprite(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		if (arg2 <= 0 || arg3 <= 0) {
 			return;
 		}
@@ -627,11 +640,12 @@ public class Pix32 extends Pix2D {
 			var8 += var12 * var20;
 			var17 += var20;
 		}
-		method2679(Pix2D.pixels, this.data, 0, var8, var9, var16, var17, arg2, arg3, var12, var13, var6, arg4);
+		tranScale(Pix2D.pixels, this.data, 0, var8, var9, var16, var17, arg2, arg3, var12, var13, var6, arg4);
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::TranScale
 	@ObfuscatedName("fq.cw([I[IIIIIIIIIIII)V")
-	public static void method2679(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12) {
+	public static void tranScale(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12) {
 		int var13 = 256 - arg12;
 		int var14 = arg3;
 		for (int var15 = -arg8; var15 < 0; var15++) {
@@ -652,6 +666,7 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::ScanlineRotatePlotSprite
 	@ObfuscatedName("fq.cz(IIIIIIII[I[I)V")
 	public void scanlineRotatePlotSprite(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int[] arg8, int[] arg9) {
 		try {
@@ -682,8 +697,9 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::RotateTransPlotSprite
 	@ObfuscatedName("fq.cv(IIIIIIDI)V")
-	public void rotatePlotSprite(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, double arg6, int arg7) {
+	public void rotateTransPlotSprite(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, double arg6, int arg7) {
 		try {
 			int var10 = -arg2 / 2;
 			int var11 = -arg3 / 2;
@@ -716,13 +732,15 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::Pix2D::PixelPerfectRotateScalePlotSprite
 	@ObfuscatedName("fq.ct(IIII)V")
-	public void method2685(int arg0, int arg1, int arg2, int arg3) {
-		this.method2683(this.owi << 3, this.ohi << 3, arg0 << 4, arg1 << 4, arg2, arg3);
+	public void pixelPerfectRotateScalePlotSprite(int arg0, int arg1, int arg2, int arg3) {
+		this.pixelPerfectRotateScalePlotSprite(this.owi << 3, this.ohi << 3, arg0 << 4, arg1 << 4, arg2, arg3);
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::PixelPerfectRotateScalePlotSprite
 	@ObfuscatedName("fq.ck(IIIIII)V")
-	public void method2683(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public void pixelPerfectRotateScalePlotSprite(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg5 == 0) {
 			return;
 		}
@@ -1167,6 +1185,7 @@ public class Pix32 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::ScanlinePlotSprite
 	@ObfuscatedName("fq.cy(Lft;II)V")
 	public void scanlinePlotSprite(Pix8 arg0, int arg1, int arg2) {
 		if (clipMaxX - clipMinX != arg0.wi || clipMaxY - clipMinY != arg0.hi) {
@@ -1208,12 +1227,12 @@ public class Pix32 extends Pix2D {
 		if (var9 > 0 && var8 > 0) {
 			int var15 = (var5 - clipMinY) * arg0.wi + (var4 - clipMinX);
 			int var16 = arg0.wi - var9;
-			scanlinePlot(Pix2D.pixels, this.data, 0, var7, var6, var15, var9, var8, var10, var11, var16, arg0.data);
+			plotScanline(Pix2D.pixels, this.data, 0, var7, var6, var15, var9, var8, var10, var11, var16, arg0.data);
 		}
 	}
 
 	@ObfuscatedName("fq.cq([I[IIIIIIIIII[B)V")
-	public static void scanlinePlot(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, byte[] arg11) {
+	public static void plotScanline(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, byte[] arg11) {
 		int var12 = -(arg6 >> 2);
 		int var13 = -(arg6 & 0x3);
 		for (int var14 = -arg7; var14 < 0; var14++) {

@@ -28,7 +28,9 @@ public class ModeGame implements ModeGameProvider {
 
 	@ObfuscatedName("bm.l(I)[Lbp;")
 	public static ModeGame[] values() {
-		return new ModeGame[] { SCRATCH, STELLARDAWN, RUNESCAPE, OLDSCAPE, TRANSFORMERS, ALTERNATEREALITY };
+		return new ModeGame[] {
+			SCRATCH, STELLARDAWN, RUNESCAPE, OLDSCAPE, TRANSFORMERS, ALTERNATEREALITY
+		};
 	}
 
 	public ModeGame(String arg0, String arg1, int arg2) {

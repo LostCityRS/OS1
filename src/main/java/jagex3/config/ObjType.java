@@ -8,7 +8,7 @@ import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.graphics.Pix2D;
 import jagex3.graphics.Pix32;
-import jagex3.graphics.SoftwareFont;
+import jagex3.graphics.PixFontGeneric;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 import jagex3.js5.Js5Loader;
@@ -41,7 +41,7 @@ public class ObjType extends Linkable2 {
 
 	// jag::oldscape::configdecoder::ObjType::m_countFont
 	@ObfuscatedName("bf.s")
-	public static SoftwareFont countFont;
+	public static PixFontGeneric countFont;
 
 	@ObfuscatedName("fj.u")
 	public int index;
@@ -693,7 +693,7 @@ public class ObjType extends Linkable2 {
 	}
 
 	// jag::oldscape::configdecoder::ObjType::Init
-	public static void init(Js5Loader var32, Js5Loader var33, boolean var34, SoftwareFont var35) {
+	public static void init(Js5Loader var32, Js5Loader var33, boolean var34, PixFontGeneric var35) {
 		configClient = var32;
 		models = var33;
 		memServer = var34;

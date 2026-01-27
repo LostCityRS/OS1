@@ -203,13 +203,15 @@ public class StringTools {
 		return var2;
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::IsASCIIAlpha
 	@ObfuscatedName("cu.z(CI)Z")
 	public static boolean isAlpha(char c) {
 		return c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::ForceCapitalisationOfWords
 	@ObfuscatedName("n.g(Ljava/lang/String;B)Ljava/lang/String;")
-	public static String method54(String arg0) {
+	public static String forceCapitalisationOfWords(String arg0) {
 		int var1 = arg0.length();
 		char[] var2 = new char[var1];
 		byte var3 = 2;
@@ -218,7 +220,7 @@ public class StringTools {
 			if (var3 == 0) {
 				var5 = Character.toLowerCase(var5);
 			} else if (var3 == 2 || Character.isUpperCase(var5)) {
-				var5 = JString.method261(var5);
+				var5 = JString.toTitleCase(var5);
 			}
 			if (Character.isLetter(var5)) {
 				var3 = 0;
@@ -234,23 +236,27 @@ public class StringTools {
 		return new String(var2);
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::GetRepeatedCharacter
 	@ObfuscatedName("bd.q(CII)Ljava/lang/String;")
-	public static String method946(char arg0, int arg1) {
-		char[] var2 = new char[arg1];
-		for (int var3 = 0; var3 < arg1; var3++) {
-			var2[var3] = arg0;
+	public static String getRepeatedCharacter(char ch, int len) {
+		char[] tmp = new char[len];
+		for (int i = 0; i < len; i++) {
+			tmp[i] = ch;
 		}
-		return new String(var2);
+		return new String(tmp);
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::IsASCIINumeric
 	public static boolean isNumeric(char c) {
 		return c >= '0' && c <= '9';
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::IsASCIIAlphaNumeric
 	public static boolean isAlphaNumeric(char c) {
 		return c >= '0' && c <= '9' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z';
 	}
 
+	// jag::oldscape::core::stringtools::general::StringTools::IsPrintableAsImplementedInJString
 	public static boolean isPrintable(char c) {
 		if (c >= ' ' && c <= '~') {
 			return true;
@@ -263,38 +269,40 @@ public class StringTools {
 		}
 	}
 
-	public static int compare(String var247, String var248) {
-		int var249 = Client.lang;
-		int var250 = var247.length();
-		int var251 = var248.length();
+	public static int compare(String s1, String s2) {
+		int lang = Client.lang;
+		int len1 = s1.length();
+		int len2 = s2.length();
+
 		int var252 = 0;
 		int var253 = 0;
 		byte var254 = 0;
 		byte var255 = 0;
 		int var256;
+
 		label2100:
 		while (true) {
-			if (var252 - var254 >= var250 && var253 - var255 >= var251) {
-				int var267 = Math.min(var250, var251);
+			if (var252 - var254 >= len1 && var253 - var255 >= len2) {
+				int var267 = Math.min(len1, len2);
 				for (int var268 = 0; var268 < var267; var268++) {
-					char var271 = var247.charAt(var268);
-					char var272 = var248.charAt(var268);
+					char var271 = s1.charAt(var268);
+					char var272 = s2.charAt(var268);
 					if (var271 != var272 && Character.toUpperCase(var271) != Character.toUpperCase(var272)) {
 						char var273 = Character.toLowerCase(var271);
 						char var274 = Character.toLowerCase(var272);
 						if (var273 != var274) {
-							var256 = StringComparator.method1018(var273, var249) - StringComparator.method1018(var274, var249);
+							var256 = StringComparator.method1018(var273, lang) - StringComparator.method1018(var274, lang);
 							break label2100;
 						}
 					}
 				}
-				int var275 = var250 - var251;
+				int var275 = len1 - len2;
 				if (var275 == 0) {
 					for (int var276 = 0; var276 < var267; var276++) {
-						char var277 = var247.charAt(var276);
-						char var278 = var248.charAt(var276);
+						char var277 = s1.charAt(var276);
+						char var278 = s2.charAt(var276);
 						if (var277 != var278) {
-							var256 = StringComparator.method1018(var277, var249) - StringComparator.method1018(var278, var249);
+							var256 = StringComparator.method1018(var277, lang) - StringComparator.method1018(var278, lang);
 							break label2100;
 						}
 					}
@@ -304,24 +312,24 @@ public class StringTools {
 				}
 				break;
 			}
-			if (var252 - var254 >= var250) {
+			if (var252 - var254 >= len1) {
 				var256 = -1;
 				break;
 			}
-			if (var253 - var255 >= var251) {
+			if (var253 - var255 >= len2) {
 				var256 = 1;
 				break;
 			}
 			char var257;
 			if (var254 == 0) {
-				var257 = var247.charAt(var252++);
+				var257 = s1.charAt(var252++);
 			} else {
 				var257 = (char) var254;
 				boolean var258 = false;
 			}
 			char var259;
 			if (var255 == 0) {
-				var259 = var248.charAt(var253++);
+				var259 = s2.charAt(var253++);
 			} else {
 				var259 = (char) var255;
 				boolean var260 = false;
@@ -356,13 +364,13 @@ public class StringTools {
 				var262 = 0;
 			}
 			var255 = var262;
-			char var263 = StringComparator.method342(var257, var249);
-			char var264 = StringComparator.method342(var259, var249);
+			char var263 = StringComparator.method342(var257, lang);
+			char var264 = StringComparator.method342(var259, lang);
 			if (var263 != var264 && Character.toUpperCase(var263) != Character.toUpperCase(var264)) {
 				char var265 = Character.toLowerCase(var263);
 				char var266 = Character.toLowerCase(var264);
 				if (var265 != var266) {
-					var256 = StringComparator.method1018(var265, var249) - StringComparator.method1018(var266, var249);
+					var256 = StringComparator.method1018(var265, lang) - StringComparator.method1018(var266, lang);
 					break;
 				}
 			}

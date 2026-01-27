@@ -9,7 +9,7 @@ public class BZip2 {
 	public static final BZip2State state = new BZip2State();
 
 	@ObfuscatedName("bg.x")
-	public static int[] field775;
+	public static int[] tt;
 
 	public BZip2() throws Throwable {
 		throw new Error();
@@ -27,7 +27,7 @@ public class BZip2 {
 			state.field766 = 0;
 			state.field759 = 0;
 			state.field763 = 0;
-			method844(state);
+			decompress(state);
 			int var6 = arg1 - state.field754;
 			state.field753 = null;
 			state.field760 = null;
@@ -36,12 +36,12 @@ public class BZip2 {
 	}
 
 	@ObfuscatedName("bu.d(Lbg;)V")
-	public static void method843(BZip2State arg0) {
+	public static void finish(BZip2State arg0) {
 		byte var1 = arg0.field755;
 		int var2 = arg0.field765;
 		int var3 = arg0.field762;
 		int var4 = arg0.field771;
-		int[] var5 = field775;
+		int[] var5 = tt;
 		int var6 = arg0.field770;
 		byte[] var7 = arg0.field760;
 		int var8 = arg0.field761;
@@ -144,7 +144,7 @@ public class BZip2 {
 		arg0.field765 = var2;
 		arg0.field762 = var3;
 		arg0.field771 = var4;
-		field775 = var5;
+		tt = var5;
 		arg0.field770 = var6;
 		arg0.field760 = var7;
 		arg0.field761 = var8;
@@ -152,7 +152,7 @@ public class BZip2 {
 	}
 
 	@ObfuscatedName("bu.l(Lbg;)V")
-	public static void method844(BZip2State arg0) {
+	public static void decompress(BZip2State arg0) {
 		boolean var1 = false;
 		boolean var2 = false;
 		boolean var3 = false;
@@ -176,37 +176,37 @@ public class BZip2 {
 		int[] var21 = null;
 		int[] var22 = null;
 		arg0.field768 = 1;
-		if (field775 == null) {
-			field775 = new int[arg0.field768 * 100000];
+		if (tt == null) {
+			tt = new int[arg0.field768 * 100000];
 		}
 		boolean var23 = true;
 		while (true) {
 			while (var23) {
-				byte var24 = method845(arg0);
+				byte var24 = getUnsignedChar(arg0);
 				if (var24 == 23) {
 					return;
 				}
-				byte var25 = method845(arg0);
-				byte var26 = method845(arg0);
-				byte var27 = method845(arg0);
-				byte var28 = method845(arg0);
-				byte var29 = method845(arg0);
-				byte var30 = method845(arg0);
-				byte var31 = method845(arg0);
-				byte var32 = method845(arg0);
-				byte var33 = method845(arg0);
-				byte var34 = method846(arg0);
+				byte var25 = getUnsignedChar(arg0);
+				byte var26 = getUnsignedChar(arg0);
+				byte var27 = getUnsignedChar(arg0);
+				byte var28 = getUnsignedChar(arg0);
+				byte var29 = getUnsignedChar(arg0);
+				byte var30 = getUnsignedChar(arg0);
+				byte var31 = getUnsignedChar(arg0);
+				byte var32 = getUnsignedChar(arg0);
+				byte var33 = getUnsignedChar(arg0);
+				byte var34 = getBit(arg0);
 				if (var34 != 0) {
 				}
 				arg0.field769 = 0;
-				byte var35 = method845(arg0);
+				byte var35 = getUnsignedChar(arg0);
 				arg0.field769 = arg0.field769 << 8 | var35 & 0xFF;
-				byte var36 = method845(arg0);
+				byte var36 = getUnsignedChar(arg0);
 				arg0.field769 = arg0.field769 << 8 | var36 & 0xFF;
-				byte var37 = method845(arg0);
+				byte var37 = getUnsignedChar(arg0);
 				arg0.field769 = arg0.field769 << 8 | var37 & 0xFF;
 				for (int var38 = 0; var38 < 16; var38++) {
-					byte var39 = method846(arg0);
+					byte var39 = getBit(arg0);
 					if (var39 == 1) {
 						arg0.field778[var38] = true;
 					} else {
@@ -219,21 +219,21 @@ public class BZip2 {
 				for (int var41 = 0; var41 < 16; var41++) {
 					if (arg0.field778[var41]) {
 						for (int var42 = 0; var42 < 16; var42++) {
-							byte var43 = method846(arg0);
+							byte var43 = getBit(arg0);
 							if (var43 == 1) {
 								arg0.field777[var41 * 16 + var42] = true;
 							}
 						}
 					}
 				}
-				method848(arg0);
+				makeMaps(arg0);
 				int var44 = arg0.field776 + 2;
-				int var45 = method847(3, arg0);
-				int var46 = method847(15, arg0);
+				int var45 = getBits(3, arg0);
+				int var46 = getBits(15, arg0);
 				for (int var47 = 0; var47 < var46; var47++) {
 					int var48 = 0;
 					while (true) {
-						byte var49 = method846(arg0);
+						byte var49 = getBit(arg0);
 						if (var49 == 0) {
 							arg0.field772[var47] = (byte) var48;
 							break;
@@ -257,15 +257,15 @@ public class BZip2 {
 					arg0.field780[var52] = var54;
 				}
 				for (int var55 = 0; var55 < var45; var55++) {
-					int var56 = method847(5, arg0);
+					int var56 = getBits(5, arg0);
 					for (int var57 = 0; var57 < var44; var57++) {
 						while (true) {
-							byte var58 = method846(arg0);
+							byte var58 = getBit(arg0);
 							if (var58 == 0) {
 								arg0.field782[var55][var57] = (byte) var56;
 								break;
 							}
-							byte var59 = method846(arg0);
+							byte var59 = getBit(arg0);
 							if (var59 == 0) {
 								var56++;
 							} else {
@@ -285,7 +285,7 @@ public class BZip2 {
 							var61 = arg0.field782[var60][var63];
 						}
 					}
-					method841(arg0.field757[var60], arg0.field786[var60], arg0.field787[var60], arg0.field782[var60], var61, var62, var44);
+					createDecodeTables(arg0.field757[var60], arg0.field786[var60], arg0.field787[var60], arg0.field782[var60], var61, var62, var44);
 					arg0.field788[var60] = var61;
 				}
 				int var64 = arg0.field776 + 1;
@@ -316,9 +316,9 @@ public class BZip2 {
 				int var73 = var19;
 				int var74;
 				byte var102;
-				for (var74 = method847(var19, arg0); var74 > var20[var73]; var74 = var74 << 1 | var102) {
+				for (var74 = getBits(var19, arg0); var74 > var20[var73]; var74 = var74 << 1 | var102) {
 					var73++;
-					var102 = method846(arg0);
+					var102 = getBit(arg0);
 				}
 				int var75 = var22[var74 - var21[var73]];
 				while (true) {
@@ -346,9 +346,9 @@ public class BZip2 {
 								int var98 = var19;
 								int var99;
 								byte var101;
-								for (var99 = method847(var19, arg0); var99 > var20[var98]; var99 = var99 << 1 | var101) {
+								for (var99 = getBits(var19, arg0); var99 > var20[var98]; var99 = var99 << 1 | var101) {
 									var98++;
-									var101 = method846(arg0);
+									var101 = getBit(arg0);
 								}
 								var75 = var22[var99 - var21[var98]];
 							} while (var75 == 0 || var75 == 1);
@@ -356,7 +356,7 @@ public class BZip2 {
 							byte var100 = arg0.field779[arg0.field789[arg0.field781[0]] & 0xFF];
 							arg0.field751[var100 & 0xFF] += var95;
 							while (var95 > 0) {
-								field775[var71] = var100 & 0xFF;
+								tt[var71] = var100 & 0xFF;
 								var71++;
 								var95--;
 							}
@@ -408,7 +408,7 @@ public class BZip2 {
 								}
 							}
 							arg0.field751[arg0.field779[var83 & 0xFF] & 0xFF]++;
-							field775[var71] = arg0.field779[var83 & 0xFF] & 0xFF;
+							tt[var71] = arg0.field779[var83 & 0xFF] & 0xFF;
 							var71++;
 							if (var103 == 0) {
 								var65++;
@@ -423,9 +423,9 @@ public class BZip2 {
 							int var92 = var19;
 							int var93;
 							byte var94;
-							for (var93 = method847(var19, arg0); var93 > var20[var92]; var93 = var93 << 1 | var94) {
+							for (var93 = getBits(var19, arg0); var93 > var20[var92]; var93 = var93 << 1 | var94) {
 								var92++;
-								var94 = method846(arg0);
+								var94 = getBit(arg0);
 							}
 							var75 = var22[var93 - var21[var92]];
 						}
@@ -440,18 +440,18 @@ public class BZip2 {
 						arg0.field774[var77] += arg0.field774[var77 - 1];
 					}
 					for (int var78 = 0; var78 < var71; var78++) {
-						byte var79 = (byte) (field775[var78] & 0xFF);
-						field775[arg0.field774[var79 & 0xFF]] |= var78 << 8;
+						byte var79 = (byte) (tt[var78] & 0xFF);
+						tt[arg0.field774[var79 & 0xFF]] |= var78 << 8;
 						arg0.field774[var79 & 0xFF]++;
 					}
-					arg0.field770 = field775[arg0.field769] >> 8;
+					arg0.field770 = tt[arg0.field769] >> 8;
 					arg0.field762 = 0;
-					arg0.field770 = field775[arg0.field770];
+					arg0.field770 = tt[arg0.field770];
 					arg0.field771 = (byte) (arg0.field770 & 0xFF);
 					arg0.field770 >>= 0x8;
 					arg0.field762++;
 					arg0.field785 = var71;
-					method843(arg0);
+					finish(arg0);
 					if (arg0.field762 == arg0.field785 + 1 && arg0.field765 == 0) {
 						var23 = true;
 						break;
@@ -465,17 +465,17 @@ public class BZip2 {
 	}
 
 	@ObfuscatedName("bu.m(Lbg;)B")
-	public static byte method845(BZip2State arg0) {
-		return (byte) method847(8, arg0);
+	public static byte getUnsignedChar(BZip2State arg0) {
+		return (byte) getBits(8, arg0);
 	}
 
 	@ObfuscatedName("bu.c(Lbg;)B")
-	public static byte method846(BZip2State arg0) {
-		return (byte) method847(1, arg0);
+	public static byte getBit(BZip2State arg0) {
+		return (byte) getBits(1, arg0);
 	}
 
 	@ObfuscatedName("bu.n(ILbg;)I")
-	public static int method847(int arg0, BZip2State arg1) {
+	public static int getBits(int arg0, BZip2State arg1) {
 		while (arg1.field767 < arg0) {
 			arg1.field766 = arg1.field766 << 8 | arg1.field753[arg1.field758] & 0xFF;
 			arg1.field767 += 8;
@@ -490,7 +490,7 @@ public class BZip2 {
 	}
 
 	@ObfuscatedName("bu.j(Lbg;)V")
-	public static void method848(BZip2State arg0) {
+	public static void makeMaps(BZip2State arg0) {
 		arg0.field776 = 0;
 		for (int var1 = 0; var1 < 256; var1++) {
 			if (arg0.field777[var1]) {
@@ -501,7 +501,7 @@ public class BZip2 {
 	}
 
 	@ObfuscatedName("bu.z([I[I[I[BIII)V")
-	public static void method841(int[] arg0, int[] arg1, int[] arg2, byte[] arg3, int arg4, int arg5, int arg6) {
+	public static void createDecodeTables(int[] arg0, int[] arg1, int[] arg2, byte[] arg3, int arg4, int arg5, int arg6) {
 		int var7 = 0;
 		for (int var8 = arg4; var8 <= arg5; var8++) {
 			for (int var9 = 0; var9 < arg6; var9++) {

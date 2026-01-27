@@ -154,7 +154,7 @@ public class MidiManager {
 		try {
 			if (state == 2) {
 				if (field1113 == null) {
-					field1113 = MidiFile.decode(field1118, field349, field1121);
+					field1113 = MidiFile.load(field1118, field349, field1121);
 					if (field1113 == null) {
 						return false;
 					}

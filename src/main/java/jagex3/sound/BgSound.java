@@ -173,7 +173,7 @@ public class BgSound extends Linkable {
 				}
 				int var6 = Client.ambientVolume * (var4.range - var5) / var4.range;
 				if (var4.field1603 != null) {
-					var4.field1603.method2090(var6);
+					var4.field1603.applyVolume(var6);
 				} else if (var4.sound >= 0) {
 					JagFx var7 = JagFx.load(Client.jagFX, var4.sound, 0);
 					if (var7 != null) {
@@ -185,7 +185,7 @@ public class BgSound extends Linkable {
 					}
 				}
 				if (var4.field1614 != null) {
-					var4.field1614.method2090(var6);
+					var4.field1614.applyVolume(var6);
 					if (!var4.field1614.isLinked()) {
 						var4.field1614 = null;
 					}

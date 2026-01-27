@@ -52,7 +52,7 @@ public class ClientInvCache extends Linkable {
 
 	// jag::oldscape::ClientInvCache::Set
 	@ObfuscatedName("fh.j(IIIII)V")
-	public static void method2901(int arg0, int arg1, int arg2, int arg3) {
+	public static void set(int arg0, int arg1, int arg2, int arg3) {
 		ClientInvCache var4 = (ClientInvCache) invList.find(arg0);
 		if (var4 == null) {
 			var4 = new ClientInvCache();

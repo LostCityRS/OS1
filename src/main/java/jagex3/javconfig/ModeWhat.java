@@ -29,7 +29,9 @@ public class ModeWhat {
 	}
 
 	public static ModeWhat[] values() {
-		return new ModeWhat[] { ModeWhat.RC, ModeWhat.WIP, ModeWhat.BUILDLIVE, ModeWhat.LIVE };
+		return new ModeWhat[] {
+			ModeWhat.RC, ModeWhat.WIP, ModeWhat.BUILDLIVE, ModeWhat.LIVE
+		};
 	}
 
 	public static ModeWhat get(int id) {

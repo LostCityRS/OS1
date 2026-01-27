@@ -11,7 +11,7 @@ import jagex3.datastruct.Linkable;
 import jagex3.datastruct.LruCache;
 import jagex3.graphics.Pix32;
 import jagex3.graphics.PixLoader;
-import jagex3.graphics.SoftwareFont;
+import jagex3.graphics.PixFontGeneric;
 import jagex3.io.Packet;
 import jagex3.js5.Js5;
 import jagex3.jstring.Text;
@@ -972,8 +972,8 @@ public class IfType extends Linkable {
 		// todo: Inlined method (pixloader::Makepix32?)
 		Js5 var6 = sprites;
 		Pix32 var7;
-		if (PixLoader.method905(var6, var2, 0)) {
-			var7 = PixLoader.method759();
+		if (PixLoader.depack(var6, var2, 0)) {
+			var7 = PixLoader.makePix32();
 		} else {
 			var7 = null;
 		}
@@ -1008,12 +1008,12 @@ public class IfType extends Linkable {
 
 	// jag::oldscape::rs2lib::IfType::GetFont
 	@ObfuscatedName("eg.w(B)Lfm;")
-	public SoftwareFont getFont() {
+	public PixFontGeneric getFont() {
 		loadingAsset = false;
 		if (this.font == -1) {
 			return null;
 		}
-		SoftwareFont var1 = (SoftwareFont) fontCache.find((long) this.font);
+		PixFontGeneric var1 = (PixFontGeneric) fontCache.find((long) this.font);
 		if (var1 != null) {
 			return var1;
 		}
@@ -1021,9 +1021,9 @@ public class IfType extends Linkable {
 		Js5 var2 = sprites;
 		Js5 var3 = fontMetrics;
 		int var4 = this.font;
-		SoftwareFont var5;
-		if (PixLoader.method905(var2, var4, 0)) {
-			var5 = PixLoader.method260(var3.getFile(var4, 0));
+		PixFontGeneric var5;
+		if (PixLoader.depack(var2, var4, 0)) {
+			var5 = PixLoader.makePixFont(var3.getFile(var4, 0));
 		} else {
 			var5 = null;
 		}
@@ -1053,8 +1053,8 @@ public class IfType extends Linkable {
 		// todo: Inlined method (pixloader::Makepix32?)
 		Js5 var4 = sprites;
 		Pix32 var5;
-		if (PixLoader.method905(var4, var2, 0)) {
-			var5 = PixLoader.method759();
+		if (PixLoader.depack(var4, var2, 0)) {
+			var5 = PixLoader.makePix32();
 		} else {
 			var5 = null;
 		}

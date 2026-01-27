@@ -8,87 +8,90 @@ import jagex3.io.Packet;
 public class Envelope {
 
 	@ObfuscatedName("k.r")
-	public int field298 = 2;
+	public int length = 2;
 
 	@ObfuscatedName("k.d")
-	public int[] field296 = new int[2];
+	public int[] shapeDelta = new int[2];
 
 	@ObfuscatedName("k.l")
-	public int[] field297 = new int[2];
+	public int[] shapePeak = new int[2];
 
 	@ObfuscatedName("k.m")
-	public int field305;
+	public int start;
 
 	@ObfuscatedName("k.c")
-	public int field299;
+	public int end;
 
 	@ObfuscatedName("k.n")
-	public int field295;
+	public int form;
 
 	@ObfuscatedName("k.j")
-	public int field301;
+	public int threshold;
 
 	@ObfuscatedName("k.z")
-	public int field300;
+	public int position;
 
 	@ObfuscatedName("k.g")
-	public int field303;
+	public int delta;
 
 	@ObfuscatedName("k.q")
-	public int field304;
+	public int amplitude;
 
 	@ObfuscatedName("k.i")
-	public int field302;
+	public int ticks;
 
 	public Envelope() {
-		this.field296[0] = 0;
-		this.field296[1] = 65535;
-		this.field297[0] = 0;
-		this.field297[1] = 65535;
+		this.shapeDelta[0] = 0;
+		this.shapeDelta[1] = 65535;
+		this.shapePeak[0] = 0;
+		this.shapePeak[1] = 65535;
 	}
 
 	@ObfuscatedName("k.r(Lev;)V")
-	public final void method276(Packet arg0) {
-		this.field295 = arg0.g1();
-		this.field305 = arg0.g4();
-		this.field299 = arg0.g4();
-		this.method277(arg0);
+	public final void load(Packet arg0) {
+		this.form = arg0.g1();
+		this.start = arg0.g4();
+		this.end = arg0.g4();
+		this.loadPoints(arg0);
 	}
 
+	// jag::oldscape::sound::Envelope::LoadPoints
 	@ObfuscatedName("k.d(Lev;)V")
-	public final void method277(Packet arg0) {
-		this.field298 = arg0.g1();
-		this.field296 = new int[this.field298];
-		this.field297 = new int[this.field298];
-		for (int var2 = 0; var2 < this.field298; var2++) {
-			this.field296[var2] = arg0.g2();
-			this.field297[var2] = arg0.g2();
+	public final void loadPoints(Packet arg0) {
+		this.length = arg0.g1();
+		this.shapeDelta = new int[this.length];
+		this.shapePeak = new int[this.length];
+		for (int var2 = 0; var2 < this.length; var2++) {
+			this.shapeDelta[var2] = arg0.g2();
+			this.shapePeak[var2] = arg0.g2();
 		}
 	}
 
+	// jag::oldscape::sound::Envelope::GenInit
 	@ObfuscatedName("k.l()V")
-	public final void method284() {
-		this.field301 = 0;
-		this.field300 = 0;
-		this.field303 = 0;
-		this.field304 = 0;
-		this.field302 = 0;
+	public final void genInit() {
+		this.threshold = 0;
+		this.position = 0;
+		this.delta = 0;
+		this.amplitude = 0;
+		this.ticks = 0;
 	}
 
+	// jag::oldscape::sound::Envelope::GenNext
 	@ObfuscatedName("k.m(I)I")
-	public final int method279(int arg0) {
-		if (this.field302 >= this.field301) {
-			this.field304 = this.field297[this.field300++] << 15;
-			if (this.field300 >= this.field298) {
-				this.field300 = this.field298 - 1;
+	public final int genNext(int arg0) {
+		if (this.ticks >= this.threshold) {
+			this.amplitude = this.shapePeak[this.position++] << 15;
+			if (this.position >= this.length) {
+				this.position = this.length - 1;
 			}
-			this.field301 = (int) ((double) this.field296[this.field300] / 65536.0D * (double) arg0);
-			if (this.field301 > this.field302) {
-				this.field303 = ((this.field297[this.field300] << 15) - this.field304) / (this.field301 - this.field302);
+			this.threshold = (int) ((double) this.shapeDelta[this.position] / 65536.0D * (double) arg0);
+			if (this.threshold > this.ticks) {
+				this.delta = ((this.shapePeak[this.position] << 15) - this.amplitude) / (this.threshold - this.ticks);
 			}
 		}
-		this.field304 += this.field303;
-		this.field302++;
-		return this.field304 - this.field303 >> 15;
+		this.amplitude += this.delta;
+		this.ticks++;
+		return this.amplitude - this.delta >> 15;
 	}
 }

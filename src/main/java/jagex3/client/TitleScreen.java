@@ -397,7 +397,7 @@ public class TitleScreen {
 
 	// jag::oldscape::TitleScreen::Draw
 	@ObfuscatedName("bg.m(Lfm;Lfm;I)V")
-	public static void draw(SoftwareFont arg0, SoftwareFont arg1) {
+	public static void draw(PixFontGeneric arg0, PixFontGeneric arg1) {
 		if (switchScreen) {
 			worldSwitchRender(arg0, arg1);
 			return;
@@ -442,7 +442,7 @@ public class TitleScreen {
 			// todo: inlined method?
 			String var8 = Text.PASSWORDPROMPT;
 			String var9 = loginPass;
-			String var10 = StringTools.method946('*', var9.length());
+			String var10 = StringTools.getRepeatedCharacter('*', var9.length());
 			arg0.drawString(var8 + var10, 274, y, 16777215, 0);
 			y += 15;
 		}
@@ -488,7 +488,7 @@ public class TitleScreen {
 				// todo: inlined method?
 				String var19 = Text.PASSWORDPROMPT;
 				String var20 = loginPass;
-				String var21 = StringTools.method946('*', var20.length());
+				String var21 = StringTools.getRepeatedCharacter('*', var20.length());
 				arg0.drawString(var19 + var21 + (field150 == 1 & Client.loopCycle % 40 < 20 ? StringConstants.TAG_COLOUR(16776960) + StringConstants.PIPE : ""), 274, y, 16777215, 0);
 				y += 15;
 
@@ -804,7 +804,7 @@ public class TitleScreen {
 
 	// jag::oldscape::TitleScreen::WorldSwitchRender
 	@ObfuscatedName("de.z(Lfm;Lfm;I)V")
-	public static void worldSwitchRender(SoftwareFont arg0, SoftwareFont arg1) {
+	public static void worldSwitchRender(PixFontGeneric arg0, PixFontGeneric arg1) {
 		if (slBack == null) {
 			slBack = PixLoader.makePix32Array(Client.sprites, "sl_back", "");
 		}
@@ -958,7 +958,7 @@ public class TitleScreen {
 
 				if (JavaMouseProvider.mouseX >= var17 && JavaMouseProvider.mouseY >= var16 && JavaMouseProvider.mouseX < var6 + var17 && JavaMouseProvider.mouseY < var7 + var16 && var21) {
 					slLastWorld = var19;
-					slBack[var20.members ? 1 : 0].method2699(var17, var16, 128, 0xffffff);
+					slBack[var20.members ? 1 : 0].litPlotSprite(var17, var16, 128, 0xffffff);
 				} else {
 					slBack[var20.members ? 1 : 0].quickPlotSprite(var17, var16);
 				}

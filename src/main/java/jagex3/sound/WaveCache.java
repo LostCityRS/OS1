@@ -51,6 +51,7 @@ public class WaveCache {
 		}
 	}
 
+	// jag::oldscape::sound::WaveCache::GetJagVorbis
 	@ObfuscatedName("a.d(II[II)Leq;")
 	public Wave getJagVorbis(int arg0, int arg1, int[] arg2) {
 		// todo: inlined hashAudioID?
@@ -61,25 +62,29 @@ public class WaveCache {
 		Wave var8 = (Wave) this.waveCache.find(var6);
 		if (var8 != null) {
 			return var8;
-		} else if (arg2 == null || arg2[0] > 0) {
-			JagVorbis var9 = (JagVorbis) this.vorbisCache.find(var6);
-			if (var9 == null) {
-				var9 = JagVorbis.decode(this.vorbisArchive, arg0, arg1);
-				if (var9 == null) {
-					return null;
-				}
-				this.vorbisCache.put(var9, var6);
-			}
-			Wave var10 = var9.method1539(arg2);
-			if (var10 == null) {
-				return null;
-			} else {
-				var9.unlink();
-				this.waveCache.put(var10, var6);
-				return var10;
-			}
-		} else {
+		}
+
+		if (arg2 != null && arg2[0] <= 0) {
 			return null;
+		}
+
+		JagVorbis var9 = (JagVorbis) this.vorbisCache.find(var6);
+		if (var9 == null) {
+			var9 = JagVorbis.load(this.vorbisArchive, arg0, arg1);
+			if (var9 == null) {
+				return null;
+			}
+
+			this.vorbisCache.put(var9, var6);
+		}
+
+		Wave var10 = var9.toWave(arg2);
+		if (var10 == null) {
+			return null;
+		} else {
+			var9.unlink();
+			this.waveCache.put(var10, var6);
+			return var10;
 		}
 	}
 

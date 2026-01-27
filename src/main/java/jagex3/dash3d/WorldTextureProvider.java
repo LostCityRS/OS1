@@ -57,7 +57,7 @@ public class WorldTextureProvider implements TextureProvider {
 		Texture var2 = this.field719[textureId];
 		if (var2 != null) {
 			if (var2.field1694 != null) {
-				this.field722.unshift(var2);
+				this.field722.pushFront(var2);
 				var2.field1689 = true;
 				return var2.field1694;
 			}
@@ -69,7 +69,7 @@ public class WorldTextureProvider implements TextureProvider {
 				} else {
 					this.field718--;
 				}
-				this.field722.unshift(var2);
+				this.field722.pushFront(var2);
 				var2.field1689 = true;
 				return var2.field1694;
 			}

@@ -3,14 +3,14 @@ package jagex3.sound;
 import deob.ObfuscatedName;
 import jagex3.datastruct.Linkable;
 
-// todo: real name
+// jag::oldscape::sound::MixerController
 @ObfuscatedName("eb")
-public abstract class MixerListener extends Linkable {
+public abstract class MixerController extends Linkable {
 
 	@ObfuscatedName("eb.m")
 	public int field1681;
 
-	public MixerListener() throws Throwable {
+	public MixerController() throws Throwable {
 		throw new Error();
 	}
 

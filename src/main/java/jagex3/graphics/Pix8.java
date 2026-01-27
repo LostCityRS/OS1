@@ -49,6 +49,7 @@ public class Pix8 extends Pix2D {
 		this.yof = 0;
 	}
 
+	// jag::oldscape::graphics::Pix8::RgbAdjust
 	@ObfuscatedName("ft.bn(III)V")
 	public void rgbAdjust(int arg0, int arg1, int arg2) {
 		for (int var4 = 0; var4 < this.bpal.length; var4++) {
@@ -77,6 +78,7 @@ public class Pix8 extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::PlotSprite
 	@ObfuscatedName("ft.be(II)V")
 	public void plotSprite(int arg0, int arg1) {
 		int var3 = this.xof + arg0;
@@ -113,12 +115,13 @@ public class Pix8 extends Pix2D {
 			var9 += var13;
 		}
 		if (var8 > 0 && var7 > 0) {
-			plot(Pix2D.pixels, this.data, this.bpal, var6, var5, var8, var7, var9, var10);
+			plotSprite(Pix2D.pixels, this.data, this.bpal, var6, var5, var8, var7, var9, var10);
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::PlotSprite
 	@ObfuscatedName("ft.bp([I[B[IIIIIII)V")
-	public static void plot(int[] arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+	public static void plotSprite(int[] arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
 		int var9 = -(arg5 >> 2);
 		int var10 = -(arg5 & 0x3);
 		for (int var11 = -arg6; var11 < 0; var11++) {

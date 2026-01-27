@@ -53,12 +53,12 @@ public class LruCache {
 	@ObfuscatedName("ce.l(Len;J)V")
 	public void put(Linkable2 node, long key) {
 		if (this.available == 0) {
-			Linkable2 first = this.order.shift();
+			Linkable2 first = this.order.popFront();
 			first.unlink();
 			first.unlink2();
 
 			if (this.sentinel == first) {
-				Linkable2 second = this.order.shift();
+				Linkable2 second = this.order.popFront();
 				second.unlink();
 				second.unlink2();
 			}

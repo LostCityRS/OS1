@@ -28,6 +28,7 @@ public class Pix2D extends Linkable2 {
 	@ObfuscatedName("fv.s")
 	public static int clipMaxX = 0;
 
+	// jag::oldscape::graphics::Pix2D::SetPixels
 	@ObfuscatedName("fv.z([III)V")
 	public static void setPixels(int[] arg0, int arg1, int arg2) {
 		pixels = arg0;
@@ -108,6 +109,7 @@ public class Pix2D extends Linkable2 {
 		clipMaxY = src[3];
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::Cls
 	@ObfuscatedName("fv.v()V")
 	public static void cls() {
 		int var0 = 0;
@@ -128,6 +130,7 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::FillRectTrans
 	@ObfuscatedName("fv.w(IIIIII)V")
 	public static void fillRectTrans(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		if (arg0 < clipMinX) {
@@ -158,6 +161,7 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::FillRect
 	@ObfuscatedName("fv.e(IIIII)V")
 	public static void fillRect(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		if (arg0 < clipMinX) {
@@ -218,6 +222,7 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::Pix2D::DrawRect
 	@ObfuscatedName("fv.y(IIIII)V")
 	public static void drawRect(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		hline(arg0, arg1, arg2, arg4);
@@ -226,6 +231,7 @@ public class Pix2D extends Linkable2 {
 		vline(arg0 + arg2 - 1, arg1, arg3, arg4);
 	}
 
+	// jag::oldscape::graphics::Pix2D::DrawRectTrans
 	@ObfuscatedName("fv.t(IIIIII)V")
 	public static void drawRectTrans(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		hlineTrans(arg0, arg1, arg2, arg4, arg5);
@@ -236,6 +242,7 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::HLine
 	@ObfuscatedName("fv.f(IIII)V")
 	public static void hline(int arg0, int arg1, int arg2, int arg3) {
 		if (arg1 < clipMinY || arg1 >= clipMaxY) {
@@ -254,6 +261,7 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::HLineTrans
 	@ObfuscatedName("fv.k(IIIII)V")
 	public static void hlineTrans(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		if (arg1 < clipMinY || arg1 >= clipMaxY) {
@@ -280,6 +288,7 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::VLine
 	@ObfuscatedName("fv.o(IIII)V")
 	public static void vline(int arg0, int arg1, int arg2, int arg3) {
 		if (arg0 < clipMinX || arg0 >= clipMaxX) {
@@ -298,6 +307,7 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::VLineTrans
 	@ObfuscatedName("fv.a(IIIII)V")
 	public static void vlineTrans(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		if (arg0 < clipMinX || arg0 >= clipMaxX) {
@@ -325,8 +335,9 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::NXTPix2D::Line
 	@ObfuscatedName("fv.h(IIIII)V")
-	public static void method2618(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public static void line(int arg0, int arg1, int arg2, int arg3, int arg4) {
 		int var5 = arg2 - arg0;
 		int var6 = arg3 - arg1;
 		if (var6 == 0) {
@@ -392,8 +403,9 @@ public class Pix2D extends Linkable2 {
 		}
 	}
 
+	// jag::oldscape::graphics::Pix2D::FillScanLine
 	@ObfuscatedName("fv.x(III[I[I)V")
-	public static void method2599(int arg0, int arg1, int arg2, int[] arg3, int[] arg4) {
+	public static void fillScanLine(int arg0, int arg1, int arg2, int[] arg3, int[] arg4) {
 		int var5 = width * arg1 + arg0;
 		for (int var6 = 0; var6 < arg3.length; var6++) {
 			int var7 = arg3[var6] + var5;

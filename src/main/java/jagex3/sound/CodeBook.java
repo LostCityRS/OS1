@@ -25,8 +25,9 @@ public class CodeBook {
 	@ObfuscatedName("x.n")
 	public int[] field323;
 
+	// jag::oldscape::sound::CodeBook::Lookup1Values
 	@ObfuscatedName("x.r(II)I")
-	public static int lookup1_values(int arg0, int arg1) {
+	public static int lookup1Values(int arg0, int arg1) {
 		int var2 = (int) Math.pow((double) arg0, 1.0D / (double) arg1) + 1;
 		while (true) {
 			int var3 = var2;
@@ -53,18 +54,18 @@ public class CodeBook {
 	}
 
 	public CodeBook() {
-		JagVorbis.read_bits(24);
-		this.dimensions = JagVorbis.read_bits(16);
-		this.entries = JagVorbis.read_bits(24);
+		JagVorbis.readBits(24);
+		this.dimensions = JagVorbis.readBits(16);
+		this.entries = JagVorbis.readBits(24);
 		this.lengths = new int[this.entries];
-		boolean ordered = JagVorbis.read_bool() != 0;
+		boolean ordered = JagVorbis.readBit() != 0;
 
 		if (ordered) {
 			int current_entry = 0;
-			int current_length = JagVorbis.read_bits(5) + 1;
+			int current_length = JagVorbis.readBits(5) + 1;
 
 			while (current_entry < this.entries) {
-				int n = JagVorbis.read_bits(MathTool.bitsRequired(this.entries - current_entry));
+				int n = JagVorbis.readBits(MathTool.bitsRequired(this.entries - current_entry));
 
 				for (int i = 0; i < n; i++) {
 					this.lengths[current_entry++] = current_length;
@@ -73,36 +74,36 @@ public class CodeBook {
 				current_length++;
 			}
 		} else {
-			boolean present = JagVorbis.read_bool() != 0;
+			boolean present = JagVorbis.readBit() != 0;
 
 			for (int i = 0; i < this.entries; i++) {
-				if (present && JagVorbis.read_bool() == 0) {
+				if (present && JagVorbis.readBit() == 0) {
 					this.lengths[i] = 0;
 				} else {
-					this.lengths[i] = JagVorbis.read_bits(5) + 1;
+					this.lengths[i] = JagVorbis.readBits(5) + 1;
 				}
 			}
 		}
 
-		this.method319();
+		this.prepareHuffman();
 
-		int lookup_type = JagVorbis.read_bits(4);
+		int lookup_type = JagVorbis.readBits(4);
 		if (lookup_type > 0) {
-			float minimum_value = JagVorbis.float32_unpack(JagVorbis.read_bits(32));
-			float delta_value = JagVorbis.float32_unpack(JagVorbis.read_bits(32));
-			int value_bits = JagVorbis.read_bits(4) + 1;
-			boolean sequence_p = JagVorbis.read_bool() != 0;
+			float minimum_value = JagVorbis.float32Unpack(JagVorbis.readBits(32));
+			float delta_value = JagVorbis.float32Unpack(JagVorbis.readBits(32));
+			int value_bits = JagVorbis.readBits(4) + 1;
+			boolean sequence_p = JagVorbis.readBit() != 0;
 
 			int lookup_values;
 			if (lookup_type == 1) {
-				lookup_values = lookup1_values(this.entries, this.dimensions);
+				lookup_values = lookup1Values(this.entries, this.dimensions);
 			} else {
 				lookup_values = this.entries * this.dimensions;
 			}
 
 			this.field326 = new int[lookup_values];
 			for (int var14 = 0; var14 < lookup_values; var14++) {
-				this.field326[var14] = JagVorbis.read_bits(value_bits);
+				this.field326[var14] = JagVorbis.readBits(value_bits);
 			}
 
 			this.field328 = new float[this.entries][this.dimensions];
@@ -137,8 +138,9 @@ public class CodeBook {
 		}
 	}
 
+	// jag::oldscape::sound::CodeBook::PrepareHuffman
 	@ObfuscatedName("x.d()V")
-	public void method319() {
+	public void prepareHuffman() {
 		int[] var1 = new int[this.entries];
 		int[] var2 = new int[33];
 		for (int var3 = 0; var3 < this.entries; var3++) {
@@ -208,16 +210,18 @@ public class CodeBook {
 		}
 	}
 
+	// jag::oldscape::sound::CodeBook::DecodeScalar
 	@ObfuscatedName("x.l()I")
-	public int method320() {
+	public int decodeScalar() {
 		int var1;
-		for (var1 = 0; this.field323[var1] >= 0; var1 = JagVorbis.read_bool() == 0 ? var1 + 1 : this.field323[var1]) {
+		for (var1 = 0; this.field323[var1] >= 0; var1 = JagVorbis.readBit() == 0 ? var1 + 1 : this.field323[var1]) {
 		}
 		return ~this.field323[var1];
 	}
 
+	// jag::oldscape::sound::CodeBook::DecodeVQ
 	@ObfuscatedName("x.m()[F")
-	public float[] method318() {
-		return this.field328[this.method320()];
+	public float[] decodeVQ() {
+		return this.field328[this.decodeScalar()];
 	}
 }

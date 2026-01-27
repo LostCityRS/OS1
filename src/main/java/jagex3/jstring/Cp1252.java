@@ -6,7 +6,11 @@ import deob.ObfuscatedName;
 public class Cp1252 {
 
 	@ObfuscatedName("ca.r")
-	public static final char[] field1158 = new char[] { '€', '\u0000', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', '\u0000', 'Ž', '\u0000', '\u0000', '‘', '’', '“', '”', '•', '–', '—', '˜', '™', 'š', '›', 'œ', '\u0000', 'ž', 'Ÿ' };
+	public static final char[] field1158 = new char[] {
+		'€', '\u0000', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹',
+		'Œ', '\u0000', 'Ž', '\u0000', '\u0000', '‘', '’', '“', '”', '•',
+		'–', '—', '˜', '™', 'š', '›', 'œ', '\u0000', 'ž', 'Ÿ'
+	};
 
 	public Cp1252() throws Throwable {
 		throw new Error();
@@ -94,8 +98,9 @@ public class Cp1252 {
 		return false;
 	}
 
+	// jag::stringtools::UTF8ToCP1252
 	@ObfuscatedName("ck.m(Ljava/lang/CharSequence;I)[B")
-	public static byte[] encode(CharSequence arg0) {
+	public static byte[] utf8ToCP1252(CharSequence arg0) {
 		int var1 = arg0.length();
 		byte[] var2 = new byte[var1];
 		for (int var3 = 0; var3 < var1; var3++) {
@@ -163,6 +168,7 @@ public class Cp1252 {
 		return var2;
 	}
 
+	// jag::stringtools::WideToCP1252
 	@ObfuscatedName("bh.c(Ljava/lang/CharSequence;II[BII)I")
 	public static int method744(CharSequence arg0, int arg1, int arg2, byte[] arg3, int arg4) {
 		int var5 = arg2 - arg1;

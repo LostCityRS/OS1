@@ -14,7 +14,7 @@ import jagex3.config.InvType;
 import jagex3.config.ObjType;
 import jagex3.config.VarBitType;
 import jagex3.graphics.PixFont;
-import jagex3.graphics.SoftwareFont;
+import jagex3.graphics.PixFontGeneric;
 import jagex3.io.Packet;
 import jagex3.jstring.JString;
 import jagex3.jstring.StringConstants;
@@ -63,7 +63,12 @@ public class ScriptRunner {
 	public static Calendar field197 = Calendar.getInstance();
 
 	@ObfuscatedName("s.u")
-	public static final String[] field190 = new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+	public static final String[] field190 = new String[] {
+		"Jan", "Feb", "Mar",
+		"Apr", "May", "Jun",
+		"Jul", "Aug", "Sep",
+		"Oct", "Nov", "Dec"
+	};
 
 	public ScriptRunner() throws Throwable {
 		throw new Error();
@@ -1770,7 +1775,7 @@ public class ScriptRunner {
 						if (Client.chatDisplayName == null) {
 							stringStack[ssp++] = "";
 						} else {
-							stringStack[ssp++] = JString.imethod1(Client.chatDisplayName);
+							stringStack[ssp++] = JString.toScreenName(Client.chatDisplayName);
 						}
 						continue;
 					}
@@ -1905,7 +1910,7 @@ public class ScriptRunner {
 						if (Client.field2155 == null) {
 							stringStack[ssp++] = "";
 						} else {
-							stringStack[ssp++] = JString.imethod1(Client.field2155);
+							stringStack[ssp++] = JString.toScreenName(Client.field2155);
 						}
 						continue;
 					}
@@ -2157,7 +2162,7 @@ public class ScriptRunner {
 						int var283 = intStack[isp + 1];
 
 						byte[] var284 = Client.fontMetrics.getFile(var283, 0);
-						SoftwareFont var285 = new SoftwareFont(var284);
+						PixFontGeneric var285 = new PixFontGeneric(var284);
 						intStack[isp++] = var285.predictLinesMultiline(var281, var282);
 						continue;
 					}
@@ -2171,7 +2176,7 @@ public class ScriptRunner {
 						int var288 = intStack[isp + 1];
 
 						byte[] var289 = Client.fontMetrics.getFile(var288, 0);
-						SoftwareFont var290 = new SoftwareFont(var289);
+						PixFontGeneric var290 = new PixFontGeneric(var289);
 						intStack[isp++] = var290.predictWidthMultiline(var286, var287);
 						continue;
 					}

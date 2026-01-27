@@ -3,13 +3,13 @@ package jagex3.graphics;
 import deob.ObfuscatedName;
 
 @ObfuscatedName("fm")
-public class SoftwareFont extends PixFont {
+public class PixFontGeneric extends PixFont {
 
-	public SoftwareFont(byte[] arg0, int[] arg1, int[] arg2, int[] arg3, int[] arg4, int[] arg5, byte[][] arg6) {
+	public PixFontGeneric(byte[] arg0, int[] arg1, int[] arg2, int[] arg3, int[] arg4, int[] arg5, byte[][] arg6) {
 		super(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 	}
 
-	public SoftwareFont(byte[] src) {
+	public PixFontGeneric(byte[] src) {
 		super(src);
 	}
 

@@ -278,7 +278,7 @@ public class MidiPlayer extends PcmStream {
 			int var6 = var3 << 8;
 			if (var5 >= var6) {
 				var5 = var6 + var6 - 1 - var5;
-				arg0.stream.setReversed(true);
+				arg0.stream.setReverse(true);
 			}
 		} else {
 			var5 = (int) ((long) this.channelCustom1[arg0.channel] * (long) var3 >> 6);

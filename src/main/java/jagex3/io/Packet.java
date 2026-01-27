@@ -87,16 +87,19 @@ public class Packet extends Linkable {
 		return arg0.length() + 1;
 	}
 
+	// jag::PacketT::pStringUTF8ToCP1252
 	@ObfuscatedName("ev.i(Ljava/lang/String;I)V")
-	public void pjstr(String arg0) {
-		int var2 = arg0.indexOf(0);
-		if (var2 >= 0) {
+	public void pjstr(String s) {
+		int nul = s.indexOf(0);
+		if (nul >= 0) {
 			throw new IllegalArgumentException("");
 		}
-		this.pos += Cp1252.method744(arg0, 0, arg0.length(), this.data, this.pos);
+
+		this.pos += Cp1252.method744(s, 0, s.length(), this.data, this.pos);
 		this.data[++this.pos - 1] = 0;
 	}
 
+	// jag::oldscape::javapal::Packet_pUTF8
 	@ObfuscatedName("ev.s(Ljava/lang/CharSequence;I)V")
 	public void pUTF8(CharSequence arg0) {
 		int var2 = Utf8.method1581(arg0);
@@ -105,6 +108,7 @@ public class Packet extends Linkable {
 		this.pos += Utf8.method1142(this.data, this.pos, arg0);
 	}
 
+	// jag::PacketT::pArrayBuffer
 	@ObfuscatedName("ev.u([BIIB)V")
 	public void pdata(byte[] arg0, int arg1, int arg2) {
 		for (int var4 = arg1; var4 < arg1 + arg2; var4++) {
@@ -112,51 +116,56 @@ public class Packet extends Linkable {
 		}
 	}
 
+	// jag::PacketT::pSize4
 	@ObfuscatedName("ev.v(II)V")
-	public void psize4(int arg0) {
-		this.data[this.pos - arg0 - 4] = (byte) (arg0 >> 24);
-		this.data[this.pos - arg0 - 3] = (byte) (arg0 >> 16);
-		this.data[this.pos - arg0 - 2] = (byte) (arg0 >> 8);
-		this.data[this.pos - arg0 - 1] = (byte) arg0;
+	public void psize4(int len) {
+		this.data[this.pos - len - 4] = (byte) (len >> 24);
+		this.data[this.pos - len - 3] = (byte) (len >> 16);
+		this.data[this.pos - len - 2] = (byte) (len >> 8);
+		this.data[this.pos - len - 1] = (byte) len;
 	}
 
+	// jag::PacketT::pSize2
 	@ObfuscatedName("ev.w(II)V")
-	public void psize2(int arg0) {
-		this.data[this.pos - arg0 - 2] = (byte) (arg0 >> 8);
-		this.data[this.pos - arg0 - 1] = (byte) arg0;
+	public void psize2(int len) {
+		this.data[this.pos - len - 2] = (byte) (len >> 8);
+		this.data[this.pos - len - 1] = (byte) len;
 	}
 
+	// jag::PacketT::pSize1
 	@ObfuscatedName("ev.e(IB)V")
-	public void psize1(int arg0) {
-		this.data[this.pos - arg0 - 1] = (byte) arg0;
+	public void psize1(int len) {
+		this.data[this.pos - len - 1] = (byte) len;
 	}
 
+	// jag::PacketT::pSmart1or2
 	@ObfuscatedName("ev.b(II)V")
-	public void psmart(int arg0) {
-		if (arg0 >= 0 && arg0 < 128) {
-			this.p1(arg0);
-		} else if (arg0 >= 0 && arg0 < 32768) {
-			this.p2(arg0 + 32768);
+	public void psmart(int n) {
+		if (n >= 0 && n < 0x80) {
+			this.p1(n);
+		} else if (n >= 0 && n < 0x8000) {
+			this.p2(n + 0x8000);
 		} else {
 			throw new IllegalArgumentException();
 		}
 	}
 
+	// jag::oldscape::PacketJ::pMidiVarLen
 	@ObfuscatedName("ev.y(II)V")
-	public void pMidiVarLen(int arg0) {
-		if ((arg0 & 0xFFFFFF80) != 0) {
-			if ((arg0 & 0xFFFFC000) != 0) {
-				if ((arg0 & 0xFFE00000) != 0) {
-					if ((arg0 & 0xF0000000) != 0) {
-						this.p1(arg0 >>> 28 | 0x80);
+	public void pMidiVarLen(int n) {
+		if ((n & 0xFFFFFF80) != 0) {
+			if ((n & 0xFFFFC000) != 0) {
+				if ((n & 0xFFE00000) != 0) {
+					if ((n & 0xF0000000) != 0) {
+						this.p1(n >>> 28 | 0x80);
 					}
-					this.p1(arg0 >>> 21 | 0x80);
+					this.p1(n >>> 21 | 0x80);
 				}
-				this.p1(arg0 >>> 14 | 0x80);
+				this.p1(n >>> 14 | 0x80);
 			}
-			this.p1(arg0 >>> 7 | 0x80);
+			this.p1(n >>> 7 | 0x80);
 		}
-		this.p1(arg0 & 0x7F);
+		this.p1(n & 0x7F);
 	}
 
 	@ObfuscatedName("ev.t(I)I")

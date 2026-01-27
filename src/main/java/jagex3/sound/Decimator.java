@@ -83,6 +83,7 @@ public class Decimator {
 		return arg0;
 	}
 
+	// jag::oldscape::sound::Decimator::TransmitFreq
 	@ObfuscatedName("p.d(IS)I")
 	public int transmitFreq(int arg0) {
 		if (this.field334 != null) {
@@ -91,6 +92,7 @@ public class Decimator {
 		return arg0;
 	}
 
+	// jag::oldscape::sound::Decimator::TransmitPos
 	@ObfuscatedName("p.l(II)I")
 	public int transmitPos(int arg0) {
 		if (this.field334 != null) {

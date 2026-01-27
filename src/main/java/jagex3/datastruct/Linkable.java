@@ -2,6 +2,7 @@ package jagex3.datastruct;
 
 import deob.ObfuscatedName;
 
+// jag::Linkable
 @ObfuscatedName("dg")
 public class Linkable {
 

@@ -25,7 +25,7 @@ public class WordPack {
 	@ObfuscatedName("bp.d(Lev;Ljava/lang/String;B)I")
 	public static int pack(Packet dst, String str) {
 		int start = dst.pos;
-		byte[] src = Cp1252.encode(str);
+		byte[] src = Cp1252.utf8ToCP1252(str);
 		dst.psmart(src.length);
 		dst.pos += huffman.encode(src, 0, src.length, dst.data, dst.pos);
 		return dst.pos - start;

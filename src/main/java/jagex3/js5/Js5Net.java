@@ -371,7 +371,7 @@ public class Js5Net {
 						return;
 					}
 
-					requestQueue.unshift(prefetch);
+					requestQueue.pushFront(prefetch);
 					pendingPrefetchQueue.put(prefetch, prefetch.key);
 					pendingPrefetchQueueSize++;
 					prefetchQueueSize--;
@@ -434,7 +434,7 @@ public class Js5Net {
 		long key = ((long) archiveId << 16) + groupId;
 		Js5NetRequest request = (Js5NetRequest) pendingPrefetchQueue.find(key);
 		if (request != null) {
-			requestQueue.unshift(request);
+			requestQueue.pushFront(request);
 		}
 	}
 

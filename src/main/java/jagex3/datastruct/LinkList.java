@@ -29,7 +29,6 @@ public class LinkList {
 		}
 	}
 
-	// add to tail
 	@ObfuscatedName("cg.d(Ldg;)V")
 	public void push(Linkable node) {
 		if (node.prev != null) {
@@ -42,9 +41,8 @@ public class LinkList {
 		node.next.prev = node;
 	}
 
-	// add to head
 	@ObfuscatedName("cg.l(Ldg;)V")
-	public void unshift(Linkable node) {
+	public void pushFront(Linkable node) {
 		if (node.prev != null) {
 			node.unlink();
 		}
@@ -67,9 +65,8 @@ public class LinkList {
 		node1.next.prev = node1;
 	}
 
-	// remove from head
 	@ObfuscatedName("cg.c()Ldg;")
-	public Linkable shift() {
+	public Linkable popFront() {
 		Linkable node = this.sentinel.next;
 		if (this.sentinel == node) {
 			return null;
@@ -79,7 +76,6 @@ public class LinkList {
 		}
 	}
 
-	// remove from tail
 	@ObfuscatedName("cg.n()Ldg;")
 	public Linkable pop() {
 		Linkable node = this.sentinel.prev;

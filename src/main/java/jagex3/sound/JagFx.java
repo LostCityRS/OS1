@@ -9,13 +9,13 @@ import jagex3.js5.Js5;
 public class JagFx {
 
 	@ObfuscatedName("o.d")
-	public Tone[] field307 = new Tone[10];
+	public Tone[] tones = new Tone[10];
 
 	@ObfuscatedName("o.l")
-	public int field308;
+	public int loopBegin;
 
 	@ObfuscatedName("o.m")
-	public int field309;
+	public int loopEnd;
 
 	// jag::oldscape::sound::JagFX::Load
 	@ObfuscatedName("o.r(Lch;II)Lo;")
@@ -29,19 +29,20 @@ public class JagFx {
 			int var3 = arg0.g1();
 			if (var3 != 0) {
 				arg0.pos--;
-				this.field307[var2] = new Tone();
-				this.field307[var2].method263(arg0);
+				this.tones[var2] = new Tone();
+				this.tones[var2].load(arg0);
 			}
 		}
-		this.field308 = arg0.g2();
-		this.field309 = arg0.g2();
+
+		this.loopBegin = arg0.g2();
+		this.loopEnd = arg0.g2();
 	}
 
 	// jag::oldscape::sound::JagFX::ToWave
 	@ObfuscatedName("o.d()Leq;")
 	public Wave toWave() {
 		byte[] var1 = this.makeSound();
-		return new Wave(22050, var1, this.field308 * 22050 / 1000, this.field309 * 22050 / 1000);
+		return new Wave(22050, var1, this.loopBegin * 22050 / 1000, this.loopEnd * 22050 / 1000);
 	}
 
 	// jag::oldscape::sound::JagFX::OptimiseStart
@@ -49,24 +50,24 @@ public class JagFx {
 	public final int optimiseStart() {
 		int var1 = 9999999;
 		for (int var2 = 0; var2 < 10; var2++) {
-			if (this.field307[var2] != null && this.field307[var2].field280 / 20 < var1) {
-				var1 = this.field307[var2].field280 / 20;
+			if (this.tones[var2] != null && this.tones[var2].start / 20 < var1) {
+				var1 = this.tones[var2].start / 20;
 			}
 		}
-		if (this.field308 < this.field309 && this.field308 / 20 < var1) {
-			var1 = this.field308 / 20;
+		if (this.loopBegin < this.loopEnd && this.loopBegin / 20 < var1) {
+			var1 = this.loopBegin / 20;
 		}
 		if (var1 == 9999999 || var1 == 0) {
 			return 0;
 		}
 		for (int var3 = 0; var3 < 10; var3++) {
-			if (this.field307[var3] != null) {
-				this.field307[var3].field280 -= var1 * 20;
+			if (this.tones[var3] != null) {
+				this.tones[var3].start -= var1 * 20;
 			}
 		}
-		if (this.field308 < this.field309) {
-			this.field308 -= var1 * 20;
-			this.field309 -= var1 * 20;
+		if (this.loopBegin < this.loopEnd) {
+			this.loopBegin -= var1 * 20;
+			this.loopEnd -= var1 * 20;
 		}
 		return var1;
 	}
@@ -76,8 +77,8 @@ public class JagFx {
 	public final byte[] makeSound() {
 		int var1 = 0;
 		for (int var2 = 0; var2 < 10; var2++) {
-			if (this.field307[var2] != null && this.field307[var2].field280 + this.field307[var2].field279 > var1) {
-				var1 = this.field307[var2].field280 + this.field307[var2].field279;
+			if (this.tones[var2] != null && this.tones[var2].start + this.tones[var2].length > var1) {
+				var1 = this.tones[var2].start + this.tones[var2].length;
 			}
 		}
 		if (var1 == 0) {
@@ -86,10 +87,10 @@ public class JagFx {
 		int var3 = var1 * 22050 / 1000;
 		byte[] var4 = new byte[var3];
 		for (int var5 = 0; var5 < 10; var5++) {
-			if (this.field307[var5] != null) {
-				int var6 = this.field307[var5].field279 * 22050 / 1000;
-				int var7 = this.field307[var5].field280 * 22050 / 1000;
-				int[] var8 = this.field307[var5].method269(var6, this.field307[var5].field279);
+			if (this.tones[var5] != null) {
+				int var6 = this.tones[var5].length * 22050 / 1000;
+				int var7 = this.tones[var5].start * 22050 / 1000;
+				int[] var8 = this.tones[var5].generate(var6, this.tones[var5].length);
 				for (int var9 = 0; var9 < var6; var9++) {
 					int var10 = (var8[var9] >> 8) + var4[var7 + var9];
 					if ((var10 + 128 & 0xFFFFFF00) != 0) {

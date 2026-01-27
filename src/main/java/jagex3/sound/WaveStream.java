@@ -51,16 +51,19 @@ public class WaveStream extends PcmStream {
 	@ObfuscatedName("et.o")
 	public int volumeChangeSpeedStereoRight;
 
+	// jag::oldscape::sound::WaveStream::GetLVol
 	@ObfuscatedName("et.p(II)I")
-	public static int panLeft(int arg0, int arg1) {
+	public static int getLVol(int arg0, int arg1) {
 		return arg1 < 0 ? arg0 : (int) ((double) arg0 * Math.sqrt((double) (16384 - arg1) * 1.220703125E-4D) + 0.5D);
 	}
 
+	// jag::oldscape::sound::WaveStream::GetRVol
 	@ObfuscatedName("et.ad(II)I")
-	public static int panRight(int arg0, int arg1) {
+	public static int getRVol(int arg0, int arg1) {
 		return arg1 < 0 ? -arg0 : (int) ((double) arg0 * Math.sqrt((double) arg1 * 1.220703125E-4D) + 0.5D);
 	}
 
+	// jag::oldscape::sound::WaveStream::Priority
 	@ObfuscatedName("et.c()I")
 	public int priority() {
 		int var1 = this.volumeMono * 3 >> 6;
@@ -82,7 +85,7 @@ public class WaveStream extends PcmStream {
 		this.volume = arg2;
 		this.pan = 8192;
 		this.position = 0;
-		this.computeChannelVolumes();
+		this.setMLRVol();
 	}
 
 	public WaveStream(Wave arg0, int arg1, int arg2, int arg3) {
@@ -94,7 +97,7 @@ public class WaveStream extends PcmStream {
 		this.volume = arg2;
 		this.pan = arg3;
 		this.position = 0;
-		this.computeChannelVolumes();
+		this.setMLRVol();
 	}
 
 	// jag::oldscape::sound::WaveStream::NewRatePercent
@@ -109,11 +112,12 @@ public class WaveStream extends PcmStream {
 		return arg0.samples == null || arg0.samples.length == 0 ? null : new WaveStream(arg0, arg1, arg2, arg3);
 	}
 
+	// jag::oldscape::sound::WaveStream::SetMLRVol
 	@ObfuscatedName("et.as()V")
-	public void computeChannelVolumes() {
+	public void setMLRVol() {
 		this.volumeMono = this.volume;
-		this.volumeStereoLeft = panLeft(this.volume, this.pan);
-		this.volumeStereoRight = panRight(this.volume, this.pan);
+		this.volumeStereoLeft = getLVol(this.volume, this.pan);
+		this.volumeStereoRight = getRVol(this.volume, this.pan);
 	}
 
 	// jag::oldscape::sound::WaveStream::SetLoopCount
@@ -122,22 +126,25 @@ public class WaveStream extends PcmStream {
 		this.loopCount = arg0;
 	}
 
+	// jag::oldscape::sound::WaveStream::ApplyVolume
 	@ObfuscatedName("et.ap(I)V")
-	public synchronized void method2090(int arg0) {
-		this.setVolume(arg0 << 6, this.getPanFine());
+	public synchronized void applyVolume(int arg0) {
+		this.setVolPanFine(arg0 << 6, this.getPanFine());
 	}
 
+	// jag::oldscape::sound::WaveStream::SetVolumeFine
 	@ObfuscatedName("et.av(I)V")
-	public synchronized void setVolume(int arg0) {
-		this.setVolume(arg0, this.getPanFine());
+	public synchronized void setVolumeFine(int arg0) {
+		this.setVolPanFine(arg0, this.getPanFine());
 	}
 
+	// jag::oldscape::sound::WaveStream::SetVolPanFine
 	@ObfuscatedName("et.ak(II)V")
-	public synchronized void setVolume(int arg0, int arg1) {
+	public synchronized void setVolPanFine(int arg0, int arg1) {
 		this.volume = arg0;
 		this.pan = arg1;
 		this.volumeChangeDelta = 0;
-		this.computeChannelVolumes();
+		this.setMLRVol();
 	}
 
 	// jag::oldscape::sound::WaveStream::GetVolumeFine
@@ -152,6 +159,7 @@ public class WaveStream extends PcmStream {
 		return this.pan < 0 ? -1 : this.pan;
 	}
 
+	// jag::oldscape::sound::WaveStream::SetPosition
 	@ObfuscatedName("et.ah(I)V")
 	public synchronized void setPosition(int arg0) {
 		int var2 = ((Wave) this.sound).samples.length << 8;
@@ -164,28 +172,33 @@ public class WaveStream extends PcmStream {
 		this.position = arg0;
 	}
 
+	// jag::oldscape::sound::WaveStream::SetReverse
 	@ObfuscatedName("et.ay(Z)V")
-	public synchronized void setReversed(boolean arg0) {
+	public synchronized void setReverse(boolean arg0) {
 		this.pitch = (this.pitch >>> 31) + (this.pitch ^ this.pitch >> 31);
 		if (arg0) {
 			this.pitch = -this.pitch;
 		}
 	}
 
+	// jag::oldscape::sound::WaveStream::SkipRampNounLink
 	@ObfuscatedName("et.al()V")
-	public void cancelVolumeChange() {
+	public void skipRampNounLink() {
 		if (this.volumeChangeDelta == 0) {
 			return;
 		}
+
 		if (this.volume == Integer.MIN_VALUE) {
 			this.volume = 0;
 		}
+
 		this.volumeChangeDelta = 0;
-		this.computeChannelVolumes();
+		this.setMLRVol();
 	}
 
+	// jag::oldscape::sound::WaveStream::RampVolumeFine
 	@ObfuscatedName("et.ab(II)V")
-	public synchronized void rampVolFine(int arg0, int arg1) {
+	public synchronized void rampVolumeFine(int arg0, int arg1) {
 		this.rampVolPanFine(arg0, arg1, this.getPanFine());
 	}
 
@@ -193,11 +206,11 @@ public class WaveStream extends PcmStream {
 	@ObfuscatedName("et.ao(III)V")
 	public synchronized void rampVolPanFine(int arg0, int arg1, int arg2) {
 		if (arg0 == 0) {
-			this.setVolume(arg1, arg2);
+			this.setVolPanFine(arg1, arg2);
 			return;
 		}
-		int var4 = panLeft(arg1, arg2);
-		int var5 = panRight(arg1, arg2);
+		int var4 = getLVol(arg1, arg2);
+		int var5 = getRVol(arg1, arg2);
 		if (this.volumeStereoLeft == var4 && this.volumeStereoRight == var5) {
 			this.volumeChangeDelta = 0;
 			return;
@@ -233,7 +246,7 @@ public class WaveStream extends PcmStream {
 	@ObfuscatedName("et.ag(I)V")
 	public synchronized void rampOut(int arg0) {
 		if (arg0 == 0) {
-			this.setVolume(0);
+			this.setVolumeFine(0);
 			this.unlink();
 		} else if (this.volumeStereoLeft == 0 && this.volumeStereoRight == 0) {
 			this.volumeChangeDelta = 0;
@@ -296,21 +309,25 @@ public class WaveStream extends PcmStream {
 		return this.volumeChangeDelta != 0;
 	}
 
+	// jag::oldscape::sound::WaveStream::SubstreamStart
 	@ObfuscatedName("et.n()Ldx;")
 	public PcmStream substreamStart() {
 		return null;
 	}
 
+	// jag::oldscape::sound::WaveStream::SubstreamNext
 	@ObfuscatedName("et.j()Ldx;")
 	public PcmStream substreamNext() {
 		return null;
 	}
 
+	// jag::oldscape::sound::WaveStream::SelfMixCost
 	@ObfuscatedName("et.z()I")
 	public int selfMixCost() {
 		return this.volume == 0 && this.volumeChangeDelta == 0 ? 0 : 1;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMix
 	@ObfuscatedName("et.q([III)V")
 	public synchronized void doMix(int[] arg0, int arg1, int arg2) {
 		if (this.volume == 0 && this.volumeChangeDelta == 0) {
@@ -329,7 +346,7 @@ public class WaveStream extends PcmStream {
 		int var10 = arg1 + arg2;
 		if (this.position < 0) {
 			if (this.pitch <= 0) {
-				this.cancelVolumeChange();
+				this.skipRampNounLink();
 				this.unlink();
 				return;
 			}
@@ -337,7 +354,7 @@ public class WaveStream extends PcmStream {
 		}
 		if (this.position >= var7) {
 			if (this.pitch >= 0) {
-				this.cancelVolumeChange();
+				this.skipRampNounLink();
 				this.unlink();
 				return;
 			}
@@ -349,7 +366,7 @@ public class WaveStream extends PcmStream {
 					label131:
 					{
 						if (this.pitch < 0) {
-							var9 = this.playReversed(arg0, arg1, var5, var10, var4.samples[this.loopStartPosition]);
+							var9 = this.mixBackwardSto(arg0, arg1, var5, var10, var4.samples[this.loopStartPosition]);
 							if (this.position >= var5) {
 								return;
 							}
@@ -360,7 +377,7 @@ public class WaveStream extends PcmStream {
 							}
 						}
 						do {
-							var9 = this.play(arg0, var9, var6, var10, var4.samples[this.loopEndPosition - 1]);
+							var9 = this.mixForwardSto(arg0, var9, var6, var10, var4.samples[this.loopEndPosition - 1]);
 							if (this.position < var6) {
 								return;
 							}
@@ -369,7 +386,7 @@ public class WaveStream extends PcmStream {
 							if (--this.loopCount == 0) {
 								break;
 							}
-							var9 = this.playReversed(arg0, var9, var5, var10, var4.samples[this.loopStartPosition]);
+							var9 = this.mixBackwardSto(arg0, var9, var5, var10, var4.samples[this.loopStartPosition]);
 							if (this.position >= var5) {
 								return;
 							}
@@ -379,7 +396,7 @@ public class WaveStream extends PcmStream {
 					}
 				} else if (this.pitch < 0) {
 					while (true) {
-						var9 = this.playReversed(arg0, var9, var5, var10, var4.samples[this.loopEndPosition - 1]);
+						var9 = this.mixBackwardSto(arg0, var9, var5, var10, var4.samples[this.loopEndPosition - 1]);
 						if (this.position >= var5) {
 							return;
 						}
@@ -394,7 +411,7 @@ public class WaveStream extends PcmStream {
 					}
 				} else {
 					while (true) {
-						var9 = this.play(arg0, var9, var6, var10, var4.samples[this.loopStartPosition]);
+						var9 = this.mixForwardSto(arg0, var9, var6, var10, var4.samples[this.loopStartPosition]);
 						if (this.position < var6) {
 							return;
 						}
@@ -410,23 +427,23 @@ public class WaveStream extends PcmStream {
 				}
 			}
 			if (this.pitch < 0) {
-				this.playReversed(arg0, var9, 0, var10, 0);
+				this.mixBackwardSto(arg0, var9, 0, var10, 0);
 				if (this.position < 0) {
 					this.position = -1;
-					this.cancelVolumeChange();
+					this.skipRampNounLink();
 					this.unlink();
 				}
 			} else {
-				this.play(arg0, var9, var7, var10, 0);
+				this.mixForwardSto(arg0, var9, var7, var10, 0);
 				if (this.position >= var7) {
 					this.position = var7;
-					this.cancelVolumeChange();
+					this.skipRampNounLink();
 					this.unlink();
 				}
 			}
 		} else if (this.loopReversed) {
 			if (this.pitch < 0) {
-				var9 = this.playReversed(arg0, arg1, var5, var10, var4.samples[this.loopStartPosition]);
+				var9 = this.mixBackwardSto(arg0, arg1, var5, var10, var4.samples[this.loopStartPosition]);
 				if (this.position >= var5) {
 					return;
 				}
@@ -434,13 +451,13 @@ public class WaveStream extends PcmStream {
 				this.pitch = -this.pitch;
 			}
 			while (true) {
-				int var11 = this.play(arg0, var9, var6, var10, var4.samples[this.loopEndPosition - 1]);
+				int var11 = this.mixForwardSto(arg0, var9, var6, var10, var4.samples[this.loopEndPosition - 1]);
 				if (this.position < var6) {
 					return;
 				}
 				this.position = var6 + var6 - 1 - this.position;
 				this.pitch = -this.pitch;
-				var9 = this.playReversed(arg0, var11, var5, var10, var4.samples[this.loopStartPosition]);
+				var9 = this.mixBackwardSto(arg0, var11, var5, var10, var4.samples[this.loopStartPosition]);
 				if (this.position >= var5) {
 					return;
 				}
@@ -449,7 +466,7 @@ public class WaveStream extends PcmStream {
 			}
 		} else if (this.pitch < 0) {
 			while (true) {
-				var9 = this.playReversed(arg0, var9, var5, var10, var4.samples[this.loopEndPosition - 1]);
+				var9 = this.mixBackwardSto(arg0, var9, var5, var10, var4.samples[this.loopEndPosition - 1]);
 				if (this.position >= var5) {
 					return;
 				}
@@ -457,7 +474,7 @@ public class WaveStream extends PcmStream {
 			}
 		} else {
 			while (true) {
-				var9 = this.play(arg0, var9, var6, var10, var4.samples[this.loopStartPosition]);
+				var9 = this.mixForwardSto(arg0, var9, var6, var10, var4.samples[this.loopStartPosition]);
 				if (this.position < var6) {
 					return;
 				}
@@ -466,6 +483,7 @@ public class WaveStream extends PcmStream {
 		}
 	}
 
+	// jag::oldscape::sound::WaveStream::PretendToMix
 	@ObfuscatedName("et.i(I)V")
 	public synchronized void pretendToMix(int arg0) {
 		if (this.volumeChangeDelta > 0) {
@@ -479,7 +497,7 @@ public class WaveStream extends PcmStream {
 					arg0 = this.volumeChangeDelta;
 				}
 				this.volumeChangeDelta = 0;
-				this.computeChannelVolumes();
+				this.setMLRVol();
 			} else {
 				this.volumeMono += this.volumeChangeSpeedMono * arg0;
 				this.volumeStereoLeft += this.volumeChangeSpeedStereoLeft * arg0;
@@ -497,7 +515,7 @@ public class WaveStream extends PcmStream {
 		}
 		if (this.position < 0) {
 			if (this.pitch <= 0) {
-				this.cancelVolumeChange();
+				this.skipRampNounLink();
 				this.unlink();
 				return;
 			}
@@ -505,7 +523,7 @@ public class WaveStream extends PcmStream {
 		}
 		if (this.position >= var5) {
 			if (this.pitch >= 0) {
-				this.cancelVolumeChange();
+				this.skipRampNounLink();
 				this.unlink();
 				return;
 			}
@@ -577,12 +595,12 @@ public class WaveStream extends PcmStream {
 			if (this.pitch < 0) {
 				if (this.position < 0) {
 					this.position = -1;
-					this.cancelVolumeChange();
+					this.skipRampNounLink();
 					this.unlink();
 				}
 			} else if (this.position >= var5) {
 				this.position = var5;
-				this.cancelVolumeChange();
+				this.skipRampNounLink();
 				this.unlink();
 			}
 		} else if (this.loopReversed) {
@@ -613,7 +631,7 @@ public class WaveStream extends PcmStream {
 	}
 
 	@ObfuscatedName("et.au([IIIII)I")
-	public int play(int[] arg0, int arg1, int arg2, int arg3, int arg4) {
+	public int mixForwardSto(int[] arg0, int arg1, int arg2, int arg3, int arg4) {
 		while (true) {
 			if (this.volumeChangeDelta > 0) {
 				int var6 = this.volumeChangeDelta + arg1;
@@ -623,39 +641,42 @@ public class WaveStream extends PcmStream {
 				this.volumeChangeDelta += arg1;
 				if (this.pitch == 256 && (this.position & 0xFF) == 0) {
 					if (PcmPlayer.stereo) {
-						arg1 = method2087(0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, this.volumeChangeSpeedStereoLeft, this.volumeChangeSpeedStereoRight, 0, var6, arg2, this);
+						arg1 = doMixForwards1To1RampStereo(0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, this.volumeChangeSpeedStereoLeft, this.volumeChangeSpeedStereoRight, 0, var6, arg2, this);
 					} else {
-						arg1 = method2121(((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, this.volumeChangeSpeedMono, 0, var6, arg2, this);
+						arg1 = doMixForwards1To1RampMono(((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, this.volumeChangeSpeedMono, 0, var6, arg2, this);
 					}
 				} else if (PcmPlayer.stereo) {
-					arg1 = method2082(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, this.volumeChangeSpeedStereoLeft, this.volumeChangeSpeedStereoRight, 0, var6, arg2, this, this.pitch, arg4);
+					arg1 = doMixForwardsRampStereo(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, this.volumeChangeSpeedStereoLeft, this.volumeChangeSpeedStereoRight, 0, var6, arg2, this, this.pitch, arg4);
 				} else {
-					arg1 = method2131(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, this.volumeChangeSpeedMono, 0, var6, arg2, this, this.pitch, arg4);
+					arg1 = doMixForwardsRampMono(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, this.volumeChangeSpeedMono, 0, var6, arg2, this, this.pitch, arg4);
 				}
 				this.volumeChangeDelta -= arg1;
 				if (this.volumeChangeDelta != 0) {
 					return arg1;
 				}
-				if (!this.method2062()) {
-					continue;
+				if (this.finaliseRamp()) {
+					return arg3;
 				}
-				return arg3;
+				continue;
 			}
 			if (this.pitch == 256 && (this.position & 0xFF) == 0) {
 				if (PcmPlayer.stereo) {
-					return method2079(0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, 0, arg3, arg2, this);
+					return doMixForwards1To1Stereo(0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, 0, arg3, arg2, this);
+				} else {
+					return doMixForwards1To1Mono(((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, 0, arg3, arg2, this);
 				}
-				return method2078(((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, 0, arg3, arg2, this);
 			}
 			if (PcmPlayer.stereo) {
-				return method2083(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, 0, arg3, arg2, this, this.pitch, arg4);
+				return doMixForwardsStereo(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, 0, arg3, arg2, this, this.pitch, arg4);
+			} else {
+				return doMixForwardsMono(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, 0, arg3, arg2, this, this.pitch, arg4);
 			}
-			return method2072(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, 0, arg3, arg2, this, this.pitch, arg4);
 		}
 	}
 
+	// jag::oldscape::sound::WaveStream::MixBackwardSto
 	@ObfuscatedName("et.ax([IIIII)I")
-	public int playReversed(int[] arg0, int arg1, int arg2, int arg3, int arg4) {
+	public int mixBackwardSto(int[] arg0, int arg1, int arg2, int arg3, int arg4) {
 		while (true) {
 			if (this.volumeChangeDelta > 0) {
 				int var6 = this.volumeChangeDelta + arg1;
@@ -665,39 +686,42 @@ public class WaveStream extends PcmStream {
 				this.volumeChangeDelta += arg1;
 				if (this.pitch == -256 && (this.position & 0xFF) == 0) {
 					if (PcmPlayer.stereo) {
-						arg1 = method2089(0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, this.volumeChangeSpeedStereoLeft, this.volumeChangeSpeedStereoRight, 0, var6, arg2, this);
+						arg1 = doMixBackwards1To1RampStereo(0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, this.volumeChangeSpeedStereoLeft, this.volumeChangeSpeedStereoRight, 0, var6, arg2, this);
 					} else {
-						arg1 = method2088(((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, this.volumeChangeSpeedMono, 0, var6, arg2, this);
+						arg1 = doMixBackwards1To1RampMono(((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, this.volumeChangeSpeedMono, 0, var6, arg2, this);
 					}
 				} else if (PcmPlayer.stereo) {
-					arg1 = method2093(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, this.volumeChangeSpeedStereoLeft, this.volumeChangeSpeedStereoRight, 0, var6, arg2, this, this.pitch, arg4);
+					arg1 = doMixBackwardsRampStereo(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, this.volumeChangeSpeedStereoLeft, this.volumeChangeSpeedStereoRight, 0, var6, arg2, this, this.pitch, arg4);
 				} else {
-					arg1 = method2136(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, this.volumeChangeSpeedMono, 0, var6, arg2, this, this.pitch, arg4);
+					arg1 = doMixBackwardsRampMono(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, this.volumeChangeSpeedMono, 0, var6, arg2, this, this.pitch, arg4);
 				}
 				this.volumeChangeDelta -= arg1;
 				if (this.volumeChangeDelta != 0) {
 					return arg1;
 				}
-				if (!this.method2062()) {
-					continue;
+				if (this.finaliseRamp()) {
+					return arg3;
 				}
-				return arg3;
+				continue;
 			}
 			if (this.pitch == -256 && (this.position & 0xFF) == 0) {
 				if (PcmPlayer.stereo) {
-					return method2133(0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, 0, arg3, arg2, this);
+					return doMixBackwards1To1Stereo(0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, 0, arg3, arg2, this);
+				} else {
+					return doMixBackwards1To1Mono(((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, 0, arg3, arg2, this);
 				}
-				return method2080(((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, 0, arg3, arg2, this);
 			}
 			if (PcmPlayer.stereo) {
-				return method2085(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, 0, arg3, arg2, this, this.pitch, arg4);
+				return doMixBackwardsStereo(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeStereoLeft, this.volumeStereoRight, 0, arg3, arg2, this, this.pitch, arg4);
+			} else {
+				return doMixBackwardsMono(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, 0, arg3, arg2, this, this.pitch, arg4);
 			}
-			return method2068(0, 0, ((Wave) this.sound).samples, arg0, this.position, arg1, this.volumeMono, 0, arg3, arg2, this, this.pitch, arg4);
 		}
 	}
 
+	// jag::oldscape::sound::WaveStream::FinaliseRamp
 	@ObfuscatedName("et.ai()Z")
-	public boolean method2062() {
+	public boolean finaliseRamp() {
 		int var1 = this.volume;
 		int var2;
 		int var3;
@@ -706,8 +730,8 @@ public class WaveStream extends PcmStream {
 			var3 = 0;
 			var1 = 0;
 		} else {
-			var3 = panLeft(var1, this.pan);
-			var2 = panRight(var1, this.pan);
+			var3 = getLVol(var1, this.pan);
+			var2 = getRVol(var1, this.pan);
 		}
 		if (this.volumeMono != var1 || this.volumeStereoLeft != var3 || this.volumeStereoRight != var2) {
 			if (this.volumeMono < var1) {
@@ -754,13 +778,14 @@ public class WaveStream extends PcmStream {
 			this.unlink();
 			return true;
 		} else {
-			this.computeChannelVolumes();
+			this.setMLRVol();
 			return false;
 		}
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixForwards1To1Mono
 	@ObfuscatedName("et.aj([B[IIIIIIILet;)I")
-	public static int method2078(byte[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, WaveStream arg8) {
+	public static int doMixForwards1To1Mono(byte[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, WaveStream arg8) {
 		int var9 = arg2 >> 8;
 		int var10 = arg7 >> 8;
 		int var11 = arg4 << 2;
@@ -789,8 +814,9 @@ public class WaveStream extends PcmStream {
 		return arg3;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixForwards1To1Stereo
 	@ObfuscatedName("et.aw(I[B[IIIIIIIILet;)I")
-	public static int method2079(int arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, WaveStream arg10) {
+	public static int doMixForwards1To1Stereo(int arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, WaveStream arg10) {
 		int var11 = arg3 >> 8;
 		int var12 = arg9 >> 8;
 		int var13 = arg5 << 2;
@@ -836,8 +862,9 @@ public class WaveStream extends PcmStream {
 		return var16 >> 1;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixBackwards1To1Mono
 	@ObfuscatedName("et.af([B[IIIIIIILet;)I")
-	public static int method2080(byte[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, WaveStream arg8) {
+	public static int doMixBackwards1To1Mono(byte[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, WaveStream arg8) {
 		int var9 = arg2 >> 8;
 		int var10 = arg7 >> 8;
 		int var11 = arg4 << 2;
@@ -866,8 +893,9 @@ public class WaveStream extends PcmStream {
 		return arg3;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixBackwards1To1Stereo
 	@ObfuscatedName("et.bh(I[B[IIIIIIIILet;)I")
-	public static int method2133(int arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, WaveStream arg10) {
+	public static int doMixBackwards1To1Stereo(int arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, WaveStream arg10) {
 		int var11 = arg3 >> 8;
 		int var12 = arg9 >> 8;
 		int var13 = arg5 << 2;
@@ -913,8 +941,9 @@ public class WaveStream extends PcmStream {
 		return var16 >> 1;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixForwardsMono
 	@ObfuscatedName("et.bi(II[B[IIIIIIILet;II)I")
-	public static int method2072(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, WaveStream arg10, int arg11, int arg12) {
+	public static int doMixForwardsMono(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, WaveStream arg10, int arg11, int arg12) {
 		int var13;
 		if (arg11 == 0 || (var13 = (arg9 - arg4 + arg11 - 257) / arg11 + arg5) > arg8) {
 			var13 = arg8;
@@ -942,8 +971,9 @@ public class WaveStream extends PcmStream {
 		return arg5;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixForwardsStereo
 	@ObfuscatedName("et.bs(II[B[IIIIIIIILet;II)I")
-	public static int method2083(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, WaveStream arg11, int arg12, int arg13) {
+	public static int doMixForwardsStereo(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, WaveStream arg11, int arg12, int arg13) {
 		int var14;
 		if (arg12 == 0 || (var14 = (arg10 - arg4 + arg12 - 257) / arg12 + arg5) > arg9) {
 			var14 = arg9;
@@ -980,8 +1010,9 @@ public class WaveStream extends PcmStream {
 		return var15 >> 1;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixBackwardsMono
 	@ObfuscatedName("et.bk(II[B[IIIIIIILet;II)I")
-	public static int method2068(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, WaveStream arg10, int arg11, int arg12) {
+	public static int doMixBackwardsMono(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, WaveStream arg10, int arg11, int arg12) {
 		int var13;
 		if (arg11 == 0 || (var13 = (arg9 + 256 - arg4 + arg11) / arg11 + arg5) > arg8) {
 			var13 = arg8;
@@ -1009,8 +1040,9 @@ public class WaveStream extends PcmStream {
 		return arg5;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixBackwardsStereo
 	@ObfuscatedName("et.bv(II[B[IIIIIIIILet;II)I")
-	public static int method2085(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, WaveStream arg11, int arg12, int arg13) {
+	public static int doMixBackwardsStereo(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, WaveStream arg11, int arg12, int arg13) {
 		int var14;
 		if (arg12 == 0 || (var14 = (arg10 + 256 - arg4 + arg12) / arg12 + arg5) > arg9) {
 			var14 = arg9;
@@ -1046,8 +1078,9 @@ public class WaveStream extends PcmStream {
 		return var15 >> 1;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixForwards1To1RampMono
 	@ObfuscatedName("et.bw([B[IIIIIIIILet;)I")
-	public static int method2121(byte[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, WaveStream arg9) {
+	public static int doMixForwards1To1RampMono(byte[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, WaveStream arg9) {
 		int var10 = arg2 >> 8;
 		int var11 = arg8 >> 8;
 		int var12 = arg4 << 2;
@@ -1085,8 +1118,9 @@ public class WaveStream extends PcmStream {
 		return arg3;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixForwards1To1RampStereo
 	@ObfuscatedName("et.by(I[B[IIIIIIIIIILet;)I")
-	public static int method2087(int arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, WaveStream arg12) {
+	public static int doMixForwards1To1RampStereo(int arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, WaveStream arg12) {
 		int var13 = arg3 >> 8;
 		int var14 = arg11 >> 8;
 		int var15 = arg5 << 2;
@@ -1147,8 +1181,9 @@ public class WaveStream extends PcmStream {
 		return var20 >> 1;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixBackwards1To1RampMono
 	@ObfuscatedName("et.bx([B[IIIIIIIILet;)I")
-	public static int method2088(byte[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, WaveStream arg9) {
+	public static int doMixBackwards1To1RampMono(byte[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, WaveStream arg9) {
 		int var10 = arg2 >> 8;
 		int var11 = arg8 >> 8;
 		int var12 = arg4 << 2;
@@ -1186,8 +1221,9 @@ public class WaveStream extends PcmStream {
 		return arg3;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixBackwards1To1RampStereo
 	@ObfuscatedName("et.bf(I[B[IIIIIIIIIILet;)I")
-	public static int method2089(int arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, WaveStream arg12) {
+	public static int doMixBackwards1To1RampStereo(int arg0, byte[] arg1, int[] arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, WaveStream arg12) {
 		int var13 = arg3 >> 8;
 		int var14 = arg11 >> 8;
 		int var15 = arg5 << 2;
@@ -1248,8 +1284,9 @@ public class WaveStream extends PcmStream {
 		return var20 >> 1;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixForwardsRampMono
 	@ObfuscatedName("et.bu(II[B[IIIIIIIILet;II)I")
-	public static int method2131(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, WaveStream arg11, int arg12, int arg13) {
+	public static int doMixForwardsRampMono(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, WaveStream arg11, int arg12, int arg13) {
 		arg11.volumeStereoLeft -= arg11.volumeChangeSpeedStereoLeft * arg5;
 		arg11.volumeStereoRight -= arg11.volumeChangeSpeedStereoRight * arg5;
 		int var14;
@@ -1284,8 +1321,9 @@ public class WaveStream extends PcmStream {
 		return arg5;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixForwardsRampStereo
 	@ObfuscatedName("et.bo(II[B[IIIIIIIIIILet;II)I")
-	public static int method2082(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, WaveStream arg13, int arg14, int arg15) {
+	public static int doMixForwardsRampStereo(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, WaveStream arg13, int arg14, int arg15) {
 		arg13.volumeMono -= arg13.volumeChangeSpeedMono * arg5;
 		int var16;
 		if (arg14 == 0 || (var16 = (arg12 - arg4 + arg14 - 257) / arg14 + arg5) > arg11) {
@@ -1331,8 +1369,9 @@ public class WaveStream extends PcmStream {
 		return var27;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixBackwardsRampMono
 	@ObfuscatedName("et.bq(II[B[IIIIIIIILet;II)I")
-	public static int method2136(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, WaveStream arg11, int arg12, int arg13) {
+	public static int doMixBackwardsRampMono(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, WaveStream arg11, int arg12, int arg13) {
 		arg11.volumeStereoLeft -= arg11.volumeChangeSpeedStereoLeft * arg5;
 		arg11.volumeStereoRight -= arg11.volumeChangeSpeedStereoRight * arg5;
 		int var14;
@@ -1367,8 +1406,9 @@ public class WaveStream extends PcmStream {
 		return arg5;
 	}
 
+	// jag::oldscape::sound::WaveStream::DoMixBackwardsRampStereo
 	@ObfuscatedName("et.bj(II[B[IIIIIIIIIILet;II)I")
-	public static int method2093(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, WaveStream arg13, int arg14, int arg15) {
+	public static int doMixBackwardsRampStereo(int arg0, int arg1, byte[] arg2, int[] arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, WaveStream arg13, int arg14, int arg15) {
 		arg13.volumeMono -= arg13.volumeChangeSpeedMono * arg5;
 		int var16;
 		if (arg14 == 0 || (var16 = (arg12 + 256 - arg4 + arg14) / arg14 + arg5) > arg11) {

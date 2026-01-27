@@ -133,7 +133,7 @@ public class MidiMixer extends PcmStream {
 				} else {
 					arg0.stream = WaveStream.newRateFineVolPan(arg0.sound, var10.getRateRaw(), 0, var10.getPanFine());
 					this.midiPlayer.setSampleOffset(arg0, arg0.patch.notePitch[arg0.noteKey] < 0);
-					arg0.stream.rampVolFine(var8, var10.getVolumeFine());
+					arg0.stream.rampVolumeFine(var8, var10.getVolumeFine());
 				}
 
 				if (arg0.patch.notePitch[arg0.noteKey] < 0) {
