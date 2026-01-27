@@ -104,15 +104,15 @@ public class ScriptRunner {
 					} else if (op == 0x80000002) {
 						op = req.mouseY;
 					} else if (op == 0x80000003) {
-						op = req.component == null ? -1 : req.component.parentlayer;
+						op = req.component == null ? -1 : req.component.parentId;
 					} else if (op == 0x80000004) {
 						op = req.opindex;
 					} else if (op == 0x80000005) {
-						op = req.component == null ? -1 : req.component.subid;
+						op = req.component == null ? -1 : req.component.subId;
 					} else if (op == 0x80000006) {
-						op = req.drop == null ? -1 : req.drop.parentlayer;
+						op = req.drop == null ? -1 : req.drop.parentId;
 					} else if (op == 0x80000007) {
-						op = req.drop == null ? -1 : req.drop.subid;
+						op = req.drop == null ? -1 : req.drop.subId;
 					} else if (op == 0x80000008) {
 						op = req.keyCode;
 					} else if (op == 0x80000009) {
@@ -465,8 +465,8 @@ public class ScriptRunner {
 
 						IfType var54 = new IfType();
 						var54.type = var49;
-						var54.layerid = var54.parentlayer = var51.parentlayer;
-						var54.subid = var50;
+						var54.layerId = var54.parentId = var51.parentId;
+						var54.subId = var50;
 						var54.v3 = true;
 						var51.subcomponents[var50] = var54;
 						if (secondary) {
@@ -481,9 +481,9 @@ public class ScriptRunner {
 					if (opcode == 101) {
 						// cc_delete
 						IfType var55 = secondary ? activeComponent2 : activeComponent;
-						IfType var56 = IfType.get(var55.parentlayer);
+						IfType var56 = IfType.get(var55.parentId);
 
-						var56.subcomponents[var55.subid] = null;
+						var56.subcomponents[var55.subId] = null;
 						Client.componentUpdated(var56);
 						continue;
 					}
@@ -531,8 +531,8 @@ public class ScriptRunner {
 					if (opcode == 1000) {
 						// if/cc_setposition
 						isp -= 2;
-						var61.renderx = intStack[isp];
-						var61.rendery = intStack[isp + 1];
+						var61.x = intStack[isp];
+						var61.y = intStack[isp + 1];
 
 						Client.componentUpdated(var61);
 						continue;
@@ -540,8 +540,8 @@ public class ScriptRunner {
 					if (opcode == 1001) {
 						// if/cc_setsize
 						isp -= 2;
-						var61.renderwidth = intStack[isp];
-						var61.renderheight = intStack[isp + 1];
+						var61.width = intStack[isp];
+						var61.height = intStack[isp + 1];
 
 						Client.componentUpdated(var61);
 						continue;
@@ -572,20 +572,20 @@ public class ScriptRunner {
 						// if/cc_setscrollpos
 						isp -= 2;
 
-						var63.scrollX = intStack[isp];
-						if (var63.scrollX > var63.scrollWidth - var63.renderwidth) {
-							var63.scrollX = var63.scrollWidth - var63.renderwidth;
+						var63.scrollPosX = intStack[isp];
+						if (var63.scrollPosX > var63.scrollWidth - var63.width) {
+							var63.scrollPosX = var63.scrollWidth - var63.width;
 						}
-						if (var63.scrollX < 0) {
-							var63.scrollX = 0;
+						if (var63.scrollPosX < 0) {
+							var63.scrollPosX = 0;
 						}
 
-						var63.scrollY = intStack[isp + 1];
-						if (var63.scrollY > var63.scrollHeight - var63.renderheight) {
-							var63.scrollY = var63.scrollHeight - var63.renderheight;
+						var63.scrollPosY = intStack[isp + 1];
+						if (var63.scrollPosY > var63.scrollHeight - var63.height) {
+							var63.scrollPosY = var63.scrollHeight - var63.height;
 						}
-						if (var63.scrollY < 0) {
-							var63.scrollY = 0;
+						if (var63.scrollPosY < 0) {
+							var63.scrollPosY = 0;
 						}
 
 						Client.componentUpdated(var63);
@@ -634,7 +634,7 @@ public class ScriptRunner {
 					if (opcode == 1106) {
 						// if/cc_set2dangle
 						isp--;
-						var63.angle2d = intStack[isp];
+						var63.rotate = intStack[isp];
 
 						Client.componentUpdated(var63);
 						continue;
@@ -649,10 +649,10 @@ public class ScriptRunner {
 					}
 					if (opcode == 1108) {
 						// if/cc_setmodel
-						var63.modelType = 1;
+						var63.model1Type = 1;
 
 						isp--;
-						var63.modelId = intStack[isp];
+						var63.model1Id = intStack[isp];
 
 						Client.componentUpdated(var63);
 						continue;
@@ -660,11 +660,11 @@ public class ScriptRunner {
 					if (opcode == 1109) {
 						// if/cc_setmodelangle
 						isp -= 6;
-						var63.xof = intStack[isp];
-						var63.yof = intStack[isp + 1];
-						var63.modelXan = intStack[isp + 2];
-						var63.modelYan = intStack[isp + 3];
-						var63.modelZan = intStack[isp + 4];
+						var63.modelXOf = intStack[isp];
+						var63.modelYOf = intStack[isp + 1];
+						var63.modelXAn = intStack[isp + 2];
+						var63.modelYAn = intStack[isp + 3];
+						var63.modelZAn = intStack[isp + 4];
 						var63.modelZoom = intStack[isp + 5];
 
 						Client.componentUpdated(var63);
@@ -687,7 +687,7 @@ public class ScriptRunner {
 					if (opcode == 1111) {
 						// if/cc_setmodelorthog
 						isp--;
-						var63.modelOrthographic = intStack[isp] == 1;
+						var63.orthog = intStack[isp] == 1;
 
 						Client.componentUpdated(var63);
 						continue;
@@ -715,9 +715,9 @@ public class ScriptRunner {
 					if (opcode == 1114) {
 						// if/cc_settextalign
 						isp -= 3;
-						var63.halign = intStack[isp];
-						var63.field1834 = intStack[isp + 1];
-						var63.field1832 = intStack[isp + 2];
+						var63.hAlign = intStack[isp];
+						var63.vAlign = intStack[isp + 1];
+						var63.lineHeight = intStack[isp + 2];
 
 						Client.componentUpdated(var63);
 						continue;
@@ -725,7 +725,7 @@ public class ScriptRunner {
 					if (opcode == 1115) {
 						// if/cc_settextshadow
 						isp--;
-						var63.shadowed = intStack[isp] == 1;
+						var63.shadow = intStack[isp] == 1;
 
 						Client.componentUpdated(var63);
 						continue;
@@ -741,7 +741,7 @@ public class ScriptRunner {
 					if (opcode == 1117) {
 						// if/cc_setgraphicshadow
 						isp--;
-						var63.graphicshadow = intStack[isp];
+						var63.shadowColour = intStack[isp];
 
 						Client.componentUpdated(var63);
 						continue;
@@ -749,7 +749,7 @@ public class ScriptRunner {
 					if (opcode == 1118) {
 						// if/cc_setvflip
 						isp--;
-						var63.vflip = intStack[isp] == 1;
+						var63.vFlip = intStack[isp] == 1;
 
 						Client.componentUpdated(var63);
 						continue;
@@ -757,7 +757,7 @@ public class ScriptRunner {
 					if (opcode == 1119) {
 						// if/cc_sethflip
 						isp--;
-						var63.hflip = intStack[isp] == 1;
+						var63.hFlip = intStack[isp] == 1;
 
 						Client.componentUpdated(var63);
 						continue;
@@ -791,31 +791,34 @@ public class ScriptRunner {
 
 						var66.invobject = var67;
 						var66.invcount = var68;
+
 						ObjType var69 = ObjType.list(var67);
-						var66.modelXan = var69.xan2d;
-						var66.modelYan = var69.yan2d;
-						var66.modelZan = var69.zan2d;
-						var66.xof = var69.xof2d;
-						var66.yof = var69.yof2d;
+						var66.modelXAn = var69.xan2d;
+						var66.modelYAn = var69.yan2d;
+						var66.modelZAn = var69.zan2d;
+						var66.modelXOf = var69.xof2d;
+						var66.modelYOf = var69.yof2d;
 						var66.modelZoom = var69.zoom2d;
-						if (var66.renderwidth > 0) {
-							var66.modelZoom = var66.modelZoom * 32 / var66.renderwidth;
+
+						if (var66.width > 0) {
+							var66.modelZoom = var66.modelZoom * 32 / var66.width;
 						}
+
 						continue;
 					}
 					if (opcode == 1201) {
 						// if/cc_setnpchead
-						var66.modelType = 2;
+						var66.model1Type = 2;
 
 						isp--;
-						var66.modelId = intStack[isp];
+						var66.model1Id = intStack[isp];
 						continue;
 					}
 					if (opcode == 1202) {
 						// if/cc_setplayerhead_self
-						var66.modelType = 3;
+						var66.model1Type = 3;
 
-						var66.modelId = Client.localPlayer.model.method1176();
+						var66.model1Id = Client.localPlayer.model.method1176();
 						continue;
 					}
 				} else if ((opcode >= 1300 && opcode < 1400) || (opcode >= 2300 && opcode < 2400)) {
@@ -872,7 +875,7 @@ public class ScriptRunner {
 					if (opcode == 1305) {
 						// if/cc_setopbase
 						ssp--;
-						var70.opbase = stringStack[ssp];
+						var70.baseOpName = stringStack[ssp];
 						continue;
 					}
 					if (opcode == 1306) {
@@ -883,7 +886,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 1307) {
 						// if/cc_clearops
-						var70.ops = null;
+						var70.opNames = null;
 						continue;
 					}
 				} else if (opcode >= 1400 && opcode < 1500 || opcode >= 2400 && opcode < 2500) {
@@ -1004,23 +1007,23 @@ public class ScriptRunner {
 					}
 					if (opcode == 1418) {
 						// if/cc_setonchattransmit
-						var74.field1872 = var78;
+						var74.onchattransmit = var78;
 					}
 					if (opcode == 1419) {
 						// if/cc_setonkey
-						var74.field1873 = var78;
+						var74.onkey = var78;
 					}
 					if (opcode == 1420) {
 						// if/cc_setonfriendtransmit
-						var74.field1877 = var78;
+						var74.onfriendtransmit = var78;
 					}
 					if (opcode == 1421) {
 						// if/cc_setonclantransmit
-						var74.field1875 = var78;
+						var74.onclantransmit = var78;
 					}
 					if (opcode == 1422) {
 						// if/cc_setonmisctransmit
-						var74.field1777 = var78;
+						var74.onmisctransmit = var78;
 					}
 					if (opcode == 1423) {
 						// if/cc_setondialogabort
@@ -1036,22 +1039,22 @@ public class ScriptRunner {
 					IfType var81 = secondary ? activeComponent2 : activeComponent;
 					if (opcode == 1500) {
 						// cc_x
-						intStack[isp++] = var81.renderx;
+						intStack[isp++] = var81.x;
 						continue;
 					}
 					if (opcode == 1501) {
 						// cc_y
-						intStack[isp++] = var81.rendery;
+						intStack[isp++] = var81.y;
 						continue;
 					}
 					if (opcode == 1502) {
 						// cc_getwidth
-						intStack[isp++] = var81.renderwidth;
+						intStack[isp++] = var81.width;
 						continue;
 					}
 					if (opcode == 1503) {
 						// cc_getheight
-						intStack[isp++] = var81.renderheight;
+						intStack[isp++] = var81.height;
 						continue;
 					}
 					if (opcode == 1504) {
@@ -1061,19 +1064,19 @@ public class ScriptRunner {
 					}
 					if (opcode == 1505) {
 						// cc_getlayer
-						intStack[isp++] = var81.layerid;
+						intStack[isp++] = var81.layerId;
 						continue;
 					}
 				} else if (opcode < 1700) {
 					IfType var82 = secondary ? activeComponent2 : activeComponent;
 					if (opcode == 1600) {
 						// cc_getscrollx
-						intStack[isp++] = var82.scrollX;
+						intStack[isp++] = var82.scrollPosX;
 						continue;
 					}
 					if (opcode == 1601) {
 						// cc_getscrolly
-						intStack[isp++] = var82.scrollY;
+						intStack[isp++] = var82.scrollPosY;
 						continue;
 					}
 					if (opcode == 1602) {
@@ -1098,17 +1101,17 @@ public class ScriptRunner {
 					}
 					if (opcode == 1606) {
 						// cc_getmodelangle_x
-						intStack[isp++] = var82.modelXan;
+						intStack[isp++] = var82.modelXAn;
 						continue;
 					}
 					if (opcode == 1607) {
 						// cc_getmodelangle_z
-						intStack[isp++] = var82.modelZan;
+						intStack[isp++] = var82.modelZAn;
 						continue;
 					}
 					if (opcode == 1608) {
 						// cc_getmodelangle_y
-						intStack[isp++] = var82.modelYan;
+						intStack[isp++] = var82.modelYAn;
 						continue;
 					}
 				} else if (opcode < 1800) {
@@ -1129,7 +1132,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 1702) {
 						// cc_getid
-						intStack[isp++] = var83.subid;
+						intStack[isp++] = var83.subId;
 						continue;
 					}
 				} else if (opcode < 1900) {
@@ -1145,8 +1148,8 @@ public class ScriptRunner {
 						int var85 = intStack[isp];
 
 						int var368 = var85 - 1;
-						if (var84.ops != null && var368 < var84.ops.length && var84.ops[var368] != null) {
-							stringStack[ssp++] = var84.ops[var368];
+						if (var84.opNames != null && var368 < var84.opNames.length && var84.opNames[var368] != null) {
+							stringStack[ssp++] = var84.opNames[var368];
 							continue;
 						}
 
@@ -1155,10 +1158,10 @@ public class ScriptRunner {
 					}
 					if (opcode == 1802) {
 						// cc_getopbase
-						if (var84.opbase == null) {
+						if (var84.baseOpName == null) {
 							stringStack[ssp++] = "";
 						} else {
-							stringStack[ssp++] = var84.opbase;
+							stringStack[ssp++] = var84.baseOpName;
 						}
 						continue;
 					}
@@ -1167,22 +1170,22 @@ public class ScriptRunner {
 					IfType var86 = IfType.get(intStack[isp]);
 					if (opcode == 2500) {
 						// if_getx
-						intStack[isp++] = var86.renderx;
+						intStack[isp++] = var86.x;
 						continue;
 					}
 					if (opcode == 2501) {
 						// if_gety
-						intStack[isp++] = var86.rendery;
+						intStack[isp++] = var86.y;
 						continue;
 					}
 					if (opcode == 2502) {
 						// if_getwidth
-						intStack[isp++] = var86.renderwidth;
+						intStack[isp++] = var86.width;
 						continue;
 					}
 					if (opcode == 2503) {
 						// if_getheight
-						intStack[isp++] = var86.renderheight;
+						intStack[isp++] = var86.height;
 						continue;
 					}
 					if (opcode == 2504) {
@@ -1192,7 +1195,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 2505) {
 						// if_getlayer
-						intStack[isp++] = var86.layerid;
+						intStack[isp++] = var86.layerId;
 						continue;
 					}
 				} else if (opcode < 2700) {
@@ -1200,12 +1203,12 @@ public class ScriptRunner {
 					IfType var87 = IfType.get(intStack[isp]);
 					if (opcode == 2600) {
 						// if_getscrollx
-						intStack[isp++] = var87.scrollX;
+						intStack[isp++] = var87.scrollPosX;
 						continue;
 					}
 					if (opcode == 2601) {
 						// if_getscrolly
-						intStack[isp++] = var87.scrollY;
+						intStack[isp++] = var87.scrollPosY;
 						continue;
 					}
 					if (opcode == 2602) {
@@ -1230,17 +1233,17 @@ public class ScriptRunner {
 					}
 					if (opcode == 2606) {
 						// if_getmodelangle_x
-						intStack[isp++] = var87.modelXan;
+						intStack[isp++] = var87.modelXAn;
 						continue;
 					}
 					if (opcode == 2607) {
 						// if_getmodelangle_z
-						intStack[isp++] = var87.modelZan;
+						intStack[isp++] = var87.modelZAn;
 						continue;
 					}
 					if (opcode == 2608) {
 						// if_getmodelangle_y
-						intStack[isp++] = var87.modelYan;
+						intStack[isp++] = var87.modelYAn;
 						continue;
 					}
 				} else if (opcode < 2800) {
@@ -1291,8 +1294,8 @@ public class ScriptRunner {
 						int var93 = intStack[isp];
 
 						int var369 = var93 - 1;
-						if (var92.ops != null && var369 < var92.ops.length && var92.ops[var369] != null) {
-							stringStack[ssp++] = var92.ops[var369];
+						if (var92.opNames != null && var369 < var92.opNames.length && var92.opNames[var369] != null) {
+							stringStack[ssp++] = var92.opNames[var369];
 							continue;
 						}
 
@@ -1301,10 +1304,10 @@ public class ScriptRunner {
 					}
 					if (opcode == 2802) {
 						// if_getopbase
-						if (var92.opbase == null) {
+						if (var92.baseOpName == null) {
 							stringStack[ssp++] = "";
 						} else {
-							stringStack[ssp++] = var92.opbase;
+							stringStack[ssp++] = var92.baseOpName;
 						}
 						continue;
 					}

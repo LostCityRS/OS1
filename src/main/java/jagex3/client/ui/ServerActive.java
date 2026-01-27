@@ -48,19 +48,19 @@ public class ServerActive extends Linkable {
 	}
 
 	@ObfuscatedName("bn.m(II)Z")
-	public static boolean objDraggable(int events) {
+	public static boolean isObjSwapEnabled(int events) {
 		return ((events >> 28) & 0x1) != 0;
 	}
 
-	public static boolean objSwappable(int events) {
+	public static boolean isObjReplaceEnabled(int events) {
 		return ((events >> 29) & 0x1) != 0;
 	}
 
-	public static boolean objOperable(int events) {
+	public static boolean isObjOpsEnabled(int events) {
 		return ((events >> 30) & 0x1) != 0;
 	}
 
-	public static boolean objUsable(int events) {
+	public static boolean isObjUseEnabled(int events) {
 		return ((events >> 31) & 0x1) != 0;
 	}
 }

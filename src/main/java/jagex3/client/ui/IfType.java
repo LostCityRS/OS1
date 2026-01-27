@@ -63,16 +63,26 @@ public class IfType extends Linkable {
 	public boolean v3 = false;
 
 	@ObfuscatedName("eg.w")
-	public int parentlayer = -1;
+	public int parentId = -1;
 
 	@ObfuscatedName("eg.e")
-	public int subid = -1;
+	public int subId = -1;
 
+	// 0 - layer
+	// 1 - unknown
+	// 2 - inv
+	// 3 - rect
+	// 4 - text
+	// 5 - graphic
+	// 6 - model
+	// 7 - invtext
+	// 8 - tooltip
+	// 9 - line
 	@ObfuscatedName("eg.b")
 	public int type;
 
 	@ObfuscatedName("eg.y")
-	public int x = 0;
+	public int dataX = 0;
 
 	@ObfuscatedName("eg.t")
 	public int buttonType = 0;
@@ -81,31 +91,31 @@ public class IfType extends Linkable {
 	public int clientCode = 0;
 
 	@ObfuscatedName("eg.k")
-	public int renderx = 0;
+	public int x = 0;
 
 	@ObfuscatedName("eg.o")
-	public int rendery = 0;
-
-	@ObfuscatedName("eg.a")
 	public int y = 0;
 
+	@ObfuscatedName("eg.a")
+	public int dataY = 0;
+
 	@ObfuscatedName("eg.h")
-	public int renderwidth = 0;
+	public int width = 0;
 
 	@ObfuscatedName("eg.x")
-	public int renderheight = 0;
+	public int height = 0;
 
 	@ObfuscatedName("eg.p")
-	public int layerid = -1;
+	public int layerId = -1;
 
 	@ObfuscatedName("eg.ad")
 	public boolean hide = false;
 
 	@ObfuscatedName("eg.ac")
-	public int scrollX = 0;
+	public int scrollPosX = 0;
 
 	@ObfuscatedName("eg.aa")
-	public int scrollY = 0;
+	public int scrollPosY = 0;
 
 	@ObfuscatedName("eg.as")
 	public int scrollWidth = 0;
@@ -141,7 +151,7 @@ public class IfType extends Linkable {
 	public int graphic2 = -1;
 
 	@ObfuscatedName("eg.ao")
-	public int angle2d = 0;
+	public int rotate = 0;
 
 	@ObfuscatedName("eg.ag")
 	public boolean tiling = false;
@@ -150,19 +160,19 @@ public class IfType extends Linkable {
 	public int outline = 0;
 
 	@ObfuscatedName("eg.aq")
-	public int graphicshadow = 0;
+	public int shadowColour = 0;
 
 	@ObfuscatedName("eg.at")
-	public boolean vflip;
+	public boolean vFlip;
 
 	@ObfuscatedName("eg.ae")
-	public boolean hflip;
+	public boolean hFlip;
 
 	@ObfuscatedName("eg.au")
-	public int modelType = 1;
+	public int model1Type = 1;
 
 	@ObfuscatedName("eg.ax")
-	public int modelId = -1;
+	public int model1Id = -1;
 
 	@ObfuscatedName("eg.ai")
 	public int model2Type = 1;
@@ -174,22 +184,22 @@ public class IfType extends Linkable {
 	public int modelAnim = -1;
 
 	@ObfuscatedName("eg.af")
-	public int model2Anim = -1;
+	public int modelAnim2 = -1;
 
 	@ObfuscatedName("eg.bh")
-	public int xof = 0;
+	public int modelXOf = 0;
 
 	@ObfuscatedName("eg.bi")
-	public int yof = 0;
+	public int modelYOf = 0;
 
 	@ObfuscatedName("eg.bs")
-	public int modelXan = 0;
+	public int modelXAn = 0;
 
 	@ObfuscatedName("eg.bk")
-	public int modelYan = 0;
+	public int modelYAn = 0;
 
 	@ObfuscatedName("eg.bv")
-	public int modelZan = 0;
+	public int modelZAn = 0;
 
 	@ObfuscatedName("eg.bg")
 	public int modelZoom = 100;
@@ -198,7 +208,7 @@ public class IfType extends Linkable {
 	public int field1827 = 0;
 
 	@ObfuscatedName("eg.bt")
-	public boolean modelOrthographic = false;
+	public boolean orthog = false;
 
 	@ObfuscatedName("eg.bw")
 	public int font = -1;
@@ -210,16 +220,16 @@ public class IfType extends Linkable {
 	public String text2 = "";
 
 	@ObfuscatedName("eg.bf")
-	public int field1832 = 0;
+	public int lineHeight = 0;
 
 	@ObfuscatedName("eg.bu")
-	public int halign = 0;
+	public int hAlign = 0;
 
 	@ObfuscatedName("eg.bo")
-	public int field1834 = 0;
+	public int vAlign = 0;
 
 	@ObfuscatedName("eg.bq")
-	public boolean shadowed = false;
+	public boolean shadow = false;
 
 	@ObfuscatedName("eg.bj")
 	public int marginX = 0;
@@ -240,13 +250,13 @@ public class IfType extends Linkable {
 	public String[] iop;
 
 	@ObfuscatedName("eg.ba")
-	public int events = 0;
+	public int eventCode = 0;
 
 	@ObfuscatedName("eg.bc")
-	public String opbase = "";
+	public String baseOpName = "";
 
 	@ObfuscatedName("eg.br")
-	public String[] ops;
+	public String[] opNames;
 
 	@ObfuscatedName("eg.bb")
 	public IfType draggable = null;
@@ -330,19 +340,19 @@ public class IfType extends Linkable {
 	public Object[] onscrollwheel;
 
 	@ObfuscatedName("eg.cg")
-	public Object[] field1872;
+	public Object[] onchattransmit;
 
 	@ObfuscatedName("eg.dd")
-	public Object[] field1873;
+	public Object[] onkey;
 
 	@ObfuscatedName("eg.dg")
-	public Object[] field1877;
+	public Object[] onfriendtransmit;
 
 	@ObfuscatedName("eg.df")
-	public Object[] field1875;
+	public Object[] onclantransmit;
 
 	@ObfuscatedName("eg.dk")
-	public Object[] field1777;
+	public Object[] onmisctransmit;
 
 	@ObfuscatedName("eg.dz")
 	public Object[] ondialogabort;
@@ -360,19 +370,19 @@ public class IfType extends Linkable {
 	public int[] scriptOperand;
 
 	@ObfuscatedName("eg.dh")
-	public int overlayer = -1;
+	public int overLayerId = -1;
 
 	@ObfuscatedName("eg.dc")
-	public String targetText = "";
+	public String targetBase = "";
 
 	@ObfuscatedName("eg.dp")
-	public String option = Text.OK;
+	public String buttonText = Text.OK;
 
 	@ObfuscatedName("eg.dm")
 	public int[] linkObjType;
 
 	@ObfuscatedName("eg.di")
-	public int[] linkObjCount;
+	public int[] linkObjNumber;
 
 	@ObfuscatedName("eg.db")
 	public int invobject = -1;
@@ -390,13 +400,13 @@ public class IfType extends Linkable {
 	public IfType[] subcomponents;
 
 	@ObfuscatedName("eg.de")
-	public boolean field1892 = false;
+	public boolean mouseTrigger = false;
 
 	@ObfuscatedName("eg.dw")
-	public boolean field1871 = false;
+	public boolean clickTrigger = false;
 
 	@ObfuscatedName("eg.dl")
-	public int field1894 = -1;
+	public int updateNum = -1;
 
 	@ObfuscatedName("eg.dn")
 	public int field1895 = 0;
@@ -408,7 +418,7 @@ public class IfType extends Linkable {
 	public int field1897 = 0;
 
 	@ObfuscatedName("eg.dt")
-	public int field1898 = -1;
+	public int drawCount = -1;
 
 	@ObfuscatedName("eg.eb")
 	public int drawTime = -1;
@@ -484,7 +494,7 @@ public class IfType extends Linkable {
 			}
 
 			list[id][sub] = new IfType();
-			list[id][sub].parentlayer = (id << 16) + sub;
+			list[id][sub].parentId = (id << 16) + sub;
 			if (data[0] == -1) {
 				list[id][sub].decode3(new Packet(data));
 			} else {
@@ -504,22 +514,22 @@ public class IfType extends Linkable {
 		this.type = buf.g1();
 		this.buttonType = buf.g1();
 		this.clientCode = buf.g2();
-		this.x = this.renderx = buf.g2b();
-		this.y = this.rendery = buf.g2b();
-		this.renderwidth = buf.g2();
-		this.renderheight = buf.g2();
+		this.dataX = this.x = buf.g2b();
+		this.dataY = this.y = buf.g2b();
+		this.width = buf.g2();
+		this.height = buf.g2();
 		this.trans = buf.g1();
 
-		this.layerid = buf.g2();
-		if (this.layerid == 65535) {
-			this.layerid = -1;
+		this.layerId = buf.g2();
+		if (this.layerId == 65535) {
+			this.layerId = -1;
 		} else {
-			this.layerid += this.parentlayer & 0xFFFF0000;
+			this.layerId += this.parentId & 0xFFFF0000;
 		}
 
-		this.overlayer = buf.g2();
-		if (this.overlayer == 65535) {
-			this.overlayer = -1;
+		this.overLayerId = buf.g2();
+		if (this.overLayerId == 65535) {
+			this.overLayerId = -1;
 		}
 
 		int scriptStackCount = buf.g1();
@@ -550,37 +560,40 @@ public class IfType extends Linkable {
 		}
 
 		if (this.type == 0) {
+			// layer
 			this.scrollHeight = buf.g2();
 			this.hide = buf.g1() == 1;
 		}
 
 		if (this.type == 1) {
+			// unknown
 			buf.g2();
 			buf.g1();
 		}
 
 		if (this.type == 2) {
-			this.linkObjType = new int[this.renderheight * this.renderwidth];
-			this.linkObjCount = new int[this.renderheight * this.renderwidth];
+			// inv
+			this.linkObjType = new int[this.height * this.width];
+			this.linkObjNumber = new int[this.height * this.width];
 
 			int draggable = buf.g1();
 			if (draggable == 1) {
-				this.events |= 0x10000000;
+				this.eventCode |= 0x10000000;
 			}
 
 			int interactable = buf.g1();
 			if (interactable == 1) {
-				this.events |= 0x40000000;
+				this.eventCode |= 0x40000000;
 			}
 
 			int usable = buf.g1();
 			if (usable == 1) {
-				this.events |= 0x80000000;
+				this.eventCode |= 0x80000000;
 			}
 
 			int swappable = buf.g1();
 			if (swappable == 1) {
-				this.events |= 0x20000000;
+				this.eventCode |= 0x20000000;
 			}
 
 			this.marginX = buf.g1();
@@ -606,51 +619,60 @@ public class IfType extends Linkable {
 				String op = buf.gjstr();
 				if (op.length() > 0) {
 					this.iop[i] = op;
-					this.events |= 0x1 << i + 23;
+					this.eventCode |= 0x1 << (i + 23);
 				}
 			}
 		}
 
 		if (this.type == 3) {
+			// rect
 			this.fill = buf.g1() == 1;
 		}
 
 		if (this.type == 4 || this.type == 1) {
-			this.halign = buf.g1();
-			this.field1834 = buf.g1();
-			this.field1832 = buf.g1();
+			// text || unknown
+			this.hAlign = buf.g1();
+			this.vAlign = buf.g1();
+			this.lineHeight = buf.g1();
+
 			this.font = buf.g2();
 			if (this.font == 65535) {
 				this.font = -1;
 			}
-			this.shadowed = buf.g1() == 1;
+
+			this.shadow = buf.g1() == 1;
 		}
 
 		if (this.type == 4) {
+			// text
 			this.text = buf.gjstr();
 			this.text2 = buf.gjstr();
 		}
 
 		if (this.type == 1 || this.type == 3 || this.type == 4) {
+			// unknown || rect || text
 			this.colour = buf.g4();
 		}
 
 		if (this.type == 3 || this.type == 4) {
+			// rect || text
 			this.colour2 = buf.g4();
 			this.colourOver = buf.g4();
 			this.colour2Over = buf.g4();
 		}
 
 		if (this.type == 5) {
+			// graphic
 			this.graphic = buf.g4();
 			this.graphic2 = buf.g4();
 		}
 
 		if (this.type == 6) {
-			this.modelType = 1;
-			this.modelId = buf.g2();
-			if (this.modelId == 65535) {
-				this.modelId = -1;
+			// model
+			this.model1Type = 1;
+			this.model1Id = buf.g2();
+			if (this.model1Id == 65535) {
+				this.model1Id = -1;
 			}
 
 			this.model2Type = 1;
@@ -664,34 +686,35 @@ public class IfType extends Linkable {
 				this.modelAnim = -1;
 			}
 
-			this.model2Anim = buf.g2();
-			if (this.model2Anim == 65535) {
-				this.model2Anim = -1;
+			this.modelAnim2 = buf.g2();
+			if (this.modelAnim2 == 65535) {
+				this.modelAnim2 = -1;
 			}
 
 			this.modelZoom = buf.g2();
-			this.modelXan = buf.g2();
-			this.modelYan = buf.g2();
+			this.modelXAn = buf.g2();
+			this.modelYAn = buf.g2();
 		}
 
 		if (this.type == 7) {
-			this.linkObjType = new int[this.renderheight * this.renderwidth];
-			this.linkObjCount = new int[this.renderheight * this.renderwidth];
+			// invtext
+			this.linkObjType = new int[this.height * this.width];
+			this.linkObjNumber = new int[this.height * this.width];
 
-			this.halign = buf.g1();
+			this.hAlign = buf.g1();
 			this.font = buf.g2();
 			if (this.font == 65535) {
 				this.font = -1;
 			}
 
-			this.shadowed = buf.g1() == 1;
+			this.shadow = buf.g1() == 1;
 			this.colour = buf.g4();
 			this.marginX = buf.g2b();
 			this.marginY = buf.g2b();
 
 			int interactable = buf.g1();
 			if (interactable == 1) {
-				this.events |= 0x40000000;
+				this.eventCode |= 0x40000000;
 			}
 
 			this.iop = new String[5];
@@ -699,44 +722,47 @@ public class IfType extends Linkable {
 				String op = buf.gjstr();
 				if (op.length() > 0) {
 					this.iop[i] = op;
-					this.events |= 0x1 << i + 23;
+					this.eventCode |= 0x1 << i + 23;
 				}
 			}
 		}
 
 		if (this.type == 8) {
+			// tooltip
 			this.text = buf.gjstr();
 		}
 
 		if (this.buttonType == 2 || this.type == 2) {
 			this.targetVerb = buf.gjstr();
-			this.targetText = buf.gjstr();
+			this.targetBase = buf.gjstr();
+
 			int targetMask = buf.g2() & 0x3F;
-			this.events |= targetMask << 11;
+			this.eventCode |= targetMask << 11;
 		}
 
 		if (this.buttonType == 1 || this.buttonType == 4 || this.buttonType == 5 || this.buttonType == 6) {
-			this.option = buf.gjstr();
+			this.buttonText = buf.gjstr();
 
-			if (this.option.length() == 0) {
+			if (this.buttonText.length() == 0) {
 				if (this.buttonType == 1) {
-					this.option = Text.OK;
+					this.buttonText = Text.OK;
 				} else if (this.buttonType == 4) {
-					this.option = Text.SELECT;
+					this.buttonText = Text.SELECT;
 				} else if (this.buttonType == 5) {
-					this.option = Text.SELECT;
+					this.buttonText = Text.SELECT;
 				} else if (this.buttonType == 6) {
-					this.option = Text.CONTINUE;
+					this.buttonText = Text.CONTINUE;
 				}
 			}
 		}
 
 		if (this.buttonType == 1 || this.buttonType == 4 || this.buttonType == 5) {
-			this.events |= 0x400000;
+			this.eventCode |= 0x400000;
 		}
 
 		if (this.buttonType == 6) {
-			this.events |= 0x1;
+			// pause
+			this.eventCode |= 0x1;
 		}
 	}
 
@@ -748,92 +774,104 @@ public class IfType extends Linkable {
 
 		this.type = buf.g1();
 		this.clientCode = buf.g2();
-		this.x = this.renderx = buf.g2b();
-		this.y = this.rendery = buf.g2b();
+		this.dataX = this.x = buf.g2b();
+		this.dataY = this.y = buf.g2b();
 
-		this.renderwidth = buf.g2();
+		this.width = buf.g2();
 		if (this.type == 9) {
-			this.renderheight = buf.g2b();
+			// line
+			this.height = buf.g2b();
 		} else {
-			this.renderheight = buf.g2();
+			this.height = buf.g2();
 		}
 
-		this.layerid = buf.g2();
-		if (this.layerid == 65535) {
-			this.layerid = -1;
+		this.layerId = buf.g2();
+		if (this.layerId == 65535) {
+			this.layerId = -1;
 		} else {
-			this.layerid += this.parentlayer & 0xFFFF0000;
+			this.layerId += this.parentId & 0xFFFF0000;
 		}
 
 		this.hide = buf.g1() == 1;
 
 		if (this.type == 0) {
+			// layer
 			this.scrollWidth = buf.g2();
 			this.scrollHeight = buf.g2();
 		}
 
 		if (this.type == 5) {
+			// graphic
 			this.graphic = buf.g4();
-			this.angle2d = buf.g2();
+			this.rotate = buf.g2();
 			this.tiling = buf.g1() == 1;
 			this.trans = buf.g1();
 			this.outline = buf.g1();
-			this.graphicshadow = buf.g4();
-			this.vflip = buf.g1() == 1;
-			this.hflip = buf.g1() == 1;
+			this.shadowColour = buf.g4();
+			this.vFlip = buf.g1() == 1;
+			this.hFlip = buf.g1() == 1;
 		}
 
 		if (this.type == 6) {
-			this.modelType = 1;
-			this.modelId = buf.g2();
-			if (this.modelId == 65535) {
-				this.modelId = -1;
+			// model
+			this.model1Type = 1;
+
+			this.model1Id = buf.g2();
+			if (this.model1Id == 65535) {
+				this.model1Id = -1;
 			}
-			this.xof = buf.g2b();
-			this.yof = buf.g2b();
-			this.modelXan = buf.g2();
-			this.modelYan = buf.g2();
-			this.modelZan = buf.g2();
+
+			this.modelXOf = buf.g2b();
+			this.modelYOf = buf.g2b();
+			this.modelXAn = buf.g2();
+			this.modelYAn = buf.g2();
+			this.modelZAn = buf.g2();
 			this.modelZoom = buf.g2();
+
 			this.modelAnim = buf.g2();
 			if (this.modelAnim == 65535) {
 				this.modelAnim = -1;
 			}
-			this.modelOrthographic = buf.g1() == 1;
+
+			this.orthog = buf.g1() == 1;
 		}
 
 		if (this.type == 4) {
+			// text
 			this.font = buf.g2();
 			if (this.font == 65535) {
 				this.font = -1;
 			}
+
 			this.text = buf.gjstr();
-			this.field1832 = buf.g1();
-			this.halign = buf.g1();
-			this.field1834 = buf.g1();
-			this.shadowed = buf.g1() == 1;
+			this.lineHeight = buf.g1();
+			this.hAlign = buf.g1();
+			this.vAlign = buf.g1();
+			this.shadow = buf.g1() == 1;
 			this.colour = buf.g4();
 		}
 
 		if (this.type == 3) {
+			// rect
 			this.colour = buf.g4();
 			this.fill = buf.g1() == 1;
 			this.trans = buf.g1();
 		}
 
 		if (this.type == 9) {
+			// line
 			this.lineWidth = buf.g1();
 			this.colour = buf.g4();
 		}
 
-		this.events = buf.g3();
-		this.opbase = buf.gjstr();
+		this.eventCode = buf.g3();
+		this.baseOpName = buf.gjstr();
 
-		int var2 = buf.g1();
-		if (var2 > 0) {
-			this.ops = new String[var2];
-			for (int var3 = 0; var3 < var2; var3++) {
-				this.ops[var3] = buf.gjstr();
+		int ops = buf.g1();
+		if (ops > 0) {
+			this.opNames = new String[ops];
+			for (int i = 0; i < ops; i++) {
+				this.opNames[i] = buf.gjstr();
 			}
 		}
 
@@ -905,9 +943,9 @@ public class IfType extends Linkable {
 		int var3 = this.linkObjType[arg1];
 		this.linkObjType[arg1] = this.linkObjType[arg0];
 		this.linkObjType[arg0] = var3;
-		int var4 = this.linkObjCount[arg1];
-		this.linkObjCount[arg1] = this.linkObjCount[arg0];
-		this.linkObjCount[arg0] = var4;
+		int var4 = this.linkObjNumber[arg1];
+		this.linkObjNumber[arg1] = this.linkObjNumber[arg0];
+		this.linkObjNumber[arg0] = var4;
 	}
 
 	// jag::oldscape::rs2lib::IfType::GetGraphic
@@ -925,7 +963,7 @@ public class IfType extends Linkable {
 			return null;
 		}
 
-		long var3 = ((long) this.graphicshadow << 40) + ((this.hflip ? 1L : 0L) << 39) + ((this.vflip ? 1L : 0L) << 38) + ((long) this.outline << 36) + (long) var2;
+		long var3 = ((long) this.shadowColour << 40) + ((this.hFlip ? 1L : 0L) << 39) + ((this.vFlip ? 1L : 0L) << 38) + ((long) this.outline << 36) + (long) var2;
 		Pix32 var5 = (Pix32) spriteCache.find(var3);
 		if (var5 != null) {
 			return var5;
@@ -945,10 +983,10 @@ public class IfType extends Linkable {
 		}
 
 		// jag::oldscape::rs2lib::IfType::PrerenderProcessSprite
-		if (this.vflip) {
+		if (this.vFlip) {
 			var7.vflip();
 		}
-		if (this.hflip) {
+		if (this.hFlip) {
 			var7.hflip();
 		}
 		if (this.outline > 0) {
@@ -960,8 +998,8 @@ public class IfType extends Linkable {
 		if (this.outline >= 2) {
 			var7.addOutline(16777215);
 		}
-		if (this.graphicshadow != 0) {
-			var7.addShadow(this.graphicshadow);
+		if (this.shadowColour != 0) {
+			var7.addShadow(this.shadowColour);
 		}
 
 		spriteCache.put(var7, var3);
@@ -1032,65 +1070,82 @@ public class IfType extends Linkable {
 	@ObfuscatedName("eg.b(Leo;IZLct;I)Lfo;")
 	public ModelLit getTempModel(SeqType arg0, int arg1, boolean arg2, PlayerModel player) {
 		loadingAsset = false;
+
 		int type;
 		int id;
 		if (arg2) {
 			type = this.model2Type;
 			id = this.model2Id;
 		} else {
-			type = this.modelType;
-			id = this.modelId;
+			type = this.model1Type;
+			id = this.model1Id;
 		}
+
 		if (type == 0) {
 			return null;
 		} else if (type == 1 && id == -1) {
 			return null;
-		} else {
-			ModelLit var7 = (ModelLit) modelCache.find((long) ((type << 16) + id));
-			if (var7 == null) {
-				if (type == 1) {
-					ModelUnlit var8 = ModelUnlit.load(models, id, 0);
-					if (var8 == null) {
-						loadingAsset = true;
-						return null;
-					}
-					var7 = var8.light(64, 768, -50, -10, -50);
-				}
-				if (type == 2) {
-					ModelUnlit var9 = NpcType.list(id).getHead();
-					if (var9 == null) {
-						loadingAsset = true;
-						return null;
-					}
-					var7 = var9.light(64, 768, -50, -10, -50);
-				}
-				if (type == 3) {
-					if (player == null) {
-						return null;
-					}
-					ModelUnlit var10 = player.getHeadModel();
-					if (var10 == null) {
-						loadingAsset = true;
-						return null;
-					}
-					var7 = var10.light(64, 768, -50, -10, -50);
-				}
-				if (type == 4) {
-					ObjType var11 = ObjType.list(id);
-					ModelUnlit var12 = var11.getModelUnlit(10);
-					if (var12 == null) {
-						loadingAsset = true;
-						return null;
-					}
-					var7 = var12.light(var11.ambient + 64, var11.contrast + 768, -50, -10, -50);
-				}
-				modelCache.put(var7, (long) ((type << 16) + id));
-			}
-			if (arg0 != null) {
-				var7 = arg0.animateModelWithExtra(var7, arg1);
-			}
-			return var7;
 		}
+
+		ModelLit var7 = (ModelLit) modelCache.find((long) ((type << 16) + id));
+		if (var7 == null) {
+			if (type == 1) {
+				// basic
+				ModelUnlit var8 = ModelUnlit.load(models, id, 0);
+				if (var8 == null) {
+					loadingAsset = true;
+					return null;
+				}
+
+				var7 = var8.light(64, 768, -50, -10, -50);
+			}
+
+			if (type == 2) {
+				// npc_head
+				ModelUnlit var9 = NpcType.list(id).getHead();
+				if (var9 == null) {
+					loadingAsset = true;
+					return null;
+				}
+
+				var7 = var9.light(64, 768, -50, -10, -50);
+			}
+
+			if (type == 3) {
+				// player_head
+				if (player == null) {
+					return null;
+				}
+
+				ModelUnlit var10 = player.getHeadModel();
+				if (var10 == null) {
+					loadingAsset = true;
+					return null;
+				}
+
+				var7 = var10.light(64, 768, -50, -10, -50);
+			}
+
+			if (type == 4) {
+				// object
+				ObjType var11 = ObjType.list(id);
+				ModelUnlit var12 = var11.getModelUnlit(10);
+				if (var12 == null) {
+					loadingAsset = true;
+					return null;
+				}
+
+				var7 = var12.light(var11.ambient + 64, var11.contrast + 768, -50, -10, -50);
+			}
+
+			modelCache.put(var7, ((long) type << 16) + id);
+		}
+
+		if (arg0 != null) {
+			var7 = arg0.animateModelWithExtra(var7, arg1);
+		}
+
+		return var7;
 	}
 
 	// jag::oldscape::rs2lib::IfType::ResetCache
@@ -1104,15 +1159,16 @@ public class IfType extends Linkable {
 	// jag::oldscape::rs2lib::IfType::SetOpName
 	@ObfuscatedName("eg.t(ILjava/lang/String;B)V")
 	public void setOpName(int arg0, String arg1) {
-		if (this.ops == null || this.ops.length <= arg0) {
+		if (this.opNames == null || this.opNames.length <= arg0) {
 			String[] var3 = new String[arg0 + 1];
-			if (this.ops != null) {
-				for (int var4 = 0; var4 < this.ops.length; var4++) {
-					var3[var4] = this.ops[var4];
+			if (this.opNames != null) {
+				for (int var4 = 0; var4 < this.opNames.length; var4++) {
+					var3[var4] = this.opNames[var4];
 				}
 			}
-			this.ops = var3;
+			this.opNames = var3;
 		}
-		this.ops[arg0] = arg1;
+
+		this.opNames[arg0] = arg1;
 	}
 }

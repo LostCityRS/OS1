@@ -47,27 +47,27 @@ public class Pix2D extends Linkable2 {
 
 	// jag::oldscape::dash3d::Pix2D::SetClipping
 	@ObfuscatedName("fv.q(IIII)V")
-	public static void setClipping(int arg0, int arg1, int arg2, int arg3) {
-		if (arg0 < 0) {
-			arg0 = 0;
+	public static void setClipping(int x, int y, int w, int h) {
+		if (x < 0) {
+			x = 0;
 		}
 
-		if (arg1 < 0) {
-			arg1 = 0;
+		if (y < 0) {
+			y = 0;
 		}
 
-		if (arg2 > width) {
-			arg2 = width;
+		if (w > width) {
+			w = width;
 		}
 
-		if (arg3 > height) {
-			arg3 = height;
+		if (h > height) {
+			h = height;
 		}
 
-		clipMinX = arg0;
-		clipMinY = arg1;
-		clipMaxX = arg2;
-		clipMaxY = arg3;
+		clipMinX = x;
+		clipMinY = y;
+		clipMaxX = w;
+		clipMaxY = h;
 	}
 
 	// jag::oldscape::graphics::Pix2D::SetSubClipping

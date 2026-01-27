@@ -750,7 +750,7 @@ public class Client extends GameShell {
 	public static int menuX; // todo
 
 	@ObfuscatedName("l.jy")
-	public static IfType field37; // todo
+	public static IfType hoveredCom; // todo
 
 	@ObfuscatedName("m.jd")
 	public static int menuHeight; // todo
@@ -978,7 +978,7 @@ public class Client extends GameShell {
 	public static int field2149 = 0;
 
 	@ObfuscatedName("client.mk")
-	public static int field2151 = 0;
+	public static int keypresses = 0;
 
 	@ObfuscatedName("client.mb")
 	public static int[] keypressKeychars = new int[128];
@@ -2239,17 +2239,17 @@ public class Client extends GameShell {
 			if (var9 != -1 && IfType.open[var9]) {
 				IfType.interfaces.discardFiles(var9);
 				if (IfType.list[var9] != null) {
-					boolean var10 = true;
+					boolean hasNoInv = true;
 					for (int var11 = 0; var11 < IfType.list[var9].length; var11++) {
 						if (IfType.list[var9][var11] != null) {
 							if (IfType.list[var9][var11].type == 2) {
-								var10 = false;
+								hasNoInv = false;
 							} else {
 								IfType.list[var9][var11] = null;
 							}
 						}
 					}
-					if (var10) {
+					if (hasNoInv) {
 						IfType.list[var9] = null;
 					}
 					IfType.open[var9] = false;
@@ -5569,9 +5569,9 @@ public class Client extends GameShell {
 				}
 
 				if (var33.v3) {
-					targetOp = var33.opbase + StringConstants.TAG_COLOUR(16777215);
+					targetOp = var33.baseOpName + StringConstants.TAG_COLOUR(16777215);
 				} else {
-					targetOp = StringConstants.TAG_COLOUR(65280) + var33.targetText + StringConstants.TAG_COLOUR(16777215);
+					targetOp = StringConstants.TAG_COLOUR(65280) + var33.targetBase + StringConstants.TAG_COLOUR(16777215);
 				}
 			}
 
@@ -5808,11 +5808,11 @@ public class Client extends GameShell {
 
 		if (action == 1005) {
 			IfType var48 = IfType.get(c);
-			if (var48 == null || var48.linkObjCount[b] < 100000) {
+			if (var48 == null || var48.linkObjNumber[b] < 100000) {
 				out.p1Enc(49);
 				out.p2_alt1(a);
 			} else {
-				addChat(0, "", var48.linkObjCount[b] + " x " + ObjType.list(a).name);
+				addChat(0, "", var48.linkObjNumber[b] + " x " + ObjType.list(a).name);
 			}
 
 			selectedCycle = 0;
@@ -6269,28 +6269,28 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::DrawLayer
 	@ObfuscatedName("g.fv([Leg;IIIIIIIIB)V")
-	public static void drawLayer(IfType[] children, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
-		Pix2D.setClipping(arg2, arg3, arg4, arg5);
+	public static void drawLayer(IfType[] children, int layerid, int x, int y, int w, int h, int childX, int childY, int childCount) {
+		Pix2D.setClipping(x, y, w, h);
 		Pix3D.setRenderClipping();
 
 		for (int i = 0; i < children.length; i++) {
 			IfType com = children[i];
-			if (com == null || (com.layerid != arg1 && (arg1 != 0xabcdabcd || dragComponent != com))) {
+			if (com == null || (com.layerId != layerid && (layerid != 0xabcdabcd || dragComponent != com))) {
 				continue;
 			}
 
-			int var11;
-			if (arg8 == -1) {
-				componentDrawX[componentDrawCount] = com.renderx + arg6;
-				componentDrawY[componentDrawCount] = com.rendery + arg7;
-				componentDrawWidth[componentDrawCount] = com.renderwidth;
-				componentDrawHeight[componentDrawCount] = com.renderheight;
-				var11 = ++componentDrawCount - 1;
+			int drawCount;
+			if (childCount == -1) {
+				componentDrawX[componentDrawCount] = com.x + childX;
+				componentDrawY[componentDrawCount] = com.y + childY;
+				componentDrawWidth[componentDrawCount] = com.width;
+				componentDrawHeight[componentDrawCount] = com.height;
+				drawCount = ++componentDrawCount - 1;
 			} else {
-				var11 = arg8;
+				drawCount = childCount;
 			}
 
-			com.field1898 = var11;
+			com.drawCount = drawCount;
 			com.drawTime = loopCycle;
 
 			if (com.v3 && hide(com)) {
@@ -6301,15 +6301,15 @@ public class Client extends GameShell {
 				clientComponent(com);
 			}
 
-			int var12 = com.renderx + arg6;
-			int var13 = com.rendery + arg7;
-			int var14 = com.trans;
+			int renderx = com.x + childX;
+			int rendery = com.y + childY;
+			int trans = com.trans;
 
 			if (dragComponent == com) {
-				if (arg1 != 0xabcdabcd && !com.draggablebehavior) {
+				if (layerid != 0xabcdabcd && !com.draggablebehavior) {
 					field1516 = children;
-					field44 = arg6;
-					field2106 = arg7;
+					field44 = childX;
+					field2106 = childY;
 					continue;
 				}
 
@@ -6324,24 +6324,24 @@ public class Client extends GameShell {
 						var17 = dragParentX;
 					}
 
-					if (com.renderwidth + var17 > dragParentX + dragParent.renderwidth) {
-						var17 = dragParentX + dragParent.renderwidth - com.renderwidth;
+					if (com.width + var17 > dragParentX + dragParent.width) {
+						var17 = dragParentX + dragParent.width - com.width;
 					}
 
 					if (var18 < dragParentY) {
 						var18 = dragParentY;
 					}
 
-					if (com.renderheight + var18 > dragParentY + dragParent.renderheight) {
-						var18 = dragParentY + dragParent.renderheight - com.renderheight;
+					if (com.height + var18 > dragParentY + dragParent.height) {
+						var18 = dragParentY + dragParent.height - com.height;
 					}
 
-					var12 = var17;
-					var13 = var18;
+					renderx = var17;
+					rendery = var18;
 				}
 
 				if (!com.draggablebehavior) {
-					var14 = 128;
+					trans = 128;
 				}
 			}
 
@@ -6350,36 +6350,38 @@ public class Client extends GameShell {
 			int var21;
 			int var22;
 			if (com.type == 2) {
-				var19 = arg2;
-				var20 = arg3;
-				var21 = arg4;
-				var22 = arg5;
+				// inv
+				var19 = x;
+				var20 = y;
+				var21 = w;
+				var22 = h;
 			} else if (com.type == 9) {
-				int var23 = var12;
-				int var24 = var13;
-				int var25 = com.renderwidth + var12;
-				int var26 = com.renderheight + var13;
-				if (var25 < var12) {
+				// line
+				int var23 = renderx;
+				int var24 = rendery;
+				int var25 = com.width + renderx;
+				int var26 = com.height + rendery;
+				if (var25 < renderx) {
 					var23 = var25;
-					var25 = var12;
+					var25 = renderx;
 				}
-				if (var26 < var13) {
+				if (var26 < rendery) {
 					var24 = var26;
-					var26 = var13;
+					var26 = rendery;
 				}
 				var25++;
 				var26++;
-				var19 = var23 > arg2 ? var23 : arg2;
-				var20 = var24 > arg3 ? var24 : arg3;
-				var21 = var25 < arg4 ? var25 : arg4;
-				var22 = var26 < arg5 ? var26 : arg5;
+				var19 = var23 > x ? var23 : x;
+				var20 = var24 > y ? var24 : y;
+				var21 = var25 < w ? var25 : w;
+				var22 = var26 < h ? var26 : h;
 			} else {
-				int var29 = com.renderwidth + var12;
-				int var30 = com.renderheight + var13;
-				var19 = var12 > arg2 ? var12 : arg2;
-				var20 = var13 > arg3 ? var13 : arg3;
-				var21 = var29 < arg4 ? var29 : arg4;
-				var22 = var30 < arg5 ? var30 : arg5;
+				int var29 = com.width + renderx;
+				int var30 = com.height + rendery;
+				var19 = renderx > x ? renderx : x;
+				var20 = rendery > y ? rendery : y;
+				var21 = var29 < w ? var29 : w;
+				var22 = var30 < h ? var30 : h;
 			}
 
 			if (com.v3 && (var19 >= var21 || var20 >= var22)) {
@@ -6388,357 +6390,409 @@ public class Client extends GameShell {
 
 			if (com.clientCode != 0) {
 				if (com.clientCode == 1337) {
-					minimenuMouseOverX = var12;
-					minimenuMouseOverY = var13;
-					gameDrawMain(var12, var13, com.renderwidth, com.renderheight);
-					Pix2D.setClipping(arg2, arg3, arg4, arg5);
+					minimenuMouseOverX = renderx;
+					minimenuMouseOverY = rendery;
+					gameDrawMain(renderx, rendery, com.width, com.height);
+					Pix2D.setClipping(x, y, w, h);
 					continue;
 				}
 
 				if (com.clientCode == 1338) {
-					minimapDraw(var12, var13, var11);
-					Pix2D.setClipping(arg2, arg3, arg4, arg5);
+					minimapDraw(renderx, rendery, drawCount);
+					Pix2D.setClipping(x, y, w, h);
 					continue;
 				}
 			}
 
-			int var127 = JavaMouseProvider.mouseX;
-			int var128 = JavaMouseProvider.mouseY;
+			int mouseX = JavaMouseProvider.mouseX;
+			int mouseY = JavaMouseProvider.mouseY;
 
-			if (!isMenuOpen && var127 >= var19 && var128 >= var20 && var127 < var21 && var128 < var22) {
-				addComponentOptions(com, var127 - var12, var128 - var13);
+			if (!isMenuOpen && mouseX >= var19 && mouseY >= var20 && mouseX < var21 && mouseY < var22) {
+				addComponentOptions(com, mouseX - renderx, mouseY - rendery);
 			}
 
 			if (com.type == 0) {
-				if (!com.v3 && hide(com) && field37 != com) {
+				if (!com.v3 && hide(com) && hoveredCom != com) {
 					continue;
 				}
 
 				if (!com.v3) {
-					if (com.scrollY > com.scrollHeight - com.renderheight) {
-						com.scrollY = com.scrollHeight - com.renderheight;
+					if (com.scrollPosY > com.scrollHeight - com.height) {
+						com.scrollPosY = com.scrollHeight - com.height;
 					}
 
-					if (com.scrollY < 0) {
-						com.scrollY = 0;
+					if (com.scrollPosY < 0) {
+						com.scrollPosY = 0;
 					}
 				}
 
-				drawLayer(children, com.parentlayer, var19, var20, var21, var22, var12 - com.scrollX, var13 - com.scrollY, var11);
+				drawLayer(children, com.parentId, var19, var20, var21, var22, renderx - com.scrollPosX, rendery - com.scrollPosY, drawCount);
 
 				if (com.subcomponents != null) {
-					drawLayer(com.subcomponents, com.parentlayer, var19, var20, var21, var22, var12 - com.scrollX, var13 - com.scrollY, var11);
+					drawLayer(com.subcomponents, com.parentId, var19, var20, var21, var22, renderx - com.scrollPosX, rendery - com.scrollPosY, drawCount);
 				}
 
-				SubInterface var164 = (SubInterface) subinterfaces.find((long) com.parentlayer);
-				if (var164 != null) {
-					if (var164.type == 0 && JavaMouseProvider.mouseX >= var19 && JavaMouseProvider.mouseY >= var20 && JavaMouseProvider.mouseX < var21 && JavaMouseProvider.mouseY < var22 && !isMenuOpen && !field2092) {
+				SubInterface sub = (SubInterface) subinterfaces.find(com.parentId);
+				if (sub != null) {
+					if (sub.type == 0 && JavaMouseProvider.mouseX >= var19 && JavaMouseProvider.mouseY >= var20 && JavaMouseProvider.mouseX < var21 && JavaMouseProvider.mouseY < var22 && !isMenuOpen && !field2092) {
 						menuVerb[0] = Text.CANCEL;
 						menuSubject[0] = "";
 						menuAction[0] = 1006;
 						menuNumEntries = 1;
 					}
 
-					drawInterface(var164.id, var19, var20, var21, var22, var12, var13, var11);
+					drawInterface(sub.id, var19, var20, var21, var22, renderx, rendery, drawCount);
 				}
 
-				Pix2D.setClipping(arg2, arg3, arg4, arg5);
+				Pix2D.setClipping(x, y, w, h);
 				Pix3D.setRenderClipping();
 			}
 
-			if (!componentDrawSomething2[var11] && componentDrawMode <= 1) {
+			if (!componentDrawSomething2[drawCount] && componentDrawMode <= 1) {
 				continue;
 			}
 
-			if (com.type == 0 && !com.v3 && com.scrollHeight > com.renderheight) {
-				drawScrollbar(var13, com.renderwidth + var12, com.scrollY, com.renderheight, com.scrollHeight);
+			if (com.type == 0 && !com.v3 && com.scrollHeight > com.height) {
+				// layer
+				drawScrollbar(rendery, com.width + renderx, com.scrollPosY, com.height, com.scrollHeight);
 			} else if (com.type == 1) {
-				// no-op
 			} else if (com.type == 2) {
-				int var171 = 0;
-				for (int var172 = 0; var172 < com.renderheight; var172++) {
-					for (int var173 = 0; var173 < com.renderwidth; var173++) {
-						int var174 = (com.marginX + 32) * var173 + var12;
-						int var175 = (com.marginY + 32) * var172 + var13;
-						if (var171 < 20) {
-							var174 += com.invBackgroundX[var171];
-							var175 += com.invBackgroundY[var171];
+				// inv
+				int slot = 0;
+				for (int row = 0; row < com.height; row++) {
+					for (int col = 0; col < com.width; col++) {
+						int slotX = (com.marginX + 32) * col + renderx;
+						int slotY = (com.marginY + 32) * row + rendery;
+
+						if (slot < 20) {
+							slotX += com.invBackgroundX[slot];
+							slotY += com.invBackgroundY[slot];
 						}
-						if (com.linkObjType[var171] > 0) {
-							int var178 = com.linkObjType[var171] - 1;
-							if (var174 + 32 > arg2 && var174 < arg4 && var175 + 32 > arg3 && var175 < arg5 || objDragInterface == com && objDragSlot == var171) {
-								Pix32 var179;
-								if (useMode == 1 && objSelectedSlot == var171 && objSelectedLayerId == com.parentlayer) {
-									var179 = ObjType.getSprite(var178, com.linkObjCount[var171], 2, 0, false);
+
+						if (com.linkObjType[slot] > 0) {
+							int id = com.linkObjType[slot] - 1;
+
+							if (slotX + 32 > x && slotX < w && slotY + 32 > y && slotY < h || objDragInterface == com && objDragSlot == slot) {
+								Pix32 sprite;
+								if (useMode == 1 && objSelectedSlot == slot && objSelectedLayerId == com.parentId) {
+									sprite = ObjType.getSprite(id, com.linkObjNumber[slot], 2, 0, false);
 								} else {
-									var179 = ObjType.getSprite(var178, com.linkObjCount[var171], 1, 3153952, false);
+									sprite = ObjType.getSprite(id, com.linkObjNumber[slot], 1, 0x302020, false);
 								}
-								if (var179 == null) {
+
+								if (sprite == null) {
 									componentUpdated(com);
-								} else if (objDragInterface == com && objDragSlot == var171) {
-									int var180 = JavaMouseProvider.mouseX - objGrabX;
-									int var181 = JavaMouseProvider.mouseY - objGrabY;
-									if (var180 < 5 && var180 > -5) {
-										var180 = 0;
+								} else if (objDragInterface == com && objDragSlot == slot) {
+									int dx = JavaMouseProvider.mouseX - objGrabX;
+									int dy = JavaMouseProvider.mouseY - objGrabY;
+
+									if (dx < 5 && dx > -5) {
+										dx = 0;
 									}
-									if (var181 < 5 && var181 > -5) {
-										var181 = 0;
+
+									if (dy < 5 && dy > -5) {
+										dy = 0;
 									}
+
 									if (objDragCycles < 5) {
-										var180 = 0;
-										var181 = 0;
+										dx = 0;
+										dy = 0;
 									}
-									var179.transPlotSprite(var174 + var180, var175 + var181, 128);
-									if (arg1 != -1) {
-										IfType var182 = children[arg1 & 0xFFFF];
-										if (var175 + var181 < Pix2D.clipMinY && var182.scrollY > 0) {
-											int var183 = worldUpdateNum * (Pix2D.clipMinY - var175 - var181) / 3;
-											if (var183 > worldUpdateNum * 10) {
-												var183 = worldUpdateNum * 10;
+
+									sprite.transPlotSprite(slotX + dx, slotY + dy, 128);
+
+									if (layerid != -1) {
+										IfType child = children[layerid & 0xFFFF];
+
+										if (slotY + dy < Pix2D.clipMinY && child.scrollPosY > 0) {
+											int autoscroll = worldUpdateNum * (Pix2D.clipMinY - slotY - dy) / 3;
+											if (autoscroll > worldUpdateNum * 10) {
+												autoscroll = worldUpdateNum * 10;
 											}
-											if (var183 > var182.scrollY) {
-												var183 = var182.scrollY;
+											if (autoscroll > child.scrollPosY) {
+												autoscroll = child.scrollPosY;
 											}
-											var182.scrollY -= var183;
-											objGrabY += var183;
-											componentUpdated(var182);
+
+											child.scrollPosY -= autoscroll;
+											objGrabY += autoscroll;
+
+											componentUpdated(child);
 										}
-										if (var175 + var181 + 32 > Pix2D.clipMaxY && var182.scrollY < var182.scrollHeight - var182.renderheight) {
-											int var184 = worldUpdateNum * (var175 + var181 + 32 - Pix2D.clipMaxY) / 3;
-											if (var184 > worldUpdateNum * 10) {
-												var184 = worldUpdateNum * 10;
+
+										if (slotY + dy + 32 > Pix2D.clipMaxY && child.scrollPosY < child.scrollHeight - child.height) {
+											int autoscroll = worldUpdateNum * (slotY + dy + 32 - Pix2D.clipMaxY) / 3;
+											if (autoscroll > worldUpdateNum * 10) {
+												autoscroll = worldUpdateNum * 10;
 											}
-											if (var184 > var182.scrollHeight - var182.renderheight - var182.scrollY) {
-												var184 = var182.scrollHeight - var182.renderheight - var182.scrollY;
+											if (autoscroll > child.scrollHeight - child.height - child.scrollPosY) {
+												autoscroll = child.scrollHeight - child.height - child.scrollPosY;
 											}
-											var182.scrollY += var184;
-											objGrabY -= var184;
-											componentUpdated(var182);
+
+											child.scrollPosY += autoscroll;
+											objGrabY -= autoscroll;
+
+											componentUpdated(child);
 										}
 									}
-								} else if (selectedArea == com && selectedItem == var171) {
-									var179.transPlotSprite(var174, var175, 128);
+								} else if (selectedArea == com && selectedItem == slot) {
+									sprite.transPlotSprite(slotX, slotY, 128);
 								} else {
-									var179.plotSprite(var174, var175);
+									sprite.plotSprite(slotX, slotY);
 								}
 							}
-						} else if (com.invBackground != null && var171 < 20) {
-							Pix32 var185 = com.getInvBackground(var171);
-							if (var185 != null) {
-								var185.plotSprite(var174, var175);
+						} else if (com.invBackground != null && slot < 20) {
+							Pix32 background = com.getInvBackground(slot);
+							if (background != null) {
+								background.plotSprite(slotX, slotY);
 							} else if (IfType.loadingAsset) {
 								componentUpdated(com);
 							}
 						}
-						var171++;
+
+						slot++;
 					}
 				}
 			} else if (com.type == 3) {
-				int var186;
+				// rect
+				int colour;
 				if (getIfActive(com)) {
-					var186 = com.colour2;
-					if (field37 == com && com.colour2Over != 0) {
-						var186 = com.colour2Over;
+					colour = com.colour2;
+					if (hoveredCom == com && com.colour2Over != 0) {
+						colour = com.colour2Over;
 					}
 				} else {
-					var186 = com.colour;
-					if (field37 == com && com.colourOver != 0) {
-						var186 = com.colourOver;
+					colour = com.colour;
+					if (hoveredCom == com && com.colourOver != 0) {
+						colour = com.colourOver;
 					}
 				}
-				if (var14 == 0) {
+
+				if (trans == 0) {
 					if (com.fill) {
-						Pix2D.fillRect(var12, var13, com.renderwidth, com.renderheight, var186);
+						Pix2D.fillRect(renderx, rendery, com.width, com.height, colour);
 					} else {
-						Pix2D.drawRect(var12, var13, com.renderwidth, com.renderheight, var186);
+						Pix2D.drawRect(renderx, rendery, com.width, com.height, colour);
 					}
 				} else if (com.fill) {
-					Pix2D.fillRectTrans(var12, var13, com.renderwidth, com.renderheight, var186, 256 - (var14 & 0xFF));
+					Pix2D.fillRectTrans(renderx, rendery, com.width, com.height, colour, 256 - (trans & 0xFF));
 				} else {
-					Pix2D.drawRectTrans(var12, var13, com.renderwidth, com.renderheight, var186, 256 - (var14 & 0xFF));
+					Pix2D.drawRectTrans(renderx, rendery, com.width, com.height, colour, 256 - (trans & 0xFF));
 				}
 			} else if (com.type == 4) {
-				SoftwareFont var187 = com.getFont();
-				if (var187 != null) {
-					String var188 = com.text;
-					int var189;
+				// text
+				SoftwareFont font = com.getFont();
+
+				if (font != null) {
+					String text = com.text;
+					int colour;
+
 					if (getIfActive(com)) {
-						var189 = com.colour2;
-						if (field37 == com && com.colour2Over != 0) {
-							var189 = com.colour2Over;
+						colour = com.colour2;
+						if (hoveredCom == com && com.colour2Over != 0) {
+							colour = com.colour2Over;
 						}
 						if (com.text2.length() > 0) {
-							var188 = com.text2;
+							text = com.text2;
 						}
 					} else {
-						var189 = com.colour;
-						if (field37 == com && com.colourOver != 0) {
-							var189 = com.colourOver;
+						colour = com.colour;
+						if (hoveredCom == com && com.colourOver != 0) {
+							colour = com.colourOver;
 						}
 					}
+
 					if (com.v3 && com.invobject != -1) {
-						ObjType var190 = ObjType.list(com.invobject);
-						var188 = var190.name;
-						if (var188 == null) {
-							var188 = "null";
+						ObjType obj = ObjType.list(com.invobject);
+
+						text = obj.name;
+
+						if (text == null) {
+							text = "null";
 						}
-						if ((var190.stackable == 1 || com.invcount != 1) && com.invcount != -1) {
-							var188 = StringConstants.TAG_COLOUR(0xff9040) + var188 + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.invcount);
+
+						if ((obj.stackable == 1 || com.invcount != 1) && com.invcount != -1) {
+							text = StringConstants.TAG_COLOUR(0xff9040) + text + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.invcount);
 						}
 					}
+
 					if (resumedPauseButton == com) {
-						Text var10000 = null;
-						var188 = Text.PLEASEWAIT;
-						var189 = com.colour;
+						text = Text.PLEASEWAIT;
+						colour = com.colour;
 					}
+
 					if (!com.v3) {
-						var188 = substituteVars(var188, com);
+						text = substituteVars(text, com);
 					}
-					var187.drawStringMultiline(var188, var12, var13, com.renderwidth, com.renderheight, var189, com.shadowed ? 0 : -1, com.halign, com.field1834, com.field1832);
+
+					font.drawStringMultiline(text, renderx, rendery, com.width, com.height, colour, com.shadow ? 0 : -1, com.hAlign, com.vAlign, com.lineHeight);
 				} else if (IfType.loadingAsset) {
 					componentUpdated(com);
 				}
 			} else if (com.type == 5) {
+				// graphic
 				if (com.v3) {
-					Pix32 var192;
+					Pix32 image;
 					if (com.invobject == -1) {
-						var192 = com.getGraphic(false);
+						image = com.getGraphic(false);
 					} else {
-						var192 = ObjType.getSprite(com.invobject, com.invcount, com.outline, com.graphicshadow, false);
+						image = ObjType.getSprite(com.invobject, com.invcount, com.outline, com.shadowColour, false);
 					}
-					if (var192 != null) {
-						int var193 = var192.owi;
-						int var194 = var192.ohi;
+
+					if (image != null) {
+						int width = image.owi;
+						int height = image.ohi;
+
 						if (com.tiling) {
-							Pix2D.setSubClipping(var12, var13, com.renderwidth + var12, com.renderheight + var13);
-							int var195 = (com.renderwidth + (var193 - 1)) / var193;
-							int var196 = (com.renderheight + (var194 - 1)) / var194;
+							Pix2D.setSubClipping(renderx, rendery, com.width + renderx, com.height + rendery);
+
+							int var195 = (com.width + (width - 1)) / width;
+							int var196 = (com.height + (height - 1)) / height;
+
 							for (int var197 = 0; var197 < var195; var197++) {
 								for (int var198 = 0; var198 < var196; var198++) {
-									if (com.angle2d != 0) {
-										var192.method2685(var193 / 2 + var193 * var197 + var12, var194 / 2 + var194 * var198 + var13, com.angle2d, 4096);
-									} else if (var14 == 0) {
-										var192.plotSprite(var193 * var197 + var12, var194 * var198 + var13);
+									if (com.rotate != 0) {
+										image.method2685(width / 2 + width * var197 + renderx, height / 2 + height * var198 + rendery, com.rotate, 4096);
+									} else if (trans == 0) {
+										image.plotSprite(width * var197 + renderx, height * var198 + rendery);
 									} else {
-										var192.transPlotSprite(var193 * var197 + var12, var194 * var198 + var13, 256 - (var14 & 0xFF));
+										image.transPlotSprite(width * var197 + renderx, height * var198 + rendery, 256 - (trans & 0xFF));
 									}
 								}
 							}
-							Pix2D.setClipping(arg2, arg3, arg4, arg5);
+
+							Pix2D.setClipping(x, y, w, h);
 						} else {
-							int var199 = com.renderwidth * 4096 / var193;
-							if (com.angle2d != 0) {
-								var192.method2685(com.renderwidth / 2 + var12, com.renderheight / 2 + var13, com.angle2d, var199);
-							} else if (var14 != 0) {
-								var192.method2678(var12, var13, com.renderwidth, com.renderheight, 256 - (var14 & 0xFF));
-							} else if (com.renderwidth == var193 && com.renderheight == var194) {
-								var192.plotSprite(var12, var13);
+							int var199 = com.width * 4096 / width;
+							if (com.rotate != 0) {
+								image.method2685(com.width / 2 + renderx, com.height / 2 + rendery, com.rotate, var199);
+							} else if (trans != 0) {
+								image.method2678(renderx, rendery, com.width, com.height, 256 - (trans & 0xFF));
+							} else if (com.width == width && com.height == height) {
+								image.plotSprite(renderx, rendery);
 							} else {
-								var192.method2664(var12, var13, com.renderwidth, com.renderheight);
+								image.method2664(renderx, rendery, com.width, com.height);
 							}
 						}
 					} else if (IfType.loadingAsset) {
 						componentUpdated(com);
 					}
 				} else {
-					Pix32 var191 = com.getGraphic(getIfActive(com));
-					if (var191 != null) {
-						var191.plotSprite(var12, var13);
+					Pix32 image = com.getGraphic(getIfActive(com));
+					if (image != null) {
+						image.plotSprite(renderx, rendery);
 					} else if (IfType.loadingAsset) {
 						componentUpdated(com);
 					}
 				}
 			} else if (com.type == 6) {
-				boolean var200 = getIfActive(com);
-				int var201;
-				if (var200) {
-					var201 = com.model2Anim;
+				// model
+				boolean active = getIfActive(com);
+
+				int anim;
+				if (active) {
+					anim = com.modelAnim2;
 				} else {
-					var201 = com.modelAnim;
+					anim = com.modelAnim;
 				}
-				ModelLit var202 = null;
+
+				ModelLit model = null;
 				int var203 = 0;
 				if (com.invobject != -1) {
-					ObjType var204 = ObjType.list(com.invobject);
-					if (var204 != null) {
-						ObjType var205 = var204.getStackSizeAlt(com.invcount);
-						var202 = var205.getModelLit(1);
-						if (var202 != null) {
-							var202.calcBoundingCylinder();
-							var203 = var202.minY / 2;
+					ObjType obj = ObjType.list(com.invobject);
+					if (obj != null) {
+						ObjType count = obj.getStackSizeAlt(com.invcount);
+						model = count.getModelLit(1);
+
+						if (model != null) {
+							model.calcBoundingCylinder();
+							var203 = model.minY / 2;
 						} else {
 							componentUpdated(com);
 						}
 					}
-				} else if (com.modelType == 5) {
-					if (com.modelId == 0) {
-						var202 = selfModel.getTempModel(null, -1, null, -1);
+				} else if (com.model1Type == 5) {
+					if (com.model1Id == 0) {
+						model = selfModel.getTempModel(null, -1, null, -1);
 					} else {
-						var202 = localPlayer.getTempModel();
+						model = localPlayer.getTempModel();
 					}
-				} else if (var201 == -1) {
-					var202 = com.getTempModel(null, -1, var200, localPlayer.model);
-					if (var202 == null && IfType.loadingAsset) {
+				} else if (anim == -1) {
+					model = com.getTempModel(null, -1, active, localPlayer.model);
+					if (model == null && IfType.loadingAsset) {
 						componentUpdated(com);
 					}
 				} else {
-					SeqType var206 = SeqType.list(var201);
-					var202 = com.getTempModel(var206, com.animFrame, var200, localPlayer.model);
-					if (var202 == null && IfType.loadingAsset) {
+					SeqType seq = SeqType.list(anim);
+					model = com.getTempModel(seq, com.animFrame, active, localPlayer.model);
+					if (model == null && IfType.loadingAsset) {
 						componentUpdated(com);
 					}
 				}
-				Pix3D.setOrigin(com.renderwidth / 2 + var12, com.renderheight / 2 + var13);
-				int var207 = com.modelZoom * Pix3D.sinTable[com.modelXan] >> 16;
-				int var208 = com.modelZoom * Pix3D.cosTable[com.modelXan] >> 16;
-				if (var202 != null) {
+
+				Pix3D.setOrigin(com.width / 2 + renderx, com.height / 2 + rendery);
+
+				int var207 = com.modelZoom * Pix3D.sinTable[com.modelXAn] >> 16;
+				int var208 = com.modelZoom * Pix3D.cosTable[com.modelXAn] >> 16;
+
+				if (model != null) {
 					if (com.v3) {
-						var202.calcBoundingCylinder();
-						if (com.modelOrthographic) {
-							var202.objRenderOrthog(0, com.modelYan, com.modelZan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208, com.modelZoom);
+						model.calcBoundingCylinder();
+
+						if (com.orthog) {
+							model.objRenderOrthog(0, com.modelYAn, com.modelZAn, com.modelXAn, com.modelXOf, com.modelYOf + var203 + var207, com.modelYOf + var208, com.modelZoom);
 						} else {
-							var202.objRender(0, com.modelYan, com.modelZan, com.modelXan, com.xof, com.yof + var203 + var207, com.yof + var208);
+							model.objRender(0, com.modelYAn, com.modelZAn, com.modelXAn, com.modelXOf, com.modelYOf + var203 + var207, com.modelYOf + var208);
 						}
 					} else {
-						var202.objRender(0, com.modelYan, 0, com.modelXan, 0, var207, var208);
+						model.objRender(0, com.modelYAn, 0, com.modelXAn, 0, var207, var208);
 					}
 				}
+
 				Pix3D.resetOrigin();
 			} else if (com.type == 7) {
-				SoftwareFont var209 = com.getFont();
-				if (var209 == null) {
+				// invtext
+				SoftwareFont font = com.getFont();
+				if (font == null) {
 					if (IfType.loadingAsset) {
 						componentUpdated(com);
 					}
+
 					continue;
 				}
-				int var210 = 0;
-				for (int var211 = 0; var211 < com.renderheight; var211++) {
-					for (int var212 = 0; var212 < com.renderwidth; var212++) {
-						if (com.linkObjType[var210] > 0) {
-							ObjType var213 = ObjType.list(com.linkObjType[var210] - 1);
-							String var214;
-							if (var213.stackable != 1 && com.linkObjCount[var210] == 1) {
-								var214 = StringConstants.TAG_COLOUR(16748608) + var213.name + StringConstants.TAG_COLOURCLOSE;
+
+				int slot = 0;
+				for (int row = 0; row < com.height; row++) {
+					for (int col = 0; col < com.width; col++) {
+						if (com.linkObjType[slot] > 0) {
+							ObjType obj = ObjType.list(com.linkObjType[slot] - 1);
+
+							String text;
+							if (obj.stackable != 1 && com.linkObjNumber[slot] == 1) {
+								text = StringConstants.TAG_COLOUR(16748608) + obj.name + StringConstants.TAG_COLOURCLOSE;
 							} else {
-								var214 = StringConstants.TAG_COLOUR(16748608) + var213.name + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.linkObjCount[var210]);
+								text = StringConstants.TAG_COLOUR(16748608) + obj.name + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.linkObjNumber[slot]);
 							}
-							int var215 = (com.marginX + 115) * var212 + var12;
-							int var216 = (com.marginY + 12) * var211 + var13;
-							if (com.halign == 0) {
-								var209.drawString(var214, var215, var216, com.colour, com.shadowed ? 0 : -1);
-							} else if (com.halign == 1) {
-								var209.centreString(var214, com.renderwidth / 2 + var215, var216, com.colour, com.shadowed ? 0 : -1);
+
+							int textX = (com.marginX + 115) * col + renderx;
+							int textY = (com.marginY + 12) * row + rendery;
+
+							if (com.hAlign == 0) {
+								font.drawString(text, textX, textY, com.colour, com.shadow ? 0 : -1);
+							} else if (com.hAlign == 1) {
+								font.centreString(text, com.width / 2 + textX, textY, com.colour, com.shadow ? 0 : -1);
 							} else {
-								var209.rightString(var214, com.renderwidth + var215 - 1, var216, com.colour, com.shadowed ? 0 : -1);
+								font.rightString(text, com.width + textX - 1, textY, com.colour, com.shadow ? 0 : -1);
 							}
 						}
-						var210++;
+
+						slot++;
 					}
 				}
 			} else if (com.type == 8 && field654 == com && field2076 == field1995) {
+				// tooltip
 				int var217 = 0;
 				int var218 = 0;
+
 				// todo: inlined method?
 				SoftwareFont var219 = p12;
 				String var220 = com.text;
@@ -6761,19 +6815,20 @@ public class Client extends GameShell {
 				}
 				var217 += 6;
 				var218 += 7;
-				int var225 = com.renderwidth + var12 - 5 - var217;
-				int var226 = com.renderheight + var13 + 5;
-				if (var225 < var12 + 5) {
-					var225 = var12 + 5;
+				int var225 = com.width + renderx - 5 - var217;
+				int var226 = com.height + rendery + 5;
+				if (var225 < renderx + 5) {
+					var225 = renderx + 5;
 				}
-				if (var217 + var225 > arg4) {
-					var225 = arg4 - var217;
+				if (var217 + var225 > w) {
+					var225 = w - var217;
 				}
-				if (var218 + var226 > arg5) {
-					var226 = arg5 - var218;
+				if (var218 + var226 > h) {
+					var226 = h - var218;
 				}
 				Pix2D.fillRect(var225, var226, var217, var218, 16777120);
 				Pix2D.drawRect(var225, var226, var217, var218, 0);
+
 				String var227 = com.text;
 				int var228 = var219.field2550 + var226 + 2;
 				String var229 = substituteVars(var227, com);
@@ -6787,23 +6842,25 @@ public class Client extends GameShell {
 						var231 = var229.substring(0, var230);
 						var229 = var229.substring(var230 + 4);
 					}
+
 					var219.drawString(var231, var225 + 3, var228, 0, -1);
 					var228 += var219.field2550 + 1;
 				}
 			} else if (com.type == 9) {
+				// line
 				if (com.lineWidth == 1) {
-					Pix2D.method2618(var12, var13, com.renderwidth + var12, com.renderheight + var13, com.colour);
+					Pix2D.method2618(renderx, rendery, com.width + renderx, com.height + rendery, com.colour);
 				} else {
 					// todo: inlined method? (DrawLineWithStrokeWidth)
-					int var232 = com.renderwidth >= 0 ? com.renderwidth : -com.renderwidth;
-					int var233 = com.renderheight >= 0 ? com.renderheight : -com.renderheight;
+					int var232 = com.width >= 0 ? com.width : -com.width;
+					int var233 = com.height >= 0 ? com.height : -com.height;
 					int var234 = var232;
 					if (var232 < var233) {
 						var234 = var233;
 					}
 					if (var234 != 0) {
-						int var235 = (com.renderwidth << 16) / var234;
-						int var236 = (com.renderheight << 16) / var234;
+						int var235 = (com.width << 16) / var234;
+						int var236 = (com.height << 16) / var234;
 						if (var236 <= var235) {
 							var235 = -var235;
 						} else {
@@ -6813,14 +6870,14 @@ public class Client extends GameShell {
 						int var238 = com.lineWidth * var236 + 1 >> 17;
 						int var239 = com.lineWidth * var235 >> 17;
 						int var240 = com.lineWidth * var235 + 1 >> 17;
-						int var241 = var12 + var237;
-						int var242 = var12 - var238;
-						int var243 = com.renderwidth + var12 - var238;
-						int var244 = com.renderwidth + var12 + var237;
-						int var245 = var13 + var239;
-						int var246 = var13 - var240;
-						int var247 = com.renderheight + var13 - var240;
-						int var248 = com.renderheight + var13 + var239;
+						int var241 = renderx + var237;
+						int var242 = renderx - var238;
+						int var243 = com.width + renderx - var238;
+						int var244 = com.width + renderx + var237;
+						int var245 = rendery + var239;
+						int var246 = rendery - var240;
+						int var247 = com.height + rendery - var240;
+						int var248 = com.height + rendery + var239;
 
 						Pix3D.setHClip(var241, var242, var243);
 						Pix3D.flatTriangle(var245, var246, var247, var241, var242, var243, com.colour);
@@ -6898,10 +6955,10 @@ public class Client extends GameShell {
 
 		if (JavaMouseProvider.mouseButton != 0) {
 			if (x >= left && x < left + 16 && y >= top && y < top + 16) {
-				com.scrollY -= 4;
+				com.scrollPosY -= 4;
 				componentUpdated(com);
 			} else if (x >= left && x < left + 16 && y >= top + height - 16 && y < top + height) {
-				com.scrollY += 4;
+				com.scrollPosY += 4;
 				componentUpdated(com);
 			} else if (x >= left - scrollInputPadding && x < scrollInputPadding + left + 16 && y >= top + 16 && y < top + height - 16) {
 				int gripSize = (height - 32) * height / scrollableHeight;
@@ -6912,16 +6969,16 @@ public class Client extends GameShell {
 				int var8 = y - top - 16 - gripSize / 2;
 				int var9 = height - 32 - gripSize;
 
-				com.scrollY = (scrollableHeight - height) * var8 / var9;
+				com.scrollPosY = (scrollableHeight - height) * var8 / var9;
 				componentUpdated(com);
 				scrollGrabbed = true;
 			}
 		}
 
 		if (mouseWheelRotation != 0) {
-			int width = com.renderwidth;
+			int width = com.width;
 			if (x >= left - width && y >= top && x < left + 16 && y <= top + height) {
-				com.scrollY += mouseWheelRotation * 45;
+				com.scrollPosY += mouseWheelRotation * 45;
 				componentUpdated(com);
 			}
 		}
@@ -7001,7 +7058,7 @@ public class Client extends GameShell {
 					if (var12 != -1 && (!ObjType.list(var12).members || memServer)) {
 						for (int var13 = 0; var13 < var11.linkObjType.length; var13++) {
 							if (var12 + 1 == var11.linkObjType[var13]) {
-								register += var11.linkObjCount[var13];
+								register += var11.linkObjNumber[var13];
 							}
 						}
 					}
@@ -7094,28 +7151,30 @@ public class Client extends GameShell {
 			if (
 				var9 == null ||
 				(var9.v3 && var9.type != 0 && !var9.hashook && getActive(var9) == 0 && dragParent != var9) ||
-				var9.layerid != arg1 ||
+				var9.layerId != arg1 ||
 				(var9.v3 && hide(var9))
 			) {
 				continue;
 			}
 
-			int var10 = var9.renderx + arg6;
-			int var11 = var9.rendery + arg7;
+			int var10 = var9.x + arg6;
+			int var11 = var9.y + arg7;
 			int var12;
 			int var13;
 			int var14;
 			int var15;
 			if (var9.type == 2) {
+				// inv
 				var12 = arg2;
 				var13 = arg3;
 				var14 = arg4;
 				var15 = arg5;
 			} else if (var9.type == 9) {
+				// line
 				int var16 = var10;
 				int var17 = var11;
-				int var18 = var9.renderwidth + var10;
-				int var19 = var9.renderheight + var11;
+				int var18 = var9.width + var10;
+				int var19 = var9.height + var11;
 				if (var18 < var10) {
 					var16 = var18;
 					var18 = var10;
@@ -7131,8 +7190,8 @@ public class Client extends GameShell {
 				var14 = var18 < arg4 ? var18 : arg4;
 				var15 = var19 < arg5 ? var19 : arg5;
 			} else {
-				int var22 = var9.renderwidth + var10;
-				int var23 = var9.renderheight + var11;
+				int var22 = var9.width + var10;
+				int var23 = var9.height + var11;
 				var12 = var10 > arg2 ? var10 : arg2;
 				var13 = var11 > arg3 ? var11 : arg3;
 				var14 = var22 < arg4 ? var22 : arg4;
@@ -7155,16 +7214,16 @@ public class Client extends GameShell {
 				minimapLoop(var10, var11);
 			} else {
 				if (var9.type == 0) {
-					if (!var9.v3 && hide(var9) && field37 != var9) {
+					if (!var9.v3 && hide(var9) && hoveredCom != var9) {
 						continue;
 					}
 
-					loopLayer(arg0, var9.parentlayer, var12, var13, var14, var15, var10 - var9.scrollX, var11 - var9.scrollY);
+					loopLayer(arg0, var9.parentId, var12, var13, var14, var15, var10 - var9.scrollPosX, var11 - var9.scrollPosY);
 					if (var9.subcomponents != null) {
-						loopLayer(var9.subcomponents, var9.parentlayer, var12, var13, var14, var15, var10 - var9.scrollX, var11 - var9.scrollY);
+						loopLayer(var9.subcomponents, var9.parentId, var12, var13, var14, var15, var10 - var9.scrollPosX, var11 - var9.scrollPosY);
 					}
 
-					SubInterface var24 = (SubInterface) subinterfaces.find((long) var9.parentlayer);
+					SubInterface var24 = (SubInterface) subinterfaces.find((long) var9.parentId);
 					if (var24 != null) {
 						loopInterface(var24.id, var12, var13, var14, var15, var10, var11);
 					}
@@ -7219,8 +7278,8 @@ public class Client extends GameShell {
 							var25 = false;
 						}
 
-						if (!var9.field1871 && var27) {
-							var9.field1871 = true;
+						if (!var9.clickTrigger && var27) {
+							var9.clickTrigger = true;
 
 							if (var9.onclick != null) {
 								HookReq req = new HookReq();
@@ -7232,7 +7291,7 @@ public class Client extends GameShell {
 							}
 						}
 
-						if (var9.field1871 && var26 && var9.onclickrepeat != null) {
+						if (var9.clickTrigger && var26 && var9.onclickrepeat != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
 							req.mouseX = JavaMouseProvider.mouseX - var10;
@@ -7241,8 +7300,8 @@ public class Client extends GameShell {
 							hookRequests.push(req);
 						}
 
-						if (var9.field1871 && !var26) {
-							var9.field1871 = false;
+						if (var9.clickTrigger && !var26) {
+							var9.clickTrigger = false;
 
 							if (var9.onrelease != null) {
 								HookReq req = new HookReq();
@@ -7263,8 +7322,8 @@ public class Client extends GameShell {
 							hookRequests.push(req);
 						}
 
-						if (!var9.field1892 && var25) {
-							var9.field1892 = true;
+						if (!var9.mouseTrigger && var25) {
+							var9.mouseTrigger = true;
 
 							if (var9.onmouseover != null) {
 								HookReq req = new HookReq();
@@ -7276,7 +7335,7 @@ public class Client extends GameShell {
 							}
 						}
 
-						if (var9.field1892 && var25 && var9.onmouserepeat != null) {
+						if (var9.mouseTrigger && var25 && var9.onmouserepeat != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
 							req.mouseX = JavaMouseProvider.mouseX - var10;
@@ -7285,8 +7344,8 @@ public class Client extends GameShell {
 							hookRequests.push(req);
 						}
 
-						if (var9.field1892 && !var25) {
-							var9.field1892 = false;
+						if (var9.mouseTrigger && !var25) {
+							var9.mouseTrigger = false;
 
 							if (var9.onmouseleave != null) {
 								HookReq req = new HookReq();
@@ -7380,43 +7439,43 @@ public class Client extends GameShell {
 							var9.field1897 = field1982;
 						}
 
-						if (chatTransmitNum > var9.field1894 && var9.field1872 != null) {
+						if (chatTransmitNum > var9.updateNum && var9.onchattransmit != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
-							req.onop = var9.field1872;
+							req.onop = var9.onchattransmit;
 							hookRequests.push(req);
 						}
 
-						if (friendSystemUpdateNum > var9.field1894 && var9.field1877 != null) {
+						if (friendSystemUpdateNum > var9.updateNum && var9.onfriendtransmit != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
-							req.onop = var9.field1877;
+							req.onop = var9.onfriendtransmit;
 							hookRequests.push(req);
 						}
 
-						if (friendChatUpdateNum > var9.field1894 && var9.field1875 != null) {
+						if (friendChatUpdateNum > var9.updateNum && var9.onclantransmit != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
-							req.onop = var9.field1875;
+							req.onop = var9.onclantransmit;
 							hookRequests.push(req);
 						}
 
-						if (field2119 > var9.field1894 && var9.field1777 != null) {
+						if (field2119 > var9.updateNum && var9.onmisctransmit != null) {
 							HookReq req = new HookReq();
 							req.component = var9;
-							req.onop = var9.field1777;
+							req.onop = var9.onmisctransmit;
 							hookRequests.push(req);
 						}
 
-						var9.field1894 = interfaceUpdateNum;
+						var9.updateNum = interfaceUpdateNum;
 
-						if (var9.field1873 != null) {
-							for (int var58 = 0; var58 < field2151; var58++) {
+						if (var9.onkey != null) {
+							for (int var58 = 0; var58 < keypresses; var58++) {
 								HookReq req = new HookReq();
 								req.component = var9;
 								req.keyCode = keypressKeycodes[var58];
 								req.keyChar = keypressKeychars[var58];
-								req.onop = var9.field1873;
+								req.onop = var9.onkey;
 								hookRequests.push(req);
 							}
 						}
@@ -7428,11 +7487,11 @@ public class Client extends GameShell {
 						return;
 					}
 
-					if ((var9.overlayer >= 0 || var9.colourOver != 0) && JavaMouseProvider.mouseX >= var12 && JavaMouseProvider.mouseY >= var13 && JavaMouseProvider.mouseX < var14 && JavaMouseProvider.mouseY < var15) {
-						if (var9.overlayer >= 0) {
-							field37 = arg0[var9.overlayer];
+					if ((var9.overLayerId >= 0 || var9.colourOver != 0) && JavaMouseProvider.mouseX >= var12 && JavaMouseProvider.mouseY >= var13 && JavaMouseProvider.mouseX < var14 && JavaMouseProvider.mouseY < var15) {
+						if (var9.overLayerId >= 0) {
+							hoveredCom = arg0[var9.overLayerId];
 						} else {
-							field37 = var9;
+							hoveredCom = var9;
 						}
 					}
 
@@ -7440,8 +7499,8 @@ public class Client extends GameShell {
 						field654 = var9;
 					}
 
-					if (var9.scrollHeight > var9.renderheight) {
-						doScrollbar(var9, var9.renderwidth + var10, var11, var9.renderheight, var9.scrollHeight, JavaMouseProvider.mouseX, JavaMouseProvider.mouseY);
+					if (var9.scrollHeight > var9.height) {
+						doScrollbar(var9, var9.width + var10, var11, var9.height, var9.scrollHeight, JavaMouseProvider.mouseX, JavaMouseProvider.mouseY);
 					}
 				}
 			}
@@ -7470,7 +7529,7 @@ public class Client extends GameShell {
 					runHookLayer(com.subcomponents, arg1);
 				}
 
-				SubInterface sub = (SubInterface) subinterfaces.find((long) com.parentlayer);
+				SubInterface sub = (SubInterface) subinterfaces.find((long) com.parentId);
 				if (sub != null) {
 					runHookImmediate(sub.id, arg1);
 				}
@@ -7484,9 +7543,9 @@ public class Client extends GameShell {
 			}
 
 			if (arg1 == 1 && com.onsubchange != null) {
-				if (com.subid >= 0) {
-					IfType var6 = IfType.get(com.parentlayer);
-					if (var6 == null || var6.subcomponents == null || com.subid >= var6.subcomponents.length || var6.subcomponents[com.subid] != com) {
+				if (com.subId >= 0) {
+					IfType var6 = IfType.get(com.parentId);
+					if (var6 == null || var6.subcomponents == null || com.subId >= var6.subcomponents.length || var6.subcomponents[com.subId] != com) {
 						continue;
 					}
 				}
@@ -7516,9 +7575,9 @@ public class Client extends GameShell {
 
 	// jag::oldscape::Client::ComponentUpdated
 	@ObfuscatedName("cq.fy(Leg;I)V")
-	public static void componentUpdated(IfType arg0) {
-		if (componentDrawTime == arg0.drawTime) {
-			componentRedrawRequested1[arg0.field1898] = true;
+	public static void componentUpdated(IfType com) {
+		if (componentDrawTime == com.drawTime) {
+			componentRedrawRequested1[com.drawCount] = true;
 		}
 	}
 
@@ -7567,7 +7626,7 @@ public class Client extends GameShell {
 					var3 = var1;
 					break;
 				}
-				var1 = IfType.get(var1.layerid);
+				var1 = IfType.get(var1.layerId);
 				if (var1 == null) {
 					var3 = null;
 					break;
@@ -7619,33 +7678,33 @@ public class Client extends GameShell {
 	public static void animateLayer(IfType[] children, int layer) {
 		for (int i = 0; i < children.length; i++) {
 			IfType com = children[i];
-			if (com == null || com.layerid != layer || (com.v3 && hide(com))) {
+			if (com == null || com.layerId != layer || (com.v3 && hide(com))) {
 				continue;
 			}
 
 			if (com.type == 0) {
-				if (!com.v3 && hide(com) && field37 != com) {
+				if (!com.v3 && hide(com) && hoveredCom != com) {
 					continue;
 				}
 
-				animateLayer(children, com.parentlayer);
+				animateLayer(children, com.parentId);
 
 				if (com.subcomponents != null) {
-					animateLayer(com.subcomponents, com.parentlayer);
+					animateLayer(com.subcomponents, com.parentId);
 				}
 
-				SubInterface var4 = (SubInterface) subinterfaces.find(com.parentlayer);
+				SubInterface var4 = (SubInterface) subinterfaces.find(com.parentId);
 				if (var4 != null) {
 					animateInterface(var4.id);
 				}
 			}
 
 			if (com.type == 6) {
-				if (com.modelAnim != -1 || com.model2Anim != -1) {
+				if (com.modelAnim != -1 || com.modelAnim2 != -1) {
 					boolean var6 = getIfActive(com);
 					int var7;
 					if (var6) {
-						var7 = com.model2Anim;
+						var7 = com.modelAnim2;
 					} else {
 						var7 = com.modelAnim;
 					}
@@ -7677,8 +7736,8 @@ public class Client extends GameShell {
 					int var11 = worldUpdateNum * var9;
 					int var12 = worldUpdateNum * var10;
 
-					com.modelXan = com.modelXan + var11 & 0x7FF;
-					com.modelYan = com.modelYan + var12 & 0x7FF;
+					com.modelXAn = com.modelXAn + var11 & 0x7FF;
+					com.modelYAn = com.modelYAn + var12 & 0x7FF;
 
 					componentUpdated(com);
 				}
@@ -7802,15 +7861,15 @@ public class Client extends GameShell {
 				com.graphic = genderButton1;
 			}
 		} else if (clientCode == 327) {
-			com.modelXan = 150;
-			com.modelYan = (int) (Math.sin((double) loopCycle / 40.0D) * 256.0D) & 0x7FF;
-			com.modelType = 5;
-			com.modelId = 0;
+			com.modelXAn = 150;
+			com.modelYAn = (int) (Math.sin((double) loopCycle / 40.0D) * 256.0D) & 0x7FF;
+			com.model1Type = 5;
+			com.model1Id = 0;
 		} else if (clientCode == 328) {
-			com.modelXan = 150;
-			com.modelYan = (int) (Math.sin((double) loopCycle / 40.0D) * 256.0D) & 0x7FF;
-			com.modelType = 5;
-			com.modelId = 1;
+			com.modelXAn = 150;
+			com.modelYAn = (int) (Math.sin((double) loopCycle / 40.0D) * 256.0D) & 0x7FF;
+			com.model1Type = 5;
+			com.model1Id = 1;
 		}
 	}
 
@@ -8310,9 +8369,9 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::GetActive
 	@ObfuscatedName("dn.gg(Leg;B)I")
 	public static int getActive(IfType com) {
-		ServerActive active = (ServerActive) serverActive.find(((long) com.parentlayer << 32) + (long) com.subid);
+		ServerActive active = (ServerActive) serverActive.find(((long) com.parentId << 32) + (long) com.subId);
 		if (active == null) {
-			return com.events;
+			return com.eventCode;
 		}
 		return active.events;
 	}
@@ -8338,10 +8397,10 @@ public class Client extends GameShell {
 	public static String getIfTypeOpName(IfType com, int opindex) {
 		if (!ServerActive.hasOp(getActive(com), opindex) && com.onop == null) {
 			return null;
-		} else if (com.ops == null || com.ops.length <= opindex || com.ops[opindex] == null || com.ops[opindex].trim().length() == 0) {
+		} else if (com.opNames == null || com.opNames.length <= opindex || com.opNames[opindex] == null || com.opNames[opindex].trim().length() == 0) {
 			return null;
 		} else {
-			return com.ops[opindex];
+			return com.opNames[opindex];
 		}
 	}
 
@@ -8875,14 +8934,14 @@ public class Client extends GameShell {
 							mode = 0;
 						}
 
-						if (ServerActive.objSwappable(getActive(com))) {
+						if (ServerActive.isObjReplaceEnabled(getActive(com))) {
 							int src = objDragSlot;
 							int dst = hoveredSlot;
 
 							com.linkObjType[dst] = com.linkObjType[src];
-							com.linkObjCount[dst] = com.linkObjCount[src];
+							com.linkObjNumber[dst] = com.linkObjNumber[src];
 							com.linkObjType[src] = -1;
-							com.linkObjCount[src] = 0;
+							com.linkObjNumber[src] = 0;
 						} else if (mode == 1) {
 							int src = objDragSlot;
 							int dst = hoveredSlot;
@@ -8902,7 +8961,7 @@ public class Client extends GameShell {
 
 						// INV_BUTTOND
 						out.p1Enc(2);
-						out.p4_alt2(objDragInterface.parentlayer);
+						out.p4_alt2(objDragInterface.parentId);
 						out.p2_alt3(hoveredSlot);
 						out.p1_alt1(mode);
 						out.p2_alt1(objDragSlot);
@@ -8920,78 +8979,78 @@ public class Client extends GameShell {
 		}
 
 		// todo: inlined method?
-		IfType var444 = field37;
+		IfType var444 = hoveredCom;
 		IfType var445 = field654;
-		field37 = null;
+		hoveredCom = null;
 		field654 = null;
 		dropComponent = null;
 		dragging = false;
 		dragParentFound = false;
 
-		field2151 = 0;
-		while (JavaKeyboardProvider.pollKey() && field2151 < 128) {
-			keypressKeycodes[field2151] = JavaKeyboardProvider.code;
-			keypressKeychars[field2151] = JavaKeyboardProvider.ch;
-			field2151++;
+		keypresses = 0;
+		while (JavaKeyboardProvider.pollKey() && keypresses < 128) {
+			keypressKeycodes[keypresses] = JavaKeyboardProvider.code;
+			keypressKeychars[keypresses] = JavaKeyboardProvider.ch;
+			keypresses++;
 		}
 
 		loopInterface(toplevelinterface, 0, 0, 765, 503, 0, 0);
 		interfaceUpdateNum++;
 
 		// todo: revisit this code if something is broken -- tried to flatten the do { } while () blocks
-		HookReq var449;
-		IfType var450;
-		IfType var451;
+		HookReq req;
+		IfType child;
+		IfType com;
 
 		do {
-			var449 = (HookReq) hookRequestsTimer.shift();
-			if (var449 == null) {
+			req = (HookReq) hookRequestsTimer.shift();
+			if (req == null) {
 				break;
 			}
 
-			var450 = var449.component;
-			if (var450.subid < 0) {
+			child = req.component;
+			if (child.subId < 0) {
 				break;
 			}
 
-			var451 = IfType.get(var450.layerid);
-		} while (var451 == null || var451.subcomponents == null || var450.subid >= var451.subcomponents.length || var451.subcomponents[var450.subid] != var450);
-		if (var449 != null) {
-			ScriptRunner.executeScript(var449);
+			com = IfType.get(child.layerId);
+		} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
+		if (req != null) {
+			ScriptRunner.executeScript(req);
 		}
 
 		do {
-			var449 = (HookReq) hookRequestsMouseStop.shift();
-			if (var449 == null) {
+			req = (HookReq) hookRequestsMouseStop.shift();
+			if (req == null) {
 				break;
 			}
 
-			var450 = var449.component;
-			if (var450.subid < 0) {
+			child = req.component;
+			if (child.subId < 0) {
 				break;
 			}
 
-			var451 = IfType.get(var450.layerid);
-		} while (var451 == null || var451.subcomponents == null || var450.subid >= var451.subcomponents.length || var451.subcomponents[var450.subid] != var450);
-		if (var449 != null) {
-			ScriptRunner.executeScript(var449);
+			com = IfType.get(child.layerId);
+		} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
+		if (req != null) {
+			ScriptRunner.executeScript(req);
 		}
 
 		do {
-			var449 = (HookReq) hookRequests.shift();
-			if (var449 == null) {
+			req = (HookReq) hookRequests.shift();
+			if (req == null) {
 				break;
 			}
 
-			var450 = var449.component;
-			if (var450.subid < 0) {
+			child = req.component;
+			if (child.subId < 0) {
 				break;
 			}
 
-			var451 = IfType.get(var450.layerid);
-		} while (var451 == null || var451.subcomponents == null || var450.subid >= var451.subcomponents.length || var451.subcomponents[var450.subid] != var450);
-		if (var449 != null) {
-			ScriptRunner.executeScript(var449);
+			com = IfType.get(child.layerId);
+		} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
+		if (req != null) {
+			ScriptRunner.executeScript(req);
 		}
 
 		if (dragComponent != null) {
@@ -8999,11 +9058,12 @@ public class Client extends GameShell {
 		}
 
 		if (World.groundX != -1) {
-			int var473 = World.groundX;
-			int var474 = World.groundZ;
-			boolean var475 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var473, var474, true, 0, 0, 0, 0, 0, 0);
+			int x = World.groundX;
+			int z = World.groundZ;
+			boolean success = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], x, z, true, 0, 0, 0, 0, 0, 0);
 			World.groundX = -1;
-			if (var475) {
+
+			if (success) {
 				crossX = JavaMouseProvider.mouseClickX;
 				crossY = JavaMouseProvider.mouseClickY;
 				crossMode = 1;
@@ -9011,14 +9071,14 @@ public class Client extends GameShell {
 			}
 		}
 
-		handleMouseInput();
+		mouseLoop();
 
-		if (field37 != var444) {
+		if (hoveredCom != var444) {
 			if (var444 != null) {
 				componentUpdated(var444);
 			}
-			if (field37 != null) {
-				componentUpdated(field37);
+			if (hoveredCom != null) {
+				componentUpdated(hoveredCom);
 			}
 		}
 
@@ -9547,11 +9607,11 @@ public class Client extends GameShell {
 				int var155 = in.g2b_alt1();
 				int var156 = in.g4_alt1();
 				IfType var157 = IfType.get(var156);
-				int var158 = var157.x + var155;
-				int var159 = var157.y + var154;
-				if (var157.renderx != var158 || var157.rendery != var159) {
-					var157.renderx = var158;
-					var157.rendery = var159;
+				int var158 = var157.dataX + var155;
+				int var159 = var157.dataY + var154;
+				if (var157.x != var158 || var157.y != var159) {
+					var157.x = var158;
+					var157.y = var159;
 					componentUpdated(var157);
 				}
 
@@ -9656,7 +9716,7 @@ public class Client extends GameShell {
 
 					if (com != null && slot >= 0 && slot < com.linkObjType.length) {
 						com.linkObjType[slot] = id;
-						com.linkObjCount[slot] = count;
+						com.linkObjNumber[slot] = count;
 					}
 
 					ClientInvCache.method2901(invId, slot, id - 1, count);
@@ -9819,9 +9879,9 @@ public class Client extends GameShell {
 				int var206 = in.g4_alt2();
 				int var207 = in.g2_alt2();
 				IfType var208 = IfType.get(var206);
-				if (var208.modelType != 2 || var208.modelId != var207) {
-					var208.modelType = 2;
-					var208.modelId = var207;
+				if (var208.model1Type != 2 || var208.model1Id != var207) {
+					var208.model1Type = 2;
+					var208.model1Id = var207;
 					componentUpdated(var208);
 				}
 
@@ -10057,27 +10117,27 @@ public class Client extends GameShell {
 					var265.invobject = var263;
 					var265.invcount = var264;
 					ObjType var267 = ObjType.list(var263);
-					var265.modelXan = var267.xan2d;
-					var265.modelYan = var267.yan2d;
-					var265.modelZan = var267.zan2d;
-					var265.xof = var267.xof2d;
-					var265.yof = var267.yof2d;
+					var265.modelXAn = var267.xan2d;
+					var265.modelYAn = var267.yan2d;
+					var265.modelZAn = var267.zan2d;
+					var265.modelXOf = var267.xof2d;
+					var265.modelYOf = var267.yof2d;
 					var265.modelZoom = var267.zoom2d;
-					if (var265.renderwidth > 0) {
-						var265.modelZoom = var265.modelZoom * 32 / var265.renderwidth;
+					if (var265.width > 0) {
+						var265.modelZoom = var265.modelZoom * 32 / var265.width;
 					}
 					componentUpdated(var265);
 				} else {
 					if (var263 == -1) {
-						var265.modelType = 0;
+						var265.model1Type = 0;
 						ptype = -1;
 						return true;
 					}
 					ObjType var266 = ObjType.list(var263);
-					var265.modelType = 4;
-					var265.modelId = var263;
-					var265.modelXan = var266.xan2d;
-					var265.modelYan = var266.yan2d;
+					var265.model1Type = 4;
+					var265.model1Id = var263;
+					var265.modelXAn = var266.xan2d;
+					var265.modelYAn = var266.yan2d;
 					var265.modelZoom = var266.zoom2d * 100 / var264;
 					componentUpdated(var265);
 				}
@@ -10299,7 +10359,7 @@ public class Client extends GameShell {
 				if (com != null) {
 					for (int i = 0; i < com.linkObjType.length; i++) {
 						com.linkObjType[i] = 0;
-						com.linkObjCount[i] = 0;
+						com.linkObjNumber[i] = 0;
 					}
 				}
 
@@ -10321,7 +10381,7 @@ public class Client extends GameShell {
 
 					if (com != null && i < com.linkObjType.length) {
 						com.linkObjType[i] = id;
-						com.linkObjCount[i] = count;
+						com.linkObjNumber[i] = count;
 					}
 
 					ClientInvCache.method2901(invId, i, id - 1, count);
@@ -10394,14 +10454,14 @@ public class Client extends GameShell {
 				int var332 = in.g2();
 				IfType var333 = IfType.get(var331);
 				if (var333 != null && var333.type == 0) {
-					if (var332 > var333.scrollHeight - var333.renderheight) {
-						var332 = var333.scrollHeight - var333.renderheight;
+					if (var332 > var333.scrollHeight - var333.height) {
+						var332 = var333.scrollHeight - var333.height;
 					}
 					if (var332 < 0) {
 						var332 = 0;
 					}
-					if (var333.scrollY != var332) {
-						var333.scrollY = var332;
+					if (var333.scrollPosY != var332) {
+						var333.scrollPosY = var332;
 						componentUpdated(var333);
 					}
 				}
@@ -10417,9 +10477,9 @@ public class Client extends GameShell {
 				int var336 = in.g4_alt1();
 				int var337 = in.g2();
 				IfType var338 = IfType.get(var336);
-				if (var338.modelXan != var334 || var338.modelYan != var337 || var338.modelZoom != var335) {
-					var338.modelXan = var334;
-					var338.modelYan = var337;
+				if (var338.modelXAn != var334 || var338.modelYAn != var337 || var338.modelZoom != var335) {
+					var338.modelXAn = var334;
+					var338.modelYAn = var337;
 					var338.modelZoom = var335;
 					componentUpdated(var338);
 				}
@@ -10442,9 +10502,9 @@ public class Client extends GameShell {
 				int var339 = in.g2();
 				int var340 = in.g4_alt2();
 				IfType var341 = IfType.get(var340);
-				if (var341.modelType != 1 || var341.modelId != var339) {
-					var341.modelType = 1;
-					var341.modelId = var339;
+				if (var341.model1Type != 1 || var341.model1Id != var339) {
+					var341.model1Type = 1;
+					var341.model1Id = var339;
 					componentUpdated(var341);
 				}
 
@@ -10505,8 +10565,8 @@ public class Client extends GameShell {
 				// IF_SETPLAYERHEAD
 				int var355 = in.g4_alt3();
 				IfType var356 = IfType.get(var355);
-				var356.modelType = 3;
-				var356.modelId = localPlayer.model.method1176();
+				var356.model1Type = 3;
+				var356.model1Id = localPlayer.model.method1176();
 				componentUpdated(var356);
 
 				ptype = -1;
@@ -10971,15 +11031,15 @@ public class Client extends GameShell {
 			if (var460 < dragParentX) {
 				var460 = dragParentX;
 			}
-			if (dragComponent.renderwidth + var460 > dragParentX + dragParent.renderwidth) {
-				var460 = dragParentX + dragParent.renderwidth - dragComponent.renderwidth;
+			if (dragComponent.width + var460 > dragParentX + dragParent.width) {
+				var460 = dragParentX + dragParent.width - dragComponent.width;
 			}
 
 			if (var461 < dragParentY) {
 				var461 = dragParentY;
 			}
-			if (dragComponent.renderheight + var461 > dragParentY + dragParent.renderheight) {
-				var461 = dragParentY + dragParent.renderheight - dragComponent.renderheight;
+			if (dragComponent.height + var461 > dragParentY + dragParent.height) {
+				var461 = dragParentY + dragParent.height - dragComponent.height;
 			}
 
 			int var462 = var460 - dragCurrentX;
@@ -10989,8 +11049,8 @@ public class Client extends GameShell {
 				dragAlive = true;
 			}
 
-			int var465 = dragParent.scrollX + (var460 - dragParentX);
-			int var466 = dragParent.scrollY + (var461 - dragParentY);
+			int var465 = dragParent.scrollPosX + (var460 - dragParentX);
+			int var466 = dragParent.scrollPosY + (var461 - dragParentY);
 
 			if (dragComponent.ondrag != null && dragAlive) {
 				HookReq req = new HookReq();
@@ -11027,7 +11087,7 @@ public class Client extends GameShell {
 									var471 = var469;
 									break;
 								}
-								var469 = IfType.get(var469.layerid);
+								var469 = IfType.get(var469.layerId);
 								if (var469 == null) {
 									var471 = null;
 									break;
@@ -11039,10 +11099,10 @@ public class Client extends GameShell {
 						if (var471 != null) {
 							// IF_BUTTOND
 							out.p1Enc(22);
-							out.p2_alt3(dragComponent.subid);
-							out.p4_alt2(dropComponent.parentlayer);
-							out.p2_alt1(dropComponent.subid);
-							out.p4_alt2(dragComponent.parentlayer);
+							out.p2_alt3(dragComponent.subId);
+							out.p4_alt2(dropComponent.parentId);
+							out.p2_alt1(dropComponent.subId);
+							out.p4_alt2(dragComponent.parentId);
 						}
 					}
 				} else if ((oneMouseButton == 1 || isAddFriendOption(menuNumEntries - 1)) && menuNumEntries > 2) {
@@ -11058,26 +11118,27 @@ public class Client extends GameShell {
 		}
 	}
 
-	public static void handleMouseInput() {
+	// jag::oldscape::minimenu::Minimenu::GameLoop
+	public static void mouseLoop() {
 		if (objDragInterface != null || dragComponent != null) {
 			return;
 		}
 
 		int button = JavaMouseProvider.mouseClickButton;
+
 		if (isMenuOpen) {
 			if (button == 1) {
-				int var479 = menuX;
-				int var480 = menuY;
-				int var481 = menuWidth;
-
-				int var482 = JavaMouseProvider.mouseClickX;
-				int var483 = JavaMouseProvider.mouseClickY;
+				int x = menuX;
+				int y = menuY;
+				int width = menuWidth;
+				int clickX = JavaMouseProvider.mouseClickX;
+				int clickY = JavaMouseProvider.mouseClickY;
 
 				int option = -1;
-				for (int var485 = 0; var485 < menuNumEntries; var485++) {
-					int var486 = (menuNumEntries - 1 - var485) * 15 + var480 + 31;
-					if (var482 > var479 && var482 < var479 + var481 && var483 > var486 - 13 && var483 < var486 + 3) {
-						option = var485;
+				for (int i = 0; i < menuNumEntries; i++) {
+					int height = (menuNumEntries - 1 - i) * 15 + y + 31;
+					if (clickX > x && clickX < x + width && clickY > height - 13 && clickY < height + 3) {
+						option = i;
 					}
 				}
 
@@ -11088,9 +11149,10 @@ public class Client extends GameShell {
 				isMenuOpen = false;
 				dirtyArea(menuX, menuY, menuWidth, menuHeight);
 			} else {
-				int var477 = JavaMouseProvider.mouseX;
-				int var478 = JavaMouseProvider.mouseY;
-				if (var477 < menuX - 10 || var477 > menuWidth + menuX + 10 || var478 < menuY - 10 || var478 > menuY + menuHeight + 10) {
+				int x = JavaMouseProvider.mouseX;
+				int y = JavaMouseProvider.mouseY;
+
+				if (x < menuX - 10 || x > menuWidth + menuX + 10 || y < menuY - 10 || y > menuY + menuHeight + 10) {
 					isMenuOpen = false;
 					dirtyArea(menuX, menuY, menuWidth, menuHeight);
 				}
@@ -11104,16 +11166,19 @@ public class Client extends GameShell {
 					int comId = menuParamC[menuNumEntries - 1];
 
 					IfType com = IfType.get(comId);
-					if (ServerActive.objDraggable(getActive(com)) || ServerActive.objSwappable(getActive(com))) {
+					if (ServerActive.isObjSwapEnabled(getActive(com)) || ServerActive.isObjReplaceEnabled(getActive(com))) {
 						objGrabThreshold = false;
 						objDragCycles = 0;
+
 						if (objDragInterface != null) {
 							componentUpdated(objDragInterface);
 						}
+
 						objDragInterface = IfType.get(comId);
 						objDragSlot = slot;
 						objGrabX = JavaMouseProvider.mouseClickX;
 						objGrabY = JavaMouseProvider.mouseClickY;
+
 						componentUpdated(objDragInterface);
 						return;
 					}
@@ -11316,7 +11381,7 @@ public class Client extends GameShell {
 	// jag::oldscape::minimenu::Minimenu::AddComponent
 	public static void addComponentOptions(IfType com, int mouseX, int mouseY) {
 		if (com.buttonType == 1) {
-			addMenuOption(com.option, "", 24, 0, 0, com.parentlayer);
+			addMenuOption(com.buttonText, "", 24, 0, 0, com.parentId);
 		}
 
 		if (com.buttonType == 2 && !targetMode) {
@@ -11330,30 +11395,30 @@ public class Client extends GameShell {
 			}
 
 			if (var131 != null) {
-				addMenuOption(var131, StringConstants.TAG_COLOUR(65280) + com.targetText, 25, 0, -1, com.parentlayer);
+				addMenuOption(var131, StringConstants.TAG_COLOUR(65280) + com.targetBase, 25, 0, -1, com.parentId);
 			}
 		}
 
 		if (com.buttonType == 3) {
-			addMenuOption(Text.CLOSE, "", 26, 0, 0, com.parentlayer);
+			addMenuOption(Text.CLOSE, "", 26, 0, 0, com.parentId);
 		}
 
 		if (com.buttonType == 4) {
-			addMenuOption(com.option, "", 28, 0, 0, com.parentlayer);
+			addMenuOption(com.buttonText, "", 28, 0, 0, com.parentId);
 		}
 
 		if (com.buttonType == 5) {
-			addMenuOption(com.option, "", 29, 0, 0, com.parentlayer);
+			addMenuOption(com.buttonText, "", 29, 0, 0, com.parentId);
 		}
 
 		if (com.buttonType == 6 && resumedPauseButton == null) {
-			addMenuOption(com.option, "", 30, 0, -1, com.parentlayer);
+			addMenuOption(com.buttonText, "", 30, 0, -1, com.parentId);
 		}
 
 		if (com.type == 2) {
 			int slot = 0;
-			for (int row = 0; row < com.renderheight; row++) {
-				for (int col = 0; col < com.renderwidth; col++) {
+			for (int row = 0; row < com.height; row++) {
+				for (int col = 0; col < com.width; col++) {
 					int slotX = (com.marginX + 32) * col;
 					int slotY = (com.marginY + 32) * row;
 
@@ -11377,13 +11442,13 @@ public class Client extends GameShell {
 
 					ObjType obj = ObjType.list(com.linkObjType[slot] - 1);
 
-					if (useMode == 1 && ServerActive.objOperable(getActive(com))) {
-						if (objSelectedLayerId != com.parentlayer || objSelectedSlot != slot) {
-							addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + obj.name, 31, obj.index, slot, com.parentlayer);
+					if (useMode == 1 && ServerActive.isObjOpsEnabled(getActive(com))) {
+						if (objSelectedLayerId != com.parentId || objSelectedSlot != slot) {
+							addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + obj.name, 31, obj.index, slot, com.parentId);
 						}
-					} else if (targetMode && ServerActive.objOperable(getActive(com))) {
+					} else if (targetMode && ServerActive.isObjOpsEnabled(getActive(com))) {
 						if ((targetMask & 0x10) == 16) {
-							addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + obj.name, 32, obj.index, slot, com.parentlayer);
+							addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + obj.name, 32, obj.index, slot, com.parentId);
 						}
 					} else {
 						String[] objIop = obj.iop;
@@ -11391,7 +11456,7 @@ public class Client extends GameShell {
 							objIop = prependOpIndex(objIop);
 						}
 
-						if (ServerActive.objOperable(getActive(com))) {
+						if (ServerActive.isObjOpsEnabled(getActive(com))) {
 							for (int index = 4; index >= 3; index--) {
 								if (objIop != null && objIop[index] != null) {
 									int action;
@@ -11401,18 +11466,18 @@ public class Client extends GameShell {
 										action = 37;
 									}
 
-									addMenuOption(objIop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentlayer);
+									addMenuOption(objIop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentId);
 								} else if (index == 4) {
-									addMenuOption(Text.DROP, StringConstants.TAG_COLOUR(16748608) + obj.name, 37, obj.index, slot, com.parentlayer);
+									addMenuOption(Text.DROP, StringConstants.TAG_COLOUR(16748608) + obj.name, 37, obj.index, slot, com.parentId);
 								}
 							}
 						}
 
-						if (ServerActive.objUsable(getActive(com))) {
-							addMenuOption(Text.USE, StringConstants.TAG_COLOUR(16748608) + obj.name, 38, obj.index, slot, com.parentlayer);
+						if (ServerActive.isObjUseEnabled(getActive(com))) {
+							addMenuOption(Text.USE, StringConstants.TAG_COLOUR(16748608) + obj.name, 38, obj.index, slot, com.parentId);
 						}
 
-						if (ServerActive.objOperable(getActive(com)) && objIop != null) {
+						if (ServerActive.isObjOpsEnabled(getActive(com)) && objIop != null) {
 							for (int index = 2; index >= 0; index--) {
 								if (objIop[index] != null) {
 									int action = 0;
@@ -11426,7 +11491,7 @@ public class Client extends GameShell {
 										action = 35;
 									}
 
-									addMenuOption(objIop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentlayer);
+									addMenuOption(objIop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentId);
 								}
 							}
 						}
@@ -11456,12 +11521,12 @@ public class Client extends GameShell {
 										action = 43;
 									}
 
-									addMenuOption(iop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentlayer);
+									addMenuOption(iop[index], StringConstants.TAG_COLOUR(16748608) + obj.name, action, obj.index, slot, com.parentId);
 								}
 							}
 						}
 
-						addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16748608) + obj.name, 1005, obj.index, slot, com.parentlayer);
+						addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16748608) + obj.name, 1005, obj.index, slot, com.parentId);
 					}
 
 					slot++;
@@ -11472,30 +11537,30 @@ public class Client extends GameShell {
 		if (com.v3) {
 			if (targetMode) {
 				if (ServerActive.isUseTarget(getActive(com)) && (targetMask & 0x20) == 32) {
-					addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + com.opbase, 58, 0, com.subid, com.parentlayer);
+					addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + com.baseOpName, 58, 0, com.subId, com.parentId);
 				}
 			} else {
 				for (int var159 = 9; var159 >= 5; var159--) {
 					String var160 = getIfTypeOpName(com, var159);
 					if (var160 != null) {
-						addMenuOption(var160, com.opbase, 1007, var159 + 1, com.subid, com.parentlayer);
+						addMenuOption(var160, com.baseOpName, 1007, var159 + 1, com.subId, com.parentId);
 					}
 				}
 
 				String var161 = targetVerb(com);
 				if (var161 != null) {
-					addMenuOption(var161, com.opbase, 25, 0, com.subid, com.parentlayer);
+					addMenuOption(var161, com.baseOpName, 25, 0, com.subId, com.parentId);
 				}
 
 				for (int var162 = 4; var162 >= 0; var162--) {
 					String var163 = getIfTypeOpName(com, var162);
 					if (var163 != null) {
-						addMenuOption(var163, com.opbase, 57, var162 + 1, com.subid, com.parentlayer);
+						addMenuOption(var163, com.baseOpName, 57, var162 + 1, com.subId, com.parentId);
 					}
 				}
 
 				if (ServerActive.pauseButton(getActive(com))) {
-					addMenuOption(Text.CONTINUE, "", 30, 0, com.subid, com.parentlayer);
+					addMenuOption(Text.CONTINUE, "", 30, 0, com.subId, com.parentId);
 				}
 			}
 		}

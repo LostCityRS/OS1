@@ -438,7 +438,7 @@ public abstract class PixFont extends Pix2D {
 
 	// jag::oldscape::jstring::PixfontGeneric::DrawStringMultiline
 	@ObfuscatedName("fs.cj(Ljava/lang/String;IIIIIIIII)I")
-	public int drawStringMultiline(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
+	public int drawStringMultiline(String arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int halign, int arg8, int arg9) {
 		if (arg0 == null) {
 			return 0;
 		}
@@ -470,11 +470,11 @@ public abstract class PixFont extends Pix2D {
 			arg9 += var14;
 		}
 		for (int var15 = 0; var15 < var12; var15++) {
-			if (arg7 == 0) {
+			if (halign == 0) {
 				this.drawStringInner(lines[var15], arg1, var13);
-			} else if (arg7 == 1) {
+			} else if (halign == 1) {
 				this.drawStringInner(lines[var15], arg1 + (arg3 - this.stringWid(lines[var15])) / 2, var13);
-			} else if (arg7 == 2) {
+			} else if (halign == 2) {
 				this.drawStringInner(lines[var15], arg1 + arg3 - this.stringWid(lines[var15]), var13);
 			} else if (var12 - 1 == var15) {
 				this.drawStringInner(lines[var15], arg1, var13);
