@@ -136,7 +136,7 @@ public class Client extends GameShell {
 	public static Packet tempP = new Packet(new byte[5000]);
 
 	@ObfuscatedName("g.bu")
-	public static PrivilegedRequest field170;
+	public static PrivilegedRequest lastAddress;
 
 	@ObfuscatedName("client.bq")
 	public static int loadingStep = 0;
@@ -738,10 +738,10 @@ public class Client extends GameShell {
 	public static int minimenuMouseOverY = -1;
 
 	@ObfuscatedName("client.ju")
-	public static int field1995 = 0;
+	public static int tooltipNum = 0;
 
 	@ObfuscatedName("client.ja")
-	public static int field2076 = 50;
+	public static int tooltipRedraw = 50;
 
 	@ObfuscatedName("client.jo")
 	public static int useMode = 0;
@@ -771,7 +771,7 @@ public class Client extends GameShell {
 	public static int objSelectedSlot;
 
 	@ObfuscatedName("at.jq")
-	public static IfType field654; // todo
+	public static IfType tooltipCom;
 
 	@ObfuscatedName("bk.ji")
 	public static int menuY;
@@ -912,13 +912,13 @@ public class Client extends GameShell {
 	public static int dragTime;
 
 	@ObfuscatedName("dz.lj")
-	public static IfType[] field1516; // todo
+	public static IfType[] dragChildren;
 
 	@ObfuscatedName("client.lh")
-	public static int field2106; // todo
+	public static int dragChildY;
 
 	@ObfuscatedName("m.la")
-	public static int field44; // todo
+	public static int dragChildX;
 
 	@ObfuscatedName("az.lu")
 	public static MouseWheelInterface mouseWheel;
@@ -6260,12 +6260,12 @@ public class Client extends GameShell {
 	@ObfuscatedName("fg.fj(IIIIIIIII)V")
 	public static void drawInterface(int id, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
 		if (IfType.openInterface(id)) {
-			field1516 = null;
+			dragChildren = null;
 			drawLayer(IfType.list[id], -1, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 
-			if (field1516 != null) {
-				drawLayer(field1516, 0xabcdabcd, arg1, arg2, arg3, arg4, field44, field2106, arg7);
-				field1516 = null;
+			if (dragChildren != null) {
+				drawLayer(dragChildren, 0xabcdabcd, arg1, arg2, arg3, arg4, dragChildX, dragChildY, arg7);
+				dragChildren = null;
 			}
 		} else if (arg7 == -1) {
 			for (int i = 0; i < 100; i++) {
@@ -6316,9 +6316,9 @@ public class Client extends GameShell {
 
 			if (dragComponent == com) {
 				if (layerid != 0xabcdabcd && !com.draggablebehavior) {
-					field1516 = children;
-					field44 = childX;
-					field2106 = childY;
+					dragChildren = children;
+					dragChildX = childX;
+					dragChildY = childY;
 					continue;
 				}
 
@@ -6797,12 +6797,11 @@ public class Client extends GameShell {
 						slot++;
 					}
 				}
-			} else if (com.type == 8 && field654 == com && field2076 == field1995) {
+			} else if (com.type == 8 && tooltipCom == com && tooltipRedraw == tooltipNum) {
 				// tooltip
 				int var217 = 0;
 				int var218 = 0;
 
-				// todo: inlined method?
 				PixFontGeneric var219 = p12;
 				String var220 = com.text;
 				String var221 = substituteVars(var220, com);
@@ -6921,10 +6920,10 @@ public class Client extends GameShell {
 				}
 
 				String var5 = "";
-				if (field170 != null) {
-					var5 = StringTools.formatIPv4(field170.intArg);
-					if (field170.result != null) {
-						var5 = (String) field170.result;
+				if (lastAddress != null) {
+					var5 = StringTools.formatIPv4(lastAddress.intArg);
+					if (lastAddress.result != null) {
+						var5 = (String) lastAddress.result;
 					}
 				}
 
@@ -7505,7 +7504,7 @@ public class Client extends GameShell {
 					}
 
 					if (var9.type == 8 && ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
-						field654 = var9;
+						tooltipCom = var9;
 					}
 
 					if (var9.scrollHeight > var9.height) {
@@ -7739,9 +7738,9 @@ public class Client extends GameShell {
 					}
 				}
 
-				if (com.field1827 != 0 && !com.v3) {
-					int var9 = com.field1827 >> 16;
-					int var10 = com.field1827 << 16 >> 16;
+				if (com.modelSpin != 0 && !com.v3) {
+					int var9 = com.modelSpin >> 16;
+					int var10 = com.modelSpin << 16 >> 16;
 					int var11 = worldUpdateNum * var9;
 					int var12 = worldUpdateNum * var10;
 
@@ -9004,11 +9003,10 @@ public class Client extends GameShell {
 			}
 		}
 
-		// todo: inlined method?
-		IfType var444 = hoveredCom;
-		IfType var445 = field654;
+		IfType hovered = hoveredCom;
+		IfType tooltip = tooltipCom;
 		hoveredCom = null;
-		field654 = null;
+		tooltipCom = null;
 		dropComponent = null;
 		dragging = false;
 		dragParentFound = false;
@@ -9099,32 +9097,32 @@ public class Client extends GameShell {
 
 		mouseLoop();
 
-		if (hoveredCom != var444) {
-			if (var444 != null) {
-				componentUpdated(var444);
+		if (hoveredCom != hovered) {
+			if (hovered != null) {
+				componentUpdated(hovered);
 			}
 			if (hoveredCom != null) {
 				componentUpdated(hoveredCom);
 			}
 		}
 
-		if (field654 != var445 && field2076 == field1995) {
-			if (var445 != null) {
-				componentUpdated(var445);
+		if (tooltipCom != tooltip && tooltipRedraw == tooltipNum) {
+			if (tooltip != null) {
+				componentUpdated(tooltip);
 			}
-			if (field654 != null) {
-				componentUpdated(field654);
+			if (tooltipCom != null) {
+				componentUpdated(tooltipCom);
 			}
 		}
 
-		if (field654 == null) {
-			if (field1995 > 0) {
-				field1995--;
+		if (tooltipCom == null) {
+			if (tooltipNum > 0) {
+				tooltipNum--;
 			}
-		} else if (field1995 < field2076) {
-			field1995++;
-			if (field2076 == field1995) {
-				componentUpdated(field654);
+		} else if (tooltipNum < tooltipRedraw) {
+			tooltipNum++;
+			if (tooltipRedraw == tooltipNum) {
+				componentUpdated(tooltipCom);
 			}
 		}
 
@@ -9134,8 +9132,8 @@ public class Client extends GameShell {
 			cinemaCamera();
 		}
 
-		for (int var504 = 0; var504 < 5; var504++) {
-			int var10002 = camShakeCycle[var504]++;
+		for (int i = 0; i < 5; i++) {
+			camShakeCycle[i]++;
 		}
 
 		int mouseIdle = ClientMouseListener.getIdleTimer();
@@ -9151,6 +9149,7 @@ public class Client extends GameShell {
 		macroCameraCycle++;
 		if (macroCameraCycle > 500) {
 			macroCameraCycle = 0;
+
 			int var509 = (int) (Math.random() * 8.0D);
 			if ((var509 & 0x1) == 1) {
 				macroCameraX += macroCameraXModifier;
@@ -9187,6 +9186,7 @@ public class Client extends GameShell {
 		macroMinimapCycle++;
 		if (macroMinimapCycle > 500) {
 			macroMinimapCycle = 0;
+
 			int var510 = (int) (Math.random() * 8.0D);
 			if ((var510 & 0x1) == 1) {
 				macroMinimapAngle += macroMinimapAngleModifier;
@@ -9222,7 +9222,7 @@ public class Client extends GameShell {
 				out.pos = 0;
 				noTimeoutCycle = 0;
 			}
-		} catch (IOException var518) {
+		} catch (IOException ex) {
 			lostCon();
 		}
 	}
@@ -9572,8 +9572,8 @@ public class Client extends GameShell {
 
 			if (ptype == 241) {
 				// LAST_LOGIN_INFO
-				int var139 = in.g4_alt1();
-				field170 = GameShell.signLink.dnsreq(var139);
+				int ip = in.g4_alt1();
+				lastAddress = GameShell.signLink.dnsreq(ip);
 
 				ptype = -1;
 				return true;
@@ -10124,11 +10124,12 @@ public class Client extends GameShell {
 			}
 
 			if (ptype == 217) {
+				// IF_SETROTATESPEED (unofficial name)
 				int var258 = in.g4_alt1();
 				int var259 = in.g2_alt3();
 				int var260 = in.g2_alt3();
 				IfType var261 = IfType.get(var258);
-				var261.field1827 = (var259 << 16) + var260;
+				var261.modelSpin = (var259 << 16) + var260;
 
 				ptype = -1;
 				return true;

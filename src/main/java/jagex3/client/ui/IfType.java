@@ -205,7 +205,7 @@ public class IfType extends Linkable {
 	public int modelZoom = 100;
 
 	@ObfuscatedName("eg.bl")
-	public int field1827 = 0;
+	public int modelSpin = 0;
 
 	@ObfuscatedName("eg.bt")
 	public boolean orthog = false;
