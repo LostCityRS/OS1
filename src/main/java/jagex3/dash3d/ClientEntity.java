@@ -53,10 +53,10 @@ public abstract class ClientEntity extends ModelSource {
 	public int chatTimer = 100;
 
 	@ObfuscatedName("fz.o")
-	public int field2652 = 0;
+	public int chatColour = 0;
 
 	@ObfuscatedName("fz.a")
-	public int field2670 = 0;
+	public int chatEffect = 0;
 
 	@ObfuscatedName("fz.x")
 	public int[] damageValues = new int[4];
@@ -89,10 +89,10 @@ public abstract class ClientEntity extends ModelSource {
 	public int secondarySeqId = -1;
 
 	@ObfuscatedName("fz.az")
-	public int field2641 = 0;
+	public int secondarySeqFrame = 0;
 
 	@ObfuscatedName("fz.an")
-	public int field2662 = 0;
+	public int secondarySeqCycle = 0;
 
 	@ObfuscatedName("fz.ah")
 	public int primarySeqId = -1;
@@ -107,7 +107,7 @@ public abstract class ClientEntity extends ModelSource {
 	public int primarySeqDelay = 0;
 
 	@ObfuscatedName("fz.ao")
-	public int field2647 = 0;
+	public int primarySeqLoop = 0;
 
 	@ObfuscatedName("fz.ag")
 	public int spotanimId = -1;
@@ -122,7 +122,7 @@ public abstract class ClientEntity extends ModelSource {
 	public int spotanimLastCycle;
 
 	@ObfuscatedName("fz.ae")
-	public int field2629;
+	public int spotanimHeight;
 
 	@ObfuscatedName("fz.au")
 	public int exactStartX;
@@ -155,7 +155,7 @@ public abstract class ClientEntity extends ModelSource {
 	public int dstYaw;
 
 	@ObfuscatedName("fz.bv")
-	public int field2663 = 0;
+	public int turnCycle = 0;
 
 	@ObfuscatedName("fz.bg")
 	public int turnSpeed = 32;

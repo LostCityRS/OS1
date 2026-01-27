@@ -155,7 +155,7 @@ public class ClientPlayer extends ClientEntity {
 		}
 		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.list(this.primarySeqId) : null;
 		SeqType var2 = this.secondarySeqId == -1 || this.lowMemory || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.list(this.secondarySeqId);
-		ModelLit var3 = this.model.getTempModel(var1, this.primarySeqFrame, var2, this.field2641);
+		ModelLit var3 = this.model.getTempModel(var1, this.primarySeqFrame, var2, this.secondarySeqFrame);
 		if (var3 == null) {
 			return null;
 		}
@@ -164,7 +164,7 @@ public class ClientPlayer extends ClientEntity {
 		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
 			ModelLit var4 = SpotType.list(this.spotanimId).getTempModel2(this.spotanimFrame);
 			if (var4 != null) {
-				var4.translate(0, -this.field2629, 0);
+				var4.translate(0, -this.spotanimHeight, 0);
 				ModelLit[] var5 = new ModelLit[] { var3, var4 };
 				var3 = new ModelLit(var5, 2);
 			}

@@ -13,10 +13,10 @@ import jagex3.io.Packet;
 public class PlayerModel {
 
 	@ObfuscatedName("ct.r")
-	public int[] field1228;
+	public int[] appearance;
 
 	@ObfuscatedName("ct.d")
-	public int[] field1223;
+	public int[] colour;
 
 	@ObfuscatedName("ct.l")
 	public boolean gender;
@@ -70,8 +70,8 @@ public class PlayerModel {
 				}
 			}
 		}
-		this.field1228 = arg0;
-		this.field1223 = arg1;
+		this.appearance = arg0;
+		this.colour = arg1;
 		this.gender = arg2;
 		this.transmog = arg3;
 		this.calcBaseId();
@@ -83,7 +83,7 @@ public class PlayerModel {
 		if (arg0 == 1 && this.gender) {
 			return;
 		}
-		int var3 = this.field1228[basePartMap[arg0]];
+		int var3 = this.appearance[basePartMap[arg0]];
 		if (var3 == 0) {
 			return;
 		}
@@ -103,14 +103,14 @@ public class PlayerModel {
 			}
 			var4 = IdkType.list(var3);
 		} while (var4 == null || var4.disable || var4.type != (this.gender ? 7 : 0) + arg0);
-		this.field1228[basePartMap[arg0]] = var3 + 256;
+		this.appearance[basePartMap[arg0]] = var3 + 256;
 		this.calcBaseId();
 	}
 
 	// jag::oldscape::rs2lib::PlayerModel::IdkChangeColour
 	@ObfuscatedName("ct.l(IZI)V")
 	public void idkChangeColour(int arg0, boolean arg1) {
-		int var3 = this.field1223[arg0];
+		int var3 = this.colour[arg0];
 		if (arg1) {
 			var3++;
 			if (var3 >= recol1d[arg0].length) {
@@ -122,7 +122,7 @@ public class PlayerModel {
 				var3 = recol1d[arg0].length - 1;
 			}
 		}
-		this.field1223[arg0] = var3;
+		this.colour[arg0] = var3;
 		this.calcBaseId();
 	}
 
@@ -130,7 +130,7 @@ public class PlayerModel {
 	@ObfuscatedName("ct.m(ZI)V")
 	public void idkChangeGender(boolean arg0) {
 		if (this.gender != arg0) {
-			this.setAppearance(null, this.field1223, arg0, -1);
+			this.setAppearance(null, this.colour, arg0, -1);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class PlayerModel {
 	public void idkSaveDesign(Packet arg0) {
 		arg0.p1(this.gender ? 1 : 0);
 		for (int var2 = 0; var2 < 7; var2++) {
-			int var3 = this.field1228[basePartMap[var2]];
+			int var3 = this.appearance[basePartMap[var2]];
 			if (var3 == 0) {
 				arg0.p1(-1);
 			} else {
@@ -147,7 +147,7 @@ public class PlayerModel {
 			}
 		}
 		for (int var4 = 0; var4 < 5; var4++) {
-			arg0.p1(this.field1223[var4]);
+			arg0.p1(this.colour[var4]);
 		}
 	}
 
@@ -155,31 +155,31 @@ public class PlayerModel {
 	@ObfuscatedName("ct.n(I)V")
 	public void calcBaseId() {
 		long var1 = this.baseId;
-		int var3 = this.field1228[5];
-		int var4 = this.field1228[9];
-		this.field1228[5] = var4;
-		this.field1228[9] = var3;
+		int var3 = this.appearance[5];
+		int var4 = this.appearance[9];
+		this.appearance[5] = var4;
+		this.appearance[9] = var3;
 		this.baseId = 0L;
 		for (int var5 = 0; var5 < 12; var5++) {
 			this.baseId <<= 0x4;
-			if (this.field1228[var5] >= 256) {
-				this.baseId += this.field1228[var5] - 256;
+			if (this.appearance[var5] >= 256) {
+				this.baseId += this.appearance[var5] - 256;
 			}
 		}
-		if (this.field1228[0] >= 256) {
-			this.baseId += this.field1228[0] - 256 >> 4;
+		if (this.appearance[0] >= 256) {
+			this.baseId += this.appearance[0] - 256 >> 4;
 		}
-		if (this.field1228[1] >= 256) {
-			this.baseId += this.field1228[1] - 256 >> 8;
+		if (this.appearance[1] >= 256) {
+			this.baseId += this.appearance[1] - 256 >> 8;
 		}
 		for (int var6 = 0; var6 < 5; var6++) {
 			this.baseId <<= 0x3;
-			this.baseId += this.field1223[var6];
+			this.baseId += this.colour[var6];
 		}
 		this.baseId <<= 0x1;
 		this.baseId += this.gender ? 1 : 0;
-		this.field1228[5] = var3;
-		this.field1228[9] = var4;
+		this.appearance[5] = var3;
+		this.appearance[9] = var4;
 		if (var1 != 0L && this.baseId != var1) {
 			modelCache.remove(var1);
 		}
@@ -192,18 +192,18 @@ public class PlayerModel {
 			return NpcType.list(this.transmog).getTempModel(arg0, arg1, arg2, arg3);
 		}
 		long var5 = this.baseId;
-		int[] var7 = this.field1228;
+		int[] var7 = this.appearance;
 		if (arg0 != null && (arg0.replaceheldleft >= 0 || arg0.replaceheldright >= 0)) {
 			var7 = new int[12];
 			for (int var8 = 0; var8 < 12; var8++) {
-				var7[var8] = this.field1228[var8];
+				var7[var8] = this.appearance[var8];
 			}
 			if (arg0.replaceheldleft >= 0) {
-				var5 += arg0.replaceheldleft - this.field1228[5] << 40;
+				var5 += arg0.replaceheldleft - this.appearance[5] << 40;
 				var7[5] = arg0.replaceheldleft;
 			}
 			if (arg0.replaceheldright >= 0) {
-				var5 += arg0.replaceheldright - this.field1228[3] << 48;
+				var5 += arg0.replaceheldright - this.appearance[3] << 48;
 				var7[3] = arg0.replaceheldright;
 			}
 		}
@@ -247,11 +247,11 @@ public class PlayerModel {
 				}
 				ModelUnlit var19 = new ModelUnlit(var13, var14);
 				for (int var20 = 0; var20 < 5; var20++) {
-					if (this.field1223[var20] < recol1d[var20].length) {
-						var19.recolour(recol1s[var20], recol1d[var20][this.field1223[var20]]);
+					if (this.colour[var20] < recol1d[var20].length) {
+						var19.recolour(recol1s[var20], recol1d[var20][this.colour[var20]]);
 					}
-					if (this.field1223[var20] < recol2d[var20].length) {
-						var19.recolour(recol2s[var20], recol2d[var20][this.field1223[var20]]);
+					if (this.colour[var20] < recol2d[var20].length) {
+						var19.recolour(recol2s[var20], recol2d[var20][this.colour[var20]]);
 					}
 				}
 				var9 = var19.light(64, 850, -30, -50, -30);
@@ -281,7 +281,7 @@ public class PlayerModel {
 		}
 		boolean var1 = false;
 		for (int var2 = 0; var2 < 12; var2++) {
-			int var3 = this.field1228[var2];
+			int var3 = this.appearance[var2];
 			if (var3 >= 256 && var3 < 512 && !IdkType.list(var3 - 256).checkHead()) {
 				var1 = true;
 			}
@@ -295,7 +295,7 @@ public class PlayerModel {
 		ModelUnlit[] var4 = new ModelUnlit[12];
 		int var5 = 0;
 		for (int var6 = 0; var6 < 12; var6++) {
-			int var7 = this.field1228[var6];
+			int var7 = this.appearance[var6];
 			if (var7 >= 256 && var7 < 512) {
 				ModelUnlit var8 = IdkType.list(var7 - 256).getHeadNoCheck();
 				if (var8 != null) {
@@ -311,11 +311,11 @@ public class PlayerModel {
 		}
 		ModelUnlit var10 = new ModelUnlit(var4, var5);
 		for (int var11 = 0; var11 < 5; var11++) {
-			if (this.field1223[var11] < recol1d[var11].length) {
-				var10.recolour(recol1s[var11], recol1d[var11][this.field1223[var11]]);
+			if (this.colour[var11] < recol1d[var11].length) {
+				var10.recolour(recol1s[var11], recol1d[var11][this.colour[var11]]);
 			}
-			if (this.field1223[var11] < recol2d[var11].length) {
-				var10.recolour(recol2s[var11], recol2d[var11][this.field1223[var11]]);
+			if (this.colour[var11] < recol2d[var11].length) {
+				var10.recolour(recol2s[var11], recol2d[var11][this.colour[var11]]);
 			}
 		}
 		return var10;
@@ -327,7 +327,7 @@ public class PlayerModel {
 			return NpcType.list(this.transmog).index + 0x12345678;
 		}
 
-		return (this.field1228[11] << 5) + (this.field1228[8] << 10) + (this.field1228[0] << 15) + (this.field1223[4] << 20) + (this.field1223[0] << 25) + this.field1228[1];
+		return (this.appearance[11] << 5) + (this.appearance[8] << 10) + (this.appearance[0] << 15) + (this.colour[4] << 20) + (this.colour[0] << 25) + this.appearance[1];
 	}
 
 	// jag::oldscape::rs2lib::PlayerModel::ResetCache

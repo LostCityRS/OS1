@@ -1784,7 +1784,7 @@ public class ScriptRunner {
 						if (Client.chatDisplayName == null) {
 							intStack[isp++] = 0;
 						} else {
-							intStack[isp++] = Client.field1220;
+							intStack[isp++] = Client.friendChatCount;
 						}
 						continue;
 					}
@@ -1793,8 +1793,8 @@ public class ScriptRunner {
 						isp--;
 						int var183 = intStack[isp];
 
-						if (Client.chatDisplayName != null && var183 < Client.field1220) {
-							stringStack[ssp++] = Client.field1774[var183].username;
+						if (Client.chatDisplayName != null && var183 < Client.friendChatCount) {
+							stringStack[ssp++] = Client.friendChatList[var183].username;
 							continue;
 						}
 
@@ -1806,8 +1806,8 @@ public class ScriptRunner {
 						isp--;
 						int var184 = intStack[isp];
 
-						if (Client.chatDisplayName != null && var184 < Client.field1220) {
-							intStack[isp++] = Client.field1774[var184].world;
+						if (Client.chatDisplayName != null && var184 < Client.friendChatCount) {
+							intStack[isp++] = Client.friendChatList[var184].world;
 							continue;
 						}
 
@@ -1819,8 +1819,8 @@ public class ScriptRunner {
 						isp--;
 						int var185 = intStack[isp];
 
-						if (Client.chatDisplayName != null && var185 < Client.field1220) {
-							intStack[isp++] = Client.field1774[var185].rank;
+						if (Client.chatDisplayName != null && var185 < Client.friendChatCount) {
+							intStack[isp++] = Client.friendChatList[var185].rank;
 							continue;
 						}
 
@@ -1897,7 +1897,7 @@ public class ScriptRunner {
 						isp--;
 						int var190 = intStack[isp];
 
-						if (Client.field1774 != null && var190 < Client.field1220 && Client.field1774[var190].username.equalsIgnoreCase(Client.localPlayer.name)) {
+						if (Client.friendChatList != null && var190 < Client.friendChatCount && Client.friendChatList[var190].username.equalsIgnoreCase(Client.localPlayer.name)) {
 							intStack[isp++] = 1;
 							continue;
 						}
@@ -1907,10 +1907,10 @@ public class ScriptRunner {
 					}
 					if (opcode == 3625) {
 						// clan_getchatownername
-						if (Client.field2155 == null) {
+						if (Client.chatOwnerName == null) {
 							stringStack[ssp++] = "";
 						} else {
-							stringStack[ssp++] = JString.toScreenName(Client.field2155);
+							stringStack[ssp++] = JString.toScreenName(Client.chatOwnerName);
 						}
 						continue;
 					}
@@ -2651,7 +2651,7 @@ public class ScriptRunner {
 
 						String var361 = null;
 						if (var360 < 100) {
-							var361 = Client.field2173[var360];
+							var361 = Client.messageScreenName[var360];
 						}
 						if (var361 == null) {
 							var361 = "";
