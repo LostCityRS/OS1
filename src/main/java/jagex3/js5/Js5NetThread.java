@@ -14,13 +14,13 @@ public class Js5NetThread implements Runnable {
 	public static LinkList requestQueue = new LinkList();
 
 	@ObfuscatedName("cc.d")
-	public static LinkList field1206 = new LinkList();
+	public static LinkList completed = new LinkList();
 
 	@ObfuscatedName("cc.l")
-	public static int field1205 = 0;
+	public static int keepAlive = 0;
 
 	@ObfuscatedName("cc.m")
-	public static Object field1207 = new Object();
+	public static Object lock = new Object();
 
 	// jag::oldscape::jagex3::Js5LocalCache::BlockingFetchFromMainThread?
 	@ObfuscatedName("cu.m(ILap;Ldq;I)V")
@@ -56,15 +56,15 @@ public class Js5NetThread implements Runnable {
 
 				if (var2 == null) {
 					ThreadSleep.sleepPrecise(100L);
-					Object var10 = field1207;
+					Object var10 = lock;
 					synchronized (var10) {
-						if (field1205 <= 1) {
-							field1205 = 0;
-							field1207.notifyAll();
+						if (keepAlive <= 1) {
+							keepAlive = 0;
+							lock.notifyAll();
 							return;
 						}
 
-						field1205--;
+						keepAlive--;
 					}
 				} else {
 					if (var2.type == 0) {
@@ -77,19 +77,19 @@ public class Js5NetThread implements Runnable {
 						var2.data = var2.fs.readFromFile((int) var2.key);
 						LinkList var6 = requestQueue;
 						synchronized (var6) {
-							field1206.push(var2);
+							completed.push(var2);
 						}
 					}
 
-					Object var8 = field1207;
+					Object var8 = lock;
 					synchronized (var8) {
-						if (field1205 <= 1) {
-							field1205 = 0;
-							field1207.notifyAll();
+						if (keepAlive <= 1) {
+							keepAlive = 0;
+							lock.notifyAll();
 							return;
 						}
 
-						field1205 = 600;
+						keepAlive = 600;
 					}
 				}
 			}
@@ -100,13 +100,13 @@ public class Js5NetThread implements Runnable {
 
 	@ObfuscatedName("bv.c(B)V")
 	public static void shutdown() {
-		Object var0 = field1207;
+		Object var0 = lock;
 		synchronized (var0) {
-			if (field1205 != 0) {
-				field1205 = 1;
+			if (keepAlive != 0) {
+				keepAlive = 1;
 
 				try {
-					field1207.wait();
+					lock.wait();
 				} catch (InterruptedException ignore) {
 				}
 			}

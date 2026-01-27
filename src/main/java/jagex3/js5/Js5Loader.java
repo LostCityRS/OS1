@@ -123,12 +123,12 @@ public class Js5Loader extends Js5 {
 				synchronized (var14) {
 					Js5NetThread.requestQueue.push(var13);
 				}
-				Object var16 = Js5NetThread.field1207;
+				Object var16 = Js5NetThread.lock;
 				synchronized (var16) {
-					if (Js5NetThread.field1205 == 0) {
+					if (Js5NetThread.keepAlive == 0) {
 						GameShell.signLink.threadreq(new Js5NetThread(), 5);
 					}
-					Js5NetThread.field1205 = 600;
+					Js5NetThread.keepAlive = 600;
 				}
 				this.loadedGroups[arg0] = true;
 			}
@@ -152,12 +152,12 @@ public class Js5Loader extends Js5 {
 			synchronized (var8) {
 				Js5NetThread.requestQueue.push(var7);
 			}
-			Object var10 = Js5NetThread.field1207;
+			Object var10 = Js5NetThread.lock;
 			synchronized (var10) {
-				if (Js5NetThread.field1205 == 0) {
+				if (Js5NetThread.keepAlive == 0) {
 					GameShell.signLink.threadreq(new Js5NetThread(), 5);
 				}
-				Js5NetThread.field1205 = 600;
+				Js5NetThread.keepAlive = 600;
 			}
 		}
 		this.decodeIndex(arg1);
@@ -258,12 +258,12 @@ public class Js5Loader extends Js5 {
 				synchronized (var6) {
 					Js5NetThread.requestQueue.push(var5);
 				}
-				Object var8 = Js5NetThread.field1207;
+				Object var8 = Js5NetThread.lock;
 				synchronized (var8) {
-					if (Js5NetThread.field1205 == 0) {
+					if (Js5NetThread.keepAlive == 0) {
 						GameShell.signLink.threadreq(new Js5NetThread(), 5);
 					}
-					Js5NetThread.field1205 = 600;
+					Js5NetThread.keepAlive = 600;
 				}
 				this.field1581 = var2;
 			}

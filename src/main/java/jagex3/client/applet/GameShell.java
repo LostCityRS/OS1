@@ -28,7 +28,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static GameShell shell = null;
 
 	@ObfuscatedName("dj.l")
-	public static int field1533 = 0;
+	public static int loaded = 0;
 
 	@ObfuscatedName("dj.m")
 	public static long killtime = 0L;
@@ -60,14 +60,14 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static long[] drawTime = new long[32];
 
 	@ObfuscatedName("bm.v")
-	public static int field833;
+	public static int drawPos;
 
 	// jag::oldscape::javapal::GameShell::m_updateTime
 	@ObfuscatedName("dj.w")
 	public static long[] updateTime = new long[32];
 
 	@ObfuscatedName("cv.e")
-	public static int field1218;
+	public static int updatePos;
 
 	@ObfuscatedName("dj.b")
 	public static int canvasWid;
@@ -97,7 +97,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static volatile boolean fullredraw = true;
 
 	@ObfuscatedName("dj.ac")
-	public static int field1547 = 500;
+	public static int redrawNum = 500;
 
 	@ObfuscatedName("dj.aa")
 	public static volatile boolean canvasReplaceRecommended = false;
@@ -131,9 +131,9 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public final void startCommon(int arg0, int arg1, int arg2) {
 		try {
 			if (shell != null) {
-				field1533++;
+				loaded++;
 
-				if (field1533 >= 3) {
+				if (loaded >= 3) {
 					this.error("alreadyloaded");
 					return;
 				}
@@ -306,9 +306,9 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("dj.i(I)V")
 	public void mainloopwrapper() {
 		long var1 = MonotonicTime.currentTime();
-		long var3 = updateTime[field1218];
-		updateTime[field1218] = var1;
-		field1218 = field1218 + 1 & 0x1F;
+		long var3 = updateTime[updatePos];
+		updateTime[updatePos] = var1;
+		updatePos = updatePos + 1 & 0x1F;
 
 		if (var3 != 0L && var1 > var3) {
 			// lps
@@ -325,17 +325,18 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	@ObfuscatedName("dj.s(I)V")
 	public void mainredrawwrapper() {
 		long var1 = MonotonicTime.currentTime();
-		long var3 = drawTime[field833];
-		drawTime[field833] = var1;
-		field833 = field833 + 1 & 0x1F;
+		long var3 = drawTime[drawPos];
+		drawTime[drawPos] = var1;
+		drawPos = drawPos + 1 & 0x1F;
 
 		if (var3 != 0L && var1 > var3) {
 			int var5 = (int) (var1 - var3);
 			fps = ((var5 >> 1) + 32000) / var5;
 		}
 
-		if (++field1547 - 1 > 50) {
-			field1547 -= 50;
+		if (++redrawNum - 1 > 50) {
+			redrawNum -= 50;
+
 			fullredraw = true;
 			canvas.setSize(canvasWid, canvasHei);
 			canvas.setVisible(true);

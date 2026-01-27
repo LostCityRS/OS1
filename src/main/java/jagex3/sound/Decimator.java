@@ -8,24 +8,24 @@ import jagex3.datastruct.MathTool;
 public class Decimator {
 
 	@ObfuscatedName("p.m")
-	public int field329;
+	public int inputRate;
 
 	@ObfuscatedName("p.c")
-	public int field331;
+	public int outputRate;
 
 	@ObfuscatedName("p.n")
-	public int[][] field334;
+	public int[][] resampleTable;
 
 	public Decimator(int arg0, int arg1) {
 		if (arg0 != arg1) {
 			int var3 = MathTool.hcf(arg0, arg1);
 			int var4 = arg0 / var3;
 			int var5 = arg1 / var3;
-			this.field329 = var4;
-			this.field331 = var5;
-			this.field334 = new int[var4][14];
+			this.inputRate = var4;
+			this.outputRate = var5;
+			this.resampleTable = new int[var4][14];
 			for (int var6 = 0; var6 < var4; var6++) {
-				int[] var7 = this.field334[var6];
+				int[] var7 = this.resampleTable[var6];
 				double var8 = (double) var6 / (double) var4 + 6.0D;
 				int var10 = (int) Math.floor(var8 - 7.0D + 1.0D);
 				if (var10 < 0) {
@@ -52,21 +52,21 @@ public class Decimator {
 
 	@ObfuscatedName("p.r([BI)[B")
 	public byte[] decimate(byte[] arg0) {
-		if (this.field334 != null) {
-			int var2 = (int) ((long) this.field331 * (long) arg0.length / (long) this.field329) + 14;
+		if (this.resampleTable != null) {
+			int var2 = (int) ((long) this.outputRate * (long) arg0.length / (long) this.inputRate) + 14;
 			int[] var3 = new int[var2];
 			int var4 = 0;
 			int var5 = 0;
 			for (int var6 = 0; var6 < arg0.length; var6++) {
 				byte var7 = arg0[var6];
-				int[] var8 = this.field334[var5];
+				int[] var8 = this.resampleTable[var5];
 				for (int var9 = 0; var9 < 14; var9++) {
 					var3[var4 + var9] += var8[var9] * var7;
 				}
-				int var10 = this.field331 + var5;
-				int var11 = var10 / this.field329;
+				int var10 = this.outputRate + var5;
+				int var11 = var10 / this.inputRate;
 				var4 += var11;
-				var5 = var10 - this.field329 * var11;
+				var5 = var10 - this.inputRate * var11;
 			}
 			arg0 = new byte[var2];
 			for (int var12 = 0; var12 < var2; var12++) {
@@ -86,8 +86,8 @@ public class Decimator {
 	// jag::oldscape::sound::Decimator::TransmitFreq
 	@ObfuscatedName("p.d(IS)I")
 	public int transmitFreq(int arg0) {
-		if (this.field334 != null) {
-			arg0 = (int) ((long) this.field331 * (long) arg0 / (long) this.field329);
+		if (this.resampleTable != null) {
+			arg0 = (int) ((long) this.outputRate * (long) arg0 / (long) this.inputRate);
 		}
 		return arg0;
 	}
@@ -95,8 +95,8 @@ public class Decimator {
 	// jag::oldscape::sound::Decimator::TransmitPos
 	@ObfuscatedName("p.l(II)I")
 	public int transmitPos(int arg0) {
-		if (this.field334 != null) {
-			arg0 = (int) ((long) this.field331 * (long) arg0 / (long) this.field329) + 6;
+		if (this.resampleTable != null) {
+			arg0 = (int) ((long) this.outputRate * (long) arg0 / (long) this.inputRate) + 6;
 		}
 		return arg0;
 	}

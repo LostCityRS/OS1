@@ -33,7 +33,7 @@ public class Patch extends Linkable {
 	public byte[] noteSecondaryNote = new byte[128];
 
 	@ObfuscatedName("ef.i")
-	public int[] field1739 = new int[128];
+	public int[] noteWaveId = new int[128];
 
 	// jag::oldscape::midi2::Patch::Load
 	@ObfuscatedName("l.c(Lch;II)Lef;")
@@ -166,7 +166,7 @@ public class Patch extends Linkable {
 				var37 = buf.gMidiVarLen();
 			}
 			this.notePitch[var38] = (short) (this.notePitch[var38] + ((var37 - 1 & 0x2) << 14));
-			this.field1739[var38] = var37;
+			this.noteWaveId[var38] = var37;
 			var35--;
 		}
 
@@ -174,7 +174,7 @@ public class Patch extends Linkable {
 		int var40 = 0;
 		int var41 = 0;
 		for (int var42 = 0; var42 < 128; var42++) {
-			if (this.field1739[var42] != 0) {
+			if (this.noteWaveId[var42] != 0) {
 				if (var39 == 0) {
 					if (var40 < var4.length) {
 						var39 = var4[var40++];
@@ -192,7 +192,7 @@ public class Patch extends Linkable {
 		int var44 = 0;
 		int var45 = 0;
 		for (int var46 = 0; var46 < 128; var46++) {
-			if (this.field1739[var46] != 0) {
+			if (this.noteWaveId[var46] != 0) {
 				if (var43 == 0) {
 					if (var44 < var8.length) {
 						var43 = var8[var44++];
@@ -210,7 +210,7 @@ public class Patch extends Linkable {
 		int var48 = 0;
 		EnvelopeSet var49 = null;
 		for (int var50 = 0; var50 < 128; var50++) {
-			if (this.field1739[var50] != 0) {
+			if (this.noteWaveId[var50] != 0) {
 				if (var47 == 0) {
 					var49 = var19[var14[var48]];
 					if (var48 < var12.length) {
@@ -234,7 +234,7 @@ public class Patch extends Linkable {
 				} else {
 					var51 = -1;
 				}
-				if (this.field1739[var54] > 0) {
+				if (this.noteWaveId[var54] > 0) {
 					var53 = buf.g1() + 1;
 				}
 			}
@@ -439,7 +439,7 @@ public class Patch extends Linkable {
 		Wave var6 = null;
 		for (int var7 = 0; var7 < 128; var7++) {
 			if (arg1 == null || arg1[var7] != 0) {
-				int var8 = this.field1739[var7];
+				int var8 = this.noteWaveId[var7];
 				if (var8 != 0) {
 					if (var5 != var8) {
 						var5 = var8--;
@@ -454,7 +454,7 @@ public class Patch extends Linkable {
 					}
 					if (var6 != null) {
 						this.noteSound[var7] = var6;
-						this.field1739[var7] = 0;
+						this.noteWaveId[var7] = 0;
 					}
 				}
 			}
@@ -463,7 +463,7 @@ public class Patch extends Linkable {
 	}
 
 	@ObfuscatedName("ef.j(B)V")
-	public void method1781() {
-		this.field1739 = null;
+	public void freeWaveIds() {
+		this.noteWaveId = null;
 	}
 }

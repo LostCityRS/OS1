@@ -165,7 +165,7 @@ public class MidiManager {
 				}
 
 				if (midiPlayer.loadAndQueuePatches(loadingMidiFile, patches, loadingWaveCache, 22050)) {
-					midiPlayer.finalizePatches();
+					midiPlayer.freeWaveIds();
 					midiPlayer.setGlobalVolume(pendingVolume);
 					midiPlayer.start(loadingMidiFile, pendingLoop);
 					state = 0;

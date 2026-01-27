@@ -39,7 +39,7 @@ public class BgSound extends Linkable {
 	public int mindelay;
 
 	@ObfuscatedName("de.u")
-	public WaveStream field1603;
+	public WaveStream continuousStream;
 
 	@ObfuscatedName("de.v")
 	public int maxdelay;
@@ -48,10 +48,10 @@ public class BgSound extends Linkable {
 	public int[] random;
 
 	@ObfuscatedName("de.e")
-	public int field1613;
+	public int randomSoundTimer;
 
 	@ObfuscatedName("de.b")
-	public WaveStream field1614;
+	public WaveStream randomStream;
 
 	@ObfuscatedName("de.y")
 	public LocType multiloc;
@@ -69,13 +69,13 @@ public class BgSound extends Linkable {
 	// jag::oldscape::bgsound::Reset
 	public static void reset() {
 		for (BgSound bg = (BgSound) soundlist.head(); bg != null; bg = (BgSound) soundlist.next()) {
-			if (bg.field1603 != null) {
-				Client.soundMixer.stopStream(bg.field1603);
-				bg.field1603 = null;
+			if (bg.continuousStream != null) {
+				Client.soundMixer.stopStream(bg.continuousStream);
+				bg.continuousStream = null;
 			}
-			if (bg.field1614 != null) {
-				Client.soundMixer.stopStream(bg.field1614);
-				bg.field1614 = null;
+			if (bg.randomStream != null) {
+				Client.soundMixer.stopStream(bg.randomStream);
+				bg.randomStream = null;
 			}
 		}
 		soundlist.clear();
@@ -101,9 +101,9 @@ public class BgSound extends Linkable {
 			this.random = loc.bgsound_random;
 		}
 
-		if (this.sound != sound && this.field1603 != null) {
-			Client.soundMixer.stopStream(this.field1603);
-			this.field1603 = null;
+		if (this.sound != sound && this.continuousStream != null) {
+			Client.soundMixer.stopStream(this.continuousStream);
+			this.continuousStream = null;
 		}
 	}
 
@@ -134,7 +134,7 @@ public class BgSound extends Linkable {
 		soundlist.push(bg);
 
 		if (bg.random != null) {
-			bg.field1613 = bg.mindelay + (int) (Math.random() * (double) (bg.maxdelay - bg.mindelay));
+			bg.randomSoundTimer = bg.mindelay + (int) (Math.random() * (double) (bg.maxdelay - bg.mindelay));
 		}
 	}
 
@@ -158,13 +158,13 @@ public class BgSound extends Linkable {
 				var5 += var4.minZ - arg2;
 			}
 			if (var5 - 64 > var4.range || Client.ambientVolume == 0 || var4.level != arg0) {
-				if (var4.field1603 != null) {
-					Client.soundMixer.stopStream(var4.field1603);
-					var4.field1603 = null;
+				if (var4.continuousStream != null) {
+					Client.soundMixer.stopStream(var4.continuousStream);
+					var4.continuousStream = null;
 				}
-				if (var4.field1614 != null) {
-					Client.soundMixer.stopStream(var4.field1614);
-					var4.field1614 = null;
+				if (var4.randomStream != null) {
+					Client.soundMixer.stopStream(var4.randomStream);
+					var4.randomStream = null;
 				}
 			} else {
 				var5 -= 64;
@@ -172,8 +172,8 @@ public class BgSound extends Linkable {
 					var5 = 0;
 				}
 				int var6 = Client.ambientVolume * (var4.range - var5) / var4.range;
-				if (var4.field1603 != null) {
-					var4.field1603.applyVolume(var6);
+				if (var4.continuousStream != null) {
+					var4.continuousStream.applyVolume(var6);
 				} else if (var4.sound >= 0) {
 					JagFx var7 = JagFx.load(Client.jagFX, var4.sound, 0);
 					if (var7 != null) {
@@ -181,15 +181,15 @@ public class BgSound extends Linkable {
 						WaveStream var9 = WaveStream.newRatePercent(var8, 100, var6);
 						var9.setLoopCount(-1);
 						Client.soundMixer.playStream(var9);
-						var4.field1603 = var9;
+						var4.continuousStream = var9;
 					}
 				}
-				if (var4.field1614 != null) {
-					var4.field1614.applyVolume(var6);
-					if (!var4.field1614.isLinked()) {
-						var4.field1614 = null;
+				if (var4.randomStream != null) {
+					var4.randomStream.applyVolume(var6);
+					if (!var4.randomStream.isLinked()) {
+						var4.randomStream = null;
 					}
-				} else if (var4.random != null && (var4.field1613 -= arg3) <= 0) {
+				} else if (var4.random != null && (var4.randomSoundTimer -= arg3) <= 0) {
 					int var10 = (int) (Math.random() * (double) var4.random.length);
 					JagFx var11 = JagFx.load(Client.jagFX, var4.random[var10], 0);
 					if (var11 != null) {
@@ -197,8 +197,8 @@ public class BgSound extends Linkable {
 						WaveStream var13 = WaveStream.newRatePercent(var12, 100, var6);
 						var13.setLoopCount(0);
 						Client.soundMixer.playStream(var13);
-						var4.field1614 = var13;
-						var4.field1613 = var4.mindelay + (int) (Math.random() * (double) (var4.maxdelay - var4.mindelay));
+						var4.randomStream = var13;
+						var4.randomSoundTimer = var4.mindelay + (int) (Math.random() * (double) (var4.maxdelay - var4.mindelay));
 					}
 				}
 			}

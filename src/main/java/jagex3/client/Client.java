@@ -8451,7 +8451,7 @@ public class Client extends GameShell {
 
 			Js5WorkerRequest req;
 			synchronized (lock) {
-				req = (Js5WorkerRequest) Js5NetThread.field1206.popFront();
+				req = (Js5WorkerRequest) Js5NetThread.completed.popFront();
 			}
 			if (req == null) {
 				return;

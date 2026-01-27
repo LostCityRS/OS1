@@ -137,9 +137,9 @@ public class MidiPlayer extends PcmStream {
 	}
 
 	@ObfuscatedName("ed.aa(B)V")
-	public synchronized void finalizePatches() {
+	public synchronized void freeWaveIds() {
 		for (Patch patch = (Patch) this.patches.search(); patch != null; patch = (Patch) this.patches.findnext()) {
-			patch.method1781();
+			patch.freeWaveIds();
 		}
 	}
 

@@ -17,13 +17,13 @@ public class CodeBook {
 	public int[] lengths;
 
 	@ObfuscatedName("x.m")
-	public int[] field326;
+	public int[] multiplicands;
 
 	@ObfuscatedName("x.c")
-	public float[][] field328;
+	public float[][] vqLookup;
 
 	@ObfuscatedName("x.n")
-	public int[] field323;
+	public int[] huffmanTree;
 
 	// jag::oldscape::sound::CodeBook::Lookup1Values
 	@ObfuscatedName("x.r(II)I")
@@ -101,20 +101,20 @@ public class CodeBook {
 				lookup_values = this.entries * this.dimensions;
 			}
 
-			this.field326 = new int[lookup_values];
+			this.multiplicands = new int[lookup_values];
 			for (int var14 = 0; var14 < lookup_values; var14++) {
-				this.field326[var14] = JagVorbis.readBits(value_bits);
+				this.multiplicands[var14] = JagVorbis.readBits(value_bits);
 			}
 
-			this.field328 = new float[this.entries][this.dimensions];
+			this.vqLookup = new float[this.entries][this.dimensions];
 			if (lookup_type == 1) {
 				for (int var15 = 0; var15 < this.entries; var15++) {
 					float var16 = 0.0F;
 					int var17 = 1;
 					for (int var18 = 0; var18 < this.dimensions; var18++) {
 						int var19 = var15 / var17 % lookup_values;
-						float var20 = (float) this.field326[var19] * delta_value + minimum_value + var16;
-						this.field328[var15][var18] = var20;
+						float var20 = (float) this.multiplicands[var19] * delta_value + minimum_value + var16;
+						this.vqLookup[var15][var18] = var20;
 						if (sequence_p) {
 							var16 = var20;
 						}
@@ -126,8 +126,8 @@ public class CodeBook {
 					float var22 = 0.0F;
 					int var23 = this.dimensions * var21;
 					for (int var24 = 0; var24 < this.dimensions; var24++) {
-						float var25 = (float) this.field326[var23] * delta_value + minimum_value + var22;
-						this.field328[var21][var24] = var25;
+						float var25 = (float) this.multiplicands[var23] * delta_value + minimum_value + var22;
+						this.vqLookup[var21][var24] = var25;
 						if (sequence_p) {
 							var22 = var25;
 						}
@@ -176,7 +176,7 @@ public class CodeBook {
 				}
 			}
 		}
-		this.field323 = new int[8];
+		this.huffmanTree = new int[8];
 		int var13 = 0;
 		for (int var14 = 0; var14 < this.entries; var14++) {
 			int var15 = this.lengths[var14];
@@ -188,21 +188,21 @@ public class CodeBook {
 					if ((var16 & var19) == 0) {
 						var17++;
 					} else {
-						if (this.field323[var17] == 0) {
-							this.field323[var17] = var13;
+						if (this.huffmanTree[var17] == 0) {
+							this.huffmanTree[var17] = var13;
 						}
-						var17 = this.field323[var17];
+						var17 = this.huffmanTree[var17];
 					}
-					if (var17 >= this.field323.length) {
-						int[] var20 = new int[this.field323.length * 2];
-						for (int var21 = 0; var21 < this.field323.length; var21++) {
-							var20[var21] = this.field323[var21];
+					if (var17 >= this.huffmanTree.length) {
+						int[] var20 = new int[this.huffmanTree.length * 2];
+						for (int var21 = 0; var21 < this.huffmanTree.length; var21++) {
+							var20[var21] = this.huffmanTree[var21];
 						}
-						this.field323 = var20;
+						this.huffmanTree = var20;
 					}
 					int var22 = var19 >>> 1;
 				}
-				this.field323[var17] = ~var14;
+				this.huffmanTree[var17] = ~var14;
 				if (var17 >= var13) {
 					var13 = var17 + 1;
 				}
@@ -214,14 +214,14 @@ public class CodeBook {
 	@ObfuscatedName("x.l()I")
 	public int decodeScalar() {
 		int var1;
-		for (var1 = 0; this.field323[var1] >= 0; var1 = JagVorbis.readBit() == 0 ? var1 + 1 : this.field323[var1]) {
+		for (var1 = 0; this.huffmanTree[var1] >= 0; var1 = JagVorbis.readBit() == 0 ? var1 + 1 : this.huffmanTree[var1]) {
 		}
-		return ~this.field323[var1];
+		return ~this.huffmanTree[var1];
 	}
 
 	// jag::oldscape::sound::CodeBook::DecodeVQ
 	@ObfuscatedName("x.m()[F")
 	public float[] decodeVQ() {
-		return this.field328[this.decodeScalar()];
+		return this.vqLookup[this.decodeScalar()];
 	}
 }
