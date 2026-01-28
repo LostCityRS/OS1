@@ -102,6 +102,10 @@ public class Client extends GameShell {
 	@ObfuscatedName("dm.ai")
 	public static MouseTracking mouseTracking;
 
+	// guessing placement
+	@ObfuscatedName("az.lu")
+	public static MouseWheelInterface mouseWheel;
+
 	@ObfuscatedName("client.aj")
 	public static int lastWriteX = 0;
 
@@ -219,6 +223,10 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.cm")
 	public static int js5Errors = 0;
+
+	// placement based on rs3
+	@ObfuscatedName("r.pa")
+	public static DataFile masterIndex;
 
 	@ObfuscatedName("client.cw")
 	public static int loginStep = 0;
@@ -439,6 +447,10 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.fv")
 	public static int worldUpdateNum = 0;
 
+	// guessing placement
+	@ObfuscatedName("dl.ns")
+	public static Pix32 minimap;
+
 	@ObfuscatedName("al.fu")
 	public static Pix32 compass;
 
@@ -622,6 +634,10 @@ public class Client extends GameShell {
 	@ObfuscatedName("cv.hg")
 	public static IfType hoveredSlotParent;
 
+	// guessing placement
+	@ObfuscatedName("l.jy")
+	public static IfType hoveredCom;
+
 	@ObfuscatedName("client.hq")
 	public static int objDragSlot = 0;
 
@@ -661,8 +677,16 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.im")
 	public static Packet[] playerAppearanceBuffer = new Packet[2048];
 
+	// placement based on rs3
+	@ObfuscatedName("al.in")
+	public static int minusedlevel;
+
 	@ObfuscatedName("client.ik")
 	public static int selfSlot = -1;
+
+	// placement based on rs3
+	@ObfuscatedName("cr.ii")
+	public static ClientPlayer localPlayer;
 
 	@ObfuscatedName("client.iy")
 	public static int membersAccount = 0;
@@ -684,18 +708,6 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.il")
 	public static int[] ANGLE_TO_DIR = new int[] { 768, 1024, 1280, 512, 1536, 256, 0, 1792 };
-
-	@ObfuscatedName("an.ix")
-	public static int objSelectedLayerId;
-
-	@ObfuscatedName("cr.ii")
-	public static ClientPlayer localPlayer;
-
-	@ObfuscatedName("al.in")
-	public static int minusedlevel;
-
-	@ObfuscatedName("ag.iz")
-	public static int objLayerId;
 
 	@ObfuscatedName("client.ir")
 	public static LinkList[][][] groundObj = new LinkList[4][104][104];
@@ -730,6 +742,18 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.jp")
 	public static int menuNumEntries = 0;
 
+	@ObfuscatedName("ca.jf")
+	public static int menuX;
+
+	@ObfuscatedName("bk.ji")
+	public static int menuY;
+
+	@ObfuscatedName("al.jt")
+	public static int menuWidth;
+
+	@ObfuscatedName("m.jd")
+	public static int menuHeight;
+
 	@ObfuscatedName("client.jg")
 	public static int[] menuParamB = new int[500];
 
@@ -754,6 +778,10 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.jx")
 	public static int minimenuMouseOverY = -1;
 
+	// guessing placement
+	@ObfuscatedName("at.jq")
+	public static IfType tooltipCom;
+
 	@ObfuscatedName("client.ju")
 	public static int tooltipNum = 0;
 
@@ -763,35 +791,31 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.jo")
 	public static int useMode = 0;
 
-	@ObfuscatedName("client.jh")
-	public static boolean targetMode = false;
+	// guessing placement
+	@ObfuscatedName("ag.iz")
+	public static int objLayerId;
 
-	@ObfuscatedName("client.jw")
-	public static int targetSub = -1;
+	// guessing placement
+	@ObfuscatedName("an.ix")
+	public static int objSelectedLayerId;
 
-	@ObfuscatedName("ca.jf")
-	public static int menuX;
-
-	@ObfuscatedName("l.jy")
-	public static IfType hoveredCom;
-
-	@ObfuscatedName("m.jd")
-	public static int menuHeight;
-
-	@ObfuscatedName("m.jv")
-	public static int targetCom;
-
-	@ObfuscatedName("al.jt")
-	public static int menuWidth;
-
+	// guessing placement
 	@ObfuscatedName("ag.jb")
 	public static int objSelectedSlot;
 
-	@ObfuscatedName("at.jq")
-	public static IfType tooltipCom;
+	@ObfuscatedName("client.jh")
+	public static boolean targetMode = false;
 
-	@ObfuscatedName("bk.ji")
-	public static int menuY;
+	// guessing placement
+	@ObfuscatedName("m.jv")
+	public static int targetCom;
+
+	// guessing placement
+	@ObfuscatedName("ak.kt")
+	public static int targetMask;
+
+	@ObfuscatedName("client.jw")
+	public static int targetSub = -1;
 
 	@ObfuscatedName("client.kn")
 	public static String targetVerb = null;
@@ -838,6 +862,18 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.kx")
 	public static IfType dragParent = null;
 
+	// guessing placement
+	@ObfuscatedName("dz.lj")
+	public static IfType[] dragChildren;
+
+	// guessing placement
+	@ObfuscatedName("client.lh")
+	public static int dragChildY;
+
+	// guessing placement
+	@ObfuscatedName("m.la")
+	public static int dragChildX;
+
 	@ObfuscatedName("client.kk")
 	public static int dragPickupX = 0;
 
@@ -868,8 +904,9 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.kh")
 	public static boolean dragAlive = false;
 
-	@ObfuscatedName("ak.kt")
-	public static int targetMask;
+	// placement based on rs3
+	@ObfuscatedName("cv.ll")
+	public static int dragTime;
 
 	@ObfuscatedName("client.lg")
 	public static int transmitNum = 1;
@@ -925,21 +962,6 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.lz")
 	public static HashTable serverActive = new HashTable(512);
 
-	@ObfuscatedName("cv.ll")
-	public static int dragTime;
-
-	@ObfuscatedName("dz.lj")
-	public static IfType[] dragChildren;
-
-	@ObfuscatedName("client.lh")
-	public static int dragChildY;
-
-	@ObfuscatedName("m.la")
-	public static int dragChildX;
-
-	@ObfuscatedName("az.lu")
-	public static MouseWheelInterface mouseWheel;
-
 	@ObfuscatedName("client.mw")
 	public static int componentDrawCount = 0;
 
@@ -991,6 +1013,10 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.mf")
 	public static int publicChatFilter = 0;
 
+	// placement based on rs3
+	@ObfuscatedName("au.mg")
+	public static PrivateChatFilter privateChatFilter;
+
 	@ObfuscatedName("client.mz")
 	public static int tradeChatFilter = 0;
 
@@ -1000,14 +1026,27 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.ml")
 	public static int privateMessageCount = 0;
 
+	// placement based on rs3
+	@ObfuscatedName("df.nr")
+	public static byte chatMinKick;
+
+	// placement based on rs3
+	@ObfuscatedName("cz.ny")
+	public static byte chatRank;
+
+	// placement based on rs3
+	@ObfuscatedName("eh.nd")
+	public static FriendChatUser[] friendChatList;
+
+	// placement based on rs3
+	@ObfuscatedName("cv.nm")
+	public static int friendChatCount;
+
 	@ObfuscatedName("client.mk")
 	public static int keypresses = 0;
 
 	@ObfuscatedName("client.mb")
 	public static int[] keypressKeychars = new int[128];
-
-	@ObfuscatedName("au.mg")
-	public static PrivateChatFilter privateChatFilter;
 
 	@ObfuscatedName("client.ne")
 	public static int[] keypressKeycodes = new int[128];
@@ -1054,21 +1093,6 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.nf")
 	public static int waveVolume = 127;
 
-	@ObfuscatedName("cz.ny")
-	public static byte chatRank;
-
-	@ObfuscatedName("cv.nm")
-	public static int friendChatCount;
-
-	@ObfuscatedName("df.nr")
-	public static byte chatMinKick;
-
-	@ObfuscatedName("dl.ns")
-	public static Pix32 minimap;
-
-	@ObfuscatedName("eh.nd")
-	public static FriendChatUser[] friendChatList;
-
 	@ObfuscatedName("client.oz")
 	public static int ambientVolume = 127;
 
@@ -1099,47 +1123,59 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.oj")
 	public static int[] camShakeAxis = new int[5];
 
-	@ObfuscatedName("br.om")
-	public static int cutsceneSrcLocalTileZ;
-
-	@ObfuscatedName("co.op")
-	public static int cutsceneMoveAcceleration;
-
-	@ObfuscatedName("ct.or")
-	public static int cutsceneDstLocalTileX;
-
-	@ObfuscatedName("cq.oc")
-	public static Mixer soundMixer;
-
-	@ObfuscatedName("cq.ob")
-	public static int cutsceneDstHeight;
-
-	@ObfuscatedName("df.ou")
-	public static int cutsceneRotateAcceleration;
-
-	@ObfuscatedName("de.oy")
-	public static int cutsceneRotateSpeed;
-
-	@ObfuscatedName("ev.od")
-	public static Decimator soundDecimator;
-
-	@ObfuscatedName("l.on")
-	public static PcmPlayer midiPcmPlayer;
-
+	// placement based on rs3
 	@ObfuscatedName("be.ox")
 	public static int cutsceneSrcLocalTileX;
 
-	@ObfuscatedName("bp.og")
-	public static int cutsceneDstLocalTileZ;
+	// placement based on rs3
+	@ObfuscatedName("br.om")
+	public static int cutsceneSrcLocalTileZ;
 
+	// placement based on rs3
 	@ObfuscatedName("dq.oq")
 	public static int cutsceneSrcHeight;
+
+	// placement based on rs3
+	@ObfuscatedName("co.op")
+	public static int cutsceneMoveAcceleration;
 
 	@ObfuscatedName("du.oh")
 	public static int cutsceneMoveSpeed;
 
+	// placement based on rs3
+	@ObfuscatedName("ct.or")
+	public static int cutsceneDstLocalTileX;
+
+	// placement based on rs3
+	@ObfuscatedName("bp.og")
+	public static int cutsceneDstLocalTileZ;
+
+	// placement based on rs3
+	@ObfuscatedName("cq.ob")
+	public static int cutsceneDstHeight;
+
+	// placement based on rs3
+	@ObfuscatedName("df.ou")
+	public static int cutsceneRotateAcceleration;
+
+	// placement based on rs3
+	@ObfuscatedName("de.oy")
+	public static int cutsceneRotateSpeed;
+
+	// guessing placement
+	@ObfuscatedName("cq.oc")
+	public static Mixer soundMixer;
+
+	// guessing placement
+	@ObfuscatedName("ev.od")
+	public static Decimator soundDecimator;
+
 	@ObfuscatedName("dr.oi")
 	public static PcmPlayer soundPcmPlayer;
+
+	// guessing placement
+	@ObfuscatedName("l.on")
+	public static PcmPlayer midiPcmPlayer;
 
 	@ObfuscatedName("client.pk")
 	public static int[] camShakeRan = new int[5];
@@ -1176,9 +1212,6 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.pz")
 	public static int genderButton2 = -1;
-
-	@ObfuscatedName("r.pa")
-	public static DataFile masterIndex;
 
 	// placement relative to other clients
 	public static void setHighMemory() {
