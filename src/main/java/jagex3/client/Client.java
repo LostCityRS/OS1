@@ -1180,15 +1180,19 @@ public class Client extends GameShell {
 	@ObfuscatedName("r.pa")
 	public static DataFile masterIndex;
 
-	@ObfuscatedName("client.f(I)V")
-	public final void reset() {
+	// placement relative to other clients
+	public static void setHighMemory() {
+		World.lowMem = false;
+		lowMemory = false;
 	}
 
-	public static void main(String[] args) {
-		Client app = new Client();
-		app.startApplication(765, 503, 1);
+	// "re-added," not exposed as an option as of osrs release :(
+	public static void setLowMemory() {
+		World.lowMem = true;
+		lowMemory = true;
 	}
 
+	// custom
 	@Override
 	public URL getCodeBase() {
 		try {
@@ -1201,11 +1205,13 @@ public class Client extends GameShell {
 		return super.getDocumentBase();
 	}
 
+	// custom
 	@Override
 	public URL getDocumentBase() {
 		return this.getCodeBase();
 	}
 
+	// custom
 	@Override
 	public String getParameter(String name) {
 		if (name.equals(JavConfigParameter.MODEWHAT.id)) {
@@ -1222,60 +1228,75 @@ public class Client extends GameShell {
 		return null;
 	}
 
+	// custom
+	public static void main(String[] args) {
+		Client app = new Client();
+		app.startApplication(765, 503, 1);
+	}
+
+	@ObfuscatedName("client.f(I)V")
+	public final void onKilled() {
+	}
+
 	@Override
 	public final void init() {
 		if (!this.checkhost()) {
 			return;
 		}
+
 		JavConfigParameter[] var1 = new JavConfigParameter[] { JavConfigParameter.MEMBERS, JavConfigParameter.LANG, JavConfigParameter.WORLDLIST_URL, JavConfigParameter.PLUG, JavConfigParameter.WORLDID, JavConfigParameter.MODEWHERE, JavConfigParameter.JS, JavConfigParameter.GAME, JavConfigParameter.MODEWHAT };
 		JavConfigParameter[] var2 = var1;
+
 		for (int var3 = 0; var3 < var2.length; var3++) {
 			JavConfigParameter var4 = var2[var3];
 			String var5 = this.getParameter(var4.id);
-			if (var5 != null) {
-				switch (Integer.parseInt(var4.id)) {
-					case 1:
-						if (var5.equalsIgnoreCase(StringConstants.TRUE_S)) {
-							js = 1;
-						} else {
-							js = 0;
-						}
-						break;
-					case 2:
-						worldid = Integer.parseInt(var5);
-					case 3:
-						break;
-					case 4:
-						lang = Integer.parseInt(var5);
-						break;
-					case 5:
-						modewhat = ModeWhat.get(Integer.parseInt(var5));
-						break;
-					case 6:
-						if (var5.equalsIgnoreCase(StringConstants.TRUE_S)) {
-							memServer = true;
-						} else {
-							memServer = false;
-						}
-						break;
-					case 7:
-						modewhere = Integer.parseInt(var5);
-						break;
-					case 8:
-						modegame = ModeGame.get(Integer.parseInt(var5));
+			if (var5 == null) {
+				continue;
+			}
 
-						if (ModeGame.OLDSCAPE == modegame) {
-							namespace = NameSpace.RUNESCAPE;
-						} else {
-							namespace = NameSpace.LEGACY;
-						}
-						break;
-					case 9:
-						TitleScreen.worldlistUrl = var5;
-						break;
-				}
+			switch (Integer.parseInt(var4.id)) {
+				case 1:
+					if (var5.equalsIgnoreCase(StringConstants.TRUE_S)) {
+						js = 1;
+					} else {
+						js = 0;
+					}
+					break;
+				case 2:
+					worldid = Integer.parseInt(var5);
+				case 3:
+					break;
+				case 4:
+					lang = Integer.parseInt(var5);
+					break;
+				case 5:
+					modewhat = ModeWhat.get(Integer.parseInt(var5));
+					break;
+				case 6:
+					if (var5.equalsIgnoreCase(StringConstants.TRUE_S)) {
+						memServer = true;
+					} else {
+						memServer = false;
+					}
+					break;
+				case 7:
+					modewhere = Integer.parseInt(var5);
+					break;
+				case 8:
+					modegame = ModeGame.get(Integer.parseInt(var5));
+
+					if (ModeGame.OLDSCAPE == modegame) {
+						namespace = NameSpace.RUNESCAPE;
+					} else {
+						namespace = NameSpace.LEGACY;
+					}
+					break;
+				case 9:
+					TitleScreen.worldlistUrl = var5;
+					break;
 			}
 		}
+
 		setHighMemory();
 		loginHost = this.getCodeBase().getHost();
 		GameShellCache.imethod1(modewhat.name, 0);
@@ -1953,6 +1974,49 @@ public class Client extends GameShell {
 		return new Js5Loader(stream, masterIndex, archive, arg1, arg2, remoteEnabled);
 	}
 
+	// guessing placement
+	public static void prepareMinimap() {
+		compassMaskLineOffsets = new int[33];
+		compassMaskLineLengths = new int[33];
+
+		minimapMaskLineOffsets = new int[151];
+		minimapMaskLineLengths = new int[151];
+
+		for (int var47 = 0; var47 < 33; var47++) {
+			int var48 = 999;
+			int var49 = 0;
+			for (int var50 = 0; var50 < 34; var50++) {
+				if (mapback.data[mapback.wi * var47 + var50] == 0) {
+					if (var48 == 999) {
+						var48 = var50;
+					}
+				} else if (var48 != 999) {
+					var49 = var50;
+					break;
+				}
+			}
+			compassMaskLineOffsets[var47] = var48;
+			compassMaskLineLengths[var47] = var49 - var48;
+		}
+
+		for (int var51 = 5; var51 < 156; var51++) {
+			int var52 = 999;
+			int var53 = 0;
+			for (int var54 = 25; var54 < 172; var54++) {
+				if (mapback.data[mapback.wi * var51 + var54] == 0 && (var54 > 34 || var51 > 34)) {
+					if (var52 == 999) {
+						var52 = var54;
+					}
+				} else if (var52 != 999) {
+					var53 = var54;
+					break;
+				}
+			}
+			minimapMaskLineOffsets[var51 - 5] = var52 - 25;
+			minimapMaskLineLengths[var51 - 5] = var53 - var52;
+		}
+	}
+
 	// jag::oldscape::Client::LoginPoll
 	@ObfuscatedName("ex.dg(I)V")
 	public static void loginPoll() {
@@ -2165,6639 +2229,8 @@ public class Client extends GameShell {
 		}
 	}
 
-	// jag::oldscape::Client::LoginDone
-	@ObfuscatedName("dr.df(S)V")
-	public static void loginDone() {
-		prevMouseClickTime = 0L;
-		mouseTrackedDelta = 0;
-		mouseTracking.length = 0;
-
-		GameShell.focus = true;
-		focusIn = true;
-
-		ReflectionChecker.checks = new LinkList();
-
-		out.pos = 0;
-		in.pos = 0;
-		ptype = -1;
-		ptype0 = -1;
-		ptype1 = -1;
-		ptype2 = -1;
-
-		timeoutTimer = 0;
-		rebootTimer = 0;
-		logoutTimer = 0;
-
-		hintType = 0;
-
-		menuNumEntries = 0;
-		isMenuOpen = false;
-
-		ClientMouseListener.setIdleTimer(0);
-
-		for (int var0 = 0; var0 < 100; var0++) {
-			messageText[var0] = null;
-		}
-		chatHistoryLength = 0;
-
-		useMode = 0;
-		targetMode = false;
-
-		waveCount = 0;
-
-		macroCameraX = (int) (Math.random() * 100.0D) - 50;
-		macroCameraZ = (int) (Math.random() * 110.0D) - 55;
-		macroCameraAngle = (int) (Math.random() * 80.0D) - 40;
-		macroMinimapAngle = (int) (Math.random() * 120.0D) - 60;
-		macroMinimapZoom = (int) (Math.random() * 30.0D) - 20;
-		orbitCameraYaw = (int) (Math.random() * 20.0D) - 10 & 0x7FF;
-
-		minimapState = 0;
-		minimapLevel = -1;
-		minimapFlagX = 0;
-		minimapFlagZ = 0;
-
-		playerCount = 0;
-		npcCount = 0;
-
-		for (int var1 = 0; var1 < 2048; var1++) {
-			players[var1] = null;
-			playerAppearanceBuffer[var1] = null;
-		}
-
-		for (int var2 = 0; var2 < 32768; var2++) {
-			npcs[var2] = null;
-		}
-
-		localPlayer = players[2047] = new ClientPlayer();
-
-		projectiles.clear();
-		spotanims.clear();
-		for (int var3 = 0; var3 < 4; var3++) {
-			for (int var4 = 0; var4 < 104; var4++) {
-				for (int var5 = 0; var5 < 104; var5++) {
-					groundObj[var3][var4][var5] = null;
-				}
-			}
-		}
-		locChanges = new LinkList();
-
-		friendListStatus = 0;
-		friendCount = 0;
-
-		for (int var6 = 0; var6 < VarpType.numDefinitions; var6++) {
-			VarpType var7 = VarpType.list(var6);
-			if (var7 != null && var7.clientcode == 0) {
-				VarCache.varServ[var6] = 0;
-				VarCache.var[var6] = 0;
-			}
-		}
-
-		for (int var8 = 0; var8 < varcInt.length; var8++) {
-			varcInt[var8] = -1;
-		}
-
-		if (toplevelinterface != -1) {
-			int var9 = toplevelinterface;
-			if (var9 != -1 && IfType.open[var9]) {
-				IfType.interfaces.discardFiles(var9);
-				if (IfType.list[var9] != null) {
-					boolean hasNoInv = true;
-					for (int var11 = 0; var11 < IfType.list[var9].length; var11++) {
-						if (IfType.list[var9][var11] != null) {
-							if (IfType.list[var9][var11].type == 2) {
-								hasNoInv = false;
-							} else {
-								IfType.list[var9][var11] = null;
-							}
-						}
-					}
-					if (hasNoInv) {
-						IfType.list[var9] = null;
-					}
-					IfType.open[var9] = false;
-				}
-			}
-		}
-
-		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
-			closeSubInterface(sub, true);
-		}
-
-		toplevelinterface = -1;
-		subinterfaces = new HashTable(8);
-		resumedPauseButton = null;
-
-		isMenuOpen = false;
-		menuNumEntries = 0;
-
-		selfModel.setAppearance(null, new int[] { 0, 0, 0, 0, 0 }, false, -1);
-
-		for (int var13 = 0; var13 < 8; var13++) {
-			playerOp[var13] = null;
-			playerOpPriority[var13] = false;
-		}
-
-		ClientInvCache.invList = new HashTable(32);
-		js5Loading = true;
-
-		for (int var14 = 0; var14 < 100; var14++) {
-			componentRedrawRequested1[var14] = true;
-		}
-
-		chatDisplayName = null;
-		friendChatCount = 0;
-		friendChatList = null;
-	}
-
-	// jag::oldscape::Client::LoginError
-	@ObfuscatedName("bf.dk(II)V")
-	public static void loginError(int response) {
-		if (response == -3) {
-			TitleScreen.loginMes(Text.LOGINM3_A, Text.LOGINM3_B, Text.LOGINM3_C);
-		} else if (response == -2) {
-			TitleScreen.loginMes(Text.LOGINM2_A, Text.LOGINM2_B, Text.LOGINM2_C);
-		} else if (response == -1) {
-			TitleScreen.loginMes(Text.LOGINM1_A, Text.LOGINM1_B, Text.LOGINM1_C);
-		} else if (response == 3) {
-			TitleScreen.loginMes(Text.LOGIN3_A, Text.LOGIN3_B, Text.LOGIN3_C);
-		} else if (response == 4) {
-			TitleScreen.loginMes(Text.LOGIN4_A, Text.LOGIN4_B, Text.LOGIN4_C);
-		} else if (response == 5) {
-			TitleScreen.loginMes(Text.LOGIN5_A, Text.LOGIN5_B, Text.LOGIN5_C);
-		} else if (response == 6) {
-			TitleScreen.loginMes(Text.LOGIN6_A, Text.LOGIN6_B, Text.LOGIN6_C);
-		} else if (response == 7) {
-			TitleScreen.loginMes(Text.LOGIN7_A, Text.LOGIN7_B, Text.LOGIN7_C);
-		} else if (response == 8) {
-			TitleScreen.loginMes(Text.LOGIN8_A, Text.LOGIN8_B, Text.LOGIN8_C);
-		} else if (response == 9) {
-			TitleScreen.loginMes(Text.LOGIN9_A, Text.LOGIN9_B, Text.LOGIN9_C);
-		} else if (response == 10) {
-			TitleScreen.loginMes(Text.LOGIN10_A, Text.LOGIN10_B, Text.LOGIN10_C);
-		} else if (response == 11) {
-			TitleScreen.loginMes(Text.LOGIN11_A, Text.LOGIN11_B, Text.LOGIN11_C);
-		} else if (response == 12) {
-			TitleScreen.loginMes(Text.LOGIN12_A, Text.LOGIN12_B, Text.LOGIN12_C);
-		} else if (response == 13) {
-			TitleScreen.loginMes(Text.LOGIN13_A, Text.LOGIN13_B, Text.LOGIN13_C);
-		} else if (response == 14) {
-			TitleScreen.loginMes(Text.LOGIN14_A, Text.LOGIN14_B, Text.LOGIN14_C);
-		} else if (response == 16) {
-			TitleScreen.loginMes(Text.LOGIN16_A, Text.LOGIN16_B, Text.LOGIN16_C);
-		} else if (response == 17) {
-			TitleScreen.loginMes(Text.LOGIN17_A, Text.LOGIN17_B, Text.LOGIN17_C);
-		} else if (response == 18) {
-			TitleScreen.loginMes(Text.LOGIN18_A, Text.LOGIN18_B, Text.LOGIN18_C);
-		} else if (response == 19) {
-			TitleScreen.loginMes(Text.LOGIN19_A, Text.LOGIN19_B, Text.LOGIN19_C);
-		} else if (response == 20) {
-			TitleScreen.loginMes(Text.LOGIN20_A, Text.LOGIN20_B, Text.LOGIN20_C);
-		} else if (response == 22) {
-			TitleScreen.loginMes(Text.LOGIN22_A, Text.LOGIN22_B, Text.LOGIN22_C);
-		} else if (response == 23) {
-			TitleScreen.loginMes(Text.LOGIN23_A, Text.LOGIN23_B, Text.LOGIN23_C);
-		} else if (response == 24) {
-			TitleScreen.loginMes(Text.LOGIN24_A, Text.LOGIN24_B, Text.LOGIN24_C);
-		} else if (response == 25) {
-			TitleScreen.loginMes(Text.LOGIN25_A, Text.LOGIN25_B, Text.LOGIN25_C);
-		} else if (response == 26) {
-			TitleScreen.loginMes(Text.LOGIN26_A, Text.LOGIN26_B, Text.LOGIN26_C);
-		} else if (response == 27) {
-			TitleScreen.loginMes(Text.LOGIN27_A, Text.LOGIN27_B, Text.LOGIN27_C);
-		} else if (response == 31) {
-			TitleScreen.loginMes(Text.LOGIN31_A, Text.LOGIN31_B, Text.LOGIN31_C);
-		} else if (response == 32) {
-			TitleScreen.loginMes(Text.LOGIN32_A, Text.LOGIN32_B, Text.LOGIN32_C);
-		} else if (response == 37) {
-			TitleScreen.loginMes(Text.LOGIN37_A, Text.LOGIN37_B, Text.LOGIN37_C);
-		} else if (response == 38) {
-			TitleScreen.loginMes(Text.LOGIN38_A, Text.LOGIN38_B, Text.LOGIN38_C);
-		} else if (response == 55) {
-			TitleScreen.loginMes(Text.LOGIN55_A, Text.LOGIN55_B, Text.LOGIN55_C);
-		} else {
-			TitleScreen.loginMes(Text.LOGINMIS_A, Text.LOGINMIS_B, Text.LOGINMIS_C);
-		}
-		setMainState(10);
-	}
-
-	// jag::oldscape::Client::Logout
-	@ObfuscatedName("dq.dz(B)V")
-	public static void logout() {
-		if (loginStream != null) {
-			loginStream.close();
-			loginStream = null;
-		}
-
-		clearCaches();
-		world.resetMap();
-
-		for (int i = 0; i < 4; i++) {
-			levelCollisionMap[i].reset();
-		}
-
-		System.gc();
-
-		MidiManager.stop2();
-		previousSong = -1;
-		playingJingle = false;
-
-		BgSound.reset();
-
-		setMainState(10);
-	}
-
-	@ObfuscatedName("bh.da(B)V")
-	public static void clearCaches() {
-		FloType.resetCache();
-		FluType.resetCache();
-		IdkType.resetCache();
-		LocType.resetCache();
-		NpcType.resetCache();
-		ObjType.resetCache();
-		SeqType.resetCache();
-		SpotType.resetCache();
-		VarpType.resetCache();
-		PlayerModel.resetCache();
-		IfType.resetCache();
-		((WorldTextureProvider) Pix3D.textureProvider).reset();
-		ClientScript.cache.clear();
-
-		anims.discardAllFiles();
-		bases.discardAllFiles();
-		interfaces.discardAllFiles();
-		jagFX.discardAllFiles();
-		maps.discardAllFiles();
-		songs.discardAllFiles();
-		models.discardAllFiles();
-		sprites.discardAllFiles();
-		textures.discardAllFiles();
-		binary.discardAllFiles();
-		jingles.discardAllFiles();
-		scripts.discardAllFiles();
-	}
-
-	@ObfuscatedName("da.dj(I)V")
-	public static void doAudio() {
-		if (soundPcmPlayer != null) {
-			soundPcmPlayer.cycle();
-		}
-		if (midiPcmPlayer != null) {
-			midiPcmPlayer.cycle();
-		}
-	}
-
-	// jag::oldscape::Client::TriggerSeqSound
-	@ObfuscatedName("de.dv(Leo;IIII)V")
-	public static void triggerSeqSound(SeqType arg0, int arg1, int arg2, int arg3) {
-		if (waveCount >= 50 || ambientVolume == 0 || (arg0.sound == null || arg1 >= arg0.sound.length)) {
-			return;
-		}
-
-		int var4 = arg0.sound[arg1];
-		if (var4 == 0) {
-			return;
-		}
-
-		int var5 = var4 >> 8;
-		int var6 = var4 >> 4 & 0x7;
-		int var7 = var4 & 0xF;
-
-		waveSoundIds[waveCount] = var5;
-		waveLoops[waveCount] = var6;
-		waveDelay[waveCount] = 0;
-		waveSounds[waveCount] = null;
-
-		int var8 = (arg2 - 64) / 128;
-		int var9 = (arg3 - 64) / 128;
-		waveAmbient[waveCount] = (var8 << 16) + (var9 << 8) + var7;
-
-		waveCount++;
-	}
-
-	// jag::oldscape::Client::PlaySongs
-	@ObfuscatedName("ck.ds(IB)V")
-	public static void playSongs(int id) {
-		if (id == -1 && !playingJingle) {
-			MidiManager.stop();
-		} else if (id != -1 && previousSong != id && midiVolume != 0 && !playingJingle) {
-			MidiManager.swapSongs(2, songs, id, 0, midiVolume, false);
-		}
-
-		previousSong = id;
-	}
-
-	// jag::oldscape::minimap::Minimap::GlMinimap
-	@ObfuscatedName("p.dh(III)V")
-	public static void minimapLoop(int offsetX, int offsetY) {
-		if (minimapState != 0 && minimapState != 3) {
-			return;
-		}
-
-		if (ClientMouseListener.mouseClickButton == 1) {
-			int x = ClientMouseListener.mouseClickX - 25 - offsetX;
-			int y = ClientMouseListener.mouseClickY - 5 - offsetY;
-
-			if (x < 0 || y < 0 || x >= 146 || y >= 151) {
-				return;
-			}
-
-			// make x and y relative to center of minimap
-			x -= 73;
-			y -= 75;
-
-			int yaw = orbitCameraYaw + macroMinimapAngle & 0x7FF;
-
-			int sinYaw = Pix3D.sinTable[yaw];
-			int cosYaw = Pix3D.cosTable[yaw];
-
-			int zoomX = (macroMinimapZoom + 256) * sinYaw >> 8;
-			int zoomY = (macroMinimapZoom + 256) * cosYaw >> 8;
-
-			int relX = x * zoomY + y * zoomX >> 11;
-			int relY = y * zoomY - x * zoomX >> 11;
-
-			int tileX = localPlayer.x + relX >> 7;
-			int tileZ = localPlayer.z - relY >> 7;
-
-			boolean moved = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], tileX, tileZ, true, 0, 0, 0, 0, 0, 1);
-			if (moved) {
-				// identical all the way back to 2004 - same constants and all!
-				out.p1(x);
-				out.p1(y);
-				out.p2(orbitCameraYaw);
-				out.p1(57);
-				out.p1(macroMinimapAngle);
-				out.p1(macroMinimapZoom);
-				out.p1(89);
-				out.p2(localPlayer.x);
-				out.p2(localPlayer.z);
-				out.p1(tryMoveNearest);
-				out.p1(63);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GlTimeoutChat
-	@ObfuscatedName("dm.dc(B)V")
-	public static void timeoutChat() {
-		for (int var0 = -1; var0 < playerCount; var0++) {
-			int var1;
-			if (var0 == -1) {
-				var1 = 2047;
-			} else {
-				var1 = playerIds[var0];
-			}
-			ClientPlayer var2 = players[var1];
-			if (var2 != null && var2.chatTimer > 0) {
-				var2.chatTimer--;
-				if (var2.chatTimer == 0) {
-					var2.chat = null;
-				}
-			}
-		}
-		for (int var3 = 0; var3 < npcCount; var3++) {
-			int var4 = npcIds[var3];
-			ClientNpc var5 = npcs[var4];
-			if (var5 != null && var5.chatTimer > 0) {
-				var5.chatTimer--;
-				if (var5.chatTimer == 0) {
-					var5.chat = null;
-				}
-			}
-		}
-	}
-
-	// jag::oldscape::Client::DoCheat
-	@ObfuscatedName("eh.dp(Ljava/lang/String;S)V")
-	public static void doCheat(String message) {
-		if (staffmodlevel >= 2) {
-			if (message.equalsIgnoreCase("::gc")) {
-				System.gc();
-			} else if (message.equalsIgnoreCase("::clientdrop")) {
-				lostCon();
-			} else if (message.equalsIgnoreCase("::fpson")) {
-				showFps = true;
-			} else if (message.equalsIgnoreCase("::fpsoff")) {
-				showFps = false;
-			} else if (message.equalsIgnoreCase("::noclip")) {
-				for (int level = 0; level < 4; level++) {
-					for (int x = 1; x < 103; x++) {
-						for (int z = 1; z < 103; z++) {
-							levelCollisionMap[level].flags[x][z] = 0;
-						}
-					}
-				}
-			} else if (message.equalsIgnoreCase("::errortest") && modewhere == 2) {
-				throw new RuntimeException();
-			}
-		}
-
-		// CLIENT_CHEAT
-		out.p1Enc(30);
-		out.p1(message.length() - 1);
-		out.pjstr(message.substring(2));
-	}
-
-	// jag::oldscape::Client::GlCinemaCamera
-	@ObfuscatedName("ez.dm(B)V")
-	public static void cinemaCamera() {
-		int var0 = cutsceneSrcLocalTileX * 128 + 64;
-		int var1 = cutsceneSrcLocalTileZ * 128 + 64;
-		int var2 = getAvH(var0, var1, minusedlevel) - cutsceneSrcHeight;
-		if (camX < var0) {
-			camX += cutsceneMoveAcceleration * (var0 - camX) / 1000 + cutsceneMoveSpeed;
-			if (camX > var0) {
-				camX = var0;
-			}
-		}
-		if (camX > var0) {
-			camX -= cutsceneMoveAcceleration * (camX - var0) / 1000 + cutsceneMoveSpeed;
-			if (camX < var0) {
-				camX = var0;
-			}
-		}
-		if (camY < var2) {
-			camY += cutsceneMoveAcceleration * (var2 - camY) / 1000 + cutsceneMoveSpeed;
-			if (camY > var2) {
-				camY = var2;
-			}
-		}
-		if (camY > var2) {
-			camY -= cutsceneMoveAcceleration * (camY - var2) / 1000 + cutsceneMoveSpeed;
-			if (camY < var2) {
-				camY = var2;
-			}
-		}
-		if (camZ < var1) {
-			camZ += cutsceneMoveAcceleration * (var1 - camZ) / 1000 + cutsceneMoveSpeed;
-			if (camZ > var1) {
-				camZ = var1;
-			}
-		}
-		if (camZ > var1) {
-			camZ -= cutsceneMoveAcceleration * (camZ - var1) / 1000 + cutsceneMoveSpeed;
-			if (camZ < var1) {
-				camZ = var1;
-			}
-		}
-		int var3 = cutsceneDstLocalTileX * 128 + 64;
-		int var4 = cutsceneDstLocalTileZ * 128 + 64;
-		int var5 = getAvH(var3, var4, minusedlevel) - cutsceneDstHeight;
-		int var6 = var3 - camX;
-		int var7 = var5 - camY;
-		int var8 = var4 - camZ;
-		int var9 = (int) Math.sqrt((double) (var6 * var6 + var8 * var8));
-		int var10 = (int) (Math.atan2((double) var7, (double) var9) * 325.949D) & 0x7FF;
-		int var11 = (int) (Math.atan2((double) var6, (double) var8) * -325.949D) & 0x7FF;
-		if (var10 < 128) {
-			var10 = 128;
-		}
-		if (var10 > 383) {
-			var10 = 383;
-		}
-		if (camPitch < var10) {
-			camPitch += cutsceneRotateAcceleration * (var10 - camPitch) / 1000 + cutsceneRotateSpeed;
-			if (camPitch > var10) {
-				camPitch = var10;
-			}
-		}
-		if (camPitch > var10) {
-			camPitch -= cutsceneRotateAcceleration * (camPitch - var10) / 1000 + cutsceneRotateSpeed;
-			if (camPitch < var10) {
-				camPitch = var10;
-			}
-		}
-		int var12 = var11 - camYaw;
-		if (var12 > 1024) {
-			var12 -= 2048;
-		}
-		if (var12 < -1024) {
-			var12 += 2048;
-		}
-		if (var12 > 0) {
-			camYaw += cutsceneRotateAcceleration * var12 / 1000 + cutsceneRotateSpeed;
-			camYaw &= 0x7FF;
-		}
-		if (var12 < 0) {
-			camYaw -= cutsceneRotateAcceleration * -var12 / 1000 + cutsceneRotateSpeed;
-			camYaw &= 0x7FF;
-		}
-		int var13 = var11 - camYaw;
-		if (var13 > 1024) {
-			var13 -= 2048;
-		}
-		if (var13 < -1024) {
-			var13 += 2048;
-		}
-		if (var13 < 0 && var12 > 0 || var13 > 0 && var12 < 0) {
-			camYaw = var11;
-		}
-	}
-
-	// jag::oldscape::Client::GlMovePlayers
-	@ObfuscatedName("eg.di(B)V")
-	public static void movePlayers() {
-		for (int var0 = -1; var0 < playerCount; var0++) {
-			int var1;
-			if (var0 == -1) {
-				var1 = 2047;
-			} else {
-				var1 = playerIds[var0];
-			}
-			ClientPlayer var2 = players[var1];
-			if (var2 != null) {
-				moveEntity(var2, 1);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GlMoveNpcs
-	@ObfuscatedName("l.db(I)V")
-	public static void moveNpcs() {
-		for (int var0 = 0; var0 < npcCount; var0++) {
-			int var1 = npcIds[var0];
-			ClientNpc var2 = npcs[var1];
-			if (var2 != null) {
-				moveEntity(var2, var2.type.size);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GlMoveEntity
-	@ObfuscatedName("be.dq(Lfz;IB)V")
-	public static void moveEntity(ClientEntity entity, int size) {
-		if (entity.exactMoveEnd > loopCycle) {
-			// todo: inlined method (exactMove1?)
-			int var2 = entity.exactMoveEnd - loopCycle;
-			int var3 = entity.size * 64 + entity.exactStartX * 128;
-			int var4 = entity.size * 64 + entity.exactStartZ * 128;
-			entity.x += (var3 - entity.x) / var2;
-			entity.z += (var4 - entity.z) / var2;
-			entity.animDelayMove = 0;
-			if (entity.exactMoveFacing == 0) {
-				entity.dstYaw = 1024;
-			}
-			if (entity.exactMoveFacing == 1) {
-				entity.dstYaw = 1536;
-			}
-			if (entity.exactMoveFacing == 2) {
-				entity.dstYaw = 0;
-			}
-			if (entity.exactMoveFacing == 3) {
-				entity.dstYaw = 512;
-			}
-		} else if (entity.exactMoveStart >= loopCycle) {
-			exactMove2(entity);
-		} else {
-			routeMove(entity);
-		}
-
-		if (entity.x < 128 || entity.z < 128 || entity.x >= 13184 || entity.z >= 13184) {
-			entity.primarySeqId = -1;
-			entity.spotanimId = -1;
-			entity.exactMoveEnd = 0;
-			entity.exactMoveStart = 0;
-			entity.x = entity.routeX[0] * 128 + entity.size * 64;
-			entity.z = entity.routeZ[0] * 128 + entity.size * 64;
-			entity.abortRoute();
-		}
-
-		if (localPlayer == entity && (entity.x < 1536 || entity.z < 1536 || entity.x >= 11776 || entity.z >= 11776)) {
-			entity.primarySeqId = -1;
-			entity.spotanimId = -1;
-			entity.exactMoveEnd = 0;
-			entity.exactMoveStart = 0;
-			entity.x = entity.routeX[0] * 128 + entity.size * 64;
-			entity.z = entity.routeZ[0] * 128 + entity.size * 64;
-			entity.abortRoute();
-		}
-
-		entityFace(entity);
-		entityAnim(entity);
-	}
-
-	// jag::oldscape::Client::GlExactMove2
-	@ObfuscatedName("ap.dr(Lfz;I)V")
-	public static void exactMove2(ClientEntity entity) {
-		if (loopCycle == entity.exactMoveStart || entity.primarySeqId == -1 || entity.primarySeqDelay != 0 || entity.primarySeqCycle + 1 > SeqType.list(entity.primarySeqId).delay[entity.primarySeqFrame]) {
-			int var1 = entity.exactMoveStart - entity.exactMoveEnd;
-			int var2 = loopCycle - entity.exactMoveEnd;
-			int var3 = (entity.size * 64) + (entity.exactStartX * 128);
-			int var4 = (entity.size * 64) + (entity.exactStartZ * 128);
-			int var5 = (entity.size * 64) + (entity.exactEndX * 128);
-			int var6 = (entity.size * 64) + (entity.exactEndZ * 128);
-			entity.x = ((var1 - var2) * var3 + var2 * var5) / var1;
-			entity.z = ((var1 - var2) * var4 + var2 * var6) / var1;
-		}
-		entity.animDelayMove = 0;
-		if (entity.exactMoveFacing == 0) {
-			entity.dstYaw = 1024;
-		}
-		if (entity.exactMoveFacing == 1) {
-			entity.dstYaw = 1536;
-		}
-		if (entity.exactMoveFacing == 2) {
-			entity.dstYaw = 0;
-		}
-		if (entity.exactMoveFacing == 3) {
-			entity.dstYaw = 512;
-		}
-		entity.yaw = entity.dstYaw;
-	}
-
-	// jag::oldscape::Client::GlRouteMove
-	@ObfuscatedName("eu.du(Lfz;B)V")
-	public static void routeMove(ClientEntity entity) {
-		entity.secondarySeqId = entity.readyanim;
-		if (entity.routeLength == 0) {
-			entity.animDelayMove = 0;
-			return;
-		}
-
-		if (entity.primarySeqId != -1 && entity.primarySeqDelay == 0) {
-			SeqType seq = SeqType.list(entity.primarySeqId);
-
-			if (entity.preanimRouteLength > 0 && seq.preanim_move == 0) {
-				entity.animDelayMove++;
-				return;
-			}
-
-			if (entity.preanimRouteLength <= 0 && seq.postanim_move == 0) {
-				entity.animDelayMove++;
-				return;
-			}
-		}
-
-		int var2 = entity.x;
-		int var3 = entity.z;
-		int var4 = (entity.routeX[entity.routeLength - 1] * 128) + (entity.size * 64);
-		int var5 = (entity.routeZ[entity.routeLength - 1] * 128) + (entity.size * 64);
-
-		if (var4 - var2 > 256 || var4 - var2 < -256 || var5 - var3 > 256 || var5 - var3 < -256) {
-			entity.x = var4;
-			entity.z = var5;
-			return;
-		}
-
-		if (var2 < var4) {
-			if (var3 < var5) {
-				entity.dstYaw = 1280;
-			} else if (var3 > var5) {
-				entity.dstYaw = 1792;
-			} else {
-				entity.dstYaw = 1536;
-			}
-		} else if (var2 > var4) {
-			if (var3 < var5) {
-				entity.dstYaw = 768;
-			} else if (var3 > var5) {
-				entity.dstYaw = 256;
-			} else {
-				entity.dstYaw = 512;
-			}
-		} else if (var3 < var5) {
-			entity.dstYaw = 1024;
-		} else if (var3 > var5) {
-			entity.dstYaw = 0;
-		}
-
-		int var6 = entity.dstYaw - entity.yaw & 0x7FF;
-		if (var6 > 1024) {
-			var6 -= 2048;
-		}
-
-		int var7 = entity.walkanim_b;
-		if (var6 >= -256 && var6 <= 256) {
-			var7 = entity.walkanim;
-		} else if (var6 >= 256 && var6 < 768) {
-			var7 = entity.walkanim_r;
-		} else if (var6 >= -768 && var6 <= -256) {
-			var7 = entity.walkanim_l;
-		}
-		if (var7 == -1) {
-			var7 = entity.walkanim;
-		}
-		entity.secondarySeqId = var7;
-
-		int var8 = 4;
-		boolean var9 = true;
-		if (entity instanceof ClientNpc) {
-			var9 = ((ClientNpc) entity).type.walksmoothing;
-		}
-
-		if (var9) {
-			if (entity.yaw != entity.dstYaw && entity.targetId == -1 && entity.turnSpeed != 0) {
-				var8 = 2;
-			}
-			if (entity.routeLength > 2) {
-				var8 = 6;
-			}
-			if (entity.routeLength > 3) {
-				var8 = 8;
-			}
-			if (entity.animDelayMove > 0 && entity.routeLength > 1) {
-				var8 = 8;
-				entity.animDelayMove--;
-			}
-		} else {
-			if (entity.routeLength > 1) {
-				var8 = 6;
-			}
-			if (entity.routeLength > 2) {
-				var8 = 8;
-			}
-			if (entity.animDelayMove > 0 && entity.routeLength > 1) {
-				var8 = 8;
-				entity.animDelayMove--;
-			}
-		}
-		if (entity.routeRun[entity.routeLength - 1]) {
-			var8 <<= 0x1;
-		}
-
-		if (var8 >= 8 && entity.secondarySeqId == entity.walkanim && entity.runanim != -1) {
-			entity.secondarySeqId = entity.runanim;
-		}
-
-		if (var2 < var4) {
-			entity.x += var8;
-			if (entity.x > var4) {
-				entity.x = var4;
-			}
-		} else if (var2 > var4) {
-			entity.x -= var8;
-			if (entity.x < var4) {
-				entity.x = var4;
-			}
-		}
-
-		if (var3 < var5) {
-			entity.z += var8;
-			if (entity.z > var5) {
-				entity.z = var5;
-			}
-		} else if (var3 > var5) {
-			entity.z -= var8;
-			if (entity.z < var5) {
-				entity.z = var5;
-			}
-		}
-
-		if (entity.x == var4 && entity.z == var5) {
-			entity.routeLength--;
-			if (entity.preanimRouteLength > 0) {
-				entity.preanimRouteLength--;
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GlEntityFace
-	@ObfuscatedName("dk.dy(Lfz;I)V")
-	public static void entityFace(ClientEntity entity) {
-		if (entity.turnSpeed == 0) {
-			return;
-		}
-
-		if (entity.targetId != -1 && entity.targetId < 32768) {
-			ClientNpc var1 = npcs[entity.targetId];
-			if (var1 != null) {
-				int var2 = entity.x - var1.x;
-				int var3 = entity.z - var1.z;
-				if (var2 != 0 || var3 != 0) {
-					entity.dstYaw = (int) (Math.atan2(var2, var3) * 325.949D) & 0x7FF;
-				}
-			}
-		}
-
-		if (entity.targetId >= 32768) {
-			int var4 = entity.targetId - 32768;
-			if (selfSlot == var4) {
-				var4 = 2047; // todo: LOCAL_PLAYER_INDEX constant
-			}
-
-			ClientPlayer var5 = players[var4];
-			if (var5 != null) {
-				int var6 = entity.x - var5.x;
-				int var7 = entity.z - var5.z;
-				if (var6 != 0 || var7 != 0) {
-					entity.dstYaw = (int) (Math.atan2(var6, var7) * 325.949D) & 0x7FF;
-				}
-			}
-		}
-
-		if ((entity.targetTileX != 0 || entity.targetTileZ != 0) && (entity.routeLength == 0 || entity.animDelayMove > 0)) {
-			int var8 = entity.x - ((entity.targetTileX * 64) - (mapBuildBaseX * 64) - (mapBuildBaseX * 64));
-			int var9 = entity.z - ((entity.targetTileZ * 64) - (mapBuildBaseZ * 64) - (mapBuildBaseZ * 64));
-			if (var8 != 0 || var9 != 0) {
-				entity.dstYaw = (int) (Math.atan2(var8, var9) * 325.949D) & 0x7FF;
-			}
-			entity.targetTileX = 0;
-			entity.targetTileZ = 0;
-		}
-
-		int var10 = entity.dstYaw - entity.yaw & 0x7FF;
-		if (var10 == 0) {
-			entity.turnCycle = 0;
-			return;
-		}
-
-		entity.turnCycle++;
-
-		if (var10 > 1024) {
-			entity.yaw -= entity.turnSpeed;
-
-			boolean var11 = true;
-			if (var10 < entity.turnSpeed || var10 > 2048 - entity.turnSpeed) {
-				entity.yaw = entity.dstYaw;
-				var11 = false;
-			}
-
-			if (entity.secondarySeqId == entity.readyanim && (entity.turnCycle > 25 || var11)) {
-				if (entity.turnleftanim == -1) {
-					entity.secondarySeqId = entity.walkanim;
-				} else {
-					entity.secondarySeqId = entity.turnleftanim;
-				}
-			}
-		} else {
-			entity.yaw += entity.turnSpeed;
-
-			boolean var12 = true;
-			if (var10 < entity.turnSpeed || var10 > 2048 - entity.turnSpeed) {
-				entity.yaw = entity.dstYaw;
-				var12 = false;
-			}
-
-			if (entity.secondarySeqId == entity.readyanim && (entity.turnCycle > 25 || var12)) {
-				if (entity.turnrightanim == -1) {
-					entity.secondarySeqId = entity.walkanim;
-				} else {
-					entity.secondarySeqId = entity.turnrightanim;
-				}
-			}
-		}
-
-		entity.yaw &= 0x7FF;
-	}
-
-	// jag::oldscape::Client::GlEntityAnim
-	@ObfuscatedName("p.de(Lfz;I)V")
-	public static void entityAnim(ClientEntity entity) {
-		entity.needsForwardDrawPadding = false;
-
-		if (entity.secondarySeqId != -1) {
-			SeqType var1 = SeqType.list(entity.secondarySeqId);
-			if (var1 == null || var1.frames == null) {
-				entity.secondarySeqId = -1;
-			} else {
-				entity.secondarySeqCycle++;
-
-				if (entity.secondarySeqFrame < var1.frames.length && entity.secondarySeqCycle > var1.delay[entity.secondarySeqFrame]) {
-					entity.secondarySeqCycle = 1;
-					entity.secondarySeqFrame++;
-					triggerSeqSound(var1, entity.secondarySeqFrame, entity.x, entity.z);
-				}
-
-				if (entity.secondarySeqFrame >= var1.frames.length) {
-					entity.secondarySeqCycle = 0;
-					entity.secondarySeqFrame = 0;
-					triggerSeqSound(var1, entity.secondarySeqFrame, entity.x, entity.z);
-				}
-			}
-		}
-
-		if (entity.spotanimId != -1 && loopCycle >= entity.spotanimLastCycle) {
-			if (entity.spotanimFrame < 0) {
-				entity.spotanimFrame = 0;
-			}
-
-			int spotAnim = SpotType.list(entity.spotanimId).anim;
-			if (spotAnim == -1) {
-				entity.spotanimId = -1;
-			} else {
-				SeqType spotSeq = SeqType.list(spotAnim);
-				if (spotSeq == null || spotSeq.frames == null) {
-					entity.spotanimId = -1;
-				} else {
-					entity.spotanimCycle++;
-
-					if (entity.spotanimFrame < spotSeq.frames.length && entity.spotanimCycle > spotSeq.delay[entity.spotanimFrame]) {
-						entity.spotanimCycle = 1;
-						entity.spotanimFrame++;
-						triggerSeqSound(spotSeq, entity.spotanimFrame, entity.x, entity.z);
-					}
-
-					if (entity.spotanimFrame >= spotSeq.frames.length && (entity.spotanimFrame < 0 || entity.spotanimFrame >= spotSeq.frames.length)) {
-						entity.spotanimId = -1;
-					}
-				}
-			}
-		}
-
-		if (entity.primarySeqId != -1 && entity.primarySeqDelay <= 1) {
-			SeqType seq = SeqType.list(entity.primarySeqId);
-			if (seq.preanim_move == 1 && entity.preanimRouteLength > 0 && entity.exactMoveEnd <= loopCycle && entity.exactMoveStart < loopCycle) {
-				entity.primarySeqDelay = 1;
-				return;
-			}
-		}
-
-		if (entity.primarySeqId != -1 && entity.primarySeqDelay == 0) {
-			SeqType seq = SeqType.list(entity.primarySeqId);
-			if (seq == null || seq.frames == null) {
-				entity.primarySeqId = -1;
-			} else {
-				entity.primarySeqCycle++;
-
-				if (entity.primarySeqFrame < seq.frames.length && entity.primarySeqCycle > seq.delay[entity.primarySeqFrame]) {
-					entity.primarySeqCycle = 1;
-					entity.primarySeqFrame++;
-					triggerSeqSound(seq, entity.primarySeqFrame, entity.x, entity.z);
-				}
-
-				if (entity.primarySeqFrame >= seq.frames.length) {
-					entity.primarySeqFrame -= seq.loops;
-					entity.primarySeqLoop++;
-
-					if (entity.primarySeqLoop >= seq.maxloops) {
-						entity.primarySeqId = -1;
-					} else if (entity.primarySeqFrame < 0 || entity.primarySeqFrame >= seq.frames.length) {
-						entity.primarySeqId = -1;
-					} else {
-						triggerSeqSound(seq, entity.primarySeqFrame, entity.x, entity.z);
-					}
-				}
-
-				entity.needsForwardDrawPadding = seq.stretches;
-			}
-		}
-
-		if (entity.primarySeqDelay > 0) {
-			entity.primarySeqDelay--;
-		}
-	}
-
-	// jag::oldscape::Client::TriggerPlayerAnim
-	@ObfuscatedName("co.dw(Lfi;III)V")
-	public static void triggerPlayerAnim(ClientPlayer arg0, int arg1, int arg2) {
-		if (arg0.primarySeqId == arg1 && arg1 != -1) {
-			int var3 = SeqType.list(arg1).duplicatebehavior;
-			if (var3 == 1) {
-				arg0.primarySeqFrame = 0;
-				arg0.primarySeqCycle = 0;
-				arg0.primarySeqDelay = arg2;
-				arg0.primarySeqLoop = 0;
-			}
-
-			if (var3 == 2) {
-				arg0.primarySeqLoop = 0;
-			}
-		} else if (arg1 == -1 || arg0.primarySeqId == -1 || SeqType.list(arg1).priority >= SeqType.list(arg0.primarySeqId).priority) {
-			arg0.primarySeqId = arg1;
-			arg0.primarySeqFrame = 0;
-			arg0.primarySeqCycle = 0;
-			arg0.primarySeqDelay = arg2;
-			arg0.primarySeqLoop = 0;
-			arg0.preanimRouteLength = arg0.routeLength;
-		}
-	}
-
-	// jag::oldscape::Client::MessageBox
-	@ObfuscatedName("ej.dl(Ljava/lang/String;ZI)V")
-	public static void messageBox(String arg0, boolean arg1) {
-		byte var2 = 4;
-		int var3 = var2 + 6;
-		int var4 = var2 + 6;
-		int var5 = p12.predictWidthMultiline(arg0, 250);
-		int var6 = p12.predictLinesMultiline(arg0, 250) * 13;
-
-		Pix2D.fillRect(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2, 0);
-		Pix2D.drawRect(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2, 0xffffff);
-		p12.drawStringMultiline(arg0, var3, var4, var5, var6, 0xffffff, -1, 1, 1, 0);
-		dirtyArea(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2);
-
-		if (arg1) {
-			try {
-				Graphics var7 = GameShell.canvas.getGraphics();
-				GameShell.drawArea.draw(var7, 0, 0);
-			} catch (Exception var14) {
-				GameShell.canvas.repaint();
-			}
-			return;
-		}
-
-		// todo: inlined method (BlitArea?)
-		int var9 = var3;
-		int var10 = var4;
-		int var11 = var5;
-		int var12 = var6;
-		for (int var13 = 0; var13 < componentDrawCount; var13++) {
-			if (componentDrawWidth[var13] + componentDrawX[var13] > var9 && componentDrawX[var13] < var9 + var11 && componentDrawHeight[var13] + componentDrawY[var13] > var10 && componentDrawY[var13] < var10 + var12) {
-				componentRedrawRequested2[var13] = true;
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GdmAddPlayerToWorld
-	@ObfuscatedName("dl.dn(ZI)V")
-	public static void addPlayers(boolean local) {
-		if (localPlayer.x >> 7 == minimapFlagX && localPlayer.z >> 7 == minimapFlagZ) {
-			minimapFlagX = 0;
-		}
-		int count = playerCount;
-		if (local) {
-			count = 1;
-		}
-		for (int i = 0; i < count; i++) {
-			ClientPlayer player;
-			int var4;
-			if (local) {
-				player = localPlayer;
-				var4 = 0x1ffc000; // todo: LOCAL_PLAYER_INDEX (2047) << 14
-			} else {
-				player = players[playerIds[i]];
-				var4 = playerIds[i] << 14;
-			}
-			if (player == null || !player.ready()) {
-				continue;
-			}
-			player.lowMemory = false;
-			if ((lowMemory && playerCount > 50 || playerCount > 200) && !local && player.secondarySeqId == player.readyanim) {
-				player.lowMemory = true;
-			}
-			int x = player.x >> 7;
-			int z = player.z >> 7;
-			if (x < 0 || x >= 104 || z < 0 || z >= 104) {
-				continue;
-			}
-			if (player.locModel == null || loopCycle < player.locStartCycle || loopCycle >= player.locEndCycle) {
-				if ((player.x & 0x7F) == 64 && (player.z & 0x7F) == 64) {
-					if (sceneCycle == tileLastOccupiedCycle[x][z]) {
-						continue;
-					}
-					tileLastOccupiedCycle[x][z] = sceneCycle;
-				}
-				player.y = getAvH(player.x, player.z, minusedlevel);
-				world.addDynamic(minusedlevel, player.x, player.z, player.y, 60, player, player.yaw, var4, player.needsForwardDrawPadding);
-			} else {
-				player.lowMemory = false;
-				player.y = getAvH(player.x, player.z, minusedlevel);
-				world.addDynamic(minusedlevel, player.x, player.z, player.y, 60, player, player.yaw, var4, player.minTileX, player.minTileZ, player.maxTileX, player.maxTileZ);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GdmAddNPCs
-	@ObfuscatedName("dw.do(ZB)V")
-	public static void addNpcs(boolean arg0) {
-		for (int var1 = 0; var1 < npcCount; var1++) {
-			ClientNpc var2 = npcs[npcIds[var1]];
-			int var3 = (npcIds[var1] << 14) + 0x20000000;
-			if (var2 == null || !var2.ready() || var2.type.alwaysontop != arg0 || !var2.type.isMultiNpcVisible()) {
-				continue;
-			}
-			int var4 = var2.x >> 7;
-			int var5 = var2.z >> 7;
-			if (var4 < 0 || var4 >= 104 || var5 < 0 || var5 >= 104) {
-				continue;
-			}
-			if (var2.size == 1 && (var2.x & 0x7F) == 64 && (var2.z & 0x7F) == 64) {
-				if (sceneCycle == tileLastOccupiedCycle[var4][var5]) {
-					continue;
-				}
-				tileLastOccupiedCycle[var4][var5] = sceneCycle;
-			}
-			if (!var2.type.active) {
-				var3 -= Integer.MIN_VALUE;
-			}
-			world.addDynamic(minusedlevel, var2.x, var2.z, getAvH(var2.x + (var2.size * 64 - 64), var2.z + (var2.size * 64 - 64), minusedlevel), var2.size * 64 - 64 + 60, var2, var2.yaw, var3, var2.needsForwardDrawPadding);
-		}
-	}
-
-	// jag::oldscape::Client::GdmAddProjectiles
-	@ObfuscatedName("r.dx(I)V")
-	public static void addProjectiles() {
-		for (ClientProj proj = (ClientProj) projectiles.head(); proj != null; proj = (ClientProj) projectiles.next()) {
-			if (minusedlevel != proj.level || loopCycle > proj.t2) {
-				proj.unlink();
-				continue;
-			}
-
-			if (loopCycle >= proj.t1) {
-				if (proj.target > 0) {
-					ClientNpc npc = npcs[proj.target - 1];
-
-					if (npc != null && npc.x >= 0 && npc.x < 13312 && npc.z >= 0 && npc.z < 13312) {
-						proj.setTarget(npc.x, npc.z, getAvH(npc.x, npc.z, proj.level) - proj.h2, loopCycle);
-					}
-				} else if (proj.target < 0) {
-					int pid = -proj.target - 1;
-
-					ClientPlayer player;
-					if (selfSlot == pid) {
-						player = localPlayer;
-					} else {
-						player = players[pid];
-					}
-
-					if (player != null && player.x >= 0 && player.x < 13312 && player.z >= 0 && player.z < 13312) {
-						proj.setTarget(player.x, player.z, getAvH(player.x, player.z, proj.level) - proj.h2, loopCycle);
-					}
-				}
-
-				proj.move(worldUpdateNum);
-				world.addDynamic(minusedlevel, (int) proj.x, (int) proj.z, (int) proj.y, 60, proj, proj.yaw, -1, false);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GdmAddMapAnim
-	@ObfuscatedName("bf.dt(I)V")
-	public static void addMapAnim() {
-		for (MapSpotAnim var0 = (MapSpotAnim) spotanims.head(); var0 != null; var0 = (MapSpotAnim) spotanims.next()) {
-			if (minusedlevel != var0.level || var0.animComplete) {
-				var0.unlink();
-			} else if (loopCycle >= var0.startCycle) {
-				var0.doAnim(worldUpdateNum);
-
-				if (var0.animComplete) {
-					var0.unlink();
-				} else {
-					world.addDynamic(var0.level, var0.x, var0.z, var0.y, 60, var0, 0, -1, false);
-				}
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GdmCoordArrow
-	@ObfuscatedName("df.eb(III)V")
-	public static void coordArrow(int arg0, int arg1) {
-		if (hintType == 2) {
-			getOverlayPos((hintTileX - mapBuildBaseX << 7) + hintOffsetX, (hintTileZ - mapBuildBaseZ << 7) + hintOffsetZ, hintHeight * 2);
-
-			if (projectX > -1 && loopCycle % 20 < 10) {
-				headiconsHint[0].plotSprite(projectX + arg0 - 12, projectY + arg1 - 28);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GdmOtherOverlays
-	@ObfuscatedName("ek.er(IIIII)V")
-	public static void otherOverlays(int arg0, int arg1, int arg2, int arg3) {
-		if (crossMode == 1) {
-			cross[crossCycle / 100].plotSprite(crossX - 8, crossY - 8);
-		}
-		if (crossMode == 2) {
-			cross[crossCycle / 100 + 4].plotSprite(crossX - 8, crossY - 8);
-		}
-		overrideChat = 0;
-		int var4 = (localPlayer.x >> 7) + mapBuildBaseX;
-		int var5 = (localPlayer.z >> 7) + mapBuildBaseZ;
-		if (var4 >= 3053 && var4 <= 3156 && var5 >= 3056 && var5 <= 3136) {
-			overrideChat = 1;
-		}
-		if (var4 >= 3072 && var4 <= 3118 && var5 >= 9492 && var5 <= 9535) {
-			overrideChat = 1;
-		}
-		if (overrideChat == 1 && var4 >= 3139 && var4 <= 3199 && var5 >= 3008 && var5 <= 3062) {
-			overrideChat = 0;
-		}
-		if (showFps) {
-			int var6 = arg0 + 512 - 5;
-			int var7 = arg1 + 20;
-			p12.rightString("Fps:" + fps, var6, var7, 0xffff00, -1);
-
-			int var11 = var7 + 15;
-			Runtime var8 = Runtime.getRuntime();
-			int var9 = (int) ((var8.totalMemory() - var8.freeMemory()) / 1024L);
-			int var10 = 0xffff00;
-			if (var9 > 32768 && lowMemory) {
-				var10 = 0xff0000;
-			}
-			if (var9 > 65536 && !lowMemory) {
-				var10 = 0xff0000;
-			}
-			p12.rightString("Mem:" + var9 + "k", var6, var11, var10, -1);
-			var7 = var11 + 15;
-		}
-	}
-
-	// jag::oldscape::Client::GetOverlayPos
-	@ObfuscatedName("bd.es(Lfz;IB)V")
-	public static void getOverlayPos(ClientEntity arg0, int arg1) {
-		getOverlayPos(arg0.x, arg0.z, arg1);
-	}
-
-	// jag::oldscape::Client::GetOverlayPos
-	@ObfuscatedName("cl.ez(IIII)V")
-	public static void getOverlayPos(int arg0, int arg1, int arg2) {
-		if (arg0 < 128 || arg1 < 128 || arg0 > 13056 || arg1 > 13056) {
-			projectX = -1;
-			projectY = -1;
-			return;
-		}
-		int var3 = getAvH(arg0, arg1, minusedlevel) - arg2;
-		int var4 = arg0 - camX;
-		int var5 = var3 - camY;
-		int var6 = arg1 - camZ;
-		int var7 = Pix3D.sinTable[camPitch];
-		int var8 = Pix3D.cosTable[camPitch];
-		int var9 = Pix3D.sinTable[camYaw];
-		int var10 = Pix3D.cosTable[camYaw];
-		int var11 = var4 * var10 + var6 * var9 >> 16;
-		int var12 = var6 * var10 - var4 * var9 >> 16;
-		int var14 = var5 * var8 - var7 * var12 >> 16;
-		int var15 = var5 * var7 + var8 * var12 >> 16;
-		if (var15 >= 50) {
-			projectX = (var11 << 9) / var15 + 256;
-			projectY = (var14 << 9) / var15 + 167;
-		} else {
-			projectX = -1;
-			projectY = -1;
-		}
-	}
-
-	// jag::oldscape::Client::GetAvH
-	@ObfuscatedName("bw.ev(IIII)I")
-	public static int getAvH(int arg0, int arg1, int arg2) {
-		int var3 = arg0 >> 7;
-		int var4 = arg1 >> 7;
-		if (var3 < 0 || var4 < 0 || var3 > 103 || var4 > 103) {
-			return 0;
-		}
-		int var5 = arg2;
-		if (arg2 < 3 && (ClientBuild.mapl[1][var3][var4] & 0x2) == 2) {
-			var5 = arg2 + 1;
-		}
-		int var6 = arg0 & 0x7F;
-		int var7 = arg1 & 0x7F;
-		int var8 = (128 - var6) * ClientBuild.groundh[var5][var3][var4] + ClientBuild.groundh[var5][var3 + 1][var4] * var6 >> 7;
-		int var9 = (128 - var6) * ClientBuild.groundh[var5][var3][var4 + 1] + ClientBuild.groundh[var5][var3 + 1][var4 + 1] * var6 >> 7;
-		return (128 - var7) * var8 + var7 * var9 >> 7;
-	}
-
-	// jag::oldscape::Client::RebuildPacket
-	@ObfuscatedName("cy.ei(ZI)V")
-	public static void rebuildPacket(boolean region) {
-		regionmode = region;
-
-		if (!regionmode) {
-			int var1 = in.g2();
-			int var2 = in.g2_alt1();
-			int var3 = (psize - in.pos) / 16;
-			mapKeys = new int[var3][4];
-			for (int var4 = 0; var4 < var3; var4++) {
-				for (int var5 = 0; var5 < 4; var5++) {
-					mapKeys[var4][var5] = in.g4_alt2();
-				}
-			}
-			int var6 = in.g1_alt2();
-			int var7 = in.g2();
-			int var8 = in.g2_alt3();
-			mapBuildIndex = new int[var3];
-			mapBuildGroundFile = new int[var3];
-			mapBuildLocationFile = new int[var3];
-			mapBuildGroundData = new byte[var3][];
-			mapBuildLocationData = new byte[var3][];
-			boolean var9 = false;
-			if ((var7 / 8 == 48 || var7 / 8 == 49) && var8 / 8 == 48) {
-				var9 = true;
-			}
-			if (var7 / 8 == 48 && var8 / 8 == 148) {
-				var9 = true;
-			}
-			int var10 = 0;
-			for (int var11 = (var7 - 6) / 8; var11 <= (var7 + 6) / 8; var11++) {
-				for (int var12 = (var8 - 6) / 8; var12 <= (var8 + 6) / 8; var12++) {
-					int var13 = (var11 << 8) + var12;
-					if (!var9 || var12 != 49 && var12 != 149 && var12 != 147 && var11 != 50 && (var11 != 49 || var12 != 47)) {
-						mapBuildIndex[var10] = var13;
-						mapBuildGroundFile[var10] = maps.getGroupId("m" + var11 + "_" + var12);
-						mapBuildLocationFile[var10] = maps.getGroupId("l" + var11 + "_" + var12);
-						var10++;
-					}
-				}
-			}
-			startRebuild(var7, var8, var6, var2, var1);
-		} else {
-			int var14 = in.g2_alt3();
-			in.gBitStart();
-			for (int var15 = 0; var15 < 4; var15++) {
-				for (int var16 = 0; var16 < 13; var16++) {
-					for (int var17 = 0; var17 < 13; var17++) {
-						int var18 = in.gBit(1);
-						if (var18 == 1) {
-							mapBuildRegionSrc[var15][var16][var17] = in.gBit(26);
-						} else {
-							mapBuildRegionSrc[var15][var16][var17] = -1;
-						}
-					}
-				}
-			}
-			in.gBitEnd();
-			int var19 = (psize - in.pos) / 16;
-			mapKeys = new int[var19][4];
-			for (int var20 = 0; var20 < var19; var20++) {
-				for (int var21 = 0; var21 < 4; var21++) {
-					mapKeys[var20][var21] = in.g4_alt2();
-				}
-			}
-			int var22 = in.g2_alt3();
-			int var23 = in.g1_alt2();
-			int var24 = in.g2_alt1();
-			int var25 = in.g2_alt3();
-			mapBuildIndex = new int[var19];
-			mapBuildGroundFile = new int[var19];
-			mapBuildLocationFile = new int[var19];
-			mapBuildGroundData = new byte[var19][];
-			mapBuildLocationData = new byte[var19][];
-			int var26 = 0;
-			for (int var27 = 0; var27 < 4; var27++) {
-				for (int var28 = 0; var28 < 13; var28++) {
-					for (int var29 = 0; var29 < 13; var29++) {
-						int var30 = mapBuildRegionSrc[var27][var28][var29];
-						if (var30 != -1) {
-							int var31 = var30 >> 14 & 0x3FF;
-							int var32 = var30 >> 3 & 0x7FF;
-							int var33 = (var31 / 8 << 8) + var32 / 8;
-							for (int var34 = 0; var34 < var26; var34++) {
-								if (mapBuildIndex[var34] == var33) {
-									var33 = -1;
-									break;
-								}
-							}
-							if (var33 != -1) {
-								mapBuildIndex[var26] = var33;
-								int var35 = var33 >> 8 & 0xFF;
-								int var36 = var33 & 0xFF;
-								mapBuildGroundFile[var26] = maps.getGroupId("m" + var35 + "_" + var36);
-								mapBuildLocationFile[var26] = maps.getGroupId("l" + var35 + "_" + var36);
-								var26++;
-							}
-						}
-					}
-				}
-			}
-			startRebuild(var14, var25, var23, var24, var22);
-		}
-	}
-
-	// jag::oldscape::Client::StartRebuild
-	@ObfuscatedName("as.ef(IIIIII)V")
-	public static void startRebuild(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (mapBuildCenterZoneX == arg0 && mapBuildCenterZoneZ == arg1 && (sceneState == arg2 || !lowMemory)) {
-			return;
-		}
-
-		mapBuildCenterZoneX = arg0;
-		mapBuildCenterZoneZ = arg1;
-		sceneState = arg2;
-		if (!lowMemory) {
-			sceneState = 0;
-		}
-		setMainState(25);
-		messageBox(Text.LOADING, true);
-
-		int var5 = mapBuildBaseX;
-		int var6 = mapBuildBaseZ;
-		mapBuildBaseX = (arg0 - 6) * 8;
-		mapBuildBaseZ = (arg1 - 6) * 8;
-		int var7 = mapBuildBaseX - var5;
-		int var8 = mapBuildBaseZ - var6;
-		int var9 = mapBuildBaseX;
-		int var10 = mapBuildBaseZ;
-
-		for (int var11 = 0; var11 < 32768; var11++) {
-			ClientNpc var12 = npcs[var11];
-			if (var12 != null) {
-				for (int var13 = 0; var13 < 10; var13++) {
-					var12.routeX[var13] -= var7;
-					var12.routeZ[var13] -= var8;
-				}
-				var12.x -= var7 * 128;
-				var12.z -= var8 * 128;
-			}
-		}
-
-		for (int var14 = 0; var14 < 2048; var14++) {
-			ClientPlayer var15 = players[var14];
-			if (var15 != null) {
-				for (int var16 = 0; var16 < 10; var16++) {
-					var15.routeX[var16] -= var7;
-					var15.routeZ[var16] -= var8;
-				}
-				var15.x -= var7 * 128;
-				var15.z -= var8 * 128;
-			}
-		}
-
-		minusedlevel = arg2;
-		localPlayer.teleport(arg3, arg4, false);
-
-		byte var17 = 0;
-		byte var18 = 104;
-		byte var19 = 1;
-		if (var7 < 0) {
-			var17 = 103;
-			var18 = -1;
-			var19 = -1;
-		}
-		byte var20 = 0;
-		byte var21 = 104;
-		byte var22 = 1;
-		if (var8 < 0) {
-			var20 = 103;
-			var21 = -1;
-			var22 = -1;
-		}
-
-		for (int var23 = var17; var23 != var18; var23 += var19) {
-			for (int var24 = var20; var24 != var21; var24 += var22) {
-				int var25 = var7 + var23;
-				int var26 = var8 + var24;
-				for (int var27 = 0; var27 < 4; var27++) {
-					if (var25 >= 0 && var26 >= 0 && var25 < 104 && var26 < 104) {
-						groundObj[var27][var23][var24] = groundObj[var27][var25][var26];
-					} else {
-						groundObj[var27][var23][var24] = null;
-					}
-				}
-			}
-		}
-
-		for (LocChange var28 = (LocChange) locChanges.head(); var28 != null; var28 = (LocChange) locChanges.next()) {
-			var28.x -= var7;
-			var28.z -= var8;
-			if (var28.x < 0 || var28.z < 0 || var28.x >= 104 || var28.z >= 104) {
-				var28.unlink();
-			}
-		}
-
-		if (minimapFlagX != 0) {
-			minimapFlagX -= var7;
-			minimapFlagZ -= var8;
-		}
-
-		waveCount = 0;
-		cinemaCam = false;
-		minimapLevel = -1;
-		spotanims.clear();
-		projectiles.clear();
-	}
-
-	// jag::oldscape::Client::PreventTimeout
-	@ObfuscatedName("at.ej(ZB)V")
-	public static void preventTimeout(boolean arg0) {
-		doAudio();
-
-		noTimeoutCycle++;
-		if (noTimeoutCycle < 50 && !arg0) {
-			return;
-		}
-
-		noTimeoutCycle = 0;
-
-		if (networkError || loginStream == null) {
-			return;
-		}
-
-		// NO_TIMEOUT
-		out.p1Enc(228);
-
-		try {
-			loginStream.write(out.data, 0, out.pos);
-			out.pos = 0;
-		} catch (IOException var2) {
-			networkError = true;
-		}
-	}
-
-	// jag::oldscape::minimap::Minimap::DrawDetail
-	@ObfuscatedName("bs.eh(IIIIII)V")
-	public static void drawDetail(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		int var5 = world.wallType(arg0, arg1, arg2);
-		if (var5 != 0) {
-			int var6 = world.typecode2(arg0, arg1, arg2, var5);
-			int var7 = var6 >> 6 & 0x3;
-			int var8 = var6 & 0x1F;
-			int var9 = arg3;
-			if (var5 > 0) {
-				var9 = arg4;
-			}
-			int[] var10 = minimap.data;
-			int var11 = (103 - arg2) * 2048 + arg1 * 4 + 24624;
-			int var12 = var5 >> 14 & 0x7FFF;
-			LocType var13 = LocType.list(var12);
-			if (var13.mapscene != -1) {
-				Pix8 var14 = mapscene[var13.mapscene];
-				if (var14 != null) {
-					int var15 = (var13.width * 4 - var14.wi) / 2;
-					int var16 = (var13.length * 4 - var14.hi) / 2;
-					var14.plotSprite(arg1 * 4 + 48 + var15, (104 - arg2 - var13.length) * 4 + 48 + var16);
-				}
-			} else {
-				if (var8 == 0 || var8 == 2) {
-					if (var7 == 0) {
-						var10[var11] = var9;
-						var10[var11 + 512] = var9;
-						var10[var11 + 1024] = var9;
-						var10[var11 + 1536] = var9;
-					} else if (var7 == 1) {
-						var10[var11] = var9;
-						var10[var11 + 1] = var9;
-						var10[var11 + 2] = var9;
-						var10[var11 + 3] = var9;
-					} else if (var7 == 2) {
-						var10[var11 + 3] = var9;
-						var10[var11 + 3 + 512] = var9;
-						var10[var11 + 3 + 1024] = var9;
-						var10[var11 + 3 + 1536] = var9;
-					} else if (var7 == 3) {
-						var10[var11 + 1536] = var9;
-						var10[var11 + 1536 + 1] = var9;
-						var10[var11 + 1536 + 2] = var9;
-						var10[var11 + 1536 + 3] = var9;
-					}
-				}
-				if (var8 == 3) {
-					if (var7 == 0) {
-						var10[var11] = var9;
-					} else if (var7 == 1) {
-						var10[var11 + 3] = var9;
-					} else if (var7 == 2) {
-						var10[var11 + 3 + 1536] = var9;
-					} else if (var7 == 3) {
-						var10[var11 + 1536] = var9;
-					}
-				}
-				if (var8 == 2) {
-					if (var7 == 3) {
-						var10[var11] = var9;
-						var10[var11 + 512] = var9;
-						var10[var11 + 1024] = var9;
-						var10[var11 + 1536] = var9;
-					} else if (var7 == 0) {
-						var10[var11] = var9;
-						var10[var11 + 1] = var9;
-						var10[var11 + 2] = var9;
-						var10[var11 + 3] = var9;
-					} else if (var7 == 1) {
-						var10[var11 + 3] = var9;
-						var10[var11 + 3 + 512] = var9;
-						var10[var11 + 3 + 1024] = var9;
-						var10[var11 + 3 + 1536] = var9;
-					} else if (var7 == 2) {
-						var10[var11 + 1536] = var9;
-						var10[var11 + 1536 + 1] = var9;
-						var10[var11 + 1536 + 2] = var9;
-						var10[var11 + 1536 + 3] = var9;
-					}
-				}
-			}
-		}
-
-		int var17 = world.sceneType(arg0, arg1, arg2);
-		if (var17 != 0) {
-			int var18 = world.typecode2(arg0, arg1, arg2, var17);
-			int var19 = var18 >> 6 & 0x3;
-			int var20 = var18 & 0x1F;
-			int var21 = var17 >> 14 & 0x7FFF;
-			LocType var22 = LocType.list(var21);
-			if (var22.mapscene != -1) {
-				Pix8 var23 = mapscene[var22.mapscene];
-				if (var23 != null) {
-					int var24 = (var22.width * 4 - var23.wi) / 2;
-					int var25 = (var22.length * 4 - var23.hi) / 2;
-					var23.plotSprite(arg1 * 4 + 48 + var24, (104 - arg2 - var22.length) * 4 + 48 + var25);
-				}
-			} else if (var20 == 9) {
-				int var26 = 15658734;
-				if (var17 > 0) {
-					var26 = 15597568;
-				}
-				int[] var27 = minimap.data;
-				int var28 = (103 - arg2) * 2048 + arg1 * 4 + 24624;
-				if (var19 == 0 || var19 == 2) {
-					var27[var28 + 1536] = var26;
-					var27[var28 + 1024 + 1] = var26;
-					var27[var28 + 512 + 2] = var26;
-					var27[var28 + 3] = var26;
-				} else {
-					var27[var28] = var26;
-					var27[var28 + 512 + 1] = var26;
-					var27[var28 + 1024 + 2] = var26;
-					var27[var28 + 1536 + 3] = var26;
-				}
-			}
-		}
-
-		int var29 = world.gdType(arg0, arg1, arg2);
-		if (var29 != 0) {
-			int var30 = var29 >> 14 & 0x7FFF;
-			LocType var31 = LocType.list(var30);
-			if (var31.mapscene != -1) {
-				Pix8 var32 = mapscene[var31.mapscene];
-				if (var32 != null) {
-					int var33 = (var31.width * 4 - var32.wi) / 2;
-					int var34 = (var31.length * 4 - var32.hi) / 2;
-					var32.plotSprite(arg1 * 4 + 48 + var33, (104 - arg2 - var31.length) * 4 + 48 + var34);
-				}
-			}
-		}
-	}
-
-	@ObfuscatedName("cz.eg(IIII)Z")
-	public static boolean interactWithLoc(int arg0, int arg1, int arg2) {
-		int var3 = arg2 >> 14 & 0x7FFF;
-		int var4 = world.typecode2(minusedlevel, arg0, arg1, arg2);
-		if (var4 == -1) {
-			return false;
-		}
-
-		int shape = var4 & 0x1F;
-		int angle = var4 >> 6 & 0x3;
-
-		if (shape == 10 || shape == 11 || shape == 22) {
-			LocType var7 = LocType.list(var3);
-
-			int width;
-			int length;
-			if (angle == 0 || angle == 2) {
-				width = var7.width;
-				length = var7.length;
-			} else {
-				width = var7.length;
-				length = var7.width;
-			}
-
-			int forceapproach = var7.forceapproach;
-			if (angle != 0) {
-				forceapproach = (forceapproach >> 4 - angle) + (forceapproach << angle & 0xF);
-			}
-
-			tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], arg0, arg1, true, 0, 0, width, length, forceapproach, 2);
-		} else {
-			tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], arg0, arg1, true, shape + 1, angle, 0, 0, 0, 2);
-		}
-
-		crossX = ClientMouseListener.mouseClickX;
-		crossY = ClientMouseListener.mouseClickY;
-		crossMode = 2;
-		crossCycle = 0;
-		return true;
-	}
-
-	@ObfuscatedName("eh.el(IIIIZIIIIIIS)Z")
-	public static boolean tryMove(int arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
-		for (int var11 = 0; var11 < 104; var11++) {
-			for (int var12 = 0; var12 < 104; var12++) {
-				dirMap[var11][var12] = 0;
-				distMap[var11][var12] = 99999999;
-			}
-		}
-		int var13 = arg0;
-		int var14 = arg1;
-		dirMap[arg0][arg1] = 99;
-		distMap[arg0][arg1] = 0;
-		byte var15 = 0;
-		int var16 = 0;
-		routeX[var15] = arg0;
-		int var36 = var15 + 1;
-		routeZ[var15] = arg1;
-		boolean var17 = false;
-		int var18 = routeX.length;
-		int[][] var19 = levelCollisionMap[minusedlevel].flags;
-		while (var36 != var16) {
-			var13 = routeX[var16];
-			var14 = routeZ[var16];
-			var16 = (var16 + 1) % var18;
-			if (arg2 == var13 && arg3 == var14) {
-				var17 = true;
-				break;
-			}
-			if (arg5 != 0) {
-				if ((arg5 < 5 || arg5 == 10) && levelCollisionMap[minusedlevel].testWall(var13, var14, arg2, arg3, arg5 - 1, arg6)) {
-					var17 = true;
-					break;
-				}
-				if (arg5 < 10 && levelCollisionMap[minusedlevel].testWDecor(var13, var14, arg2, arg3, arg5 - 1, arg6)) {
-					var17 = true;
-					break;
-				}
-			}
-			if (arg7 != 0 && arg8 != 0 && levelCollisionMap[minusedlevel].testLoc(var13, var14, arg2, arg3, arg7, arg8, arg9)) {
-				var17 = true;
-				break;
-			}
-			int var20 = distMap[var13][var14] + 1;
-			if (var13 > 0 && dirMap[var13 - 1][var14] == 0 && (var19[var13 - 1][var14] & 0x12C0108) == 0) {
-				routeX[var36] = var13 - 1;
-				routeZ[var36] = var14;
-				var36 = (var36 + 1) % var18;
-				dirMap[var13 - 1][var14] = 2;
-				distMap[var13 - 1][var14] = var20;
-			}
-			if (var13 < 103 && dirMap[var13 + 1][var14] == 0 && (var19[var13 + 1][var14] & 0x12C0180) == 0) {
-				routeX[var36] = var13 + 1;
-				routeZ[var36] = var14;
-				var36 = (var36 + 1) % var18;
-				dirMap[var13 + 1][var14] = 8;
-				distMap[var13 + 1][var14] = var20;
-			}
-			if (var14 > 0 && dirMap[var13][var14 - 1] == 0 && (var19[var13][var14 - 1] & 0x12C0102) == 0) {
-				routeX[var36] = var13;
-				routeZ[var36] = var14 - 1;
-				var36 = (var36 + 1) % var18;
-				dirMap[var13][var14 - 1] = 1;
-				distMap[var13][var14 - 1] = var20;
-			}
-			if (var14 < 103 && dirMap[var13][var14 + 1] == 0 && (var19[var13][var14 + 1] & 0x12C0120) == 0) {
-				routeX[var36] = var13;
-				routeZ[var36] = var14 + 1;
-				var36 = (var36 + 1) % var18;
-				dirMap[var13][var14 + 1] = 4;
-				distMap[var13][var14 + 1] = var20;
-			}
-			if (var13 > 0 && var14 > 0 && dirMap[var13 - 1][var14 - 1] == 0 && (var19[var13 - 1][var14 - 1] & 0x12C010E) == 0 && (var19[var13 - 1][var14] & 0x12C0108) == 0 && (var19[var13][var14 - 1] & 0x12C0102) == 0) {
-				routeX[var36] = var13 - 1;
-				routeZ[var36] = var14 - 1;
-				var36 = (var36 + 1) % var18;
-				dirMap[var13 - 1][var14 - 1] = 3;
-				distMap[var13 - 1][var14 - 1] = var20;
-			}
-			if (var13 < 103 && var14 > 0 && dirMap[var13 + 1][var14 - 1] == 0 && (var19[var13 + 1][var14 - 1] & 0x12C0183) == 0 && (var19[var13 + 1][var14] & 0x12C0180) == 0 && (var19[var13][var14 - 1] & 0x12C0102) == 0) {
-				routeX[var36] = var13 + 1;
-				routeZ[var36] = var14 - 1;
-				var36 = (var36 + 1) % var18;
-				dirMap[var13 + 1][var14 - 1] = 9;
-				distMap[var13 + 1][var14 - 1] = var20;
-			}
-			if (var13 > 0 && var14 < 103 && dirMap[var13 - 1][var14 + 1] == 0 && (var19[var13 - 1][var14 + 1] & 0x12C0138) == 0 && (var19[var13 - 1][var14] & 0x12C0108) == 0 && (var19[var13][var14 + 1] & 0x12C0120) == 0) {
-				routeX[var36] = var13 - 1;
-				routeZ[var36] = var14 + 1;
-				var36 = (var36 + 1) % var18;
-				dirMap[var13 - 1][var14 + 1] = 6;
-				distMap[var13 - 1][var14 + 1] = var20;
-			}
-			if (var13 < 103 && var14 < 103 && dirMap[var13 + 1][var14 + 1] == 0 && (var19[var13 + 1][var14 + 1] & 0x12C01E0) == 0 && (var19[var13 + 1][var14] & 0x12C0180) == 0 && (var19[var13][var14 + 1] & 0x12C0120) == 0) {
-				routeX[var36] = var13 + 1;
-				routeZ[var36] = var14 + 1;
-				var36 = (var36 + 1) % var18;
-				dirMap[var13 + 1][var14 + 1] = 12;
-				distMap[var13 + 1][var14 + 1] = var20;
-			}
-		}
-		tryMoveNearest = 0;
-		if (!var17) {
-			if (!arg4) {
-				return false;
-			}
-			int var21 = 1000;
-			int var22 = 100;
-			byte var23 = 10;
-			for (int var24 = arg2 - var23; var24 <= arg2 + var23; var24++) {
-				for (int var25 = arg3 - var23; var25 <= arg3 + var23; var25++) {
-					if (var24 >= 0 && var25 >= 0 && var24 < 104 && var25 < 104 && distMap[var24][var25] < 100) {
-						int var26 = 0;
-						if (var24 < arg2) {
-							var26 = arg2 - var24;
-						} else if (var24 > arg2 + arg7 - 1) {
-							var26 = var24 - (arg2 + arg7 - 1);
-						}
-						int var27 = 0;
-						if (var25 < arg3) {
-							var27 = arg3 - var25;
-						} else if (var25 > arg3 + arg8 - 1) {
-							var27 = var25 - (arg3 + arg8 - 1);
-						}
-						int var28 = var26 * var26 + var27 * var27;
-						if (var28 < var21 || var21 == var28 && distMap[var24][var25] < var22) {
-							var21 = var28;
-							var22 = distMap[var24][var25];
-							var13 = var24;
-							var14 = var25;
-						}
-					}
-				}
-			}
-			if (var21 == 1000) {
-				return false;
-			}
-			if (arg0 == var13 && arg1 == var14) {
-				return false;
-			}
-			tryMoveNearest = 1;
-		}
-		byte var29 = 0;
-		routeX[var29] = var13;
-		int var37 = var29 + 1;
-		routeZ[var29] = var14;
-		int var30;
-		int var31 = var30 = dirMap[var13][var14];
-		while (arg0 != var13 || arg1 != var14) {
-			if (var30 != var31) {
-				var30 = var31;
-				routeX[var37] = var13;
-				routeZ[var37++] = var14;
-			}
-			if ((var31 & 0x2) != 0) {
-				var13++;
-			} else if ((var31 & 0x8) != 0) {
-				var13--;
-			}
-			if ((var31 & 0x1) != 0) {
-				var14++;
-			} else if ((var31 & 0x4) != 0) {
-				var14--;
-			}
-			var31 = dirMap[var13][var14];
-		}
-		if (var37 > 0) {
-			int var32 = var37;
-			if (var37 > 25) {
-				var32 = 25;
-			}
-			var37--;
-			int var33 = routeX[var37];
-			int var34 = routeZ[var37];
-
-			if (arg10 == 0) {
-				// MOVE_GAMECLICK
-				out.p1Enc(176);
-				out.p1(var32 + var32 + 3);
-			} else if (arg10 == 1) {
-				// MOVE_MINIMAPCLICK
-				out.p1Enc(60);
-				out.p1(var32 + var32 + 3 + 14);
-			} else if (arg10 == 2) {
-				// MOVE_OPCLICK (custom name)
-				out.p1Enc(214);
-				out.p1(var32 + var32 + 3);
-			}
-
-			minimapFlagX = routeX[0];
-			minimapFlagZ = routeZ[0];
-
-			for (int var35 = 1; var35 < var32; var35++) {
-				var37--;
-				out.p1_alt2(routeX[var37] - var33);
-				out.p1_alt3(routeZ[var37] - var34);
-			}
-
-			out.p2_alt3(mapBuildBaseZ + var34);
-			out.p1(ClientKeyboardListener.keyHeld[82] ? 1 : 0);
-			out.p2(mapBuildBaseX + var33);
-			return true;
-		} else if (arg10 == 1) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	// jag::oldscape::Client::ZonePacket
-	@ObfuscatedName("ai.en(I)V")
-	public static void readZonePacket() {
-		if (ptype == 245) {
-			// LOC_MERGE
-			int var0 = in.g2();
-			byte var1 = in.g1b_alt1();
-			int var2 = in.g1_alt2();
-			int var3 = var2 >> 2;
-			int var4 = var2 & 0x3;
-			int var5 = LOC_SHAPE_TO_LAYER[var3];
-			int locId = in.g2_alt2();
-			int var7 = in.g2_alt1();
-			int pid = in.g2();
-			int var9 = in.g1_alt3();
-			int var10 = (var9 >> 4 & 0x7) + baseX;
-			int var11 = (var9 & 0x7) + baseZ;
-			byte var12 = in.g1b_alt1();
-			byte var13 = in.g1b();
-			byte var14 = in.g1b();
-
-			ClientPlayer player;
-			if (selfSlot == pid) {
-				player = localPlayer;
-			} else {
-				player = players[pid];
-			}
-
-			if (player != null) {
-				LocType loc = LocType.list(locId);
-
-				int width;
-				int length;
-				if (var4 == 1 || var4 == 3) {
-					width = loc.length;
-					length = loc.width;
-				} else {
-					width = loc.width;
-					length = loc.length;
-				}
-
-				int var19 = (width >> 1) + var10;
-				int var20 = (width + 1 >> 1) + var10;
-				int var21 = (length >> 1) + var11;
-				int var22 = (length + 1 >> 1) + var11;
-				int[][] var23 = ClientBuild.groundh[minusedlevel];
-				int locOffsetY = var23[var19][var21] + var23[var20][var21] + var23[var19][var22] + var23[var20][var22] >> 2;
-				int var25 = (var10 << 7) + (width << 6);
-				int var26 = (var11 << 7) + (length << 6);
-
-				ModelLit var27 = loc.getModelLit(var3, var4, var23, var25, locOffsetY, var26);
-				if (var27 != null) {
-					locChangeCreate(minusedlevel, var10, var11, var5, -1, 0, 0, var7 + 1, var0 + 1);
-					player.locStartCycle = loopCycle + var7;
-					player.locEndCycle = loopCycle + var0;
-					player.locModel = var27;
-					player.locOffsetX = var10 * 128 + width * 64;
-					player.locOffsetZ = var11 * 128 + length * 64;
-					player.locOffsetY = locOffsetY;
-					if (var14 > var12) {
-						byte var28 = var14;
-						var14 = var12;
-						var12 = var28;
-					}
-					if (var13 > var1) {
-						byte var29 = var13;
-						var13 = var1;
-						var1 = var29;
-					}
-					player.minTileX = var10 + var14;
-					player.maxTileX = var10 + var12;
-					player.minTileZ = var11 + var13;
-					player.maxTileZ = var1 + var11;
-				}
-			}
-		} else if (ptype == 207) {
-			// OBJ_DEL
-			int var30 = in.g2_alt3();
-			int var31 = in.g1();
-			int var32 = (var31 >> 4 & 0x7) + baseX;
-			int var33 = (var31 & 0x7) + baseZ;
-			if (var32 >= 0 && var33 >= 0 && var32 < 104 && var33 < 104) {
-				LinkList var34 = groundObj[minusedlevel][var32][var33];
-				if (var34 != null) {
-					for (ClientObj var35 = (ClientObj) var34.head(); var35 != null; var35 = (ClientObj) var34.next()) {
-						if ((var30 & 0x7FFF) == var35.id) {
-							var35.unlink();
-							break;
-						}
-					}
-					if (var34.head() == null) {
-						groundObj[minusedlevel][var32][var33] = null;
-					}
-					showObject(var32, var33);
-				}
-			}
-		} else if (ptype == 205) {
-			// SOUND_AREA
-			int var36 = in.g1();
-			int var37 = (var36 >> 4 & 0x7) + baseX;
-			int var38 = (var36 & 0x7) + baseZ;
-			int var39 = in.g2();
-			int var40 = in.g1();
-			int var41 = var40 >> 4 & 0xF;
-			int var42 = var40 & 0x7;
-			int var43 = in.g1();
-			if (var37 >= 0 && var38 >= 0 && var37 < 104 && var38 < 104) {
-				int var44 = var41 + 1;
-				if (localPlayer.routeX[0] >= var37 - var44 && localPlayer.routeX[0] <= var37 + var44 && localPlayer.routeZ[0] >= var38 - var44 && localPlayer.routeZ[0] <= var38 + var44 && ambientVolume != 0 && var42 > 0 && waveCount < 50) {
-					waveSoundIds[waveCount] = var39;
-					waveLoops[waveCount] = var42;
-					waveDelay[waveCount] = var43;
-					waveSounds[waveCount] = null;
-					waveAmbient[waveCount] = (var37 << 16) + (var38 << 8) + var41;
-					waveCount++;
-				}
-			}
-		} else if (ptype == 6) {
-			// LOC_ANIM
-			int var45 = in.g2_alt2();
-			int var46 = in.g1_alt2();
-			int var47 = (var46 >> 4 & 0x7) + baseX;
-			int var48 = (var46 & 0x7) + baseZ;
-			int var49 = in.g1_alt3();
-			int var50 = var49 >> 2;
-			int var51 = var49 & 0x3;
-			int var52 = LOC_SHAPE_TO_LAYER[var50];
-			if (var47 >= 0 && var48 >= 0 && var47 < 103 && var48 < 103) {
-				if (var52 == 0) {
-					Wall var53 = world.getWall(minusedlevel, var47, var48);
-					if (var53 != null) {
-						int var54 = var53.typecode >> 14 & 0x7FFF;
-						if (var50 == 2) {
-							var53.modelA = new ClientLocAnim(var54, 2, var51 + 4, minusedlevel, var47, var48, var45, false, var53.modelA);
-							var53.modelB = new ClientLocAnim(var54, 2, var51 + 1 & 0x3, minusedlevel, var47, var48, var45, false, var53.modelB);
-						} else {
-							var53.modelA = new ClientLocAnim(var54, var50, var51, minusedlevel, var47, var48, var45, false, var53.modelA);
-						}
-					}
-				}
-				if (var52 == 1) {
-					Decor var55 = world.getDecor(minusedlevel, var47, var48);
-					if (var55 != null) {
-						int var56 = var55.typecode >> 14 & 0x7FFF;
-						if (var50 == 4 || var50 == 5) {
-							var55.model = new ClientLocAnim(var56, 4, var51, minusedlevel, var47, var48, var45, false, var55.model);
-						} else if (var50 == 6) {
-							var55.model = new ClientLocAnim(var56, 4, var51 + 4, minusedlevel, var47, var48, var45, false, var55.model);
-						} else if (var50 == 7) {
-							var55.model = new ClientLocAnim(var56, 4, (var51 + 2 & 0x3) + 4, minusedlevel, var47, var48, var45, false, var55.model);
-						} else if (var50 == 8) {
-							var55.model = new ClientLocAnim(var56, 4, var51 + 4, minusedlevel, var47, var48, var45, false, var55.model);
-							var55.model2 = new ClientLocAnim(var56, 4, (var51 + 2 & 0x3) + 4, minusedlevel, var47, var48, var45, false, var55.model2);
-						}
-					}
-				}
-				if (var52 == 2) {
-					Sprite var57 = world.getScene(minusedlevel, var47, var48);
-					if (var50 == 11) {
-						var50 = 10;
-					}
-					if (var57 != null) {
-						var57.model = new ClientLocAnim(var57.typecode >> 14 & 0x7FFF, var50, var51, minusedlevel, var47, var48, var45, false, var57.model);
-					}
-				}
-				if (var52 == 3) {
-					GroundDecor var58 = world.getGd(minusedlevel, var47, var48);
-					if (var58 != null) {
-						var58.model = new ClientLocAnim(var58.typecode >> 14 & 0x7FFF, 22, var51, minusedlevel, var47, var48, var45, false, var58.model);
-					}
-				}
-			}
-		} else if (ptype == 173) {
-			// OBJ_ADD
-			int var59 = in.g1_alt1();
-			int var60 = (var59 >> 4 & 0x7) + baseX;
-			int var61 = (var59 & 0x7) + baseZ;
-			int var62 = in.g2_alt2();
-			int var63 = in.g2_alt3();
-			if (var60 >= 0 && var61 >= 0 && var60 < 104 && var61 < 104) {
-				ClientObj var64 = new ClientObj();
-				var64.id = var63;
-				var64.count = var62;
-				if (groundObj[minusedlevel][var60][var61] == null) {
-					groundObj[minusedlevel][var60][var61] = new LinkList();
-				}
-				groundObj[minusedlevel][var60][var61].push(var64);
-				showObject(var60, var61);
-			}
-		} else if (ptype == 106) {
-			// OBJ_COUNT
-			int var65 = in.g1();
-			int var66 = (var65 >> 4 & 0x7) + baseX;
-			int var67 = (var65 & 0x7) + baseZ;
-			int var68 = in.g2();
-			int var69 = in.g2();
-			int var70 = in.g2();
-			if (var66 >= 0 && var67 >= 0 && var66 < 104 && var67 < 104) {
-				LinkList var71 = groundObj[minusedlevel][var66][var67];
-				if (var71 != null) {
-					for (ClientObj var72 = (ClientObj) var71.head(); var72 != null; var72 = (ClientObj) var71.next()) {
-						if ((var68 & 0x7FFF) == var72.id && var72.count == var69) {
-							var72.count = var70;
-							break;
-						}
-					}
-					showObject(var66, var67);
-				}
-			}
-		} else if (ptype == 154) {
-			// LOC_ADD_CHANGE
-			int var73 = in.g2_alt3();
-			int var74 = in.g1_alt1();
-			int var75 = var74 >> 2;
-			int var76 = var74 & 0x3;
-			int var77 = LOC_SHAPE_TO_LAYER[var75];
-			int var78 = in.g1_alt2();
-			int var79 = (var78 >> 4 & 0x7) + baseX;
-			int var80 = (var78 & 0x7) + baseZ;
-			if (var79 >= 0 && var80 >= 0 && var79 < 104 && var80 < 104) {
-				locChangeCreate(minusedlevel, var79, var80, var77, var73, var75, var76, 0, -1);
-			}
-		} else if (ptype == 20) {
-			// MAP_ANIM
-			int var81 = in.g1();
-			int var82 = (var81 >> 4 & 0x7) + baseX;
-			int var83 = (var81 & 0x7) + baseZ;
-			int var84 = in.g2();
-			int var85 = in.g1();
-			int var86 = in.g2();
-			if (var82 >= 0 && var83 >= 0 && var82 < 104 && var83 < 104) {
-				int var87 = var82 * 128 + 64;
-				int var88 = var83 * 128 + 64;
-				MapSpotAnim var89 = new MapSpotAnim(var84, minusedlevel, var87, var88, getAvH(var87, var88, minusedlevel) - var85, var86, loopCycle);
-				spotanims.push(var89);
-			}
-		} else if (ptype == 32) {
-			// MAP_PROJANIM
-			int var90 = in.g1();
-			int var91 = (var90 >> 4 & 0x7) + baseX;
-			int var92 = (var90 & 0x7) + baseZ;
-			int var93 = var91 + in.g1b();
-			int var94 = var92 + in.g1b();
-			int var95 = in.g2b();
-			int var96 = in.g2();
-			int var97 = in.g1() * 4;
-			int var98 = in.g1() * 4;
-			int var99 = in.g2();
-			int var100 = in.g2();
-			int var101 = in.g1();
-			int var102 = in.g1();
-			if (var91 >= 0 && var92 >= 0 && var91 < 104 && var92 < 104 && var93 >= 0 && var94 >= 0 && var93 < 104 && var94 < 104 && var96 != 65535) {
-				int var103 = var91 * 128 + 64;
-				int var104 = var92 * 128 + 64;
-				int var105 = var93 * 128 + 64;
-				int var106 = var94 * 128 + 64;
-				ClientProj var107 = new ClientProj(var96, minusedlevel, var103, var104, getAvH(var103, var104, minusedlevel) - var97, loopCycle + var99, loopCycle + var100, var101, var102, var95, var98);
-				var107.setTarget(var105, var106, getAvH(var105, var106, minusedlevel) - var98, loopCycle + var99);
-				projectiles.push(var107);
-			}
-		} else if (ptype == 215) {
-			// OBJ_REVEAL
-			int var108 = in.g1_alt2();
-			int var109 = (var108 >> 4 & 0x7) + baseX;
-			int var110 = (var108 & 0x7) + baseZ;
-			int var111 = in.g2();
-			int var112 = in.g2_alt2();
-			int var113 = in.g2();
-			if (var109 >= 0 && var110 >= 0 && var109 < 104 && var110 < 104 && selfSlot != var111) {
-				ClientObj var114 = new ClientObj();
-				var114.id = var113;
-				var114.count = var112;
-				if (groundObj[minusedlevel][var109][var110] == null) {
-					groundObj[minusedlevel][var109][var110] = new LinkList();
-				}
-				groundObj[minusedlevel][var109][var110].push(var114);
-				showObject(var109, var110);
-			}
-		} else if (ptype == 7) {
-			// LOC_DEL
-			int var115 = in.g1_alt3();
-			int var116 = var115 >> 2;
-			int var117 = var115 & 0x3;
-			int var118 = LOC_SHAPE_TO_LAYER[var116];
-			int var119 = in.g1_alt1();
-			int var120 = (var119 >> 4 & 0x7) + baseX;
-			int var121 = (var119 & 0x7) + baseZ;
-			if (var120 >= 0 && var121 >= 0 && var120 < 104 && var121 < 104) {
-				locChangeCreate(minusedlevel, var120, var121, var118, -1, var116, var117, 0, -1);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::LocChangeCreate
-	@ObfuscatedName("ap.ew(IIIIIIIIII)V")
-	public static void locChangeCreate(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
-		LocChange var9 = null;
-		for (LocChange var10 = (LocChange) locChanges.head(); var10 != null; var10 = (LocChange) locChanges.next()) {
-			if (var10.level == arg0 && var10.x == arg1 && var10.z == arg2 && var10.layer == arg3) {
-				var9 = var10;
-				break;
-			}
-		}
-		if (var9 == null) {
-			var9 = new LocChange();
-			var9.level = arg0;
-			var9.layer = arg3;
-			var9.x = arg1;
-			var9.z = arg2;
-			locChangeSetOld(var9);
-			locChanges.push(var9);
-		}
-		var9.newType = arg4;
-		var9.newShape = arg5;
-		var9.newAngle = arg6;
-		var9.startTime = arg7;
-		var9.endTime = arg8;
-	}
-
-	// jag::oldscape::Client::LocChangeSetOld
-	@ObfuscatedName("dc.ek(Ldn;I)V")
-	public static void locChangeSetOld(LocChange arg0) {
-		int var1 = 0;
-		int var2 = -1;
-		int var3 = 0;
-		int var4 = 0;
-		if (arg0.layer == 0) {
-			var1 = world.wallType(arg0.level, arg0.x, arg0.z);
-		}
-		if (arg0.layer == 1) {
-			var1 = world.decorType(arg0.level, arg0.x, arg0.z);
-		}
-		if (arg0.layer == 2) {
-			var1 = world.sceneType(arg0.level, arg0.x, arg0.z);
-		}
-		if (arg0.layer == 3) {
-			var1 = world.gdType(arg0.level, arg0.x, arg0.z);
-		}
-		if (var1 != 0) {
-			int var5 = world.typecode2(arg0.level, arg0.x, arg0.z, var1);
-			var2 = var1 >> 14 & 0x7FFF;
-			var3 = var5 & 0x1F;
-			var4 = var5 >> 6 & 0x3;
-		}
-		arg0.oldType = var2;
-		arg0.oldShape = var3;
-		arg0.oldAngle = var4;
-	}
-
-	// jag::oldscape::Client::LocChangeUnchecked
-	@ObfuscatedName("f.eq(IIIIIIII)V")
-	public static void locChangeUnchecked(int arg0, int layer, int arg2, int arg3, int arg4, int arg5, int arg6) {
-		if (arg2 < 1 || arg3 < 1 || arg2 > 102 || arg3 > 102) {
-			return;
-		}
-		if (lowMemory && minusedlevel != arg0) {
-			return;
-		}
-		int var7 = 0;
-		boolean var8 = true;
-		boolean var9 = false;
-		boolean var10 = false;
-		if (layer == 0) {
-			var7 = world.wallType(arg0, arg2, arg3);
-		}
-		if (layer == 1) {
-			var7 = world.decorType(arg0, arg2, arg3);
-		}
-		if (layer == 2) {
-			var7 = world.sceneType(arg0, arg2, arg3);
-		}
-		if (layer == 3) {
-			var7 = world.gdType(arg0, arg2, arg3);
-		}
-		if (var7 != 0) {
-			int var11 = world.typecode2(arg0, arg2, arg3, var7);
-			int var12 = var7 >> 14 & 0x7FFF;
-			int var13 = var11 & 0x1F;
-			int var14 = var11 >> 6 & 0x3;
-			if (layer == 0) {
-				world.delWall(arg0, arg2, arg3);
-				LocType var15 = LocType.list(var12);
-				if (var15.blockwalk != 0) {
-					levelCollisionMap[arg0].delWall(arg2, arg3, var13, var14, var15.blockrange);
-				}
-			}
-			if (layer == 1) {
-				world.delDecor(arg0, arg2, arg3);
-			}
-			if (layer == 2) {
-				world.delLoc(arg0, arg2, arg3);
-				LocType var16 = LocType.list(var12);
-				if (var16.width + arg2 > 103 || var16.width + arg3 > 103 || var16.length + arg2 > 103 || var16.length + arg3 > 103) {
-					return;
-				}
-				if (var16.blockwalk != 0) {
-					levelCollisionMap[arg0].delLoc(arg2, arg3, var16.width, var16.length, var14, var16.blockrange);
-				}
-			}
-			if (layer == 3) {
-				world.delGroundDecor(arg0, arg2, arg3);
-				LocType var17 = LocType.list(var12);
-				if (var17.blockwalk == 1) {
-					levelCollisionMap[arg0].unblockGroundDecor(arg2, arg3);
-				}
-			}
-		}
-		if (arg4 >= 0) {
-			int var18 = arg0;
-			if (arg0 < 3 && (ClientBuild.mapl[1][arg2][arg3] & 0x2) == 2) {
-				var18 = arg0 + 1;
-			}
-			ClientBuild.changeLocUnchecked(arg0, var18, arg2, arg3, arg4, arg5, arg6, world, levelCollisionMap[arg0]);
-		}
-	}
-
-	// jag::oldscape::Client::ShowObject
-	@ObfuscatedName("dr.et(III)V")
-	public static void showObject(int arg0, int arg1) {
-		LinkList var2 = groundObj[minusedlevel][arg0][arg1];
-		if (var2 == null) {
-			world.delObj(minusedlevel, arg0, arg1);
-			return;
-		}
-		int var3 = -99999999;
-		ClientObj var4 = null;
-		for (ClientObj var5 = (ClientObj) var2.head(); var5 != null; var5 = (ClientObj) var2.next()) {
-			ObjType var6 = ObjType.list(var5.id);
-			int var7 = var6.cost;
-			if (var6.stackable == 1) {
-				var7 = (var5.count + 1) * var7;
-			}
-			if (var7 > var3) {
-				var3 = var7;
-				var4 = var5;
-			}
-		}
-		if (var4 == null) {
-			world.delObj(minusedlevel, arg0, arg1);
-			return;
-		}
-		var2.pushFront(var4);
-		ClientObj var8 = null;
-		ClientObj var9 = null;
-		for (ClientObj var10 = (ClientObj) var2.head(); var10 != null; var10 = (ClientObj) var2.next()) {
-			if (var4.id != var10.id) {
-				if (var8 == null) {
-					var8 = var10;
-				}
-				if (var8.id != var10.id && var9 == null) {
-					var9 = var10;
-				}
-			}
-		}
-		int var11 = (arg1 << 7) + arg0 + 1610612736;
-		world.setObj(minusedlevel, arg0, arg1, getAvH(arg0 * 128 + 64, arg1 * 128 + 64, minusedlevel), var4, var11, var8, var9);
-	}
-
-	@ObfuscatedName("ej.ee(I)V")
-	public static void getPlayerPos() {
-		entityRemovalCount = 0;
-		entityUpdateCount = 0;
-		getPlayerPosLocal();
-		getPlayerPosOldVis();
-		getPlayerPosNewVis();
-		getPlayerPosExtended();
-		for (int var44 = 0; var44 < entityRemovalCount; var44++) {
-			int var45 = entityRemovalIds[var44];
-			if (loopCycle != players[var45].cycle) {
-				players[var45] = null;
-			}
-		}
-		if (psize != in.pos) {
-			throw new RuntimeException("gpp1 pos:" + in.pos + " size:" + psize);
-		}
-		for (int var46 = 0; var46 < playerCount; var46++) {
-			if (players[playerIds[var46]] == null) {
-				throw new RuntimeException("gpp2 pos:" + var46 + " size:" + playerCount);
-			}
-		}
-	}
-
-	public static void getPlayerPosLocal() {
-		in.gBitStart();
-		int var0 = in.gBit(1);
-		if (var0 == 0) {
-			return;
-		}
-		int var1 = in.gBit(2);
-		if (var1 == 0) {
-			entityUpdateIds[++entityUpdateCount - 1] = 2047;
-		} else if (var1 == 1) {
-			int var2 = in.gBit(3);
-			localPlayer.moveCode(var2, false);
-			int var3 = in.gBit(1);
-			if (var3 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = 2047;
-			}
-		} else if (var1 == 2) {
-			int var4 = in.gBit(3);
-			localPlayer.moveCode(var4, true);
-			int var5 = in.gBit(3);
-			localPlayer.moveCode(var5, true);
-			int var6 = in.gBit(1);
-			if (var6 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = 2047;
-			}
-		} else if (var1 == 3) {
-			minusedlevel = in.gBit(2);
-			int var7 = in.gBit(7);
-			int var8 = in.gBit(1);
-			if (var8 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = 2047;
-			}
-			int var9 = in.gBit(7);
-			int var10 = in.gBit(1);
-			localPlayer.teleport(var7, var9, var10 == 1);
-		}
-	}
-
-	public static void getPlayerPosOldVis() {
-		int var11 = in.gBit(8);
-		if (var11 < playerCount) {
-			for (int var12 = var11; var12 < playerCount; var12++) {
-				entityRemovalIds[++entityRemovalCount - 1] = playerIds[var12];
-			}
-		}
-		if (var11 > playerCount) {
-			throw new RuntimeException("gppov1");
-		}
-		playerCount = 0;
-		for (int var13 = 0; var13 < var11; var13++) {
-			int var14 = playerIds[var13];
-			ClientPlayer var15 = players[var14];
-			int var16 = in.gBit(1);
-			if (var16 == 0) {
-				playerIds[++playerCount - 1] = var14;
-				var15.cycle = loopCycle;
-			} else {
-				int var17 = in.gBit(2);
-				if (var17 == 0) {
-					playerIds[++playerCount - 1] = var14;
-					var15.cycle = loopCycle;
-					entityUpdateIds[++entityUpdateCount - 1] = var14;
-				} else if (var17 == 1) {
-					playerIds[++playerCount - 1] = var14;
-					var15.cycle = loopCycle;
-					int var18 = in.gBit(3);
-					var15.moveCode(var18, false);
-					int var19 = in.gBit(1);
-					if (var19 == 1) {
-						entityUpdateIds[++entityUpdateCount - 1] = var14;
-					}
-				} else if (var17 == 2) {
-					playerIds[++playerCount - 1] = var14;
-					var15.cycle = loopCycle;
-					int var20 = in.gBit(3);
-					var15.moveCode(var20, true);
-					int var21 = in.gBit(3);
-					var15.moveCode(var21, true);
-					int var22 = in.gBit(1);
-					if (var22 == 1) {
-						entityUpdateIds[++entityUpdateCount - 1] = var14;
-					}
-				} else if (var17 == 3) {
-					entityRemovalIds[++entityRemovalCount - 1] = var14;
-				}
-			}
-		}
-	}
-
-	public static void getPlayerPosNewVis() {
-		while (in.bitsLeft(psize) >= 11) {
-			int var23 = in.gBit(11);
-			if (var23 == 2047) {
-				break;
-			}
-			boolean var47 = false;
-			if (players[var23] == null) {
-				players[var23] = new ClientPlayer();
-				if (playerAppearanceBuffer[var23] != null) {
-					players[var23].setAppearance(playerAppearanceBuffer[var23]);
-				}
-				var47 = true;
-			}
-			playerIds[++playerCount - 1] = var23;
-			ClientPlayer var48 = players[var23];
-			var48.cycle = loopCycle;
-			int var49 = in.gBit(5);
-			if (var49 > 15) {
-				var49 -= 32;
-			}
-			int var50 = ANGLE_TO_DIR[in.gBit(3)];
-			if (var47) {
-				var48.dstYaw = var48.yaw = var50;
-			}
-			int var51 = in.gBit(5);
-			if (var51 > 15) {
-				var51 -= 32;
-			}
-			int var52 = in.gBit(1);
-			int var53 = in.gBit(1);
-			if (var53 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = var23;
-			}
-			var48.teleport(localPlayer.routeX[0] + var51, localPlayer.routeZ[0] + var49, var52 == 1);
-		}
-		in.gBitEnd();
-	}
-
-	public static void getPlayerPosExtended() {
-		for (int var24 = 0; var24 < entityUpdateCount; var24++) {
-			int var25 = entityUpdateIds[var24];
-			ClientPlayer var26 = players[var25];
-			int var27 = in.g1();
-			if ((var27 & 0x40) != 0) {
-				var27 += in.g1() << 8;
-			}
-			getPlayerPosExtended(var25, var26, var27);
-		}
-	}
-
-	public static void getPlayerPosExtended(int var25, ClientPlayer var26, int var27) {
-		if ((var27 & 0x4) != 0) {
-			int var28 = in.g2();
-			int var29 = in.g1();
-			int var30 = in.g1();
-			int var31 = in.pos;
-			if (var26.name != null && var26.model != null) {
-				boolean var32 = false;
-				if (var29 <= 1 && isIgnored(var26.name)) {
-					var32 = true;
-				}
-				if (!var32 && overrideChat == 0) {
-					tempP.pos = 0;
-					in.gdata(tempP.data, 0, var30);
-
-					tempP.pos = 0;
-					String var33 = PixFont.escape(StringTools.forceCapitalisationOfWords(WordPack.unpack(tempP)));
-
-					var26.chat = var33.trim();
-					var26.chatColour = var28 >> 8;
-					var26.chatEffect = var28 & 0xFF;
-					var26.chatTimer = 150;
-
-					if (var29 == 2 || var29 == 3) {
-						addChat(1, StringConstants.TAG_IMG(1) + var26.name, var33);
-					} else if (var29 == 1) {
-						addChat(1, StringConstants.TAG_IMG(0) + var26.name, var33);
-					} else {
-						addChat(2, var26.name, var33);
-					}
-				}
-			}
-			in.pos = var30 + var31;
-		}
-		if ((var27 & 0x2) != 0) {
-			int var34 = in.g1_alt3();
-			byte[] var35 = new byte[var34];
-			Packet var36 = new Packet(var35);
-			in.gdata_alt1(var35, 0, var34);
-			playerAppearanceBuffer[var25] = var36;
-			var26.setAppearance(var36);
-		}
-		if ((var27 & 0x100) != 0) {
-			var26.exactStartX = in.g1();
-			var26.exactStartZ = in.g1_alt2();
-			var26.exactEndX = in.g1();
-			var26.exactEndZ = in.g1_alt1();
-			var26.exactMoveEnd = in.g2_alt2() + loopCycle;
-			var26.exactMoveStart = in.g2() + loopCycle;
-			var26.exactMoveFacing = in.g1_alt2();
-			var26.routeLength = 1;
-			var26.preanimRouteLength = 0;
-		}
-		if ((var27 & 0x20) != 0) {
-			var26.targetId = in.g2_alt3();
-			if (var26.targetId == 65535) {
-				var26.targetId = -1;
-			}
-		}
-		if ((var27 & 0x80) != 0) {
-			var26.targetTileX = in.g2_alt2();
-			var26.targetTileZ = in.g2_alt1();
-		}
-		if ((var27 & 0x10) != 0) {
-			int var37 = in.g2_alt2();
-			if (var37 == 65535) {
-				var37 = -1;
-			}
-			int var38 = in.g1_alt2();
-			triggerPlayerAnim(var26, var37, var38);
-		}
-		if ((var27 & 0x200) != 0) {
-			var26.spotanimId = in.g2_alt1();
-			int var39 = in.g4();
-			var26.spotanimHeight = var39 >> 16;
-			var26.spotanimLastCycle = (var39 & 0xFFFF) + loopCycle;
-			var26.spotanimFrame = 0;
-			var26.spotanimCycle = 0;
-			if (var26.spotanimLastCycle > loopCycle) {
-				var26.spotanimFrame = -1;
-			}
-			if (var26.spotanimId == 65535) {
-				var26.spotanimId = -1;
-			}
-		}
-		if ((var27 & 0x400) != 0) {
-			int var40 = in.g1_alt1();
-			int var41 = in.g1_alt3();
-			var26.addHitmark(var40, var41, loopCycle);
-			var26.combatCycle = loopCycle + 300;
-			var26.health = in.g1();
-			var26.totalHealth = in.g1_alt2();
-		}
-		if ((var27 & 0x1) != 0) {
-			var26.chat = in.gjstr();
-			if (var26.chat.charAt(0) == '~') {
-				var26.chat = var26.chat.substring(1);
-				addChat(2, var26.name, var26.chat);
-			} else if (localPlayer == var26) {
-				addChat(2, var26.name, var26.chat);
-			}
-			var26.chatColour = 0;
-			var26.chatEffect = 0;
-			var26.chatTimer = 150;
-		}
-		if ((var27 & 0x8) != 0) {
-			int var42 = in.g1_alt1();
-			int var43 = in.g1_alt3();
-			var26.addHitmark(var42, var43, loopCycle);
-			var26.combatCycle = loopCycle + 300;
-			var26.health = in.g1_alt1();
-			var26.totalHealth = in.g1();
-		}
-	}
-
-	// jag::oldscape::Client::GetNPCPos
-	public static void getNpcPos() {
-		entityRemovalCount = 0;
-		entityUpdateCount = 0;
-		getNpcPosOldVis();
-		getNpcPosNewVis();
-		getNpcPosExtended();
-		for (int var374 = 0; var374 < entityRemovalCount; var374++) {
-			int var375 = entityRemovalIds[var374];
-			if (loopCycle != npcs[var375].cycle) {
-				npcs[var375].type = null;
-				npcs[var375] = null;
-			}
-		}
-		if (psize != in.pos) {
-			throw new RuntimeException("gnp1 pos:" + in.pos + " psize:" + psize);
-		}
-		for (int var376 = 0; var376 < npcCount; var376++) {
-			if (npcs[npcIds[var376]] == null) {
-				throw new RuntimeException("gnp2 pos:" + var376 + " size:" + npcCount);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GetNPCPosOldVis
-	public static void getNpcPosOldVis() {
-		in.gBitStart();
-		int var362 = in.gBit(8);
-		if (var362 < npcCount) {
-			for (int var363 = var362; var363 < npcCount; var363++) {
-				entityRemovalIds[++entityRemovalCount - 1] = npcIds[var363];
-			}
-		}
-		if (var362 > npcCount) {
-			throw new RuntimeException("gnpov1");
-		}
-		npcCount = 0;
-		for (int var364 = 0; var364 < var362; var364++) {
-			int var365 = npcIds[var364];
-			ClientNpc var366 = npcs[var365];
-			int var367 = in.gBit(1);
-			if (var367 == 0) {
-				npcIds[++npcCount - 1] = var365;
-				var366.cycle = loopCycle;
-			} else {
-				int var368 = in.gBit(2);
-				if (var368 == 0) {
-					npcIds[++npcCount - 1] = var365;
-					var366.cycle = loopCycle;
-					entityUpdateIds[++entityUpdateCount - 1] = var365;
-				} else if (var368 == 1) {
-					npcIds[++npcCount - 1] = var365;
-					var366.cycle = loopCycle;
-					int var369 = in.gBit(3);
-					var366.moveCode(var369, false);
-					int var370 = in.gBit(1);
-					if (var370 == 1) {
-						entityUpdateIds[++entityUpdateCount - 1] = var365;
-					}
-				} else if (var368 == 2) {
-					npcIds[++npcCount - 1] = var365;
-					var366.cycle = loopCycle;
-					int var371 = in.gBit(3);
-					var366.moveCode(var371, true);
-					int var372 = in.gBit(3);
-					var366.moveCode(var372, true);
-					int var373 = in.gBit(1);
-					if (var373 == 1) {
-						entityUpdateIds[++entityUpdateCount - 1] = var365;
-					}
-				} else if (var368 == 3) {
-					entityRemovalIds[++entityRemovalCount - 1] = var365;
-				}
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GetNPCPosNewVis
-	@ObfuscatedName("dm.ed(I)V")
-	public static void getNpcPosNewVis() {
-		while (in.bitsLeft(psize) >= 27) {
-			int var0 = in.gBit(15);
-			if (var0 == 32767) {
-				break;
-			}
-
-			boolean var1 = false;
-			if (npcs[var0] == null) {
-				npcs[var0] = new ClientNpc();
-				var1 = true;
-			}
-			ClientNpc var2 = npcs[var0];
-			npcIds[++npcCount - 1] = var0;
-			var2.cycle = loopCycle;
-			int var3 = ANGLE_TO_DIR[in.gBit(3)];
-			if (var1) {
-				var2.dstYaw = var2.yaw = var3;
-			}
-			int var4 = in.gBit(5);
-			if (var4 > 15) {
-				var4 -= 32;
-			}
-			int var5 = in.gBit(1);
-			if (var5 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = var0;
-			}
-			int var6 = in.gBit(1);
-			var2.type = NpcType.list(in.gBit(14));
-			int var7 = in.gBit(5);
-			if (var7 > 15) {
-				var7 -= 32;
-			}
-			var2.size = var2.type.size;
-			var2.turnSpeed = var2.type.turnspeed;
-			if (var2.turnSpeed == 0) {
-				var2.yaw = 0;
-			}
-			var2.walkanim = var2.type.walkanim;
-			var2.walkanim_b = var2.type.walkanim_b;
-			var2.walkanim_l = var2.type.walkanim_r;
-			var2.walkanim_r = var2.type.walkanim_l;
-			var2.readyanim = var2.type.readyanim;
-			var2.turnleftanim = var2.type.turnleftanim;
-			var2.turnrightanim = var2.type.turnrightanim;
-			var2.teleport(localPlayer.routeX[0] + var7, localPlayer.routeZ[0] + var4, var6 == 1);
-		}
-
-		in.gBitEnd();
-	}
-
-	// jag::oldscape::Client::GetNPCPosExtended
-	@ObfuscatedName("ag.ex(B)V")
-	public static void getNpcPosExtended() {
-		for (int var0 = 0; var0 < entityUpdateCount; var0++) {
-			int var1 = entityUpdateIds[var0];
-			ClientNpc var2 = npcs[var1];
-			int var3 = in.g1();
-			if ((var3 & 0x80) != 0) {
-				int var4 = in.g1();
-				int var5 = in.g1_alt2();
-				var2.addHitmark(var4, var5, loopCycle);
-				var2.combatCycle = loopCycle + 300;
-				var2.health = in.g1_alt1();
-				var2.totalHealth = in.g1_alt1();
-			}
-			if ((var3 & 0x4) != 0) {
-				var2.targetId = in.g2_alt1();
-				if (var2.targetId == 65535) {
-					var2.targetId = -1;
-				}
-			}
-			if ((var3 & 0x2) != 0) {
-				var2.targetTileX = in.g2_alt3();
-				var2.targetTileZ = in.g2_alt3();
-			}
-			if ((var3 & 0x1) != 0) {
-				var2.spotanimId = in.g2_alt1();
-				int var6 = in.g4();
-				var2.spotanimHeight = var6 >> 16;
-				var2.spotanimLastCycle = (var6 & 0xFFFF) + loopCycle;
-				var2.spotanimFrame = 0;
-				var2.spotanimCycle = 0;
-				if (var2.spotanimLastCycle > loopCycle) {
-					var2.spotanimFrame = -1;
-				}
-				if (var2.spotanimId == 65535) {
-					var2.spotanimId = -1;
-				}
-			}
-			if ((var3 & 0x8) != 0) {
-				int var7 = in.g2_alt3();
-				if (var7 == 65535) {
-					var7 = -1;
-				}
-				int var8 = in.g1_alt1();
-				if (var2.primarySeqId == var7 && var7 != -1) {
-					int var9 = SeqType.list(var7).duplicatebehavior;
-					if (var9 == 1) {
-						var2.primarySeqFrame = 0;
-						var2.primarySeqCycle = 0;
-						var2.primarySeqDelay = var8;
-						var2.primarySeqLoop = 0;
-					}
-					if (var9 == 2) {
-						var2.primarySeqLoop = 0;
-					}
-				} else if (var7 == -1 || var2.primarySeqId == -1 || SeqType.list(var7).priority >= SeqType.list(var2.primarySeqId).priority) {
-					var2.primarySeqId = var7;
-					var2.primarySeqFrame = 0;
-					var2.primarySeqCycle = 0;
-					var2.primarySeqDelay = var8;
-					var2.primarySeqLoop = 0;
-					var2.preanimRouteLength = var2.routeLength;
-				}
-			}
-			if ((var3 & 0x40) != 0) {
-				var2.type = NpcType.list(in.g2());
-				var2.size = var2.type.size;
-				var2.turnSpeed = var2.type.turnspeed;
-				var2.walkanim = var2.type.walkanim;
-				var2.walkanim_b = var2.type.walkanim_b;
-				var2.walkanim_l = var2.type.walkanim_r;
-				var2.walkanim_r = var2.type.walkanim_l;
-				var2.readyanim = var2.type.readyanim;
-				var2.turnleftanim = var2.type.turnleftanim;
-				var2.turnrightanim = var2.type.turnrightanim;
-			}
-			if ((var3 & 0x20) != 0) {
-				var2.chat = in.gjstr();
-				var2.chatTimer = 100;
-			}
-			if ((var3 & 0x10) != 0) {
-				int var10 = in.g1_alt3();
-				int var11 = in.g1_alt3();
-				var2.addHitmark(var10, var11, loopCycle);
-				var2.combatCycle = loopCycle + 300;
-				var2.health = in.g1_alt3();
-				var2.totalHealth = in.g1_alt1();
-			}
-		}
-	}
-
-	// jag::oldscape::Client::DirtyArea
-	@ObfuscatedName("bs.ea(IIIII)V")
-	public static void dirtyArea(int arg0, int arg1, int arg2, int arg3) {
-		for (int i = 0; i < componentDrawCount; i++) {
-			if (componentDrawWidth[i] + componentDrawX[i] > arg0 && componentDrawX[i] < arg0 + arg2 && componentDrawHeight[i] + componentDrawY[i] > arg1 && componentDrawY[i] < arg1 + arg3) {
-				componentRedrawRequested1[i] = true;
-			}
-		}
-	}
-
-	// jag::oldscape::minimenu::Minimenu::Open
-	@ObfuscatedName("bk.ep(B)V")
-	public static void openMenu() {
-		int width = b12.stringWid(Text.CHOOSEOPTION);
-		for (int i = 0; i < menuNumEntries; i++) {
-			int var2 = b12.stringWid(getLine(i));
-			if (var2 > width) {
-				width = var2;
-			}
-		}
-		width += 8;
-
-		int height = menuNumEntries * 15 + 21;
-
-		int var4 = ClientMouseListener.mouseClickX - width / 2;
-		if (width + var4 > 765) {
-			var4 = 765 - width;
-		}
-		if (var4 < 0) {
-			var4 = 0;
-		}
-
-		int var5 = ClientMouseListener.mouseClickY;
-		if (height + var5 > 503) {
-			var5 = 503 - height;
-		}
-		if (var5 < 0) {
-			var5 = 0;
-		}
-
-		isMenuOpen = true;
-		menuX = var4;
-		menuY = var5;
-		menuWidth = width;
-		menuHeight = menuNumEntries * 15 + 22;
-	}
-
-	@ObfuscatedName("br.em(II)Z")
-	public static boolean isAddFriendOption(int arg0) {
-		if (arg0 < 0) {
-			return false;
-		}
-
-		int var1 = menuAction[arg0];
-		if (var1 >= 2000) {
-			var1 -= 2000;
-		}
-		return var1 == 1007;
-	}
-
-	// jag::oldscape::Client::DoAction
-	@ObfuscatedName("m.ey(II)V")
-	public static void doAction(int arg0) {
-		if (arg0 < 0) {
-			return;
-		}
-
-		int b = menuParamB[arg0];
-		int c = menuParamC[arg0];
-		int action = menuAction[arg0];
-		int a = menuParamA[arg0];
-
-		if (action >= 2000) {
-			action -= 2000;
-		}
-
-		if (action == 45) {
-			ClientPlayer var5 = players[a];
-			if (var5 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var5.routeX[0], var5.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYER2
-				out.p1Enc(146);
-				out.p2(a);
-			}
-		}
-
-		if (action == 35) {
-			// OPHELD3
-			out.p1Enc(76);
-			out.p2_alt1(b);
-			out.p4_alt2(c);
-			out.p2_alt1(a);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 8) {
-			ClientNpc var6 = npcs[a];
-			if (var6 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var6.routeX[0], var6.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPNPCT
-				out.p1Enc(190);
-				out.p4(targetCom);
-				out.p2_alt2(a);
-				out.p2_alt2(targetSub);
-			}
-		}
-
-		if (action == 51) {
-			ClientPlayer var7 = players[a];
-			if (var7 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var7.routeX[0], var7.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYER8
-				out.p1Enc(145);
-				out.p2_alt1(a);
-			}
-		}
-
-		if (action == 28) {
-			// IF_BUTTON
-			out.p1Enc(155);
-			out.p4(c);
-
-			IfType var8 = IfType.get(c);
-			if (var8.scripts != null && var8.scripts[0][0] == 5) {
-				int var9 = var8.scripts[0][1];
-				VarCache.var[var9] = 1 - VarCache.var[var9];
-				clientVar(var9);
-			}
-		}
-
-		if (action == 1002) {
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPLOCE
-			out.p1Enc(162);
-			out.p2_alt2(a >> 14 & 0x7FFF);
-		}
-
-		if (action == 31) {
-			// OPHELDU
-			out.p1Enc(70);
-			out.p2_alt1(a);
-			out.p2_alt1(objLayerId);
-			out.p2(objSelectedSlot);
-			out.p4(c);
-			out.p2_alt1(b);
-			out.p4_alt1(objSelectedLayerId);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 1004) {
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPOBJE
-			out.p1Enc(49);
-			out.p2_alt1(a);
-		}
-
-		if (action == 47) {
-			ClientPlayer var10 = players[a];
-			if (var10 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var10.routeX[0], var10.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYER4
-				out.p1Enc(78);
-				out.p2(a);
-			}
-		}
-
-		if (action == 32) {
-			// OPHELDT
-			out.p1Enc(218);
-			out.p2_alt1(targetSub);
-			out.p2(b);
-			out.p2(a);
-			out.p4_alt2(c);
-			out.p4_alt2(targetCom);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 46) {
-			ClientPlayer var11 = players[a];
-			if (var11 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var11.routeX[0], var11.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYER3
-				out.p1Enc(102);
-				out.p2_alt1(a);
-			}
-		}
-
-		if (action == 20) {
-			boolean var12 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
-			if (!var12) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
-			}
-
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPOBJ3
-			out.p1Enc(224);
-			out.p2_alt2(a);
-			out.p2_alt3(mapBuildBaseX + b);
-			out.p2_alt2(mapBuildBaseZ + c);
-		}
-
-		if (action == 12) {
-			ClientNpc var14 = npcs[a];
-			if (var14 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var14.routeX[0], var14.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPNPC4
-				out.p1Enc(95);
-				out.p2_alt1(a);
-			}
-		}
-
-		if (action == 14) {
-			ClientPlayer var15 = players[a];
-			if (var15 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var15.routeX[0], var15.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYERU
-				out.p1Enc(226);
-				out.p2_alt2(objLayerId);
-				out.p2_alt1(objSelectedSlot);
-				out.p2_alt2(a);
-				out.p4_alt2(objSelectedLayerId);
-			}
-		}
-
-		if (action == 2) {
-			if (interactWithLoc(b, c, a)) {
-				// OPLOCT
-				out.p1Enc(247);
-				out.p4_alt3(targetCom);
-				out.p2(mapBuildBaseZ + c);
-				out.p2_alt1(targetSub);
-				out.p2_alt2(a >> 14 & 0x7FFF);
-				out.p2_alt1(mapBuildBaseX + b);
-			}
-		}
-
-		if (action == 41) {
-			// INV_BUTTON3
-			out.p1Enc(6);
-			out.p2_alt1(b);
-			out.p4_alt1(c);
-			out.p2_alt3(a);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 50) {
-			ClientPlayer var16 = players[a];
-			if (var16 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var16.routeX[0], var16.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYER7
-				out.p1Enc(119);
-				out.p2_alt3(a);
-			}
-		}
-
-		if (action == 29) {
-			// IF_BUTTON
-			out.p1Enc(155);
-			out.p4(c);
-
-			IfType var17 = IfType.get(c);
-			if (var17.scripts != null && var17.scripts[0][0] == 5) {
-				int var18 = var17.scripts[0][1];
-				if (VarCache.var[var18] != var17.scriptOperand[0]) {
-					VarCache.var[var18] = var17.scriptOperand[0];
-					clientVar(var18);
-				}
-			}
-		}
-
-		if (action == 48) {
-			ClientPlayer var19 = players[a];
-			if (var19 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var19.routeX[0], var19.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYER5
-				out.p1Enc(117);
-				out.p2_alt2(a);
-			}
-		}
-
-		if (action == 33) {
-			// OPHELD1
-			out.p1Enc(135);
-			out.p4_alt2(c);
-			out.p2_alt3(a);
-			out.p2_alt3(b);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 1) {
-			if (interactWithLoc(b, c, a)) {
-				// OPLOCU
-				out.p1Enc(241);
-				out.p4_alt1(objSelectedLayerId);
-				out.p2(objSelectedSlot);
-				out.p2(a >> 14 & 0x7FFF);
-				out.p2_alt2(mapBuildBaseX + b);
-				out.p2_alt1(objLayerId);
-				out.p2_alt2(mapBuildBaseZ + c);
-			}
-		}
-
-		if (action == 6) {
-			interactWithLoc(b, c, a);
-
-			// OPLOC4
-			out.p1Enc(83);
-			out.p2_alt2(mapBuildBaseX + b);
-			out.p2_alt3(mapBuildBaseZ + c);
-			out.p2_alt3(a >> 14 & 0x7FFF);
-		}
-
-		if (action == 15) {
-			ClientPlayer var20 = players[a];
-			if (var20 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var20.routeX[0], var20.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYERT
-				out.p1Enc(183);
-				out.p2_alt2(targetSub);
-				out.p4(targetCom);
-				out.p2_alt1(a);
-			}
-		}
-
-		if (action == 18) {
-			boolean var21 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
-			if (!var21) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
-			}
-
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPOBJ1
-			out.p1Enc(243);
-			out.p2_alt1(a);
-			out.p2(mapBuildBaseX + b);
-			out.p2_alt3(mapBuildBaseZ + c);
-		}
-
-		if (action == 5) {
-			interactWithLoc(b, c, a);
-
-			// OPLOC3
-			out.p1Enc(133);
-			out.p2_alt2(mapBuildBaseX + b);
-			out.p2_alt2(mapBuildBaseZ + c);
-			out.p2_alt3(a >> 14 & 0x7FFF);
-		}
-
-		if (action == 16) {
-			boolean var23 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
-			if (!var23) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
-			}
-
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPOBJU
-			out.p1Enc(235);
-			out.p2(mapBuildBaseZ + c);
-			out.p2_alt2(objLayerId);
-			out.p2_alt1(mapBuildBaseX + b);
-			out.p4(objSelectedLayerId);
-			out.p2_alt1(a);
-			out.p2_alt1(objSelectedSlot);
-		}
-
-		if (action == 1001) {
-			interactWithLoc(b, c, a);
-
-			// OPLOC5
-			out.p1Enc(56);
-			out.p2(mapBuildBaseX + b);
-			out.p2_alt1(a >> 14 & 0x7FFF);
-			out.p2_alt2(mapBuildBaseZ + c);
-		}
-
-		if (action == 26) {
-			closeModal();
-		}
-
-		if (action == 37) {
-			// OPHELD5
-			out.p1Enc(19);
-			out.p2(a);
-			out.p4(c);
-			out.p2_alt2(b);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 57 || action == 1007) {
-			ifButtonX(a, c, b, menuSubject[arg0]);
-		}
-
-		if (action == 44) {
-			ClientPlayer var26 = players[a];
-			if (var26 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var26.routeX[0], var26.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYER1
-				out.p1Enc(246);
-				out.p2(a);
-			}
-		}
-
-		if (action == 22) {
-			boolean var27 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
-			if (!var27) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
-			}
-
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPOBJ5
-			out.p1Enc(77);
-			out.p2(mapBuildBaseX + b);
-			out.p2_alt2(mapBuildBaseZ + c);
-			out.p2_alt3(a);
-		}
-
-		if (action == 24) {
-			IfType var29 = IfType.get(c);
-
-			boolean transmit = true;
-			if (var29.clientCode > 0) {
-				transmit = clientButton(var29);
-			}
-			if (transmit) {
-				// IF_BUTTON
-				out.p1Enc(155);
-				out.p4(c);
-			}
-		}
-
-		if (action == 9) {
-			ClientNpc var31 = npcs[a];
-			if (var31 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var31.routeX[0], var31.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPNPC1
-				out.p1Enc(84);
-				out.p2_alt3(a);
-			}
-		}
-
-		if (action == 49) {
-			ClientPlayer var32 = players[a];
-			if (var32 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var32.routeX[0], var32.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPPLAYER6
-				out.p1Enc(111);
-				out.p2_alt3(a);
-			}
-		}
-
-		if (action == 25) {
-			IfType var33 = IfType.get(c, b);
-			if (var33 != null) {
-				endTargetMode();
-
-				// todo: inlined method (minimenuEnterTargetMode?)
-				int var34 = ServerActive.targetMask(getActive(var33));
-				IfType var35 = IfType.get(c, b);
-				if (var35 != null && var35.ontargetenter != null) {
-					HookReq req = new HookReq();
-					req.component = var35;
-					req.onop = var35.ontargetenter;
-					ScriptRunner.executeScript(req);
-				}
-				targetMode = true;
-				targetCom = c;
-				targetSub = b;
-				targetMask = var34;
-				componentUpdated(var35);
-
-				useMode = 0;
-
-				// todo: inlined method (getComponentTargetVerb?)
-				String var37;
-				if (ServerActive.targetMask(getActive(var33)) == 0) {
-					var37 = null;
-				} else if (var33.targetVerb == null || var33.targetVerb.trim().length() == 0) {
-					var37 = null;
-				} else {
-					var37 = var33.targetVerb;
-				}
-
-				targetVerb = var37;
-				if (targetVerb == null) {
-					targetVerb = "Null";
-				}
-
-				if (var33.v3) {
-					targetOp = var33.baseOpName + StringConstants.TAG_COLOUR(16777215);
-				} else {
-					targetOp = StringConstants.TAG_COLOUR(65280) + var33.targetBase + StringConstants.TAG_COLOUR(16777215);
-				}
-			}
-
-			return;
-		}
-
-		if (action == 42) {
-			// INV_BUTTON4
-			out.p1Enc(186);
-			out.p2(b);
-			out.p4(c);
-			out.p2(a);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 10) {
-			ClientNpc var38 = npcs[a];
-			if (var38 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var38.routeX[0], var38.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPNPC2
-				out.p1Enc(13);
-				out.p2_alt2(a);
-			}
-		}
-
-		if (action == 34) {
-			// OPHELD2
-			out.p1Enc(179);
-			out.p2_alt3(b);
-			out.p2_alt2(a);
-			out.p4_alt1(c);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 43) {
-			// INV_BUTTON5
-			out.p1Enc(40);
-			out.p2_alt1(a);
-			out.p4_alt1(c);
-			out.p2_alt2(b);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 1003) {
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			ClientNpc var39 = npcs[a];
-			if (var39 != null) {
-				NpcType var40 = var39.type;
-				if (var40.multinpc != null) {
-					var40 = var40.getMultiNpc();
-				}
-				if (var40 != null) {
-					// OPNPCE
-					out.p1Enc(52);
-					out.p2(var40.index);
-				}
-			}
-		}
-		if (action == 13) {
-			ClientNpc var41 = npcs[a];
-			if (var41 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var41.routeX[0], var41.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPNPC5
-				out.p1Enc(88);
-				out.p2(a);
-			}
-		}
-
-		if (action == 11) {
-			ClientNpc var42 = npcs[a];
-			if (var42 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var42.routeX[0], var42.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPNPC3
-				out.p1Enc(67);
-				out.p2_alt1(a);
-			}
-		}
-
-		if (action == 17) {
-			boolean var43 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
-			if (!var43) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
-			}
-
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPOBJT
-			out.p1Enc(81);
-			out.p2_alt3(a);
-			out.p2(mapBuildBaseZ + c);
-			out.p4_alt3(targetCom);
-			out.p2_alt2(mapBuildBaseX + b);
-			out.p2_alt2(targetSub);
-		}
-
-		if (action == 3) {
-			interactWithLoc(b, c, a);
-
-			// OPLOC1
-			out.p1Enc(73);
-			out.p2_alt2(a >> 14 & 0x7FFF);
-			out.p2(mapBuildBaseX + b);
-			out.p2(mapBuildBaseZ + c);
-		}
-
-		if (action == 38) {
-			endTargetMode();
-
-			IfType var45 = IfType.get(c);
-			useMode = 1;
-			objSelectedSlot = b;
-			objSelectedLayerId = c;
-			objLayerId = a;
-			componentUpdated(var45);
-
-			objSelectedName = StringConstants.TAG_COLOUR(16748608) + ObjType.list(a).name + StringConstants.TAG_COLOUR(16777215);
-			if (objSelectedName == null) {
-				objSelectedName = "null";
-			}
-
-			return;
-		}
-
-		if (action == 58) {
-			// IF_BUTTONT
-			out.p1Enc(251);
-			out.p2_alt2(targetSub);
-			out.p2_alt2(b);
-			out.p4(targetCom);
-			out.p4_alt2(c);
-		}
-
-		if (action == 30) {
-			if (resumedPauseButton == null) {
-				// RESUME_PAUSEBUTTON
-				out.p1Enc(242);
-				out.p2_alt2(b);
-				out.p4(c);
-
-				resumedPauseButton = IfType.get(c, b);
-				componentUpdated(resumedPauseButton);
-			}
-		}
-
-		if (action == 23) {
-			world.updateMousePicking(minusedlevel, b, c);
-		}
-
-		if (action == 4) {
-			interactWithLoc(b, c, a);
-
-			// OPLOC2
-			out.p1Enc(90);
-			out.p2_alt3(mapBuildBaseZ + c);
-			out.p2_alt3(mapBuildBaseX + b);
-			out.p2_alt2(a >> 14 & 0x7FFF);
-		}
-
-		if (action == 36) {
-			// OPHELD4
-			out.p1Enc(220);
-			out.p4_alt3(c);
-			out.p2_alt2(b);
-			out.p2_alt1(a);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 19) {
-			boolean var46 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
-			if (!var46) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
-			}
-
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPOBJ2
-			out.p1Enc(177);
-			out.p2(mapBuildBaseZ + c);
-			out.p2_alt3(a);
-			out.p2(mapBuildBaseX + b);
-		}
-
-		if (action == 40) {
-			// INV_BUTTON2
-			out.p1Enc(202);
-			out.p2_alt1(a);
-			out.p4_alt2(c);
-			out.p2_alt1(b);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 1005) {
-			IfType var48 = IfType.get(c);
-			if (var48 == null || var48.linkObjNumber[b] < 100000) {
-				out.p1Enc(49);
-				out.p2_alt1(a);
-			} else {
-				addChat(0, "", var48.linkObjNumber[b] + " x " + ObjType.list(a).name);
-			}
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (action == 7) {
-			ClientNpc var49 = npcs[a];
-			if (var49 != null) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var49.routeX[0], var49.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				crossX = ClientMouseListener.mouseClickX;
-				crossY = ClientMouseListener.mouseClickY;
-				crossMode = 2;
-				crossCycle = 0;
-
-				// OPNPCU
-				out.p1Enc(106);
-				out.p2_alt2(objSelectedSlot);
-				out.p4(objSelectedLayerId);
-				out.p2_alt1(a);
-				out.p2_alt3(objLayerId);
-			}
-		}
-
-		if (action == 21) {
-			boolean var50 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
-			if (!var50) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
-			}
-
-			crossX = ClientMouseListener.mouseClickX;
-			crossY = ClientMouseListener.mouseClickY;
-			crossMode = 2;
-			crossCycle = 0;
-
-			// OPOBJ4
-			out.p1Enc(139);
-			out.p2_alt1(mapBuildBaseZ + c);
-			out.p2_alt1(mapBuildBaseX + b);
-			out.p2_alt3(a);
-		}
-
-		if (action == 39) {
-			// INV_BUTTON1
-			out.p1Enc(21);
-			out.p2(b);
-			out.p4_alt2(c);
-			out.p2_alt1(a);
-
-			selectedCycle = 0;
-			selectedArea = IfType.get(c);
-			selectedItem = b;
-		}
-
-		if (useMode != 0) {
-			useMode = 0;
-			componentUpdated(IfType.get(objSelectedLayerId));
-		}
-
-		if (targetMode) {
-			endTargetMode();
-		}
-
-		if (selectedArea != null && selectedCycle == 0) {
-			componentUpdated(selectedArea);
-		}
-	}
-
-	// jag::oldscape::Client::OpPlayer
-	@ObfuscatedName("ao.ec(ILjava/lang/String;I)V")
-	public static void opPlayer(int arg0, String arg1) {
-		String var2 = JString.toRawUsername(arg1);
-		String var3 = JString.toScreenName(JString.toUserhash(var2));
-		if (var3 == null) {
-			var3 = "";
-		}
-		String var5 = var3;
-
-		boolean found = false;
-		for (int i = 0; i < playerCount; i++) {
-			ClientPlayer player = players[playerIds[i]];
-			if (player != null && player.name != null && player.name.equalsIgnoreCase(var5)) {
-				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], player.routeX[0], player.routeZ[0], false, 0, 0, 1, 1, 0, 2);
-
-				if (arg0 == 1) {
-					// OPPLAYER1
-					out.p1Enc(246);
-					out.p2(playerIds[i]);
-				} else if (arg0 == 4) {
-					// OPPLAYER4
-					out.p1Enc(78);
-					out.p2(playerIds[i]);
-				} else if (arg0 == 6) {
-					// OPPLAYER6
-					out.p1Enc(111);
-					out.p2_alt3(playerIds[i]);
-				} else if (arg0 == 7) {
-					// OPPLAYER7
-					out.p1Enc(119);
-					out.p2_alt3(playerIds[i]);
-				}
-
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			addChat(0, "", Text.UNABLETOFIND + var5);
-		}
-	}
-
-	// jag::oldscape::minimenu::Minimenu::EndTargetMode
-	@ObfuscatedName("ba.eo(B)V")
-	public static void endTargetMode() {
-		if (!targetMode) {
-			return;
-		}
-
-		IfType var0 = IfType.get(targetCom, targetSub);
-		if (var0 != null && var0.ontargetleave != null) {
-			HookReq req = new HookReq();
-			req.component = var0;
-			req.onop = var0.ontargetleave;
-			ScriptRunner.executeScript(req);
-		}
-
-		targetMode = false;
-		componentUpdated(var0);
-	}
-
-	// jag::oldscape::Client::IfButtonX
-	@ObfuscatedName("bd.eu(IIILjava/lang/String;I)V")
-	public static void ifButtonX(int opindex, int arg1, int arg2, String opbase) {
-		IfType com = IfType.get(arg1, arg2);
-		if (com == null) {
-			return;
-		}
-		if (com.onop != null) {
-			HookReq hook = new HookReq();
-			hook.component = com;
-			hook.opindex = opindex;
-			hook.opbase = opbase;
-			hook.onop = com.onop;
-			ScriptRunner.executeScript(hook);
-		}
-
-		boolean transmit = true;
-		if (com.clientCode > 0) {
-			transmit = clientButton(com);
-		}
-		if (!transmit) {
-			return;
-		}
-
-		if (ServerActive.hasOp(getActive(com), opindex - 1)) {
-			if (opindex == 1) {
-				// IF_BUTTON1
-				out.p1Enc(63);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 2) {
-				// IF_BUTTON2
-				out.p1Enc(87);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 3) {
-				// IF_BUTTON3
-				out.p1Enc(238);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 4) {
-				// IF_BUTTON4
-				out.p1Enc(240);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 5) {
-				// IF_BUTTON5
-				out.p1Enc(153);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 6) {
-				// IF_BUTTON6
-				out.p1Enc(232);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 7) {
-				// IF_BUTTON7
-				out.p1Enc(168);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 8) {
-				// IF_BUTTON8
-				out.p1Enc(239);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 9) {
-				// IF_BUTTON9
-				out.p1Enc(254);
-				out.p4(arg1);
-				out.p2(arg2);
-			} else if (opindex == 10) {
-				// IF_BUTTON10
-				out.p1Enc(169);
-				out.p4(arg1);
-				out.p2(arg2);
-			}
-		}
-	}
-
-	@ObfuscatedName("d.fd(Ljava/lang/String;Ljava/lang/String;IIIII)V")
-	public static void addMenuOption(String verb, String subject, int action, int a, int b, int c) {
-		if (isMenuOpen || menuNumEntries >= 500) {
-			return;
-		}
-
-		menuVerb[menuNumEntries] = verb;
-		menuSubject[menuNumEntries] = subject;
-		menuAction[menuNumEntries] = action;
-		menuParamA[menuNumEntries] = a;
-		menuParamB[menuNumEntries] = b;
-		menuParamC[menuNumEntries] = c;
-		menuNumEntries++;
-	}
-
-	// jag::oldscape::minimenu::Minimenu::GetLine
-	@ObfuscatedName("cq.fb(IS)Ljava/lang/String;")
-	public static String getLine(int arg0) {
-		return menuSubject[arg0].length() > 0 ? menuVerb[arg0] + Text.MINISEPARATOR + menuSubject[arg0] : menuVerb[arg0];
-	}
-
-	// jag::oldscape::minimenu::Minimenu::AddNpcOptions
-	@ObfuscatedName("z.fc(Lem;IIII)V")
-	public static void addNpcOptions(NpcType npc, int arg1, int arg2, int arg3) {
-		if (menuNumEntries >= 400) {
-			return;
-		}
-
-		if (npc.multinpc != null) {
-			npc = npc.getMultiNpc();
-		}
-
-		if (npc == null || !npc.active) {
-			return;
-		}
-
-		String name = npc.name;
-		if (npc.vislevel != 0) {
-			// todo: inlined method (combatColourCode)
-			int otherLevel = npc.vislevel;
-			int viewerLevel = localPlayer.combatLevel;
-			int delta = viewerLevel - otherLevel;
-			String tag;
-			if (delta < -9) {
-				tag = StringConstants.TAG_COLOUR(16711680);
-			} else if (delta < -6) {
-				tag = StringConstants.TAG_COLOUR(16723968);
-			} else if (delta < -3) {
-				tag = StringConstants.TAG_COLOUR(16740352);
-			} else if (delta < 0) {
-				tag = StringConstants.TAG_COLOUR(16756736);
-			} else if (delta > 9) {
-				tag = StringConstants.TAG_COLOUR(65280);
-			} else if (delta > 6) {
-				tag = StringConstants.TAG_COLOUR(4259584);
-			} else if (delta > 3) {
-				tag = StringConstants.TAG_COLOUR(8453888);
-			} else if (delta > 0) {
-				tag = StringConstants.TAG_COLOUR(12648192);
-			} else {
-				tag = StringConstants.TAG_COLOUR(16776960);
-			}
-
-			name = name + tag + " " + StringConstants.OPEN_BRACKET + Text.LEVEL + npc.vislevel + StringConstants.CLOSE_BRACKET;
-		}
-
-		if (useMode == 1) {
-			addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16776960) + name, 7, arg1, arg2, arg3);
-		} else if (targetMode) {
-			if ((targetMask & 0x2) == 2) {
-				addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16776960) + name, 8, arg1, arg2, arg3);
-			}
-		} else {
-			String[] op = npc.op;
-			if (showOpIndex) {
-				op = prependOpIndex(op);
-			}
-
-			if (op != null) {
-				for (int index = 4; index >= 0; index--) {
-					if (op[index] == null || op[index].equalsIgnoreCase(Text.ATTACK)) {
-						continue;
-					}
-
-					int action = 0;
-					if (index == 0) {
-						action = 9;
-					}
-					if (index == 1) {
-						action = 10;
-					}
-					if (index == 2) {
-						action = 11;
-					}
-					if (index == 3) {
-						action = 12;
-					}
-					if (index == 4) {
-						action = 13;
-					}
-
-					addMenuOption(op[index], StringConstants.TAG_COLOUR(16776960) + name, action, arg1, arg2, arg3);
-				}
-			}
-
-			if (op != null) {
-				for (int index = 4; index >= 0; index--) {
-					if (op[index] == null || !op[index].equalsIgnoreCase(Text.ATTACK)) {
-						continue;
-					}
-
-					int priority = 0;
-					if (npc.vislevel > localPlayer.combatLevel) {
-						priority = 2000;
-					}
-
-					int action = 0;
-					if (index == 0) {
-						action = priority + 9;
-					}
-					if (index == 1) {
-						action = priority + 10;
-					}
-					if (index == 2) {
-						action = priority + 11;
-					}
-					if (index == 3) {
-						action = priority + 12;
-					}
-					if (index == 4) {
-						action = priority + 13;
-					}
-
-					addMenuOption(op[index], StringConstants.TAG_COLOUR(16776960) + name, action, arg1, arg2, arg3);
-				}
-			}
-
-			addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16776960) + name, 1003, arg1, arg2, arg3);
-		}
-	}
-
-	// jag::oldscape::minimenu::Minimenu::AddPlayerOptions
-	@ObfuscatedName("cr.fe(Lfi;IIII)V")
-	public static void addPlayerOptions(ClientPlayer player, int arg1, int arg2, int arg3) {
-		if (localPlayer == player || menuNumEntries >= 400) {
-			return;
-		}
-
-		String name;
-		if (player.skillLevel == 0) {
-			// todo: inlined method (combatColourCode)
-			String playerName = player.name;
-			int otherLevel = player.combatLevel;
-			int viewerLevel = localPlayer.combatLevel;
-			int delta = viewerLevel - otherLevel;
-			String tag;
-			if (delta < -9) {
-				tag = StringConstants.TAG_COLOUR(16711680);
-			} else if (delta < -6) {
-				tag = StringConstants.TAG_COLOUR(16723968);
-			} else if (delta < -3) {
-				tag = StringConstants.TAG_COLOUR(16740352);
-			} else if (delta < 0) {
-				tag = StringConstants.TAG_COLOUR(16756736);
-			} else if (delta > 9) {
-				tag = StringConstants.TAG_COLOUR(65280);
-			} else if (delta > 6) {
-				tag = StringConstants.TAG_COLOUR(4259584);
-			} else if (delta > 3) {
-				tag = StringConstants.TAG_COLOUR(8453888);
-			} else if (delta > 0) {
-				tag = StringConstants.TAG_COLOUR(12648192);
-			} else {
-				tag = StringConstants.TAG_COLOUR(16776960);
-			}
-
-			name = playerName + tag + " " + StringConstants.OPEN_BRACKET + Text.LEVEL + player.combatLevel + StringConstants.CLOSE_BRACKET;
-		} else {
-			name = player.name + " " + StringConstants.OPEN_BRACKET + Text.SKILL + player.skillLevel + StringConstants.CLOSE_BRACKET;
-		}
-
-		if (useMode == 1) {
-			addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16777215) + name, 14, arg1, arg2, arg3);
-		} else if (targetMode) {
-			if ((targetMask & 0x8) == 8) {
-				addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16777215) + name, 15, arg1, arg2, arg3);
-			}
-		} else {
-			for (int i = 7; i >= 0; i--) {
-				if (playerOp[i] == null) {
-					continue;
-				}
-
-				short priority = 0;
-				if (playerOp[i].equalsIgnoreCase(Text.ATTACK)) {
-					if (player.combatLevel > localPlayer.combatLevel) {
-						priority = 2000;
-					}
-
-					if (localPlayer.team != 0 && player.team != 0) {
-						if (localPlayer.team == player.team) {
-							priority = 2000;
-						} else {
-							priority = 0;
-						}
-					}
-				} else if (playerOpPriority[i]) {
-					priority = 2000;
-				}
-
-				int action = MENUACTION_PLAYER[i] + priority;
-				addMenuOption(playerOp[i], StringConstants.TAG_COLOUR(16777215) + name, action, arg1, arg2, arg3);
-			}
-		}
-
-		for (int i = 0; i < menuNumEntries; i++) {
-			if (menuAction[i] == 23) {
-				menuSubject[i] = StringConstants.TAG_COLOUR(16777215) + name;
-				break;
-			}
-		}
-	}
-
-	// jag::oldscape::Client::DrawInterface
-	@ObfuscatedName("fg.fj(IIIIIIIII)V")
-	public static void drawInterface(int id, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-		if (IfType.openInterface(id)) {
-			dragChildren = null;
-			drawLayer(IfType.list[id], -1, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-
-			if (dragChildren != null) {
-				drawLayer(dragChildren, 0xabcdabcd, arg1, arg2, arg3, arg4, dragChildX, dragChildY, arg7);
-				dragChildren = null;
-			}
-		} else if (arg7 == -1) {
-			for (int i = 0; i < 100; i++) {
-				componentRedrawRequested1[i] = true;
-			}
-		} else {
-			componentRedrawRequested1[arg7] = true;
-		}
-	}
-
-	// jag::oldscape::Client::DrawLayer
-	@ObfuscatedName("g.fv([Leg;IIIIIIIIB)V")
-	public static void drawLayer(IfType[] children, int layerid, int x, int y, int w, int h, int childX, int childY, int childCount) {
-		Pix2D.setClipping(x, y, w, h);
-		Pix3D.setRenderClipping();
-
-		for (int i = 0; i < children.length; i++) {
-			IfType com = children[i];
-			if (com == null || (com.layerId != layerid && (layerid != 0xabcdabcd || dragComponent != com))) {
-				continue;
-			}
-
-			int drawCount;
-			if (childCount == -1) {
-				componentDrawX[componentDrawCount] = com.x + childX;
-				componentDrawY[componentDrawCount] = com.y + childY;
-				componentDrawWidth[componentDrawCount] = com.width;
-				componentDrawHeight[componentDrawCount] = com.height;
-				drawCount = ++componentDrawCount - 1;
-			} else {
-				drawCount = childCount;
-			}
-
-			com.drawCount = drawCount;
-			com.drawTime = loopCycle;
-
-			if (com.v3 && hide(com)) {
-				continue;
-			}
-
-			if (com.clientCode > 0) {
-				clientComponent(com);
-			}
-
-			int renderx = com.x + childX;
-			int rendery = com.y + childY;
-			int trans = com.trans;
-
-			if (dragComponent == com) {
-				if (layerid != 0xabcdabcd && !com.draggablebehavior) {
-					dragChildren = children;
-					dragChildX = childX;
-					dragChildY = childY;
-					continue;
-				}
-
-				if (dragAlive && dragParentFound) {
-					int var15 = ClientMouseListener.mouseX;
-					int var16 = ClientMouseListener.mouseY;
-
-					int var17 = var15 - dragPickupX;
-					int var18 = var16 - dragPickupY;
-
-					if (var17 < dragParentX) {
-						var17 = dragParentX;
-					}
-
-					if (com.width + var17 > dragParentX + dragParent.width) {
-						var17 = dragParentX + dragParent.width - com.width;
-					}
-
-					if (var18 < dragParentY) {
-						var18 = dragParentY;
-					}
-
-					if (com.height + var18 > dragParentY + dragParent.height) {
-						var18 = dragParentY + dragParent.height - com.height;
-					}
-
-					renderx = var17;
-					rendery = var18;
-				}
-
-				if (!com.draggablebehavior) {
-					trans = 128;
-				}
-			}
-
-			int var19;
-			int var20;
-			int var21;
-			int var22;
-			if (com.type == 2) {
-				// inv
-				var19 = x;
-				var20 = y;
-				var21 = w;
-				var22 = h;
-			} else if (com.type == 9) {
-				// line
-				int var23 = renderx;
-				int var24 = rendery;
-				int var25 = com.width + renderx;
-				int var26 = com.height + rendery;
-				if (var25 < renderx) {
-					var23 = var25;
-					var25 = renderx;
-				}
-				if (var26 < rendery) {
-					var24 = var26;
-					var26 = rendery;
-				}
-				var25++;
-				var26++;
-				var19 = var23 > x ? var23 : x;
-				var20 = var24 > y ? var24 : y;
-				var21 = var25 < w ? var25 : w;
-				var22 = var26 < h ? var26 : h;
-			} else {
-				int var29 = com.width + renderx;
-				int var30 = com.height + rendery;
-				var19 = renderx > x ? renderx : x;
-				var20 = rendery > y ? rendery : y;
-				var21 = var29 < w ? var29 : w;
-				var22 = var30 < h ? var30 : h;
-			}
-
-			if (com.v3 && (var19 >= var21 || var20 >= var22)) {
-				continue;
-			}
-
-			if (com.clientCode != 0) {
-				if (com.clientCode == 1337) {
-					minimenuMouseOverX = renderx;
-					minimenuMouseOverY = rendery;
-					gameDrawMain(renderx, rendery, com.width, com.height);
-					Pix2D.setClipping(x, y, w, h);
-					continue;
-				}
-
-				if (com.clientCode == 1338) {
-					minimapDraw(renderx, rendery, drawCount);
-					Pix2D.setClipping(x, y, w, h);
-					continue;
-				}
-			}
-
-			int mouseX = ClientMouseListener.mouseX;
-			int mouseY = ClientMouseListener.mouseY;
-
-			if (!isMenuOpen && mouseX >= var19 && mouseY >= var20 && mouseX < var21 && mouseY < var22) {
-				addComponentOptions(com, mouseX - renderx, mouseY - rendery);
-			}
-
-			if (com.type == 0) {
-				if (!com.v3 && hide(com) && hoveredCom != com) {
-					continue;
-				}
-
-				if (!com.v3) {
-					if (com.scrollPosY > com.scrollHeight - com.height) {
-						com.scrollPosY = com.scrollHeight - com.height;
-					}
-
-					if (com.scrollPosY < 0) {
-						com.scrollPosY = 0;
-					}
-				}
-
-				drawLayer(children, com.parentId, var19, var20, var21, var22, renderx - com.scrollPosX, rendery - com.scrollPosY, drawCount);
-
-				if (com.subcomponents != null) {
-					drawLayer(com.subcomponents, com.parentId, var19, var20, var21, var22, renderx - com.scrollPosX, rendery - com.scrollPosY, drawCount);
-				}
-
-				SubInterface sub = (SubInterface) subinterfaces.find(com.parentId);
-				if (sub != null) {
-					if (sub.type == 0 && ClientMouseListener.mouseX >= var19 && ClientMouseListener.mouseY >= var20 && ClientMouseListener.mouseX < var21 && ClientMouseListener.mouseY < var22 && !isMenuOpen && !field2092) {
-						menuVerb[0] = Text.CANCEL;
-						menuSubject[0] = "";
-						menuAction[0] = 1006;
-						menuNumEntries = 1;
-					}
-
-					drawInterface(sub.id, var19, var20, var21, var22, renderx, rendery, drawCount);
-				}
-
-				Pix2D.setClipping(x, y, w, h);
-				Pix3D.setRenderClipping();
-			}
-
-			if (!componentDrawSomething2[drawCount] && componentDrawMode <= 1) {
-				continue;
-			}
-
-			if (com.type == 0 && !com.v3 && com.scrollHeight > com.height) {
-				// layer
-				drawScrollbar(rendery, com.width + renderx, com.scrollPosY, com.height, com.scrollHeight);
-			} else if (com.type == 1) {
-			} else if (com.type == 2) {
-				// inv
-				int slot = 0;
-				for (int row = 0; row < com.height; row++) {
-					for (int col = 0; col < com.width; col++) {
-						int slotX = (com.marginX + 32) * col + renderx;
-						int slotY = (com.marginY + 32) * row + rendery;
-
-						if (slot < 20) {
-							slotX += com.invBackgroundX[slot];
-							slotY += com.invBackgroundY[slot];
-						}
-
-						if (com.linkObjType[slot] > 0) {
-							int id = com.linkObjType[slot] - 1;
-
-							if (slotX + 32 > x && slotX < w && slotY + 32 > y && slotY < h || objDragInterface == com && objDragSlot == slot) {
-								Pix32 sprite;
-								if (useMode == 1 && objSelectedSlot == slot && objSelectedLayerId == com.parentId) {
-									sprite = ObjType.getSprite(id, com.linkObjNumber[slot], 2, 0, false);
-								} else {
-									sprite = ObjType.getSprite(id, com.linkObjNumber[slot], 1, 0x302020, false);
-								}
-
-								if (sprite == null) {
-									componentUpdated(com);
-								} else if (objDragInterface == com && objDragSlot == slot) {
-									int dx = ClientMouseListener.mouseX - objGrabX;
-									int dy = ClientMouseListener.mouseY - objGrabY;
-
-									if (dx < 5 && dx > -5) {
-										dx = 0;
-									}
-
-									if (dy < 5 && dy > -5) {
-										dy = 0;
-									}
-
-									if (objDragCycles < 5) {
-										dx = 0;
-										dy = 0;
-									}
-
-									sprite.transPlotSprite(slotX + dx, slotY + dy, 128);
-
-									if (layerid != -1) {
-										IfType child = children[layerid & 0xFFFF];
-
-										if (slotY + dy < Pix2D.clipMinY && child.scrollPosY > 0) {
-											int autoscroll = worldUpdateNum * (Pix2D.clipMinY - slotY - dy) / 3;
-											if (autoscroll > worldUpdateNum * 10) {
-												autoscroll = worldUpdateNum * 10;
-											}
-											if (autoscroll > child.scrollPosY) {
-												autoscroll = child.scrollPosY;
-											}
-
-											child.scrollPosY -= autoscroll;
-											objGrabY += autoscroll;
-
-											componentUpdated(child);
-										}
-
-										if (slotY + dy + 32 > Pix2D.clipMaxY && child.scrollPosY < child.scrollHeight - child.height) {
-											int autoscroll = worldUpdateNum * (slotY + dy + 32 - Pix2D.clipMaxY) / 3;
-											if (autoscroll > worldUpdateNum * 10) {
-												autoscroll = worldUpdateNum * 10;
-											}
-											if (autoscroll > child.scrollHeight - child.height - child.scrollPosY) {
-												autoscroll = child.scrollHeight - child.height - child.scrollPosY;
-											}
-
-											child.scrollPosY += autoscroll;
-											objGrabY -= autoscroll;
-
-											componentUpdated(child);
-										}
-									}
-								} else if (selectedArea == com && selectedItem == slot) {
-									sprite.transPlotSprite(slotX, slotY, 128);
-								} else {
-									sprite.plotSprite(slotX, slotY);
-								}
-							}
-						} else if (com.invBackground != null && slot < 20) {
-							Pix32 background = com.getInvBackground(slot);
-							if (background != null) {
-								background.plotSprite(slotX, slotY);
-							} else if (IfType.loadingAsset) {
-								componentUpdated(com);
-							}
-						}
-
-						slot++;
-					}
-				}
-			} else if (com.type == 3) {
-				// rect
-				int colour;
-				if (getIfActive(com)) {
-					colour = com.colour2;
-					if (hoveredCom == com && com.colour2Over != 0) {
-						colour = com.colour2Over;
-					}
-				} else {
-					colour = com.colour;
-					if (hoveredCom == com && com.colourOver != 0) {
-						colour = com.colourOver;
-					}
-				}
-
-				if (trans == 0) {
-					if (com.fill) {
-						Pix2D.fillRect(renderx, rendery, com.width, com.height, colour);
-					} else {
-						Pix2D.drawRect(renderx, rendery, com.width, com.height, colour);
-					}
-				} else if (com.fill) {
-					Pix2D.fillRectTrans(renderx, rendery, com.width, com.height, colour, 256 - (trans & 0xFF));
-				} else {
-					Pix2D.drawRectTrans(renderx, rendery, com.width, com.height, colour, 256 - (trans & 0xFF));
-				}
-			} else if (com.type == 4) {
-				// text
-				PixFontGeneric font = com.getFont();
-
-				if (font != null) {
-					String text = com.text;
-					int colour;
-
-					if (getIfActive(com)) {
-						colour = com.colour2;
-						if (hoveredCom == com && com.colour2Over != 0) {
-							colour = com.colour2Over;
-						}
-						if (com.text2.length() > 0) {
-							text = com.text2;
-						}
-					} else {
-						colour = com.colour;
-						if (hoveredCom == com && com.colourOver != 0) {
-							colour = com.colourOver;
-						}
-					}
-
-					if (com.v3 && com.invobject != -1) {
-						ObjType obj = ObjType.list(com.invobject);
-
-						text = obj.name;
-
-						if (text == null) {
-							text = "null";
-						}
-
-						if ((obj.stackable == 1 || com.invcount != 1) && com.invcount != -1) {
-							text = StringConstants.TAG_COLOUR(0xff9040) + text + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.invcount);
-						}
-					}
-
-					if (resumedPauseButton == com) {
-						text = Text.PLEASEWAIT;
-						colour = com.colour;
-					}
-
-					if (!com.v3) {
-						text = substituteVars(text, com);
-					}
-
-					font.drawStringMultiline(text, renderx, rendery, com.width, com.height, colour, com.shadow ? 0 : -1, com.hAlign, com.vAlign, com.lineHeight);
-				} else if (IfType.loadingAsset) {
-					componentUpdated(com);
-				}
-			} else if (com.type == 5) {
-				// graphic
-				if (com.v3) {
-					Pix32 image;
-					if (com.invobject == -1) {
-						image = com.getGraphic(false);
-					} else {
-						image = ObjType.getSprite(com.invobject, com.invcount, com.outline, com.shadowColour, false);
-					}
-
-					if (image != null) {
-						int width = image.owi;
-						int height = image.ohi;
-
-						if (com.tiling) {
-							Pix2D.setSubClipping(renderx, rendery, com.width + renderx, com.height + rendery);
-
-							int var195 = (com.width + (width - 1)) / width;
-							int var196 = (com.height + (height - 1)) / height;
-
-							for (int var197 = 0; var197 < var195; var197++) {
-								for (int var198 = 0; var198 < var196; var198++) {
-									if (com.rotate != 0) {
-										image.pixelPerfectRotateScalePlotSprite(width / 2 + width * var197 + renderx, height / 2 + height * var198 + rendery, com.rotate, 4096);
-									} else if (trans != 0) {
-										image.transPlotSprite(width * var197 + renderx, height * var198 + rendery, 256 - (trans & 0xFF));
-									} else {
-										image.plotSprite(width * var197 + renderx, height * var198 + rendery);
-									}
-								}
-							}
-
-							Pix2D.setClipping(x, y, w, h);
-						} else {
-							int var199 = com.width * 4096 / width;
-							if (com.rotate != 0) {
-								image.pixelPerfectRotateScalePlotSprite(com.width / 2 + renderx, com.height / 2 + rendery, com.rotate, var199);
-							} else if (trans != 0) {
-								image.transScalePlotSprite(renderx, rendery, com.width, com.height, 256 - (trans & 0xFF));
-							} else if (com.width != width || com.height != height) {
-								image.scalePlotSprite(renderx, rendery, com.width, com.height);
-							} else {
-								image.plotSprite(renderx, rendery);
-							}
-						}
-					} else if (IfType.loadingAsset) {
-						componentUpdated(com);
-					}
-				} else {
-					Pix32 image = com.getGraphic(getIfActive(com));
-					if (image != null) {
-						image.plotSprite(renderx, rendery);
-					} else if (IfType.loadingAsset) {
-						componentUpdated(com);
-					}
-				}
-			} else if (com.type == 6) {
-				// model
-				boolean active = getIfActive(com);
-
-				int anim;
-				if (active) {
-					anim = com.modelAnim2;
-				} else {
-					anim = com.modelAnim;
-				}
-
-				ModelLit model = null;
-				int var203 = 0;
-				if (com.invobject != -1) {
-					ObjType obj = ObjType.list(com.invobject);
-					if (obj != null) {
-						ObjType count = obj.getStackSizeAlt(com.invcount);
-						model = count.getModelLit(1);
-
-						if (model != null) {
-							model.calcBoundingCylinder();
-							var203 = model.minY / 2;
-						} else {
-							componentUpdated(com);
-						}
-					}
-				} else if (com.model1Type == 5) {
-					if (com.model1Id == 0) {
-						model = selfModel.getTempModel(null, -1, null, -1);
-					} else {
-						model = localPlayer.getTempModel();
-					}
-				} else if (anim == -1) {
-					model = com.getTempModel(null, -1, active, localPlayer.model);
-					if (model == null && IfType.loadingAsset) {
-						componentUpdated(com);
-					}
-				} else {
-					SeqType seq = SeqType.list(anim);
-					model = com.getTempModel(seq, com.animFrame, active, localPlayer.model);
-					if (model == null && IfType.loadingAsset) {
-						componentUpdated(com);
-					}
-				}
-
-				Pix3D.setOrigin(com.width / 2 + renderx, com.height / 2 + rendery);
-
-				int var207 = com.modelZoom * Pix3D.sinTable[com.modelXAn] >> 16;
-				int var208 = com.modelZoom * Pix3D.cosTable[com.modelXAn] >> 16;
-
-				if (model != null) {
-					if (com.v3) {
-						model.calcBoundingCylinder();
-
-						if (com.orthog) {
-							model.objRenderOrthog(0, com.modelYAn, com.modelZAn, com.modelXAn, com.modelXOf, com.modelYOf + var203 + var207, com.modelYOf + var208, com.modelZoom);
-						} else {
-							model.objRender(0, com.modelYAn, com.modelZAn, com.modelXAn, com.modelXOf, com.modelYOf + var203 + var207, com.modelYOf + var208);
-						}
-					} else {
-						model.objRender(0, com.modelYAn, 0, com.modelXAn, 0, var207, var208);
-					}
-				}
-
-				Pix3D.resetOrigin();
-			} else if (com.type == 7) {
-				// invtext
-				PixFontGeneric font = com.getFont();
-				if (font == null) {
-					if (IfType.loadingAsset) {
-						componentUpdated(com);
-					}
-
-					continue;
-				}
-
-				int slot = 0;
-				for (int row = 0; row < com.height; row++) {
-					for (int col = 0; col < com.width; col++) {
-						if (com.linkObjType[slot] > 0) {
-							ObjType obj = ObjType.list(com.linkObjType[slot] - 1);
-
-							String text;
-							if (obj.stackable != 1 && com.linkObjNumber[slot] == 1) {
-								text = StringConstants.TAG_COLOUR(16748608) + obj.name + StringConstants.TAG_COLOURCLOSE;
-							} else {
-								text = StringConstants.TAG_COLOUR(16748608) + obj.name + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.linkObjNumber[slot]);
-							}
-
-							int textX = (com.marginX + 115) * col + renderx;
-							int textY = (com.marginY + 12) * row + rendery;
-
-							if (com.hAlign == 0) {
-								font.drawString(text, textX, textY, com.colour, com.shadow ? 0 : -1);
-							} else if (com.hAlign == 1) {
-								font.centreString(text, com.width / 2 + textX, textY, com.colour, com.shadow ? 0 : -1);
-							} else {
-								font.rightString(text, com.width + textX - 1, textY, com.colour, com.shadow ? 0 : -1);
-							}
-						}
-
-						slot++;
-					}
-				}
-			} else if (com.type == 8 && tooltipCom == com && tooltipRedraw == tooltipNum) {
-				// tooltip
-				int var217 = 0;
-				int var218 = 0;
-
-				PixFontGeneric var219 = p12;
-				String var220 = com.text;
-				String var221 = substituteVars(var220, com);
-				while (var221.length() > 0) {
-					int var222 = var221.indexOf(StringConstants.TAG_BREAK);
-					String var223;
-					if (var222 == -1) {
-						var223 = var221;
-						var221 = "";
-					} else {
-						var223 = var221.substring(0, var222);
-						var221 = var221.substring(var222 + 4);
-					}
-					int var224 = var219.stringWid(var223);
-					if (var224 > var217) {
-						var217 = var224;
-					}
-					var218 += var219.ascent + 1;
-				}
-				var217 += 6;
-				var218 += 7;
-				int var225 = com.width + renderx - 5 - var217;
-				int var226 = com.height + rendery + 5;
-				if (var225 < renderx + 5) {
-					var225 = renderx + 5;
-				}
-				if (var217 + var225 > w) {
-					var225 = w - var217;
-				}
-				if (var218 + var226 > h) {
-					var226 = h - var218;
-				}
-				Pix2D.fillRect(var225, var226, var217, var218, 16777120);
-				Pix2D.drawRect(var225, var226, var217, var218, 0);
-
-				String var227 = com.text;
-				int var228 = var219.ascent + var226 + 2;
-				String var229 = substituteVars(var227, com);
-				while (var229.length() > 0) {
-					int var230 = var229.indexOf(StringConstants.TAG_BREAK);
-					String var231;
-					if (var230 == -1) {
-						var231 = var229;
-						var229 = "";
-					} else {
-						var231 = var229.substring(0, var230);
-						var229 = var229.substring(var230 + 4);
-					}
-
-					var219.drawString(var231, var225 + 3, var228, 0, -1);
-					var228 += var219.ascent + 1;
-				}
-			} else if (com.type == 9) {
-				// line
-				if (com.lineWidth == 1) {
-					Pix2D.line(renderx, rendery, com.width + renderx, com.height + rendery, com.colour);
-				} else {
-					// todo: inlined method (DrawLineWithStrokeWidth?)
-					int var232 = com.width >= 0 ? com.width : -com.width;
-					int var233 = com.height >= 0 ? com.height : -com.height;
-					int var234 = var232;
-					if (var232 < var233) {
-						var234 = var233;
-					}
-					if (var234 != 0) {
-						int var235 = (com.width << 16) / var234;
-						int var236 = (com.height << 16) / var234;
-						if (var236 <= var235) {
-							var235 = -var235;
-						} else {
-							var236 = -var236;
-						}
-						int var237 = com.lineWidth * var236 >> 17;
-						int var238 = com.lineWidth * var236 + 1 >> 17;
-						int var239 = com.lineWidth * var235 >> 17;
-						int var240 = com.lineWidth * var235 + 1 >> 17;
-						int var241 = renderx + var237;
-						int var242 = renderx - var238;
-						int var243 = com.width + renderx - var238;
-						int var244 = com.width + renderx + var237;
-						int var245 = rendery + var239;
-						int var246 = rendery - var240;
-						int var247 = com.height + rendery - var240;
-						int var248 = com.height + rendery + var239;
-
-						Pix3D.setHClip(var241, var242, var243);
-						Pix3D.flatTriangle(var245, var246, var247, var241, var242, var243, com.colour);
-
-						Pix3D.setHClip(var241, var243, var244);
-						Pix3D.flatTriangle(var245, var247, var248, var241, var243, var244, com.colour);
-					}
-				}
-			}
-		}
-	}
-
-	// jag::oldscape::Client::SubstituteVars
-	@ObfuscatedName("ez.fu(Ljava/lang/String;Leg;S)Ljava/lang/String;")
-	public static String substituteVars(String text, IfType com) {
-		if (text.indexOf("%") != -1) {
-			for (int i = 1; i <= 5; i++) {
-				while (true) {
-					int var3 = text.indexOf("%" + i);
-					if (var3 == -1) {
-						break;
-					}
-
-					text = text.substring(0, var3) + inf(getIfVar(com, i - 1)) + text.substring(var3 + 2);
-				}
-			}
-
-			while (true) {
-				int var4 = text.indexOf("%dns");
-				if (var4 == -1) {
-					break;
-				}
-
-				String var5 = "";
-				if (lastAddress != null) {
-					var5 = StringTools.formatIPv4(lastAddress.intArg);
-					if (lastAddress.result != null) {
-						var5 = (String) lastAddress.result;
-					}
-				}
-
-				text = text.substring(0, var4) + var5 + text.substring(var4 + 4);
-			}
-		}
-
-		return text;
-	}
-
-	// jag::oldscape::Client::NiceNumber
-	@ObfuscatedName("dy.fr(IB)Ljava/lang/String;")
-	public static String niceNumber(int cost) {
-		String value = Integer.toString(cost);
-		for (int i = value.length() - 3; i > 0; i -= 3) {
-			value = value.substring(0, i) + StringConstants.COMMA + value.substring(i);
-		}
-		if (value.length() > 9) {
-			return " " + StringConstants.TAG_COLOUR(0xff80) + value.substring(0, value.length() - 8) + Text.MILLION + " " + StringConstants.OPEN_BRACKET + value + StringConstants.CLOSE_BRACKET + StringConstants.TAG_COLOURCLOSE;
-		} else if (value.length() > 6) {
-			return " " + StringConstants.TAG_COLOUR(0xffffff) + value.substring(0, value.length() - 4) + Text.THOUSAND + " " + StringConstants.OPEN_BRACKET + value + StringConstants.CLOSE_BRACKET + StringConstants.TAG_COLOURCLOSE;
-		} else {
-			return " " + StringConstants.TAG_COLOUR(0xffff00) + value + StringConstants.TAG_COLOURCLOSE;
-		}
-	}
-
-	// jag::oldscape::Client::DoScrollbar
-	@ObfuscatedName("q.fl(Leg;IIIIIII)V")
-	public static void doScrollbar(IfType com, int left, int top, int height, int scrollableHeight, int x, int y) {
-		if (scrollGrabbed) {
-			scrollInputPadding = 32;
-		} else {
-			scrollInputPadding = 0;
-		}
-
-		scrollGrabbed = false;
-
-		if (ClientMouseListener.mouseButton != 0) {
-			if (x >= left && x < left + 16 && y >= top && y < top + 16) {
-				com.scrollPosY -= 4;
-				componentUpdated(com);
-			} else if (x >= left && x < left + 16 && y >= top + height - 16 && y < top + height) {
-				com.scrollPosY += 4;
-				componentUpdated(com);
-			} else if (x >= left - scrollInputPadding && x < scrollInputPadding + left + 16 && y >= top + 16 && y < top + height - 16) {
-				int gripSize = (height - 32) * height / scrollableHeight;
-				if (gripSize < 8) {
-					gripSize = 8;
-				}
-
-				int var8 = y - top - 16 - gripSize / 2;
-				int var9 = height - 32 - gripSize;
-
-				com.scrollPosY = (scrollableHeight - height) * var8 / var9;
-				componentUpdated(com);
-				scrollGrabbed = true;
-			}
-		}
-
-		if (mouseWheelRotation != 0) {
-			int width = com.width;
-			if (x >= left - width && y >= top && x < left + 16 && y <= top + height) {
-				com.scrollPosY += mouseWheelRotation * 45;
-				componentUpdated(com);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::Inf
-	@ObfuscatedName("ck.fk(II)Ljava/lang/String;")
-	public static String inf(int arg0) {
-		return arg0 < 999999999 ? Integer.toString(arg0) : "*";
-	}
-
-	// jag::oldscape::Client::GetIfActive
-	@ObfuscatedName("n.fa(Leg;I)Z")
-	public static boolean getIfActive(IfType com) {
-		if (com.scriptComparator == null) {
-			return false;
-		}
-
-		for (int i = 0; i < com.scriptComparator.length; i++) {
-			int value = getIfVar(com, i);
-			int operand = com.scriptOperand[i];
-
-			if (com.scriptComparator[i] == 2) {
-				if (value >= operand) {
-					return false;
-				}
-			} else if (com.scriptComparator[i] == 3) {
-				if (value <= operand) {
-					return false;
-				}
-			} else if (com.scriptComparator[i] == 4) {
-				if (value == operand) {
-					return false;
-				}
-			} else if (value != operand) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	// jag::oldscape::Client::GetIfVar
-	@ObfuscatedName("ba.fq(Leg;IB)I")
-	public static int getIfVar(IfType com, int scriptId) {
-		if (com.scripts == null || scriptId >= com.scripts.length) {
-			return -2;
-		}
-
-		try {
-			int[] script = com.scripts[scriptId];
-
-			int acc = 0;
-			int pc = 0;
-			byte arithmetic = 0;
-
-			while (true) {
-				int opcode = script[pc++];
-				int register = 0;
-				byte nextArithmetic = 0;
-
-				if (opcode == 0) {
-					return acc;
-				}
-
-				if (opcode == 1) {
-					register = statEffectiveLevel[script[pc++]];
-				} else if (opcode == 2) {
-					register = statBaseLevel[script[pc++]];
-				} else if (opcode == 3) {
-					register = statXP[script[pc++]];
-				} else if (opcode == 4) {
-					int var9 = script[pc++] << 16;
-					int var10 = var9 + script[pc++];
-					IfType var11 = IfType.get(var10);
-					int var12 = script[pc++];
-					if (var12 != -1 && (!ObjType.list(var12).members || memServer)) {
-						for (int var13 = 0; var13 < var11.linkObjType.length; var13++) {
-							if (var12 + 1 == var11.linkObjType[var13]) {
-								register += var11.linkObjNumber[var13];
-							}
-						}
-					}
-				} else if (opcode == 5) {
-					register = VarCache.var[script[pc++]];
-				} else if (opcode == 6) {
-					register = Skills.skillxp[statBaseLevel[script[pc++]] - 1];
-				} else if (opcode == 7) {
-					register = VarCache.var[script[pc++]] * 100 / 46875;
-				} else if (opcode == 8) {
-					register = localPlayer.combatLevel;
-				} else if (opcode == 9) {
-					for (int var14 = 0; var14 < 25; var14++) {
-						if (Skills.used[var14]) {
-							register += statBaseLevel[var14];
-						}
-					}
-				} else if (opcode == 10) {
-					int var15 = script[pc++] << 16;
-					int var16 = var15 + script[pc++];
-					IfType var17 = IfType.get(var16);
-					int var18 = script[pc++];
-					if (var18 != -1 && (!ObjType.list(var18).members || memServer)) {
-						for (int var19 = 0; var19 < var17.linkObjType.length; var19++) {
-							if (var18 + 1 == var17.linkObjType[var19]) {
-								register = 999999999;
-								break;
-							}
-						}
-					}
-				} else if (opcode == 11) {
-					register = runEnergy;
-				} else if (opcode == 12) {
-					register = runWeight;
-				} else if (opcode == 13) {
-					int var20 = VarCache.var[script[pc++]];
-					int var21 = script[pc++];
-					register = (var20 & 0x1 << var21) == 0 ? 0 : 1;
-				} else if (opcode == 14) {
-					int var22 = script[pc++];
-					register = VarCache.getVarbit(var22);
-				} else if (opcode == 15) {
-					nextArithmetic = 1;
-				} else if (opcode == 16) {
-					nextArithmetic = 2;
-				} else if (opcode == 17) {
-					nextArithmetic = 3;
-				} else if (opcode == 18) {
-					register = (localPlayer.x >> 7) + mapBuildBaseX;
-				} else if (opcode == 19) {
-					register = (localPlayer.z >> 7) + mapBuildBaseZ;
-				} else if (opcode == 20) {
-					register = script[pc++];
-				}
-
-				if (nextArithmetic == 0) {
-					if (arithmetic == 0) {
-						acc += register;
-					} else if (arithmetic == 1) {
-						acc -= register;
-					} else if (arithmetic == 2 && register != 0) {
-						acc /= register;
-					} else if (arithmetic == 3) {
-						acc *= register;
-					}
-
-					arithmetic = 0;
-				} else {
-					arithmetic = nextArithmetic;
-				}
-			}
-		} catch (Exception ex) {
-			return -1;
-		}
-	}
-
-	// jag::oldscape::Client::LoopInterface
-	@ObfuscatedName("cz.ft(IIIIIIIS)V")
-	public static void loopInterface(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
-		if (IfType.openInterface(arg0)) {
-			loopLayer(IfType.list[arg0], -1, arg1, arg2, arg3, arg4, arg5, arg6);
-		}
-	}
-
-	// jag::oldscape::Client::LoopLayer
-	@ObfuscatedName("eg.fx([Leg;IIIIIIIB)V")
-	public static void loopLayer(IfType[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-		for (int var8 = 0; var8 < arg0.length; var8++) {
-			IfType var9 = arg0[var8];
-			if (
-				var9 == null ||
-				(var9.v3 && var9.type != 0 && !var9.hashook && getActive(var9) == 0 && dragParent != var9) ||
-				var9.layerId != arg1 ||
-				(var9.v3 && hide(var9))
-			) {
-				continue;
-			}
-
-			int var10 = var9.x + arg6;
-			int var11 = var9.y + arg7;
-			int var12;
-			int var13;
-			int var14;
-			int var15;
-			if (var9.type == 2) {
-				// inv
-				var12 = arg2;
-				var13 = arg3;
-				var14 = arg4;
-				var15 = arg5;
-			} else if (var9.type == 9) {
-				// line
-				int var16 = var10;
-				int var17 = var11;
-				int var18 = var9.width + var10;
-				int var19 = var9.height + var11;
-				if (var18 < var10) {
-					var16 = var18;
-					var18 = var10;
-				}
-				if (var19 < var11) {
-					var17 = var19;
-					var19 = var11;
-				}
-				var18++;
-				var19++;
-				var12 = var16 > arg2 ? var16 : arg2;
-				var13 = var17 > arg3 ? var17 : arg3;
-				var14 = var18 < arg4 ? var18 : arg4;
-				var15 = var19 < arg5 ? var19 : arg5;
-			} else {
-				int var22 = var9.width + var10;
-				int var23 = var9.height + var11;
-				var12 = var10 > arg2 ? var10 : arg2;
-				var13 = var11 > arg3 ? var11 : arg3;
-				var14 = var22 < arg4 ? var22 : arg4;
-				var15 = var23 < arg5 ? var23 : arg5;
-			}
-
-			if (dragComponent == var9) {
-				dragging = true;
-				dragCurrentX = var10;
-				dragCurrentY = var11;
-			}
-
-			if (var9.v3 && (var12 >= var14 || var13 >= var15)) {
-				continue;
-			}
-
-			if (var9.clientCode == 1337) {
-				componentUpdated(var9);
-			} else if (var9.clientCode == 1338) {
-				minimapLoop(var10, var11);
-			} else {
-				if (var9.type == 0) {
-					if (!var9.v3 && hide(var9) && hoveredCom != var9) {
-						continue;
-					}
-
-					loopLayer(arg0, var9.parentId, var12, var13, var14, var15, var10 - var9.scrollPosX, var11 - var9.scrollPosY);
-					if (var9.subcomponents != null) {
-						loopLayer(var9.subcomponents, var9.parentId, var12, var13, var14, var15, var10 - var9.scrollPosX, var11 - var9.scrollPosY);
-					}
-
-					SubInterface var24 = (SubInterface) subinterfaces.find((long) var9.parentId);
-					if (var24 != null) {
-						loopInterface(var24.id, var12, var13, var14, var15, var10, var11);
-					}
-				}
-
-				if (var9.v3) {
-					boolean var25;
-					if (ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
-						var25 = true;
-					} else {
-						var25 = false;
-					}
-
-					boolean var26 = false;
-					if (ClientMouseListener.mouseButton == 1 && var25) {
-						var26 = true;
-					}
-
-					boolean var27 = false;
-					if (ClientMouseListener.mouseClickButton == 1 && ClientMouseListener.mouseClickX >= var12 && ClientMouseListener.mouseClickY >= var13 && ClientMouseListener.mouseClickX < var14 && ClientMouseListener.mouseClickY < var15) {
-						var27 = true;
-					}
-
-					if (var27) {
-						dragTryPickup(var9, ClientMouseListener.mouseClickX - var10, ClientMouseListener.mouseClickY - var11);
-					}
-
-					if (dragComponent != null && dragComponent != var9 && var25) {
-						if (ServerActive.isDragTarget(getActive(var9))) {
-							dropComponent = var9;
-						}
-					}
-
-					if (dragParent == var9) {
-						dragParentFound = true;
-						dragParentX = var10;
-						dragParentY = var11;
-					}
-
-					if (var9.hashook) {
-						if (var25 && mouseWheelRotation != 0 && var9.onscrollwheel != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.mouseY = mouseWheelRotation;
-							req.onop = var9.onscrollwheel;
-							hookRequests.push(req);
-						}
-
-						if (dragComponent != null || objDragInterface != null || isMenuOpen) {
-							var27 = false;
-							var26 = false;
-							var25 = false;
-						}
-
-						if (!var9.clickTrigger && var27) {
-							var9.clickTrigger = true;
-
-							if (var9.onclick != null) {
-								HookReq req = new HookReq();
-								req.component = var9;
-								req.mouseX = ClientMouseListener.mouseClickX - var10;
-								req.mouseY = ClientMouseListener.mouseClickY - var11;
-								req.onop = var9.onclick;
-								hookRequests.push(req);
-							}
-						}
-
-						if (var9.clickTrigger && var26 && var9.onclickrepeat != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.mouseX = ClientMouseListener.mouseX - var10;
-							req.mouseY = ClientMouseListener.mouseY - var11;
-							req.onop = var9.onclickrepeat;
-							hookRequests.push(req);
-						}
-
-						if (var9.clickTrigger && !var26) {
-							var9.clickTrigger = false;
-
-							if (var9.onrelease != null) {
-								HookReq req = new HookReq();
-								req.component = var9;
-								req.mouseX = ClientMouseListener.mouseX - var10;
-								req.mouseY = ClientMouseListener.mouseY - var11;
-								req.onop = var9.onrelease;
-								hookRequestsMouseStop.push(req);
-							}
-						}
-
-						if (var26 && var9.onhold != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.mouseX = ClientMouseListener.mouseX - var10;
-							req.mouseY = ClientMouseListener.mouseY - var11;
-							req.onop = var9.onhold;
-							hookRequests.push(req);
-						}
-
-						if (!var9.mouseTrigger && var25) {
-							var9.mouseTrigger = true;
-
-							if (var9.onmouseover != null) {
-								HookReq req = new HookReq();
-								req.component = var9;
-								req.mouseX = ClientMouseListener.mouseX - var10;
-								req.mouseY = ClientMouseListener.mouseY - var11;
-								req.onop = var9.onmouseover;
-								hookRequests.push(req);
-							}
-						}
-
-						if (var9.mouseTrigger && var25 && var9.onmouserepeat != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.mouseX = ClientMouseListener.mouseX - var10;
-							req.mouseY = ClientMouseListener.mouseY - var11;
-							req.onop = var9.onmouserepeat;
-							hookRequests.push(req);
-						}
-
-						if (var9.mouseTrigger && !var25) {
-							var9.mouseTrigger = false;
-
-							if (var9.onmouseleave != null) {
-								HookReq req = new HookReq();
-								req.component = var9;
-								req.mouseX = ClientMouseListener.mouseX - var10;
-								req.mouseY = ClientMouseListener.mouseY - var11;
-								req.onop = var9.onmouseleave;
-								hookRequestsMouseStop.push(req);
-							}
-						}
-
-						if (var9.ontimer != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.onop = var9.ontimer;
-							hookRequestsTimer.push(req);
-						}
-
-						if (var9.onvartransmit != null && varTransmitNum > var9.varTransmitNum) {
-							if (var9.onvartransmitlist == null || varTransmitNum - var9.varTransmitNum > 32) {
-								HookReq req = new HookReq();
-								req.component = var9;
-								req.onop = var9.onvartransmit;
-								hookRequests.push(req);
-							} else {
-								label383:
-								for (int var39 = var9.varTransmitNum; var39 < varTransmitNum; var39++) {
-									int var40 = varTransmit[var39 & 0x1F];
-									for (int var41 = 0; var41 < var9.onvartransmitlist.length; var41++) {
-										if (var9.onvartransmitlist[var41] == var40) {
-											HookReq req = new HookReq();
-											req.component = var9;
-											req.onop = var9.onvartransmit;
-											hookRequests.push(req);
-											break label383;
-										}
-									}
-								}
-							}
-
-							var9.varTransmitNum = varTransmitNum;
-						}
-
-						if (var9.oninvtransmit != null && invTransmitNum > var9.invTransmitNum) {
-							if (var9.oninvtransmitlist == null || invTransmitNum - var9.invTransmitNum > 32) {
-								HookReq req = new HookReq();
-								req.component = var9;
-								req.onop = var9.oninvtransmit;
-								hookRequests.push(req);
-							} else {
-								label363:
-								for (int var44 = var9.invTransmitNum; var44 < invTransmitNum; var44++) {
-									int var45 = invTransmit[var44 & 0x1F];
-									for (int var46 = 0; var46 < var9.oninvtransmitlist.length; var46++) {
-										if (var9.oninvtransmitlist[var46] == var45) {
-											HookReq req = new HookReq();
-											req.component = var9;
-											req.onop = var9.oninvtransmit;
-											hookRequests.push(req);
-											break label363;
-										}
-									}
-								}
-							}
-
-							var9.invTransmitNum = invTransmitNum;
-						}
-
-						if (var9.onstattransmit != null && statTransmitNum > var9.statTransmitNum) {
-							if (var9.onstattransmitlist == null || statTransmitNum - var9.statTransmitNum > 32) {
-								HookReq req = new HookReq();
-								req.component = var9;
-								req.onop = var9.onstattransmit;
-								hookRequests.push(req);
-							} else {
-								label343:
-								for (int var49 = var9.statTransmitNum; var49 < statTransmitNum; var49++) {
-									int var50 = statTransmit[var49 & 0x1F];
-									for (int var51 = 0; var51 < var9.onstattransmitlist.length; var51++) {
-										if (var9.onstattransmitlist[var51] == var50) {
-											HookReq req = new HookReq();
-											req.component = var9;
-											req.onop = var9.onstattransmit;
-											hookRequests.push(req);
-											break label343;
-										}
-									}
-								}
-							}
-
-							var9.statTransmitNum = statTransmitNum;
-						}
-
-						if (chatTransmitNum > var9.transmitNum && var9.onchattransmit != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.onop = var9.onchattransmit;
-							hookRequests.push(req);
-						}
-
-						if (friendTransmitNum > var9.transmitNum && var9.onfriendtransmit != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.onop = var9.onfriendtransmit;
-							hookRequests.push(req);
-						}
-
-						if (clanTransmitNum > var9.transmitNum && var9.onclantransmit != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.onop = var9.onclantransmit;
-							hookRequests.push(req);
-						}
-
-						if (miscTransmitNum > var9.transmitNum && var9.onmisctransmit != null) {
-							HookReq req = new HookReq();
-							req.component = var9;
-							req.onop = var9.onmisctransmit;
-							hookRequests.push(req);
-						}
-
-						var9.transmitNum = transmitNum;
-
-						if (var9.onkey != null) {
-							for (int var58 = 0; var58 < keypresses; var58++) {
-								HookReq req = new HookReq();
-								req.component = var9;
-								req.keyCode = keypressKeycodes[var58];
-								req.keyChar = keypressKeychars[var58];
-								req.onop = var9.onkey;
-								hookRequests.push(req);
-							}
-						}
-					}
-				}
-
-				if (!var9.v3) {
-					if (dragComponent != null || objDragInterface != null || isMenuOpen) {
-						return;
-					}
-
-					if ((var9.overLayerId >= 0 || var9.colourOver != 0) && ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
-						if (var9.overLayerId >= 0) {
-							hoveredCom = arg0[var9.overLayerId];
-						} else {
-							hoveredCom = var9;
-						}
-					}
-
-					if (var9.type == 8 && ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
-						tooltipCom = var9;
-					}
-
-					if (var9.scrollHeight > var9.height) {
-						doScrollbar(var9, var9.width + var10, var11, var9.height, var9.scrollHeight, ClientMouseListener.mouseX, ClientMouseListener.mouseY);
-					}
-				}
-			}
-		}
-	}
-
-	// jag::oldscape::Client::RunHookImmediate
-	@ObfuscatedName("ai.fs(III)V")
-	public static void runHookImmediate(int arg0, int arg1) {
-		if (IfType.openInterface(arg0)) {
-			runHookLayer(IfType.list[arg0], arg1);
-		}
-	}
-
-	// jag::oldscape::Client::RunHookLayer
-	@ObfuscatedName("ao.fh([Leg;IB)V")
-	public static void runHookLayer(IfType[] children, int arg1) {
-		for (int i = 0; i < children.length; i++) {
-			IfType com = children[i];
-			if (com == null) {
-				continue;
-			}
-
-			if (com.type == 0) {
-				if (com.subcomponents != null) {
-					runHookLayer(com.subcomponents, arg1);
-				}
-
-				SubInterface sub = (SubInterface) subinterfaces.find((long) com.parentId);
-				if (sub != null) {
-					runHookImmediate(sub.id, arg1);
-				}
-			}
-
-			if (arg1 == 0 && com.ondialogabort != null) {
-				HookReq req = new HookReq();
-				req.component = com;
-				req.onop = com.ondialogabort;
-				ScriptRunner.executeScript(req);
-			}
-
-			if (arg1 == 1 && com.onsubchange != null) {
-				if (com.subId >= 0) {
-					IfType var6 = IfType.get(com.parentId);
-					if (var6 == null || var6.subcomponents == null || com.subId >= var6.subcomponents.length || var6.subcomponents[com.subId] != com) {
-						continue;
-					}
-				}
-
-				HookReq req = new HookReq();
-				req.component = com;
-				req.onop = com.onsubchange;
-				ScriptRunner.executeScript(req);
-			}
-		}
-	}
-
-	// jag::oldscape::Client::DragTryPickup
-	@ObfuscatedName("ch.ff(Leg;IIB)V")
-	public static void dragTryPickup(IfType arg0, int arg1, int arg2) {
-		if (dragComponent != null || isMenuOpen || (arg0 == null || getDragLayer(arg0) == null)) {
-			return;
-		}
-
-		dragComponent = arg0;
-		dragParent = getDragLayer(arg0);
-		dragPickupX = arg1;
-		dragPickupY = arg2;
-		dragTime = 0;
-		dragAlive = false;
-	}
-
-	// jag::oldscape::Client::ComponentUpdated
-	@ObfuscatedName("cq.fy(Leg;I)V")
-	public static void componentUpdated(IfType com) {
-		if (componentDrawTime == com.drawTime) {
-			componentRedrawRequested1[com.drawCount] = true;
-		}
-	}
-
-	// jag::oldscape::Client::LegacyUpdated
-	@ObfuscatedName("g.fn(B)V")
-	public static void legacyUpdated() {
-		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
-			int id = sub.id;
-
-			if (IfType.openInterface(id)) {
-				boolean newFormat = true;
-
-				IfType[] children = IfType.list[id];
-				for (int i = 0; i < children.length; i++) {
-					if (children[i] != null) {
-						newFormat = children[i].v3;
-						break;
-					}
-				}
-
-				if (!newFormat) {
-					int key = (int) sub.key;
-
-					IfType com = IfType.get(key);
-					if (com != null) {
-						componentUpdated(com);
-					}
-				}
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GetDragLayer
-	@ObfuscatedName("bs.fz(Leg;I)Leg;")
-	public static IfType getDragLayer(IfType arg0) {
-		// todo: inlined method (ServerDraggable?)
-		IfType var1 = arg0;
-		int var2 = ServerActive.serverDraggable(getActive(arg0));
-		IfType var3;
-		if (var2 == 0) {
-			var3 = null;
-		} else {
-			int var4 = 0;
-			while (true) {
-				if (var4 >= var2) {
-					var3 = var1;
-					break;
-				}
-				var1 = IfType.get(var1.layerId);
-				if (var1 == null) {
-					var3 = null;
-					break;
-				}
-				var4++;
-			}
-		}
-
-		IfType var5 = var3;
-		if (var3 == null) {
-			var5 = arg0.draggable;
-		}
-		return var5;
-	}
-
-	@ObfuscatedName("ai.fw([Ljava/lang/String;B)[Ljava/lang/String;")
-	public static String[] prependOpIndex(String[] op) {
-		String[] tmp = new String[5];
-		for (int i = 0; i < 5; i++) {
-			tmp[i] = i + ": ";
-
-			if (op != null && op[i] != null) {
-				tmp[i] = tmp[i] + op[i];
-			}
-		}
-
-		return tmp;
-	}
-
-	// jag::oldscape::Client::IfAnimReset
-	@ObfuscatedName("n.fo(II)V")
-	public static void ifAnimReset(int arg0) {
-		if (!IfType.openInterface(arg0)) {
-			return;
-		}
-
-		IfType[] var1 = IfType.list[arg0];
-		for (int var2 = 0; var2 < var1.length; var2++) {
-			IfType var3 = var1[var2];
-			if (var3 != null) {
-				var3.animFrame = 0;
-				var3.animCycle = 0;
-			}
-		}
-	}
-
-	// jag::oldscape::Client::AnimateLayer
-	@ObfuscatedName("cz.fm([Leg;IB)V")
-	public static void animateLayer(IfType[] children, int layer) {
-		for (int i = 0; i < children.length; i++) {
-			IfType com = children[i];
-			if (com == null || com.layerId != layer || (com.v3 && hide(com))) {
-				continue;
-			}
-
-			if (com.type == 0) {
-				if (!com.v3 && hide(com) && hoveredCom != com) {
-					continue;
-				}
-
-				animateLayer(children, com.parentId);
-
-				if (com.subcomponents != null) {
-					animateLayer(com.subcomponents, com.parentId);
-				}
-
-				SubInterface var4 = (SubInterface) subinterfaces.find(com.parentId);
-				if (var4 != null) {
-					animateInterface(var4.id);
-				}
-			}
-
-			if (com.type == 6) {
-				if (com.modelAnim != -1 || com.modelAnim2 != -1) {
-					boolean var6 = getIfActive(com);
-					int var7;
-					if (var6) {
-						var7 = com.modelAnim2;
-					} else {
-						var7 = com.modelAnim;
-					}
-					if (var7 != -1) {
-						SeqType var8 = SeqType.list(var7);
-
-						com.animCycle += worldUpdateNum;
-
-						while (com.animCycle > var8.delay[com.animFrame]) {
-							com.animCycle -= var8.delay[com.animFrame];
-							com.animFrame++;
-
-							if (com.animFrame >= var8.frames.length) {
-								com.animFrame -= var8.loops;
-
-								if (com.animFrame < 0 || com.animFrame >= var8.frames.length) {
-									com.animFrame = 0;
-								}
-							}
-
-							componentUpdated(com);
-						}
-					}
-				}
-
-				if (com.modelSpin != 0 && !com.v3) {
-					int var9 = com.modelSpin >> 16;
-					int var10 = com.modelSpin << 16 >> 16;
-					int var11 = worldUpdateNum * var9;
-					int var12 = worldUpdateNum * var10;
-
-					com.modelXAn = com.modelXAn + var11 & 0x7FF;
-					com.modelYAn = com.modelYAn + var12 & 0x7FF;
-
-					componentUpdated(com);
-				}
-			}
-		}
-	}
-
-	// jag::oldscape::Client::ClientVar
-	@ObfuscatedName("bv.fi(II)V")
-	public static void clientVar(int varp) {
-		legacyUpdated();
-		BgSound.recalculateMultilocs();
-
-		int clientcode = VarpType.list(varp).clientcode;
-		if (clientcode == 0) {
-			return;
-		}
-
-		int value = VarCache.var[varp];
-		if (clientcode == 1) {
-			if (value == 1) {
-				Pix3D.initColourTable(0.9D);
-				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.9D);
-			} else if (value == 2) {
-				Pix3D.initColourTable(0.8D);
-				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.8D);
-			} else if (value == 3) {
-				Pix3D.initColourTable(0.7D);
-				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.7D);
-			} else if (value == 4) {
-				Pix3D.initColourTable(0.6D);
-				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.6D);
-			}
-
-			ObjType.resetSpriteCache();
-		} else if (clientcode == 3) {
-			short volume = 0;
-			if (value == 0) {
-				volume = 255;
-			} else if (value == 1) {
-				volume = 192;
-			} else if (value == 2) {
-				volume = 128;
-			} else if (value == 3) {
-				volume = 64;
-			} else if (value == 4) {
-				volume = 0;
-			}
-
-			if (midiVolume != volume) {
-				if (midiVolume == 0 && previousSong != -1) {
-					MidiManager.play(songs, previousSong, 0, volume, false);
-					playingJingle = false;
-				} else if (volume == 0) {
-					MidiManager.stop();
-					playingJingle = false;
-				} else {
-					MidiManager.setVolume(volume);
-				}
-
-				midiVolume = volume;
-			}
-		} else if (clientcode == 4) {
-			if (value == 0) {
-				waveVolume = 127;
-			} else if (value == 1) {
-				waveVolume = 96;
-			} else if (value == 2) {
-				waveVolume = 64;
-			} else if (value == 3) {
-				waveVolume = 32;
-			} else if (value == 4) {
-				waveVolume = 0;
-			}
-		} else if (clientcode == 5) {
-			oneMouseButton = value;
-		} else if (clientcode == 6) {
-			chatEffects = value;
-		} else if (clientcode == 9) {
-			bankArrangeMode = value;
-		} else if (clientcode == 10) {
-			if (value == 0) {
-				ambientVolume = 127;
-			} else if (value == 1) {
-				ambientVolume = 96;
-			} else if (value == 2) {
-				ambientVolume = 64;
-			} else if (value == 3) {
-				ambientVolume = 32;
-			} else if (value == 4) {
-				ambientVolume = 0;
-			}
-		}
-	}
-
-	// jag::oldscape::Client::ClientComponent
-	@ObfuscatedName("cy.ge(Leg;I)V")
-	public static void clientComponent(IfType com) {
-		int clientCode = com.clientCode;
-
-		if (clientCode == 324) {
-			if (genderButton1 == -1) {
-				genderButton1 = com.graphic;
-				genderButton2 = com.graphic2;
-			}
-
-			if (selfModel.gender) {
-				com.graphic = genderButton1;
-			} else {
-				com.graphic = genderButton2;
-			}
-		} else if (clientCode == 325) {
-			if (genderButton1 == -1) {
-				genderButton1 = com.graphic;
-				genderButton2 = com.graphic2;
-			}
-
-			if (selfModel.gender) {
-				com.graphic = genderButton2;
-			} else {
-				com.graphic = genderButton1;
-			}
-		} else if (clientCode == 327) {
-			com.modelXAn = 150;
-			com.modelYAn = (int) (Math.sin((double) loopCycle / 40.0D) * 256.0D) & 0x7FF;
-			com.model1Type = 5;
-			com.model1Id = 0;
-		} else if (clientCode == 328) {
-			com.modelXAn = 150;
-			com.modelYAn = (int) (Math.sin((double) loopCycle / 40.0D) * 256.0D) & 0x7FF;
-			com.model1Type = 5;
-			com.model1Id = 1;
-		}
-	}
-
-	// jag::oldscape::Client::OpenSubinterface
-	@ObfuscatedName("cz.gq(IIIB)Ldy;")
-	public static SubInterface openSubInterface(int arg0, int arg1, int arg2) {
-		SubInterface sub = new SubInterface();
-		sub.id = arg1;
-		sub.type = arg2;
-		subinterfaces.put(sub, arg0);
-
-		ifAnimReset(arg1);
-		ScriptRunner.executeOnLoad(arg1);
-
-		IfType var4 = IfType.get(arg0);
-		if (var4 != null) {
-			componentUpdated(var4);
-		}
-
-		if (resumedPauseButton != null) {
-			componentUpdated(resumedPauseButton);
-			resumedPauseButton = null;
-		}
-
-		isMenuOpen = false;
-		menuNumEntries = 0;
-		dirtyArea(menuX, menuY, menuWidth, menuHeight);
-
-		if (toplevelinterface != -1) {
-			runHookImmediate(toplevelinterface, 1);
-		}
-
-		return sub;
-	}
-
-	// jag::oldscape::Client::CloseSubinterface
-	@ObfuscatedName("am.gr(Ldy;ZI)V")
-	public static void closeSubInterface(SubInterface sub, boolean arg1) {
-		int var2 = sub.id;
-		int var3 = (int) sub.key;
-
-		sub.unlink();
-
-		if (arg1 && var2 != -1 && IfType.open[var2]) {
-			IfType.interfaces.discardFiles(var2);
-
-			if (IfType.list[var2] != null) {
-				boolean var4 = true;
-				for (int var5 = 0; var5 < IfType.list[var2].length; var5++) {
-					if (IfType.list[var2][var5] != null) {
-						if (IfType.list[var2][var5].type == 2) {
-							var4 = false;
-						} else {
-							IfType.list[var2][var5] = null;
-						}
-					}
-				}
-				if (var4) {
-					IfType.list[var2] = null;
-				}
-
-				IfType.open[var2] = false;
-			}
-		}
-
-		purgeServerActive(var2);
-
-		IfType com = IfType.get(var3);
-		if (com != null) {
-			componentUpdated(com);
-		}
-
-		isMenuOpen = false;
-		menuNumEntries = 0;
-		dirtyArea(menuX, menuY, menuWidth, menuHeight);
-
-		if (toplevelinterface != -1) {
-			runHookImmediate(toplevelinterface, 1);
-		}
-	}
-
-	// jag::oldscape::Client::ClientButton
-	@ObfuscatedName("es.gd(Leg;B)Z")
-	public static boolean clientButton(IfType com) {
-		int clientCode = com.clientCode;
-
-		if (clientCode == 205) {
-			logoutTimer = 250;
-			return true;
-		} else if (clientCode >= 300 && clientCode <= 313) {
-			int var2 = (clientCode - 300) / 2;
-			int var3 = clientCode & 0x1;
-			selfModel.idkChangePart(var2, var3 == 1);
-		} else if (clientCode >= 314 && clientCode <= 323) {
-			int var4 = (clientCode - 314) / 2;
-			int var5 = clientCode & 0x1;
-			selfModel.idkChangeColour(var4, var5 == 1);
-		} else if (clientCode == 324) {
-			selfModel.idkChangeGender(false);
-		} else if (clientCode == 325) {
-			selfModel.idkChangeGender(true);
-		} else if (clientCode == 326) {
-			// IDK_SAVEDESIGN
-			out.p1Enc(71);
-			selfModel.idkSaveDesign(out);
-			return true;
-		}
-
-		return false;
-	}
-
-	// jag::oldscape::minimap::Minimap::Draw
-	@ObfuscatedName("ba.gh(IIII)V")
-	public static void minimapDraw(int arg0, int arg1, int arg2) {
-		doAudio();
-		Pix2D.setClipping(arg0, arg1, mapback.wi + arg0, mapback.hi + arg1);
-
-		if (minimapState == 2 || minimapState == 5) {
-			Pix2D.fillScanLine(arg0 + 25, arg1 + 5, 0, minimapMaskLineOffsets, minimapMaskLineLengths);
-		} else {
-			int var3 = orbitCameraYaw + macroMinimapAngle & 0x7FF;
-			int var4 = localPlayer.x / 32 + 48;
-			int var5 = 464 - localPlayer.z / 32;
-
-			minimap.scanlineRotatePlotSprite(arg0 + 25, arg1 + 5, 146, 151, var4, var5, var3, macroMinimapZoom + 256, minimapMaskLineOffsets, minimapMaskLineLengths);
-
-			for (int var6 = 0; var6 < activeMapFunctionCount; var6++) {
-				int var7 = activeMapFunctionX[var6] * 4 + 2 - localPlayer.x / 32;
-				int var8 = activeMapFunctionZ[var6] * 4 + 2 - localPlayer.z / 32;
-				minimapDrawDot(arg0, arg1, var7, var8, activeMapFunctions[var6]);
-			}
-
-			for (int var9 = 0; var9 < 104; var9++) {
-				for (int var10 = 0; var10 < 104; var10++) {
-					LinkList var11 = groundObj[minusedlevel][var9][var10];
-					if (var11 != null) {
-						int var12 = var9 * 4 + 2 - localPlayer.x / 32;
-						int var13 = var10 * 4 + 2 - localPlayer.z / 32;
-						minimapDrawDot(arg0, arg1, var12, var13, mapdots[0]);
-					}
-				}
-			}
-
-			for (int var14 = 0; var14 < npcCount; var14++) {
-				ClientNpc var15 = npcs[npcIds[var14]];
-				if (var15 != null && var15.ready()) {
-					NpcType var16 = var15.type;
-					if (var16 != null && var16.multinpc != null) {
-						var16 = var16.getMultiNpc();
-					}
-					if (var16 != null && var16.minimap && var16.active) {
-						int var17 = var15.x / 32 - localPlayer.x / 32;
-						int var18 = var15.z / 32 - localPlayer.z / 32;
-						minimapDrawDot(arg0, arg1, var17, var18, mapdots[1]);
-					}
-				}
-			}
-
-			for (int var19 = 0; var19 < playerCount; var19++) {
-				ClientPlayer var20 = players[playerIds[var19]];
-				if (var20 != null && var20.ready()) {
-					int var21 = var20.x / 32 - localPlayer.x / 32;
-					int var22 = var20.z / 32 - localPlayer.z / 32;
-					boolean var23 = false;
-					if (isFriend(var20.name)) {
-						var23 = true;
-					}
-					boolean var24 = false;
-					if (localPlayer.team != 0 && var20.team != 0 && localPlayer.team == var20.team) {
-						var24 = true;
-					}
-					if (var23) {
-						minimapDrawDot(arg0, arg1, var21, var22, mapdots[3]);
-					} else if (var24) {
-						minimapDrawDot(arg0, arg1, var21, var22, mapdots[4]);
-					} else {
-						minimapDrawDot(arg0, arg1, var21, var22, mapdots[2]);
-					}
-				}
-			}
-
-			if (hintType != 0 && loopCycle % 20 < 10) {
-				if (hintType == 1 && hintNpc >= 0 && hintNpc < npcs.length) {
-					ClientNpc var25 = npcs[hintNpc];
-					if (var25 != null) {
-						int var26 = var25.x / 32 - localPlayer.x / 32;
-						int var27 = var25.z / 32 - localPlayer.z / 32;
-						minimapDrawArrow(arg0, arg1, var26, var27, mapmarker[1]);
-					}
-				}
-
-				if (hintType == 2) {
-					int var28 = hintTileX * 4 - mapBuildBaseX * 4 + 2 - localPlayer.x / 32;
-					int var29 = hintTileZ * 4 - mapBuildBaseZ * 4 + 2 - localPlayer.z / 32;
-					minimapDrawArrow(arg0, arg1, var28, var29, mapmarker[1]);
-				}
-
-				if (hintType == 10 && hintPlayer >= 0 && hintPlayer < players.length) {
-					ClientPlayer var30 = players[hintPlayer];
-					if (var30 != null) {
-						int var31 = var30.x / 32 - localPlayer.x / 32;
-						int var32 = var30.z / 32 - localPlayer.z / 32;
-						minimapDrawArrow(arg0, arg1, var31, var32, mapmarker[1]);
-					}
-				}
-			}
-
-			if (minimapFlagX != 0) {
-				int var33 = minimapFlagX * 4 + 2 - localPlayer.x / 32;
-				int var34 = minimapFlagZ * 4 + 2 - localPlayer.z / 32;
-				minimapDrawDot(arg0, arg1, var33, var34, mapmarker[0]);
-			}
-
-			Pix2D.fillRect(arg0 + 93 + 4, arg1 + 82 - 4, 3, 3, 0xffffff);
-		}
-
-		if (minimapState < 3) {
-			compass.scanlineRotatePlotSprite(arg0, arg1, 33, 33, 25, 25, orbitCameraYaw, 256, compassMaskLineOffsets, compassMaskLineLengths);
-		} else {
-			Pix2D.fillScanLine(arg0, arg1, 0, compassMaskLineOffsets, compassMaskLineLengths);
-		}
-
-		if (componentDrawSomething2[arg2]) {
-			mapback.plotSprite(arg0, arg1);
-		}
-
-		componentRedrawRequested2[arg2] = true;
-	}
-
-	// jag::oldscape::minimap::Minimap::DrawArrow
-	@ObfuscatedName("ak.gm(IIIILfq;B)V")
-	public static void minimapDrawArrow(int arg0, int arg1, int arg2, int arg3, Pix32 arg4) {
-		int var5 = arg2 * arg2 + arg3 * arg3;
-		if (var5 <= 4225 || var5 >= 90000) {
-			minimapDrawDot(arg0, arg1, arg2, arg3, arg4);
-			return;
-		}
-		int var6 = orbitCameraYaw + macroMinimapAngle & 0x7FF;
-		int var7 = Pix3D.sinTable[var6];
-		int var8 = Pix3D.cosTable[var6];
-		int var9 = var7 * 256 / (macroMinimapZoom + 256);
-		int var10 = var8 * 256 / (macroMinimapZoom + 256);
-		int var11 = arg2 * var10 + arg3 * var9 >> 16;
-		int var12 = arg3 * var10 - arg2 * var9 >> 16;
-		double var13 = Math.atan2((double) var11, (double) var12);
-		int var15 = (int) (Math.sin(var13) * 63.0D);
-		int var16 = (int) (Math.cos(var13) * 57.0D);
-		mapedge.rotateTransPlotSprite(arg0 + 94 + var15 + 4 - 10, arg1 + 83 - var16 - 20, 20, 20, 15, 15, var13, 256);
-	}
-
-	// jag::oldscape::minimap::Minimap::DrawDot
-	@ObfuscatedName("g.gw(IIIILfq;I)V")
-	public static void minimapDrawDot(int arg0, int arg1, int arg2, int arg3, Pix32 arg4) {
-		if (arg4 == null) {
-			return;
-		}
-		int var5 = orbitCameraYaw + macroMinimapAngle & 0x7FF;
-		int var6 = arg2 * arg2 + arg3 * arg3;
-		if (var6 > 6400) {
-			return;
-		}
-		int var7 = Pix3D.sinTable[var5];
-		int var8 = Pix3D.cosTable[var5];
-		int var9 = var7 * 256 / (macroMinimapZoom + 256);
-		int var10 = var8 * 256 / (macroMinimapZoom + 256);
-		int var11 = arg2 * var10 + arg3 * var9 >> 16;
-		int var12 = arg3 * var10 - arg2 * var9 >> 16;
-		if (var6 > 2500) {
-			arg4.scanlinePlotSprite(mapback, arg0 + 94 + var11 - arg4.owi / 2 + 4, arg1 + 83 - var12 - arg4.ohi / 2 - 4);
-		} else {
-			arg4.plotSprite(arg0 + 94 + var11 - arg4.owi / 2 + 4, arg1 + 83 - var12 - arg4.ohi / 2 - 4);
-		}
-	}
-
-	// jag::oldscape::Client::AddChat
-	@ObfuscatedName("ao.gn(ILjava/lang/String;Ljava/lang/String;I)V")
-	public static void addChat(int type, String sender, String message) {
-		addChat(type, sender, message, null);
-	}
-
-	// jag::oldscape::Client::AddChat
-	@ObfuscatedName("br.gj(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V")
-	public static void addChat(int type, String sender, String message, String arg3) {
-		for (int i = 99; i > 0; i--) {
-			messageType[i] = messageType[i - 1];
-			messageSender[i] = messageSender[i - 1];
-			messageText[i] = messageText[i - 1];
-			messageScreenName[i] = messageScreenName[i - 1];
-		}
-
-		messageType[0] = type;
-		messageSender[0] = sender;
-		messageText[0] = message;
-		messageScreenName[0] = arg3;
-
-		chatHistoryLength++;
-		chatTransmitNum = transmitNum;
-	}
-
-	// jag::oldscape::FriendSystem::IsFriend
-	@ObfuscatedName("bg.gk(Ljava/lang/String;B)Z")
-	public static boolean isFriend(String arg0) {
-		if (arg0 == null) {
-			return false;
-		}
-		for (int var1 = 0; var1 < friendCount; var1++) {
-			if (arg0.equalsIgnoreCase(friendList[var1].name)) {
-				return true;
-			}
-		}
-		if (arg0.equalsIgnoreCase(localPlayer.name)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// jag::oldscape::FriendSystem::IsIgnored
-	@ObfuscatedName("bi.gx(Ljava/lang/String;I)Z")
-	public static boolean isIgnored(String arg0) {
-		if (arg0 == null) {
-			return false;
-		}
-		for (int var1 = 0; var1 < ignoreCount; var1++) {
-			IgnoreListEntry var2 = ignoreList[var1];
-			if (arg0.equalsIgnoreCase(var2.name)) {
-				return true;
-			}
-			if (arg0.equalsIgnoreCase(var2.displayName)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	// jag::oldscape::FriendSystem::AddFriend
-	@ObfuscatedName("ch.gl(Ljava/lang/String;I)V")
-	public static void addFriend(String arg0) {
-		if (arg0 == null) {
-			return;
-		}
-		if (friendCount >= 200 && membersAccount != 1 || friendCount >= 200) {
-			addChat(0, "", Text.FRIENDLISTFULL);
-			return;
-		}
-		String var1 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
-		if (var1 == null) {
-			return;
-		}
-		for (int var2 = 0; var2 < friendCount; var2++) {
-			FriendListEntry var3 = friendList[var2];
-			String var4 = DisplayNameTools.toBaseDisplayName(var3.name, namespace);
-			if (var4 != null && var4.equals(var1)) {
-				addChat(0, "", arg0 + Text.FRIENDLISTDUPE);
-				return;
-			}
-			if (var3.previousName != null) {
-				String var5 = DisplayNameTools.toBaseDisplayName(var3.previousName, namespace);
-				if (var5 != null && var5.equals(var1)) {
-					addChat(0, "", arg0 + Text.FRIENDLISTDUPE);
-					return;
-				}
-			}
-		}
-		for (int var6 = 0; var6 < ignoreCount; var6++) {
-			IgnoreListEntry var7 = ignoreList[var6];
-			String var8 = DisplayNameTools.toBaseDisplayName(var7.name, namespace);
-			if (var8 != null && var8.equals(var1)) {
-				addChat(0, "", Text.REMOVEIGNORE1 + arg0 + Text.REMOVEIGNORE2);
-				return;
-			}
-			if (var7.displayName != null) {
-				String var9 = DisplayNameTools.toBaseDisplayName(var7.displayName, namespace);
-				if (var9 != null && var9.equals(var1)) {
-					addChat(0, "", Text.REMOVEIGNORE1 + arg0 + Text.REMOVEIGNORE2);
-					return;
-				}
-			}
-		}
-		if (DisplayNameTools.toBaseDisplayName(localPlayer.name, namespace).equals(var1)) {
-			addChat(0, "", Text.FRIENDCANTADDSELF);
-		} else {
-			// FRIENDLIST_ADD
-			out.p1Enc(203);
-			out.p1(Packet.pjstrlen(arg0));
-			out.pjstr(arg0);
-		}
-	}
-
-	// jag::oldscape::FriendSystem::AddIgnore
-	@ObfuscatedName("a.gz(Ljava/lang/String;ZS)V")
-	public static void addIgnore(String arg0, boolean arg1) {
-		if (arg0 == null) {
-			return;
-		}
-		if (ignoreCount >= 100) {
-			addChat(0, "", Text.IGNORELISTFULL);
-			return;
-		}
-		String var2 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
-		if (var2 == null) {
-			return;
-		}
-		for (int var3 = 0; var3 < ignoreCount; var3++) {
-			IgnoreListEntry var4 = ignoreList[var3];
-			String var5 = DisplayNameTools.toBaseDisplayName(var4.name, namespace);
-			if (var5 != null && var5.equals(var2)) {
-				addChat(0, "", arg0 + Text.IGNORELISTDUPE);
-				return;
-			}
-			if (var4.displayName != null) {
-				String var6 = DisplayNameTools.toBaseDisplayName(var4.displayName, namespace);
-				if (var6 != null && var6.equals(var2)) {
-					addChat(0, "", arg0 + Text.IGNORELISTDUPE);
-					return;
-				}
-			}
-		}
-		for (int var7 = 0; var7 < friendCount; var7++) {
-			FriendListEntry var8 = friendList[var7];
-			String var9 = DisplayNameTools.toBaseDisplayName(var8.name, namespace);
-			if (var9 != null && var9.equals(var2)) {
-				addChat(0, "", Text.REMOVEFRIEND1 + arg0 + Text.REMOVEFRIEND2);
-				return;
-			}
-			if (var8.previousName != null) {
-				String var10 = DisplayNameTools.toBaseDisplayName(var8.previousName, namespace);
-				if (var10 != null && var10.equals(var2)) {
-					addChat(0, "", Text.REMOVEFRIEND1 + arg0 + Text.REMOVEFRIEND2);
-					return;
-				}
-			}
-		}
-		if (DisplayNameTools.toBaseDisplayName(localPlayer.name, namespace).equals(var2)) {
-			addChat(0, "", Text.IGNORECANTADDSELF);
-		} else {
-			// IGNORELIST_ADD
-			out.p1Enc(231);
-			out.p1(Packet.pjstrlen(arg0));
-			out.pjstr(arg0);
-		}
-	}
-
-	// jag::oldscape::FriendSystem::DelFriend
-	@ObfuscatedName("ao.gp(Ljava/lang/String;B)V")
-	public static void delFriend(String arg0) {
-		if (arg0 == null) {
-			return;
-		}
-		String var1 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
-		if (var1 == null) {
-			return;
-		}
-		for (int var2 = 0; var2 < friendCount; var2++) {
-			FriendListEntry var3 = friendList[var2];
-			String var4 = var3.name;
-			String var5 = DisplayNameTools.toBaseDisplayName(var4, namespace);
-			boolean var6;
-			if (arg0 == null || var4 == null) {
-				var6 = false;
-			} else if (arg0.startsWith("#") || var4.startsWith("#")) {
-				var6 = arg0.equals(var4);
-			} else {
-				var6 = var1.equals(var5);
-			}
-			if (var6) {
-				friendCount--;
-				for (int var7 = var2; var7 < friendCount; var7++) {
-					friendList[var7] = friendList[var7 + 1];
-				}
-				friendTransmitNum = transmitNum;
-				// FRIENDLIST_DEL
-				out.p1Enc(41);
-				out.p1(Packet.pjstrlen(arg0));
-				out.pjstr(arg0);
-				break;
-			}
-		}
-	}
-
-	// jag::oldscape::Client::FriendsChatJoinChat
-	@ObfuscatedName("af.gf(Ljava/lang/String;I)V")
-	public static void friendsChatJoinChat(String arg0) {
-		if (arg0.equals("")) {
-			return;
-		}
-
-		// CLAN_JOINCHAT_LEAVECHAT
-		out.p1Enc(185);
-		out.p1(Packet.pjstrlen(arg0));
-		out.pjstr(arg0);
-	}
-
-	// jag::oldscape::Client::FriendsChatLeaveChat
-	@ObfuscatedName("aa.gv(I)V")
-	public static void friendsChatLeaveChat() {
-		// CLAN_JOINCHAT_LEAVECHAT
-		out.p1Enc(185);
-		out.p1(0);
-	}
-
-	// jag::oldscape::Client::PurgeServerActive
-	@ObfuscatedName("s.gt(II)V")
-	public static void purgeServerActive(int comId) {
-		for (ServerActive active = (ServerActive) serverActive.search(); active != null; active = (ServerActive) serverActive.findnext()) {
-			if ((long) comId == (active.key >> 48 & 0xFFFFL)) {
-				active.unlink();
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GetActive
-	@ObfuscatedName("dn.gg(Leg;B)I")
-	public static int getActive(IfType com) {
-		ServerActive active = (ServerActive) serverActive.find(((long) com.parentId << 32) + (long) com.subId);
-		if (active == null) {
-			return com.eventCode;
-		}
-		return active.events;
-	}
-
-	// jag::oldscape::Client::Hide
-	@ObfuscatedName("bo.gy(Leg;I)Z")
-	public static boolean hide(IfType com) {
-		if (field2092) {
-			if (getActive(com) != 0) {
-				return false;
-			}
-
-			if (com.type == 0) {
-				return false;
-			}
-		}
-
-		return com.hide;
-	}
-
-	// jag::oldscape::minimenu::Minimenu::GetIftypeOpName
-	@ObfuscatedName("ay.gu(Leg;II)Ljava/lang/String;")
-	public static String getIfTypeOpName(IfType com, int opindex) {
-		if (!ServerActive.hasOp(getActive(com), opindex) && com.onop == null) {
-			return null;
-		} else if (com.opNames == null || com.opNames.length <= opindex || com.opNames[opindex] == null || com.opNames[opindex].trim().length() == 0) {
-			return null;
-		} else {
-			return com.opNames[opindex];
-		}
-	}
-
-	// jag::oldscape::Client::TargetVerb
-	@ObfuscatedName("ap.gb(Leg;I)Ljava/lang/String;")
-	public static String targetVerb(IfType com) {
-		if (ServerActive.targetMask(getActive(com)) == 0) {
-			return null;
-		} else if (com.targetVerb == null || com.targetVerb.trim().length() == 0) {
-			return null;
-		} else {
-			return com.targetVerb;
-		}
-	}
-
-	// inlined methods (un-inlined by hand!) - be careful when restoring the method order
-
-	public static void imethod1() {
-		while (true) {
-			LinkList lock = Js5NetThread.requestQueue;
-
-			Js5WorkerRequest req;
-			synchronized (lock) {
-				req = (Js5WorkerRequest) Js5NetThread.completed.popFront();
-			}
-			if (req == null) {
-				return;
-			}
-
-			req.field1773.loadIndex(req.fs, (int) req.key, req.data, false);
-		}
-	}
-
-	// jag::oldscape::Client::MapBuildLoop
-	public static void mapBuildLoop() {
-		preventTimeout(false);
-
-		mapLoadCount = 0;
-
-		boolean var11 = true;
-		for (int var12 = 0; var12 < mapBuildGroundData.length; var12++) {
-			if (mapBuildGroundFile[var12] != -1 && mapBuildGroundData[var12] == null) {
-				mapBuildGroundData[var12] = maps.getFile(mapBuildGroundFile[var12], 0);
-				if (mapBuildGroundData[var12] == null) {
-					var11 = false;
-					mapLoadCount++;
-				}
-			}
-			if (mapBuildLocationFile[var12] != -1 && mapBuildLocationData[var12] == null) {
-				mapBuildLocationData[var12] = maps.fetchFile(mapBuildLocationFile[var12], 0, mapKeys[var12]);
-				if (mapBuildLocationData[var12] == null) {
-					var11 = false;
-					mapLoadCount++;
-				}
-			}
-		}
-		if (!var11) {
-			mapLoadingStage = 1;
-			return;
-		}
-
-		locModelLoadCount = 0;
-
-		boolean var13 = true;
-		for (int var14 = 0; var14 < mapBuildGroundData.length; var14++) {
-			byte[] var15 = mapBuildLocationData[var14];
-			if (var15 != null) {
-				int var16 = (mapBuildIndex[var14] >> 8) * 64 - mapBuildBaseX;
-				int var17 = (mapBuildIndex[var14] & 0xFF) * 64 - mapBuildBaseZ;
-				if (regionmode) {
-					var16 = 10;
-					var17 = 10;
-				}
-				var13 &= ClientBuild.checkLocations(var15, var16, var17);
-			}
-		}
-		if (!var13) {
-			mapLoadingStage = 2;
-			return;
-		}
-
-		if (mapLoadingStage != 0) {
-			messageBox(Text.LOADING + StringConstants.TAG_BREAK + StringConstants.OPEN_BRACKET + 100 + "%" + StringConstants.CLOSE_BRACKET, true);
-		}
-
-		doAudio();
-		clearCaches();
-
-		doAudio();
-		world.resetMap();
-
-		doAudio();
-		System.gc();
-
-		for (int var18 = 0; var18 < 4; var18++) {
-			levelCollisionMap[var18].reset();
-		}
-
-		for (int var19 = 0; var19 < 4; var19++) {
-			for (int var20 = 0; var20 < 104; var20++) {
-				for (int var21 = 0; var21 < 104; var21++) {
-					ClientBuild.mapl[var19][var20][var21] = 0;
-				}
-			}
-		}
-
-		doAudio();
-		ClientBuild.init();
-
-		int maps = mapBuildGroundData.length;
-		BgSound.reset();
-
-		preventTimeout(true);
-
-		if (!regionmode) {
-			for (int var24 = 0; var24 < maps; var24++) {
-				int var25 = (mapBuildIndex[var24] >> 8) * 64 - mapBuildBaseX;
-				int var26 = (mapBuildIndex[var24] & 0xFF) * 64 - mapBuildBaseZ;
-				byte[] var27 = mapBuildGroundData[var24];
-				if (var27 != null) {
-					doAudio();
-					ClientBuild.loadGround(var27, var25, var26, mapBuildCenterZoneX * 8 - 48, mapBuildCenterZoneZ * 8 - 48, levelCollisionMap);
-				}
-			}
-
-			for (int var28 = 0; var28 < maps; var28++) {
-				int var29 = (mapBuildIndex[var28] >> 8) * 64 - mapBuildBaseX;
-				int var30 = (mapBuildIndex[var28] & 0xFF) * 64 - mapBuildBaseZ;
-				byte[] var31 = mapBuildGroundData[var28];
-				if (var31 == null && mapBuildCenterZoneZ < 800) {
-					doAudio();
-					ClientBuild.fadeAdjacent(var29, var30, 64, 64);
-				}
-			}
-
-			preventTimeout(true);
-
-			for (int var32 = 0; var32 < maps; var32++) {
-				byte[] var33 = mapBuildLocationData[var32];
-				if (var33 != null) {
-					int var34 = (mapBuildIndex[var32] >> 8) * 64 - mapBuildBaseX;
-					int var35 = (mapBuildIndex[var32] & 0xFF) * 64 - mapBuildBaseZ;
-
-					doAudio();
-					ClientBuild.loadLocations(var33, var34, var35, world, levelCollisionMap);
-				}
-			}
-		}
-
-		if (regionmode) {
-			for (int var36 = 0; var36 < 4; var36++) {
-				doAudio();
-
-				for (int var37 = 0; var37 < 13; var37++) {
-					for (int var38 = 0; var38 < 13; var38++) {
-						boolean var39 = false;
-						int var40 = mapBuildRegionSrc[var36][var37][var38];
-						if (var40 != -1) {
-							int var41 = var40 >> 24 & 0x3;
-							int var42 = var40 >> 1 & 0x3;
-							int var43 = var40 >> 14 & 0x3FF;
-							int var44 = var40 >> 3 & 0x7FF;
-							int var45 = (var43 / 8 << 8) + var44 / 8;
-							for (int var46 = 0; var46 < mapBuildIndex.length; var46++) {
-								if (mapBuildIndex[var46] == var45 && mapBuildGroundData[var46] != null) {
-									ClientBuild.loadGroundRegion(mapBuildGroundData[var46], var36, var37 * 8, var38 * 8, var41, (var43 & 0x7) * 8, (var44 & 0x7) * 8, var42, levelCollisionMap);
-									var39 = true;
-									break;
-								}
-							}
-						}
-						if (!var39) {
-							ClientBuild.autoGroundRegion(var36, var37 * 8, var38 * 8);
-						}
-					}
-				}
-			}
-
-			for (int var54 = 0; var54 < 13; var54++) {
-				for (int var55 = 0; var55 < 13; var55++) {
-					int var56 = mapBuildRegionSrc[0][var54][var55];
-					if (var56 == -1) {
-						ClientBuild.fadeAdjacent(var54 * 8, var55 * 8, 8, 8);
-					}
-				}
-			}
-
-			preventTimeout(true);
-
-			for (int var57 = 0; var57 < 4; var57++) {
-				doAudio();
-
-				for (int var58 = 0; var58 < 13; var58++) {
-					for (int var59 = 0; var59 < 13; var59++) {
-						int var60 = mapBuildRegionSrc[var57][var58][var59];
-						if (var60 != -1) {
-							int var61 = var60 >> 24 & 0x3;
-							int var62 = var60 >> 1 & 0x3;
-							int var63 = var60 >> 14 & 0x3FF;
-							int var64 = var60 >> 3 & 0x7FF;
-							int var65 = (var63 / 8 << 8) + var64 / 8;
-							for (int var66 = 0; var66 < mapBuildIndex.length; var66++) {
-								if (mapBuildIndex[var66] == var65 && mapBuildLocationData[var66] != null) {
-									ClientBuild.loadLocationsRegion(mapBuildLocationData[var66], var57, var58 * 8, var59 * 8, var61, (var63 & 0x7) * 8, (var64 & 0x7) * 8, var62, world, levelCollisionMap);
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		preventTimeout(true);
-		clearCaches();
-
-		doAudio();
-		ClientBuild.finishBuild(world, levelCollisionMap);
-
-		preventTimeout(true);
-
-		int var67 = ClientBuild.minusedlevel;
-		if (var67 > minusedlevel) {
-			var67 = minusedlevel;
-		}
-		if (var67 < minusedlevel - 1) {
-			int var68 = minusedlevel - 1;
-		}
-
-		if (lowMemory) {
-			world.fillBaseLevel(ClientBuild.minusedlevel);
-		} else {
-			world.fillBaseLevel(0);
-		}
-
-		for (int x = 0; x < 104; x++) {
-			for (int z = 0; z < 104; z++) {
-				showObject(x, z);
-			}
-		}
-
-		doAudio();
-		locChangePostBuildCorrect();
-
-		LocType.mc1.clear();
-
-		if (GameShell.frame != null) {
-			// todo: packet name notifying the server the client is in a frame
-			out.p1Enc(210);
-			out.p4(1057001181);
-		}
-
-		if (!regionmode) {
-			int var72 = (mapBuildCenterZoneX - 6) / 8;
-			int var73 = (mapBuildCenterZoneX + 6) / 8;
-			int var74 = (mapBuildCenterZoneZ - 6) / 8;
-			int var75 = (mapBuildCenterZoneZ + 6) / 8;
-			for (int var76 = var72 - 1; var76 <= var73 + 1; var76++) {
-				for (int var77 = var74 - 1; var77 <= var75 + 1; var77++) {
-					if (var76 < var72 || var76 > var73 || var77 < var74 || var77 > var75) {
-						Client.maps.updateCacheHint("m" + var76 + "_" + var77);
-						Client.maps.updateCacheHint("l" + var76 + "_" + var77);
-					}
-				}
-			}
-		}
-
-		setMainState(30);
-
-		doAudio();
-		ClientBuild.quit();
-
-		// MAP_BUILD_COMPLETE
-		out.p1Enc(197);
-
-		GameShell.doneslowupdate();
-	}
-
-	// jag::oldscape::Client::LocChangePostBuildCorrect
-	public static void locChangePostBuildCorrect() {
-		for (LocChange loc = (LocChange) locChanges.head(); loc != null; loc = (LocChange) locChanges.next()) {
-			if (loc.endTime == -1) {
-				loc.startTime = 0;
-				locChangeSetOld(loc);
-			} else {
-				loc.unlink();
-			}
-		}
-	}
-
-	// jag::oldscape::Client::ReconnectDone
-	public static void reconnectDone() {
-		out.pos = 0;
-		in.pos = 0;
-		ptype = -1;
-		ptype0 = -1;
-		ptype1 = -1;
-		ptype2 = -1;
-		psize = 0;
-
-		timeoutTimer = 0;
-		rebootTimer = 0;
-
-		menuNumEntries = 0;
-		isMenuOpen = false;
-
-		minimapState = 0;
-		minimapFlagX = 0;
-
-		for (int i = 0; i < players.length; i++) {
-			if (players[i] != null) {
-				players[i].targetId = -1;
-			}
-		}
-
-		for (int i = 0; i < npcs.length; i++) {
-			if (npcs[i] != null) {
-				npcs[i].targetId = -1;
-			}
-		}
-
-		ClientInvCache.deleteAll();
-		setMainState(30);
-
-		for (int i = 0; i < 100; i++) {
-			componentRedrawRequested1[i] = true;
-		}
-	}
-
 	// jag::oldscape::Client::GameLoop
+	// placement relative to other clients
 	public static void gameLoop() {
 		if (rebootTimer > 1) {
 			rebootTimer--;
@@ -9271,18 +2704,7 @@ public class Client extends GameShell {
 		}
 	}
 
-	// jag::oldscape::Client::LostCon
-	public static void lostCon() {
-		if (logoutTimer > 0) {
-			logout();
-			return;
-		}
-
-		setMainState(40);
-		stream = loginStream;
-		loginStream = null;
-	}
-
+	// guessing placement
 	public static boolean tcpIn() {
 		if (loginStream == null) {
 			return false;
@@ -9497,16 +2919,16 @@ public class Client extends GameShell {
 
 			if (
 				ptype == 205 ||
-				ptype == 106 ||
-				ptype == 245 ||
-				ptype == 215 ||
-				ptype == 20 ||
-				ptype == 32 ||
-				ptype == 207 ||
-				ptype == 173 ||
-				ptype == 6 ||
-				ptype == 7 ||
-				ptype == 154
+					ptype == 106 ||
+					ptype == 245 ||
+					ptype == 215 ||
+					ptype == 20 ||
+					ptype == 32 ||
+					ptype == 207 ||
+					ptype == 173 ||
+					ptype == 6 ||
+					ptype == 7 ||
+					ptype == 154
 			) {
 				readZonePacket();
 				ptype = -1;
@@ -10739,363 +4161,8 @@ public class Client extends GameShell {
 		return true;
 	}
 
-	// jag::oldscape::Client::GameDraw
-	public static void gameDraw() {
-		if (!isMenuOpen) {
-			menuVerb[0] = Text.CANCEL;
-			menuSubject[0] = "";
-			menuAction[0] = 1006;
-			menuNumEntries = 1;
-		}
-
-		if (toplevelinterface != -1) {
-			animateInterface(toplevelinterface);
-		}
-
-		for (int i = 0; i < componentDrawCount; i++) {
-			if (componentRedrawRequested1[i]) {
-				componentRedrawRequested2[i] = true;
-			}
-
-			componentDrawSomething2[i] = componentRedrawRequested1[i];
-			componentRedrawRequested1[i] = false;
-		}
-
-		componentDrawTime = loopCycle;
-
-		minimenuMouseOverX = -1;
-		minimenuMouseOverY = -1;
-
-		hoveredSlotParent = null;
-
-		if (toplevelinterface != -1) {
-			componentDrawCount = 0;
-			drawInterface(toplevelinterface, 0, 0, 765, 503, 0, 0, -1);
-		}
-
-		Pix2D.resetClipping();
-		sortMinimenu();
-		if (isMenuOpen) {
-			drawMinimenu();
-		} else if (minimenuMouseOverX != -1) {
-			drawFeedback(minimenuMouseOverX, minimenuMouseOverY);
-		}
-
-		if (componentDrawMode == 3) {
-			for (int i = 0; i < componentDrawCount; i++) {
-				if (componentDrawSomething2[i]) {
-					Pix2D.fillRectTrans(componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i], 0xff00ff, 0x80);
-				} else if (componentRedrawRequested2[i]) {
-					Pix2D.fillRectTrans(componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i], 0xff0000, 0x80);
-				}
-			}
-		}
-
-		BgSound.doMix(minusedlevel, localPlayer.x, localPlayer.z, worldUpdateNum);
-		worldUpdateNum = 0;
-	}
-
-	// jag::oldscape::Client::AnimateInterface
-	public static void animateInterface(int var14) {
-		if (IfType.openInterface(var14)) {
-			animateLayer(IfType.list[var14], -1);
-		}
-	}
-
-	// jag::oldscape::minimenu::Minimenu::Sort
-	public static void sortMinimenu() {
-		boolean done = false;
-		while (!done) {
-			done = true;
-
-			for (int i = 0; i < menuNumEntries - 1; i++) {
-				if (menuAction[i] >= 1000 || menuAction[i + 1] <= 1000) {
-					continue;
-				}
-
-				String subject = menuSubject[i];
-				menuSubject[i] = menuSubject[i + 1];
-				menuSubject[i + 1] = subject;
-
-				String verb = menuVerb[i];
-				menuVerb[i] = menuVerb[i + 1];
-				menuVerb[i + 1] = verb;
-
-				int action = menuAction[i];
-				menuAction[i] = menuAction[i + 1];
-				menuAction[i + 1] = action;
-
-				int b = menuParamB[i];
-				menuParamB[i] = menuParamB[i + 1];
-				menuParamB[i + 1] = b;
-
-				int c = menuParamC[i];
-				menuParamC[i] = menuParamC[i + 1];
-				menuParamC[i + 1] = c;
-
-				int a = menuParamA[i];
-				menuParamA[i] = menuParamA[i + 1];
-				menuParamA[i + 1] = a;
-
-				done = false;
-			}
-		}
-	}
-
-	public static void drawMinimenu() {
-		int var27 = menuX;
-		int var28 = menuY;
-		int var29 = menuWidth;
-		int var30 = menuHeight;
-		int var31 = 0x5d5447;
-		Pix2D.fillRect(var27, var28, var29, var30, var31);
-		Pix2D.fillRect(var27 + 1, var28 + 1, var29 - 2, 16, 0);
-		Pix2D.drawRect(var27 + 1, var28 + 18, var29 - 2, var30 - 19, 0);
-		b12.drawString(Text.CHOOSEOPTION, var27 + 3, var28 + 14, var31, -1);
-		int var32 = ClientMouseListener.mouseX;
-		int var33 = ClientMouseListener.mouseY;
-		for (int var34 = 0; var34 < menuNumEntries; var34++) {
-			int var35 = (menuNumEntries - 1 - var34) * 15 + var28 + 31;
-			int var36 = 0xffffff;
-			if (var32 > var27 && var32 < var27 + var29 && var33 > var35 - 13 && var33 < var35 + 3) {
-				var36 = 0xffff00;
-			}
-			b12.drawString(getLine(var34), var27 + 3, var35, var36, 0);
-		}
-		imethod26(menuX, menuY, menuWidth, menuHeight);
-	}
-
-	public static void imethod26(int var37, int var38, int var39, int var40) {
-		for (int var41 = 0; var41 < componentDrawCount; var41++) {
-			if (componentDrawWidth[var41] + componentDrawX[var41] > var37 && componentDrawX[var41] < var37 + var39 && componentDrawHeight[var41] + componentDrawY[var41] > var38 && componentDrawY[var41] < var38 + var40) {
-				componentRedrawRequested2[var41] = true;
-			}
-		}
-	}
-
-	// jag::oldscape::minimenu::Minimenu::DrawFeedback
-	public static void drawFeedback(int var24, int var25) {
-		if (menuNumEntries < 2 && useMode == 0 && !targetMode) {
-			return;
-		}
-
-		String var26;
-		if (useMode == 1 && menuNumEntries < 2) {
-			var26 = Text.USE + Text.MINISEPARATOR + objSelectedName + " " + StringConstants.TAG_ARROW;
-		} else if (targetMode && menuNumEntries < 2) {
-			var26 = targetVerb + Text.MINISEPARATOR + targetOp + " " + StringConstants.TAG_ARROW;
-		} else {
-			var26 = getLine(menuNumEntries - 1);
-		}
-
-		if (menuNumEntries > 2) {
-			var26 = var26 + StringConstants.TAG_COLOUR(0xffffff) + " " + '/' + " " + (menuNumEntries - 2) + Text.MOREOPTIONS;
-		}
-
-		b12.drawStringAntiMacro(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
-	}
-
-	// jag::oldscape::Client::GlCheckMinimap
-	public static void checkMinimap() {
-		if (lowMemory && sceneState != minusedlevel) {
-			startRebuild(mapBuildCenterZoneX, mapBuildCenterZoneZ, minusedlevel, localPlayer.routeX[0], localPlayer.routeZ[0]);
-			return;
-		}
-
-		if (minimapLevel != minusedlevel) {
-			minimapLevel = minusedlevel;
-
-			// todo: minimapBuildBuffer inlined:
-			int var402 = minusedlevel;
-			int[] var403 = minimap.data;
-			int var404 = var403.length;
-			for (int var405 = 0; var405 < var404; var405++) {
-				var403[var405] = 0;
-			}
-			int var406 = 1;
-			while (true) {
-				if (var406 >= 103) {
-					int var409 = ((int) (Math.random() * 20.0D) + 238 - 10 << 16) + ((int) (Math.random() * 20.0D) + 238 - 10 << 8) + ((int) (Math.random() * 20.0D) + 238 - 10);
-					int var410 = (int) (Math.random() * 20.0D) + 238 - 10 << 16;
-					minimap.setPixels();
-					for (int var411 = 1; var411 < 103; var411++) {
-						for (int var412 = 1; var412 < 103; var412++) {
-							if ((ClientBuild.mapl[var402][var412][var411] & 0x18) == 0) {
-								drawDetail(var402, var412, var411, var409, var410);
-							}
-							if (var402 < 3 && (ClientBuild.mapl[var402 + 1][var412][var411] & 0x8) != 0) {
-								drawDetail(var402 + 1, var412, var411, var409, var410);
-							}
-						}
-					}
-					activeMapFunctionCount = 0;
-					for (int var413 = 0; var413 < 104; var413++) {
-						for (int var414 = 0; var414 < 104; var414++) {
-							int var415 = world.gdType(minusedlevel, var413, var414);
-							if (var415 == 0) {
-								continue;
-							}
-							int var416 = var415 >> 14 & 0x7FFF;
-							int var417 = LocType.list(var416).mapfunction;
-							if (var417 < 0) {
-								continue;
-							}
-							int var418 = var413;
-							int var419 = var414;
-							if (var417 != 22 && var417 != 29 && var417 != 34 && var417 != 36 && var417 != 46 && var417 != 47 && var417 != 48) {
-								int[][] var420 = levelCollisionMap[minusedlevel].flags;
-								for (int var421 = 0; var421 < 10; var421++) {
-									int var422 = (int) (Math.random() * 4.0D);
-									if (var422 == 0 && var418 > 0 && var418 > var413 - 3 && (var420[var418 - 1][var419] & 0x12C0108) == 0) {
-										var418--;
-									}
-									if (var422 == 1 && var418 < 103 && var418 < var413 + 3 && (var420[var418 + 1][var419] & 0x12C0180) == 0) {
-										var418++;
-									}
-									if (var422 == 2 && var419 > 0 && var419 > var414 - 3 && (var420[var418][var419 - 1] & 0x12C0102) == 0) {
-										var419--;
-									}
-									if (var422 == 3 && var419 < 103 && var419 < var414 + 3 && (var420[var418][var419 + 1] & 0x12C0120) == 0) {
-										var419++;
-									}
-								}
-							}
-							activeMapFunctions[activeMapFunctionCount] = mapfunction[var417];
-							activeMapFunctionX[activeMapFunctionCount] = var418;
-							activeMapFunctionZ[activeMapFunctionCount] = var419;
-							activeMapFunctionCount++;
-						}
-					}
-					GameShell.drawArea.bind();
-					break;
-				}
-				int var407 = (103 - var406) * 2048 + 24628;
-				for (int var408 = 1; var408 < 103; var408++) {
-					if ((ClientBuild.mapl[var402][var408][var406] & 0x18) == 0) {
-						world.render2DGround(var403, var407, 512, var402, var408, var406);
-					}
-					if (var402 < 3 && (ClientBuild.mapl[var402 + 1][var408][var406] & 0x8) != 0) {
-						world.render2DGround(var403, var407, 512, var402 + 1, var408, var406);
-					}
-					var407 += 4;
-				}
-				var406++;
-			}
-		}
-	}
-
-	// jag::oldscape::Client::LocChangeDoQueue
-	public static void locChangeDoQueue() {
-		for (LocChange var423 = (LocChange) locChanges.head(); var423 != null; var423 = (LocChange) locChanges.next()) {
-			if (var423.endTime > 0) {
-				var423.endTime--;
-			}
-			if (var423.endTime != 0) {
-				if (var423.startTime > 0) {
-					var423.startTime--;
-				}
-				if (var423.startTime == 0 && var423.x >= 1 && var423.z >= 1 && var423.x <= 102 && var423.z <= 102 && (var423.newType < 0 || ClientBuild.changeLocAvailable(var423.newType, var423.newShape))) {
-					locChangeUnchecked(var423.level, var423.layer, var423.x, var423.z, var423.newType, var423.newAngle, var423.newShape);
-					var423.startTime = -1;
-					if (var423.newType == var423.oldType && var423.oldType == -1) {
-						var423.unlink();
-					} else if (var423.newType == var423.oldType && var423.newAngle == var423.oldAngle && var423.oldShape == var423.newShape) {
-						var423.unlink();
-					}
-				}
-			} else if (var423.oldType < 0 || ClientBuild.changeLocAvailable(var423.oldType, var423.oldShape)) {
-				locChangeUnchecked(var423.level, var423.layer, var423.x, var423.z, var423.oldType, var423.oldAngle, var423.oldShape);
-				var423.unlink();
-			}
-		}
-	}
-
-	// jag::oldscape::Client::GlDoSoundsQueue
-	public static void soundsDoQueue() {
-		for (int i = 0; i < waveCount; i++) {
-			waveDelay[i]--;
-
-			if (waveDelay[i] >= -10) {
-				JagFx sound = waveSounds[i];
-
-				if (sound == null) {
-					sound = JagFx.load(jagFX, waveSoundIds[i], 0);
-					if (sound == null) {
-						continue;
-					}
-
-					waveDelay[i] += sound.optimiseStart();
-					waveSounds[i] = sound;
-				}
-
-				if (waveDelay[i] < 0) {
-					int finalVolume;
-					if (waveAmbient[i] != 0) {
-						// jag::oldscape::Client::GetFinalAmbientVolume
-						int var427 = (waveAmbient[i] & 0xFF) * 128;
-
-						int var428 = waveAmbient[i] >> 16 & 0xFF;
-						int var429 = var428 * 128 + 64 - localPlayer.x;
-						if (var429 < 0) {
-							var429 = -var429;
-						}
-
-						int var430 = waveAmbient[i] >> 8 & 0xFF;
-						int var431 = var430 * 128 + 64 - localPlayer.z;
-						if (var431 < 0) {
-							var431 = -var431;
-						}
-
-						int var432 = var429 + var431 - 128;
-						if (var432 > var427) {
-							waveDelay[i] = -100;
-							continue;
-						}
-
-						if (var432 < 0) {
-							var432 = 0;
-						}
-
-						finalVolume = ambientVolume * (var427 - var432) / var427;
-					} else {
-						// jag::oldscape::Client::GetFinalWaveVolume
-						finalVolume = waveVolume;
-					}
-
-					if (finalVolume > 0) {
-						Wave wave = sound.toWave().decimate(soundDecimator);
-						WaveStream stream = WaveStream.newRatePercent(wave, 100, finalVolume);
-						stream.setLoopCount(waveLoops[i] - 1);
-						soundMixer.playStream(stream);
-					}
-
-					waveDelay[i] = -100;
-				}
-			} else {
-				waveCount--;
-
-				for (int j = i; j < waveCount; j++) {
-					waveSoundIds[j] = waveSoundIds[j + 1];
-					waveSounds[j] = waveSounds[j + 1];
-					waveLoops[j] = waveLoops[j + 1];
-					waveDelay[j] = waveDelay[j + 1];
-					waveAmbient[j] = waveAmbient[j + 1];
-				}
-
-				i--;
-			}
-		}
-
-		if (playingJingle && !MidiManager.isInitialised()) {
-			if (midiVolume != 0 && previousSong != -1) {
-				MidiManager.play(songs, previousSong, 0, midiVolume, false);
-			}
-
-			playingJingle = false;
-		}
-	}
-
 	// jag::oldscape::Client::LoopIf3Drag
+	// guessing placement
 	public static void loopIf3Drag() {
 		componentUpdated(dragComponent);
 		dragTime++;
@@ -11197,86 +4264,595 @@ public class Client extends GameShell {
 		}
 	}
 
-	// jag::oldscape::minimenu::Minimenu::GameLoop
-	public static void mouseLoop() {
-		if (objDragInterface != null || dragComponent != null) {
+	// jag::oldscape::Client::GameDraw
+	// placement relative to other clients
+	public static void gameDraw() {
+		if (!isMenuOpen) {
+			menuVerb[0] = Text.CANCEL;
+			menuSubject[0] = "";
+			menuAction[0] = 1006;
+			menuNumEntries = 1;
+		}
+
+		if (toplevelinterface != -1) {
+			animateInterface(toplevelinterface);
+		}
+
+		for (int i = 0; i < componentDrawCount; i++) {
+			if (componentRedrawRequested1[i]) {
+				componentRedrawRequested2[i] = true;
+			}
+
+			componentDrawSomething2[i] = componentRedrawRequested1[i];
+			componentRedrawRequested1[i] = false;
+		}
+
+		componentDrawTime = loopCycle;
+
+		minimenuMouseOverX = -1;
+		minimenuMouseOverY = -1;
+
+		hoveredSlotParent = null;
+
+		if (toplevelinterface != -1) {
+			componentDrawCount = 0;
+			drawInterface(toplevelinterface, 0, 0, 765, 503, 0, 0, -1);
+		}
+
+		Pix2D.resetClipping();
+		sortMinimenu();
+		if (isMenuOpen) {
+			drawMinimenu();
+		} else if (minimenuMouseOverX != -1) {
+			drawFeedback(minimenuMouseOverX, minimenuMouseOverY);
+		}
+
+		if (componentDrawMode == 3) {
+			for (int i = 0; i < componentDrawCount; i++) {
+				if (componentDrawSomething2[i]) {
+					Pix2D.fillRectTrans(componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i], 0xff00ff, 0x80);
+				} else if (componentRedrawRequested2[i]) {
+					Pix2D.fillRectTrans(componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i], 0xff0000, 0x80);
+				}
+			}
+		}
+
+		BgSound.doMix(minusedlevel, localPlayer.x, localPlayer.z, worldUpdateNum);
+		worldUpdateNum = 0;
+	}
+
+	// jag::oldscape::Client::LoginDone
+	@ObfuscatedName("dr.df(S)V")
+	public static void loginDone() {
+		prevMouseClickTime = 0L;
+		mouseTrackedDelta = 0;
+		mouseTracking.length = 0;
+
+		GameShell.focus = true;
+		focusIn = true;
+
+		ReflectionChecker.checks = new LinkList();
+
+		out.pos = 0;
+		in.pos = 0;
+		ptype = -1;
+		ptype0 = -1;
+		ptype1 = -1;
+		ptype2 = -1;
+
+		timeoutTimer = 0;
+		rebootTimer = 0;
+		logoutTimer = 0;
+
+		hintType = 0;
+
+		menuNumEntries = 0;
+		isMenuOpen = false;
+
+		ClientMouseListener.setIdleTimer(0);
+
+		for (int var0 = 0; var0 < 100; var0++) {
+			messageText[var0] = null;
+		}
+		chatHistoryLength = 0;
+
+		useMode = 0;
+		targetMode = false;
+
+		waveCount = 0;
+
+		macroCameraX = (int) (Math.random() * 100.0D) - 50;
+		macroCameraZ = (int) (Math.random() * 110.0D) - 55;
+		macroCameraAngle = (int) (Math.random() * 80.0D) - 40;
+		macroMinimapAngle = (int) (Math.random() * 120.0D) - 60;
+		macroMinimapZoom = (int) (Math.random() * 30.0D) - 20;
+		orbitCameraYaw = (int) (Math.random() * 20.0D) - 10 & 0x7FF;
+
+		minimapState = 0;
+		minimapLevel = -1;
+		minimapFlagX = 0;
+		minimapFlagZ = 0;
+
+		playerCount = 0;
+		npcCount = 0;
+
+		for (int var1 = 0; var1 < 2048; var1++) {
+			players[var1] = null;
+			playerAppearanceBuffer[var1] = null;
+		}
+
+		for (int var2 = 0; var2 < 32768; var2++) {
+			npcs[var2] = null;
+		}
+
+		localPlayer = players[2047] = new ClientPlayer();
+
+		projectiles.clear();
+		spotanims.clear();
+		for (int var3 = 0; var3 < 4; var3++) {
+			for (int var4 = 0; var4 < 104; var4++) {
+				for (int var5 = 0; var5 < 104; var5++) {
+					groundObj[var3][var4][var5] = null;
+				}
+			}
+		}
+		locChanges = new LinkList();
+
+		friendListStatus = 0;
+		friendCount = 0;
+
+		for (int var6 = 0; var6 < VarpType.numDefinitions; var6++) {
+			VarpType var7 = VarpType.list(var6);
+			if (var7 != null && var7.clientcode == 0) {
+				VarCache.varServ[var6] = 0;
+				VarCache.var[var6] = 0;
+			}
+		}
+
+		for (int var8 = 0; var8 < varcInt.length; var8++) {
+			varcInt[var8] = -1;
+		}
+
+		if (toplevelinterface != -1) {
+			int var9 = toplevelinterface;
+			if (var9 != -1 && IfType.open[var9]) {
+				IfType.interfaces.discardFiles(var9);
+				if (IfType.list[var9] != null) {
+					boolean hasNoInv = true;
+					for (int var11 = 0; var11 < IfType.list[var9].length; var11++) {
+						if (IfType.list[var9][var11] != null) {
+							if (IfType.list[var9][var11].type == 2) {
+								hasNoInv = false;
+							} else {
+								IfType.list[var9][var11] = null;
+							}
+						}
+					}
+					if (hasNoInv) {
+						IfType.list[var9] = null;
+					}
+					IfType.open[var9] = false;
+				}
+			}
+		}
+
+		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
+			closeSubInterface(sub, true);
+		}
+
+		toplevelinterface = -1;
+		subinterfaces = new HashTable(8);
+		resumedPauseButton = null;
+
+		isMenuOpen = false;
+		menuNumEntries = 0;
+
+		selfModel.setAppearance(null, new int[] { 0, 0, 0, 0, 0 }, false, -1);
+
+		for (int var13 = 0; var13 < 8; var13++) {
+			playerOp[var13] = null;
+			playerOpPriority[var13] = false;
+		}
+
+		ClientInvCache.invList = new HashTable(32);
+		js5Loading = true;
+
+		for (int var14 = 0; var14 < 100; var14++) {
+			componentRedrawRequested1[var14] = true;
+		}
+
+		chatDisplayName = null;
+		friendChatCount = 0;
+		friendChatList = null;
+	}
+
+	// jag::oldscape::Client::LoginError
+	@ObfuscatedName("bf.dk(II)V")
+	public static void loginError(int response) {
+		if (response == -3) {
+			TitleScreen.loginMes(Text.LOGINM3_A, Text.LOGINM3_B, Text.LOGINM3_C);
+		} else if (response == -2) {
+			TitleScreen.loginMes(Text.LOGINM2_A, Text.LOGINM2_B, Text.LOGINM2_C);
+		} else if (response == -1) {
+			TitleScreen.loginMes(Text.LOGINM1_A, Text.LOGINM1_B, Text.LOGINM1_C);
+		} else if (response == 3) {
+			TitleScreen.loginMes(Text.LOGIN3_A, Text.LOGIN3_B, Text.LOGIN3_C);
+		} else if (response == 4) {
+			TitleScreen.loginMes(Text.LOGIN4_A, Text.LOGIN4_B, Text.LOGIN4_C);
+		} else if (response == 5) {
+			TitleScreen.loginMes(Text.LOGIN5_A, Text.LOGIN5_B, Text.LOGIN5_C);
+		} else if (response == 6) {
+			TitleScreen.loginMes(Text.LOGIN6_A, Text.LOGIN6_B, Text.LOGIN6_C);
+		} else if (response == 7) {
+			TitleScreen.loginMes(Text.LOGIN7_A, Text.LOGIN7_B, Text.LOGIN7_C);
+		} else if (response == 8) {
+			TitleScreen.loginMes(Text.LOGIN8_A, Text.LOGIN8_B, Text.LOGIN8_C);
+		} else if (response == 9) {
+			TitleScreen.loginMes(Text.LOGIN9_A, Text.LOGIN9_B, Text.LOGIN9_C);
+		} else if (response == 10) {
+			TitleScreen.loginMes(Text.LOGIN10_A, Text.LOGIN10_B, Text.LOGIN10_C);
+		} else if (response == 11) {
+			TitleScreen.loginMes(Text.LOGIN11_A, Text.LOGIN11_B, Text.LOGIN11_C);
+		} else if (response == 12) {
+			TitleScreen.loginMes(Text.LOGIN12_A, Text.LOGIN12_B, Text.LOGIN12_C);
+		} else if (response == 13) {
+			TitleScreen.loginMes(Text.LOGIN13_A, Text.LOGIN13_B, Text.LOGIN13_C);
+		} else if (response == 14) {
+			TitleScreen.loginMes(Text.LOGIN14_A, Text.LOGIN14_B, Text.LOGIN14_C);
+		} else if (response == 16) {
+			TitleScreen.loginMes(Text.LOGIN16_A, Text.LOGIN16_B, Text.LOGIN16_C);
+		} else if (response == 17) {
+			TitleScreen.loginMes(Text.LOGIN17_A, Text.LOGIN17_B, Text.LOGIN17_C);
+		} else if (response == 18) {
+			TitleScreen.loginMes(Text.LOGIN18_A, Text.LOGIN18_B, Text.LOGIN18_C);
+		} else if (response == 19) {
+			TitleScreen.loginMes(Text.LOGIN19_A, Text.LOGIN19_B, Text.LOGIN19_C);
+		} else if (response == 20) {
+			TitleScreen.loginMes(Text.LOGIN20_A, Text.LOGIN20_B, Text.LOGIN20_C);
+		} else if (response == 22) {
+			TitleScreen.loginMes(Text.LOGIN22_A, Text.LOGIN22_B, Text.LOGIN22_C);
+		} else if (response == 23) {
+			TitleScreen.loginMes(Text.LOGIN23_A, Text.LOGIN23_B, Text.LOGIN23_C);
+		} else if (response == 24) {
+			TitleScreen.loginMes(Text.LOGIN24_A, Text.LOGIN24_B, Text.LOGIN24_C);
+		} else if (response == 25) {
+			TitleScreen.loginMes(Text.LOGIN25_A, Text.LOGIN25_B, Text.LOGIN25_C);
+		} else if (response == 26) {
+			TitleScreen.loginMes(Text.LOGIN26_A, Text.LOGIN26_B, Text.LOGIN26_C);
+		} else if (response == 27) {
+			TitleScreen.loginMes(Text.LOGIN27_A, Text.LOGIN27_B, Text.LOGIN27_C);
+		} else if (response == 31) {
+			TitleScreen.loginMes(Text.LOGIN31_A, Text.LOGIN31_B, Text.LOGIN31_C);
+		} else if (response == 32) {
+			TitleScreen.loginMes(Text.LOGIN32_A, Text.LOGIN32_B, Text.LOGIN32_C);
+		} else if (response == 37) {
+			TitleScreen.loginMes(Text.LOGIN37_A, Text.LOGIN37_B, Text.LOGIN37_C);
+		} else if (response == 38) {
+			TitleScreen.loginMes(Text.LOGIN38_A, Text.LOGIN38_B, Text.LOGIN38_C);
+		} else if (response == 55) {
+			TitleScreen.loginMes(Text.LOGIN55_A, Text.LOGIN55_B, Text.LOGIN55_C);
+		} else {
+			TitleScreen.loginMes(Text.LOGINMIS_A, Text.LOGINMIS_B, Text.LOGINMIS_C);
+		}
+		setMainState(10);
+	}
+
+	// jag::oldscape::Client::ReconnectDone
+	// guessing placement
+	public static void reconnectDone() {
+		out.pos = 0;
+		in.pos = 0;
+		ptype = -1;
+		ptype0 = -1;
+		ptype1 = -1;
+		ptype2 = -1;
+		psize = 0;
+
+		timeoutTimer = 0;
+		rebootTimer = 0;
+
+		menuNumEntries = 0;
+		isMenuOpen = false;
+
+		minimapState = 0;
+		minimapFlagX = 0;
+
+		for (int i = 0; i < players.length; i++) {
+			if (players[i] != null) {
+				players[i].targetId = -1;
+			}
+		}
+
+		for (int i = 0; i < npcs.length; i++) {
+			if (npcs[i] != null) {
+				npcs[i].targetId = -1;
+			}
+		}
+
+		ClientInvCache.deleteAll();
+		setMainState(30);
+
+		for (int i = 0; i < 100; i++) {
+			componentRedrawRequested1[i] = true;
+		}
+	}
+
+	// jag::oldscape::Client::Logout
+	@ObfuscatedName("dq.dz(B)V")
+	public static void logout() {
+		if (loginStream != null) {
+			loginStream.close();
+			loginStream = null;
+		}
+
+		clearCaches();
+		world.resetMap();
+
+		for (int i = 0; i < 4; i++) {
+			levelCollisionMap[i].reset();
+		}
+
+		System.gc();
+
+		MidiManager.stop2();
+		previousSong = -1;
+		playingJingle = false;
+
+		BgSound.reset();
+
+		setMainState(10);
+	}
+
+	@ObfuscatedName("bh.da(B)V")
+	public static void clearCaches() {
+		FloType.resetCache();
+		FluType.resetCache();
+		IdkType.resetCache();
+		LocType.resetCache();
+		NpcType.resetCache();
+		ObjType.resetCache();
+		SeqType.resetCache();
+		SpotType.resetCache();
+		VarpType.resetCache();
+		PlayerModel.resetCache();
+		IfType.resetCache();
+		((WorldTextureProvider) Pix3D.textureProvider).reset();
+		ClientScript.cache.clear();
+
+		anims.discardAllFiles();
+		bases.discardAllFiles();
+		interfaces.discardAllFiles();
+		jagFX.discardAllFiles();
+		maps.discardAllFiles();
+		songs.discardAllFiles();
+		models.discardAllFiles();
+		sprites.discardAllFiles();
+		textures.discardAllFiles();
+		binary.discardAllFiles();
+		jingles.discardAllFiles();
+		scripts.discardAllFiles();
+	}
+
+	// jag::oldscape::Client::LostCon
+	// placement relative to other clients
+	public static void lostCon() {
+		if (logoutTimer > 0) {
+			logout();
 			return;
 		}
 
-		int button = ClientMouseListener.mouseClickButton;
+		setMainState(40);
+		stream = loginStream;
+		loginStream = null;
+	}
 
-		if (isMenuOpen) {
-			if (button == 1) {
-				int x = menuX;
-				int y = menuY;
-				int width = menuWidth;
-				int clickX = ClientMouseListener.mouseClickX;
-				int clickY = ClientMouseListener.mouseClickY;
+	// guessing placement
+	public static void imethod1() {
+		while (true) {
+			LinkList lock = Js5NetThread.requestQueue;
 
-				int option = -1;
-				for (int i = 0; i < menuNumEntries; i++) {
-					int height = (menuNumEntries - 1 - i) * 15 + y + 31;
-					if (clickX > x && clickX < x + width && clickY > height - 13 && clickY < height + 3) {
-						option = i;
-					}
-				}
-
-				if (option != -1) {
-					doAction(option);
-				}
-
-				isMenuOpen = false;
-				dirtyArea(menuX, menuY, menuWidth, menuHeight);
-			} else {
-				int x = ClientMouseListener.mouseX;
-				int y = ClientMouseListener.mouseY;
-
-				if (x < menuX - 10 || x > menuWidth + menuX + 10 || y < menuY - 10 || y > menuY + menuHeight + 10) {
-					isMenuOpen = false;
-					dirtyArea(menuX, menuY, menuWidth, menuHeight);
-				}
+			Js5WorkerRequest req;
+			synchronized (lock) {
+				req = (Js5WorkerRequest) Js5NetThread.completed.popFront();
 			}
-		} else {
-			if (button == 1 && menuNumEntries > 0) {
-				int action = menuAction[menuNumEntries - 1];
-
-				if (action == 39 || action == 40 || action == 41 || action == 42 || action == 43 || action == 33 || action == 34 || action == 35 || action == 36 || action == 37 || action == 38 || action == 1005) {
-					int slot = menuParamB[menuNumEntries - 1];
-					int comId = menuParamC[menuNumEntries - 1];
-
-					IfType com = IfType.get(comId);
-					if (ServerActive.isObjSwapEnabled(getActive(com)) || ServerActive.isObjReplaceEnabled(getActive(com))) {
-						objGrabThreshold = false;
-						objDragCycles = 0;
-
-						if (objDragInterface != null) {
-							componentUpdated(objDragInterface);
-						}
-
-						objDragInterface = IfType.get(comId);
-						objDragSlot = slot;
-						objGrabX = ClientMouseListener.mouseClickX;
-						objGrabY = ClientMouseListener.mouseClickY;
-
-						componentUpdated(objDragInterface);
-						return;
-					}
-				}
+			if (req == null) {
+				return;
 			}
 
-			if (button == 1 && (oneMouseButton == 1 && menuNumEntries > 2 || isAddFriendOption(menuNumEntries - 1))) {
-				button = 2;
+			req.field1773.loadIndex(req.fs, (int) req.key, req.data, false);
+		}
+	}
+
+	@ObfuscatedName("da.dj(I)V")
+	public static void doAudio() {
+		if (soundPcmPlayer != null) {
+			soundPcmPlayer.cycle();
+		}
+		if (midiPcmPlayer != null) {
+			midiPcmPlayer.cycle();
+		}
+	}
+
+	// jag::oldscape::Client::TriggerSeqSound
+	@ObfuscatedName("de.dv(Leo;IIII)V")
+	public static void triggerSeqSound(SeqType arg0, int arg1, int arg2, int arg3) {
+		if (waveCount >= 50 || ambientVolume == 0 || (arg0.sound == null || arg1 >= arg0.sound.length)) {
+			return;
+		}
+
+		int var4 = arg0.sound[arg1];
+		if (var4 == 0) {
+			return;
+		}
+
+		int var5 = var4 >> 8;
+		int var6 = var4 >> 4 & 0x7;
+		int var7 = var4 & 0xF;
+
+		waveSoundIds[waveCount] = var5;
+		waveLoops[waveCount] = var6;
+		waveDelay[waveCount] = 0;
+		waveSounds[waveCount] = null;
+
+		int var8 = (arg2 - 64) / 128;
+		int var9 = (arg3 - 64) / 128;
+		waveAmbient[waveCount] = (var8 << 16) + (var9 << 8) + var7;
+
+		waveCount++;
+	}
+
+	// jag::oldscape::Client::PlaySongs
+	@ObfuscatedName("ck.ds(IB)V")
+	public static void playSongs(int id) {
+		if (id == -1 && !playingJingle) {
+			MidiManager.stop();
+		} else if (id != -1 && previousSong != id && midiVolume != 0 && !playingJingle) {
+			MidiManager.swapSongs(2, songs, id, 0, midiVolume, false);
+		}
+
+		previousSong = id;
+	}
+
+	// jag::oldscape::Client::PlayJingle
+	// placement relative to other clients
+	public static void playJingle(int var113, int var114) {
+		if (midiVolume == 0 || var113 == -1) {
+			return;
+		}
+
+		MidiManager.play(jingles, var113, 0, midiVolume, false);
+		playingJingle = true;
+	}
+
+	// jag::oldscape::Client::PlaySynth
+	// guessing placement
+	public static void playSynth(int sound, int loops, int delay) {
+		if (waveVolume == 0 || loops == 0 || waveCount >= 50) {
+			return;
+		}
+
+		waveSoundIds[waveCount] = sound;
+		waveLoops[waveCount] = loops;
+		waveDelay[waveCount] = delay;
+		waveSounds[waveCount] = null;
+		waveAmbient[waveCount] = 0;
+		waveCount++;
+	}
+
+	// jag::oldscape::minimap::Minimap::GlMinimap
+	@ObfuscatedName("p.dh(III)V")
+	public static void minimapLoop(int offsetX, int offsetY) {
+		if (minimapState != 0 && minimapState != 3) {
+			return;
+		}
+
+		if (ClientMouseListener.mouseClickButton == 1) {
+			int x = ClientMouseListener.mouseClickX - 25 - offsetX;
+			int y = ClientMouseListener.mouseClickY - 5 - offsetY;
+
+			if (x < 0 || y < 0 || x >= 146 || y >= 151) {
+				return;
 			}
 
-			if (button == 1 && menuNumEntries > 0) {
-				doAction(menuNumEntries - 1);
-			} else if (button == 2 && menuNumEntries > 0) {
-				openMenu();
+			// make x and y relative to center of minimap
+			x -= 73;
+			y -= 75;
+
+			int yaw = orbitCameraYaw + macroMinimapAngle & 0x7FF;
+
+			int sinYaw = Pix3D.sinTable[yaw];
+			int cosYaw = Pix3D.cosTable[yaw];
+
+			int zoomX = (macroMinimapZoom + 256) * sinYaw >> 8;
+			int zoomY = (macroMinimapZoom + 256) * cosYaw >> 8;
+
+			int relX = x * zoomY + y * zoomX >> 11;
+			int relY = y * zoomY - x * zoomX >> 11;
+
+			int tileX = localPlayer.x + relX >> 7;
+			int tileZ = localPlayer.z - relY >> 7;
+
+			boolean moved = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], tileX, tileZ, true, 0, 0, 0, 0, 0, 1);
+			if (moved) {
+				// identical all the way back to 2004 - same constants and all!
+				out.p1(x);
+				out.p1(y);
+				out.p2(orbitCameraYaw);
+				out.p1(57);
+				out.p1(macroMinimapAngle);
+				out.p1(macroMinimapZoom);
+				out.p1(89);
+				out.p2(localPlayer.x);
+				out.p2(localPlayer.z);
+				out.p1(tryMoveNearest);
+				out.p1(63);
 			}
 		}
 	}
 
+	// jag::oldscape::Client::GlTimeoutChat
+	@ObfuscatedName("dm.dc(B)V")
+	public static void timeoutChat() {
+		for (int var0 = -1; var0 < playerCount; var0++) {
+			int var1;
+			if (var0 == -1) {
+				var1 = 2047;
+			} else {
+				var1 = playerIds[var0];
+			}
+			ClientPlayer var2 = players[var1];
+			if (var2 != null && var2.chatTimer > 0) {
+				var2.chatTimer--;
+				if (var2.chatTimer == 0) {
+					var2.chat = null;
+				}
+			}
+		}
+		for (int var3 = 0; var3 < npcCount; var3++) {
+			int var4 = npcIds[var3];
+			ClientNpc var5 = npcs[var4];
+			if (var5 != null && var5.chatTimer > 0) {
+				var5.chatTimer--;
+				if (var5.chatTimer == 0) {
+					var5.chat = null;
+				}
+			}
+		}
+	}
+
+	// jag::oldscape::Client::DoCheat
+	@ObfuscatedName("eh.dp(Ljava/lang/String;S)V")
+	public static void doCheat(String message) {
+		if (staffmodlevel >= 2) {
+			if (message.equalsIgnoreCase("::gc")) {
+				System.gc();
+			} else if (message.equalsIgnoreCase("::clientdrop")) {
+				lostCon();
+			} else if (message.equalsIgnoreCase("::fpson")) {
+				showFps = true;
+			} else if (message.equalsIgnoreCase("::fpsoff")) {
+				showFps = false;
+			} else if (message.equalsIgnoreCase("::noclip")) {
+				for (int level = 0; level < 4; level++) {
+					for (int x = 1; x < 103; x++) {
+						for (int z = 1; z < 103; z++) {
+							levelCollisionMap[level].flags[x][z] = 0;
+						}
+					}
+				}
+			} else if (message.equalsIgnoreCase("::errortest") && modewhere == 2) {
+				throw new RuntimeException();
+			}
+		}
+
+		// CLIENT_CHEAT
+		out.p1Enc(30);
+		out.p1(message.length() - 1);
+		out.pjstr(message.substring(2));
+	}
+
 	// jag::oldscape::Client::GlFollowCamera
+	// guessing placement
 	public static void followCamera() {
 		int var493 = macroCameraX + localPlayer.x;
 		int var494 = macroCameraZ + localPlayer.z;
@@ -11344,6 +4920,783 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::GlCinemaCamera
+	@ObfuscatedName("ez.dm(B)V")
+	public static void cinemaCamera() {
+		int var0 = cutsceneSrcLocalTileX * 128 + 64;
+		int var1 = cutsceneSrcLocalTileZ * 128 + 64;
+		int var2 = getAvH(var0, var1, minusedlevel) - cutsceneSrcHeight;
+		if (camX < var0) {
+			camX += cutsceneMoveAcceleration * (var0 - camX) / 1000 + cutsceneMoveSpeed;
+			if (camX > var0) {
+				camX = var0;
+			}
+		}
+		if (camX > var0) {
+			camX -= cutsceneMoveAcceleration * (camX - var0) / 1000 + cutsceneMoveSpeed;
+			if (camX < var0) {
+				camX = var0;
+			}
+		}
+		if (camY < var2) {
+			camY += cutsceneMoveAcceleration * (var2 - camY) / 1000 + cutsceneMoveSpeed;
+			if (camY > var2) {
+				camY = var2;
+			}
+		}
+		if (camY > var2) {
+			camY -= cutsceneMoveAcceleration * (camY - var2) / 1000 + cutsceneMoveSpeed;
+			if (camY < var2) {
+				camY = var2;
+			}
+		}
+		if (camZ < var1) {
+			camZ += cutsceneMoveAcceleration * (var1 - camZ) / 1000 + cutsceneMoveSpeed;
+			if (camZ > var1) {
+				camZ = var1;
+			}
+		}
+		if (camZ > var1) {
+			camZ -= cutsceneMoveAcceleration * (camZ - var1) / 1000 + cutsceneMoveSpeed;
+			if (camZ < var1) {
+				camZ = var1;
+			}
+		}
+		int var3 = cutsceneDstLocalTileX * 128 + 64;
+		int var4 = cutsceneDstLocalTileZ * 128 + 64;
+		int var5 = getAvH(var3, var4, minusedlevel) - cutsceneDstHeight;
+		int var6 = var3 - camX;
+		int var7 = var5 - camY;
+		int var8 = var4 - camZ;
+		int var9 = (int) Math.sqrt((double) (var6 * var6 + var8 * var8));
+		int var10 = (int) (Math.atan2((double) var7, (double) var9) * 325.949D) & 0x7FF;
+		int var11 = (int) (Math.atan2((double) var6, (double) var8) * -325.949D) & 0x7FF;
+		if (var10 < 128) {
+			var10 = 128;
+		}
+		if (var10 > 383) {
+			var10 = 383;
+		}
+		if (camPitch < var10) {
+			camPitch += cutsceneRotateAcceleration * (var10 - camPitch) / 1000 + cutsceneRotateSpeed;
+			if (camPitch > var10) {
+				camPitch = var10;
+			}
+		}
+		if (camPitch > var10) {
+			camPitch -= cutsceneRotateAcceleration * (camPitch - var10) / 1000 + cutsceneRotateSpeed;
+			if (camPitch < var10) {
+				camPitch = var10;
+			}
+		}
+		int var12 = var11 - camYaw;
+		if (var12 > 1024) {
+			var12 -= 2048;
+		}
+		if (var12 < -1024) {
+			var12 += 2048;
+		}
+		if (var12 > 0) {
+			camYaw += cutsceneRotateAcceleration * var12 / 1000 + cutsceneRotateSpeed;
+			camYaw &= 0x7FF;
+		}
+		if (var12 < 0) {
+			camYaw -= cutsceneRotateAcceleration * -var12 / 1000 + cutsceneRotateSpeed;
+			camYaw &= 0x7FF;
+		}
+		int var13 = var11 - camYaw;
+		if (var13 > 1024) {
+			var13 -= 2048;
+		}
+		if (var13 < -1024) {
+			var13 += 2048;
+		}
+		if (var13 < 0 && var12 > 0 || var13 > 0 && var12 < 0) {
+			camYaw = var11;
+		}
+	}
+
+	// jag::oldscape::Client::GlCheckMinimap
+	// guessing placement
+	public static void checkMinimap() {
+		if (lowMemory && sceneState != minusedlevel) {
+			startRebuild(mapBuildCenterZoneX, mapBuildCenterZoneZ, minusedlevel, localPlayer.routeX[0], localPlayer.routeZ[0]);
+			return;
+		}
+
+		if (minimapLevel != minusedlevel) {
+			minimapLevel = minusedlevel;
+
+			// todo: minimapBuildBuffer inlined:
+			int var402 = minusedlevel;
+			int[] var403 = minimap.data;
+			int var404 = var403.length;
+			for (int var405 = 0; var405 < var404; var405++) {
+				var403[var405] = 0;
+			}
+			int var406 = 1;
+			while (true) {
+				if (var406 >= 103) {
+					int var409 = ((int) (Math.random() * 20.0D) + 238 - 10 << 16) + ((int) (Math.random() * 20.0D) + 238 - 10 << 8) + ((int) (Math.random() * 20.0D) + 238 - 10);
+					int var410 = (int) (Math.random() * 20.0D) + 238 - 10 << 16;
+					minimap.setPixels();
+					for (int var411 = 1; var411 < 103; var411++) {
+						for (int var412 = 1; var412 < 103; var412++) {
+							if ((ClientBuild.mapl[var402][var412][var411] & 0x18) == 0) {
+								drawDetail(var402, var412, var411, var409, var410);
+							}
+							if (var402 < 3 && (ClientBuild.mapl[var402 + 1][var412][var411] & 0x8) != 0) {
+								drawDetail(var402 + 1, var412, var411, var409, var410);
+							}
+						}
+					}
+					activeMapFunctionCount = 0;
+					for (int var413 = 0; var413 < 104; var413++) {
+						for (int var414 = 0; var414 < 104; var414++) {
+							int var415 = world.gdType(minusedlevel, var413, var414);
+							if (var415 == 0) {
+								continue;
+							}
+							int var416 = var415 >> 14 & 0x7FFF;
+							int var417 = LocType.list(var416).mapfunction;
+							if (var417 < 0) {
+								continue;
+							}
+							int var418 = var413;
+							int var419 = var414;
+							if (var417 != 22 && var417 != 29 && var417 != 34 && var417 != 36 && var417 != 46 && var417 != 47 && var417 != 48) {
+								int[][] var420 = levelCollisionMap[minusedlevel].flags;
+								for (int var421 = 0; var421 < 10; var421++) {
+									int var422 = (int) (Math.random() * 4.0D);
+									if (var422 == 0 && var418 > 0 && var418 > var413 - 3 && (var420[var418 - 1][var419] & 0x12C0108) == 0) {
+										var418--;
+									}
+									if (var422 == 1 && var418 < 103 && var418 < var413 + 3 && (var420[var418 + 1][var419] & 0x12C0180) == 0) {
+										var418++;
+									}
+									if (var422 == 2 && var419 > 0 && var419 > var414 - 3 && (var420[var418][var419 - 1] & 0x12C0102) == 0) {
+										var419--;
+									}
+									if (var422 == 3 && var419 < 103 && var419 < var414 + 3 && (var420[var418][var419 + 1] & 0x12C0120) == 0) {
+										var419++;
+									}
+								}
+							}
+							activeMapFunctions[activeMapFunctionCount] = mapfunction[var417];
+							activeMapFunctionX[activeMapFunctionCount] = var418;
+							activeMapFunctionZ[activeMapFunctionCount] = var419;
+							activeMapFunctionCount++;
+						}
+					}
+					GameShell.drawArea.bind();
+					break;
+				}
+				int var407 = (103 - var406) * 2048 + 24628;
+				for (int var408 = 1; var408 < 103; var408++) {
+					if ((ClientBuild.mapl[var402][var408][var406] & 0x18) == 0) {
+						world.render2DGround(var403, var407, 512, var402, var408, var406);
+					}
+					if (var402 < 3 && (ClientBuild.mapl[var402 + 1][var408][var406] & 0x8) != 0) {
+						world.render2DGround(var403, var407, 512, var402 + 1, var408, var406);
+					}
+					var407 += 4;
+				}
+				var406++;
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GlDoSoundsQueue
+	// guessing placement
+	public static void soundsDoQueue() {
+		for (int i = 0; i < waveCount; i++) {
+			waveDelay[i]--;
+
+			if (waveDelay[i] >= -10) {
+				JagFx sound = waveSounds[i];
+
+				if (sound == null) {
+					sound = JagFx.load(jagFX, waveSoundIds[i], 0);
+					if (sound == null) {
+						continue;
+					}
+
+					waveDelay[i] += sound.optimiseStart();
+					waveSounds[i] = sound;
+				}
+
+				if (waveDelay[i] < 0) {
+					int finalVolume;
+					if (waveAmbient[i] != 0) {
+						// jag::oldscape::Client::GetFinalAmbientVolume
+						int var427 = (waveAmbient[i] & 0xFF) * 128;
+
+						int var428 = waveAmbient[i] >> 16 & 0xFF;
+						int var429 = var428 * 128 + 64 - localPlayer.x;
+						if (var429 < 0) {
+							var429 = -var429;
+						}
+
+						int var430 = waveAmbient[i] >> 8 & 0xFF;
+						int var431 = var430 * 128 + 64 - localPlayer.z;
+						if (var431 < 0) {
+							var431 = -var431;
+						}
+
+						int var432 = var429 + var431 - 128;
+						if (var432 > var427) {
+							waveDelay[i] = -100;
+							continue;
+						}
+
+						if (var432 < 0) {
+							var432 = 0;
+						}
+
+						finalVolume = ambientVolume * (var427 - var432) / var427;
+					} else {
+						// jag::oldscape::Client::GetFinalWaveVolume
+						finalVolume = waveVolume;
+					}
+
+					if (finalVolume > 0) {
+						Wave wave = sound.toWave().decimate(soundDecimator);
+						WaveStream stream = WaveStream.newRatePercent(wave, 100, finalVolume);
+						stream.setLoopCount(waveLoops[i] - 1);
+						soundMixer.playStream(stream);
+					}
+
+					waveDelay[i] = -100;
+				}
+			} else {
+				waveCount--;
+
+				for (int j = i; j < waveCount; j++) {
+					waveSoundIds[j] = waveSoundIds[j + 1];
+					waveSounds[j] = waveSounds[j + 1];
+					waveLoops[j] = waveLoops[j + 1];
+					waveDelay[j] = waveDelay[j + 1];
+					waveAmbient[j] = waveAmbient[j + 1];
+				}
+
+				i--;
+			}
+		}
+
+		if (playingJingle && !MidiManager.isInitialised()) {
+			if (midiVolume != 0 && previousSong != -1) {
+				MidiManager.play(songs, previousSong, 0, midiVolume, false);
+			}
+
+			playingJingle = false;
+		}
+	}
+
+	// jag::oldscape::Client::GlMovePlayers
+	@ObfuscatedName("eg.di(B)V")
+	public static void movePlayers() {
+		for (int var0 = -1; var0 < playerCount; var0++) {
+			int var1;
+			if (var0 == -1) {
+				var1 = 2047;
+			} else {
+				var1 = playerIds[var0];
+			}
+			ClientPlayer var2 = players[var1];
+			if (var2 != null) {
+				moveEntity(var2, 1);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GlMoveNpcs
+	@ObfuscatedName("l.db(I)V")
+	public static void moveNpcs() {
+		for (int var0 = 0; var0 < npcCount; var0++) {
+			int var1 = npcIds[var0];
+			ClientNpc var2 = npcs[var1];
+			if (var2 != null) {
+				moveEntity(var2, var2.type.size);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GlMoveEntity
+	@ObfuscatedName("be.dq(Lfz;IB)V")
+	public static void moveEntity(ClientEntity entity, int size) {
+		if (entity.exactMoveEnd > loopCycle) {
+			// todo: inlined method (exactMove1?)
+			int var2 = entity.exactMoveEnd - loopCycle;
+			int var3 = entity.size * 64 + entity.exactStartX * 128;
+			int var4 = entity.size * 64 + entity.exactStartZ * 128;
+			entity.x += (var3 - entity.x) / var2;
+			entity.z += (var4 - entity.z) / var2;
+			entity.animDelayMove = 0;
+			if (entity.exactMoveFacing == 0) {
+				entity.dstYaw = 1024;
+			}
+			if (entity.exactMoveFacing == 1) {
+				entity.dstYaw = 1536;
+			}
+			if (entity.exactMoveFacing == 2) {
+				entity.dstYaw = 0;
+			}
+			if (entity.exactMoveFacing == 3) {
+				entity.dstYaw = 512;
+			}
+		} else if (entity.exactMoveStart >= loopCycle) {
+			exactMove2(entity);
+		} else {
+			routeMove(entity);
+		}
+
+		if (entity.x < 128 || entity.z < 128 || entity.x >= 13184 || entity.z >= 13184) {
+			entity.primarySeqId = -1;
+			entity.spotanimId = -1;
+			entity.exactMoveEnd = 0;
+			entity.exactMoveStart = 0;
+			entity.x = entity.routeX[0] * 128 + entity.size * 64;
+			entity.z = entity.routeZ[0] * 128 + entity.size * 64;
+			entity.abortRoute();
+		}
+
+		if (localPlayer == entity && (entity.x < 1536 || entity.z < 1536 || entity.x >= 11776 || entity.z >= 11776)) {
+			entity.primarySeqId = -1;
+			entity.spotanimId = -1;
+			entity.exactMoveEnd = 0;
+			entity.exactMoveStart = 0;
+			entity.x = entity.routeX[0] * 128 + entity.size * 64;
+			entity.z = entity.routeZ[0] * 128 + entity.size * 64;
+			entity.abortRoute();
+		}
+
+		entityFace(entity);
+		entityAnim(entity);
+	}
+
+	// jag::oldscape::Client::GlExactMove2
+	@ObfuscatedName("ap.dr(Lfz;I)V")
+	public static void exactMove2(ClientEntity entity) {
+		if (loopCycle == entity.exactMoveStart || entity.primarySeqId == -1 || entity.primarySeqDelay != 0 || entity.primarySeqCycle + 1 > SeqType.list(entity.primarySeqId).delay[entity.primarySeqFrame]) {
+			int var1 = entity.exactMoveStart - entity.exactMoveEnd;
+			int var2 = loopCycle - entity.exactMoveEnd;
+			int var3 = (entity.size * 64) + (entity.exactStartX * 128);
+			int var4 = (entity.size * 64) + (entity.exactStartZ * 128);
+			int var5 = (entity.size * 64) + (entity.exactEndX * 128);
+			int var6 = (entity.size * 64) + (entity.exactEndZ * 128);
+			entity.x = ((var1 - var2) * var3 + var2 * var5) / var1;
+			entity.z = ((var1 - var2) * var4 + var2 * var6) / var1;
+		}
+		entity.animDelayMove = 0;
+		if (entity.exactMoveFacing == 0) {
+			entity.dstYaw = 1024;
+		}
+		if (entity.exactMoveFacing == 1) {
+			entity.dstYaw = 1536;
+		}
+		if (entity.exactMoveFacing == 2) {
+			entity.dstYaw = 0;
+		}
+		if (entity.exactMoveFacing == 3) {
+			entity.dstYaw = 512;
+		}
+		entity.yaw = entity.dstYaw;
+	}
+
+	// jag::oldscape::Client::GlRouteMove
+	@ObfuscatedName("eu.du(Lfz;B)V")
+	public static void routeMove(ClientEntity entity) {
+		entity.secondarySeqId = entity.readyanim;
+		if (entity.routeLength == 0) {
+			entity.animDelayMove = 0;
+			return;
+		}
+
+		if (entity.primarySeqId != -1 && entity.primarySeqDelay == 0) {
+			SeqType seq = SeqType.list(entity.primarySeqId);
+
+			if (entity.preanimRouteLength > 0 && seq.preanim_move == 0) {
+				entity.animDelayMove++;
+				return;
+			}
+
+			if (entity.preanimRouteLength <= 0 && seq.postanim_move == 0) {
+				entity.animDelayMove++;
+				return;
+			}
+		}
+
+		int var2 = entity.x;
+		int var3 = entity.z;
+		int var4 = (entity.routeX[entity.routeLength - 1] * 128) + (entity.size * 64);
+		int var5 = (entity.routeZ[entity.routeLength - 1] * 128) + (entity.size * 64);
+
+		if (var4 - var2 > 256 || var4 - var2 < -256 || var5 - var3 > 256 || var5 - var3 < -256) {
+			entity.x = var4;
+			entity.z = var5;
+			return;
+		}
+
+		if (var2 < var4) {
+			if (var3 < var5) {
+				entity.dstYaw = 1280;
+			} else if (var3 > var5) {
+				entity.dstYaw = 1792;
+			} else {
+				entity.dstYaw = 1536;
+			}
+		} else if (var2 > var4) {
+			if (var3 < var5) {
+				entity.dstYaw = 768;
+			} else if (var3 > var5) {
+				entity.dstYaw = 256;
+			} else {
+				entity.dstYaw = 512;
+			}
+		} else if (var3 < var5) {
+			entity.dstYaw = 1024;
+		} else if (var3 > var5) {
+			entity.dstYaw = 0;
+		}
+
+		int var6 = entity.dstYaw - entity.yaw & 0x7FF;
+		if (var6 > 1024) {
+			var6 -= 2048;
+		}
+
+		int var7 = entity.walkanim_b;
+		if (var6 >= -256 && var6 <= 256) {
+			var7 = entity.walkanim;
+		} else if (var6 >= 256 && var6 < 768) {
+			var7 = entity.walkanim_r;
+		} else if (var6 >= -768 && var6 <= -256) {
+			var7 = entity.walkanim_l;
+		}
+		if (var7 == -1) {
+			var7 = entity.walkanim;
+		}
+		entity.secondarySeqId = var7;
+
+		int var8 = 4;
+		boolean var9 = true;
+		if (entity instanceof ClientNpc) {
+			var9 = ((ClientNpc) entity).type.walksmoothing;
+		}
+
+		if (var9) {
+			if (entity.yaw != entity.dstYaw && entity.targetId == -1 && entity.turnSpeed != 0) {
+				var8 = 2;
+			}
+			if (entity.routeLength > 2) {
+				var8 = 6;
+			}
+			if (entity.routeLength > 3) {
+				var8 = 8;
+			}
+			if (entity.animDelayMove > 0 && entity.routeLength > 1) {
+				var8 = 8;
+				entity.animDelayMove--;
+			}
+		} else {
+			if (entity.routeLength > 1) {
+				var8 = 6;
+			}
+			if (entity.routeLength > 2) {
+				var8 = 8;
+			}
+			if (entity.animDelayMove > 0 && entity.routeLength > 1) {
+				var8 = 8;
+				entity.animDelayMove--;
+			}
+		}
+		if (entity.routeRun[entity.routeLength - 1]) {
+			var8 <<= 0x1;
+		}
+
+		if (var8 >= 8 && entity.secondarySeqId == entity.walkanim && entity.runanim != -1) {
+			entity.secondarySeqId = entity.runanim;
+		}
+
+		if (var2 < var4) {
+			entity.x += var8;
+			if (entity.x > var4) {
+				entity.x = var4;
+			}
+		} else if (var2 > var4) {
+			entity.x -= var8;
+			if (entity.x < var4) {
+				entity.x = var4;
+			}
+		}
+
+		if (var3 < var5) {
+			entity.z += var8;
+			if (entity.z > var5) {
+				entity.z = var5;
+			}
+		} else if (var3 > var5) {
+			entity.z -= var8;
+			if (entity.z < var5) {
+				entity.z = var5;
+			}
+		}
+
+		if (entity.x == var4 && entity.z == var5) {
+			entity.routeLength--;
+			if (entity.preanimRouteLength > 0) {
+				entity.preanimRouteLength--;
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GlEntityFace
+	@ObfuscatedName("dk.dy(Lfz;I)V")
+	public static void entityFace(ClientEntity entity) {
+		if (entity.turnSpeed == 0) {
+			return;
+		}
+
+		if (entity.targetId != -1 && entity.targetId < 32768) {
+			ClientNpc var1 = npcs[entity.targetId];
+			if (var1 != null) {
+				int var2 = entity.x - var1.x;
+				int var3 = entity.z - var1.z;
+				if (var2 != 0 || var3 != 0) {
+					entity.dstYaw = (int) (Math.atan2(var2, var3) * 325.949D) & 0x7FF;
+				}
+			}
+		}
+
+		if (entity.targetId >= 32768) {
+			int var4 = entity.targetId - 32768;
+			if (selfSlot == var4) {
+				var4 = 2047; // todo: LOCAL_PLAYER_INDEX constant
+			}
+
+			ClientPlayer var5 = players[var4];
+			if (var5 != null) {
+				int var6 = entity.x - var5.x;
+				int var7 = entity.z - var5.z;
+				if (var6 != 0 || var7 != 0) {
+					entity.dstYaw = (int) (Math.atan2(var6, var7) * 325.949D) & 0x7FF;
+				}
+			}
+		}
+
+		if ((entity.targetTileX != 0 || entity.targetTileZ != 0) && (entity.routeLength == 0 || entity.animDelayMove > 0)) {
+			int var8 = entity.x - ((entity.targetTileX * 64) - (mapBuildBaseX * 64) - (mapBuildBaseX * 64));
+			int var9 = entity.z - ((entity.targetTileZ * 64) - (mapBuildBaseZ * 64) - (mapBuildBaseZ * 64));
+			if (var8 != 0 || var9 != 0) {
+				entity.dstYaw = (int) (Math.atan2(var8, var9) * 325.949D) & 0x7FF;
+			}
+			entity.targetTileX = 0;
+			entity.targetTileZ = 0;
+		}
+
+		int var10 = entity.dstYaw - entity.yaw & 0x7FF;
+		if (var10 == 0) {
+			entity.turnCycle = 0;
+			return;
+		}
+
+		entity.turnCycle++;
+
+		if (var10 > 1024) {
+			entity.yaw -= entity.turnSpeed;
+
+			boolean var11 = true;
+			if (var10 < entity.turnSpeed || var10 > 2048 - entity.turnSpeed) {
+				entity.yaw = entity.dstYaw;
+				var11 = false;
+			}
+
+			if (entity.secondarySeqId == entity.readyanim && (entity.turnCycle > 25 || var11)) {
+				if (entity.turnleftanim == -1) {
+					entity.secondarySeqId = entity.walkanim;
+				} else {
+					entity.secondarySeqId = entity.turnleftanim;
+				}
+			}
+		} else {
+			entity.yaw += entity.turnSpeed;
+
+			boolean var12 = true;
+			if (var10 < entity.turnSpeed || var10 > 2048 - entity.turnSpeed) {
+				entity.yaw = entity.dstYaw;
+				var12 = false;
+			}
+
+			if (entity.secondarySeqId == entity.readyanim && (entity.turnCycle > 25 || var12)) {
+				if (entity.turnrightanim == -1) {
+					entity.secondarySeqId = entity.walkanim;
+				} else {
+					entity.secondarySeqId = entity.turnrightanim;
+				}
+			}
+		}
+
+		entity.yaw &= 0x7FF;
+	}
+
+	// jag::oldscape::Client::GlEntityAnim
+	@ObfuscatedName("p.de(Lfz;I)V")
+	public static void entityAnim(ClientEntity entity) {
+		entity.needsForwardDrawPadding = false;
+
+		if (entity.secondarySeqId != -1) {
+			SeqType var1 = SeqType.list(entity.secondarySeqId);
+			if (var1 == null || var1.frames == null) {
+				entity.secondarySeqId = -1;
+			} else {
+				entity.secondarySeqCycle++;
+
+				if (entity.secondarySeqFrame < var1.frames.length && entity.secondarySeqCycle > var1.delay[entity.secondarySeqFrame]) {
+					entity.secondarySeqCycle = 1;
+					entity.secondarySeqFrame++;
+					triggerSeqSound(var1, entity.secondarySeqFrame, entity.x, entity.z);
+				}
+
+				if (entity.secondarySeqFrame >= var1.frames.length) {
+					entity.secondarySeqCycle = 0;
+					entity.secondarySeqFrame = 0;
+					triggerSeqSound(var1, entity.secondarySeqFrame, entity.x, entity.z);
+				}
+			}
+		}
+
+		if (entity.spotanimId != -1 && loopCycle >= entity.spotanimLastCycle) {
+			if (entity.spotanimFrame < 0) {
+				entity.spotanimFrame = 0;
+			}
+
+			int spotAnim = SpotType.list(entity.spotanimId).anim;
+			if (spotAnim == -1) {
+				entity.spotanimId = -1;
+			} else {
+				SeqType spotSeq = SeqType.list(spotAnim);
+				if (spotSeq == null || spotSeq.frames == null) {
+					entity.spotanimId = -1;
+				} else {
+					entity.spotanimCycle++;
+
+					if (entity.spotanimFrame < spotSeq.frames.length && entity.spotanimCycle > spotSeq.delay[entity.spotanimFrame]) {
+						entity.spotanimCycle = 1;
+						entity.spotanimFrame++;
+						triggerSeqSound(spotSeq, entity.spotanimFrame, entity.x, entity.z);
+					}
+
+					if (entity.spotanimFrame >= spotSeq.frames.length && (entity.spotanimFrame < 0 || entity.spotanimFrame >= spotSeq.frames.length)) {
+						entity.spotanimId = -1;
+					}
+				}
+			}
+		}
+
+		if (entity.primarySeqId != -1 && entity.primarySeqDelay <= 1) {
+			SeqType seq = SeqType.list(entity.primarySeqId);
+			if (seq.preanim_move == 1 && entity.preanimRouteLength > 0 && entity.exactMoveEnd <= loopCycle && entity.exactMoveStart < loopCycle) {
+				entity.primarySeqDelay = 1;
+				return;
+			}
+		}
+
+		if (entity.primarySeqId != -1 && entity.primarySeqDelay == 0) {
+			SeqType seq = SeqType.list(entity.primarySeqId);
+			if (seq == null || seq.frames == null) {
+				entity.primarySeqId = -1;
+			} else {
+				entity.primarySeqCycle++;
+
+				if (entity.primarySeqFrame < seq.frames.length && entity.primarySeqCycle > seq.delay[entity.primarySeqFrame]) {
+					entity.primarySeqCycle = 1;
+					entity.primarySeqFrame++;
+					triggerSeqSound(seq, entity.primarySeqFrame, entity.x, entity.z);
+				}
+
+				if (entity.primarySeqFrame >= seq.frames.length) {
+					entity.primarySeqFrame -= seq.loops;
+					entity.primarySeqLoop++;
+
+					if (entity.primarySeqLoop >= seq.maxloops) {
+						entity.primarySeqId = -1;
+					} else if (entity.primarySeqFrame < 0 || entity.primarySeqFrame >= seq.frames.length) {
+						entity.primarySeqId = -1;
+					} else {
+						triggerSeqSound(seq, entity.primarySeqFrame, entity.x, entity.z);
+					}
+				}
+
+				entity.needsForwardDrawPadding = seq.stretches;
+			}
+		}
+
+		if (entity.primarySeqDelay > 0) {
+			entity.primarySeqDelay--;
+		}
+	}
+
+	// jag::oldscape::Client::TriggerPlayerAnim
+	@ObfuscatedName("co.dw(Lfi;III)V")
+	public static void triggerPlayerAnim(ClientPlayer arg0, int arg1, int arg2) {
+		if (arg0.primarySeqId == arg1 && arg1 != -1) {
+			int var3 = SeqType.list(arg1).duplicatebehavior;
+			if (var3 == 1) {
+				arg0.primarySeqFrame = 0;
+				arg0.primarySeqCycle = 0;
+				arg0.primarySeqDelay = arg2;
+				arg0.primarySeqLoop = 0;
+			}
+
+			if (var3 == 2) {
+				arg0.primarySeqLoop = 0;
+			}
+		} else if (arg1 == -1 || arg0.primarySeqId == -1 || SeqType.list(arg1).priority >= SeqType.list(arg0.primarySeqId).priority) {
+			arg0.primarySeqId = arg1;
+			arg0.primarySeqFrame = 0;
+			arg0.primarySeqCycle = 0;
+			arg0.primarySeqDelay = arg2;
+			arg0.primarySeqLoop = 0;
+			arg0.preanimRouteLength = arg0.routeLength;
+		}
+	}
+
+	// jag::oldscape::Client::MessageBox
+	@ObfuscatedName("ej.dl(Ljava/lang/String;ZI)V")
+	public static void messageBox(String arg0, boolean arg1) {
+		byte var2 = 4;
+		int var3 = var2 + 6;
+		int var4 = var2 + 6;
+		int var5 = p12.predictWidthMultiline(arg0, 250);
+		int var6 = p12.predictLinesMultiline(arg0, 250) * 13;
+
+		Pix2D.fillRect(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2, 0);
+		Pix2D.drawRect(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2, 0xffffff);
+		p12.drawStringMultiline(arg0, var3, var4, var5, var6, 0xffffff, -1, 1, 1, 0);
+		dirtyArea(var3 - var2, var4 - var2, var2 + var5 + var2, var2 + var6 + var2);
+
+		if (arg1) {
+			try {
+				Graphics var7 = GameShell.canvas.getGraphics();
+				GameShell.drawArea.draw(var7, 0, 0);
+			} catch (Exception var14) {
+				GameShell.canvas.repaint();
+			}
+			return;
+		}
+
+		// todo: inlined method (BlitArea?)
+		int var9 = var3;
+		int var10 = var4;
+		int var11 = var5;
+		int var12 = var6;
+		for (int var13 = 0; var13 < componentDrawCount; var13++) {
+			if (componentDrawWidth[var13] + componentDrawX[var13] > var9 && componentDrawX[var13] < var9 + var11 && componentDrawHeight[var13] + componentDrawY[var13] > var10 && componentDrawY[var13] < var10 + var12) {
+				componentRedrawRequested2[var13] = true;
+			}
+		}
+	}
+
+	// placement relative to other clients
 	public static void gameDrawMain(int var12, int var13, int var31, int var32) {
 		Pix2D.setClipping(var12, var13, var12 + var31, var13 + var32);
 		Pix3D.setRenderClipping();
@@ -11453,11 +5806,4080 @@ public class Client extends GameShell {
 		}
 
 		if (!js5Loading && !isMenuOpen && var72 >= var12 && var72 < var12 + var31 && var73 >= var13 && var73 < var13 + var32) {
-			imethod41(var12, var13, var72, var73);
+			minimenuBuildSceneActions(var12, var13, var72, var73);
+		}
+	}
+
+	// jag::oldscape::Client::GdmAddPlayerToWorld
+	@ObfuscatedName("dl.dn(ZI)V")
+	public static void addPlayers(boolean local) {
+		if (localPlayer.x >> 7 == minimapFlagX && localPlayer.z >> 7 == minimapFlagZ) {
+			minimapFlagX = 0;
+		}
+		int count = playerCount;
+		if (local) {
+			count = 1;
+		}
+		for (int i = 0; i < count; i++) {
+			ClientPlayer player;
+			int var4;
+			if (local) {
+				player = localPlayer;
+				var4 = 0x1ffc000; // todo: LOCAL_PLAYER_INDEX (2047) << 14
+			} else {
+				player = players[playerIds[i]];
+				var4 = playerIds[i] << 14;
+			}
+			if (player == null || !player.ready()) {
+				continue;
+			}
+			player.lowMemory = false;
+			if ((lowMemory && playerCount > 50 || playerCount > 200) && !local && player.secondarySeqId == player.readyanim) {
+				player.lowMemory = true;
+			}
+			int x = player.x >> 7;
+			int z = player.z >> 7;
+			if (x < 0 || x >= 104 || z < 0 || z >= 104) {
+				continue;
+			}
+			if (player.locModel == null || loopCycle < player.locStartCycle || loopCycle >= player.locEndCycle) {
+				if ((player.x & 0x7F) == 64 && (player.z & 0x7F) == 64) {
+					if (sceneCycle == tileLastOccupiedCycle[x][z]) {
+						continue;
+					}
+					tileLastOccupiedCycle[x][z] = sceneCycle;
+				}
+				player.y = getAvH(player.x, player.z, minusedlevel);
+				world.addDynamic(minusedlevel, player.x, player.z, player.y, 60, player, player.yaw, var4, player.needsForwardDrawPadding);
+			} else {
+				player.lowMemory = false;
+				player.y = getAvH(player.x, player.z, minusedlevel);
+				world.addDynamic(minusedlevel, player.x, player.z, player.y, 60, player, player.yaw, var4, player.minTileX, player.minTileZ, player.maxTileX, player.maxTileZ);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GdmAddNPCs
+	@ObfuscatedName("dw.do(ZB)V")
+	public static void addNpcs(boolean arg0) {
+		for (int var1 = 0; var1 < npcCount; var1++) {
+			ClientNpc var2 = npcs[npcIds[var1]];
+			int var3 = (npcIds[var1] << 14) + 0x20000000;
+			if (var2 == null || !var2.ready() || var2.type.alwaysontop != arg0 || !var2.type.isMultiNpcVisible()) {
+				continue;
+			}
+			int var4 = var2.x >> 7;
+			int var5 = var2.z >> 7;
+			if (var4 < 0 || var4 >= 104 || var5 < 0 || var5 >= 104) {
+				continue;
+			}
+			if (var2.size == 1 && (var2.x & 0x7F) == 64 && (var2.z & 0x7F) == 64) {
+				if (sceneCycle == tileLastOccupiedCycle[var4][var5]) {
+					continue;
+				}
+				tileLastOccupiedCycle[var4][var5] = sceneCycle;
+			}
+			if (!var2.type.active) {
+				var3 -= Integer.MIN_VALUE;
+			}
+			world.addDynamic(minusedlevel, var2.x, var2.z, getAvH(var2.x + (var2.size * 64 - 64), var2.z + (var2.size * 64 - 64), minusedlevel), var2.size * 64 - 64 + 60, var2, var2.yaw, var3, var2.needsForwardDrawPadding);
+		}
+	}
+
+	// jag::oldscape::Client::GdmAddProjectiles
+	@ObfuscatedName("r.dx(I)V")
+	public static void addProjectiles() {
+		for (ClientProj proj = (ClientProj) projectiles.head(); proj != null; proj = (ClientProj) projectiles.next()) {
+			if (minusedlevel != proj.level || loopCycle > proj.t2) {
+				proj.unlink();
+				continue;
+			}
+
+			if (loopCycle >= proj.t1) {
+				if (proj.target > 0) {
+					ClientNpc npc = npcs[proj.target - 1];
+
+					if (npc != null && npc.x >= 0 && npc.x < 13312 && npc.z >= 0 && npc.z < 13312) {
+						proj.setTarget(npc.x, npc.z, getAvH(npc.x, npc.z, proj.level) - proj.h2, loopCycle);
+					}
+				} else if (proj.target < 0) {
+					int pid = -proj.target - 1;
+
+					ClientPlayer player;
+					if (selfSlot == pid) {
+						player = localPlayer;
+					} else {
+						player = players[pid];
+					}
+
+					if (player != null && player.x >= 0 && player.x < 13312 && player.z >= 0 && player.z < 13312) {
+						proj.setTarget(player.x, player.z, getAvH(player.x, player.z, proj.level) - proj.h2, loopCycle);
+					}
+				}
+
+				proj.move(worldUpdateNum);
+				world.addDynamic(minusedlevel, (int) proj.x, (int) proj.z, (int) proj.y, 60, proj, proj.yaw, -1, false);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GdmAddMapAnim
+	@ObfuscatedName("bf.dt(I)V")
+	public static void addMapAnim() {
+		for (MapSpotAnim var0 = (MapSpotAnim) spotanims.head(); var0 != null; var0 = (MapSpotAnim) spotanims.next()) {
+			if (minusedlevel != var0.level || var0.animComplete) {
+				var0.unlink();
+			} else if (loopCycle >= var0.startCycle) {
+				var0.doAnim(worldUpdateNum);
+
+				if (var0.animComplete) {
+					var0.unlink();
+				} else {
+					world.addDynamic(var0.level, var0.x, var0.z, var0.y, 60, var0, 0, -1, false);
+				}
+			}
+		}
+	}
+
+	// jag::oldscape::Client::CamFollow
+	// guessing placement
+	public static void camFollow(int var33, int var34, int var35, int var36, int var37, int var38) {
+		int var39 = 2048 - var33 & 0x7FF;
+		int var40 = 2048 - var34 & 0x7FF;
+		int var41 = 0;
+		int var42 = 0;
+		int var43 = var38;
+		if (var39 != 0) {
+			int var44 = Pix3D.sinTable[var39];
+			int var45 = Pix3D.cosTable[var39];
+			int var46 = var42 * var45 - var38 * var44 >> 16;
+			var43 = var42 * var44 + var38 * var45 >> 16;
+			var42 = var46;
+		}
+		if (var40 != 0) {
+			int var47 = Pix3D.sinTable[var40];
+			int var48 = Pix3D.cosTable[var40];
+			int var49 = var41 * var48 + var43 * var47 >> 16;
+			var43 = var43 * var48 - var41 * var47 >> 16;
+			var41 = var49;
+		}
+		camX = var35 - var41;
+		camY = var36 - var42;
+		camZ = var37 - var43;
+		camPitch = var33;
+		camYaw = var34;
+	}
+
+	// jag::oldscape::Client::GdmRoofCheck2
+	// guessing placement
+	public static int roofCheck2() {
+		int var63 = getAvH(camX, camZ, minusedlevel);
+		if (var63 - camY < 800 && (ClientBuild.mapl[minusedlevel][camX >> 7][camZ >> 7] & 0x4) != 0) {
+			return minusedlevel;
+		} else {
+			return 3;
+		}
+	}
+
+	// jag::oldscape::Client::GdmRoofCheck
+	// guessing placement
+	public static int roofCheck() {
+		int var50 = 3;
+		if (camPitch < 310) {
+			int var51 = camX >> 7;
+			int var52 = camZ >> 7;
+			int var53 = localPlayer.x >> 7;
+			int var54 = localPlayer.z >> 7;
+			if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
+				var50 = minusedlevel;
+			}
+			int var55;
+			if (var53 > var51) {
+				var55 = var53 - var51;
+			} else {
+				var55 = var51 - var53;
+			}
+			int var56;
+			if (var54 > var52) {
+				var56 = var54 - var52;
+			} else {
+				var56 = var52 - var54;
+			}
+			if (var55 > var56) {
+				int var57 = var56 * 65536 / var55;
+				int var58 = 32768;
+				while (var51 != var53) {
+					if (var51 < var53) {
+						var51++;
+					} else if (var51 > var53) {
+						var51--;
+					}
+					if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
+						var50 = minusedlevel;
+					}
+					var58 += var57;
+					if (var58 >= 65536) {
+						var58 -= 65536;
+						if (var52 < var54) {
+							var52++;
+						} else if (var52 > var54) {
+							var52--;
+						}
+						if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
+							var50 = minusedlevel;
+						}
+					}
+				}
+			} else {
+				int var59 = var55 * 65536 / var56;
+				int var60 = 32768;
+				while (var52 != var54) {
+					if (var52 < var54) {
+						var52++;
+					} else if (var52 > var54) {
+						var52--;
+					}
+					if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
+						var50 = minusedlevel;
+					}
+					var60 += var59;
+					if (var60 >= 65536) {
+						var60 -= 65536;
+						if (var51 < var53) {
+							var51++;
+						} else if (var51 > var53) {
+							var51--;
+						}
+						if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
+							var50 = minusedlevel;
+						}
+					}
+				}
+			}
+		}
+		if ((ClientBuild.mapl[minusedlevel][localPlayer.x >> 7][localPlayer.z >> 7] & 0x4) != 0) {
+			var50 = minusedlevel;
+		}
+		return var50;
+	}
+
+	// jag::oldscape::Client::GdmEntityOverlays
+	// placement relative to other clients
+	public static void entityOverlays(int var12, int var13, int var31, int var32) {
+		chatCount = 0;
+
+		for (int var74 = -1; var74 < playerCount + npcCount; var74++) {
+			ClientEntity var75;
+			if (var74 == -1) {
+				var75 = localPlayer;
+			} else if (var74 < playerCount) {
+				var75 = players[playerIds[var74]];
+			} else {
+				var75 = npcs[npcIds[var74 - playerCount]];
+			}
+
+			if (var75 != null && var75.ready()) {
+				if (var75 instanceof ClientNpc) {
+					NpcType var76 = ((ClientNpc) var75).type;
+					if (var76.multinpc != null) {
+						var76 = var76.getMultiNpc();
+					}
+					if (var76 == null) {
+						continue;
+					}
+				}
+				if (var74 >= playerCount) {
+					NpcType var79 = ((ClientNpc) var75).type;
+					if (var79.multinpc != null) {
+						var79 = var79.getMultiNpc();
+					}
+					if (var79.headicon >= 0 && var79.headicon < headiconsPrayer.length) {
+						getOverlayPos(var75, var75.height + 15);
+						if (projectX > -1) {
+							headiconsPrayer[var79.headicon].plotSprite(projectX + var12 - 12, projectY + var13 - 30);
+						}
+					}
+					if (hintType == 1 && hintNpc == npcIds[var74 - playerCount] && loopCycle % 20 < 10) {
+						getOverlayPos(var75, var75.height + 15);
+						if (projectX > -1) {
+							headiconsHint[0].plotSprite(projectX + var12 - 12, projectY + var13 - 28);
+						}
+					}
+				} else {
+					int var77 = 30;
+					ClientPlayer var78 = (ClientPlayer) var75;
+					if (var78.headiconPk != -1 || var78.headiconPrayer != -1) {
+						getOverlayPos(var75, var75.height + 15);
+						if (projectX > -1) {
+							if (var78.headiconPk != -1) {
+								headiconsPk[var78.headiconPk].plotSprite(projectX + var12 - 12, projectY + var13 - var77);
+								var77 += 25;
+							}
+							if (var78.headiconPrayer != -1) {
+								headiconsPrayer[var78.headiconPrayer].plotSprite(projectX + var12 - 12, projectY + var13 - var77);
+								var77 += 25;
+							}
+						}
+					}
+					if (var74 >= 0 && hintType == 10 && hintPlayer == playerIds[var74]) {
+						getOverlayPos(var75, var75.height + 15);
+						if (projectX > -1) {
+							headiconsHint[1].plotSprite(projectX + var12 - 12, projectY + var13 - var77);
+						}
+					}
+				}
+				if (var75.chat != null && (var74 >= playerCount || publicChatFilter == 0 || publicChatFilter == 3 || publicChatFilter == 1 && isFriend(((ClientPlayer) var75).name))) {
+					getOverlayPos(var75, var75.height);
+					if (projectX > -1 && chatCount < MAX_CHATS) {
+						chatWidth[chatCount] = b12.stringWid(var75.chat) / 2;
+						chatHeight[chatCount] = b12.ascent;
+						chatX[chatCount] = projectX;
+						chatY[chatCount] = projectY;
+						chatColour[chatCount] = var75.chatColour;
+						chatEffect[chatCount] = var75.chatEffect;
+						chatTimer[chatCount] = var75.chatTimer;
+						chats[chatCount] = var75.chat;
+						chatCount++;
+					}
+				}
+				if (var75.combatCycle > loopCycle) {
+					getOverlayPos(var75, var75.height + 15);
+					if (projectX > -1) {
+						int var80 = var75.health * 30 / var75.totalHealth;
+						if (var80 > 30) {
+							var80 = 30;
+						}
+						Pix2D.fillRect(projectX + var12 - 15, projectY + var13 - 3, var80, 5, 65280);
+						Pix2D.fillRect(projectX + var12 - 15 + var80, projectY + var13 - 3, 30 - var80, 5, 16711680);
+					}
+				}
+				for (int var81 = 0; var81 < 4; var81++) {
+					if (var75.damageCycles[var81] <= loopCycle) {
+						continue;
+					}
+
+					getOverlayPos(var75, var75.height / 2);
+
+					if (projectX <= -1) {
+						continue;
+					}
+
+					if (var81 == 1) {
+						projectY -= 20;
+					} else if (var81 == 2) {
+						projectX -= 15;
+						projectY -= 10;
+					} else if (var81 == 3) {
+						projectX += 15;
+						projectY -= 10;
+					}
+
+					hitmarks[var75.damageTypes[var81]].plotSprite(projectX + var12 - 12, projectY + var13 - 12);
+					p11.centreString(Integer.toString(var75.damageValues[var81]), projectX + var12 - 1, projectY + var13 + 3, 16777215, 0);
+				}
+			}
+		}
+
+		for (int var82 = 0; var82 < chatCount; var82++) {
+			int var83 = chatX[var82];
+			int var84 = chatY[var82];
+			int var85 = chatWidth[var82];
+			int var86 = chatHeight[var82];
+			boolean var87 = true;
+			while (var87) {
+				var87 = false;
+				for (int var88 = 0; var88 < var82; var88++) {
+					if (var84 + 2 > chatY[var88] - chatHeight[var88] && var84 - var86 < chatY[var88] + 2 && var83 - var85 < chatWidth[var88] + chatX[var88] && var83 + var85 > chatX[var88] - chatWidth[var88] && chatY[var88] - chatHeight[var88] < var84) {
+						var84 = chatY[var88] - chatHeight[var88];
+						var87 = true;
+					}
+				}
+			}
+			projectX = chatX[var82];
+			projectY = chatY[var82] = var84;
+			String var89 = chats[var82];
+			if (chatEffects == 0) {
+				int var90 = 16776960;
+				if (chatColour[var82] < 6) {
+					var90 = CHAT_COLOURS[chatColour[var82]];
+				}
+				if (chatColour[var82] == 6) {
+					var90 = sceneCycle % 20 < 10 ? 16711680 : 16776960;
+				}
+				if (chatColour[var82] == 7) {
+					var90 = sceneCycle % 20 < 10 ? 255 : 65535;
+				}
+				if (chatColour[var82] == 8) {
+					var90 = sceneCycle % 20 < 10 ? 45056 : 8454016;
+				}
+				if (chatColour[var82] == 9) {
+					int var91 = 150 - chatTimer[var82];
+					if (var91 < 50) {
+						var90 = var91 * 1280 + 16711680;
+					} else if (var91 < 100) {
+						var90 = 16776960 - (var91 - 50) * 327680;
+					} else if (var91 < 150) {
+						var90 = (var91 - 100) * 5 + 65280;
+					}
+				}
+				if (chatColour[var82] == 10) {
+					int var92 = 150 - chatTimer[var82];
+					if (var92 < 50) {
+						var90 = var92 * 5 + 16711680;
+					} else if (var92 < 100) {
+						var90 = 16711935 - (var92 - 50) * 327680;
+					} else if (var92 < 150) {
+						var90 = (var92 - 100) * 327680 + 255 - (var92 - 100) * 5;
+					}
+				}
+				if (chatColour[var82] == 11) {
+					int var93 = 150 - chatTimer[var82];
+					if (var93 < 50) {
+						var90 = 16777215 - var93 * 327685;
+					} else if (var93 < 100) {
+						var90 = (var93 - 50) * 327685 + 65280;
+					} else if (var93 < 150) {
+						var90 = 16777215 - (var93 - 100) * 327680;
+					}
+				}
+				if (chatEffect[var82] == 0) {
+					b12.centreString(var89, projectX + var12, projectY + var13, var90, 0);
+				}
+				if (chatEffect[var82] == 1) {
+					b12.centerStringWave(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
+				}
+				if (chatEffect[var82] == 2) {
+					b12.centreStringWave2(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
+				}
+				if (chatEffect[var82] == 3) {
+					b12.centreStringWave3(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle, 150 - chatTimer[var82]);
+				}
+				if (chatEffect[var82] == 4) {
+					int var94 = (150 - chatTimer[var82]) * (b12.stringWid(var89) + 100) / 150;
+					Pix2D.setSubClipping(projectX + var12 - 50, var13, projectX + var12 + 50, var13 + var32);
+					b12.drawString(var89, projectX + var12 + 50 - var94, projectY + var13, var90, 0);
+					Pix2D.setClipping(var12, var13, var12 + var31, var13 + var32);
+				}
+				if (chatEffect[var82] == 5) {
+					int var95 = 150 - chatTimer[var82];
+					int var96 = 0;
+					if (var95 < 25) {
+						var96 = var95 - 25;
+					} else if (var95 > 125) {
+						var96 = var95 - 125;
+					}
+					Pix2D.setSubClipping(var12, projectY + var13 - b12.ascent - 1, var12 + var31, projectY + var13 + 5);
+					b12.centreString(var89, projectX + var12, projectY + var13 + var96, var90, 0);
+					Pix2D.setClipping(var12, var13, var12 + var31, var13 + var32);
+				}
+			} else {
+				b12.centreString(var89, projectX + var12, projectY + var13, 16776960, 0);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GdmCoordArrow
+	@ObfuscatedName("df.eb(III)V")
+	public static void coordArrow(int arg0, int arg1) {
+		if (hintType == 2) {
+			getOverlayPos((hintTileX - mapBuildBaseX << 7) + hintOffsetX, (hintTileZ - mapBuildBaseZ << 7) + hintOffsetZ, hintHeight * 2);
+
+			if (projectX > -1 && loopCycle % 20 < 10) {
+				headiconsHint[0].plotSprite(projectX + arg0 - 12, projectY + arg1 - 28);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GdmOtherOverlays
+	@ObfuscatedName("ek.er(IIIII)V")
+	public static void otherOverlays(int arg0, int arg1, int arg2, int arg3) {
+		if (crossMode == 1) {
+			cross[crossCycle / 100].plotSprite(crossX - 8, crossY - 8);
+		}
+		if (crossMode == 2) {
+			cross[crossCycle / 100 + 4].plotSprite(crossX - 8, crossY - 8);
+		}
+		overrideChat = 0;
+		int var4 = (localPlayer.x >> 7) + mapBuildBaseX;
+		int var5 = (localPlayer.z >> 7) + mapBuildBaseZ;
+		if (var4 >= 3053 && var4 <= 3156 && var5 >= 3056 && var5 <= 3136) {
+			overrideChat = 1;
+		}
+		if (var4 >= 3072 && var4 <= 3118 && var5 >= 9492 && var5 <= 9535) {
+			overrideChat = 1;
+		}
+		if (overrideChat == 1 && var4 >= 3139 && var4 <= 3199 && var5 >= 3008 && var5 <= 3062) {
+			overrideChat = 0;
+		}
+		if (showFps) {
+			int var6 = arg0 + 512 - 5;
+			int var7 = arg1 + 20;
+			p12.rightString("Fps:" + fps, var6, var7, 0xffff00, -1);
+
+			int var11 = var7 + 15;
+			Runtime var8 = Runtime.getRuntime();
+			int var9 = (int) ((var8.totalMemory() - var8.freeMemory()) / 1024L);
+			int var10 = 0xffff00;
+			if (var9 > 32768 && lowMemory) {
+				var10 = 0xff0000;
+			}
+			if (var9 > 65536 && !lowMemory) {
+				var10 = 0xff0000;
+			}
+			p12.rightString("Mem:" + var9 + "k", var6, var11, var10, -1);
+			var7 = var11 + 15;
+		}
+	}
+
+	// jag::oldscape::Client::GetOverlayPos
+	@ObfuscatedName("bd.es(Lfz;IB)V")
+	public static void getOverlayPos(ClientEntity arg0, int arg1) {
+		getOverlayPos(arg0.x, arg0.z, arg1);
+	}
+
+	// jag::oldscape::Client::GetOverlayPos
+	@ObfuscatedName("cl.ez(IIII)V")
+	public static void getOverlayPos(int arg0, int arg1, int arg2) {
+		if (arg0 < 128 || arg1 < 128 || arg0 > 13056 || arg1 > 13056) {
+			projectX = -1;
+			projectY = -1;
+			return;
+		}
+		int var3 = getAvH(arg0, arg1, minusedlevel) - arg2;
+		int var4 = arg0 - camX;
+		int var5 = var3 - camY;
+		int var6 = arg1 - camZ;
+		int var7 = Pix3D.sinTable[camPitch];
+		int var8 = Pix3D.cosTable[camPitch];
+		int var9 = Pix3D.sinTable[camYaw];
+		int var10 = Pix3D.cosTable[camYaw];
+		int var11 = var4 * var10 + var6 * var9 >> 16;
+		int var12 = var6 * var10 - var4 * var9 >> 16;
+		int var14 = var5 * var8 - var7 * var12 >> 16;
+		int var15 = var5 * var7 + var8 * var12 >> 16;
+		if (var15 >= 50) {
+			projectX = (var11 << 9) / var15 + 256;
+			projectY = (var14 << 9) / var15 + 167;
+		} else {
+			projectX = -1;
+			projectY = -1;
+		}
+	}
+
+	// jag::oldscape::Client::GetAvH
+	@ObfuscatedName("bw.ev(IIII)I")
+	public static int getAvH(int arg0, int arg1, int arg2) {
+		int var3 = arg0 >> 7;
+		int var4 = arg1 >> 7;
+		if (var3 < 0 || var4 < 0 || var3 > 103 || var4 > 103) {
+			return 0;
+		}
+		int var5 = arg2;
+		if (arg2 < 3 && (ClientBuild.mapl[1][var3][var4] & 0x2) == 2) {
+			var5 = arg2 + 1;
+		}
+		int var6 = arg0 & 0x7F;
+		int var7 = arg1 & 0x7F;
+		int var8 = (128 - var6) * ClientBuild.groundh[var5][var3][var4] + ClientBuild.groundh[var5][var3 + 1][var4] * var6 >> 7;
+		int var9 = (128 - var6) * ClientBuild.groundh[var5][var3][var4 + 1] + ClientBuild.groundh[var5][var3 + 1][var4 + 1] * var6 >> 7;
+		return (128 - var7) * var8 + var7 * var9 >> 7;
+	}
+
+	// jag::oldscape::Client::RebuildPacket
+	@ObfuscatedName("cy.ei(ZI)V")
+	public static void rebuildPacket(boolean region) {
+		regionmode = region;
+
+		if (!regionmode) {
+			int var1 = in.g2();
+			int var2 = in.g2_alt1();
+			int var3 = (psize - in.pos) / 16;
+			mapKeys = new int[var3][4];
+			for (int var4 = 0; var4 < var3; var4++) {
+				for (int var5 = 0; var5 < 4; var5++) {
+					mapKeys[var4][var5] = in.g4_alt2();
+				}
+			}
+			int var6 = in.g1_alt2();
+			int var7 = in.g2();
+			int var8 = in.g2_alt3();
+			mapBuildIndex = new int[var3];
+			mapBuildGroundFile = new int[var3];
+			mapBuildLocationFile = new int[var3];
+			mapBuildGroundData = new byte[var3][];
+			mapBuildLocationData = new byte[var3][];
+			boolean var9 = false;
+			if ((var7 / 8 == 48 || var7 / 8 == 49) && var8 / 8 == 48) {
+				var9 = true;
+			}
+			if (var7 / 8 == 48 && var8 / 8 == 148) {
+				var9 = true;
+			}
+			int var10 = 0;
+			for (int var11 = (var7 - 6) / 8; var11 <= (var7 + 6) / 8; var11++) {
+				for (int var12 = (var8 - 6) / 8; var12 <= (var8 + 6) / 8; var12++) {
+					int var13 = (var11 << 8) + var12;
+					if (!var9 || var12 != 49 && var12 != 149 && var12 != 147 && var11 != 50 && (var11 != 49 || var12 != 47)) {
+						mapBuildIndex[var10] = var13;
+						mapBuildGroundFile[var10] = maps.getGroupId("m" + var11 + "_" + var12);
+						mapBuildLocationFile[var10] = maps.getGroupId("l" + var11 + "_" + var12);
+						var10++;
+					}
+				}
+			}
+			startRebuild(var7, var8, var6, var2, var1);
+		} else {
+			int var14 = in.g2_alt3();
+			in.gBitStart();
+			for (int var15 = 0; var15 < 4; var15++) {
+				for (int var16 = 0; var16 < 13; var16++) {
+					for (int var17 = 0; var17 < 13; var17++) {
+						int var18 = in.gBit(1);
+						if (var18 == 1) {
+							mapBuildRegionSrc[var15][var16][var17] = in.gBit(26);
+						} else {
+							mapBuildRegionSrc[var15][var16][var17] = -1;
+						}
+					}
+				}
+			}
+			in.gBitEnd();
+			int var19 = (psize - in.pos) / 16;
+			mapKeys = new int[var19][4];
+			for (int var20 = 0; var20 < var19; var20++) {
+				for (int var21 = 0; var21 < 4; var21++) {
+					mapKeys[var20][var21] = in.g4_alt2();
+				}
+			}
+			int var22 = in.g2_alt3();
+			int var23 = in.g1_alt2();
+			int var24 = in.g2_alt1();
+			int var25 = in.g2_alt3();
+			mapBuildIndex = new int[var19];
+			mapBuildGroundFile = new int[var19];
+			mapBuildLocationFile = new int[var19];
+			mapBuildGroundData = new byte[var19][];
+			mapBuildLocationData = new byte[var19][];
+			int var26 = 0;
+			for (int var27 = 0; var27 < 4; var27++) {
+				for (int var28 = 0; var28 < 13; var28++) {
+					for (int var29 = 0; var29 < 13; var29++) {
+						int var30 = mapBuildRegionSrc[var27][var28][var29];
+						if (var30 != -1) {
+							int var31 = var30 >> 14 & 0x3FF;
+							int var32 = var30 >> 3 & 0x7FF;
+							int var33 = (var31 / 8 << 8) + var32 / 8;
+							for (int var34 = 0; var34 < var26; var34++) {
+								if (mapBuildIndex[var34] == var33) {
+									var33 = -1;
+									break;
+								}
+							}
+							if (var33 != -1) {
+								mapBuildIndex[var26] = var33;
+								int var35 = var33 >> 8 & 0xFF;
+								int var36 = var33 & 0xFF;
+								mapBuildGroundFile[var26] = maps.getGroupId("m" + var35 + "_" + var36);
+								mapBuildLocationFile[var26] = maps.getGroupId("l" + var35 + "_" + var36);
+								var26++;
+							}
+						}
+					}
+				}
+			}
+			startRebuild(var14, var25, var23, var24, var22);
+		}
+	}
+
+	// jag::oldscape::Client::StartRebuild
+	@ObfuscatedName("as.ef(IIIIII)V")
+	public static void startRebuild(int arg0, int arg1, int arg2, int arg3, int arg4) {
+		if (mapBuildCenterZoneX == arg0 && mapBuildCenterZoneZ == arg1 && (sceneState == arg2 || !lowMemory)) {
+			return;
+		}
+
+		mapBuildCenterZoneX = arg0;
+		mapBuildCenterZoneZ = arg1;
+		sceneState = arg2;
+		if (!lowMemory) {
+			sceneState = 0;
+		}
+		setMainState(25);
+		messageBox(Text.LOADING, true);
+
+		int var5 = mapBuildBaseX;
+		int var6 = mapBuildBaseZ;
+		mapBuildBaseX = (arg0 - 6) * 8;
+		mapBuildBaseZ = (arg1 - 6) * 8;
+		int var7 = mapBuildBaseX - var5;
+		int var8 = mapBuildBaseZ - var6;
+		int var9 = mapBuildBaseX;
+		int var10 = mapBuildBaseZ;
+
+		for (int var11 = 0; var11 < 32768; var11++) {
+			ClientNpc var12 = npcs[var11];
+			if (var12 != null) {
+				for (int var13 = 0; var13 < 10; var13++) {
+					var12.routeX[var13] -= var7;
+					var12.routeZ[var13] -= var8;
+				}
+				var12.x -= var7 * 128;
+				var12.z -= var8 * 128;
+			}
+		}
+
+		for (int var14 = 0; var14 < 2048; var14++) {
+			ClientPlayer var15 = players[var14];
+			if (var15 != null) {
+				for (int var16 = 0; var16 < 10; var16++) {
+					var15.routeX[var16] -= var7;
+					var15.routeZ[var16] -= var8;
+				}
+				var15.x -= var7 * 128;
+				var15.z -= var8 * 128;
+			}
+		}
+
+		minusedlevel = arg2;
+		localPlayer.teleport(arg3, arg4, false);
+
+		byte var17 = 0;
+		byte var18 = 104;
+		byte var19 = 1;
+		if (var7 < 0) {
+			var17 = 103;
+			var18 = -1;
+			var19 = -1;
+		}
+		byte var20 = 0;
+		byte var21 = 104;
+		byte var22 = 1;
+		if (var8 < 0) {
+			var20 = 103;
+			var21 = -1;
+			var22 = -1;
+		}
+
+		for (int var23 = var17; var23 != var18; var23 += var19) {
+			for (int var24 = var20; var24 != var21; var24 += var22) {
+				int var25 = var7 + var23;
+				int var26 = var8 + var24;
+				for (int var27 = 0; var27 < 4; var27++) {
+					if (var25 >= 0 && var26 >= 0 && var25 < 104 && var26 < 104) {
+						groundObj[var27][var23][var24] = groundObj[var27][var25][var26];
+					} else {
+						groundObj[var27][var23][var24] = null;
+					}
+				}
+			}
+		}
+
+		for (LocChange var28 = (LocChange) locChanges.head(); var28 != null; var28 = (LocChange) locChanges.next()) {
+			var28.x -= var7;
+			var28.z -= var8;
+			if (var28.x < 0 || var28.z < 0 || var28.x >= 104 || var28.z >= 104) {
+				var28.unlink();
+			}
+		}
+
+		if (minimapFlagX != 0) {
+			minimapFlagX -= var7;
+			minimapFlagZ -= var8;
+		}
+
+		waveCount = 0;
+		cinemaCam = false;
+		minimapLevel = -1;
+		spotanims.clear();
+		projectiles.clear();
+	}
+
+	// jag::oldscape::Client::PreventTimeout
+	@ObfuscatedName("at.ej(ZB)V")
+	public static void preventTimeout(boolean arg0) {
+		doAudio();
+
+		noTimeoutCycle++;
+		if (noTimeoutCycle < 50 && !arg0) {
+			return;
+		}
+
+		noTimeoutCycle = 0;
+
+		if (networkError || loginStream == null) {
+			return;
+		}
+
+		// NO_TIMEOUT
+		out.p1Enc(228);
+
+		try {
+			loginStream.write(out.data, 0, out.pos);
+			out.pos = 0;
+		} catch (IOException var2) {
+			networkError = true;
+		}
+	}
+
+	// jag::oldscape::Client::MapBuildLoop
+	// placement relative to other clients
+	public static void mapBuildLoop() {
+		preventTimeout(false);
+
+		mapLoadCount = 0;
+
+		boolean var11 = true;
+		for (int var12 = 0; var12 < mapBuildGroundData.length; var12++) {
+			if (mapBuildGroundFile[var12] != -1 && mapBuildGroundData[var12] == null) {
+				mapBuildGroundData[var12] = maps.getFile(mapBuildGroundFile[var12], 0);
+				if (mapBuildGroundData[var12] == null) {
+					var11 = false;
+					mapLoadCount++;
+				}
+			}
+			if (mapBuildLocationFile[var12] != -1 && mapBuildLocationData[var12] == null) {
+				mapBuildLocationData[var12] = maps.fetchFile(mapBuildLocationFile[var12], 0, mapKeys[var12]);
+				if (mapBuildLocationData[var12] == null) {
+					var11 = false;
+					mapLoadCount++;
+				}
+			}
+		}
+		if (!var11) {
+			mapLoadingStage = 1;
+			return;
+		}
+
+		locModelLoadCount = 0;
+
+		boolean var13 = true;
+		for (int var14 = 0; var14 < mapBuildGroundData.length; var14++) {
+			byte[] var15 = mapBuildLocationData[var14];
+			if (var15 != null) {
+				int var16 = (mapBuildIndex[var14] >> 8) * 64 - mapBuildBaseX;
+				int var17 = (mapBuildIndex[var14] & 0xFF) * 64 - mapBuildBaseZ;
+				if (regionmode) {
+					var16 = 10;
+					var17 = 10;
+				}
+				var13 &= ClientBuild.checkLocations(var15, var16, var17);
+			}
+		}
+		if (!var13) {
+			mapLoadingStage = 2;
+			return;
+		}
+
+		if (mapLoadingStage != 0) {
+			messageBox(Text.LOADING + StringConstants.TAG_BREAK + StringConstants.OPEN_BRACKET + 100 + "%" + StringConstants.CLOSE_BRACKET, true);
+		}
+
+		doAudio();
+		clearCaches();
+
+		doAudio();
+		world.resetMap();
+
+		doAudio();
+		System.gc();
+
+		for (int var18 = 0; var18 < 4; var18++) {
+			levelCollisionMap[var18].reset();
+		}
+
+		for (int var19 = 0; var19 < 4; var19++) {
+			for (int var20 = 0; var20 < 104; var20++) {
+				for (int var21 = 0; var21 < 104; var21++) {
+					ClientBuild.mapl[var19][var20][var21] = 0;
+				}
+			}
+		}
+
+		doAudio();
+		ClientBuild.init();
+
+		int maps = mapBuildGroundData.length;
+		BgSound.reset();
+
+		preventTimeout(true);
+
+		if (!regionmode) {
+			for (int var24 = 0; var24 < maps; var24++) {
+				int var25 = (mapBuildIndex[var24] >> 8) * 64 - mapBuildBaseX;
+				int var26 = (mapBuildIndex[var24] & 0xFF) * 64 - mapBuildBaseZ;
+				byte[] var27 = mapBuildGroundData[var24];
+				if (var27 != null) {
+					doAudio();
+					ClientBuild.loadGround(var27, var25, var26, mapBuildCenterZoneX * 8 - 48, mapBuildCenterZoneZ * 8 - 48, levelCollisionMap);
+				}
+			}
+
+			for (int var28 = 0; var28 < maps; var28++) {
+				int var29 = (mapBuildIndex[var28] >> 8) * 64 - mapBuildBaseX;
+				int var30 = (mapBuildIndex[var28] & 0xFF) * 64 - mapBuildBaseZ;
+				byte[] var31 = mapBuildGroundData[var28];
+				if (var31 == null && mapBuildCenterZoneZ < 800) {
+					doAudio();
+					ClientBuild.fadeAdjacent(var29, var30, 64, 64);
+				}
+			}
+
+			preventTimeout(true);
+
+			for (int var32 = 0; var32 < maps; var32++) {
+				byte[] var33 = mapBuildLocationData[var32];
+				if (var33 != null) {
+					int var34 = (mapBuildIndex[var32] >> 8) * 64 - mapBuildBaseX;
+					int var35 = (mapBuildIndex[var32] & 0xFF) * 64 - mapBuildBaseZ;
+
+					doAudio();
+					ClientBuild.loadLocations(var33, var34, var35, world, levelCollisionMap);
+				}
+			}
+		}
+
+		if (regionmode) {
+			for (int var36 = 0; var36 < 4; var36++) {
+				doAudio();
+
+				for (int var37 = 0; var37 < 13; var37++) {
+					for (int var38 = 0; var38 < 13; var38++) {
+						boolean var39 = false;
+						int var40 = mapBuildRegionSrc[var36][var37][var38];
+						if (var40 != -1) {
+							int var41 = var40 >> 24 & 0x3;
+							int var42 = var40 >> 1 & 0x3;
+							int var43 = var40 >> 14 & 0x3FF;
+							int var44 = var40 >> 3 & 0x7FF;
+							int var45 = (var43 / 8 << 8) + var44 / 8;
+							for (int var46 = 0; var46 < mapBuildIndex.length; var46++) {
+								if (mapBuildIndex[var46] == var45 && mapBuildGroundData[var46] != null) {
+									ClientBuild.loadGroundRegion(mapBuildGroundData[var46], var36, var37 * 8, var38 * 8, var41, (var43 & 0x7) * 8, (var44 & 0x7) * 8, var42, levelCollisionMap);
+									var39 = true;
+									break;
+								}
+							}
+						}
+						if (!var39) {
+							ClientBuild.autoGroundRegion(var36, var37 * 8, var38 * 8);
+						}
+					}
+				}
+			}
+
+			for (int var54 = 0; var54 < 13; var54++) {
+				for (int var55 = 0; var55 < 13; var55++) {
+					int var56 = mapBuildRegionSrc[0][var54][var55];
+					if (var56 == -1) {
+						ClientBuild.fadeAdjacent(var54 * 8, var55 * 8, 8, 8);
+					}
+				}
+			}
+
+			preventTimeout(true);
+
+			for (int var57 = 0; var57 < 4; var57++) {
+				doAudio();
+
+				for (int var58 = 0; var58 < 13; var58++) {
+					for (int var59 = 0; var59 < 13; var59++) {
+						int var60 = mapBuildRegionSrc[var57][var58][var59];
+						if (var60 != -1) {
+							int var61 = var60 >> 24 & 0x3;
+							int var62 = var60 >> 1 & 0x3;
+							int var63 = var60 >> 14 & 0x3FF;
+							int var64 = var60 >> 3 & 0x7FF;
+							int var65 = (var63 / 8 << 8) + var64 / 8;
+							for (int var66 = 0; var66 < mapBuildIndex.length; var66++) {
+								if (mapBuildIndex[var66] == var65 && mapBuildLocationData[var66] != null) {
+									ClientBuild.loadLocationsRegion(mapBuildLocationData[var66], var57, var58 * 8, var59 * 8, var61, (var63 & 0x7) * 8, (var64 & 0x7) * 8, var62, world, levelCollisionMap);
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		preventTimeout(true);
+		clearCaches();
+
+		doAudio();
+		ClientBuild.finishBuild(world, levelCollisionMap);
+
+		preventTimeout(true);
+
+		int var67 = ClientBuild.minusedlevel;
+		if (var67 > minusedlevel) {
+			var67 = minusedlevel;
+		}
+		if (var67 < minusedlevel - 1) {
+			int var68 = minusedlevel - 1;
+		}
+
+		if (lowMemory) {
+			world.fillBaseLevel(ClientBuild.minusedlevel);
+		} else {
+			world.fillBaseLevel(0);
+		}
+
+		for (int x = 0; x < 104; x++) {
+			for (int z = 0; z < 104; z++) {
+				showObject(x, z);
+			}
+		}
+
+		doAudio();
+		locChangePostBuildCorrect();
+
+		LocType.mc1.clear();
+
+		if (GameShell.frame != null) {
+			// todo: packet name notifying the server the client is in a frame
+			out.p1Enc(210);
+			out.p4(1057001181);
+		}
+
+		if (!regionmode) {
+			int var72 = (mapBuildCenterZoneX - 6) / 8;
+			int var73 = (mapBuildCenterZoneX + 6) / 8;
+			int var74 = (mapBuildCenterZoneZ - 6) / 8;
+			int var75 = (mapBuildCenterZoneZ + 6) / 8;
+			for (int var76 = var72 - 1; var76 <= var73 + 1; var76++) {
+				for (int var77 = var74 - 1; var77 <= var75 + 1; var77++) {
+					if (var76 < var72 || var76 > var73 || var77 < var74 || var77 > var75) {
+						Client.maps.updateCacheHint("m" + var76 + "_" + var77);
+						Client.maps.updateCacheHint("l" + var76 + "_" + var77);
+					}
+				}
+			}
+		}
+
+		setMainState(30);
+
+		doAudio();
+		ClientBuild.quit();
+
+		// MAP_BUILD_COMPLETE
+		out.p1Enc(197);
+
+		GameShell.doneslowupdate();
+	}
+
+	// jag::oldscape::minimap::Minimap::DrawDetail
+	@ObfuscatedName("bs.eh(IIIIII)V")
+	public static void drawDetail(int arg0, int arg1, int arg2, int arg3, int arg4) {
+		int var5 = world.wallType(arg0, arg1, arg2);
+		if (var5 != 0) {
+			int var6 = world.typecode2(arg0, arg1, arg2, var5);
+			int var7 = var6 >> 6 & 0x3;
+			int var8 = var6 & 0x1F;
+			int var9 = arg3;
+			if (var5 > 0) {
+				var9 = arg4;
+			}
+			int[] var10 = minimap.data;
+			int var11 = (103 - arg2) * 2048 + arg1 * 4 + 24624;
+			int var12 = var5 >> 14 & 0x7FFF;
+			LocType var13 = LocType.list(var12);
+			if (var13.mapscene != -1) {
+				Pix8 var14 = mapscene[var13.mapscene];
+				if (var14 != null) {
+					int var15 = (var13.width * 4 - var14.wi) / 2;
+					int var16 = (var13.length * 4 - var14.hi) / 2;
+					var14.plotSprite(arg1 * 4 + 48 + var15, (104 - arg2 - var13.length) * 4 + 48 + var16);
+				}
+			} else {
+				if (var8 == 0 || var8 == 2) {
+					if (var7 == 0) {
+						var10[var11] = var9;
+						var10[var11 + 512] = var9;
+						var10[var11 + 1024] = var9;
+						var10[var11 + 1536] = var9;
+					} else if (var7 == 1) {
+						var10[var11] = var9;
+						var10[var11 + 1] = var9;
+						var10[var11 + 2] = var9;
+						var10[var11 + 3] = var9;
+					} else if (var7 == 2) {
+						var10[var11 + 3] = var9;
+						var10[var11 + 3 + 512] = var9;
+						var10[var11 + 3 + 1024] = var9;
+						var10[var11 + 3 + 1536] = var9;
+					} else if (var7 == 3) {
+						var10[var11 + 1536] = var9;
+						var10[var11 + 1536 + 1] = var9;
+						var10[var11 + 1536 + 2] = var9;
+						var10[var11 + 1536 + 3] = var9;
+					}
+				}
+				if (var8 == 3) {
+					if (var7 == 0) {
+						var10[var11] = var9;
+					} else if (var7 == 1) {
+						var10[var11 + 3] = var9;
+					} else if (var7 == 2) {
+						var10[var11 + 3 + 1536] = var9;
+					} else if (var7 == 3) {
+						var10[var11 + 1536] = var9;
+					}
+				}
+				if (var8 == 2) {
+					if (var7 == 3) {
+						var10[var11] = var9;
+						var10[var11 + 512] = var9;
+						var10[var11 + 1024] = var9;
+						var10[var11 + 1536] = var9;
+					} else if (var7 == 0) {
+						var10[var11] = var9;
+						var10[var11 + 1] = var9;
+						var10[var11 + 2] = var9;
+						var10[var11 + 3] = var9;
+					} else if (var7 == 1) {
+						var10[var11 + 3] = var9;
+						var10[var11 + 3 + 512] = var9;
+						var10[var11 + 3 + 1024] = var9;
+						var10[var11 + 3 + 1536] = var9;
+					} else if (var7 == 2) {
+						var10[var11 + 1536] = var9;
+						var10[var11 + 1536 + 1] = var9;
+						var10[var11 + 1536 + 2] = var9;
+						var10[var11 + 1536 + 3] = var9;
+					}
+				}
+			}
+		}
+
+		int var17 = world.sceneType(arg0, arg1, arg2);
+		if (var17 != 0) {
+			int var18 = world.typecode2(arg0, arg1, arg2, var17);
+			int var19 = var18 >> 6 & 0x3;
+			int var20 = var18 & 0x1F;
+			int var21 = var17 >> 14 & 0x7FFF;
+			LocType var22 = LocType.list(var21);
+			if (var22.mapscene != -1) {
+				Pix8 var23 = mapscene[var22.mapscene];
+				if (var23 != null) {
+					int var24 = (var22.width * 4 - var23.wi) / 2;
+					int var25 = (var22.length * 4 - var23.hi) / 2;
+					var23.plotSprite(arg1 * 4 + 48 + var24, (104 - arg2 - var22.length) * 4 + 48 + var25);
+				}
+			} else if (var20 == 9) {
+				int var26 = 15658734;
+				if (var17 > 0) {
+					var26 = 15597568;
+				}
+				int[] var27 = minimap.data;
+				int var28 = (103 - arg2) * 2048 + arg1 * 4 + 24624;
+				if (var19 == 0 || var19 == 2) {
+					var27[var28 + 1536] = var26;
+					var27[var28 + 1024 + 1] = var26;
+					var27[var28 + 512 + 2] = var26;
+					var27[var28 + 3] = var26;
+				} else {
+					var27[var28] = var26;
+					var27[var28 + 512 + 1] = var26;
+					var27[var28 + 1024 + 2] = var26;
+					var27[var28 + 1536 + 3] = var26;
+				}
+			}
+		}
+
+		int var29 = world.gdType(arg0, arg1, arg2);
+		if (var29 != 0) {
+			int var30 = var29 >> 14 & 0x7FFF;
+			LocType var31 = LocType.list(var30);
+			if (var31.mapscene != -1) {
+				Pix8 var32 = mapscene[var31.mapscene];
+				if (var32 != null) {
+					int var33 = (var31.width * 4 - var32.wi) / 2;
+					int var34 = (var31.length * 4 - var32.hi) / 2;
+					var32.plotSprite(arg1 * 4 + 48 + var33, (104 - arg2 - var31.length) * 4 + 48 + var34);
+				}
+			}
+		}
+	}
+
+	@ObfuscatedName("cz.eg(IIII)Z")
+	public static boolean interactWithLoc(int arg0, int arg1, int arg2) {
+		int var3 = arg2 >> 14 & 0x7FFF;
+		int var4 = world.typecode2(minusedlevel, arg0, arg1, arg2);
+		if (var4 == -1) {
+			return false;
+		}
+
+		int shape = var4 & 0x1F;
+		int angle = var4 >> 6 & 0x3;
+
+		if (shape == 10 || shape == 11 || shape == 22) {
+			LocType var7 = LocType.list(var3);
+
+			int width;
+			int length;
+			if (angle == 0 || angle == 2) {
+				width = var7.width;
+				length = var7.length;
+			} else {
+				width = var7.length;
+				length = var7.width;
+			}
+
+			int forceapproach = var7.forceapproach;
+			if (angle != 0) {
+				forceapproach = (forceapproach >> 4 - angle) + (forceapproach << angle & 0xF);
+			}
+
+			tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], arg0, arg1, true, 0, 0, width, length, forceapproach, 2);
+		} else {
+			tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], arg0, arg1, true, shape + 1, angle, 0, 0, 0, 2);
+		}
+
+		crossX = ClientMouseListener.mouseClickX;
+		crossY = ClientMouseListener.mouseClickY;
+		crossMode = 2;
+		crossCycle = 0;
+		return true;
+	}
+
+	@ObfuscatedName("eh.el(IIIIZIIIIIIS)Z")
+	public static boolean tryMove(int arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10) {
+		for (int var11 = 0; var11 < 104; var11++) {
+			for (int var12 = 0; var12 < 104; var12++) {
+				dirMap[var11][var12] = 0;
+				distMap[var11][var12] = 99999999;
+			}
+		}
+		int var13 = arg0;
+		int var14 = arg1;
+		dirMap[arg0][arg1] = 99;
+		distMap[arg0][arg1] = 0;
+		byte var15 = 0;
+		int var16 = 0;
+		routeX[var15] = arg0;
+		int var36 = var15 + 1;
+		routeZ[var15] = arg1;
+		boolean var17 = false;
+		int var18 = routeX.length;
+		int[][] var19 = levelCollisionMap[minusedlevel].flags;
+		while (var36 != var16) {
+			var13 = routeX[var16];
+			var14 = routeZ[var16];
+			var16 = (var16 + 1) % var18;
+			if (arg2 == var13 && arg3 == var14) {
+				var17 = true;
+				break;
+			}
+			if (arg5 != 0) {
+				if ((arg5 < 5 || arg5 == 10) && levelCollisionMap[minusedlevel].testWall(var13, var14, arg2, arg3, arg5 - 1, arg6)) {
+					var17 = true;
+					break;
+				}
+				if (arg5 < 10 && levelCollisionMap[minusedlevel].testWDecor(var13, var14, arg2, arg3, arg5 - 1, arg6)) {
+					var17 = true;
+					break;
+				}
+			}
+			if (arg7 != 0 && arg8 != 0 && levelCollisionMap[minusedlevel].testLoc(var13, var14, arg2, arg3, arg7, arg8, arg9)) {
+				var17 = true;
+				break;
+			}
+			int var20 = distMap[var13][var14] + 1;
+			if (var13 > 0 && dirMap[var13 - 1][var14] == 0 && (var19[var13 - 1][var14] & 0x12C0108) == 0) {
+				routeX[var36] = var13 - 1;
+				routeZ[var36] = var14;
+				var36 = (var36 + 1) % var18;
+				dirMap[var13 - 1][var14] = 2;
+				distMap[var13 - 1][var14] = var20;
+			}
+			if (var13 < 103 && dirMap[var13 + 1][var14] == 0 && (var19[var13 + 1][var14] & 0x12C0180) == 0) {
+				routeX[var36] = var13 + 1;
+				routeZ[var36] = var14;
+				var36 = (var36 + 1) % var18;
+				dirMap[var13 + 1][var14] = 8;
+				distMap[var13 + 1][var14] = var20;
+			}
+			if (var14 > 0 && dirMap[var13][var14 - 1] == 0 && (var19[var13][var14 - 1] & 0x12C0102) == 0) {
+				routeX[var36] = var13;
+				routeZ[var36] = var14 - 1;
+				var36 = (var36 + 1) % var18;
+				dirMap[var13][var14 - 1] = 1;
+				distMap[var13][var14 - 1] = var20;
+			}
+			if (var14 < 103 && dirMap[var13][var14 + 1] == 0 && (var19[var13][var14 + 1] & 0x12C0120) == 0) {
+				routeX[var36] = var13;
+				routeZ[var36] = var14 + 1;
+				var36 = (var36 + 1) % var18;
+				dirMap[var13][var14 + 1] = 4;
+				distMap[var13][var14 + 1] = var20;
+			}
+			if (var13 > 0 && var14 > 0 && dirMap[var13 - 1][var14 - 1] == 0 && (var19[var13 - 1][var14 - 1] & 0x12C010E) == 0 && (var19[var13 - 1][var14] & 0x12C0108) == 0 && (var19[var13][var14 - 1] & 0x12C0102) == 0) {
+				routeX[var36] = var13 - 1;
+				routeZ[var36] = var14 - 1;
+				var36 = (var36 + 1) % var18;
+				dirMap[var13 - 1][var14 - 1] = 3;
+				distMap[var13 - 1][var14 - 1] = var20;
+			}
+			if (var13 < 103 && var14 > 0 && dirMap[var13 + 1][var14 - 1] == 0 && (var19[var13 + 1][var14 - 1] & 0x12C0183) == 0 && (var19[var13 + 1][var14] & 0x12C0180) == 0 && (var19[var13][var14 - 1] & 0x12C0102) == 0) {
+				routeX[var36] = var13 + 1;
+				routeZ[var36] = var14 - 1;
+				var36 = (var36 + 1) % var18;
+				dirMap[var13 + 1][var14 - 1] = 9;
+				distMap[var13 + 1][var14 - 1] = var20;
+			}
+			if (var13 > 0 && var14 < 103 && dirMap[var13 - 1][var14 + 1] == 0 && (var19[var13 - 1][var14 + 1] & 0x12C0138) == 0 && (var19[var13 - 1][var14] & 0x12C0108) == 0 && (var19[var13][var14 + 1] & 0x12C0120) == 0) {
+				routeX[var36] = var13 - 1;
+				routeZ[var36] = var14 + 1;
+				var36 = (var36 + 1) % var18;
+				dirMap[var13 - 1][var14 + 1] = 6;
+				distMap[var13 - 1][var14 + 1] = var20;
+			}
+			if (var13 < 103 && var14 < 103 && dirMap[var13 + 1][var14 + 1] == 0 && (var19[var13 + 1][var14 + 1] & 0x12C01E0) == 0 && (var19[var13 + 1][var14] & 0x12C0180) == 0 && (var19[var13][var14 + 1] & 0x12C0120) == 0) {
+				routeX[var36] = var13 + 1;
+				routeZ[var36] = var14 + 1;
+				var36 = (var36 + 1) % var18;
+				dirMap[var13 + 1][var14 + 1] = 12;
+				distMap[var13 + 1][var14 + 1] = var20;
+			}
+		}
+		tryMoveNearest = 0;
+		if (!var17) {
+			if (!arg4) {
+				return false;
+			}
+			int var21 = 1000;
+			int var22 = 100;
+			byte var23 = 10;
+			for (int var24 = arg2 - var23; var24 <= arg2 + var23; var24++) {
+				for (int var25 = arg3 - var23; var25 <= arg3 + var23; var25++) {
+					if (var24 >= 0 && var25 >= 0 && var24 < 104 && var25 < 104 && distMap[var24][var25] < 100) {
+						int var26 = 0;
+						if (var24 < arg2) {
+							var26 = arg2 - var24;
+						} else if (var24 > arg2 + arg7 - 1) {
+							var26 = var24 - (arg2 + arg7 - 1);
+						}
+						int var27 = 0;
+						if (var25 < arg3) {
+							var27 = arg3 - var25;
+						} else if (var25 > arg3 + arg8 - 1) {
+							var27 = var25 - (arg3 + arg8 - 1);
+						}
+						int var28 = var26 * var26 + var27 * var27;
+						if (var28 < var21 || var21 == var28 && distMap[var24][var25] < var22) {
+							var21 = var28;
+							var22 = distMap[var24][var25];
+							var13 = var24;
+							var14 = var25;
+						}
+					}
+				}
+			}
+			if (var21 == 1000) {
+				return false;
+			}
+			if (arg0 == var13 && arg1 == var14) {
+				return false;
+			}
+			tryMoveNearest = 1;
+		}
+		byte var29 = 0;
+		routeX[var29] = var13;
+		int var37 = var29 + 1;
+		routeZ[var29] = var14;
+		int var30;
+		int var31 = var30 = dirMap[var13][var14];
+		while (arg0 != var13 || arg1 != var14) {
+			if (var30 != var31) {
+				var30 = var31;
+				routeX[var37] = var13;
+				routeZ[var37++] = var14;
+			}
+			if ((var31 & 0x2) != 0) {
+				var13++;
+			} else if ((var31 & 0x8) != 0) {
+				var13--;
+			}
+			if ((var31 & 0x1) != 0) {
+				var14++;
+			} else if ((var31 & 0x4) != 0) {
+				var14--;
+			}
+			var31 = dirMap[var13][var14];
+		}
+		if (var37 > 0) {
+			int var32 = var37;
+			if (var37 > 25) {
+				var32 = 25;
+			}
+			var37--;
+			int var33 = routeX[var37];
+			int var34 = routeZ[var37];
+
+			if (arg10 == 0) {
+				// MOVE_GAMECLICK
+				out.p1Enc(176);
+				out.p1(var32 + var32 + 3);
+			} else if (arg10 == 1) {
+				// MOVE_MINIMAPCLICK
+				out.p1Enc(60);
+				out.p1(var32 + var32 + 3 + 14);
+			} else if (arg10 == 2) {
+				// MOVE_OPCLICK (custom name)
+				out.p1Enc(214);
+				out.p1(var32 + var32 + 3);
+			}
+
+			minimapFlagX = routeX[0];
+			minimapFlagZ = routeZ[0];
+
+			for (int var35 = 1; var35 < var32; var35++) {
+				var37--;
+				out.p1_alt2(routeX[var37] - var33);
+				out.p1_alt3(routeZ[var37] - var34);
+			}
+
+			out.p2_alt3(mapBuildBaseZ + var34);
+			out.p1(ClientKeyboardListener.keyHeld[82] ? 1 : 0);
+			out.p2(mapBuildBaseX + var33);
+			return true;
+		} else if (arg10 == 1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	// jag::oldscape::Client::ZonePacket
+	@ObfuscatedName("ai.en(I)V")
+	public static void readZonePacket() {
+		if (ptype == 245) {
+			// LOC_MERGE
+			int var0 = in.g2();
+			byte var1 = in.g1b_alt1();
+			int var2 = in.g1_alt2();
+			int var3 = var2 >> 2;
+			int var4 = var2 & 0x3;
+			int var5 = LOC_SHAPE_TO_LAYER[var3];
+			int locId = in.g2_alt2();
+			int var7 = in.g2_alt1();
+			int pid = in.g2();
+			int var9 = in.g1_alt3();
+			int var10 = (var9 >> 4 & 0x7) + baseX;
+			int var11 = (var9 & 0x7) + baseZ;
+			byte var12 = in.g1b_alt1();
+			byte var13 = in.g1b();
+			byte var14 = in.g1b();
+
+			ClientPlayer player;
+			if (selfSlot == pid) {
+				player = localPlayer;
+			} else {
+				player = players[pid];
+			}
+
+			if (player != null) {
+				LocType loc = LocType.list(locId);
+
+				int width;
+				int length;
+				if (var4 == 1 || var4 == 3) {
+					width = loc.length;
+					length = loc.width;
+				} else {
+					width = loc.width;
+					length = loc.length;
+				}
+
+				int var19 = (width >> 1) + var10;
+				int var20 = (width + 1 >> 1) + var10;
+				int var21 = (length >> 1) + var11;
+				int var22 = (length + 1 >> 1) + var11;
+				int[][] var23 = ClientBuild.groundh[minusedlevel];
+				int locOffsetY = var23[var19][var21] + var23[var20][var21] + var23[var19][var22] + var23[var20][var22] >> 2;
+				int var25 = (var10 << 7) + (width << 6);
+				int var26 = (var11 << 7) + (length << 6);
+
+				ModelLit var27 = loc.getModelLit(var3, var4, var23, var25, locOffsetY, var26);
+				if (var27 != null) {
+					locChangeCreate(minusedlevel, var10, var11, var5, -1, 0, 0, var7 + 1, var0 + 1);
+					player.locStartCycle = loopCycle + var7;
+					player.locEndCycle = loopCycle + var0;
+					player.locModel = var27;
+					player.locOffsetX = var10 * 128 + width * 64;
+					player.locOffsetZ = var11 * 128 + length * 64;
+					player.locOffsetY = locOffsetY;
+					if (var14 > var12) {
+						byte var28 = var14;
+						var14 = var12;
+						var12 = var28;
+					}
+					if (var13 > var1) {
+						byte var29 = var13;
+						var13 = var1;
+						var1 = var29;
+					}
+					player.minTileX = var10 + var14;
+					player.maxTileX = var10 + var12;
+					player.minTileZ = var11 + var13;
+					player.maxTileZ = var1 + var11;
+				}
+			}
+		} else if (ptype == 207) {
+			// OBJ_DEL
+			int var30 = in.g2_alt3();
+			int var31 = in.g1();
+			int var32 = (var31 >> 4 & 0x7) + baseX;
+			int var33 = (var31 & 0x7) + baseZ;
+			if (var32 >= 0 && var33 >= 0 && var32 < 104 && var33 < 104) {
+				LinkList var34 = groundObj[minusedlevel][var32][var33];
+				if (var34 != null) {
+					for (ClientObj var35 = (ClientObj) var34.head(); var35 != null; var35 = (ClientObj) var34.next()) {
+						if ((var30 & 0x7FFF) == var35.id) {
+							var35.unlink();
+							break;
+						}
+					}
+					if (var34.head() == null) {
+						groundObj[minusedlevel][var32][var33] = null;
+					}
+					showObject(var32, var33);
+				}
+			}
+		} else if (ptype == 205) {
+			// SOUND_AREA
+			int var36 = in.g1();
+			int var37 = (var36 >> 4 & 0x7) + baseX;
+			int var38 = (var36 & 0x7) + baseZ;
+			int var39 = in.g2();
+			int var40 = in.g1();
+			int var41 = var40 >> 4 & 0xF;
+			int var42 = var40 & 0x7;
+			int var43 = in.g1();
+			if (var37 >= 0 && var38 >= 0 && var37 < 104 && var38 < 104) {
+				int var44 = var41 + 1;
+				if (localPlayer.routeX[0] >= var37 - var44 && localPlayer.routeX[0] <= var37 + var44 && localPlayer.routeZ[0] >= var38 - var44 && localPlayer.routeZ[0] <= var38 + var44 && ambientVolume != 0 && var42 > 0 && waveCount < 50) {
+					waveSoundIds[waveCount] = var39;
+					waveLoops[waveCount] = var42;
+					waveDelay[waveCount] = var43;
+					waveSounds[waveCount] = null;
+					waveAmbient[waveCount] = (var37 << 16) + (var38 << 8) + var41;
+					waveCount++;
+				}
+			}
+		} else if (ptype == 6) {
+			// LOC_ANIM
+			int var45 = in.g2_alt2();
+			int var46 = in.g1_alt2();
+			int var47 = (var46 >> 4 & 0x7) + baseX;
+			int var48 = (var46 & 0x7) + baseZ;
+			int var49 = in.g1_alt3();
+			int var50 = var49 >> 2;
+			int var51 = var49 & 0x3;
+			int var52 = LOC_SHAPE_TO_LAYER[var50];
+			if (var47 >= 0 && var48 >= 0 && var47 < 103 && var48 < 103) {
+				if (var52 == 0) {
+					Wall var53 = world.getWall(minusedlevel, var47, var48);
+					if (var53 != null) {
+						int var54 = var53.typecode >> 14 & 0x7FFF;
+						if (var50 == 2) {
+							var53.modelA = new ClientLocAnim(var54, 2, var51 + 4, minusedlevel, var47, var48, var45, false, var53.modelA);
+							var53.modelB = new ClientLocAnim(var54, 2, var51 + 1 & 0x3, minusedlevel, var47, var48, var45, false, var53.modelB);
+						} else {
+							var53.modelA = new ClientLocAnim(var54, var50, var51, minusedlevel, var47, var48, var45, false, var53.modelA);
+						}
+					}
+				}
+				if (var52 == 1) {
+					Decor var55 = world.getDecor(minusedlevel, var47, var48);
+					if (var55 != null) {
+						int var56 = var55.typecode >> 14 & 0x7FFF;
+						if (var50 == 4 || var50 == 5) {
+							var55.model = new ClientLocAnim(var56, 4, var51, minusedlevel, var47, var48, var45, false, var55.model);
+						} else if (var50 == 6) {
+							var55.model = new ClientLocAnim(var56, 4, var51 + 4, minusedlevel, var47, var48, var45, false, var55.model);
+						} else if (var50 == 7) {
+							var55.model = new ClientLocAnim(var56, 4, (var51 + 2 & 0x3) + 4, minusedlevel, var47, var48, var45, false, var55.model);
+						} else if (var50 == 8) {
+							var55.model = new ClientLocAnim(var56, 4, var51 + 4, minusedlevel, var47, var48, var45, false, var55.model);
+							var55.model2 = new ClientLocAnim(var56, 4, (var51 + 2 & 0x3) + 4, minusedlevel, var47, var48, var45, false, var55.model2);
+						}
+					}
+				}
+				if (var52 == 2) {
+					Sprite var57 = world.getScene(minusedlevel, var47, var48);
+					if (var50 == 11) {
+						var50 = 10;
+					}
+					if (var57 != null) {
+						var57.model = new ClientLocAnim(var57.typecode >> 14 & 0x7FFF, var50, var51, minusedlevel, var47, var48, var45, false, var57.model);
+					}
+				}
+				if (var52 == 3) {
+					GroundDecor var58 = world.getGd(minusedlevel, var47, var48);
+					if (var58 != null) {
+						var58.model = new ClientLocAnim(var58.typecode >> 14 & 0x7FFF, 22, var51, minusedlevel, var47, var48, var45, false, var58.model);
+					}
+				}
+			}
+		} else if (ptype == 173) {
+			// OBJ_ADD
+			int var59 = in.g1_alt1();
+			int var60 = (var59 >> 4 & 0x7) + baseX;
+			int var61 = (var59 & 0x7) + baseZ;
+			int var62 = in.g2_alt2();
+			int var63 = in.g2_alt3();
+			if (var60 >= 0 && var61 >= 0 && var60 < 104 && var61 < 104) {
+				ClientObj var64 = new ClientObj();
+				var64.id = var63;
+				var64.count = var62;
+				if (groundObj[minusedlevel][var60][var61] == null) {
+					groundObj[minusedlevel][var60][var61] = new LinkList();
+				}
+				groundObj[minusedlevel][var60][var61].push(var64);
+				showObject(var60, var61);
+			}
+		} else if (ptype == 106) {
+			// OBJ_COUNT
+			int var65 = in.g1();
+			int var66 = (var65 >> 4 & 0x7) + baseX;
+			int var67 = (var65 & 0x7) + baseZ;
+			int var68 = in.g2();
+			int var69 = in.g2();
+			int var70 = in.g2();
+			if (var66 >= 0 && var67 >= 0 && var66 < 104 && var67 < 104) {
+				LinkList var71 = groundObj[minusedlevel][var66][var67];
+				if (var71 != null) {
+					for (ClientObj var72 = (ClientObj) var71.head(); var72 != null; var72 = (ClientObj) var71.next()) {
+						if ((var68 & 0x7FFF) == var72.id && var72.count == var69) {
+							var72.count = var70;
+							break;
+						}
+					}
+					showObject(var66, var67);
+				}
+			}
+		} else if (ptype == 154) {
+			// LOC_ADD_CHANGE
+			int var73 = in.g2_alt3();
+			int var74 = in.g1_alt1();
+			int var75 = var74 >> 2;
+			int var76 = var74 & 0x3;
+			int var77 = LOC_SHAPE_TO_LAYER[var75];
+			int var78 = in.g1_alt2();
+			int var79 = (var78 >> 4 & 0x7) + baseX;
+			int var80 = (var78 & 0x7) + baseZ;
+			if (var79 >= 0 && var80 >= 0 && var79 < 104 && var80 < 104) {
+				locChangeCreate(minusedlevel, var79, var80, var77, var73, var75, var76, 0, -1);
+			}
+		} else if (ptype == 20) {
+			// MAP_ANIM
+			int var81 = in.g1();
+			int var82 = (var81 >> 4 & 0x7) + baseX;
+			int var83 = (var81 & 0x7) + baseZ;
+			int var84 = in.g2();
+			int var85 = in.g1();
+			int var86 = in.g2();
+			if (var82 >= 0 && var83 >= 0 && var82 < 104 && var83 < 104) {
+				int var87 = var82 * 128 + 64;
+				int var88 = var83 * 128 + 64;
+				MapSpotAnim var89 = new MapSpotAnim(var84, minusedlevel, var87, var88, getAvH(var87, var88, minusedlevel) - var85, var86, loopCycle);
+				spotanims.push(var89);
+			}
+		} else if (ptype == 32) {
+			// MAP_PROJANIM
+			int var90 = in.g1();
+			int var91 = (var90 >> 4 & 0x7) + baseX;
+			int var92 = (var90 & 0x7) + baseZ;
+			int var93 = var91 + in.g1b();
+			int var94 = var92 + in.g1b();
+			int var95 = in.g2b();
+			int var96 = in.g2();
+			int var97 = in.g1() * 4;
+			int var98 = in.g1() * 4;
+			int var99 = in.g2();
+			int var100 = in.g2();
+			int var101 = in.g1();
+			int var102 = in.g1();
+			if (var91 >= 0 && var92 >= 0 && var91 < 104 && var92 < 104 && var93 >= 0 && var94 >= 0 && var93 < 104 && var94 < 104 && var96 != 65535) {
+				int var103 = var91 * 128 + 64;
+				int var104 = var92 * 128 + 64;
+				int var105 = var93 * 128 + 64;
+				int var106 = var94 * 128 + 64;
+				ClientProj var107 = new ClientProj(var96, minusedlevel, var103, var104, getAvH(var103, var104, minusedlevel) - var97, loopCycle + var99, loopCycle + var100, var101, var102, var95, var98);
+				var107.setTarget(var105, var106, getAvH(var105, var106, minusedlevel) - var98, loopCycle + var99);
+				projectiles.push(var107);
+			}
+		} else if (ptype == 215) {
+			// OBJ_REVEAL
+			int var108 = in.g1_alt2();
+			int var109 = (var108 >> 4 & 0x7) + baseX;
+			int var110 = (var108 & 0x7) + baseZ;
+			int var111 = in.g2();
+			int var112 = in.g2_alt2();
+			int var113 = in.g2();
+			if (var109 >= 0 && var110 >= 0 && var109 < 104 && var110 < 104 && selfSlot != var111) {
+				ClientObj var114 = new ClientObj();
+				var114.id = var113;
+				var114.count = var112;
+				if (groundObj[minusedlevel][var109][var110] == null) {
+					groundObj[minusedlevel][var109][var110] = new LinkList();
+				}
+				groundObj[minusedlevel][var109][var110].push(var114);
+				showObject(var109, var110);
+			}
+		} else if (ptype == 7) {
+			// LOC_DEL
+			int var115 = in.g1_alt3();
+			int var116 = var115 >> 2;
+			int var117 = var115 & 0x3;
+			int var118 = LOC_SHAPE_TO_LAYER[var116];
+			int var119 = in.g1_alt1();
+			int var120 = (var119 >> 4 & 0x7) + baseX;
+			int var121 = (var119 & 0x7) + baseZ;
+			if (var120 >= 0 && var121 >= 0 && var120 < 104 && var121 < 104) {
+				locChangeCreate(minusedlevel, var120, var121, var118, -1, var116, var117, 0, -1);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::LocChangeCreate
+	@ObfuscatedName("ap.ew(IIIIIIIIII)V")
+	public static void locChangeCreate(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
+		LocChange var9 = null;
+		for (LocChange var10 = (LocChange) locChanges.head(); var10 != null; var10 = (LocChange) locChanges.next()) {
+			if (var10.level == arg0 && var10.x == arg1 && var10.z == arg2 && var10.layer == arg3) {
+				var9 = var10;
+				break;
+			}
+		}
+		if (var9 == null) {
+			var9 = new LocChange();
+			var9.level = arg0;
+			var9.layer = arg3;
+			var9.x = arg1;
+			var9.z = arg2;
+			locChangeSetOld(var9);
+			locChanges.push(var9);
+		}
+		var9.newType = arg4;
+		var9.newShape = arg5;
+		var9.newAngle = arg6;
+		var9.startTime = arg7;
+		var9.endTime = arg8;
+	}
+
+	// jag::oldscape::Client::LocChangePostBuildCorrect
+	// placement relative to other clients
+	public static void locChangePostBuildCorrect() {
+		for (LocChange loc = (LocChange) locChanges.head(); loc != null; loc = (LocChange) locChanges.next()) {
+			if (loc.endTime == -1) {
+				loc.startTime = 0;
+				locChangeSetOld(loc);
+			} else {
+				loc.unlink();
+			}
+		}
+	}
+
+	// jag::oldscape::Client::LocChangeSetOld
+	@ObfuscatedName("dc.ek(Ldn;I)V")
+	public static void locChangeSetOld(LocChange arg0) {
+		int var1 = 0;
+		int var2 = -1;
+		int var3 = 0;
+		int var4 = 0;
+		if (arg0.layer == 0) {
+			var1 = world.wallType(arg0.level, arg0.x, arg0.z);
+		}
+		if (arg0.layer == 1) {
+			var1 = world.decorType(arg0.level, arg0.x, arg0.z);
+		}
+		if (arg0.layer == 2) {
+			var1 = world.sceneType(arg0.level, arg0.x, arg0.z);
+		}
+		if (arg0.layer == 3) {
+			var1 = world.gdType(arg0.level, arg0.x, arg0.z);
+		}
+		if (var1 != 0) {
+			int var5 = world.typecode2(arg0.level, arg0.x, arg0.z, var1);
+			var2 = var1 >> 14 & 0x7FFF;
+			var3 = var5 & 0x1F;
+			var4 = var5 >> 6 & 0x3;
+		}
+		arg0.oldType = var2;
+		arg0.oldShape = var3;
+		arg0.oldAngle = var4;
+	}
+
+	// jag::oldscape::Client::LocChangeDoQueue
+	// placement relative to other clients
+	public static void locChangeDoQueue() {
+		for (LocChange var423 = (LocChange) locChanges.head(); var423 != null; var423 = (LocChange) locChanges.next()) {
+			if (var423.endTime > 0) {
+				var423.endTime--;
+			}
+			if (var423.endTime != 0) {
+				if (var423.startTime > 0) {
+					var423.startTime--;
+				}
+				if (var423.startTime == 0 && var423.x >= 1 && var423.z >= 1 && var423.x <= 102 && var423.z <= 102 && (var423.newType < 0 || ClientBuild.changeLocAvailable(var423.newType, var423.newShape))) {
+					locChangeUnchecked(var423.level, var423.layer, var423.x, var423.z, var423.newType, var423.newAngle, var423.newShape);
+					var423.startTime = -1;
+					if (var423.newType == var423.oldType && var423.oldType == -1) {
+						var423.unlink();
+					} else if (var423.newType == var423.oldType && var423.newAngle == var423.oldAngle && var423.oldShape == var423.newShape) {
+						var423.unlink();
+					}
+				}
+			} else if (var423.oldType < 0 || ClientBuild.changeLocAvailable(var423.oldType, var423.oldShape)) {
+				locChangeUnchecked(var423.level, var423.layer, var423.x, var423.z, var423.oldType, var423.oldAngle, var423.oldShape);
+				var423.unlink();
+			}
+		}
+	}
+
+	// jag::oldscape::Client::LocChangeUnchecked
+	@ObfuscatedName("f.eq(IIIIIIII)V")
+	public static void locChangeUnchecked(int arg0, int layer, int arg2, int arg3, int arg4, int arg5, int arg6) {
+		if (arg2 < 1 || arg3 < 1 || arg2 > 102 || arg3 > 102) {
+			return;
+		}
+		if (lowMemory && minusedlevel != arg0) {
+			return;
+		}
+		int var7 = 0;
+		boolean var8 = true;
+		boolean var9 = false;
+		boolean var10 = false;
+		if (layer == 0) {
+			var7 = world.wallType(arg0, arg2, arg3);
+		}
+		if (layer == 1) {
+			var7 = world.decorType(arg0, arg2, arg3);
+		}
+		if (layer == 2) {
+			var7 = world.sceneType(arg0, arg2, arg3);
+		}
+		if (layer == 3) {
+			var7 = world.gdType(arg0, arg2, arg3);
+		}
+		if (var7 != 0) {
+			int var11 = world.typecode2(arg0, arg2, arg3, var7);
+			int var12 = var7 >> 14 & 0x7FFF;
+			int var13 = var11 & 0x1F;
+			int var14 = var11 >> 6 & 0x3;
+			if (layer == 0) {
+				world.delWall(arg0, arg2, arg3);
+				LocType var15 = LocType.list(var12);
+				if (var15.blockwalk != 0) {
+					levelCollisionMap[arg0].delWall(arg2, arg3, var13, var14, var15.blockrange);
+				}
+			}
+			if (layer == 1) {
+				world.delDecor(arg0, arg2, arg3);
+			}
+			if (layer == 2) {
+				world.delLoc(arg0, arg2, arg3);
+				LocType var16 = LocType.list(var12);
+				if (var16.width + arg2 > 103 || var16.width + arg3 > 103 || var16.length + arg2 > 103 || var16.length + arg3 > 103) {
+					return;
+				}
+				if (var16.blockwalk != 0) {
+					levelCollisionMap[arg0].delLoc(arg2, arg3, var16.width, var16.length, var14, var16.blockrange);
+				}
+			}
+			if (layer == 3) {
+				world.delGroundDecor(arg0, arg2, arg3);
+				LocType var17 = LocType.list(var12);
+				if (var17.blockwalk == 1) {
+					levelCollisionMap[arg0].unblockGroundDecor(arg2, arg3);
+				}
+			}
+		}
+		if (arg4 >= 0) {
+			int var18 = arg0;
+			if (arg0 < 3 && (ClientBuild.mapl[1][arg2][arg3] & 0x2) == 2) {
+				var18 = arg0 + 1;
+			}
+			ClientBuild.changeLocUnchecked(arg0, var18, arg2, arg3, arg4, arg5, arg6, world, levelCollisionMap[arg0]);
+		}
+	}
+
+	// jag::oldscape::Client::ShowObject
+	@ObfuscatedName("dr.et(III)V")
+	public static void showObject(int arg0, int arg1) {
+		LinkList var2 = groundObj[minusedlevel][arg0][arg1];
+		if (var2 == null) {
+			world.delObj(minusedlevel, arg0, arg1);
+			return;
+		}
+		int var3 = -99999999;
+		ClientObj var4 = null;
+		for (ClientObj var5 = (ClientObj) var2.head(); var5 != null; var5 = (ClientObj) var2.next()) {
+			ObjType var6 = ObjType.list(var5.id);
+			int var7 = var6.cost;
+			if (var6.stackable == 1) {
+				var7 = (var5.count + 1) * var7;
+			}
+			if (var7 > var3) {
+				var3 = var7;
+				var4 = var5;
+			}
+		}
+		if (var4 == null) {
+			world.delObj(minusedlevel, arg0, arg1);
+			return;
+		}
+		var2.pushFront(var4);
+		ClientObj var8 = null;
+		ClientObj var9 = null;
+		for (ClientObj var10 = (ClientObj) var2.head(); var10 != null; var10 = (ClientObj) var2.next()) {
+			if (var4.id != var10.id) {
+				if (var8 == null) {
+					var8 = var10;
+				}
+				if (var8.id != var10.id && var9 == null) {
+					var9 = var10;
+				}
+			}
+		}
+		int var11 = (arg1 << 7) + arg0 + 1610612736;
+		world.setObj(minusedlevel, arg0, arg1, getAvH(arg0 * 128 + 64, arg1 * 128 + 64, minusedlevel), var4, var11, var8, var9);
+	}
+
+	@ObfuscatedName("ej.ee(I)V")
+	public static void getPlayerPos() {
+		entityRemovalCount = 0;
+		entityUpdateCount = 0;
+		getPlayerPosLocal();
+		getPlayerPosOldVis();
+		getPlayerPosNewVis();
+		getPlayerPosExtended();
+		for (int var44 = 0; var44 < entityRemovalCount; var44++) {
+			int var45 = entityRemovalIds[var44];
+			if (loopCycle != players[var45].cycle) {
+				players[var45] = null;
+			}
+		}
+		if (psize != in.pos) {
+			throw new RuntimeException("gpp1 pos:" + in.pos + " size:" + psize);
+		}
+		for (int var46 = 0; var46 < playerCount; var46++) {
+			if (players[playerIds[var46]] == null) {
+				throw new RuntimeException("gpp2 pos:" + var46 + " size:" + playerCount);
+			}
+		}
+	}
+
+	public static void getPlayerPosLocal() {
+		in.gBitStart();
+		int var0 = in.gBit(1);
+		if (var0 == 0) {
+			return;
+		}
+		int var1 = in.gBit(2);
+		if (var1 == 0) {
+			entityUpdateIds[++entityUpdateCount - 1] = 2047;
+		} else if (var1 == 1) {
+			int var2 = in.gBit(3);
+			localPlayer.moveCode(var2, false);
+			int var3 = in.gBit(1);
+			if (var3 == 1) {
+				entityUpdateIds[++entityUpdateCount - 1] = 2047;
+			}
+		} else if (var1 == 2) {
+			int var4 = in.gBit(3);
+			localPlayer.moveCode(var4, true);
+			int var5 = in.gBit(3);
+			localPlayer.moveCode(var5, true);
+			int var6 = in.gBit(1);
+			if (var6 == 1) {
+				entityUpdateIds[++entityUpdateCount - 1] = 2047;
+			}
+		} else if (var1 == 3) {
+			minusedlevel = in.gBit(2);
+			int var7 = in.gBit(7);
+			int var8 = in.gBit(1);
+			if (var8 == 1) {
+				entityUpdateIds[++entityUpdateCount - 1] = 2047;
+			}
+			int var9 = in.gBit(7);
+			int var10 = in.gBit(1);
+			localPlayer.teleport(var7, var9, var10 == 1);
+		}
+	}
+
+	public static void getPlayerPosOldVis() {
+		int var11 = in.gBit(8);
+		if (var11 < playerCount) {
+			for (int var12 = var11; var12 < playerCount; var12++) {
+				entityRemovalIds[++entityRemovalCount - 1] = playerIds[var12];
+			}
+		}
+		if (var11 > playerCount) {
+			throw new RuntimeException("gppov1");
+		}
+		playerCount = 0;
+		for (int var13 = 0; var13 < var11; var13++) {
+			int var14 = playerIds[var13];
+			ClientPlayer var15 = players[var14];
+			int var16 = in.gBit(1);
+			if (var16 == 0) {
+				playerIds[++playerCount - 1] = var14;
+				var15.cycle = loopCycle;
+			} else {
+				int var17 = in.gBit(2);
+				if (var17 == 0) {
+					playerIds[++playerCount - 1] = var14;
+					var15.cycle = loopCycle;
+					entityUpdateIds[++entityUpdateCount - 1] = var14;
+				} else if (var17 == 1) {
+					playerIds[++playerCount - 1] = var14;
+					var15.cycle = loopCycle;
+					int var18 = in.gBit(3);
+					var15.moveCode(var18, false);
+					int var19 = in.gBit(1);
+					if (var19 == 1) {
+						entityUpdateIds[++entityUpdateCount - 1] = var14;
+					}
+				} else if (var17 == 2) {
+					playerIds[++playerCount - 1] = var14;
+					var15.cycle = loopCycle;
+					int var20 = in.gBit(3);
+					var15.moveCode(var20, true);
+					int var21 = in.gBit(3);
+					var15.moveCode(var21, true);
+					int var22 = in.gBit(1);
+					if (var22 == 1) {
+						entityUpdateIds[++entityUpdateCount - 1] = var14;
+					}
+				} else if (var17 == 3) {
+					entityRemovalIds[++entityRemovalCount - 1] = var14;
+				}
+			}
+		}
+	}
+
+	public static void getPlayerPosNewVis() {
+		while (in.bitsLeft(psize) >= 11) {
+			int var23 = in.gBit(11);
+			if (var23 == 2047) {
+				break;
+			}
+			boolean var47 = false;
+			if (players[var23] == null) {
+				players[var23] = new ClientPlayer();
+				if (playerAppearanceBuffer[var23] != null) {
+					players[var23].setAppearance(playerAppearanceBuffer[var23]);
+				}
+				var47 = true;
+			}
+			playerIds[++playerCount - 1] = var23;
+			ClientPlayer var48 = players[var23];
+			var48.cycle = loopCycle;
+			int var49 = in.gBit(5);
+			if (var49 > 15) {
+				var49 -= 32;
+			}
+			int var50 = ANGLE_TO_DIR[in.gBit(3)];
+			if (var47) {
+				var48.dstYaw = var48.yaw = var50;
+			}
+			int var51 = in.gBit(5);
+			if (var51 > 15) {
+				var51 -= 32;
+			}
+			int var52 = in.gBit(1);
+			int var53 = in.gBit(1);
+			if (var53 == 1) {
+				entityUpdateIds[++entityUpdateCount - 1] = var23;
+			}
+			var48.teleport(localPlayer.routeX[0] + var51, localPlayer.routeZ[0] + var49, var52 == 1);
+		}
+		in.gBitEnd();
+	}
+
+	public static void getPlayerPosExtended() {
+		for (int var24 = 0; var24 < entityUpdateCount; var24++) {
+			int var25 = entityUpdateIds[var24];
+			ClientPlayer var26 = players[var25];
+			int var27 = in.g1();
+			if ((var27 & 0x40) != 0) {
+				var27 += in.g1() << 8;
+			}
+			getPlayerPosExtended(var25, var26, var27);
+		}
+	}
+
+	public static void getPlayerPosExtended(int var25, ClientPlayer var26, int var27) {
+		if ((var27 & 0x4) != 0) {
+			int var28 = in.g2();
+			int var29 = in.g1();
+			int var30 = in.g1();
+			int var31 = in.pos;
+			if (var26.name != null && var26.model != null) {
+				boolean var32 = false;
+				if (var29 <= 1 && isIgnored(var26.name)) {
+					var32 = true;
+				}
+				if (!var32 && overrideChat == 0) {
+					tempP.pos = 0;
+					in.gdata(tempP.data, 0, var30);
+
+					tempP.pos = 0;
+					String var33 = PixFont.escape(StringTools.forceCapitalisationOfWords(WordPack.unpack(tempP)));
+
+					var26.chat = var33.trim();
+					var26.chatColour = var28 >> 8;
+					var26.chatEffect = var28 & 0xFF;
+					var26.chatTimer = 150;
+
+					if (var29 == 2 || var29 == 3) {
+						addChat(1, StringConstants.TAG_IMG(1) + var26.name, var33);
+					} else if (var29 == 1) {
+						addChat(1, StringConstants.TAG_IMG(0) + var26.name, var33);
+					} else {
+						addChat(2, var26.name, var33);
+					}
+				}
+			}
+			in.pos = var30 + var31;
+		}
+		if ((var27 & 0x2) != 0) {
+			int var34 = in.g1_alt3();
+			byte[] var35 = new byte[var34];
+			Packet var36 = new Packet(var35);
+			in.gdata_alt1(var35, 0, var34);
+			playerAppearanceBuffer[var25] = var36;
+			var26.setAppearance(var36);
+		}
+		if ((var27 & 0x100) != 0) {
+			var26.exactStartX = in.g1();
+			var26.exactStartZ = in.g1_alt2();
+			var26.exactEndX = in.g1();
+			var26.exactEndZ = in.g1_alt1();
+			var26.exactMoveEnd = in.g2_alt2() + loopCycle;
+			var26.exactMoveStart = in.g2() + loopCycle;
+			var26.exactMoveFacing = in.g1_alt2();
+			var26.routeLength = 1;
+			var26.preanimRouteLength = 0;
+		}
+		if ((var27 & 0x20) != 0) {
+			var26.targetId = in.g2_alt3();
+			if (var26.targetId == 65535) {
+				var26.targetId = -1;
+			}
+		}
+		if ((var27 & 0x80) != 0) {
+			var26.targetTileX = in.g2_alt2();
+			var26.targetTileZ = in.g2_alt1();
+		}
+		if ((var27 & 0x10) != 0) {
+			int var37 = in.g2_alt2();
+			if (var37 == 65535) {
+				var37 = -1;
+			}
+			int var38 = in.g1_alt2();
+			triggerPlayerAnim(var26, var37, var38);
+		}
+		if ((var27 & 0x200) != 0) {
+			var26.spotanimId = in.g2_alt1();
+			int var39 = in.g4();
+			var26.spotanimHeight = var39 >> 16;
+			var26.spotanimLastCycle = (var39 & 0xFFFF) + loopCycle;
+			var26.spotanimFrame = 0;
+			var26.spotanimCycle = 0;
+			if (var26.spotanimLastCycle > loopCycle) {
+				var26.spotanimFrame = -1;
+			}
+			if (var26.spotanimId == 65535) {
+				var26.spotanimId = -1;
+			}
+		}
+		if ((var27 & 0x400) != 0) {
+			int var40 = in.g1_alt1();
+			int var41 = in.g1_alt3();
+			var26.addHitmark(var40, var41, loopCycle);
+			var26.combatCycle = loopCycle + 300;
+			var26.health = in.g1();
+			var26.totalHealth = in.g1_alt2();
+		}
+		if ((var27 & 0x1) != 0) {
+			var26.chat = in.gjstr();
+			if (var26.chat.charAt(0) == '~') {
+				var26.chat = var26.chat.substring(1);
+				addChat(2, var26.name, var26.chat);
+			} else if (localPlayer == var26) {
+				addChat(2, var26.name, var26.chat);
+			}
+			var26.chatColour = 0;
+			var26.chatEffect = 0;
+			var26.chatTimer = 150;
+		}
+		if ((var27 & 0x8) != 0) {
+			int var42 = in.g1_alt1();
+			int var43 = in.g1_alt3();
+			var26.addHitmark(var42, var43, loopCycle);
+			var26.combatCycle = loopCycle + 300;
+			var26.health = in.g1_alt1();
+			var26.totalHealth = in.g1();
+		}
+	}
+
+	// jag::oldscape::Client::GetNPCPos
+	public static void getNpcPos() {
+		entityRemovalCount = 0;
+		entityUpdateCount = 0;
+		getNpcPosOldVis();
+		getNpcPosNewVis();
+		getNpcPosExtended();
+		for (int var374 = 0; var374 < entityRemovalCount; var374++) {
+			int var375 = entityRemovalIds[var374];
+			if (loopCycle != npcs[var375].cycle) {
+				npcs[var375].type = null;
+				npcs[var375] = null;
+			}
+		}
+		if (psize != in.pos) {
+			throw new RuntimeException("gnp1 pos:" + in.pos + " psize:" + psize);
+		}
+		for (int var376 = 0; var376 < npcCount; var376++) {
+			if (npcs[npcIds[var376]] == null) {
+				throw new RuntimeException("gnp2 pos:" + var376 + " size:" + npcCount);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GetNPCPosOldVis
+	public static void getNpcPosOldVis() {
+		in.gBitStart();
+		int var362 = in.gBit(8);
+		if (var362 < npcCount) {
+			for (int var363 = var362; var363 < npcCount; var363++) {
+				entityRemovalIds[++entityRemovalCount - 1] = npcIds[var363];
+			}
+		}
+		if (var362 > npcCount) {
+			throw new RuntimeException("gnpov1");
+		}
+		npcCount = 0;
+		for (int var364 = 0; var364 < var362; var364++) {
+			int var365 = npcIds[var364];
+			ClientNpc var366 = npcs[var365];
+			int var367 = in.gBit(1);
+			if (var367 == 0) {
+				npcIds[++npcCount - 1] = var365;
+				var366.cycle = loopCycle;
+			} else {
+				int var368 = in.gBit(2);
+				if (var368 == 0) {
+					npcIds[++npcCount - 1] = var365;
+					var366.cycle = loopCycle;
+					entityUpdateIds[++entityUpdateCount - 1] = var365;
+				} else if (var368 == 1) {
+					npcIds[++npcCount - 1] = var365;
+					var366.cycle = loopCycle;
+					int var369 = in.gBit(3);
+					var366.moveCode(var369, false);
+					int var370 = in.gBit(1);
+					if (var370 == 1) {
+						entityUpdateIds[++entityUpdateCount - 1] = var365;
+					}
+				} else if (var368 == 2) {
+					npcIds[++npcCount - 1] = var365;
+					var366.cycle = loopCycle;
+					int var371 = in.gBit(3);
+					var366.moveCode(var371, true);
+					int var372 = in.gBit(3);
+					var366.moveCode(var372, true);
+					int var373 = in.gBit(1);
+					if (var373 == 1) {
+						entityUpdateIds[++entityUpdateCount - 1] = var365;
+					}
+				} else if (var368 == 3) {
+					entityRemovalIds[++entityRemovalCount - 1] = var365;
+				}
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GetNPCPosNewVis
+	@ObfuscatedName("dm.ed(I)V")
+	public static void getNpcPosNewVis() {
+		while (in.bitsLeft(psize) >= 27) {
+			int var0 = in.gBit(15);
+			if (var0 == 32767) {
+				break;
+			}
+
+			boolean var1 = false;
+			if (npcs[var0] == null) {
+				npcs[var0] = new ClientNpc();
+				var1 = true;
+			}
+			ClientNpc var2 = npcs[var0];
+			npcIds[++npcCount - 1] = var0;
+			var2.cycle = loopCycle;
+			int var3 = ANGLE_TO_DIR[in.gBit(3)];
+			if (var1) {
+				var2.dstYaw = var2.yaw = var3;
+			}
+			int var4 = in.gBit(5);
+			if (var4 > 15) {
+				var4 -= 32;
+			}
+			int var5 = in.gBit(1);
+			if (var5 == 1) {
+				entityUpdateIds[++entityUpdateCount - 1] = var0;
+			}
+			int var6 = in.gBit(1);
+			var2.type = NpcType.list(in.gBit(14));
+			int var7 = in.gBit(5);
+			if (var7 > 15) {
+				var7 -= 32;
+			}
+			var2.size = var2.type.size;
+			var2.turnSpeed = var2.type.turnspeed;
+			if (var2.turnSpeed == 0) {
+				var2.yaw = 0;
+			}
+			var2.walkanim = var2.type.walkanim;
+			var2.walkanim_b = var2.type.walkanim_b;
+			var2.walkanim_l = var2.type.walkanim_r;
+			var2.walkanim_r = var2.type.walkanim_l;
+			var2.readyanim = var2.type.readyanim;
+			var2.turnleftanim = var2.type.turnleftanim;
+			var2.turnrightanim = var2.type.turnrightanim;
+			var2.teleport(localPlayer.routeX[0] + var7, localPlayer.routeZ[0] + var4, var6 == 1);
+		}
+
+		in.gBitEnd();
+	}
+
+	// jag::oldscape::Client::GetNPCPosExtended
+	@ObfuscatedName("ag.ex(B)V")
+	public static void getNpcPosExtended() {
+		for (int var0 = 0; var0 < entityUpdateCount; var0++) {
+			int var1 = entityUpdateIds[var0];
+			ClientNpc var2 = npcs[var1];
+			int var3 = in.g1();
+			if ((var3 & 0x80) != 0) {
+				int var4 = in.g1();
+				int var5 = in.g1_alt2();
+				var2.addHitmark(var4, var5, loopCycle);
+				var2.combatCycle = loopCycle + 300;
+				var2.health = in.g1_alt1();
+				var2.totalHealth = in.g1_alt1();
+			}
+			if ((var3 & 0x4) != 0) {
+				var2.targetId = in.g2_alt1();
+				if (var2.targetId == 65535) {
+					var2.targetId = -1;
+				}
+			}
+			if ((var3 & 0x2) != 0) {
+				var2.targetTileX = in.g2_alt3();
+				var2.targetTileZ = in.g2_alt3();
+			}
+			if ((var3 & 0x1) != 0) {
+				var2.spotanimId = in.g2_alt1();
+				int var6 = in.g4();
+				var2.spotanimHeight = var6 >> 16;
+				var2.spotanimLastCycle = (var6 & 0xFFFF) + loopCycle;
+				var2.spotanimFrame = 0;
+				var2.spotanimCycle = 0;
+				if (var2.spotanimLastCycle > loopCycle) {
+					var2.spotanimFrame = -1;
+				}
+				if (var2.spotanimId == 65535) {
+					var2.spotanimId = -1;
+				}
+			}
+			if ((var3 & 0x8) != 0) {
+				int var7 = in.g2_alt3();
+				if (var7 == 65535) {
+					var7 = -1;
+				}
+				int var8 = in.g1_alt1();
+				if (var2.primarySeqId == var7 && var7 != -1) {
+					int var9 = SeqType.list(var7).duplicatebehavior;
+					if (var9 == 1) {
+						var2.primarySeqFrame = 0;
+						var2.primarySeqCycle = 0;
+						var2.primarySeqDelay = var8;
+						var2.primarySeqLoop = 0;
+					}
+					if (var9 == 2) {
+						var2.primarySeqLoop = 0;
+					}
+				} else if (var7 == -1 || var2.primarySeqId == -1 || SeqType.list(var7).priority >= SeqType.list(var2.primarySeqId).priority) {
+					var2.primarySeqId = var7;
+					var2.primarySeqFrame = 0;
+					var2.primarySeqCycle = 0;
+					var2.primarySeqDelay = var8;
+					var2.primarySeqLoop = 0;
+					var2.preanimRouteLength = var2.routeLength;
+				}
+			}
+			if ((var3 & 0x40) != 0) {
+				var2.type = NpcType.list(in.g2());
+				var2.size = var2.type.size;
+				var2.turnSpeed = var2.type.turnspeed;
+				var2.walkanim = var2.type.walkanim;
+				var2.walkanim_b = var2.type.walkanim_b;
+				var2.walkanim_l = var2.type.walkanim_r;
+				var2.walkanim_r = var2.type.walkanim_l;
+				var2.readyanim = var2.type.readyanim;
+				var2.turnleftanim = var2.type.turnleftanim;
+				var2.turnrightanim = var2.type.turnrightanim;
+			}
+			if ((var3 & 0x20) != 0) {
+				var2.chat = in.gjstr();
+				var2.chatTimer = 100;
+			}
+			if ((var3 & 0x10) != 0) {
+				int var10 = in.g1_alt3();
+				int var11 = in.g1_alt3();
+				var2.addHitmark(var10, var11, loopCycle);
+				var2.combatCycle = loopCycle + 300;
+				var2.health = in.g1_alt3();
+				var2.totalHealth = in.g1_alt1();
+			}
+		}
+	}
+
+	// jag::oldscape::Client::DirtyArea
+	@ObfuscatedName("bs.ea(IIIII)V")
+	public static void dirtyArea(int arg0, int arg1, int arg2, int arg3) {
+		for (int i = 0; i < componentDrawCount; i++) {
+			if (componentDrawWidth[i] + componentDrawX[i] > arg0 && componentDrawX[i] < arg0 + arg2 && componentDrawHeight[i] + componentDrawY[i] > arg1 && componentDrawY[i] < arg1 + arg3) {
+				componentRedrawRequested1[i] = true;
+			}
+		}
+	}
+
+	// jag::oldscape::minimenu::Minimenu::GameLoop
+	// guessing placement
+	public static void mouseLoop() {
+		if (objDragInterface != null || dragComponent != null) {
+			return;
+		}
+
+		int button = ClientMouseListener.mouseClickButton;
+
+		if (isMenuOpen) {
+			if (button == 1) {
+				int x = menuX;
+				int y = menuY;
+				int width = menuWidth;
+				int clickX = ClientMouseListener.mouseClickX;
+				int clickY = ClientMouseListener.mouseClickY;
+
+				int option = -1;
+				for (int i = 0; i < menuNumEntries; i++) {
+					int height = (menuNumEntries - 1 - i) * 15 + y + 31;
+					if (clickX > x && clickX < x + width && clickY > height - 13 && clickY < height + 3) {
+						option = i;
+					}
+				}
+
+				if (option != -1) {
+					doAction(option);
+				}
+
+				isMenuOpen = false;
+				dirtyArea(menuX, menuY, menuWidth, menuHeight);
+			} else {
+				int x = ClientMouseListener.mouseX;
+				int y = ClientMouseListener.mouseY;
+
+				if (x < menuX - 10 || x > menuWidth + menuX + 10 || y < menuY - 10 || y > menuY + menuHeight + 10) {
+					isMenuOpen = false;
+					dirtyArea(menuX, menuY, menuWidth, menuHeight);
+				}
+			}
+		} else {
+			if (button == 1 && menuNumEntries > 0) {
+				int action = menuAction[menuNumEntries - 1];
+
+				if (action == 39 || action == 40 || action == 41 || action == 42 || action == 43 || action == 33 || action == 34 || action == 35 || action == 36 || action == 37 || action == 38 || action == 1005) {
+					int slot = menuParamB[menuNumEntries - 1];
+					int comId = menuParamC[menuNumEntries - 1];
+
+					IfType com = IfType.get(comId);
+					if (ServerActive.isObjSwapEnabled(getActive(com)) || ServerActive.isObjReplaceEnabled(getActive(com))) {
+						objGrabThreshold = false;
+						objDragCycles = 0;
+
+						if (objDragInterface != null) {
+							componentUpdated(objDragInterface);
+						}
+
+						objDragInterface = IfType.get(comId);
+						objDragSlot = slot;
+						objGrabX = ClientMouseListener.mouseClickX;
+						objGrabY = ClientMouseListener.mouseClickY;
+
+						componentUpdated(objDragInterface);
+						return;
+					}
+				}
+			}
+
+			if (button == 1 && (oneMouseButton == 1 && menuNumEntries > 2 || isAddFriendOption(menuNumEntries - 1))) {
+				button = 2;
+			}
+
+			if (button == 1 && menuNumEntries > 0) {
+				doAction(menuNumEntries - 1);
+			} else if (button == 2 && menuNumEntries > 0) {
+				openMenu();
+			}
+		}
+	}
+
+	// jag::oldscape::minimenu::Minimenu::Sort
+	// guessing placement
+	public static void sortMinimenu() {
+		boolean done = false;
+		while (!done) {
+			done = true;
+
+			for (int i = 0; i < menuNumEntries - 1; i++) {
+				if (menuAction[i] >= 1000 || menuAction[i + 1] <= 1000) {
+					continue;
+				}
+
+				String subject = menuSubject[i];
+				menuSubject[i] = menuSubject[i + 1];
+				menuSubject[i + 1] = subject;
+
+				String verb = menuVerb[i];
+				menuVerb[i] = menuVerb[i + 1];
+				menuVerb[i + 1] = verb;
+
+				int action = menuAction[i];
+				menuAction[i] = menuAction[i + 1];
+				menuAction[i + 1] = action;
+
+				int b = menuParamB[i];
+				menuParamB[i] = menuParamB[i + 1];
+				menuParamB[i + 1] = b;
+
+				int c = menuParamC[i];
+				menuParamC[i] = menuParamC[i + 1];
+				menuParamC[i + 1] = c;
+
+				int a = menuParamA[i];
+				menuParamA[i] = menuParamA[i + 1];
+				menuParamA[i + 1] = a;
+
+				done = false;
+			}
+		}
+	}
+
+	// guessing placement
+	public static void imethod26(int var37, int var38, int var39, int var40) {
+		for (int var41 = 0; var41 < componentDrawCount; var41++) {
+			if (componentDrawWidth[var41] + componentDrawX[var41] > var37 && componentDrawX[var41] < var37 + var39 && componentDrawHeight[var41] + componentDrawY[var41] > var38 && componentDrawY[var41] < var38 + var40) {
+				componentRedrawRequested2[var41] = true;
+			}
+		}
+	}
+
+	// guessing placement
+	public static void drawMinimenu() {
+		int var27 = menuX;
+		int var28 = menuY;
+		int var29 = menuWidth;
+		int var30 = menuHeight;
+		int var31 = 0x5d5447;
+		Pix2D.fillRect(var27, var28, var29, var30, var31);
+		Pix2D.fillRect(var27 + 1, var28 + 1, var29 - 2, 16, 0);
+		Pix2D.drawRect(var27 + 1, var28 + 18, var29 - 2, var30 - 19, 0);
+		b12.drawString(Text.CHOOSEOPTION, var27 + 3, var28 + 14, var31, -1);
+		int var32 = ClientMouseListener.mouseX;
+		int var33 = ClientMouseListener.mouseY;
+		for (int var34 = 0; var34 < menuNumEntries; var34++) {
+			int var35 = (menuNumEntries - 1 - var34) * 15 + var28 + 31;
+			int var36 = 0xffffff;
+			if (var32 > var27 && var32 < var27 + var29 && var33 > var35 - 13 && var33 < var35 + 3) {
+				var36 = 0xffff00;
+			}
+			b12.drawString(getLine(var34), var27 + 3, var35, var36, 0);
+		}
+		imethod26(menuX, menuY, menuWidth, menuHeight);
+	}
+
+	// jag::oldscape::minimenu::Minimenu::DrawFeedback
+	// guessing placement
+	public static void drawFeedback(int var24, int var25) {
+		if (menuNumEntries < 2 && useMode == 0 && !targetMode) {
+			return;
+		}
+
+		String var26;
+		if (useMode == 1 && menuNumEntries < 2) {
+			var26 = Text.USE + Text.MINISEPARATOR + objSelectedName + " " + StringConstants.TAG_ARROW;
+		} else if (targetMode && menuNumEntries < 2) {
+			var26 = targetVerb + Text.MINISEPARATOR + targetOp + " " + StringConstants.TAG_ARROW;
+		} else {
+			var26 = getLine(menuNumEntries - 1);
+		}
+
+		if (menuNumEntries > 2) {
+			var26 = var26 + StringConstants.TAG_COLOUR(0xffffff) + " " + '/' + " " + (menuNumEntries - 2) + Text.MOREOPTIONS;
+		}
+
+		b12.drawStringAntiMacro(var26, var24 + 4, var25 + 15, 0xffffff, 0, loopCycle / 1000);
+	}
+
+	// jag::oldscape::minimenu::Minimenu::Open
+	@ObfuscatedName("bk.ep(B)V")
+	public static void openMenu() {
+		int width = b12.stringWid(Text.CHOOSEOPTION);
+		for (int i = 0; i < menuNumEntries; i++) {
+			int var2 = b12.stringWid(getLine(i));
+			if (var2 > width) {
+				width = var2;
+			}
+		}
+		width += 8;
+
+		int height = menuNumEntries * 15 + 21;
+
+		int var4 = ClientMouseListener.mouseClickX - width / 2;
+		if (width + var4 > 765) {
+			var4 = 765 - width;
+		}
+		if (var4 < 0) {
+			var4 = 0;
+		}
+
+		int var5 = ClientMouseListener.mouseClickY;
+		if (height + var5 > 503) {
+			var5 = 503 - height;
+		}
+		if (var5 < 0) {
+			var5 = 0;
+		}
+
+		isMenuOpen = true;
+		menuX = var4;
+		menuY = var5;
+		menuWidth = width;
+		menuHeight = menuNumEntries * 15 + 22;
+	}
+
+	@ObfuscatedName("br.em(II)Z")
+	public static boolean isAddFriendOption(int arg0) {
+		if (arg0 < 0) {
+			return false;
+		}
+
+		int var1 = menuAction[arg0];
+		if (var1 >= 2000) {
+			var1 -= 2000;
+		}
+		return var1 == 1007;
+	}
+
+	// jag::oldscape::Client::DoAction
+	@ObfuscatedName("m.ey(II)V")
+	public static void doAction(int arg0) {
+		if (arg0 < 0) {
+			return;
+		}
+
+		int b = menuParamB[arg0];
+		int c = menuParamC[arg0];
+		int action = menuAction[arg0];
+		int a = menuParamA[arg0];
+
+		if (action >= 2000) {
+			action -= 2000;
+		}
+
+		if (action == 45) {
+			ClientPlayer var5 = players[a];
+			if (var5 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var5.routeX[0], var5.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYER2
+				out.p1Enc(146);
+				out.p2(a);
+			}
+		}
+
+		if (action == 35) {
+			// OPHELD3
+			out.p1Enc(76);
+			out.p2_alt1(b);
+			out.p4_alt2(c);
+			out.p2_alt1(a);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 8) {
+			ClientNpc var6 = npcs[a];
+			if (var6 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var6.routeX[0], var6.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPNPCT
+				out.p1Enc(190);
+				out.p4(targetCom);
+				out.p2_alt2(a);
+				out.p2_alt2(targetSub);
+			}
+		}
+
+		if (action == 51) {
+			ClientPlayer var7 = players[a];
+			if (var7 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var7.routeX[0], var7.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYER8
+				out.p1Enc(145);
+				out.p2_alt1(a);
+			}
+		}
+
+		if (action == 28) {
+			// IF_BUTTON
+			out.p1Enc(155);
+			out.p4(c);
+
+			IfType var8 = IfType.get(c);
+			if (var8.scripts != null && var8.scripts[0][0] == 5) {
+				int var9 = var8.scripts[0][1];
+				VarCache.var[var9] = 1 - VarCache.var[var9];
+				clientVar(var9);
+			}
+		}
+
+		if (action == 1002) {
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPLOCE
+			out.p1Enc(162);
+			out.p2_alt2(a >> 14 & 0x7FFF);
+		}
+
+		if (action == 31) {
+			// OPHELDU
+			out.p1Enc(70);
+			out.p2_alt1(a);
+			out.p2_alt1(objLayerId);
+			out.p2(objSelectedSlot);
+			out.p4(c);
+			out.p2_alt1(b);
+			out.p4_alt1(objSelectedLayerId);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 1004) {
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPOBJE
+			out.p1Enc(49);
+			out.p2_alt1(a);
+		}
+
+		if (action == 47) {
+			ClientPlayer var10 = players[a];
+			if (var10 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var10.routeX[0], var10.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYER4
+				out.p1Enc(78);
+				out.p2(a);
+			}
+		}
+
+		if (action == 32) {
+			// OPHELDT
+			out.p1Enc(218);
+			out.p2_alt1(targetSub);
+			out.p2(b);
+			out.p2(a);
+			out.p4_alt2(c);
+			out.p4_alt2(targetCom);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 46) {
+			ClientPlayer var11 = players[a];
+			if (var11 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var11.routeX[0], var11.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYER3
+				out.p1Enc(102);
+				out.p2_alt1(a);
+			}
+		}
+
+		if (action == 20) {
+			boolean var12 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
+			if (!var12) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
+			}
+
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPOBJ3
+			out.p1Enc(224);
+			out.p2_alt2(a);
+			out.p2_alt3(mapBuildBaseX + b);
+			out.p2_alt2(mapBuildBaseZ + c);
+		}
+
+		if (action == 12) {
+			ClientNpc var14 = npcs[a];
+			if (var14 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var14.routeX[0], var14.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPNPC4
+				out.p1Enc(95);
+				out.p2_alt1(a);
+			}
+		}
+
+		if (action == 14) {
+			ClientPlayer var15 = players[a];
+			if (var15 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var15.routeX[0], var15.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYERU
+				out.p1Enc(226);
+				out.p2_alt2(objLayerId);
+				out.p2_alt1(objSelectedSlot);
+				out.p2_alt2(a);
+				out.p4_alt2(objSelectedLayerId);
+			}
+		}
+
+		if (action == 2) {
+			if (interactWithLoc(b, c, a)) {
+				// OPLOCT
+				out.p1Enc(247);
+				out.p4_alt3(targetCom);
+				out.p2(mapBuildBaseZ + c);
+				out.p2_alt1(targetSub);
+				out.p2_alt2(a >> 14 & 0x7FFF);
+				out.p2_alt1(mapBuildBaseX + b);
+			}
+		}
+
+		if (action == 41) {
+			// INV_BUTTON3
+			out.p1Enc(6);
+			out.p2_alt1(b);
+			out.p4_alt1(c);
+			out.p2_alt3(a);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 50) {
+			ClientPlayer var16 = players[a];
+			if (var16 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var16.routeX[0], var16.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYER7
+				out.p1Enc(119);
+				out.p2_alt3(a);
+			}
+		}
+
+		if (action == 29) {
+			// IF_BUTTON
+			out.p1Enc(155);
+			out.p4(c);
+
+			IfType var17 = IfType.get(c);
+			if (var17.scripts != null && var17.scripts[0][0] == 5) {
+				int var18 = var17.scripts[0][1];
+				if (VarCache.var[var18] != var17.scriptOperand[0]) {
+					VarCache.var[var18] = var17.scriptOperand[0];
+					clientVar(var18);
+				}
+			}
+		}
+
+		if (action == 48) {
+			ClientPlayer var19 = players[a];
+			if (var19 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var19.routeX[0], var19.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYER5
+				out.p1Enc(117);
+				out.p2_alt2(a);
+			}
+		}
+
+		if (action == 33) {
+			// OPHELD1
+			out.p1Enc(135);
+			out.p4_alt2(c);
+			out.p2_alt3(a);
+			out.p2_alt3(b);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 1) {
+			if (interactWithLoc(b, c, a)) {
+				// OPLOCU
+				out.p1Enc(241);
+				out.p4_alt1(objSelectedLayerId);
+				out.p2(objSelectedSlot);
+				out.p2(a >> 14 & 0x7FFF);
+				out.p2_alt2(mapBuildBaseX + b);
+				out.p2_alt1(objLayerId);
+				out.p2_alt2(mapBuildBaseZ + c);
+			}
+		}
+
+		if (action == 6) {
+			interactWithLoc(b, c, a);
+
+			// OPLOC4
+			out.p1Enc(83);
+			out.p2_alt2(mapBuildBaseX + b);
+			out.p2_alt3(mapBuildBaseZ + c);
+			out.p2_alt3(a >> 14 & 0x7FFF);
+		}
+
+		if (action == 15) {
+			ClientPlayer var20 = players[a];
+			if (var20 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var20.routeX[0], var20.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYERT
+				out.p1Enc(183);
+				out.p2_alt2(targetSub);
+				out.p4(targetCom);
+				out.p2_alt1(a);
+			}
+		}
+
+		if (action == 18) {
+			boolean var21 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
+			if (!var21) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
+			}
+
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPOBJ1
+			out.p1Enc(243);
+			out.p2_alt1(a);
+			out.p2(mapBuildBaseX + b);
+			out.p2_alt3(mapBuildBaseZ + c);
+		}
+
+		if (action == 5) {
+			interactWithLoc(b, c, a);
+
+			// OPLOC3
+			out.p1Enc(133);
+			out.p2_alt2(mapBuildBaseX + b);
+			out.p2_alt2(mapBuildBaseZ + c);
+			out.p2_alt3(a >> 14 & 0x7FFF);
+		}
+
+		if (action == 16) {
+			boolean var23 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
+			if (!var23) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
+			}
+
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPOBJU
+			out.p1Enc(235);
+			out.p2(mapBuildBaseZ + c);
+			out.p2_alt2(objLayerId);
+			out.p2_alt1(mapBuildBaseX + b);
+			out.p4(objSelectedLayerId);
+			out.p2_alt1(a);
+			out.p2_alt1(objSelectedSlot);
+		}
+
+		if (action == 1001) {
+			interactWithLoc(b, c, a);
+
+			// OPLOC5
+			out.p1Enc(56);
+			out.p2(mapBuildBaseX + b);
+			out.p2_alt1(a >> 14 & 0x7FFF);
+			out.p2_alt2(mapBuildBaseZ + c);
+		}
+
+		if (action == 26) {
+			closeModal();
+		}
+
+		if (action == 37) {
+			// OPHELD5
+			out.p1Enc(19);
+			out.p2(a);
+			out.p4(c);
+			out.p2_alt2(b);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 57 || action == 1007) {
+			ifButtonX(a, c, b, menuSubject[arg0]);
+		}
+
+		if (action == 44) {
+			ClientPlayer var26 = players[a];
+			if (var26 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var26.routeX[0], var26.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYER1
+				out.p1Enc(246);
+				out.p2(a);
+			}
+		}
+
+		if (action == 22) {
+			boolean var27 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
+			if (!var27) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
+			}
+
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPOBJ5
+			out.p1Enc(77);
+			out.p2(mapBuildBaseX + b);
+			out.p2_alt2(mapBuildBaseZ + c);
+			out.p2_alt3(a);
+		}
+
+		if (action == 24) {
+			IfType var29 = IfType.get(c);
+
+			boolean transmit = true;
+			if (var29.clientCode > 0) {
+				transmit = clientButton(var29);
+			}
+			if (transmit) {
+				// IF_BUTTON
+				out.p1Enc(155);
+				out.p4(c);
+			}
+		}
+
+		if (action == 9) {
+			ClientNpc var31 = npcs[a];
+			if (var31 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var31.routeX[0], var31.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPNPC1
+				out.p1Enc(84);
+				out.p2_alt3(a);
+			}
+		}
+
+		if (action == 49) {
+			ClientPlayer var32 = players[a];
+			if (var32 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var32.routeX[0], var32.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPPLAYER6
+				out.p1Enc(111);
+				out.p2_alt3(a);
+			}
+		}
+
+		if (action == 25) {
+			IfType var33 = IfType.get(c, b);
+			if (var33 != null) {
+				endTargetMode();
+
+				// todo: inlined method (minimenuEnterTargetMode?)
+				int var34 = ServerActive.targetMask(getActive(var33));
+				IfType var35 = IfType.get(c, b);
+				if (var35 != null && var35.ontargetenter != null) {
+					HookReq req = new HookReq();
+					req.component = var35;
+					req.onop = var35.ontargetenter;
+					ScriptRunner.executeScript(req);
+				}
+				targetMode = true;
+				targetCom = c;
+				targetSub = b;
+				targetMask = var34;
+				componentUpdated(var35);
+
+				useMode = 0;
+
+				// todo: inlined method (getComponentTargetVerb?)
+				String var37;
+				if (ServerActive.targetMask(getActive(var33)) == 0) {
+					var37 = null;
+				} else if (var33.targetVerb == null || var33.targetVerb.trim().length() == 0) {
+					var37 = null;
+				} else {
+					var37 = var33.targetVerb;
+				}
+
+				targetVerb = var37;
+				if (targetVerb == null) {
+					targetVerb = "Null";
+				}
+
+				if (var33.v3) {
+					targetOp = var33.baseOpName + StringConstants.TAG_COLOUR(16777215);
+				} else {
+					targetOp = StringConstants.TAG_COLOUR(65280) + var33.targetBase + StringConstants.TAG_COLOUR(16777215);
+				}
+			}
+
+			return;
+		}
+
+		if (action == 42) {
+			// INV_BUTTON4
+			out.p1Enc(186);
+			out.p2(b);
+			out.p4(c);
+			out.p2(a);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 10) {
+			ClientNpc var38 = npcs[a];
+			if (var38 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var38.routeX[0], var38.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPNPC2
+				out.p1Enc(13);
+				out.p2_alt2(a);
+			}
+		}
+
+		if (action == 34) {
+			// OPHELD2
+			out.p1Enc(179);
+			out.p2_alt3(b);
+			out.p2_alt2(a);
+			out.p4_alt1(c);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 43) {
+			// INV_BUTTON5
+			out.p1Enc(40);
+			out.p2_alt1(a);
+			out.p4_alt1(c);
+			out.p2_alt2(b);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 1003) {
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			ClientNpc var39 = npcs[a];
+			if (var39 != null) {
+				NpcType var40 = var39.type;
+				if (var40.multinpc != null) {
+					var40 = var40.getMultiNpc();
+				}
+				if (var40 != null) {
+					// OPNPCE
+					out.p1Enc(52);
+					out.p2(var40.index);
+				}
+			}
+		}
+		if (action == 13) {
+			ClientNpc var41 = npcs[a];
+			if (var41 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var41.routeX[0], var41.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPNPC5
+				out.p1Enc(88);
+				out.p2(a);
+			}
+		}
+
+		if (action == 11) {
+			ClientNpc var42 = npcs[a];
+			if (var42 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var42.routeX[0], var42.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPNPC3
+				out.p1Enc(67);
+				out.p2_alt1(a);
+			}
+		}
+
+		if (action == 17) {
+			boolean var43 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
+			if (!var43) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
+			}
+
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPOBJT
+			out.p1Enc(81);
+			out.p2_alt3(a);
+			out.p2(mapBuildBaseZ + c);
+			out.p4_alt3(targetCom);
+			out.p2_alt2(mapBuildBaseX + b);
+			out.p2_alt2(targetSub);
+		}
+
+		if (action == 3) {
+			interactWithLoc(b, c, a);
+
+			// OPLOC1
+			out.p1Enc(73);
+			out.p2_alt2(a >> 14 & 0x7FFF);
+			out.p2(mapBuildBaseX + b);
+			out.p2(mapBuildBaseZ + c);
+		}
+
+		if (action == 38) {
+			endTargetMode();
+
+			IfType var45 = IfType.get(c);
+			useMode = 1;
+			objSelectedSlot = b;
+			objSelectedLayerId = c;
+			objLayerId = a;
+			componentUpdated(var45);
+
+			objSelectedName = StringConstants.TAG_COLOUR(16748608) + ObjType.list(a).name + StringConstants.TAG_COLOUR(16777215);
+			if (objSelectedName == null) {
+				objSelectedName = "null";
+			}
+
+			return;
+		}
+
+		if (action == 58) {
+			// IF_BUTTONT
+			out.p1Enc(251);
+			out.p2_alt2(targetSub);
+			out.p2_alt2(b);
+			out.p4(targetCom);
+			out.p4_alt2(c);
+		}
+
+		if (action == 30) {
+			if (resumedPauseButton == null) {
+				// RESUME_PAUSEBUTTON
+				out.p1Enc(242);
+				out.p2_alt2(b);
+				out.p4(c);
+
+				resumedPauseButton = IfType.get(c, b);
+				componentUpdated(resumedPauseButton);
+			}
+		}
+
+		if (action == 23) {
+			world.updateMousePicking(minusedlevel, b, c);
+		}
+
+		if (action == 4) {
+			interactWithLoc(b, c, a);
+
+			// OPLOC2
+			out.p1Enc(90);
+			out.p2_alt3(mapBuildBaseZ + c);
+			out.p2_alt3(mapBuildBaseX + b);
+			out.p2_alt2(a >> 14 & 0x7FFF);
+		}
+
+		if (action == 36) {
+			// OPHELD4
+			out.p1Enc(220);
+			out.p4_alt3(c);
+			out.p2_alt2(b);
+			out.p2_alt1(a);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 19) {
+			boolean var46 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
+			if (!var46) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
+			}
+
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPOBJ2
+			out.p1Enc(177);
+			out.p2(mapBuildBaseZ + c);
+			out.p2_alt3(a);
+			out.p2(mapBuildBaseX + b);
+		}
+
+		if (action == 40) {
+			// INV_BUTTON2
+			out.p1Enc(202);
+			out.p2_alt1(a);
+			out.p4_alt2(c);
+			out.p2_alt1(b);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 1005) {
+			IfType var48 = IfType.get(c);
+			if (var48 == null || var48.linkObjNumber[b] < 100000) {
+				out.p1Enc(49);
+				out.p2_alt1(a);
+			} else {
+				addChat(0, "", var48.linkObjNumber[b] + " x " + ObjType.list(a).name);
+			}
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (action == 7) {
+			ClientNpc var49 = npcs[a];
+			if (var49 != null) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var49.routeX[0], var49.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				crossX = ClientMouseListener.mouseClickX;
+				crossY = ClientMouseListener.mouseClickY;
+				crossMode = 2;
+				crossCycle = 0;
+
+				// OPNPCU
+				out.p1Enc(106);
+				out.p2_alt2(objSelectedSlot);
+				out.p4(objSelectedLayerId);
+				out.p2_alt1(a);
+				out.p2_alt3(objLayerId);
+			}
+		}
+
+		if (action == 21) {
+			boolean var50 = tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 0, 0, 0, 2);
+			if (!var50) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], b, c, false, 0, 0, 1, 1, 0, 2);
+			}
+
+			crossX = ClientMouseListener.mouseClickX;
+			crossY = ClientMouseListener.mouseClickY;
+			crossMode = 2;
+			crossCycle = 0;
+
+			// OPOBJ4
+			out.p1Enc(139);
+			out.p2_alt1(mapBuildBaseZ + c);
+			out.p2_alt1(mapBuildBaseX + b);
+			out.p2_alt3(a);
+		}
+
+		if (action == 39) {
+			// INV_BUTTON1
+			out.p1Enc(21);
+			out.p2(b);
+			out.p4_alt2(c);
+			out.p2_alt1(a);
+
+			selectedCycle = 0;
+			selectedArea = IfType.get(c);
+			selectedItem = b;
+		}
+
+		if (useMode != 0) {
+			useMode = 0;
+			componentUpdated(IfType.get(objSelectedLayerId));
+		}
+
+		if (targetMode) {
+			endTargetMode();
+		}
+
+		if (selectedArea != null && selectedCycle == 0) {
+			componentUpdated(selectedArea);
+		}
+	}
+
+	// jag::oldscape::Client::OpPlayer
+	@ObfuscatedName("ao.ec(ILjava/lang/String;I)V")
+	public static void opPlayer(int arg0, String arg1) {
+		String var2 = JString.toRawUsername(arg1);
+		String var3 = JString.toScreenName(JString.toUserhash(var2));
+		if (var3 == null) {
+			var3 = "";
+		}
+		String var5 = var3;
+
+		boolean found = false;
+		for (int i = 0; i < playerCount; i++) {
+			ClientPlayer player = players[playerIds[i]];
+			if (player != null && player.name != null && player.name.equalsIgnoreCase(var5)) {
+				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], player.routeX[0], player.routeZ[0], false, 0, 0, 1, 1, 0, 2);
+
+				if (arg0 == 1) {
+					// OPPLAYER1
+					out.p1Enc(246);
+					out.p2(playerIds[i]);
+				} else if (arg0 == 4) {
+					// OPPLAYER4
+					out.p1Enc(78);
+					out.p2(playerIds[i]);
+				} else if (arg0 == 6) {
+					// OPPLAYER6
+					out.p1Enc(111);
+					out.p2_alt3(playerIds[i]);
+				} else if (arg0 == 7) {
+					// OPPLAYER7
+					out.p1Enc(119);
+					out.p2_alt3(playerIds[i]);
+				}
+
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			addChat(0, "", Text.UNABLETOFIND + var5);
+		}
+	}
+
+	// jag::oldscape::minimenu::Minimenu::EndTargetMode
+	@ObfuscatedName("ba.eo(B)V")
+	public static void endTargetMode() {
+		if (!targetMode) {
+			return;
+		}
+
+		IfType var0 = IfType.get(targetCom, targetSub);
+		if (var0 != null && var0.ontargetleave != null) {
+			HookReq req = new HookReq();
+			req.component = var0;
+			req.onop = var0.ontargetleave;
+			ScriptRunner.executeScript(req);
+		}
+
+		targetMode = false;
+		componentUpdated(var0);
+	}
+
+	// jag::oldscape::Client::IfButtonX
+	@ObfuscatedName("bd.eu(IIILjava/lang/String;I)V")
+	public static void ifButtonX(int opindex, int arg1, int arg2, String opbase) {
+		IfType com = IfType.get(arg1, arg2);
+		if (com == null) {
+			return;
+		}
+		if (com.onop != null) {
+			HookReq hook = new HookReq();
+			hook.component = com;
+			hook.opindex = opindex;
+			hook.opbase = opbase;
+			hook.onop = com.onop;
+			ScriptRunner.executeScript(hook);
+		}
+
+		boolean transmit = true;
+		if (com.clientCode > 0) {
+			transmit = clientButton(com);
+		}
+		if (!transmit) {
+			return;
+		}
+
+		if (ServerActive.hasOp(getActive(com), opindex - 1)) {
+			if (opindex == 1) {
+				// IF_BUTTON1
+				out.p1Enc(63);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 2) {
+				// IF_BUTTON2
+				out.p1Enc(87);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 3) {
+				// IF_BUTTON3
+				out.p1Enc(238);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 4) {
+				// IF_BUTTON4
+				out.p1Enc(240);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 5) {
+				// IF_BUTTON5
+				out.p1Enc(153);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 6) {
+				// IF_BUTTON6
+				out.p1Enc(232);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 7) {
+				// IF_BUTTON7
+				out.p1Enc(168);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 8) {
+				// IF_BUTTON8
+				out.p1Enc(239);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 9) {
+				// IF_BUTTON9
+				out.p1Enc(254);
+				out.p4(arg1);
+				out.p2(arg2);
+			} else if (opindex == 10) {
+				// IF_BUTTON10
+				out.p1Enc(169);
+				out.p4(arg1);
+				out.p2(arg2);
+			}
+		}
+	}
+
+	@ObfuscatedName("d.fd(Ljava/lang/String;Ljava/lang/String;IIIII)V")
+	public static void addMenuOption(String verb, String subject, int action, int a, int b, int c) {
+		if (isMenuOpen || menuNumEntries >= 500) {
+			return;
+		}
+
+		menuVerb[menuNumEntries] = verb;
+		menuSubject[menuNumEntries] = subject;
+		menuAction[menuNumEntries] = action;
+		menuParamA[menuNumEntries] = a;
+		menuParamB[menuNumEntries] = b;
+		menuParamC[menuNumEntries] = c;
+		menuNumEntries++;
+	}
+
+	// jag::oldscape::minimenu::Minimenu::GetLine
+	@ObfuscatedName("cq.fb(IS)Ljava/lang/String;")
+	public static String getLine(int arg0) {
+		return menuSubject[arg0].length() > 0 ? menuVerb[arg0] + Text.MINISEPARATOR + menuSubject[arg0] : menuVerb[arg0];
+	}
+
+	// placement relative to other clients
+	public static void minimenuBuildSceneActions(int var12, int var13, int var72, int var73) {
+		if (useMode == 0 && !targetMode) {
+			addMenuOption(Text.WALKHERE, "", 23, 0, var72 - var12, var73 - var13);
+		}
+
+		int lastTypecode = -1;
+		for (int i = 0; i < ModelLit.pickedCount; i++) {
+			int typecode = ModelLit.pickedEntityTypecode[i];
+
+			int x = typecode & 0x7F;
+			int z = typecode >> 7 & 0x7F;
+			int entityType = typecode >> 29 & 0x3;
+			int id = typecode >> 14 & 0x7FFF;
+
+			if (lastTypecode == typecode) {
+				continue;
+			}
+
+			lastTypecode = typecode;
+
+			if (entityType == 2 && world.typecode2(minusedlevel, x, z, typecode) >= 0) {
+				LocType loc = LocType.list(id);
+				if (loc.multiloc != null) {
+					loc = loc.getMultiLoc();
+				}
+				if (loc == null) {
+					continue;
+				}
+
+				if (useMode == 1) {
+					addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(65535) + loc.name, 1, typecode, x, z);
+				} else if (targetMode) {
+					if ((targetMask & 0x4) == 4) {
+						addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(65535) + loc.name, 2, typecode, x, z);
+					}
+				} else {
+					String[] op = loc.op;
+					if (showOpIndex) {
+						op = prependOpIndex(op);
+					}
+
+					if (op != null) {
+						for (int index = 4; index >= 0; index--) {
+							if (op[index] != null) {
+								short action = 0;
+								if (index == 0) {
+									action = 3;
+								}
+								if (index == 1) {
+									action = 4;
+								}
+								if (index == 2) {
+									action = 5;
+								}
+								if (index == 3) {
+									action = 6;
+								}
+								if (index == 4) {
+									action = 1001;
+								}
+
+								addMenuOption(op[index], StringConstants.TAG_COLOUR(65535) + loc.name, action, typecode, x, z);
+							}
+						}
+					}
+
+					addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(65535) + loc.name, 1002, loc.id << 14, x, z);
+				}
+			}
+
+			if (entityType == 1) {
+				ClientNpc npc = npcs[id];
+
+				if (npc.type.size == 1 && (npc.x & 0x7F) == 64 && (npc.z & 0x7F) == 64) {
+					for (int n = 0; n < npcCount; n++) {
+						ClientNpc other = npcs[npcIds[n]];
+						if (other != null && npc != other && other.type.size == 1 && npc.x == other.x && npc.z == other.z) {
+							addNpcOptions(other.type, npcIds[n], x, z);
+						}
+					}
+
+					for (int p = 0; p < playerCount; p++) {
+						ClientPlayer player = players[playerIds[p]];
+						if (player != null && npc.x == player.x && npc.z == player.z) {
+							addPlayerOptions(player, playerIds[p], x, z);
+						}
+					}
+				}
+
+				addNpcOptions(npc.type, id, x, z);
+			}
+
+			if (entityType == 0) {
+				ClientPlayer player = players[id];
+
+				if ((player.x & 0x7F) == 64 && (player.z & 0x7F) == 64) {
+					for (int n = 0; n < npcCount; n++) {
+						ClientNpc npc = npcs[npcIds[n]];
+						if (npc != null && npc.type.size == 1 && player.x == npc.x && player.z == npc.z) {
+							addNpcOptions(npc.type, npcIds[n], x, z);
+						}
+					}
+
+					for (int p = 0; p < playerCount; p++) {
+						ClientPlayer other = players[playerIds[p]];
+						if (other != null && player != other && player.x == other.x && player.z == other.z) {
+							addPlayerOptions(other, playerIds[p], x, z);
+						}
+					}
+				}
+
+				addPlayerOptions(player, id, x, z);
+			}
+
+			if (entityType == 3) {
+				LinkList objs = groundObj[minusedlevel][x][z];
+				if (objs == null) {
+					continue;
+				}
+
+				for (ClientObj obj = (ClientObj) objs.tail(); obj != null; obj = (ClientObj) objs.prev()) {
+					ObjType type = ObjType.list(obj.id);
+
+					if (useMode == 1) {
+						addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + type.name, 16, obj.id, x, z);
+					} else if (targetMode) {
+						if ((targetMask & 0x1) == 1) {
+							addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + type.name, 17, obj.id, x, z);
+						}
+					} else {
+						String[] op = type.op;
+						if (showOpIndex) {
+							op = prependOpIndex(op);
+						}
+
+						for (int var125 = 4; var125 >= 0; var125--) {
+							if (op != null && op[var125] != null) {
+								byte var126 = 0;
+								if (var125 == 0) {
+									var126 = 18;
+								}
+								if (var125 == 1) {
+									var126 = 19;
+								}
+								if (var125 == 2) {
+									var126 = 20;
+								}
+								if (var125 == 3) {
+									var126 = 21;
+								}
+								if (var125 == 4) {
+									var126 = 22;
+								}
+								addMenuOption(op[var125], StringConstants.TAG_COLOUR(16748608) + type.name, var126, obj.id, x, z);
+							} else if (var125 == 2) {
+								addMenuOption(Text.TAKE, StringConstants.TAG_COLOUR(16748608) + type.name, 20, obj.id, x, z);
+							}
+						}
+
+						addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16748608) + type.name, 1004, obj.id, x, z);
+					}
+				}
+			}
+		}
+	}
+
+	// jag::oldscape::minimenu::Minimenu::AddNpcOptions
+	@ObfuscatedName("z.fc(Lem;IIII)V")
+	public static void addNpcOptions(NpcType npc, int arg1, int arg2, int arg3) {
+		if (menuNumEntries >= 400) {
+			return;
+		}
+
+		if (npc.multinpc != null) {
+			npc = npc.getMultiNpc();
+		}
+
+		if (npc == null || !npc.active) {
+			return;
+		}
+
+		String name = npc.name;
+		if (npc.vislevel != 0) {
+			// todo: inlined method (combatColourCode)
+			int otherLevel = npc.vislevel;
+			int viewerLevel = localPlayer.combatLevel;
+			int delta = viewerLevel - otherLevel;
+			String tag;
+			if (delta < -9) {
+				tag = StringConstants.TAG_COLOUR(16711680);
+			} else if (delta < -6) {
+				tag = StringConstants.TAG_COLOUR(16723968);
+			} else if (delta < -3) {
+				tag = StringConstants.TAG_COLOUR(16740352);
+			} else if (delta < 0) {
+				tag = StringConstants.TAG_COLOUR(16756736);
+			} else if (delta > 9) {
+				tag = StringConstants.TAG_COLOUR(65280);
+			} else if (delta > 6) {
+				tag = StringConstants.TAG_COLOUR(4259584);
+			} else if (delta > 3) {
+				tag = StringConstants.TAG_COLOUR(8453888);
+			} else if (delta > 0) {
+				tag = StringConstants.TAG_COLOUR(12648192);
+			} else {
+				tag = StringConstants.TAG_COLOUR(16776960);
+			}
+
+			name = name + tag + " " + StringConstants.OPEN_BRACKET + Text.LEVEL + npc.vislevel + StringConstants.CLOSE_BRACKET;
+		}
+
+		if (useMode == 1) {
+			addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16776960) + name, 7, arg1, arg2, arg3);
+		} else if (targetMode) {
+			if ((targetMask & 0x2) == 2) {
+				addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16776960) + name, 8, arg1, arg2, arg3);
+			}
+		} else {
+			String[] op = npc.op;
+			if (showOpIndex) {
+				op = prependOpIndex(op);
+			}
+
+			if (op != null) {
+				for (int index = 4; index >= 0; index--) {
+					if (op[index] == null || op[index].equalsIgnoreCase(Text.ATTACK)) {
+						continue;
+					}
+
+					int action = 0;
+					if (index == 0) {
+						action = 9;
+					}
+					if (index == 1) {
+						action = 10;
+					}
+					if (index == 2) {
+						action = 11;
+					}
+					if (index == 3) {
+						action = 12;
+					}
+					if (index == 4) {
+						action = 13;
+					}
+
+					addMenuOption(op[index], StringConstants.TAG_COLOUR(16776960) + name, action, arg1, arg2, arg3);
+				}
+			}
+
+			if (op != null) {
+				for (int index = 4; index >= 0; index--) {
+					if (op[index] == null || !op[index].equalsIgnoreCase(Text.ATTACK)) {
+						continue;
+					}
+
+					int priority = 0;
+					if (npc.vislevel > localPlayer.combatLevel) {
+						priority = 2000;
+					}
+
+					int action = 0;
+					if (index == 0) {
+						action = priority + 9;
+					}
+					if (index == 1) {
+						action = priority + 10;
+					}
+					if (index == 2) {
+						action = priority + 11;
+					}
+					if (index == 3) {
+						action = priority + 12;
+					}
+					if (index == 4) {
+						action = priority + 13;
+					}
+
+					addMenuOption(op[index], StringConstants.TAG_COLOUR(16776960) + name, action, arg1, arg2, arg3);
+				}
+			}
+
+			addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16776960) + name, 1003, arg1, arg2, arg3);
+		}
+	}
+
+	// jag::oldscape::minimenu::Minimenu::AddPlayerOptions
+	@ObfuscatedName("cr.fe(Lfi;IIII)V")
+	public static void addPlayerOptions(ClientPlayer player, int arg1, int arg2, int arg3) {
+		if (localPlayer == player || menuNumEntries >= 400) {
+			return;
+		}
+
+		String name;
+		if (player.skillLevel == 0) {
+			// todo: inlined method (combatColourCode)
+			String playerName = player.name;
+			int otherLevel = player.combatLevel;
+			int viewerLevel = localPlayer.combatLevel;
+			int delta = viewerLevel - otherLevel;
+			String tag;
+			if (delta < -9) {
+				tag = StringConstants.TAG_COLOUR(16711680);
+			} else if (delta < -6) {
+				tag = StringConstants.TAG_COLOUR(16723968);
+			} else if (delta < -3) {
+				tag = StringConstants.TAG_COLOUR(16740352);
+			} else if (delta < 0) {
+				tag = StringConstants.TAG_COLOUR(16756736);
+			} else if (delta > 9) {
+				tag = StringConstants.TAG_COLOUR(65280);
+			} else if (delta > 6) {
+				tag = StringConstants.TAG_COLOUR(4259584);
+			} else if (delta > 3) {
+				tag = StringConstants.TAG_COLOUR(8453888);
+			} else if (delta > 0) {
+				tag = StringConstants.TAG_COLOUR(12648192);
+			} else {
+				tag = StringConstants.TAG_COLOUR(16776960);
+			}
+
+			name = playerName + tag + " " + StringConstants.OPEN_BRACKET + Text.LEVEL + player.combatLevel + StringConstants.CLOSE_BRACKET;
+		} else {
+			name = player.name + " " + StringConstants.OPEN_BRACKET + Text.SKILL + player.skillLevel + StringConstants.CLOSE_BRACKET;
+		}
+
+		if (useMode == 1) {
+			addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16777215) + name, 14, arg1, arg2, arg3);
+		} else if (targetMode) {
+			if ((targetMask & 0x8) == 8) {
+				addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16777215) + name, 15, arg1, arg2, arg3);
+			}
+		} else {
+			for (int i = 7; i >= 0; i--) {
+				if (playerOp[i] == null) {
+					continue;
+				}
+
+				short priority = 0;
+				if (playerOp[i].equalsIgnoreCase(Text.ATTACK)) {
+					if (player.combatLevel > localPlayer.combatLevel) {
+						priority = 2000;
+					}
+
+					if (localPlayer.team != 0 && player.team != 0) {
+						if (localPlayer.team == player.team) {
+							priority = 2000;
+						} else {
+							priority = 0;
+						}
+					}
+				} else if (playerOpPriority[i]) {
+					priority = 2000;
+				}
+
+				int action = MENUACTION_PLAYER[i] + priority;
+				addMenuOption(playerOp[i], StringConstants.TAG_COLOUR(16777215) + name, action, arg1, arg2, arg3);
+			}
+		}
+
+		for (int i = 0; i < menuNumEntries; i++) {
+			if (menuAction[i] == 23) {
+				menuSubject[i] = StringConstants.TAG_COLOUR(16777215) + name;
+				break;
+			}
 		}
 	}
 
 	// jag::oldscape::minimenu::Minimenu::AddComponent
+	// guessing placement
 	public static void addComponentOptions(IfType com, int mouseX, int mouseY) {
 		if (com.buttonType == 1) {
 			addMenuOption(com.buttonText, "", 24, 0, 0, com.parentId);
@@ -11645,536 +10067,2166 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::DrawInterface
+	@ObfuscatedName("fg.fj(IIIIIIIII)V")
+	public static void drawInterface(int id, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+		if (IfType.openInterface(id)) {
+			dragChildren = null;
+			drawLayer(IfType.list[id], -1, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+
+			if (dragChildren != null) {
+				drawLayer(dragChildren, 0xabcdabcd, arg1, arg2, arg3, arg4, dragChildX, dragChildY, arg7);
+				dragChildren = null;
+			}
+		} else if (arg7 == -1) {
+			for (int i = 0; i < 100; i++) {
+				componentRedrawRequested1[i] = true;
+			}
+		} else {
+			componentRedrawRequested1[arg7] = true;
+		}
+	}
+
+	// jag::oldscape::Client::DrawLayer
+	@ObfuscatedName("g.fv([Leg;IIIIIIIIB)V")
+	public static void drawLayer(IfType[] children, int layerid, int x, int y, int w, int h, int childX, int childY, int childCount) {
+		Pix2D.setClipping(x, y, w, h);
+		Pix3D.setRenderClipping();
+
+		for (int i = 0; i < children.length; i++) {
+			IfType com = children[i];
+			if (com == null || (com.layerId != layerid && (layerid != 0xabcdabcd || dragComponent != com))) {
+				continue;
+			}
+
+			int drawCount;
+			if (childCount == -1) {
+				componentDrawX[componentDrawCount] = com.x + childX;
+				componentDrawY[componentDrawCount] = com.y + childY;
+				componentDrawWidth[componentDrawCount] = com.width;
+				componentDrawHeight[componentDrawCount] = com.height;
+				drawCount = ++componentDrawCount - 1;
+			} else {
+				drawCount = childCount;
+			}
+
+			com.drawCount = drawCount;
+			com.drawTime = loopCycle;
+
+			if (com.v3 && hide(com)) {
+				continue;
+			}
+
+			if (com.clientCode > 0) {
+				clientComponent(com);
+			}
+
+			int renderx = com.x + childX;
+			int rendery = com.y + childY;
+			int trans = com.trans;
+
+			if (dragComponent == com) {
+				if (layerid != 0xabcdabcd && !com.draggablebehavior) {
+					dragChildren = children;
+					dragChildX = childX;
+					dragChildY = childY;
+					continue;
+				}
+
+				if (dragAlive && dragParentFound) {
+					int var15 = ClientMouseListener.mouseX;
+					int var16 = ClientMouseListener.mouseY;
+
+					int var17 = var15 - dragPickupX;
+					int var18 = var16 - dragPickupY;
+
+					if (var17 < dragParentX) {
+						var17 = dragParentX;
+					}
+
+					if (com.width + var17 > dragParentX + dragParent.width) {
+						var17 = dragParentX + dragParent.width - com.width;
+					}
+
+					if (var18 < dragParentY) {
+						var18 = dragParentY;
+					}
+
+					if (com.height + var18 > dragParentY + dragParent.height) {
+						var18 = dragParentY + dragParent.height - com.height;
+					}
+
+					renderx = var17;
+					rendery = var18;
+				}
+
+				if (!com.draggablebehavior) {
+					trans = 128;
+				}
+			}
+
+			int var19;
+			int var20;
+			int var21;
+			int var22;
+			if (com.type == 2) {
+				// inv
+				var19 = x;
+				var20 = y;
+				var21 = w;
+				var22 = h;
+			} else if (com.type == 9) {
+				// line
+				int var23 = renderx;
+				int var24 = rendery;
+				int var25 = com.width + renderx;
+				int var26 = com.height + rendery;
+				if (var25 < renderx) {
+					var23 = var25;
+					var25 = renderx;
+				}
+				if (var26 < rendery) {
+					var24 = var26;
+					var26 = rendery;
+				}
+				var25++;
+				var26++;
+				var19 = var23 > x ? var23 : x;
+				var20 = var24 > y ? var24 : y;
+				var21 = var25 < w ? var25 : w;
+				var22 = var26 < h ? var26 : h;
+			} else {
+				int var29 = com.width + renderx;
+				int var30 = com.height + rendery;
+				var19 = renderx > x ? renderx : x;
+				var20 = rendery > y ? rendery : y;
+				var21 = var29 < w ? var29 : w;
+				var22 = var30 < h ? var30 : h;
+			}
+
+			if (com.v3 && (var19 >= var21 || var20 >= var22)) {
+				continue;
+			}
+
+			if (com.clientCode != 0) {
+				if (com.clientCode == 1337) {
+					minimenuMouseOverX = renderx;
+					minimenuMouseOverY = rendery;
+					gameDrawMain(renderx, rendery, com.width, com.height);
+					Pix2D.setClipping(x, y, w, h);
+					continue;
+				}
+
+				if (com.clientCode == 1338) {
+					minimapDraw(renderx, rendery, drawCount);
+					Pix2D.setClipping(x, y, w, h);
+					continue;
+				}
+			}
+
+			int mouseX = ClientMouseListener.mouseX;
+			int mouseY = ClientMouseListener.mouseY;
+
+			if (!isMenuOpen && mouseX >= var19 && mouseY >= var20 && mouseX < var21 && mouseY < var22) {
+				addComponentOptions(com, mouseX - renderx, mouseY - rendery);
+			}
+
+			if (com.type == 0) {
+				if (!com.v3 && hide(com) && hoveredCom != com) {
+					continue;
+				}
+
+				if (!com.v3) {
+					if (com.scrollPosY > com.scrollHeight - com.height) {
+						com.scrollPosY = com.scrollHeight - com.height;
+					}
+
+					if (com.scrollPosY < 0) {
+						com.scrollPosY = 0;
+					}
+				}
+
+				drawLayer(children, com.parentId, var19, var20, var21, var22, renderx - com.scrollPosX, rendery - com.scrollPosY, drawCount);
+
+				if (com.subcomponents != null) {
+					drawLayer(com.subcomponents, com.parentId, var19, var20, var21, var22, renderx - com.scrollPosX, rendery - com.scrollPosY, drawCount);
+				}
+
+				SubInterface sub = (SubInterface) subinterfaces.find(com.parentId);
+				if (sub != null) {
+					if (sub.type == 0 && ClientMouseListener.mouseX >= var19 && ClientMouseListener.mouseY >= var20 && ClientMouseListener.mouseX < var21 && ClientMouseListener.mouseY < var22 && !isMenuOpen && !field2092) {
+						menuVerb[0] = Text.CANCEL;
+						menuSubject[0] = "";
+						menuAction[0] = 1006;
+						menuNumEntries = 1;
+					}
+
+					drawInterface(sub.id, var19, var20, var21, var22, renderx, rendery, drawCount);
+				}
+
+				Pix2D.setClipping(x, y, w, h);
+				Pix3D.setRenderClipping();
+			}
+
+			if (!componentDrawSomething2[drawCount] && componentDrawMode <= 1) {
+				continue;
+			}
+
+			if (com.type == 0 && !com.v3 && com.scrollHeight > com.height) {
+				// layer
+				drawScrollbar(rendery, com.width + renderx, com.scrollPosY, com.height, com.scrollHeight);
+			} else if (com.type == 1) {
+			} else if (com.type == 2) {
+				// inv
+				int slot = 0;
+				for (int row = 0; row < com.height; row++) {
+					for (int col = 0; col < com.width; col++) {
+						int slotX = (com.marginX + 32) * col + renderx;
+						int slotY = (com.marginY + 32) * row + rendery;
+
+						if (slot < 20) {
+							slotX += com.invBackgroundX[slot];
+							slotY += com.invBackgroundY[slot];
+						}
+
+						if (com.linkObjType[slot] > 0) {
+							int id = com.linkObjType[slot] - 1;
+
+							if (slotX + 32 > x && slotX < w && slotY + 32 > y && slotY < h || objDragInterface == com && objDragSlot == slot) {
+								Pix32 sprite;
+								if (useMode == 1 && objSelectedSlot == slot && objSelectedLayerId == com.parentId) {
+									sprite = ObjType.getSprite(id, com.linkObjNumber[slot], 2, 0, false);
+								} else {
+									sprite = ObjType.getSprite(id, com.linkObjNumber[slot], 1, 0x302020, false);
+								}
+
+								if (sprite == null) {
+									componentUpdated(com);
+								} else if (objDragInterface == com && objDragSlot == slot) {
+									int dx = ClientMouseListener.mouseX - objGrabX;
+									int dy = ClientMouseListener.mouseY - objGrabY;
+
+									if (dx < 5 && dx > -5) {
+										dx = 0;
+									}
+
+									if (dy < 5 && dy > -5) {
+										dy = 0;
+									}
+
+									if (objDragCycles < 5) {
+										dx = 0;
+										dy = 0;
+									}
+
+									sprite.transPlotSprite(slotX + dx, slotY + dy, 128);
+
+									if (layerid != -1) {
+										IfType child = children[layerid & 0xFFFF];
+
+										if (slotY + dy < Pix2D.clipMinY && child.scrollPosY > 0) {
+											int autoscroll = worldUpdateNum * (Pix2D.clipMinY - slotY - dy) / 3;
+											if (autoscroll > worldUpdateNum * 10) {
+												autoscroll = worldUpdateNum * 10;
+											}
+											if (autoscroll > child.scrollPosY) {
+												autoscroll = child.scrollPosY;
+											}
+
+											child.scrollPosY -= autoscroll;
+											objGrabY += autoscroll;
+
+											componentUpdated(child);
+										}
+
+										if (slotY + dy + 32 > Pix2D.clipMaxY && child.scrollPosY < child.scrollHeight - child.height) {
+											int autoscroll = worldUpdateNum * (slotY + dy + 32 - Pix2D.clipMaxY) / 3;
+											if (autoscroll > worldUpdateNum * 10) {
+												autoscroll = worldUpdateNum * 10;
+											}
+											if (autoscroll > child.scrollHeight - child.height - child.scrollPosY) {
+												autoscroll = child.scrollHeight - child.height - child.scrollPosY;
+											}
+
+											child.scrollPosY += autoscroll;
+											objGrabY -= autoscroll;
+
+											componentUpdated(child);
+										}
+									}
+								} else if (selectedArea == com && selectedItem == slot) {
+									sprite.transPlotSprite(slotX, slotY, 128);
+								} else {
+									sprite.plotSprite(slotX, slotY);
+								}
+							}
+						} else if (com.invBackground != null && slot < 20) {
+							Pix32 background = com.getInvBackground(slot);
+							if (background != null) {
+								background.plotSprite(slotX, slotY);
+							} else if (IfType.loadingAsset) {
+								componentUpdated(com);
+							}
+						}
+
+						slot++;
+					}
+				}
+			} else if (com.type == 3) {
+				// rect
+				int colour;
+				if (getIfActive(com)) {
+					colour = com.colour2;
+					if (hoveredCom == com && com.colour2Over != 0) {
+						colour = com.colour2Over;
+					}
+				} else {
+					colour = com.colour;
+					if (hoveredCom == com && com.colourOver != 0) {
+						colour = com.colourOver;
+					}
+				}
+
+				if (trans == 0) {
+					if (com.fill) {
+						Pix2D.fillRect(renderx, rendery, com.width, com.height, colour);
+					} else {
+						Pix2D.drawRect(renderx, rendery, com.width, com.height, colour);
+					}
+				} else if (com.fill) {
+					Pix2D.fillRectTrans(renderx, rendery, com.width, com.height, colour, 256 - (trans & 0xFF));
+				} else {
+					Pix2D.drawRectTrans(renderx, rendery, com.width, com.height, colour, 256 - (trans & 0xFF));
+				}
+			} else if (com.type == 4) {
+				// text
+				PixFontGeneric font = com.getFont();
+
+				if (font != null) {
+					String text = com.text;
+					int colour;
+
+					if (getIfActive(com)) {
+						colour = com.colour2;
+						if (hoveredCom == com && com.colour2Over != 0) {
+							colour = com.colour2Over;
+						}
+						if (com.text2.length() > 0) {
+							text = com.text2;
+						}
+					} else {
+						colour = com.colour;
+						if (hoveredCom == com && com.colourOver != 0) {
+							colour = com.colourOver;
+						}
+					}
+
+					if (com.v3 && com.invobject != -1) {
+						ObjType obj = ObjType.list(com.invobject);
+
+						text = obj.name;
+
+						if (text == null) {
+							text = "null";
+						}
+
+						if ((obj.stackable == 1 || com.invcount != 1) && com.invcount != -1) {
+							text = StringConstants.TAG_COLOUR(0xff9040) + text + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.invcount);
+						}
+					}
+
+					if (resumedPauseButton == com) {
+						text = Text.PLEASEWAIT;
+						colour = com.colour;
+					}
+
+					if (!com.v3) {
+						text = substituteVars(text, com);
+					}
+
+					font.drawStringMultiline(text, renderx, rendery, com.width, com.height, colour, com.shadow ? 0 : -1, com.hAlign, com.vAlign, com.lineHeight);
+				} else if (IfType.loadingAsset) {
+					componentUpdated(com);
+				}
+			} else if (com.type == 5) {
+				// graphic
+				if (com.v3) {
+					Pix32 image;
+					if (com.invobject == -1) {
+						image = com.getGraphic(false);
+					} else {
+						image = ObjType.getSprite(com.invobject, com.invcount, com.outline, com.shadowColour, false);
+					}
+
+					if (image != null) {
+						int width = image.owi;
+						int height = image.ohi;
+
+						if (com.tiling) {
+							Pix2D.setSubClipping(renderx, rendery, com.width + renderx, com.height + rendery);
+
+							int var195 = (com.width + (width - 1)) / width;
+							int var196 = (com.height + (height - 1)) / height;
+
+							for (int var197 = 0; var197 < var195; var197++) {
+								for (int var198 = 0; var198 < var196; var198++) {
+									if (com.rotate != 0) {
+										image.pixelPerfectRotateScalePlotSprite(width / 2 + width * var197 + renderx, height / 2 + height * var198 + rendery, com.rotate, 4096);
+									} else if (trans != 0) {
+										image.transPlotSprite(width * var197 + renderx, height * var198 + rendery, 256 - (trans & 0xFF));
+									} else {
+										image.plotSprite(width * var197 + renderx, height * var198 + rendery);
+									}
+								}
+							}
+
+							Pix2D.setClipping(x, y, w, h);
+						} else {
+							int var199 = com.width * 4096 / width;
+							if (com.rotate != 0) {
+								image.pixelPerfectRotateScalePlotSprite(com.width / 2 + renderx, com.height / 2 + rendery, com.rotate, var199);
+							} else if (trans != 0) {
+								image.transScalePlotSprite(renderx, rendery, com.width, com.height, 256 - (trans & 0xFF));
+							} else if (com.width != width || com.height != height) {
+								image.scalePlotSprite(renderx, rendery, com.width, com.height);
+							} else {
+								image.plotSprite(renderx, rendery);
+							}
+						}
+					} else if (IfType.loadingAsset) {
+						componentUpdated(com);
+					}
+				} else {
+					Pix32 image = com.getGraphic(getIfActive(com));
+					if (image != null) {
+						image.plotSprite(renderx, rendery);
+					} else if (IfType.loadingAsset) {
+						componentUpdated(com);
+					}
+				}
+			} else if (com.type == 6) {
+				// model
+				boolean active = getIfActive(com);
+
+				int anim;
+				if (active) {
+					anim = com.modelAnim2;
+				} else {
+					anim = com.modelAnim;
+				}
+
+				ModelLit model = null;
+				int var203 = 0;
+				if (com.invobject != -1) {
+					ObjType obj = ObjType.list(com.invobject);
+					if (obj != null) {
+						ObjType count = obj.getStackSizeAlt(com.invcount);
+						model = count.getModelLit(1);
+
+						if (model != null) {
+							model.calcBoundingCylinder();
+							var203 = model.minY / 2;
+						} else {
+							componentUpdated(com);
+						}
+					}
+				} else if (com.model1Type == 5) {
+					if (com.model1Id == 0) {
+						model = selfModel.getTempModel(null, -1, null, -1);
+					} else {
+						model = localPlayer.getTempModel();
+					}
+				} else if (anim == -1) {
+					model = com.getTempModel(null, -1, active, localPlayer.model);
+					if (model == null && IfType.loadingAsset) {
+						componentUpdated(com);
+					}
+				} else {
+					SeqType seq = SeqType.list(anim);
+					model = com.getTempModel(seq, com.animFrame, active, localPlayer.model);
+					if (model == null && IfType.loadingAsset) {
+						componentUpdated(com);
+					}
+				}
+
+				Pix3D.setOrigin(com.width / 2 + renderx, com.height / 2 + rendery);
+
+				int var207 = com.modelZoom * Pix3D.sinTable[com.modelXAn] >> 16;
+				int var208 = com.modelZoom * Pix3D.cosTable[com.modelXAn] >> 16;
+
+				if (model != null) {
+					if (com.v3) {
+						model.calcBoundingCylinder();
+
+						if (com.orthog) {
+							model.objRenderOrthog(0, com.modelYAn, com.modelZAn, com.modelXAn, com.modelXOf, com.modelYOf + var203 + var207, com.modelYOf + var208, com.modelZoom);
+						} else {
+							model.objRender(0, com.modelYAn, com.modelZAn, com.modelXAn, com.modelXOf, com.modelYOf + var203 + var207, com.modelYOf + var208);
+						}
+					} else {
+						model.objRender(0, com.modelYAn, 0, com.modelXAn, 0, var207, var208);
+					}
+				}
+
+				Pix3D.resetOrigin();
+			} else if (com.type == 7) {
+				// invtext
+				PixFontGeneric font = com.getFont();
+				if (font == null) {
+					if (IfType.loadingAsset) {
+						componentUpdated(com);
+					}
+
+					continue;
+				}
+
+				int slot = 0;
+				for (int row = 0; row < com.height; row++) {
+					for (int col = 0; col < com.width; col++) {
+						if (com.linkObjType[slot] > 0) {
+							ObjType obj = ObjType.list(com.linkObjType[slot] - 1);
+
+							String text;
+							if (obj.stackable != 1 && com.linkObjNumber[slot] == 1) {
+								text = StringConstants.TAG_COLOUR(16748608) + obj.name + StringConstants.TAG_COLOURCLOSE;
+							} else {
+								text = StringConstants.TAG_COLOUR(16748608) + obj.name + StringConstants.TAG_COLOURCLOSE + " " + 'x' + niceNumber(com.linkObjNumber[slot]);
+							}
+
+							int textX = (com.marginX + 115) * col + renderx;
+							int textY = (com.marginY + 12) * row + rendery;
+
+							if (com.hAlign == 0) {
+								font.drawString(text, textX, textY, com.colour, com.shadow ? 0 : -1);
+							} else if (com.hAlign == 1) {
+								font.centreString(text, com.width / 2 + textX, textY, com.colour, com.shadow ? 0 : -1);
+							} else {
+								font.rightString(text, com.width + textX - 1, textY, com.colour, com.shadow ? 0 : -1);
+							}
+						}
+
+						slot++;
+					}
+				}
+			} else if (com.type == 8 && tooltipCom == com && tooltipRedraw == tooltipNum) {
+				// tooltip
+				int var217 = 0;
+				int var218 = 0;
+
+				PixFontGeneric var219 = p12;
+				String var220 = com.text;
+				String var221 = substituteVars(var220, com);
+				while (var221.length() > 0) {
+					int var222 = var221.indexOf(StringConstants.TAG_BREAK);
+					String var223;
+					if (var222 == -1) {
+						var223 = var221;
+						var221 = "";
+					} else {
+						var223 = var221.substring(0, var222);
+						var221 = var221.substring(var222 + 4);
+					}
+					int var224 = var219.stringWid(var223);
+					if (var224 > var217) {
+						var217 = var224;
+					}
+					var218 += var219.ascent + 1;
+				}
+				var217 += 6;
+				var218 += 7;
+				int var225 = com.width + renderx - 5 - var217;
+				int var226 = com.height + rendery + 5;
+				if (var225 < renderx + 5) {
+					var225 = renderx + 5;
+				}
+				if (var217 + var225 > w) {
+					var225 = w - var217;
+				}
+				if (var218 + var226 > h) {
+					var226 = h - var218;
+				}
+				Pix2D.fillRect(var225, var226, var217, var218, 16777120);
+				Pix2D.drawRect(var225, var226, var217, var218, 0);
+
+				String var227 = com.text;
+				int var228 = var219.ascent + var226 + 2;
+				String var229 = substituteVars(var227, com);
+				while (var229.length() > 0) {
+					int var230 = var229.indexOf(StringConstants.TAG_BREAK);
+					String var231;
+					if (var230 == -1) {
+						var231 = var229;
+						var229 = "";
+					} else {
+						var231 = var229.substring(0, var230);
+						var229 = var229.substring(var230 + 4);
+					}
+
+					var219.drawString(var231, var225 + 3, var228, 0, -1);
+					var228 += var219.ascent + 1;
+				}
+			} else if (com.type == 9) {
+				// line
+				if (com.lineWidth == 1) {
+					Pix2D.line(renderx, rendery, com.width + renderx, com.height + rendery, com.colour);
+				} else {
+					// todo: inlined method (DrawLineWithStrokeWidth?)
+					int var232 = com.width >= 0 ? com.width : -com.width;
+					int var233 = com.height >= 0 ? com.height : -com.height;
+					int var234 = var232;
+					if (var232 < var233) {
+						var234 = var233;
+					}
+					if (var234 != 0) {
+						int var235 = (com.width << 16) / var234;
+						int var236 = (com.height << 16) / var234;
+						if (var236 <= var235) {
+							var235 = -var235;
+						} else {
+							var236 = -var236;
+						}
+						int var237 = com.lineWidth * var236 >> 17;
+						int var238 = com.lineWidth * var236 + 1 >> 17;
+						int var239 = com.lineWidth * var235 >> 17;
+						int var240 = com.lineWidth * var235 + 1 >> 17;
+						int var241 = renderx + var237;
+						int var242 = renderx - var238;
+						int var243 = com.width + renderx - var238;
+						int var244 = com.width + renderx + var237;
+						int var245 = rendery + var239;
+						int var246 = rendery - var240;
+						int var247 = com.height + rendery - var240;
+						int var248 = com.height + rendery + var239;
+
+						Pix3D.setHClip(var241, var242, var243);
+						Pix3D.flatTriangle(var245, var246, var247, var241, var242, var243, com.colour);
+
+						Pix3D.setHClip(var241, var243, var244);
+						Pix3D.flatTriangle(var245, var247, var248, var241, var243, var244, com.colour);
+					}
+				}
+			}
+		}
+	}
+
+	// jag::oldscape::Client::SubstituteVars
+	@ObfuscatedName("ez.fu(Ljava/lang/String;Leg;S)Ljava/lang/String;")
+	public static String substituteVars(String text, IfType com) {
+		if (text.indexOf("%") != -1) {
+			for (int i = 1; i <= 5; i++) {
+				while (true) {
+					int var3 = text.indexOf("%" + i);
+					if (var3 == -1) {
+						break;
+					}
+
+					text = text.substring(0, var3) + inf(getIfVar(com, i - 1)) + text.substring(var3 + 2);
+				}
+			}
+
+			while (true) {
+				int var4 = text.indexOf("%dns");
+				if (var4 == -1) {
+					break;
+				}
+
+				String var5 = "";
+				if (lastAddress != null) {
+					var5 = StringTools.formatIPv4(lastAddress.intArg);
+					if (lastAddress.result != null) {
+						var5 = (String) lastAddress.result;
+					}
+				}
+
+				text = text.substring(0, var4) + var5 + text.substring(var4 + 4);
+			}
+		}
+
+		return text;
+	}
+
+	// jag::oldscape::Client::NiceNumber
+	@ObfuscatedName("dy.fr(IB)Ljava/lang/String;")
+	public static String niceNumber(int cost) {
+		String value = Integer.toString(cost);
+		for (int i = value.length() - 3; i > 0; i -= 3) {
+			value = value.substring(0, i) + StringConstants.COMMA + value.substring(i);
+		}
+		if (value.length() > 9) {
+			return " " + StringConstants.TAG_COLOUR(0xff80) + value.substring(0, value.length() - 8) + Text.MILLION + " " + StringConstants.OPEN_BRACKET + value + StringConstants.CLOSE_BRACKET + StringConstants.TAG_COLOURCLOSE;
+		} else if (value.length() > 6) {
+			return " " + StringConstants.TAG_COLOUR(0xffffff) + value.substring(0, value.length() - 4) + Text.THOUSAND + " " + StringConstants.OPEN_BRACKET + value + StringConstants.CLOSE_BRACKET + StringConstants.TAG_COLOURCLOSE;
+		} else {
+			return " " + StringConstants.TAG_COLOUR(0xffff00) + value + StringConstants.TAG_COLOURCLOSE;
+		}
+	}
+
+	// jag::oldscape::Client::DoScrollbar
+	@ObfuscatedName("q.fl(Leg;IIIIIII)V")
+	public static void doScrollbar(IfType com, int left, int top, int height, int scrollableHeight, int x, int y) {
+		if (scrollGrabbed) {
+			scrollInputPadding = 32;
+		} else {
+			scrollInputPadding = 0;
+		}
+
+		scrollGrabbed = false;
+
+		if (ClientMouseListener.mouseButton != 0) {
+			if (x >= left && x < left + 16 && y >= top && y < top + 16) {
+				com.scrollPosY -= 4;
+				componentUpdated(com);
+			} else if (x >= left && x < left + 16 && y >= top + height - 16 && y < top + height) {
+				com.scrollPosY += 4;
+				componentUpdated(com);
+			} else if (x >= left - scrollInputPadding && x < scrollInputPadding + left + 16 && y >= top + 16 && y < top + height - 16) {
+				int gripSize = (height - 32) * height / scrollableHeight;
+				if (gripSize < 8) {
+					gripSize = 8;
+				}
+
+				int var8 = y - top - 16 - gripSize / 2;
+				int var9 = height - 32 - gripSize;
+
+				com.scrollPosY = (scrollableHeight - height) * var8 / var9;
+				componentUpdated(com);
+				scrollGrabbed = true;
+			}
+		}
+
+		if (mouseWheelRotation != 0) {
+			int width = com.width;
+			if (x >= left - width && y >= top && x < left + 16 && y <= top + height) {
+				com.scrollPosY += mouseWheelRotation * 45;
+				componentUpdated(com);
+			}
+		}
+	}
+
 	// jag::oldscape::Client::DrawScrollbar
+	// placement relative to other clients
 	public static void drawScrollbar(int var13, int var165, int var166, int var167, int var168) {
 		scrollbar[0].plotSprite(var165, var13);
 		scrollbar[1].plotSprite(var165, var13 + var167 - 16);
+
 		Pix2D.fillRect(var165, var13 + 16, 16, var167 - 32, SCROLLBAR_TRACK);
+
 		int var169 = (var167 - 32) * var167 / var168;
 		if (var169 < 8) {
 			var169 = 8;
 		}
 		int var170 = (var167 - 32 - var169) * var166 / (var168 - var167);
+
 		Pix2D.fillRect(var165, var13 + 16 + var170, 16, var169, SCROLLBAR_GRIP_FOREGROUND);
+
 		Pix2D.vline(var165, var13 + 16 + var170, var169, SCROLLBAR_GRIP_HIGHLIGHT);
 		Pix2D.vline(var165 + 1, var13 + 16 + var170, var169, SCROLLBAR_GRIP_HIGHLIGHT);
+
 		Pix2D.hline(var165, var13 + 16 + var170, 16, SCROLLBAR_GRIP_HIGHLIGHT);
 		Pix2D.hline(var165, var13 + 17 + var170, 16, SCROLLBAR_GRIP_HIGHLIGHT);
+
 		Pix2D.vline(var165 + 15, var13 + 16 + var170, var169, SCROLLBAR_GRIP_LOWLIGHT);
 		Pix2D.vline(var165 + 14, var13 + 17 + var170, var169 - 1, SCROLLBAR_GRIP_LOWLIGHT);
+
 		Pix2D.hline(var165, var13 + 15 + var170 + var169, 16, SCROLLBAR_GRIP_LOWLIGHT);
 		Pix2D.hline(var165 + 1, var13 + 14 + var170 + var169, 15, SCROLLBAR_GRIP_LOWLIGHT);
 	}
 
-	// jag::oldscape::Client::GdmEntityOverlays
-	public static void entityOverlays(int var12, int var13, int var31, int var32) {
-		chatCount = 0;
-		for (int var74 = -1; var74 < playerCount + npcCount; var74++) {
-			ClientEntity var75;
-			if (var74 == -1) {
-				var75 = localPlayer;
-			} else if (var74 < playerCount) {
-				var75 = players[playerIds[var74]];
-			} else {
-				var75 = npcs[npcIds[var74 - playerCount]];
-			}
-			if (var75 != null && var75.ready()) {
-				if (var75 instanceof ClientNpc) {
-					NpcType var76 = ((ClientNpc) var75).type;
-					if (var76.multinpc != null) {
-						var76 = var76.getMultiNpc();
-					}
-					if (var76 == null) {
-						continue;
-					}
+	// jag::oldscape::Client::Inf
+	@ObfuscatedName("ck.fk(II)Ljava/lang/String;")
+	public static String inf(int arg0) {
+		return arg0 < 999999999 ? Integer.toString(arg0) : "*";
+	}
+
+	// jag::oldscape::Client::GetIfActive
+	@ObfuscatedName("n.fa(Leg;I)Z")
+	public static boolean getIfActive(IfType com) {
+		if (com.scriptComparator == null) {
+			return false;
+		}
+
+		for (int i = 0; i < com.scriptComparator.length; i++) {
+			int value = getIfVar(com, i);
+			int operand = com.scriptOperand[i];
+
+			if (com.scriptComparator[i] == 2) {
+				if (value >= operand) {
+					return false;
 				}
-				if (var74 >= playerCount) {
-					NpcType var79 = ((ClientNpc) var75).type;
-					if (var79.multinpc != null) {
-						var79 = var79.getMultiNpc();
-					}
-					if (var79.headicon >= 0 && var79.headicon < headiconsPrayer.length) {
-						getOverlayPos(var75, var75.height + 15);
-						if (projectX > -1) {
-							headiconsPrayer[var79.headicon].plotSprite(projectX + var12 - 12, projectY + var13 - 30);
+			} else if (com.scriptComparator[i] == 3) {
+				if (value <= operand) {
+					return false;
+				}
+			} else if (com.scriptComparator[i] == 4) {
+				if (value == operand) {
+					return false;
+				}
+			} else if (value != operand) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	// jag::oldscape::Client::GetIfVar
+	@ObfuscatedName("ba.fq(Leg;IB)I")
+	public static int getIfVar(IfType com, int scriptId) {
+		if (com.scripts == null || scriptId >= com.scripts.length) {
+			return -2;
+		}
+
+		try {
+			int[] script = com.scripts[scriptId];
+
+			int acc = 0;
+			int pc = 0;
+			byte arithmetic = 0;
+
+			while (true) {
+				int opcode = script[pc++];
+				int register = 0;
+				byte nextArithmetic = 0;
+
+				if (opcode == 0) {
+					return acc;
+				}
+
+				if (opcode == 1) {
+					register = statEffectiveLevel[script[pc++]];
+				} else if (opcode == 2) {
+					register = statBaseLevel[script[pc++]];
+				} else if (opcode == 3) {
+					register = statXP[script[pc++]];
+				} else if (opcode == 4) {
+					int var9 = script[pc++] << 16;
+					int var10 = var9 + script[pc++];
+					IfType var11 = IfType.get(var10);
+					int var12 = script[pc++];
+					if (var12 != -1 && (!ObjType.list(var12).members || memServer)) {
+						for (int var13 = 0; var13 < var11.linkObjType.length; var13++) {
+							if (var12 + 1 == var11.linkObjType[var13]) {
+								register += var11.linkObjNumber[var13];
+							}
 						}
 					}
-					if (hintType == 1 && hintNpc == npcIds[var74 - playerCount] && loopCycle % 20 < 10) {
-						getOverlayPos(var75, var75.height + 15);
-						if (projectX > -1) {
-							headiconsHint[0].plotSprite(projectX + var12 - 12, projectY + var13 - 28);
+				} else if (opcode == 5) {
+					register = VarCache.var[script[pc++]];
+				} else if (opcode == 6) {
+					register = Skills.skillxp[statBaseLevel[script[pc++]] - 1];
+				} else if (opcode == 7) {
+					register = VarCache.var[script[pc++]] * 100 / 46875;
+				} else if (opcode == 8) {
+					register = localPlayer.combatLevel;
+				} else if (opcode == 9) {
+					for (int var14 = 0; var14 < 25; var14++) {
+						if (Skills.used[var14]) {
+							register += statBaseLevel[var14];
 						}
 					}
+				} else if (opcode == 10) {
+					int var15 = script[pc++] << 16;
+					int var16 = var15 + script[pc++];
+					IfType var17 = IfType.get(var16);
+					int var18 = script[pc++];
+					if (var18 != -1 && (!ObjType.list(var18).members || memServer)) {
+						for (int var19 = 0; var19 < var17.linkObjType.length; var19++) {
+							if (var18 + 1 == var17.linkObjType[var19]) {
+								register = 999999999;
+								break;
+							}
+						}
+					}
+				} else if (opcode == 11) {
+					register = runEnergy;
+				} else if (opcode == 12) {
+					register = runWeight;
+				} else if (opcode == 13) {
+					int var20 = VarCache.var[script[pc++]];
+					int var21 = script[pc++];
+					register = (var20 & 0x1 << var21) == 0 ? 0 : 1;
+				} else if (opcode == 14) {
+					int var22 = script[pc++];
+					register = VarCache.getVarbit(var22);
+				} else if (opcode == 15) {
+					nextArithmetic = 1;
+				} else if (opcode == 16) {
+					nextArithmetic = 2;
+				} else if (opcode == 17) {
+					nextArithmetic = 3;
+				} else if (opcode == 18) {
+					register = (localPlayer.x >> 7) + mapBuildBaseX;
+				} else if (opcode == 19) {
+					register = (localPlayer.z >> 7) + mapBuildBaseZ;
+				} else if (opcode == 20) {
+					register = script[pc++];
+				}
+
+				if (nextArithmetic == 0) {
+					if (arithmetic == 0) {
+						acc += register;
+					} else if (arithmetic == 1) {
+						acc -= register;
+					} else if (arithmetic == 2 && register != 0) {
+						acc /= register;
+					} else if (arithmetic == 3) {
+						acc *= register;
+					}
+
+					arithmetic = 0;
 				} else {
-					int var77 = 30;
-					ClientPlayer var78 = (ClientPlayer) var75;
-					if (var78.headiconPk != -1 || var78.headiconPrayer != -1) {
-						getOverlayPos(var75, var75.height + 15);
-						if (projectX > -1) {
-							if (var78.headiconPk != -1) {
-								headiconsPk[var78.headiconPk].plotSprite(projectX + var12 - 12, projectY + var13 - var77);
-								var77 += 25;
-							}
-							if (var78.headiconPrayer != -1) {
-								headiconsPrayer[var78.headiconPrayer].plotSprite(projectX + var12 - 12, projectY + var13 - var77);
-								var77 += 25;
-							}
-						}
-					}
-					if (var74 >= 0 && hintType == 10 && hintPlayer == playerIds[var74]) {
-						getOverlayPos(var75, var75.height + 15);
-						if (projectX > -1) {
-							headiconsHint[1].plotSprite(projectX + var12 - 12, projectY + var13 - var77);
-						}
-					}
-				}
-				if (var75.chat != null && (var74 >= playerCount || publicChatFilter == 0 || publicChatFilter == 3 || publicChatFilter == 1 && isFriend(((ClientPlayer) var75).name))) {
-					getOverlayPos(var75, var75.height);
-					if (projectX > -1 && chatCount < MAX_CHATS) {
-						chatWidth[chatCount] = b12.stringWid(var75.chat) / 2;
-						chatHeight[chatCount] = b12.ascent;
-						chatX[chatCount] = projectX;
-						chatY[chatCount] = projectY;
-						chatColour[chatCount] = var75.chatColour;
-						chatEffect[chatCount] = var75.chatEffect;
-						chatTimer[chatCount] = var75.chatTimer;
-						chats[chatCount] = var75.chat;
-						chatCount++;
-					}
-				}
-				if (var75.combatCycle > loopCycle) {
-					getOverlayPos(var75, var75.height + 15);
-					if (projectX > -1) {
-						int var80 = var75.health * 30 / var75.totalHealth;
-						if (var80 > 30) {
-							var80 = 30;
-						}
-						Pix2D.fillRect(projectX + var12 - 15, projectY + var13 - 3, var80, 5, 65280);
-						Pix2D.fillRect(projectX + var12 - 15 + var80, projectY + var13 - 3, 30 - var80, 5, 16711680);
-					}
-				}
-				for (int var81 = 0; var81 < 4; var81++) {
-					if (var75.damageCycles[var81] <= loopCycle) {
-						continue;
-					}
-
-					getOverlayPos(var75, var75.height / 2);
-
-					if (projectX <= -1) {
-						continue;
-					}
-
-					if (var81 == 1) {
-						projectY -= 20;
-					} else if (var81 == 2) {
-						projectX -= 15;
-						projectY -= 10;
-					} else if (var81 == 3) {
-						projectX += 15;
-						projectY -= 10;
-					}
-
-					hitmarks[var75.damageTypes[var81]].plotSprite(projectX + var12 - 12, projectY + var13 - 12);
-					p11.centreString(Integer.toString(var75.damageValues[var81]), projectX + var12 - 1, projectY + var13 + 3, 16777215, 0);
+					arithmetic = nextArithmetic;
 				}
 			}
-		}
-		for (int var82 = 0; var82 < chatCount; var82++) {
-			int var83 = chatX[var82];
-			int var84 = chatY[var82];
-			int var85 = chatWidth[var82];
-			int var86 = chatHeight[var82];
-			boolean var87 = true;
-			while (var87) {
-				var87 = false;
-				for (int var88 = 0; var88 < var82; var88++) {
-					if (var84 + 2 > chatY[var88] - chatHeight[var88] && var84 - var86 < chatY[var88] + 2 && var83 - var85 < chatWidth[var88] + chatX[var88] && var83 + var85 > chatX[var88] - chatWidth[var88] && chatY[var88] - chatHeight[var88] < var84) {
-						var84 = chatY[var88] - chatHeight[var88];
-						var87 = true;
-					}
-				}
-			}
-			projectX = chatX[var82];
-			projectY = chatY[var82] = var84;
-			String var89 = chats[var82];
-			if (chatEffects == 0) {
-				int var90 = 16776960;
-				if (chatColour[var82] < 6) {
-					var90 = CHAT_COLOURS[chatColour[var82]];
-				}
-				if (chatColour[var82] == 6) {
-					var90 = sceneCycle % 20 < 10 ? 16711680 : 16776960;
-				}
-				if (chatColour[var82] == 7) {
-					var90 = sceneCycle % 20 < 10 ? 255 : 65535;
-				}
-				if (chatColour[var82] == 8) {
-					var90 = sceneCycle % 20 < 10 ? 45056 : 8454016;
-				}
-				if (chatColour[var82] == 9) {
-					int var91 = 150 - chatTimer[var82];
-					if (var91 < 50) {
-						var90 = var91 * 1280 + 16711680;
-					} else if (var91 < 100) {
-						var90 = 16776960 - (var91 - 50) * 327680;
-					} else if (var91 < 150) {
-						var90 = (var91 - 100) * 5 + 65280;
-					}
-				}
-				if (chatColour[var82] == 10) {
-					int var92 = 150 - chatTimer[var82];
-					if (var92 < 50) {
-						var90 = var92 * 5 + 16711680;
-					} else if (var92 < 100) {
-						var90 = 16711935 - (var92 - 50) * 327680;
-					} else if (var92 < 150) {
-						var90 = (var92 - 100) * 327680 + 255 - (var92 - 100) * 5;
-					}
-				}
-				if (chatColour[var82] == 11) {
-					int var93 = 150 - chatTimer[var82];
-					if (var93 < 50) {
-						var90 = 16777215 - var93 * 327685;
-					} else if (var93 < 100) {
-						var90 = (var93 - 50) * 327685 + 65280;
-					} else if (var93 < 150) {
-						var90 = 16777215 - (var93 - 100) * 327680;
-					}
-				}
-				if (chatEffect[var82] == 0) {
-					b12.centreString(var89, projectX + var12, projectY + var13, var90, 0);
-				}
-				if (chatEffect[var82] == 1) {
-					b12.centerStringWave(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
-				}
-				if (chatEffect[var82] == 2) {
-					b12.centreStringWave2(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle);
-				}
-				if (chatEffect[var82] == 3) {
-					b12.centreStringWave3(var89, projectX + var12, projectY + var13, var90, 0, sceneCycle, 150 - chatTimer[var82]);
-				}
-				if (chatEffect[var82] == 4) {
-					int var94 = (150 - chatTimer[var82]) * (b12.stringWid(var89) + 100) / 150;
-					Pix2D.setSubClipping(projectX + var12 - 50, var13, projectX + var12 + 50, var13 + var32);
-					b12.drawString(var89, projectX + var12 + 50 - var94, projectY + var13, var90, 0);
-					Pix2D.setClipping(var12, var13, var12 + var31, var13 + var32);
-				}
-				if (chatEffect[var82] == 5) {
-					int var95 = 150 - chatTimer[var82];
-					int var96 = 0;
-					if (var95 < 25) {
-						var96 = var95 - 25;
-					} else if (var95 > 125) {
-						var96 = var95 - 125;
-					}
-					Pix2D.setSubClipping(var12, projectY + var13 - b12.ascent - 1, var12 + var31, projectY + var13 + 5);
-					b12.centreString(var89, projectX + var12, projectY + var13 + var96, var90, 0);
-					Pix2D.setClipping(var12, var13, var12 + var31, var13 + var32);
-				}
-			} else {
-				b12.centreString(var89, projectX + var12, projectY + var13, 16776960, 0);
-			}
+		} catch (Exception ex) {
+			return -1;
 		}
 	}
 
-	// jag::oldscape::Client::CamFollow
-	public static void camFollow(int var33, int var34, int var35, int var36, int var37, int var38) {
-		int var39 = 2048 - var33 & 0x7FF;
-		int var40 = 2048 - var34 & 0x7FF;
-		int var41 = 0;
-		int var42 = 0;
-		int var43 = var38;
-		if (var39 != 0) {
-			int var44 = Pix3D.sinTable[var39];
-			int var45 = Pix3D.cosTable[var39];
-			int var46 = var42 * var45 - var38 * var44 >> 16;
-			var43 = var42 * var44 + var38 * var45 >> 16;
-			var42 = var46;
-		}
-		if (var40 != 0) {
-			int var47 = Pix3D.sinTable[var40];
-			int var48 = Pix3D.cosTable[var40];
-			int var49 = var41 * var48 + var43 * var47 >> 16;
-			var43 = var43 * var48 - var41 * var47 >> 16;
-			var41 = var49;
-		}
-		camX = var35 - var41;
-		camY = var36 - var42;
-		camZ = var37 - var43;
-		camPitch = var33;
-		camYaw = var34;
-	}
-
-	// jag::oldscape::Client::GdmRoofCheck2
-	public static int roofCheck2() {
-		int var63 = getAvH(camX, camZ, minusedlevel);
-		if (var63 - camY >= 800 || (ClientBuild.mapl[minusedlevel][camX >> 7][camZ >> 7] & 0x4) == 0) {
-			return 3;
-		} else {
-			return minusedlevel;
+	// jag::oldscape::Client::LoopInterface
+	@ObfuscatedName("cz.ft(IIIIIIIS)V")
+	public static void loopInterface(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
+		if (IfType.openInterface(arg0)) {
+			loopLayer(IfType.list[arg0], -1, arg1, arg2, arg3, arg4, arg5, arg6);
 		}
 	}
 
-	// jag::oldscape::Client::GdmRoofCheck
-	public static int roofCheck() {
-		int var50 = 3;
-		if (camPitch < 310) {
-			int var51 = camX >> 7;
-			int var52 = camZ >> 7;
-			int var53 = localPlayer.x >> 7;
-			int var54 = localPlayer.z >> 7;
-			if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
-				var50 = minusedlevel;
-			}
-			int var55;
-			if (var53 > var51) {
-				var55 = var53 - var51;
-			} else {
-				var55 = var51 - var53;
-			}
-			int var56;
-			if (var54 > var52) {
-				var56 = var54 - var52;
-			} else {
-				var56 = var52 - var54;
-			}
-			if (var55 > var56) {
-				int var57 = var56 * 65536 / var55;
-				int var58 = 32768;
-				while (var51 != var53) {
-					if (var51 < var53) {
-						var51++;
-					} else if (var51 > var53) {
-						var51--;
-					}
-					if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
-						var50 = minusedlevel;
-					}
-					var58 += var57;
-					if (var58 >= 65536) {
-						var58 -= 65536;
-						if (var52 < var54) {
-							var52++;
-						} else if (var52 > var54) {
-							var52--;
-						}
-						if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
-							var50 = minusedlevel;
-						}
-					}
-				}
-			} else {
-				int var59 = var55 * 65536 / var56;
-				int var60 = 32768;
-				while (var52 != var54) {
-					if (var52 < var54) {
-						var52++;
-					} else if (var52 > var54) {
-						var52--;
-					}
-					if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
-						var50 = minusedlevel;
-					}
-					var60 += var59;
-					if (var60 >= 65536) {
-						var60 -= 65536;
-						if (var51 < var53) {
-							var51++;
-						} else if (var51 > var53) {
-							var51--;
-						}
-						if ((ClientBuild.mapl[minusedlevel][var51][var52] & 0x4) != 0) {
-							var50 = minusedlevel;
-						}
-					}
-				}
-			}
-		}
-		if ((ClientBuild.mapl[minusedlevel][localPlayer.x >> 7][localPlayer.z >> 7] & 0x4) != 0) {
-			var50 = minusedlevel;
-		}
-		return var50;
-	}
-
-	public static void imethod41(int var12, int var13, int var72, int var73) {
-		if (useMode == 0 && !targetMode) {
-			addMenuOption(Text.WALKHERE, "", 23, 0, var72 - var12, var73 - var13);
-		}
-
-		int lastTypecode = -1;
-		for (int i = 0; i < ModelLit.pickedCount; i++) {
-			int typecode = ModelLit.pickedEntityTypecode[i];
-
-			int x = typecode & 0x7F;
-			int z = typecode >> 7 & 0x7F;
-			int entityType = typecode >> 29 & 0x3;
-			int id = typecode >> 14 & 0x7FFF;
-
-			if (lastTypecode == typecode) {
+	// jag::oldscape::Client::LoopLayer
+	@ObfuscatedName("eg.fx([Leg;IIIIIIIB)V")
+	public static void loopLayer(IfType[] arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
+		for (int var8 = 0; var8 < arg0.length; var8++) {
+			IfType var9 = arg0[var8];
+			if (
+				var9 == null ||
+				(var9.v3 && var9.type != 0 && !var9.hashook && getActive(var9) == 0 && dragParent != var9) ||
+				var9.layerId != arg1 ||
+				(var9.v3 && hide(var9))
+			) {
 				continue;
 			}
 
-			lastTypecode = typecode;
-
-			if (entityType == 2 && world.typecode2(minusedlevel, x, z, typecode) >= 0) {
-				LocType loc = LocType.list(id);
-				if (loc.multiloc != null) {
-					loc = loc.getMultiLoc();
+			int var10 = var9.x + arg6;
+			int var11 = var9.y + arg7;
+			int var12;
+			int var13;
+			int var14;
+			int var15;
+			if (var9.type == 2) {
+				// inv
+				var12 = arg2;
+				var13 = arg3;
+				var14 = arg4;
+				var15 = arg5;
+			} else if (var9.type == 9) {
+				// line
+				int var16 = var10;
+				int var17 = var11;
+				int var18 = var9.width + var10;
+				int var19 = var9.height + var11;
+				if (var18 < var10) {
+					var16 = var18;
+					var18 = var10;
 				}
-				if (loc == null) {
-					continue;
+				if (var19 < var11) {
+					var17 = var19;
+					var19 = var11;
 				}
-
-				if (useMode == 1) {
-					addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(65535) + loc.name, 1, typecode, x, z);
-				} else if (targetMode) {
-					if ((targetMask & 0x4) == 4) {
-						addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(65535) + loc.name, 2, typecode, x, z);
-					}
-				} else {
-					String[] op = loc.op;
-					if (showOpIndex) {
-						op = prependOpIndex(op);
-					}
-
-					if (op != null) {
-						for (int index = 4; index >= 0; index--) {
-							if (op[index] != null) {
-								short action = 0;
-								if (index == 0) {
-									action = 3;
-								}
-								if (index == 1) {
-									action = 4;
-								}
-								if (index == 2) {
-									action = 5;
-								}
-								if (index == 3) {
-									action = 6;
-								}
-								if (index == 4) {
-									action = 1001;
-								}
-
-								addMenuOption(op[index], StringConstants.TAG_COLOUR(65535) + loc.name, action, typecode, x, z);
-							}
-						}
-					}
-
-					addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(65535) + loc.name, 1002, loc.id << 14, x, z);
-				}
+				var18++;
+				var19++;
+				var12 = var16 > arg2 ? var16 : arg2;
+				var13 = var17 > arg3 ? var17 : arg3;
+				var14 = var18 < arg4 ? var18 : arg4;
+				var15 = var19 < arg5 ? var19 : arg5;
+			} else {
+				int var22 = var9.width + var10;
+				int var23 = var9.height + var11;
+				var12 = var10 > arg2 ? var10 : arg2;
+				var13 = var11 > arg3 ? var11 : arg3;
+				var14 = var22 < arg4 ? var22 : arg4;
+				var15 = var23 < arg5 ? var23 : arg5;
 			}
 
-			if (entityType == 1) {
-				ClientNpc npc = npcs[id];
-
-				if (npc.type.size == 1 && (npc.x & 0x7F) == 64 && (npc.z & 0x7F) == 64) {
-					for (int n = 0; n < npcCount; n++) {
-						ClientNpc other = npcs[npcIds[n]];
-						if (other != null && npc != other && other.type.size == 1 && npc.x == other.x && npc.z == other.z) {
-							addNpcOptions(other.type, npcIds[n], x, z);
-						}
-					}
-
-					for (int p = 0; p < playerCount; p++) {
-						ClientPlayer player = players[playerIds[p]];
-						if (player != null && npc.x == player.x && npc.z == player.z) {
-							addPlayerOptions(player, playerIds[p], x, z);
-						}
-					}
-				}
-
-				addNpcOptions(npc.type, id, x, z);
+			if (dragComponent == var9) {
+				dragging = true;
+				dragCurrentX = var10;
+				dragCurrentY = var11;
 			}
 
-			if (entityType == 0) {
-				ClientPlayer player = players[id];
-
-				if ((player.x & 0x7F) == 64 && (player.z & 0x7F) == 64) {
-					for (int n = 0; n < npcCount; n++) {
-						ClientNpc npc = npcs[npcIds[n]];
-						if (npc != null && npc.type.size == 1 && player.x == npc.x && player.z == npc.z) {
-							addNpcOptions(npc.type, npcIds[n], x, z);
-						}
-					}
-
-					for (int p = 0; p < playerCount; p++) {
-						ClientPlayer other = players[playerIds[p]];
-						if (other != null && player != other && player.x == other.x && player.z == other.z) {
-							addPlayerOptions(other, playerIds[p], x, z);
-						}
-					}
-				}
-
-				addPlayerOptions(player, id, x, z);
+			if (var9.v3 && (var12 >= var14 || var13 >= var15)) {
+				continue;
 			}
 
-			if (entityType == 3) {
-				LinkList objs = groundObj[minusedlevel][x][z];
-				if (objs == null) {
-					continue;
+			if (var9.clientCode == 1337) {
+				componentUpdated(var9);
+			} else if (var9.clientCode == 1338) {
+				minimapLoop(var10, var11);
+			} else {
+				if (var9.type == 0) {
+					if (!var9.v3 && hide(var9) && hoveredCom != var9) {
+						continue;
+					}
+
+					loopLayer(arg0, var9.parentId, var12, var13, var14, var15, var10 - var9.scrollPosX, var11 - var9.scrollPosY);
+					if (var9.subcomponents != null) {
+						loopLayer(var9.subcomponents, var9.parentId, var12, var13, var14, var15, var10 - var9.scrollPosX, var11 - var9.scrollPosY);
+					}
+
+					SubInterface var24 = (SubInterface) subinterfaces.find((long) var9.parentId);
+					if (var24 != null) {
+						loopInterface(var24.id, var12, var13, var14, var15, var10, var11);
+					}
 				}
 
-				for (ClientObj obj = (ClientObj) objs.tail(); obj != null; obj = (ClientObj) objs.prev()) {
-					ObjType type = ObjType.list(obj.id);
-
-					if (useMode == 1) {
-						addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + type.name, 16, obj.id, x, z);
-					} else if (targetMode) {
-						if ((targetMask & 0x1) == 1) {
-							addMenuOption(targetVerb, targetOp + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + type.name, 17, obj.id, x, z);
-						}
+				if (var9.v3) {
+					boolean var25;
+					if (ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
+						var25 = true;
 					} else {
-						String[] op = type.op;
-						if (showOpIndex) {
-							op = prependOpIndex(op);
+						var25 = false;
+					}
+
+					boolean var26 = false;
+					if (ClientMouseListener.mouseButton == 1 && var25) {
+						var26 = true;
+					}
+
+					boolean var27 = false;
+					if (ClientMouseListener.mouseClickButton == 1 && ClientMouseListener.mouseClickX >= var12 && ClientMouseListener.mouseClickY >= var13 && ClientMouseListener.mouseClickX < var14 && ClientMouseListener.mouseClickY < var15) {
+						var27 = true;
+					}
+
+					if (var27) {
+						dragTryPickup(var9, ClientMouseListener.mouseClickX - var10, ClientMouseListener.mouseClickY - var11);
+					}
+
+					if (dragComponent != null && dragComponent != var9 && var25) {
+						if (ServerActive.isDragTarget(getActive(var9))) {
+							dropComponent = var9;
+						}
+					}
+
+					if (dragParent == var9) {
+						dragParentFound = true;
+						dragParentX = var10;
+						dragParentY = var11;
+					}
+
+					if (var9.hashook) {
+						if (var25 && mouseWheelRotation != 0 && var9.onscrollwheel != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.mouseY = mouseWheelRotation;
+							req.onop = var9.onscrollwheel;
+							hookRequests.push(req);
 						}
 
-						for (int var125 = 4; var125 >= 0; var125--) {
-							if (op != null && op[var125] != null) {
-								byte var126 = 0;
-								if (var125 == 0) {
-									var126 = 18;
-								}
-								if (var125 == 1) {
-									var126 = 19;
-								}
-								if (var125 == 2) {
-									var126 = 20;
-								}
-								if (var125 == 3) {
-									var126 = 21;
-								}
-								if (var125 == 4) {
-									var126 = 22;
-								}
-								addMenuOption(op[var125], StringConstants.TAG_COLOUR(16748608) + type.name, var126, obj.id, x, z);
-							} else if (var125 == 2) {
-								addMenuOption(Text.TAKE, StringConstants.TAG_COLOUR(16748608) + type.name, 20, obj.id, x, z);
+						if (dragComponent != null || objDragInterface != null || isMenuOpen) {
+							var27 = false;
+							var26 = false;
+							var25 = false;
+						}
+
+						if (!var9.clickTrigger && var27) {
+							var9.clickTrigger = true;
+
+							if (var9.onclick != null) {
+								HookReq req = new HookReq();
+								req.component = var9;
+								req.mouseX = ClientMouseListener.mouseClickX - var10;
+								req.mouseY = ClientMouseListener.mouseClickY - var11;
+								req.onop = var9.onclick;
+								hookRequests.push(req);
 							}
 						}
 
-						addMenuOption(Text.EXAMINE, StringConstants.TAG_COLOUR(16748608) + type.name, 1004, obj.id, x, z);
+						if (var9.clickTrigger && var26 && var9.onclickrepeat != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.mouseX = ClientMouseListener.mouseX - var10;
+							req.mouseY = ClientMouseListener.mouseY - var11;
+							req.onop = var9.onclickrepeat;
+							hookRequests.push(req);
+						}
+
+						if (var9.clickTrigger && !var26) {
+							var9.clickTrigger = false;
+
+							if (var9.onrelease != null) {
+								HookReq req = new HookReq();
+								req.component = var9;
+								req.mouseX = ClientMouseListener.mouseX - var10;
+								req.mouseY = ClientMouseListener.mouseY - var11;
+								req.onop = var9.onrelease;
+								hookRequestsMouseStop.push(req);
+							}
+						}
+
+						if (var26 && var9.onhold != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.mouseX = ClientMouseListener.mouseX - var10;
+							req.mouseY = ClientMouseListener.mouseY - var11;
+							req.onop = var9.onhold;
+							hookRequests.push(req);
+						}
+
+						if (!var9.mouseTrigger && var25) {
+							var9.mouseTrigger = true;
+
+							if (var9.onmouseover != null) {
+								HookReq req = new HookReq();
+								req.component = var9;
+								req.mouseX = ClientMouseListener.mouseX - var10;
+								req.mouseY = ClientMouseListener.mouseY - var11;
+								req.onop = var9.onmouseover;
+								hookRequests.push(req);
+							}
+						}
+
+						if (var9.mouseTrigger && var25 && var9.onmouserepeat != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.mouseX = ClientMouseListener.mouseX - var10;
+							req.mouseY = ClientMouseListener.mouseY - var11;
+							req.onop = var9.onmouserepeat;
+							hookRequests.push(req);
+						}
+
+						if (var9.mouseTrigger && !var25) {
+							var9.mouseTrigger = false;
+
+							if (var9.onmouseleave != null) {
+								HookReq req = new HookReq();
+								req.component = var9;
+								req.mouseX = ClientMouseListener.mouseX - var10;
+								req.mouseY = ClientMouseListener.mouseY - var11;
+								req.onop = var9.onmouseleave;
+								hookRequestsMouseStop.push(req);
+							}
+						}
+
+						if (var9.ontimer != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.onop = var9.ontimer;
+							hookRequestsTimer.push(req);
+						}
+
+						if (var9.onvartransmit != null && varTransmitNum > var9.varTransmitNum) {
+							if (var9.onvartransmitlist == null || varTransmitNum - var9.varTransmitNum > 32) {
+								HookReq req = new HookReq();
+								req.component = var9;
+								req.onop = var9.onvartransmit;
+								hookRequests.push(req);
+							} else {
+								label383:
+								for (int var39 = var9.varTransmitNum; var39 < varTransmitNum; var39++) {
+									int var40 = varTransmit[var39 & 0x1F];
+									for (int var41 = 0; var41 < var9.onvartransmitlist.length; var41++) {
+										if (var9.onvartransmitlist[var41] == var40) {
+											HookReq req = new HookReq();
+											req.component = var9;
+											req.onop = var9.onvartransmit;
+											hookRequests.push(req);
+											break label383;
+										}
+									}
+								}
+							}
+
+							var9.varTransmitNum = varTransmitNum;
+						}
+
+						if (var9.oninvtransmit != null && invTransmitNum > var9.invTransmitNum) {
+							if (var9.oninvtransmitlist == null || invTransmitNum - var9.invTransmitNum > 32) {
+								HookReq req = new HookReq();
+								req.component = var9;
+								req.onop = var9.oninvtransmit;
+								hookRequests.push(req);
+							} else {
+								label363:
+								for (int var44 = var9.invTransmitNum; var44 < invTransmitNum; var44++) {
+									int var45 = invTransmit[var44 & 0x1F];
+									for (int var46 = 0; var46 < var9.oninvtransmitlist.length; var46++) {
+										if (var9.oninvtransmitlist[var46] == var45) {
+											HookReq req = new HookReq();
+											req.component = var9;
+											req.onop = var9.oninvtransmit;
+											hookRequests.push(req);
+											break label363;
+										}
+									}
+								}
+							}
+
+							var9.invTransmitNum = invTransmitNum;
+						}
+
+						if (var9.onstattransmit != null && statTransmitNum > var9.statTransmitNum) {
+							if (var9.onstattransmitlist == null || statTransmitNum - var9.statTransmitNum > 32) {
+								HookReq req = new HookReq();
+								req.component = var9;
+								req.onop = var9.onstattransmit;
+								hookRequests.push(req);
+							} else {
+								label343:
+								for (int var49 = var9.statTransmitNum; var49 < statTransmitNum; var49++) {
+									int var50 = statTransmit[var49 & 0x1F];
+									for (int var51 = 0; var51 < var9.onstattransmitlist.length; var51++) {
+										if (var9.onstattransmitlist[var51] == var50) {
+											HookReq req = new HookReq();
+											req.component = var9;
+											req.onop = var9.onstattransmit;
+											hookRequests.push(req);
+											break label343;
+										}
+									}
+								}
+							}
+
+							var9.statTransmitNum = statTransmitNum;
+						}
+
+						if (chatTransmitNum > var9.transmitNum && var9.onchattransmit != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.onop = var9.onchattransmit;
+							hookRequests.push(req);
+						}
+
+						if (friendTransmitNum > var9.transmitNum && var9.onfriendtransmit != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.onop = var9.onfriendtransmit;
+							hookRequests.push(req);
+						}
+
+						if (clanTransmitNum > var9.transmitNum && var9.onclantransmit != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.onop = var9.onclantransmit;
+							hookRequests.push(req);
+						}
+
+						if (miscTransmitNum > var9.transmitNum && var9.onmisctransmit != null) {
+							HookReq req = new HookReq();
+							req.component = var9;
+							req.onop = var9.onmisctransmit;
+							hookRequests.push(req);
+						}
+
+						var9.transmitNum = transmitNum;
+
+						if (var9.onkey != null) {
+							for (int var58 = 0; var58 < keypresses; var58++) {
+								HookReq req = new HookReq();
+								req.component = var9;
+								req.keyCode = keypressKeycodes[var58];
+								req.keyChar = keypressKeychars[var58];
+								req.onop = var9.onkey;
+								hookRequests.push(req);
+							}
+						}
+					}
+				}
+
+				if (!var9.v3) {
+					if (dragComponent != null || objDragInterface != null || isMenuOpen) {
+						return;
+					}
+
+					if ((var9.overLayerId >= 0 || var9.colourOver != 0) && ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
+						if (var9.overLayerId >= 0) {
+							hoveredCom = arg0[var9.overLayerId];
+						} else {
+							hoveredCom = var9;
+						}
+					}
+
+					if (var9.type == 8 && ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
+						tooltipCom = var9;
+					}
+
+					if (var9.scrollHeight > var9.height) {
+						doScrollbar(var9, var9.width + var10, var11, var9.height, var9.scrollHeight, ClientMouseListener.mouseX, ClientMouseListener.mouseY);
 					}
 				}
 			}
 		}
 	}
 
-	// jag::oldscape::Client::FriendsChatKickUser
-	public static void friendsChatKickUser(String var186) {
-		if (friendChatList == null) {
+	// jag::oldscape::Client::RunHookImmediate
+	@ObfuscatedName("ai.fs(III)V")
+	public static void runHookImmediate(int arg0, int arg1) {
+		if (IfType.openInterface(arg0)) {
+			runHookLayer(IfType.list[arg0], arg1);
+		}
+	}
+
+	// jag::oldscape::Client::RunHookLayer
+	@ObfuscatedName("ao.fh([Leg;IB)V")
+	public static void runHookLayer(IfType[] children, int arg1) {
+		for (int i = 0; i < children.length; i++) {
+			IfType com = children[i];
+			if (com == null) {
+				continue;
+			}
+
+			if (com.type == 0) {
+				if (com.subcomponents != null) {
+					runHookLayer(com.subcomponents, arg1);
+				}
+
+				SubInterface sub = (SubInterface) subinterfaces.find((long) com.parentId);
+				if (sub != null) {
+					runHookImmediate(sub.id, arg1);
+				}
+			}
+
+			if (arg1 == 0 && com.ondialogabort != null) {
+				HookReq req = new HookReq();
+				req.component = com;
+				req.onop = com.ondialogabort;
+				ScriptRunner.executeScript(req);
+			}
+
+			if (arg1 == 1 && com.onsubchange != null) {
+				if (com.subId >= 0) {
+					IfType var6 = IfType.get(com.parentId);
+					if (var6 == null || var6.subcomponents == null || com.subId >= var6.subcomponents.length || var6.subcomponents[com.subId] != com) {
+						continue;
+					}
+				}
+
+				HookReq req = new HookReq();
+				req.component = com;
+				req.onop = com.onsubchange;
+				ScriptRunner.executeScript(req);
+			}
+		}
+	}
+
+	// jag::oldscape::Client::DragTryPickup
+	@ObfuscatedName("ch.ff(Leg;IIB)V")
+	public static void dragTryPickup(IfType arg0, int arg1, int arg2) {
+		if (dragComponent != null || isMenuOpen || (arg0 == null || getDragLayer(arg0) == null)) {
 			return;
 		}
 
-		// CLAN_KICKUSER
-		out.p1Enc(245);
-		out.p1(Packet.pjstrlen(var186));
-		out.pjstr(var186);
+		dragComponent = arg0;
+		dragParent = getDragLayer(arg0);
+		dragPickupX = arg1;
+		dragPickupY = arg2;
+		dragTime = 0;
+		dragAlive = false;
+	}
+
+	// jag::oldscape::Client::ComponentUpdated
+	@ObfuscatedName("cq.fy(Leg;I)V")
+	public static void componentUpdated(IfType com) {
+		if (componentDrawTime == com.drawTime) {
+			componentRedrawRequested1[com.drawCount] = true;
+		}
+	}
+
+	// jag::oldscape::Client::LegacyUpdated
+	@ObfuscatedName("g.fn(B)V")
+	public static void legacyUpdated() {
+		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
+			int id = sub.id;
+
+			if (IfType.openInterface(id)) {
+				boolean newFormat = true;
+
+				IfType[] children = IfType.list[id];
+				for (int i = 0; i < children.length; i++) {
+					if (children[i] != null) {
+						newFormat = children[i].v3;
+						break;
+					}
+				}
+
+				if (!newFormat) {
+					int key = (int) sub.key;
+
+					IfType com = IfType.get(key);
+					if (com != null) {
+						componentUpdated(com);
+					}
+				}
+			}
+		}
+	}
+
+	// jag::oldscape::Client::GetDragLayer
+	@ObfuscatedName("bs.fz(Leg;I)Leg;")
+	public static IfType getDragLayer(IfType arg0) {
+		// todo: inlined method (ServerDraggable?)
+		IfType var1 = arg0;
+		int var2 = ServerActive.serverDraggable(getActive(arg0));
+		IfType var3;
+		if (var2 == 0) {
+			var3 = null;
+		} else {
+			int var4 = 0;
+			while (true) {
+				if (var4 >= var2) {
+					var3 = var1;
+					break;
+				}
+				var1 = IfType.get(var1.layerId);
+				if (var1 == null) {
+					var3 = null;
+					break;
+				}
+				var4++;
+			}
+		}
+
+		IfType var5 = var3;
+		if (var3 == null) {
+			var5 = arg0.draggable;
+		}
+		return var5;
+	}
+
+	@ObfuscatedName("ai.fw([Ljava/lang/String;B)[Ljava/lang/String;")
+	public static String[] prependOpIndex(String[] op) {
+		String[] tmp = new String[5];
+		for (int i = 0; i < 5; i++) {
+			tmp[i] = i + ": ";
+
+			if (op != null && op[i] != null) {
+				tmp[i] = tmp[i] + op[i];
+			}
+		}
+
+		return tmp;
+	}
+
+	// jag::oldscape::Client::IfAnimReset
+	@ObfuscatedName("n.fo(II)V")
+	public static void ifAnimReset(int arg0) {
+		if (!IfType.openInterface(arg0)) {
+			return;
+		}
+
+		IfType[] var1 = IfType.list[arg0];
+		for (int var2 = 0; var2 < var1.length; var2++) {
+			IfType var3 = var1[var2];
+			if (var3 != null) {
+				var3.animFrame = 0;
+				var3.animCycle = 0;
+			}
+		}
+	}
+
+	// jag::oldscape::Client::AnimateInterface
+	// placement relative to other clients
+	public static void animateInterface(int var14) {
+		if (IfType.openInterface(var14)) {
+			animateLayer(IfType.list[var14], -1);
+		}
+	}
+
+	// jag::oldscape::Client::AnimateLayer
+	// placement relative to other clients
+	@ObfuscatedName("cz.fm([Leg;IB)V")
+	public static void animateLayer(IfType[] children, int layer) {
+		for (int i = 0; i < children.length; i++) {
+			IfType com = children[i];
+			if (com == null || com.layerId != layer || (com.v3 && hide(com))) {
+				continue;
+			}
+
+			if (com.type == 0) {
+				if (!com.v3 && hide(com) && hoveredCom != com) {
+					continue;
+				}
+
+				animateLayer(children, com.parentId);
+
+				if (com.subcomponents != null) {
+					animateLayer(com.subcomponents, com.parentId);
+				}
+
+				SubInterface var4 = (SubInterface) subinterfaces.find(com.parentId);
+				if (var4 != null) {
+					animateInterface(var4.id);
+				}
+			}
+
+			if (com.type == 6) {
+				if (com.modelAnim != -1 || com.modelAnim2 != -1) {
+					boolean var6 = getIfActive(com);
+					int var7;
+					if (var6) {
+						var7 = com.modelAnim2;
+					} else {
+						var7 = com.modelAnim;
+					}
+					if (var7 != -1) {
+						SeqType var8 = SeqType.list(var7);
+
+						com.animCycle += worldUpdateNum;
+
+						while (com.animCycle > var8.delay[com.animFrame]) {
+							com.animCycle -= var8.delay[com.animFrame];
+							com.animFrame++;
+
+							if (com.animFrame >= var8.frames.length) {
+								com.animFrame -= var8.loops;
+
+								if (com.animFrame < 0 || com.animFrame >= var8.frames.length) {
+									com.animFrame = 0;
+								}
+							}
+
+							componentUpdated(com);
+						}
+					}
+				}
+
+				if (com.modelSpin != 0 && !com.v3) {
+					int var9 = com.modelSpin >> 16;
+					int var10 = com.modelSpin << 16 >> 16;
+					int var11 = worldUpdateNum * var9;
+					int var12 = worldUpdateNum * var10;
+
+					com.modelXAn = com.modelXAn + var11 & 0x7FF;
+					com.modelYAn = com.modelYAn + var12 & 0x7FF;
+
+					componentUpdated(com);
+				}
+			}
+		}
+	}
+
+	// jag::oldscape::Client::ClientVar
+	@ObfuscatedName("bv.fi(II)V")
+	public static void clientVar(int varp) {
+		legacyUpdated();
+		BgSound.recalculateMultilocs();
+
+		int clientcode = VarpType.list(varp).clientcode;
+		if (clientcode == 0) {
+			return;
+		}
+
+		int value = VarCache.var[varp];
+		if (clientcode == 1) {
+			if (value == 1) {
+				Pix3D.initColourTable(0.9D);
+				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.9D);
+			} else if (value == 2) {
+				Pix3D.initColourTable(0.8D);
+				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.8D);
+			} else if (value == 3) {
+				Pix3D.initColourTable(0.7D);
+				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.7D);
+			} else if (value == 4) {
+				Pix3D.initColourTable(0.6D);
+				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.6D);
+			}
+
+			ObjType.resetSpriteCache();
+		} else if (clientcode == 3) {
+			short volume = 0;
+			if (value == 0) {
+				volume = 255;
+			} else if (value == 1) {
+				volume = 192;
+			} else if (value == 2) {
+				volume = 128;
+			} else if (value == 3) {
+				volume = 64;
+			} else if (value == 4) {
+				volume = 0;
+			}
+
+			if (midiVolume != volume) {
+				if (midiVolume == 0 && previousSong != -1) {
+					MidiManager.play(songs, previousSong, 0, volume, false);
+					playingJingle = false;
+				} else if (volume == 0) {
+					MidiManager.stop();
+					playingJingle = false;
+				} else {
+					MidiManager.setVolume(volume);
+				}
+
+				midiVolume = volume;
+			}
+		} else if (clientcode == 4) {
+			if (value == 0) {
+				waveVolume = 127;
+			} else if (value == 1) {
+				waveVolume = 96;
+			} else if (value == 2) {
+				waveVolume = 64;
+			} else if (value == 3) {
+				waveVolume = 32;
+			} else if (value == 4) {
+				waveVolume = 0;
+			}
+		} else if (clientcode == 5) {
+			oneMouseButton = value;
+		} else if (clientcode == 6) {
+			chatEffects = value;
+		} else if (clientcode == 9) {
+			bankArrangeMode = value;
+		} else if (clientcode == 10) {
+			if (value == 0) {
+				ambientVolume = 127;
+			} else if (value == 1) {
+				ambientVolume = 96;
+			} else if (value == 2) {
+				ambientVolume = 64;
+			} else if (value == 3) {
+				ambientVolume = 32;
+			} else if (value == 4) {
+				ambientVolume = 0;
+			}
+		}
+	}
+
+	// jag::oldscape::Client::ClientComponent
+	@ObfuscatedName("cy.ge(Leg;I)V")
+	public static void clientComponent(IfType com) {
+		int clientCode = com.clientCode;
+
+		if (clientCode == 324) {
+			if (genderButton1 == -1) {
+				genderButton1 = com.graphic;
+				genderButton2 = com.graphic2;
+			}
+
+			if (selfModel.gender) {
+				com.graphic = genderButton1;
+			} else {
+				com.graphic = genderButton2;
+			}
+		} else if (clientCode == 325) {
+			if (genderButton1 == -1) {
+				genderButton1 = com.graphic;
+				genderButton2 = com.graphic2;
+			}
+
+			if (selfModel.gender) {
+				com.graphic = genderButton2;
+			} else {
+				com.graphic = genderButton1;
+			}
+		} else if (clientCode == 327) {
+			com.modelXAn = 150;
+			com.modelYAn = (int) (Math.sin((double) loopCycle / 40.0D) * 256.0D) & 0x7FF;
+			com.model1Type = 5;
+			com.model1Id = 0;
+		} else if (clientCode == 328) {
+			com.modelXAn = 150;
+			com.modelYAn = (int) (Math.sin((double) loopCycle / 40.0D) * 256.0D) & 0x7FF;
+			com.model1Type = 5;
+			com.model1Id = 1;
+		}
+	}
+
+	// jag::oldscape::Client::CloseModal
+	// placement relative to other clients
+	public static void closeModal() {
+		// CLOSE_MODAL
+		out.p1Enc(129);
+
+		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
+			if (sub.type == 0 || sub.type == 3) {
+				closeSubInterface(sub, true);
+			}
+		}
+
+		if (resumedPauseButton != null) {
+			componentUpdated(resumedPauseButton);
+			resumedPauseButton = null;
+		}
+	}
+
+	// jag::oldscape::Client::OpenSubinterface
+	@ObfuscatedName("cz.gq(IIIB)Ldy;")
+	public static SubInterface openSubInterface(int arg0, int arg1, int arg2) {
+		SubInterface sub = new SubInterface();
+		sub.id = arg1;
+		sub.type = arg2;
+		subinterfaces.put(sub, arg0);
+
+		ifAnimReset(arg1);
+		ScriptRunner.executeOnLoad(arg1);
+
+		IfType var4 = IfType.get(arg0);
+		if (var4 != null) {
+			componentUpdated(var4);
+		}
+
+		if (resumedPauseButton != null) {
+			componentUpdated(resumedPauseButton);
+			resumedPauseButton = null;
+		}
+
+		isMenuOpen = false;
+		menuNumEntries = 0;
+		dirtyArea(menuX, menuY, menuWidth, menuHeight);
+
+		if (toplevelinterface != -1) {
+			runHookImmediate(toplevelinterface, 1);
+		}
+
+		return sub;
+	}
+
+	// jag::oldscape::Client::CloseSubinterface
+	@ObfuscatedName("am.gr(Ldy;ZI)V")
+	public static void closeSubInterface(SubInterface sub, boolean arg1) {
+		int var2 = sub.id;
+		int var3 = (int) sub.key;
+
+		sub.unlink();
+
+		if (arg1 && var2 != -1 && IfType.open[var2]) {
+			IfType.interfaces.discardFiles(var2);
+
+			if (IfType.list[var2] != null) {
+				boolean var4 = true;
+				for (int var5 = 0; var5 < IfType.list[var2].length; var5++) {
+					if (IfType.list[var2][var5] != null) {
+						if (IfType.list[var2][var5].type == 2) {
+							var4 = false;
+						} else {
+							IfType.list[var2][var5] = null;
+						}
+					}
+				}
+				if (var4) {
+					IfType.list[var2] = null;
+				}
+
+				IfType.open[var2] = false;
+			}
+		}
+
+		purgeServerActive(var2);
+
+		IfType com = IfType.get(var3);
+		if (com != null) {
+			componentUpdated(com);
+		}
+
+		isMenuOpen = false;
+		menuNumEntries = 0;
+		dirtyArea(menuX, menuY, menuWidth, menuHeight);
+
+		if (toplevelinterface != -1) {
+			runHookImmediate(toplevelinterface, 1);
+		}
+	}
+
+	// jag::oldscape::Client::ClientButton
+	@ObfuscatedName("es.gd(Leg;B)Z")
+	public static boolean clientButton(IfType com) {
+		int clientCode = com.clientCode;
+
+		if (clientCode == 205) {
+			logoutTimer = 250;
+			return true;
+		} else if (clientCode >= 300 && clientCode <= 313) {
+			int var2 = (clientCode - 300) / 2;
+			int var3 = clientCode & 0x1;
+			selfModel.idkChangePart(var2, var3 == 1);
+		} else if (clientCode >= 314 && clientCode <= 323) {
+			int var4 = (clientCode - 314) / 2;
+			int var5 = clientCode & 0x1;
+			selfModel.idkChangeColour(var4, var5 == 1);
+		} else if (clientCode == 324) {
+			selfModel.idkChangeGender(false);
+		} else if (clientCode == 325) {
+			selfModel.idkChangeGender(true);
+		} else if (clientCode == 326) {
+			// IDK_SAVEDESIGN
+			out.p1Enc(71);
+			selfModel.idkSaveDesign(out);
+			return true;
+		}
+
+		return false;
+	}
+
+	// jag::oldscape::minimap::Minimap::Draw
+	@ObfuscatedName("ba.gh(IIII)V")
+	public static void minimapDraw(int arg0, int arg1, int arg2) {
+		doAudio();
+		Pix2D.setClipping(arg0, arg1, mapback.wi + arg0, mapback.hi + arg1);
+
+		if (minimapState == 2 || minimapState == 5) {
+			Pix2D.fillScanLine(arg0 + 25, arg1 + 5, 0, minimapMaskLineOffsets, minimapMaskLineLengths);
+		} else {
+			int var3 = orbitCameraYaw + macroMinimapAngle & 0x7FF;
+			int var4 = localPlayer.x / 32 + 48;
+			int var5 = 464 - localPlayer.z / 32;
+
+			minimap.scanlineRotatePlotSprite(arg0 + 25, arg1 + 5, 146, 151, var4, var5, var3, macroMinimapZoom + 256, minimapMaskLineOffsets, minimapMaskLineLengths);
+
+			for (int var6 = 0; var6 < activeMapFunctionCount; var6++) {
+				int var7 = activeMapFunctionX[var6] * 4 + 2 - localPlayer.x / 32;
+				int var8 = activeMapFunctionZ[var6] * 4 + 2 - localPlayer.z / 32;
+				minimapDrawDot(arg0, arg1, var7, var8, activeMapFunctions[var6]);
+			}
+
+			for (int var9 = 0; var9 < 104; var9++) {
+				for (int var10 = 0; var10 < 104; var10++) {
+					LinkList var11 = groundObj[minusedlevel][var9][var10];
+					if (var11 != null) {
+						int var12 = var9 * 4 + 2 - localPlayer.x / 32;
+						int var13 = var10 * 4 + 2 - localPlayer.z / 32;
+						minimapDrawDot(arg0, arg1, var12, var13, mapdots[0]);
+					}
+				}
+			}
+
+			for (int var14 = 0; var14 < npcCount; var14++) {
+				ClientNpc var15 = npcs[npcIds[var14]];
+				if (var15 != null && var15.ready()) {
+					NpcType var16 = var15.type;
+					if (var16 != null && var16.multinpc != null) {
+						var16 = var16.getMultiNpc();
+					}
+					if (var16 != null && var16.minimap && var16.active) {
+						int var17 = var15.x / 32 - localPlayer.x / 32;
+						int var18 = var15.z / 32 - localPlayer.z / 32;
+						minimapDrawDot(arg0, arg1, var17, var18, mapdots[1]);
+					}
+				}
+			}
+
+			for (int var19 = 0; var19 < playerCount; var19++) {
+				ClientPlayer var20 = players[playerIds[var19]];
+				if (var20 != null && var20.ready()) {
+					int var21 = var20.x / 32 - localPlayer.x / 32;
+					int var22 = var20.z / 32 - localPlayer.z / 32;
+					boolean var23 = false;
+					if (isFriend(var20.name)) {
+						var23 = true;
+					}
+					boolean var24 = false;
+					if (localPlayer.team != 0 && var20.team != 0 && localPlayer.team == var20.team) {
+						var24 = true;
+					}
+					if (var23) {
+						minimapDrawDot(arg0, arg1, var21, var22, mapdots[3]);
+					} else if (var24) {
+						minimapDrawDot(arg0, arg1, var21, var22, mapdots[4]);
+					} else {
+						minimapDrawDot(arg0, arg1, var21, var22, mapdots[2]);
+					}
+				}
+			}
+
+			if (hintType != 0 && loopCycle % 20 < 10) {
+				if (hintType == 1 && hintNpc >= 0 && hintNpc < npcs.length) {
+					ClientNpc var25 = npcs[hintNpc];
+					if (var25 != null) {
+						int var26 = var25.x / 32 - localPlayer.x / 32;
+						int var27 = var25.z / 32 - localPlayer.z / 32;
+						minimapDrawArrow(arg0, arg1, var26, var27, mapmarker[1]);
+					}
+				}
+
+				if (hintType == 2) {
+					int var28 = hintTileX * 4 - mapBuildBaseX * 4 + 2 - localPlayer.x / 32;
+					int var29 = hintTileZ * 4 - mapBuildBaseZ * 4 + 2 - localPlayer.z / 32;
+					minimapDrawArrow(arg0, arg1, var28, var29, mapmarker[1]);
+				}
+
+				if (hintType == 10 && hintPlayer >= 0 && hintPlayer < players.length) {
+					ClientPlayer var30 = players[hintPlayer];
+					if (var30 != null) {
+						int var31 = var30.x / 32 - localPlayer.x / 32;
+						int var32 = var30.z / 32 - localPlayer.z / 32;
+						minimapDrawArrow(arg0, arg1, var31, var32, mapmarker[1]);
+					}
+				}
+			}
+
+			if (minimapFlagX != 0) {
+				int var33 = minimapFlagX * 4 + 2 - localPlayer.x / 32;
+				int var34 = minimapFlagZ * 4 + 2 - localPlayer.z / 32;
+				minimapDrawDot(arg0, arg1, var33, var34, mapmarker[0]);
+			}
+
+			Pix2D.fillRect(arg0 + 93 + 4, arg1 + 82 - 4, 3, 3, 0xffffff);
+		}
+
+		if (minimapState < 3) {
+			compass.scanlineRotatePlotSprite(arg0, arg1, 33, 33, 25, 25, orbitCameraYaw, 256, compassMaskLineOffsets, compassMaskLineLengths);
+		} else {
+			Pix2D.fillScanLine(arg0, arg1, 0, compassMaskLineOffsets, compassMaskLineLengths);
+		}
+
+		if (componentDrawSomething2[arg2]) {
+			mapback.plotSprite(arg0, arg1);
+		}
+
+		componentRedrawRequested2[arg2] = true;
+	}
+
+	// jag::oldscape::minimap::Minimap::DrawArrow
+	@ObfuscatedName("ak.gm(IIIILfq;B)V")
+	public static void minimapDrawArrow(int arg0, int arg1, int arg2, int arg3, Pix32 arg4) {
+		int var5 = arg2 * arg2 + arg3 * arg3;
+		if (var5 <= 4225 || var5 >= 90000) {
+			minimapDrawDot(arg0, arg1, arg2, arg3, arg4);
+			return;
+		}
+		int var6 = orbitCameraYaw + macroMinimapAngle & 0x7FF;
+		int var7 = Pix3D.sinTable[var6];
+		int var8 = Pix3D.cosTable[var6];
+		int var9 = var7 * 256 / (macroMinimapZoom + 256);
+		int var10 = var8 * 256 / (macroMinimapZoom + 256);
+		int var11 = arg2 * var10 + arg3 * var9 >> 16;
+		int var12 = arg3 * var10 - arg2 * var9 >> 16;
+		double var13 = Math.atan2((double) var11, (double) var12);
+		int var15 = (int) (Math.sin(var13) * 63.0D);
+		int var16 = (int) (Math.cos(var13) * 57.0D);
+		mapedge.rotateTransPlotSprite(arg0 + 94 + var15 + 4 - 10, arg1 + 83 - var16 - 20, 20, 20, 15, 15, var13, 256);
+	}
+
+	// jag::oldscape::minimap::Minimap::DrawDot
+	@ObfuscatedName("g.gw(IIIILfq;I)V")
+	public static void minimapDrawDot(int arg0, int arg1, int arg2, int arg3, Pix32 arg4) {
+		if (arg4 == null) {
+			return;
+		}
+		int var5 = orbitCameraYaw + macroMinimapAngle & 0x7FF;
+		int var6 = arg2 * arg2 + arg3 * arg3;
+		if (var6 > 6400) {
+			return;
+		}
+		int var7 = Pix3D.sinTable[var5];
+		int var8 = Pix3D.cosTable[var5];
+		int var9 = var7 * 256 / (macroMinimapZoom + 256);
+		int var10 = var8 * 256 / (macroMinimapZoom + 256);
+		int var11 = arg2 * var10 + arg3 * var9 >> 16;
+		int var12 = arg3 * var10 - arg2 * var9 >> 16;
+		if (var6 > 2500) {
+			arg4.scanlinePlotSprite(mapback, arg0 + 94 + var11 - arg4.owi / 2 + 4, arg1 + 83 - var12 - arg4.ohi / 2 - 4);
+		} else {
+			arg4.plotSprite(arg0 + 94 + var11 - arg4.owi / 2 + 4, arg1 + 83 - var12 - arg4.ohi / 2 - 4);
+		}
+	}
+
+	// jag::oldscape::Client::AddChat
+	@ObfuscatedName("ao.gn(ILjava/lang/String;Ljava/lang/String;I)V")
+	public static void addChat(int type, String sender, String message) {
+		addChat(type, sender, message, null);
+	}
+
+	// jag::oldscape::Client::AddChat
+	@ObfuscatedName("br.gj(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V")
+	public static void addChat(int type, String sender, String message, String arg3) {
+		for (int i = 99; i > 0; i--) {
+			messageType[i] = messageType[i - 1];
+			messageSender[i] = messageSender[i - 1];
+			messageText[i] = messageText[i - 1];
+			messageScreenName[i] = messageScreenName[i - 1];
+		}
+
+		messageType[0] = type;
+		messageSender[0] = sender;
+		messageText[0] = message;
+		messageScreenName[0] = arg3;
+
+		chatHistoryLength++;
+		chatTransmitNum = transmitNum;
+	}
+
+	// jag::oldscape::FriendSystem::IsFriend
+	@ObfuscatedName("bg.gk(Ljava/lang/String;B)Z")
+	public static boolean isFriend(String arg0) {
+		if (arg0 == null) {
+			return false;
+		}
+		for (int var1 = 0; var1 < friendCount; var1++) {
+			if (arg0.equalsIgnoreCase(friendList[var1].name)) {
+				return true;
+			}
+		}
+		if (arg0.equalsIgnoreCase(localPlayer.name)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// jag::oldscape::FriendSystem::IsIgnored
+	@ObfuscatedName("bi.gx(Ljava/lang/String;I)Z")
+	public static boolean isIgnored(String arg0) {
+		if (arg0 == null) {
+			return false;
+		}
+		for (int var1 = 0; var1 < ignoreCount; var1++) {
+			IgnoreListEntry var2 = ignoreList[var1];
+			if (arg0.equalsIgnoreCase(var2.name)) {
+				return true;
+			}
+			if (arg0.equalsIgnoreCase(var2.displayName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// jag::oldscape::FriendSystem::AddFriend
+	@ObfuscatedName("ch.gl(Ljava/lang/String;I)V")
+	public static void addFriend(String arg0) {
+		if (arg0 == null) {
+			return;
+		}
+		if (friendCount >= 200 && membersAccount != 1 || friendCount >= 200) {
+			addChat(0, "", Text.FRIENDLISTFULL);
+			return;
+		}
+		String var1 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
+		if (var1 == null) {
+			return;
+		}
+		for (int var2 = 0; var2 < friendCount; var2++) {
+			FriendListEntry var3 = friendList[var2];
+			String var4 = DisplayNameTools.toBaseDisplayName(var3.name, namespace);
+			if (var4 != null && var4.equals(var1)) {
+				addChat(0, "", arg0 + Text.FRIENDLISTDUPE);
+				return;
+			}
+			if (var3.previousName != null) {
+				String var5 = DisplayNameTools.toBaseDisplayName(var3.previousName, namespace);
+				if (var5 != null && var5.equals(var1)) {
+					addChat(0, "", arg0 + Text.FRIENDLISTDUPE);
+					return;
+				}
+			}
+		}
+		for (int var6 = 0; var6 < ignoreCount; var6++) {
+			IgnoreListEntry var7 = ignoreList[var6];
+			String var8 = DisplayNameTools.toBaseDisplayName(var7.name, namespace);
+			if (var8 != null && var8.equals(var1)) {
+				addChat(0, "", Text.REMOVEIGNORE1 + arg0 + Text.REMOVEIGNORE2);
+				return;
+			}
+			if (var7.displayName != null) {
+				String var9 = DisplayNameTools.toBaseDisplayName(var7.displayName, namespace);
+				if (var9 != null && var9.equals(var1)) {
+					addChat(0, "", Text.REMOVEIGNORE1 + arg0 + Text.REMOVEIGNORE2);
+					return;
+				}
+			}
+		}
+		if (DisplayNameTools.toBaseDisplayName(localPlayer.name, namespace).equals(var1)) {
+			addChat(0, "", Text.FRIENDCANTADDSELF);
+		} else {
+			// FRIENDLIST_ADD
+			out.p1Enc(203);
+			out.p1(Packet.pjstrlen(arg0));
+			out.pjstr(arg0);
+		}
+	}
+
+	// jag::oldscape::FriendSystem::AddIgnore
+	@ObfuscatedName("a.gz(Ljava/lang/String;ZS)V")
+	public static void addIgnore(String arg0, boolean arg1) {
+		if (arg0 == null) {
+			return;
+		}
+		if (ignoreCount >= 100) {
+			addChat(0, "", Text.IGNORELISTFULL);
+			return;
+		}
+		String var2 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
+		if (var2 == null) {
+			return;
+		}
+		for (int var3 = 0; var3 < ignoreCount; var3++) {
+			IgnoreListEntry var4 = ignoreList[var3];
+			String var5 = DisplayNameTools.toBaseDisplayName(var4.name, namespace);
+			if (var5 != null && var5.equals(var2)) {
+				addChat(0, "", arg0 + Text.IGNORELISTDUPE);
+				return;
+			}
+			if (var4.displayName != null) {
+				String var6 = DisplayNameTools.toBaseDisplayName(var4.displayName, namespace);
+				if (var6 != null && var6.equals(var2)) {
+					addChat(0, "", arg0 + Text.IGNORELISTDUPE);
+					return;
+				}
+			}
+		}
+		for (int var7 = 0; var7 < friendCount; var7++) {
+			FriendListEntry var8 = friendList[var7];
+			String var9 = DisplayNameTools.toBaseDisplayName(var8.name, namespace);
+			if (var9 != null && var9.equals(var2)) {
+				addChat(0, "", Text.REMOVEFRIEND1 + arg0 + Text.REMOVEFRIEND2);
+				return;
+			}
+			if (var8.previousName != null) {
+				String var10 = DisplayNameTools.toBaseDisplayName(var8.previousName, namespace);
+				if (var10 != null && var10.equals(var2)) {
+					addChat(0, "", Text.REMOVEFRIEND1 + arg0 + Text.REMOVEFRIEND2);
+					return;
+				}
+			}
+		}
+		if (DisplayNameTools.toBaseDisplayName(localPlayer.name, namespace).equals(var2)) {
+			addChat(0, "", Text.IGNORECANTADDSELF);
+		} else {
+			// IGNORELIST_ADD
+			out.p1Enc(231);
+			out.p1(Packet.pjstrlen(arg0));
+			out.pjstr(arg0);
+		}
+	}
+
+	// jag::oldscape::FriendSystem::DelFriend
+	@ObfuscatedName("ao.gp(Ljava/lang/String;B)V")
+	public static void delFriend(String arg0) {
+		if (arg0 == null) {
+			return;
+		}
+		String var1 = DisplayNameTools.toBaseDisplayName(arg0, namespace);
+		if (var1 == null) {
+			return;
+		}
+		for (int var2 = 0; var2 < friendCount; var2++) {
+			FriendListEntry var3 = friendList[var2];
+			String var4 = var3.name;
+			String var5 = DisplayNameTools.toBaseDisplayName(var4, namespace);
+			boolean var6;
+			if (arg0 == null || var4 == null) {
+				var6 = false;
+			} else if (arg0.startsWith("#") || var4.startsWith("#")) {
+				var6 = arg0.equals(var4);
+			} else {
+				var6 = var1.equals(var5);
+			}
+			if (var6) {
+				friendCount--;
+				for (int var7 = var2; var7 < friendCount; var7++) {
+					friendList[var7] = friendList[var7 + 1];
+				}
+				friendTransmitNum = transmitNum;
+				// FRIENDLIST_DEL
+				out.p1Enc(41);
+				out.p1(Packet.pjstrlen(arg0));
+				out.pjstr(arg0);
+				break;
+			}
+		}
 	}
 
 	// jag::oldscape::FriendSystem::DelIgnore
+	// placement relative to other clients
 	public static void delIgnore(String var169) {
 		if (var169 == null) {
 			return;
@@ -12216,7 +12268,42 @@ public class Client extends GameShell {
 		}
 	}
 
+	// jag::oldscape::Client::FriendsChatKickUser
+	// placement relative to other clients
+	public static void friendsChatKickUser(String var186) {
+		if (friendChatList == null) {
+			return;
+		}
+
+		// CLAN_KICKUSER
+		out.p1Enc(245);
+		out.p1(Packet.pjstrlen(var186));
+		out.pjstr(var186);
+	}
+
+	// jag::oldscape::Client::FriendsChatJoinChat
+	@ObfuscatedName("af.gf(Ljava/lang/String;I)V")
+	public static void friendsChatJoinChat(String arg0) {
+		if (arg0.equals("")) {
+			return;
+		}
+
+		// CLAN_JOINCHAT_LEAVECHAT
+		out.p1Enc(185);
+		out.p1(Packet.pjstrlen(arg0));
+		out.pjstr(arg0);
+	}
+
+	// jag::oldscape::Client::FriendsChatLeaveChat
+	@ObfuscatedName("aa.gv(I)V")
+	public static void friendsChatLeaveChat() {
+		// CLAN_JOINCHAT_LEAVECHAT
+		out.p1Enc(185);
+		out.p1(0);
+	}
+
 	// jag::oldscape::FriendSystem::SetFriendRank
+	// guessing placement
 	public static void setFriendRank(String var164, int var165) {
 		// FRIEND_SETRANK
 		out.p1Enc(252);
@@ -12225,97 +12312,63 @@ public class Client extends GameShell {
 		out.p1_alt1(var165);
 	}
 
-	// jag::oldscape::Client::PlayJingle
-	public static void playJingle(int var113, int var114) {
-		if (midiVolume == 0 || var113 == -1) {
-			return;
+	// jag::oldscape::Client::PurgeServerActive
+	@ObfuscatedName("s.gt(II)V")
+	public static void purgeServerActive(int comId) {
+		for (ServerActive active = (ServerActive) serverActive.search(); active != null; active = (ServerActive) serverActive.findnext()) {
+			if ((long) comId == (active.key >> 48 & 0xFFFFL)) {
+				active.unlink();
+			}
 		}
-
-		MidiManager.play(jingles, var113, 0, midiVolume, false);
-		playingJingle = true;
 	}
 
-	// jag::oldscape::Client::PlaySynth
-	public static void playSynth(int sound, int loops, int delay) {
-		if (waveVolume == 0 || loops == 0 || waveCount >= 50) {
-			return;
+	// jag::oldscape::Client::GetActive
+	@ObfuscatedName("dn.gg(Leg;B)I")
+	public static int getActive(IfType com) {
+		ServerActive active = (ServerActive) serverActive.find(((long) com.parentId << 32) + (long) com.subId);
+		if (active == null) {
+			return com.eventCode;
 		}
-
-		waveSoundIds[waveCount] = sound;
-		waveLoops[waveCount] = loops;
-		waveDelay[waveCount] = delay;
-		waveSounds[waveCount] = null;
-		waveAmbient[waveCount] = 0;
-		waveCount++;
+		return active.eventCode;
 	}
 
-	// jag::oldscape::Client::CloseModal
-	public static void closeModal() {
-		// CLOSE_MODAL
-		out.p1Enc(129);
+	// jag::oldscape::Client::Hide
+	@ObfuscatedName("bo.gy(Leg;I)Z")
+	public static boolean hide(IfType com) {
+		if (field2092) {
+			if (getActive(com) != 0) {
+				return false;
+			}
 
-		for (SubInterface sub = (SubInterface) subinterfaces.search(); sub != null; sub = (SubInterface) subinterfaces.findnext()) {
-			if (sub.type == 0 || sub.type == 3) {
-				closeSubInterface(sub, true);
+			if (com.type == 0) {
+				return false;
 			}
 		}
 
-		if (resumedPauseButton != null) {
-			componentUpdated(resumedPauseButton);
-			resumedPauseButton = null;
+		return com.hide;
+	}
+
+	// jag::oldscape::minimenu::Minimenu::GetIftypeOpName
+	@ObfuscatedName("ay.gu(Leg;II)Ljava/lang/String;")
+	public static String getIfTypeOpName(IfType com, int opindex) {
+		if (!ServerActive.hasOp(getActive(com), opindex) && com.onop == null) {
+			return null;
+		} else if (com.opNames == null || com.opNames.length <= opindex || com.opNames[opindex] == null || com.opNames[opindex].trim().length() == 0) {
+			return null;
+		} else {
+			return com.opNames[opindex];
 		}
 	}
 
-	public static void prepareMinimap() {
-		compassMaskLineOffsets = new int[33];
-		compassMaskLineLengths = new int[33];
-
-		minimapMaskLineOffsets = new int[151];
-		minimapMaskLineLengths = new int[151];
-
-		for (int var47 = 0; var47 < 33; var47++) {
-			int var48 = 999;
-			int var49 = 0;
-			for (int var50 = 0; var50 < 34; var50++) {
-				if (mapback.data[mapback.wi * var47 + var50] == 0) {
-					if (var48 == 999) {
-						var48 = var50;
-					}
-				} else if (var48 != 999) {
-					var49 = var50;
-					break;
-				}
-			}
-			compassMaskLineOffsets[var47] = var48;
-			compassMaskLineLengths[var47] = var49 - var48;
+	// jag::oldscape::Client::TargetVerb
+	@ObfuscatedName("ap.gb(Leg;I)Ljava/lang/String;")
+	public static String targetVerb(IfType com) {
+		if (ServerActive.targetMask(getActive(com)) == 0) {
+			return null;
+		} else if (com.targetVerb == null || com.targetVerb.trim().length() == 0) {
+			return null;
+		} else {
+			return com.targetVerb;
 		}
-
-		for (int var51 = 5; var51 < 156; var51++) {
-			int var52 = 999;
-			int var53 = 0;
-			for (int var54 = 25; var54 < 172; var54++) {
-				if (mapback.data[mapback.wi * var51 + var54] == 0 && (var54 > 34 || var51 > 34)) {
-					if (var52 == 999) {
-						var52 = var54;
-					}
-				} else if (var52 != 999) {
-					var53 = var54;
-					break;
-				}
-			}
-			minimapMaskLineOffsets[var51 - 5] = var52 - 25;
-			minimapMaskLineLengths[var51 - 5] = var53 - var52;
-		}
-	}
-
-	public static void setHighMemory() {
-		World.lowMem = false;
-		lowMemory = false;
-	}
-
-	// not exposed as an option anymore :(
-	public static void setLowMemory() {
-		World.lowMem = true;
-		lowMemory = true;
 	}
 }

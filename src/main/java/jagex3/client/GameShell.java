@@ -112,6 +112,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static boolean focus;
 
 	// com.jagex.game.runetek6.client.GameShell3.startApplication
+	// "custom"
 	public final void startApplication(int width, int height, int revision) {
 		frame = new Frame();
 		frame.setTitle("Jagex");
@@ -384,7 +385,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			}
 		}
 
-		this.reset();
+		this.onKilled();
 	}
 
 	// com.jagex.game.runetek6.client.GameShell3.doneslowupdate
@@ -519,7 +520,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public abstract void mainloop();
 
 	@ObfuscatedName("dj.f(I)V")
-	public abstract void reset();
+	public abstract void onKilled();
 
 	@ObfuscatedName("dj.b(I)V")
 	public abstract void mainredraw();
