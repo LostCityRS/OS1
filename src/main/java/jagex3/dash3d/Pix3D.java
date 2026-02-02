@@ -1287,7 +1287,6 @@ public class Pix3D extends Pix2D {
 		}
 	}
 
-	// jag::oldscape::dash3d::SoftwarePix3D::TextureTriangleAffine
 	@ObfuscatedName("fx.cp(IIIIIIIIIIIIIIIIIII)V")
 	public static void textureTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
 		int[] var19 = textureProvider.getTexels(arg18);
@@ -1857,7 +1856,6 @@ public class Pix3D extends Pix2D {
 		}
 	}
 
-	// jag::oldscape::dash3d::SoftwarePix3D::TextureRasterAffine
 	@ObfuscatedName("fx.ca([I[IIIIIIIIIIIIII)V")
 	public static void textureRaster(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
 		if (hclip) {
@@ -2265,8 +2263,9 @@ public class Pix3D extends Pix2D {
 		} while (var76 > 0);
 	}
 
+	// jag::oldscape::dash3d::SoftwarePix3D::TextureTriangleAffine
 	@ObfuscatedName("fx.co(IIIIIIIIIIIIIIIIIII)V")
-	public static void textureTriangleCorrect(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
+	public static void textureTriangleAffine(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
 		int[] var19 = textureProvider.getTexels(arg18);
 		if (var19 == null) {
 			int var20 = textureProvider.getAverageRgb(arg18);
@@ -2353,7 +2352,7 @@ public class Pix3D extends Pix2D {
 									if (var56 < 0) {
 										return;
 									}
-									textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var58, var50 >> 16, var51 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
+									textureRasterAffine(Pix2D.pixels, var19, 0, 0, var58, var50 >> 16, var51 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
 									var50 += var29;
 									var51 += var28;
 									var48 += var32;
@@ -2363,7 +2362,7 @@ public class Pix3D extends Pix2D {
 									var55 += var47;
 								}
 							}
-							textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var58, var50 >> 16, var49 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
+							textureRasterAffine(Pix2D.pixels, var19, 0, 0, var58, var50 >> 16, var49 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
 							var50 += var29;
 							var49 += var27;
 							var48 += var32;
@@ -2384,7 +2383,7 @@ public class Pix3D extends Pix2D {
 									if (var59 < 0) {
 										return;
 									}
-									textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var61, var51 >> 16, var50 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
+									textureRasterAffine(Pix2D.pixels, var19, 0, 0, var61, var51 >> 16, var50 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
 									var50 += var29;
 									var51 += var28;
 									var48 += var32;
@@ -2394,7 +2393,7 @@ public class Pix3D extends Pix2D {
 									var55 += var47;
 								}
 							}
-							textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var61, var49 >> 16, var50 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
+							textureRasterAffine(Pix2D.pixels, var19, 0, 0, var61, var49 >> 16, var50 >> 16, var48, var31, var53, var54, var55, var40, var43, var46);
 							var50 += var29;
 							var49 += var27;
 							var48 += var32;
@@ -2434,7 +2433,7 @@ public class Pix3D extends Pix2D {
 									if (var72 < 0) {
 										return;
 									}
-									textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var74, var62 >> 16, var64 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
+									textureRasterAffine(Pix2D.pixels, var19, 0, 0, var74, var62 >> 16, var64 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
 									var64 += var28;
 									var62 += var27;
 									var48 += var32;
@@ -2444,7 +2443,7 @@ public class Pix3D extends Pix2D {
 									var68 += var47;
 								}
 							}
-							textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var74, var62 >> 16, var63 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
+							textureRasterAffine(Pix2D.pixels, var19, 0, 0, var74, var62 >> 16, var63 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
 							var63 += var29;
 							var62 += var27;
 							var48 += var32;
@@ -2465,7 +2464,7 @@ public class Pix3D extends Pix2D {
 									if (var69 < 0) {
 										return;
 									}
-									textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var71, var64 >> 16, var62 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
+									textureRasterAffine(Pix2D.pixels, var19, 0, 0, var71, var64 >> 16, var62 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
 									var64 += var28;
 									var62 += var27;
 									var48 += var32;
@@ -2475,7 +2474,7 @@ public class Pix3D extends Pix2D {
 									var68 += var47;
 								}
 							}
-							textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var71, var63 >> 16, var62 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
+							textureRasterAffine(Pix2D.pixels, var19, 0, 0, var71, var63 >> 16, var62 >> 16, var48, var31, var66, var67, var68, var40, var43, var46);
 							var63 += var29;
 							var62 += var27;
 							var48 += var32;
@@ -2526,7 +2525,7 @@ public class Pix3D extends Pix2D {
 									if (var83 < 0) {
 										return;
 									}
-									textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var85, var77 >> 16, var78 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
+									textureRasterAffine(Pix2D.pixels, var19, 0, 0, var85, var77 >> 16, var78 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
 									var77 += var27;
 									var78 += var29;
 									var75 += var32;
@@ -2536,7 +2535,7 @@ public class Pix3D extends Pix2D {
 									var82 += var47;
 								}
 							}
-							textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var85, var77 >> 16, var76 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
+							textureRasterAffine(Pix2D.pixels, var19, 0, 0, var85, var77 >> 16, var76 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
 							var77 += var27;
 							var76 += var28;
 							var75 += var32;
@@ -2557,7 +2556,7 @@ public class Pix3D extends Pix2D {
 									if (var86 < 0) {
 										return;
 									}
-									textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var88, var78 >> 16, var77 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
+									textureRasterAffine(Pix2D.pixels, var19, 0, 0, var88, var78 >> 16, var77 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
 									var77 += var27;
 									var78 += var29;
 									var75 += var32;
@@ -2567,7 +2566,7 @@ public class Pix3D extends Pix2D {
 									var82 += var47;
 								}
 							}
-							textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var88, var76 >> 16, var77 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
+							textureRasterAffine(Pix2D.pixels, var19, 0, 0, var88, var76 >> 16, var77 >> 16, var75, var31, var80, var81, var82, var40, var43, var46);
 							var77 += var27;
 							var76 += var28;
 							var75 += var32;
@@ -2607,7 +2606,7 @@ public class Pix3D extends Pix2D {
 									if (var96 < 0) {
 										return;
 									}
-									textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var98, var91 >> 16, var89 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
+									textureRasterAffine(Pix2D.pixels, var19, 0, 0, var98, var91 >> 16, var89 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
 									var91 += var29;
 									var89 += var28;
 									var75 += var32;
@@ -2617,7 +2616,7 @@ public class Pix3D extends Pix2D {
 									var95 += var47;
 								}
 							}
-							textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var98, var90 >> 16, var89 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
+							textureRasterAffine(Pix2D.pixels, var19, 0, 0, var98, var90 >> 16, var89 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
 							var90 += var27;
 							var89 += var28;
 							var75 += var32;
@@ -2638,7 +2637,7 @@ public class Pix3D extends Pix2D {
 									if (var99 < 0) {
 										return;
 									}
-									textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var101, var89 >> 16, var91 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
+									textureRasterAffine(Pix2D.pixels, var19, 0, 0, var101, var89 >> 16, var91 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
 									var91 += var29;
 									var89 += var28;
 									var75 += var32;
@@ -2648,7 +2647,7 @@ public class Pix3D extends Pix2D {
 									var95 += var47;
 								}
 							}
-							textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var101, var89 >> 16, var90 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
+							textureRasterAffine(Pix2D.pixels, var19, 0, 0, var101, var89 >> 16, var90 >> 16, var75, var31, var93, var94, var95, var40, var43, var46);
 							var90 += var27;
 							var89 += var28;
 							var75 += var32;
@@ -2698,7 +2697,7 @@ public class Pix3D extends Pix2D {
 								if (var110 < 0) {
 									return;
 								}
-								textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var112, var104 >> 16, var105 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
+								textureRasterAffine(Pix2D.pixels, var19, 0, 0, var112, var104 >> 16, var105 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
 								var104 += var28;
 								var105 += var27;
 								var102 += var32;
@@ -2708,7 +2707,7 @@ public class Pix3D extends Pix2D {
 								var109 += var47;
 							}
 						}
-						textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var112, var104 >> 16, var103 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
+						textureRasterAffine(Pix2D.pixels, var19, 0, 0, var112, var104 >> 16, var103 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
 						var104 += var28;
 						var103 += var29;
 						var102 += var32;
@@ -2729,7 +2728,7 @@ public class Pix3D extends Pix2D {
 								if (var113 < 0) {
 									return;
 								}
-								textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var115, var105 >> 16, var104 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
+								textureRasterAffine(Pix2D.pixels, var19, 0, 0, var115, var105 >> 16, var104 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
 								var104 += var28;
 								var105 += var27;
 								var102 += var32;
@@ -2739,7 +2738,7 @@ public class Pix3D extends Pix2D {
 								var109 += var47;
 							}
 						}
-						textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var115, var103 >> 16, var104 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
+						textureRasterAffine(Pix2D.pixels, var19, 0, 0, var115, var103 >> 16, var104 >> 16, var102, var31, var107, var108, var109, var40, var43, var46);
 						var104 += var28;
 						var103 += var29;
 						var102 += var32;
@@ -2779,7 +2778,7 @@ public class Pix3D extends Pix2D {
 								if (var123 < 0) {
 									return;
 								}
-								textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var125, var118 >> 16, var116 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
+								textureRasterAffine(Pix2D.pixels, var19, 0, 0, var125, var118 >> 16, var116 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
 								var118 += var27;
 								var116 += var29;
 								var102 += var32;
@@ -2789,7 +2788,7 @@ public class Pix3D extends Pix2D {
 								var122 += var47;
 							}
 						}
-						textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var125, var117 >> 16, var116 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
+						textureRasterAffine(Pix2D.pixels, var19, 0, 0, var125, var117 >> 16, var116 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
 						var117 += var28;
 						var116 += var29;
 						var102 += var32;
@@ -2810,7 +2809,7 @@ public class Pix3D extends Pix2D {
 								if (var126 < 0) {
 									return;
 								}
-								textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var128, var116 >> 16, var118 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
+								textureRasterAffine(Pix2D.pixels, var19, 0, 0, var128, var116 >> 16, var118 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
 								var118 += var27;
 								var116 += var29;
 								var102 += var32;
@@ -2820,7 +2819,7 @@ public class Pix3D extends Pix2D {
 								var122 += var47;
 							}
 						}
-						textureRasterCorrect(Pix2D.pixels, var19, 0, 0, var128, var116 >> 16, var117 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
+						textureRasterAffine(Pix2D.pixels, var19, 0, 0, var128, var116 >> 16, var117 >> 16, var102, var31, var120, var121, var122, var40, var43, var46);
 						var117 += var28;
 						var116 += var29;
 						var102 += var32;
@@ -2834,8 +2833,9 @@ public class Pix3D extends Pix2D {
 		}
 	}
 
+	// jag::oldscape::dash3d::SoftwarePix3D::TextureRasterAffine
 	@ObfuscatedName("fx.ch([I[IIIIIIIIIIIIII)V")
-	public static void textureRasterCorrect(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
+	public static void textureRasterAffine(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14) {
 		if (hclip) {
 			if (arg6 > sizeX) {
 				arg6 = sizeX;
