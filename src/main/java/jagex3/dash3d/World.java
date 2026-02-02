@@ -1744,9 +1744,9 @@ public class World {
 				int textureColor = Pix3D.textureProvider.getAverageRgb(underlay.texture);
 				Pix3D.gouraudTriangle(pz1, py3, px1, py1, px3, pz0, mulLightness(textureColor, underlay.colourNE), mulLightness(textureColor, underlay.colourNW), mulLightness(textureColor, underlay.colourSE));
 			} else if (underlay.flat) {
-				Pix3D.textureTriangle(pz1, py3, px1, py1, px3, pz0, underlay.colourNE, underlay.colourNW, underlay.colourSE, var21, var27, var39, var24, var30, var42, z0, z1, z3, underlay.texture);
+				Pix3D.textureTriangleAffine(pz1, py3, px1, py1, px3, pz0, underlay.colourNE, underlay.colourNW, underlay.colourSE, var21, var27, var39, var24, var30, var42, z0, z1, z3, underlay.texture);
 			} else {
-				Pix3D.textureTriangle(pz1, py3, px1, py1, px3, pz0, underlay.colourNE, underlay.colourNW, underlay.colourSE, var33, var39, var27, var36, var42, var30, z2, z3, z1, underlay.texture);
+				Pix3D.textureTriangleAffine(pz1, py3, px1, py1, px3, pz0, underlay.colourNE, underlay.colourNW, underlay.colourSE, var33, var39, var27, var36, var42, var30, z2, z3, z1, underlay.texture);
 			}
 		}
 
@@ -1769,7 +1769,7 @@ public class World {
 				int averageColour = Pix3D.textureProvider.getAverageRgb(underlay.texture);
 				Pix3D.gouraudTriangle(py0, px1, py3, px0, pz0, px3, mulLightness(averageColour, underlay.colourSW), mulLightness(averageColour, underlay.colourSE), mulLightness(averageColour, underlay.colourNW));
 			} else {
-				Pix3D.textureTriangle(py0, px1, py3, px0, pz0, px3, underlay.colourSW, underlay.colourSE, underlay.colourNW, var21, var27, var39, var24, var30, var42, z0, z1, z3, underlay.texture);
+				Pix3D.textureTriangleAffine(py0, px1, py3, px0, pz0, px3, underlay.colourSW, underlay.colourSE, underlay.colourNW, var21, var27, var39, var24, var30, var42, z0, z1, z3, underlay.texture);
 			}
 		}
 	}
@@ -1838,9 +1838,9 @@ public class World {
 					int textureColor = Pix3D.textureProvider.getAverageRgb(overlay.faceTexture[var20]);
 					Pix3D.gouraudTriangle(yA, yB, yC, xA, xB, xC, mulLightness(textureColor, overlay.faceColourA[var20]), mulLightness(textureColor, overlay.faceColourB[var20]), mulLightness(textureColor, overlay.faceColourC[var20]));
 				} else if (overlay.flat) {
-					Pix3D.textureTriangle(yA, yB, yC, xA, xB, xC, overlay.faceColourA[var20], overlay.faceColourB[var20], overlay.faceColourC[var20], Ground.drawTextureVertexX[0], Ground.drawTextureVertexX[1], Ground.drawTextureVertexX[3], Ground.drawTextureVertexY[0], Ground.drawTextureVertexY[1], Ground.drawTextureVertexY[3], Ground.drawTextureVertexZ[0], Ground.drawTextureVertexZ[1], Ground.drawTextureVertexZ[3], overlay.faceTexture[var20]);
+					Pix3D.textureTriangleAffine(yA, yB, yC, xA, xB, xC, overlay.faceColourA[var20], overlay.faceColourB[var20], overlay.faceColourC[var20], Ground.drawTextureVertexX[0], Ground.drawTextureVertexX[1], Ground.drawTextureVertexX[3], Ground.drawTextureVertexY[0], Ground.drawTextureVertexY[1], Ground.drawTextureVertexY[3], Ground.drawTextureVertexZ[0], Ground.drawTextureVertexZ[1], Ground.drawTextureVertexZ[3], overlay.faceTexture[var20]);
 				} else {
-					Pix3D.textureTriangle(yA, yB, yC, xA, xB, xC, overlay.faceColourA[var20], overlay.faceColourB[var20], overlay.faceColourC[var20], Ground.drawTextureVertexX[a], Ground.drawTextureVertexX[b], Ground.drawTextureVertexX[c], Ground.drawTextureVertexY[a], Ground.drawTextureVertexY[b], Ground.drawTextureVertexY[c], Ground.drawTextureVertexZ[a], Ground.drawTextureVertexZ[b], Ground.drawTextureVertexZ[c], overlay.faceTexture[var20]);
+					Pix3D.textureTriangleAffine(yA, yB, yC, xA, xB, xC, overlay.faceColourA[var20], overlay.faceColourB[var20], overlay.faceColourC[var20], Ground.drawTextureVertexX[a], Ground.drawTextureVertexX[b], Ground.drawTextureVertexX[c], Ground.drawTextureVertexY[a], Ground.drawTextureVertexY[b], Ground.drawTextureVertexY[c], Ground.drawTextureVertexZ[a], Ground.drawTextureVertexZ[b], Ground.drawTextureVertexZ[c], overlay.faceTexture[var20]);
 				}
 			}
 		}
