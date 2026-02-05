@@ -2532,59 +2532,66 @@ public class Client extends GameShell {
 		transmitNum++;
 
 		// todo: revisit this code if something is broken -- tried to flatten the do { } while () blocks
-		HookReq req;
-		IfType child;
-		IfType com;
+		while (true) {
+			HookReq req;
+			IfType child;
+			IfType com;
 
-		do {
-			req = (HookReq) hookRequestsTimer.popFront();
-			if (req == null) {
-				break;
+			do {
+				req = (HookReq) hookRequestsTimer.popFront();
+				if (req == null) {
+					break;
+				}
+
+				child = req.component;
+				if (child.subId < 0) {
+					break;
+				}
+
+				com = IfType.get(child.layerId);
+			} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
+			if (req != null) {
+				ScriptRunner.executeScript(req);
+				continue;
 			}
 
-			child = req.component;
-			if (child.subId < 0) {
-				break;
+			do {
+				req = (HookReq) hookRequestsMouseStop.popFront();
+				if (req == null) {
+					break;
+				}
+
+				child = req.component;
+				if (child.subId < 0) {
+					break;
+				}
+
+				com = IfType.get(child.layerId);
+			} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
+			if (req != null) {
+				ScriptRunner.executeScript(req);
+				continue;
 			}
 
-			com = IfType.get(child.layerId);
-		} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
-		if (req != null) {
-			ScriptRunner.executeScript(req);
-		}
+			do {
+				req = (HookReq) hookRequests.popFront();
+				if (req == null) {
+					break;
+				}
 
-		do {
-			req = (HookReq) hookRequestsMouseStop.popFront();
-			if (req == null) {
-				break;
+				child = req.component;
+				if (child.subId < 0) {
+					break;
+				}
+
+				com = IfType.get(child.layerId);
+			} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
+			if (req != null) {
+				ScriptRunner.executeScript(req);
+				continue;
 			}
 
-			child = req.component;
-			if (child.subId < 0) {
-				break;
-			}
-
-			com = IfType.get(child.layerId);
-		} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
-		if (req != null) {
-			ScriptRunner.executeScript(req);
-		}
-
-		do {
-			req = (HookReq) hookRequests.popFront();
-			if (req == null) {
-				break;
-			}
-
-			child = req.component;
-			if (child.subId < 0) {
-				break;
-			}
-
-			com = IfType.get(child.layerId);
-		} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
-		if (req != null) {
-			ScriptRunner.executeScript(req);
+			break;
 		}
 
 		if (dragComponent != null) {
