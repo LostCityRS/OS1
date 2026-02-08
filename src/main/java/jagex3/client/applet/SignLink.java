@@ -136,7 +136,6 @@ public class SignLink implements Runnable {
 
 	@ObfuscatedName("ak.n(Ljava/lang/String;IB)Lah;")
 	public final PrivilegedRequest socketreq(String arg0, int arg1) {
-		System.out.println("socketreq " + arg0 + ":" + arg1);
 		return this.newRequest(1, arg1, 0, arg0);
 	}
 

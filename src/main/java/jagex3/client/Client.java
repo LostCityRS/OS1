@@ -360,7 +360,7 @@ public class Client extends GameShell {
 	public static World world;
 
 	@ObfuscatedName("client.el")
-	public static CollisionMap[] levelCollisionMap = new CollisionMap[4];
+	public static CollisionMap[] collision = new CollisionMap[4];
 
 	@ObfuscatedName("client.en")
 	public static boolean regionmode = false;
@@ -641,13 +641,6 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("client.hx")
 	public static int objDragCycles = 0;
-
-	@ObfuscatedName("cv.hg")
-	public static IfType hoveredSlotParent;
-
-	// guessing placement
-	@ObfuscatedName("l.jy")
-	public static IfType hoveredCom;
 
 	@ObfuscatedName("client.hc")
 	public static int hoveredSlot = 0;
@@ -1687,7 +1680,7 @@ public class Client extends GameShell {
 		if (loadingStep == 0) {
 			world = new World(4, 104, 104, ClientBuild.groundh);
 			for (int level = 0; level < 4; level++) {
-				levelCollisionMap[level] = new CollisionMap(104, 104);
+				collision[level] = new CollisionMap(104, 104);
 			}
 			minimap = new Pix32(512, 512);
 
@@ -2129,7 +2122,7 @@ public class Client extends GameShell {
 				out.p4(seed[3]);
 				out.p8(0L);
 				out.pjstr(TitleScreen.loginPass);
-				out.rsaenc(PublicKeys.LOGIN_RSAN, PublicKeys.LOGIN_RSAE);
+				out.rsaenc(ClientKeys.LOGIN_RSAE, ClientKeys.LOGIN_RSAN);
 
 				loginout.pos = 0;
 				if (state == 40) {
@@ -3075,7 +3068,7 @@ public class Client extends GameShell {
 		world.resetMap();
 
 		for (int i = 0; i < 4; i++) {
-			levelCollisionMap[i].reset();
+			collision[i].reset();
 		}
 
 		System.gc();
@@ -3322,7 +3315,7 @@ public class Client extends GameShell {
 				for (int level = 0; level < 4; level++) {
 					for (int x = 1; x < 103; x++) {
 						for (int z = 1; z < 103; z++) {
-							levelCollisionMap[level].flags[x][z] = 0;
+							collision[level].flags[x][z] = 0;
 						}
 					}
 				}
@@ -5065,7 +5058,7 @@ public class Client extends GameShell {
 							int var418 = var413;
 							int var419 = var414;
 							if (var417 != 22 && var417 != 29 && var417 != 34 && var417 != 36 && var417 != 46 && var417 != 47 && var417 != 48) {
-								int[][] var420 = levelCollisionMap[minusedlevel].flags;
+								int[][] var420 = collision[minusedlevel].flags;
 								for (int var421 = 0; var421 < 10; var421++) {
 									int var422 = (int) (Math.random() * 4.0D);
 									if (var422 == 0 && var418 > 0 && var418 > var413 - 3 && (var420[var418 - 1][var419] & 0x12C0108) == 0) {
@@ -5169,7 +5162,7 @@ public class Client extends GameShell {
 		System.gc();
 
 		for (int var18 = 0; var18 < 4; var18++) {
-			levelCollisionMap[var18].reset();
+			collision[var18].reset();
 		}
 
 		for (int var19 = 0; var19 < 4; var19++) {
@@ -5195,7 +5188,7 @@ public class Client extends GameShell {
 				byte[] var27 = mapBuildGroundData[var24];
 				if (var27 != null) {
 					doAudio();
-					ClientBuild.loadGround(var27, var25, var26, mapBuildCenterZoneX * 8 - 48, mapBuildCenterZoneZ * 8 - 48, levelCollisionMap);
+					ClientBuild.loadGround(var27, var25, var26, mapBuildCenterZoneX * 8 - 48, mapBuildCenterZoneZ * 8 - 48, collision);
 				}
 			}
 
@@ -5218,7 +5211,7 @@ public class Client extends GameShell {
 					int var35 = (mapBuildIndex[var32] & 0xFF) * 64 - mapBuildBaseZ;
 
 					doAudio();
-					ClientBuild.loadLocations(var33, var34, var35, world, levelCollisionMap);
+					ClientBuild.loadLocations(var33, var34, var35, world, collision);
 				}
 			}
 		}
@@ -5239,7 +5232,7 @@ public class Client extends GameShell {
 							int var45 = (var43 / 8 << 8) + var44 / 8;
 							for (int var46 = 0; var46 < mapBuildIndex.length; var46++) {
 								if (mapBuildIndex[var46] == var45 && mapBuildGroundData[var46] != null) {
-									ClientBuild.loadGroundRegion(mapBuildGroundData[var46], var36, var37 * 8, var38 * 8, var41, (var43 & 0x7) * 8, (var44 & 0x7) * 8, var42, levelCollisionMap);
+									ClientBuild.loadGroundRegion(mapBuildGroundData[var46], var36, var37 * 8, var38 * 8, var41, (var43 & 0x7) * 8, (var44 & 0x7) * 8, var42, collision);
 									var39 = true;
 									break;
 								}
@@ -5277,7 +5270,7 @@ public class Client extends GameShell {
 							int var65 = (var63 / 8 << 8) + var64 / 8;
 							for (int var66 = 0; var66 < mapBuildIndex.length; var66++) {
 								if (mapBuildIndex[var66] == var65 && mapBuildLocationData[var66] != null) {
-									ClientBuild.loadLocationsRegion(mapBuildLocationData[var66], var57, var58 * 8, var59 * 8, var61, (var63 & 0x7) * 8, (var64 & 0x7) * 8, var62, world, levelCollisionMap);
+									ClientBuild.loadLocationsRegion(mapBuildLocationData[var66], var57, var58 * 8, var59 * 8, var61, (var63 & 0x7) * 8, (var64 & 0x7) * 8, var62, world, collision);
 									break;
 								}
 							}
@@ -5291,7 +5284,7 @@ public class Client extends GameShell {
 		clearCaches();
 
 		doAudio();
-		ClientBuild.finishBuild(world, levelCollisionMap);
+		ClientBuild.finishBuild(world, collision);
 
 		preventTimeout(true);
 
@@ -5546,7 +5539,7 @@ public class Client extends GameShell {
 		routeZ[var15] = arg1;
 		boolean var17 = false;
 		int var18 = routeX.length;
-		int[][] var19 = levelCollisionMap[minusedlevel].flags;
+		int[][] var19 = collision[minusedlevel].flags;
 		while (var36 != var16) {
 			var13 = routeX[var16];
 			var14 = routeZ[var16];
@@ -5556,16 +5549,16 @@ public class Client extends GameShell {
 				break;
 			}
 			if (arg5 != 0) {
-				if ((arg5 < 5 || arg5 == 10) && levelCollisionMap[minusedlevel].testWall(var13, var14, arg2, arg3, arg5 - 1, arg6)) {
+				if ((arg5 < 5 || arg5 == 10) && collision[minusedlevel].testWall(var13, var14, arg2, arg3, arg5 - 1, arg6)) {
 					var17 = true;
 					break;
 				}
-				if (arg5 < 10 && levelCollisionMap[minusedlevel].testWDecor(var13, var14, arg2, arg3, arg5 - 1, arg6)) {
+				if (arg5 < 10 && collision[minusedlevel].testWDecor(var13, var14, arg2, arg3, arg5 - 1, arg6)) {
 					var17 = true;
 					break;
 				}
 			}
-			if (arg7 != 0 && arg8 != 0 && levelCollisionMap[minusedlevel].testLoc(var13, var14, arg2, arg3, arg7, arg8, arg9)) {
+			if (arg7 != 0 && arg8 != 0 && collision[minusedlevel].testLoc(var13, var14, arg2, arg3, arg7, arg8, arg9)) {
 				var17 = true;
 				break;
 			}
@@ -7617,7 +7610,7 @@ public class Client extends GameShell {
 				world.delWall(arg0, arg2, arg3);
 				LocType var15 = LocType.list(var12);
 				if (var15.blockwalk != 0) {
-					levelCollisionMap[arg0].delWall(arg2, arg3, var13, var14, var15.blockrange);
+					collision[arg0].delWall(arg2, arg3, var13, var14, var15.blockrange);
 				}
 			}
 			if (layer == 1) {
@@ -7630,14 +7623,14 @@ public class Client extends GameShell {
 					return;
 				}
 				if (var16.blockwalk != 0) {
-					levelCollisionMap[arg0].delLoc(arg2, arg3, var16.width, var16.length, var14, var16.blockrange);
+					collision[arg0].delLoc(arg2, arg3, var16.width, var16.length, var14, var16.blockrange);
 				}
 			}
 			if (layer == 3) {
 				world.delGroundDecor(arg0, arg2, arg3);
 				LocType var17 = LocType.list(var12);
 				if (var17.blockwalk == 1) {
-					levelCollisionMap[arg0].unblockGroundDecor(arg2, arg3);
+					collision[arg0].unblockGroundDecor(arg2, arg3);
 				}
 			}
 		}
@@ -7646,7 +7639,7 @@ public class Client extends GameShell {
 			if (arg0 < 3 && (ClientBuild.mapl[1][arg2][arg3] & 0x2) == 2) {
 				var18 = arg0 + 1;
 			}
-			ClientBuild.changeLocUnchecked(arg0, var18, arg2, arg3, arg4, arg5, arg6, world, levelCollisionMap[arg0]);
+			ClientBuild.changeLocUnchecked(arg0, var18, arg2, arg3, arg4, arg5, arg6, world, collision[arg0]);
 		}
 	}
 
