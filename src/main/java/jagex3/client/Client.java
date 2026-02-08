@@ -1946,7 +1946,7 @@ public class Client extends GameShell {
 				TitleScreen.loadString = Text.MAINLOAD90 + textures.getIndexLoadProgress() + "%";
 				TitleScreen.loadPos = 90;
 			} else {
-				WorldTextureProvider provider = new WorldTextureProvider(textures, sprites, 20, 0.8D, lowMem ? 64 : 128);
+				TextureManager provider = new TextureManager(textures, sprites, 20, 0.8D, lowMem ? 64 : 128);
 				Pix3D.setTextures(provider);
 				Pix3D.initColourTable(0.8D);
 
@@ -3095,7 +3095,7 @@ public class Client extends GameShell {
 		VarpType.resetCache();
 		PlayerModel.resetCache();
 		IfType.resetCache();
-		((WorldTextureProvider) Pix3D.textureProvider).reset();
+		((TextureManager) Pix3D.textureManager).reset();
 		ClientScript.cache.clear();
 
 		anims.discardAllFiles();
@@ -4175,7 +4175,7 @@ public class Client extends GameShell {
 
 		entityOverlays(var12, var13, var31, var32);
 		coordArrow(var12, var13);
-		((WorldTextureProvider) Pix3D.textureProvider).runAnims(worldUpdateNum);
+		((TextureManager) Pix3D.textureManager).runAnims(worldUpdateNum);
 		otherOverlays(var12, var13, var31, var32);
 
 		camX = var65;
@@ -5314,7 +5314,7 @@ public class Client extends GameShell {
 		LocType.mc1.clear();
 
 		if (GameShell.frame != null) {
-			// todo: packet name notifying the server the client is in a frame
+			// WINDOW_STATUS
 			out.p1Enc(210);
 			out.p4(1057001181);
 		}
@@ -11669,16 +11669,16 @@ public class Client extends GameShell {
 		if (clientcode == 1) {
 			if (value == 1) {
 				Pix3D.initColourTable(0.9D);
-				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.9D);
+				((TextureManager) Pix3D.textureManager).setBrightness(0.9D);
 			} else if (value == 2) {
 				Pix3D.initColourTable(0.8D);
-				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.8D);
+				((TextureManager) Pix3D.textureManager).setBrightness(0.8D);
 			} else if (value == 3) {
 				Pix3D.initColourTable(0.7D);
-				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.7D);
+				((TextureManager) Pix3D.textureManager).setBrightness(0.7D);
 			} else if (value == 4) {
 				Pix3D.initColourTable(0.6D);
-				((WorldTextureProvider) Pix3D.textureProvider).setBrightness(0.6D);
+				((TextureManager) Pix3D.textureManager).setBrightness(0.6D);
 			}
 
 			ObjType.resetSpriteCache();

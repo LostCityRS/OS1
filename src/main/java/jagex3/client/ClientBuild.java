@@ -907,7 +907,7 @@ public class ClientBuild {
 									int var61;
 									int var62;
 									if (var60 >= 0) {
-										var61 = Pix3D.textureProvider.getAverageRgb(var60);
+										var61 = Pix3D.textureManager.getAverageRgb(var60);
 										var62 = -1;
 									} else if (var59.colour == 16711935) {
 										var62 = -2;

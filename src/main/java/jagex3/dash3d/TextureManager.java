@@ -6,7 +6,7 @@ import jagex3.io.Packet;
 import jagex3.js5.Js5;
 
 @ObfuscatedName("bi")
-public class WorldTextureProvider implements TextureProvider {
+public class TextureManager implements TextureProvider {
 
 	@ObfuscatedName("bi.r")
 	public Texture[] textures;
@@ -29,7 +29,7 @@ public class WorldTextureProvider implements TextureProvider {
 	@ObfuscatedName("bi.j")
 	public Js5 sprites;
 
-	public WorldTextureProvider(Js5 textures, Js5 sprites, int poolSize, double brightness, int resolution) {
+	public TextureManager(Js5 textures, Js5 sprites, int poolSize, double brightness, int resolution) {
 		this.sprites = sprites;
 		this.poolSize = poolSize;
 		this.field718 = this.poolSize;

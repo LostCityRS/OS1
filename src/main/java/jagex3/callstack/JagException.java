@@ -7,6 +7,7 @@ import java.applet.Applet;
 import java.io.*;
 import java.net.URL;
 
+// jag::JagException
 @ObfuscatedName("fa")
 public class JagException extends RuntimeException {
 

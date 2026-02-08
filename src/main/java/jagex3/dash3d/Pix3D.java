@@ -57,7 +57,7 @@ public class Pix3D extends Pix2D {
 	public static int[] colourTable = new int[65536];
 
 	@ObfuscatedName("fx.av")
-	public static TextureProvider textureProvider;
+	public static TextureProvider textureManager;
 
 	// jag::oldscape::dash3d::Pix3D::m_divTable
 	@ObfuscatedName("fx.ak")
@@ -155,7 +155,7 @@ public class Pix3D extends Pix2D {
 	// jag::oldscape::dash3d::Pix3D::SetTextures
 	@ObfuscatedName("fx.ba(Law;)V")
 	public static void setTextures(TextureProvider arg0) {
-		textureProvider = arg0;
+		textureManager = arg0;
 	}
 
 	// jag::oldscape::dash3d::Pix3D::InitColourTable
@@ -1290,14 +1290,14 @@ public class Pix3D extends Pix2D {
 
 	@ObfuscatedName("fx.cp(IIIIIIIIIIIIIIIIIII)V")
 	public static void textureTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
-		int[] var19 = textureProvider.getTexels(arg18);
+		int[] var19 = textureManager.getTexels(arg18);
 		if (var19 == null) {
-			int var20 = textureProvider.getAverageRgb(arg18);
+			int var20 = textureManager.getAverageRgb(arg18);
 			gouraudTriangle(arg0, arg1, arg2, arg3, arg4, arg5, textureLightColour(var20, arg6), textureLightColour(var20, arg7), textureLightColour(var20, arg8));
 			return;
 		}
-		lowMem = textureProvider.isLowMem(arg18);
-		opaque = textureProvider.isOpaque(arg18);
+		lowMem = textureManager.isLowMem(arg18);
+		opaque = textureManager.isOpaque(arg18);
 		int var21 = arg4 - arg3;
 		int var22 = arg1 - arg0;
 		int var23 = arg5 - arg3;
@@ -2267,14 +2267,14 @@ public class Pix3D extends Pix2D {
 	// jag::oldscape::dash3d::SoftwarePix3D::TextureTriangleAffine
 	@ObfuscatedName("fx.co(IIIIIIIIIIIIIIIIIII)V")
 	public static void textureTriangleAffine(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11, int arg12, int arg13, int arg14, int arg15, int arg16, int arg17, int arg18) {
-		int[] var19 = textureProvider.getTexels(arg18);
+		int[] var19 = textureManager.getTexels(arg18);
 		if (var19 == null) {
-			int var20 = textureProvider.getAverageRgb(arg18);
+			int var20 = textureManager.getAverageRgb(arg18);
 			gouraudTriangle(arg0, arg1, arg2, arg3, arg4, arg5, textureLightColour(var20, arg6), textureLightColour(var20, arg7), textureLightColour(var20, arg8));
 			return;
 		}
-		lowMem = textureProvider.isLowMem(arg18);
-		opaque = textureProvider.isOpaque(arg18);
+		lowMem = textureManager.isLowMem(arg18);
+		opaque = textureManager.isOpaque(arg18);
 		int var21 = arg4 - arg3;
 		int var22 = arg1 - arg0;
 		int var23 = arg5 - arg3;
