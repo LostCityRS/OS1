@@ -1,7 +1,6 @@
-package jagex3.dash3d;
+package jagex3.graphics;
 
 import deob.ObfuscatedName;
-import jagex3.graphics.Pix2D;
 
 @ObfuscatedName("fm")
 public class PixFontGeneric extends PixFont {

@@ -61,7 +61,7 @@ public class ModelLit extends ModelSource {
 	public byte[] faceAlpha;
 
 	@ObfuscatedName("fo.h")
-	public byte[] faceTextureIndex;
+	public byte[] faceTextureAxis;
 
 	@ObfuscatedName("fo.x")
 	public short[] faceTextureId;
@@ -73,13 +73,13 @@ public class ModelLit extends ModelSource {
 	public int faceTextureCount = 0;
 
 	@ObfuscatedName("fo.ac")
-	public int[] textureVertexX;
+	public int[] faceTextureP;
 
 	@ObfuscatedName("fo.aa")
-	public int[] textureVertexY;
+	public int[] faceTextureM;
 
 	@ObfuscatedName("fo.as")
-	public int[] textureVertexZ;
+	public int[] faceTextureN;
 
 	@ObfuscatedName("fo.am")
 	public int[][] labelVertices;
@@ -175,7 +175,7 @@ public class ModelLit extends ModelSource {
 
 	// jag::oldscape::dash3d::MousePickingHelper::m_mouseCheck
 	@ObfuscatedName("fo.by")
-	public static boolean checkHover = false;
+	public static boolean mouseCheck = false;
 
 	// jag::oldscape::dash3d::MousePickingHelper::m_mouseX
 	@ObfuscatedName("fo.bx")
@@ -200,7 +200,7 @@ public class ModelLit extends ModelSource {
 	public static int[] cosTable = Pix3D.cosTable;
 
 	@ObfuscatedName("fo.bz")
-	public static int[] palette = Pix3D.colourTable;
+	public static int[] colourTable = Pix3D.colourTable;
 
 	@ObfuscatedName("fo.bm")
 	public static int[] divTable2 = Pix3D.divTable2;
@@ -235,7 +235,7 @@ public class ModelLit extends ModelSource {
 				}
 				var4 |= var8.faceAlpha != null;
 				var5 |= var8.faceTextureId != null;
-				var6 |= var8.faceTextureIndex != null;
+				var6 |= var8.faceTextureAxis != null;
 			}
 		}
 		this.vertexX = new int[this.vertexCount];
@@ -257,12 +257,12 @@ public class ModelLit extends ModelSource {
 			this.faceTextureId = new short[this.faceCount];
 		}
 		if (var6) {
-			this.faceTextureIndex = new byte[this.faceCount];
+			this.faceTextureAxis = new byte[this.faceCount];
 		}
 		if (this.faceTextureCount > 0) {
-			this.textureVertexX = new int[this.faceTextureCount];
-			this.textureVertexY = new int[this.faceTextureCount];
-			this.textureVertexZ = new int[this.faceTextureCount];
+			this.faceTextureP = new int[this.faceTextureCount];
+			this.faceTextureM = new int[this.faceTextureCount];
+			this.faceTextureN = new int[this.faceTextureCount];
 		}
 		this.vertexCount = 0;
 		this.faceCount = 0;
@@ -295,18 +295,18 @@ public class ModelLit extends ModelSource {
 						}
 					}
 					if (var6) {
-						if (var10.faceTextureIndex == null || var10.faceTextureIndex[var11] == -1) {
-							this.faceTextureIndex[this.faceCount] = -1;
+						if (var10.faceTextureAxis == null || var10.faceTextureAxis[var11] == -1) {
+							this.faceTextureAxis[this.faceCount] = -1;
 						} else {
-							this.faceTextureIndex[this.faceCount] = (byte) (var10.faceTextureIndex[var11] + this.faceTextureCount);
+							this.faceTextureAxis[this.faceCount] = (byte) (var10.faceTextureAxis[var11] + this.faceTextureCount);
 						}
 					}
 					this.faceCount++;
 				}
 				for (int var12 = 0; var12 < var10.faceTextureCount; var12++) {
-					this.textureVertexX[this.faceTextureCount] = var10.textureVertexX[var12] + this.vertexCount;
-					this.textureVertexY[this.faceTextureCount] = var10.textureVertexY[var12] + this.vertexCount;
-					this.textureVertexZ[this.faceTextureCount] = var10.textureVertexZ[var12] + this.vertexCount;
+					this.faceTextureP[this.faceTextureCount] = var10.faceTextureP[var12] + this.vertexCount;
+					this.faceTextureM[this.faceTextureCount] = var10.faceTextureM[var12] + this.vertexCount;
+					this.faceTextureN[this.faceTextureCount] = var10.faceTextureN[var12] + this.vertexCount;
 					this.faceTextureCount++;
 				}
 				for (int var13 = 0; var13 < var10.vertexCount; var13++) {
@@ -353,12 +353,12 @@ public class ModelLit extends ModelSource {
 			var15.faceColourC = this.faceColourC;
 			var15.facePriority = this.facePriority;
 			var15.faceAlpha = this.faceAlpha;
-			var15.faceTextureIndex = this.faceTextureIndex;
+			var15.faceTextureAxis = this.faceTextureAxis;
 			var15.faceTextureId = this.faceTextureId;
 			var15.priority = this.priority;
-			var15.textureVertexX = this.textureVertexX;
-			var15.textureVertexY = this.textureVertexY;
-			var15.textureVertexZ = this.textureVertexZ;
+			var15.faceTextureP = this.faceTextureP;
+			var15.faceTextureM = this.faceTextureM;
+			var15.faceTextureN = this.faceTextureN;
 			var15.labelVertices = this.labelVertices;
 			var15.labelFaces = this.labelFaces;
 			var15.useAABBMouseCheck = this.useAABBMouseCheck;
@@ -459,12 +459,12 @@ public class ModelLit extends ModelSource {
 		model.faceColourB = this.faceColourB;
 		model.faceColourC = this.faceColourC;
 		model.facePriority = this.facePriority;
-		model.faceTextureIndex = this.faceTextureIndex;
+		model.faceTextureAxis = this.faceTextureAxis;
 		model.faceTextureId = this.faceTextureId;
 		model.priority = this.priority;
-		model.textureVertexX = this.textureVertexX;
-		model.textureVertexY = this.textureVertexY;
-		model.textureVertexZ = this.textureVertexZ;
+		model.faceTextureP = this.faceTextureP;
+		model.faceTextureM = this.faceTextureM;
+		model.faceTextureN = this.faceTextureN;
 		model.labelVertices = this.labelVertices;
 		model.labelFaces = this.labelFaces;
 		model.useAABBMouseCheck = this.useAABBMouseCheck;
@@ -597,15 +597,18 @@ public class ModelLit extends ModelSource {
 
 	// jag::oldscape::dash3d::ModelLitImpl::Animate2
 	@ObfuscatedName("fo.p(I[IIII)V")
-	public void animate2(int arg0, int[] arg1, int arg2, int arg3, int arg4) {
-		int var6 = arg1.length;
-		if (arg0 == 0) {
-			int var7 = 0;
+	public void animate2(int type, int[] labels, int arg2, int arg3, int arg4) {
+		int labelCount = labels.length;
+
+		if (type == 0) {
+			int count = 0;
+
 			oX = 0;
 			oY = 0;
 			oZ = 0;
-			for (int var8 = 0; var8 < var6; var8++) {
-				int var9 = arg1[var8];
+
+			for (int var8 = 0; var8 < labelCount; var8++) {
+				int var9 = labels[var8];
 				if (var9 < this.labelVertices.length) {
 					int[] var10 = this.labelVertices[var9];
 					for (int var11 = 0; var11 < var10.length; var11++) {
@@ -613,22 +616,22 @@ public class ModelLit extends ModelSource {
 						oX += this.vertexX[var12];
 						oY += this.vertexY[var12];
 						oZ += this.vertexZ[var12];
-						var7++;
+						count++;
 					}
 				}
 			}
-			if (var7 > 0) {
-				oX = oX / var7 + arg2;
-				oY = oY / var7 + arg3;
-				oZ = oZ / var7 + arg4;
+			if (count > 0) {
+				oX = oX / count + arg2;
+				oY = oY / count + arg3;
+				oZ = oZ / count + arg4;
 			} else {
 				oX = arg2;
 				oY = arg3;
 				oZ = arg4;
 			}
-		} else if (arg0 == 1) {
-			for (int var13 = 0; var13 < var6; var13++) {
-				int var14 = arg1[var13];
+		} else if (type == 1) {
+			for (int var13 = 0; var13 < labelCount; var13++) {
+				int var14 = labels[var13];
 				if (var14 < this.labelVertices.length) {
 					int[] var15 = this.labelVertices[var14];
 					for (int var16 = 0; var16 < var15.length; var16++) {
@@ -639,9 +642,9 @@ public class ModelLit extends ModelSource {
 					}
 				}
 			}
-		} else if (arg0 == 2) {
-			for (int var18 = 0; var18 < var6; var18++) {
-				int var19 = arg1[var18];
+		} else if (type == 2) {
+			for (int var18 = 0; var18 < labelCount; var18++) {
+				int var19 = labels[var18];
 				if (var19 < this.labelVertices.length) {
 					int[] var20 = this.labelVertices[var19];
 					for (int var21 = 0; var21 < var20.length; var21++) {
@@ -679,9 +682,9 @@ public class ModelLit extends ModelSource {
 					}
 				}
 			}
-		} else if (arg0 == 3) {
-			for (int var35 = 0; var35 < var6; var35++) {
-				int var36 = arg1[var35];
+		} else if (type == 3) {
+			for (int var35 = 0; var35 < labelCount; var35++) {
+				int var36 = labels[var35];
 				if (var36 < this.labelVertices.length) {
 					int[] var37 = this.labelVertices[var36];
 					for (int var38 = 0; var38 < var37.length; var38++) {
@@ -698,20 +701,20 @@ public class ModelLit extends ModelSource {
 					}
 				}
 			}
-		} else if (arg0 == 5 && (this.labelFaces != null && this.faceAlpha != null)) {
-			for (int var40 = 0; var40 < var6; var40++) {
-				int var41 = arg1[var40];
-				if (var41 < this.labelFaces.length) {
-					int[] var42 = this.labelFaces[var41];
-					for (int var43 = 0; var43 < var42.length; var43++) {
-						int var44 = var42[var43];
-						int var45 = (this.faceAlpha[var44] & 0xFF) + arg2 * 8;
-						if (var45 < 0) {
-							var45 = 0;
-						} else if (var45 > 255) {
-							var45 = 255;
+		} else if (type == 5 && (this.labelFaces != null && this.faceAlpha != null)) {
+			for (int l = 0; l < labelCount; l++) {
+				int label = labels[l];
+				if (label < this.labelFaces.length) {
+					int[] faces = this.labelFaces[label];
+					for (int i = 0; i < faces.length; i++) {
+						int f = faces[i];
+						int alpha = (this.faceAlpha[f] & 0xFF) + arg2 * 8;
+						if (alpha < 0) {
+							alpha = 0;
+						} else if (alpha > 255) {
+							alpha = 255;
 						}
-						this.faceAlpha[var44] = (byte) var45;
+						this.faceAlpha[f] = (byte) alpha;
 					}
 				}
 			}
@@ -955,7 +958,7 @@ public class ModelLit extends ModelSource {
 		boolean textured = clipped || this.faceTextureCount > 0;
 		boolean picking = false;
 
-		if (typecode > 0 && checkHover) {
+		if (typecode > 0 && mouseCheck) {
 			int var27 = var11 - var12;
 			if (var27 <= 50) {
 				var27 = 50;
@@ -1052,60 +1055,66 @@ public class ModelLit extends ModelSource {
 		}
 
 		for (int f = 0; f < this.faceCount; f++) {
-			if (this.faceColourC[f] != -2) {
-				int var6 = this.faceVertexA[f];
-				int var7 = this.faceVertexB[f];
-				int var8 = this.faceVertexC[f];
+			if (this.faceColourC[f] == -2) {
+				continue;
+			}
 
-				int var9 = vertexScreenX[var6];
-				int var10 = vertexScreenX[var7];
-				int var11 = vertexScreenX[var8];
+			int a = this.faceVertexA[f];
+			int b = this.faceVertexB[f];
+			int c = this.faceVertexC[f];
 
-				if (clipped && (var9 == -5000 || var10 == -5000 || var11 == -5000)) {
-					int var12 = vertexViewSpaceX[var6];
-					int var13 = vertexViewSpaceX[var7];
-					int var14 = vertexViewSpaceX[var8];
+			int xA = vertexScreenX[a];
+			int xB = vertexScreenX[b];
+			int xC = vertexScreenX[c];
 
-					int var15 = vertexViewSpaceY[var6];
-					int var16 = vertexViewSpaceY[var7];
-					int var17 = vertexViewSpaceY[var8];
+			if (clipped && (xA == -5000 || xB == -5000 || xC == -5000)) {
+				int vxA = vertexViewSpaceX[a];
+				int vxB = vertexViewSpaceX[b];
+				int vxC = vertexViewSpaceX[c];
 
-					int var18 = vertexViewSpaceZ[var6];
-					int var19 = vertexViewSpaceZ[var7];
-					int var20 = vertexViewSpaceZ[var8];
+				int vyA = vertexViewSpaceY[a];
+				int vyB = vertexViewSpaceY[b];
+				int vyC = vertexViewSpaceY[c];
 
-					int var21 = var12 - var13;
-					int var22 = var14 - var13;
-					int var23 = var15 - var16;
-					int var24 = var17 - var16;
-					int var25 = var18 - var19;
-					int var26 = var20 - var19;
-					int var27 = var23 * var26 - var24 * var25;
-					int var28 = var22 * var25 - var21 * var26;
-					int var29 = var21 * var24 - var22 * var23;
-					if (var19 * var29 + var13 * var27 + var16 * var28 > 0) {
-						faceNearClipped[f] = true;
-						int var30 = (vertexScreenZ[var6] + vertexScreenZ[var7] + vertexScreenZ[var8]) / 3 + this.minDepth;
-						tmpDepthFaces[var30][tmpDepthFaceCount[var30]++] = f;
+				int vzA = vertexViewSpaceZ[a];
+				int vzB = vertexViewSpaceZ[b];
+				int vzC = vertexViewSpaceZ[c];
+
+				int var21 = vxA - vxB;
+				int var22 = vxC - vxB;
+				int var23 = vyA - vyB;
+
+				int var24 = vyC - vyB;
+				int var25 = vzA - vzB;
+				int var26 = vzC - vzB;
+
+				int normalX = var23 * var26 - var24 * var25;
+				int normalY = var22 * var25 - var21 * var26;
+				int normalZ = var21 * var24 - var22 * var23;
+
+				if (vzB * normalZ + vxB * normalX + vyB * normalY > 0) {
+					faceNearClipped[f] = true;
+
+					int depthAverage = (vertexScreenZ[a] + vertexScreenZ[b] + vertexScreenZ[c]) / 3 + this.minDepth;
+					tmpDepthFaces[depthAverage][tmpDepthFaceCount[depthAverage]++] = f;
+				}
+			} else {
+				if (picking && this.isMouseRoughlyInsideTriangle(mouseX, mouseY, vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], xA, xB, xC)) {
+					pickedEntityTypecode[pickedCount++] = typecode;
+					picking = false;
+				}
+
+				if ((vertexScreenY[c] - vertexScreenY[b]) * (xA - xB) - (vertexScreenY[a] - vertexScreenY[b]) * (xC - xB) > 0) {
+					faceNearClipped[f] = false;
+
+					if (xA >= 0 && xB >= 0 && xC >= 0 && xA <= Pix3D.sizeX && xB <= Pix3D.sizeX && xC <= Pix3D.sizeX) {
+						faceClippedX[f] = false;
+					} else {
+						faceClippedX[f] = true;
 					}
-				} else {
-					if (picking && this.isMouseRoughlyInsideTriangle(mouseX, mouseY, vertexScreenY[var6], vertexScreenY[var7], vertexScreenY[var8], var9, var10, var11)) {
-						pickedEntityTypecode[pickedCount++] = typecode;
-						picking = false;
-					}
 
-					if ((vertexScreenY[var8] - vertexScreenY[var7]) * (var9 - var10) - (vertexScreenY[var6] - vertexScreenY[var7]) * (var11 - var10) > 0) {
-						faceNearClipped[f] = false;
-
-						if (var9 >= 0 && var10 >= 0 && var11 >= 0 && var9 <= Pix3D.sizeX && var10 <= Pix3D.sizeX && var11 <= Pix3D.sizeX) {
-							faceClippedX[f] = false;
-						} else {
-							faceClippedX[f] = true;
-						}
-
-						int var31 = (vertexScreenZ[var6] + vertexScreenZ[var7] + vertexScreenZ[var8]) / 3 + this.minDepth;
-						tmpDepthFaces[var31][tmpDepthFaceCount[var31]++] = f;
-					}
+					int depthAverage = (vertexScreenZ[a] + vertexScreenZ[b] + vertexScreenZ[c]) / 3 + this.minDepth;
+					tmpDepthFaces[depthAverage][tmpDepthFaceCount[depthAverage]++] = f;
 				}
 			}
 		}
@@ -1275,194 +1284,238 @@ public class ModelLit extends ModelSource {
 		}
 
 		if (this.faceTextureId != null && this.faceTextureId[face] != -1) {
-			int var6;
-			int var7;
-			int var8;
-			if (this.faceTextureIndex == null || this.faceTextureIndex[face] == -1) {
-				var6 = a;
-				var7 = b;
-				var8 = c;
+			int tA;
+			int tB;
+			int tC;
+			if (this.faceTextureAxis == null || this.faceTextureAxis[face] == -1) {
+				tA = a;
+				tB = b;
+				tC = c;
 			} else {
-				int var5 = this.faceTextureIndex[face] & 0xFF;
-				var6 = this.textureVertexX[var5];
-				var7 = this.textureVertexY[var5];
-				var8 = this.textureVertexZ[var5];
+				int texturedFace = this.faceTextureAxis[face] & 0xFF;
+				tA = this.faceTextureP[texturedFace];
+				tB = this.faceTextureM[texturedFace];
+				tC = this.faceTextureN[texturedFace];
 			}
 			if (this.faceColourC[face] == -1) {
-				Pix3D.textureTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.faceTextureId[face]);
+				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
 			} else {
-				Pix3D.textureTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourB[face], this.faceColourC[face], vertexViewSpaceX[var6], vertexViewSpaceX[var7], vertexViewSpaceX[var8], vertexViewSpaceY[var6], vertexViewSpaceY[var7], vertexViewSpaceY[var8], vertexViewSpaceZ[var6], vertexViewSpaceZ[var7], vertexViewSpaceZ[var8], this.faceTextureId[face]);
+				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourB[face], this.faceColourC[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
 			}
-		} else if (this.faceColourC[face] == -1) {
-			Pix3D.flatTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], palette[this.faceColourA[face]]);
-		} else {
+		} else if (this.faceColourC[face] != -1) {
 			Pix3D.gouraudTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourB[face], this.faceColourC[face]);
+		} else {
+			Pix3D.flatTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], colourTable[this.faceColourA[face]]);
 		}
 	}
 
 	// jag::oldscape::dash3d::SoftwareModelLitRenderer::Render3ZClip
 	@ObfuscatedName("fo.ah(I)V")
-	public final void render3ZClip(int arg0) {
-		int var2 = Pix3D.originX;
-		int var3 = Pix3D.originY;
+	public final void render3ZClip(int face) {
+		int originX = Pix3D.originX;
+		int originY = Pix3D.originY;
+
 		int elements = 0;
-		int var5 = this.faceVertexA[arg0];
-		int var6 = this.faceVertexB[arg0];
-		int var7 = this.faceVertexC[arg0];
-		int var8 = vertexViewSpaceZ[var5];
-		int var9 = vertexViewSpaceZ[var6];
-		int var10 = vertexViewSpaceZ[var7];
+
+		int a = this.faceVertexA[face];
+		int b = this.faceVertexB[face];
+		int c = this.faceVertexC[face];
+
+		int zA = vertexViewSpaceZ[a];
+		int zB = vertexViewSpaceZ[b];
+		int zC = vertexViewSpaceZ[c];
+
 		if (this.faceAlpha == null) {
 			Pix3D.trans = 0;
 		} else {
-			Pix3D.trans = this.faceAlpha[arg0] & 0xFF;
+			Pix3D.trans = this.faceAlpha[face] & 0xFF;
 		}
-		if (var8 >= 50) {
-			clippedX[elements] = vertexScreenX[var5];
-			clippedY[elements] = vertexScreenY[var5];
-			clippedColour[elements++] = this.faceColourA[arg0];
+
+		if (zA >= 50) {
+			clippedX[elements] = vertexScreenX[a];
+			clippedY[elements] = vertexScreenY[a];
+			clippedColour[elements++] = this.faceColourA[face];
 		} else {
-			int var11 = vertexViewSpaceX[var5];
-			int var12 = vertexViewSpaceY[var5];
-			int var13 = this.faceColourA[arg0];
-			if (var10 >= 50) {
-				int var14 = (50 - var8) * divTable2[var10 - var8];
-				clippedX[elements] = (((vertexViewSpaceX[var7] - var11) * var14 >> 16) + var11 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var7] - var12) * var14 >> 16) + var12 << 9) / 50 + var3;
-				clippedColour[elements++] = ((this.faceColourC[arg0] - var13) * var14 >> 16) + var13;
+			int xA = vertexViewSpaceX[a];
+			int yA = vertexViewSpaceY[a];
+			int colour = this.faceColourA[face];
+
+			if (zC >= 50) {
+				int var14 = (50 - zA) * divTable2[zC - zA];
+				clippedX[elements] = (((vertexViewSpaceX[c] - xA) * var14 >> 16) + xA << 9) / 50 + originX;
+				clippedY[elements] = (((vertexViewSpaceY[c] - yA) * var14 >> 16) + yA << 9) / 50 + originY;
+				clippedColour[elements++] = ((this.faceColourC[face] - colour) * var14 >> 16) + colour;
 			}
-			if (var9 >= 50) {
-				int var15 = (50 - var8) * divTable2[var9 - var8];
-				clippedX[elements] = (((vertexViewSpaceX[var6] - var11) * var15 >> 16) + var11 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var6] - var12) * var15 >> 16) + var12 << 9) / 50 + var3;
-				clippedColour[elements++] = ((this.faceColourB[arg0] - var13) * var15 >> 16) + var13;
+
+			if (zB >= 50) {
+				int var15 = (50 - zA) * divTable2[zB - zA];
+				clippedX[elements] = (((vertexViewSpaceX[b] - xA) * var15 >> 16) + xA << 9) / 50 + originX;
+				clippedY[elements] = (((vertexViewSpaceY[b] - yA) * var15 >> 16) + yA << 9) / 50 + originY;
+				clippedColour[elements++] = ((this.faceColourB[face] - colour) * var15 >> 16) + colour;
 			}
 		}
-		if (var9 >= 50) {
-			clippedX[elements] = vertexScreenX[var6];
-			clippedY[elements] = vertexScreenY[var6];
-			clippedColour[elements++] = this.faceColourB[arg0];
+
+		if (zB >= 50) {
+			clippedX[elements] = vertexScreenX[b];
+			clippedY[elements] = vertexScreenY[b];
+			clippedColour[elements++] = this.faceColourB[face];
 		} else {
-			int var16 = vertexViewSpaceX[var6];
-			int var17 = vertexViewSpaceY[var6];
-			int var18 = this.faceColourB[arg0];
-			if (var8 >= 50) {
-				int var19 = (50 - var9) * divTable2[var8 - var9];
-				clippedX[elements] = (((vertexViewSpaceX[var5] - var16) * var19 >> 16) + var16 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var5] - var17) * var19 >> 16) + var17 << 9) / 50 + var3;
-				clippedColour[elements++] = ((this.faceColourA[arg0] - var18) * var19 >> 16) + var18;
+			int var16 = vertexViewSpaceX[b];
+			int var17 = vertexViewSpaceY[b];
+			int var18 = this.faceColourB[face];
+			if (zA >= 50) {
+				int var19 = (50 - zB) * divTable2[zA - zB];
+				clippedX[elements] = (((vertexViewSpaceX[a] - var16) * var19 >> 16) + var16 << 9) / 50 + originX;
+				clippedY[elements] = (((vertexViewSpaceY[a] - var17) * var19 >> 16) + var17 << 9) / 50 + originY;
+				clippedColour[elements++] = ((this.faceColourA[face] - var18) * var19 >> 16) + var18;
 			}
-			if (var10 >= 50) {
-				int var20 = (50 - var9) * divTable2[var10 - var9];
-				clippedX[elements] = (((vertexViewSpaceX[var7] - var16) * var20 >> 16) + var16 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var7] - var17) * var20 >> 16) + var17 << 9) / 50 + var3;
-				clippedColour[elements++] = ((this.faceColourC[arg0] - var18) * var20 >> 16) + var18;
+			if (zC >= 50) {
+				int var20 = (50 - zB) * divTable2[zC - zB];
+				clippedX[elements] = (((vertexViewSpaceX[c] - var16) * var20 >> 16) + var16 << 9) / 50 + originX;
+				clippedY[elements] = (((vertexViewSpaceY[c] - var17) * var20 >> 16) + var17 << 9) / 50 + originY;
+				clippedColour[elements++] = ((this.faceColourC[face] - var18) * var20 >> 16) + var18;
 			}
 		}
-		if (var10 >= 50) {
-			clippedX[elements] = vertexScreenX[var7];
-			clippedY[elements] = vertexScreenY[var7];
-			clippedColour[elements++] = this.faceColourC[arg0];
+
+		if (zC >= 50) {
+			clippedX[elements] = vertexScreenX[c];
+			clippedY[elements] = vertexScreenY[c];
+			clippedColour[elements++] = this.faceColourC[face];
 		} else {
-			int var21 = vertexViewSpaceX[var7];
-			int var22 = vertexViewSpaceY[var7];
-			int var23 = this.faceColourC[arg0];
-			if (var9 >= 50) {
-				int var24 = (50 - var10) * divTable2[var9 - var10];
-				clippedX[elements] = (((vertexViewSpaceX[var6] - var21) * var24 >> 16) + var21 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var6] - var22) * var24 >> 16) + var22 << 9) / 50 + var3;
-				clippedColour[elements++] = ((this.faceColourB[arg0] - var23) * var24 >> 16) + var23;
+			int var21 = vertexViewSpaceX[c];
+			int var22 = vertexViewSpaceY[c];
+			int var23 = this.faceColourC[face];
+			if (zB >= 50) {
+				int var24 = (50 - zC) * divTable2[zB - zC];
+				clippedX[elements] = (((vertexViewSpaceX[b] - var21) * var24 >> 16) + var21 << 9) / 50 + originX;
+				clippedY[elements] = (((vertexViewSpaceY[b] - var22) * var24 >> 16) + var22 << 9) / 50 + originY;
+				clippedColour[elements++] = ((this.faceColourB[face] - var23) * var24 >> 16) + var23;
 			}
-			if (var8 >= 50) {
-				int var25 = (50 - var10) * divTable2[var8 - var10];
-				clippedX[elements] = (((vertexViewSpaceX[var5] - var21) * var25 >> 16) + var21 << 9) / 50 + var2;
-				clippedY[elements] = (((vertexViewSpaceY[var5] - var22) * var25 >> 16) + var22 << 9) / 50 + var3;
-				clippedColour[elements++] = ((this.faceColourA[arg0] - var23) * var25 >> 16) + var23;
+			if (zA >= 50) {
+				int var25 = (50 - zC) * divTable2[zA - zC];
+				clippedX[elements] = (((vertexViewSpaceX[a] - var21) * var25 >> 16) + var21 << 9) / 50 + originX;
+				clippedY[elements] = (((vertexViewSpaceY[a] - var22) * var25 >> 16) + var22 << 9) / 50 + originY;
+				clippedColour[elements++] = ((this.faceColourA[face] - var23) * var25 >> 16) + var23;
 			}
 		}
-		int var26 = clippedX[0];
-		int var27 = clippedX[1];
-		int var28 = clippedX[2];
-		int var29 = clippedY[0];
-		int var30 = clippedY[1];
-		int var31 = clippedY[2];
+
+		int x0 = clippedX[0];
+		int x1 = clippedX[1];
+		int x2 = clippedX[2];
+		int y0 = clippedY[0];
+		int y1 = clippedY[1];
+		int y2 = clippedY[2];
+
 		Pix3D.hclip = false;
+
 		if (elements == 3) {
-			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.sizeX || var27 > Pix3D.sizeX || var28 > Pix3D.sizeX) {
+			if (x0 < 0 || x1 < 0 || x2 < 0 || x0 > Pix3D.sizeX || x1 > Pix3D.sizeX || x2 > Pix3D.sizeX) {
 				Pix3D.hclip = true;
 			}
-			if (this.faceTextureId != null && this.faceTextureId[arg0] != -1) {
-				int var33;
-				int var34;
-				int var35;
-				if (this.faceTextureIndex == null || this.faceTextureIndex[arg0] == -1) {
-					var33 = var5;
-					var34 = var6;
-					var35 = var7;
+
+			if (this.faceTextureId != null && this.faceTextureId[face] != -1) {
+				int tA;
+				int tB;
+				int tC;
+				if (this.faceTextureAxis == null || this.faceTextureAxis[face] == -1) {
+					tA = a;
+					tB = b;
+					tC = c;
 				} else {
-					int var32 = this.faceTextureIndex[arg0] & 0xFF;
-					var33 = this.textureVertexX[var32];
-					var34 = this.textureVertexY[var32];
-					var35 = this.textureVertexZ[var32];
+					int texturedFace = this.faceTextureAxis[face] & 0xFF;
+					tA = this.faceTextureP[texturedFace];
+					tB = this.faceTextureM[texturedFace];
+					tC = this.faceTextureN[texturedFace];
 				}
-				if (this.faceColourC[arg0] == -1) {
-					Pix3D.textureTriangle(var29, var30, var31, var26, var27, var28, this.faceColourA[arg0], this.faceColourA[arg0], this.faceColourA[arg0], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.faceTextureId[arg0]);
+
+				if (this.faceColourC[face] == -1) {
+					Pix3D.textureTriangleAffine(y0, y1, y2, x0, x1, x2, this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
 				} else {
-					Pix3D.textureTriangle(var29, var30, var31, var26, var27, var28, clippedColour[0], clippedColour[1], clippedColour[2], vertexViewSpaceX[var33], vertexViewSpaceX[var34], vertexViewSpaceX[var35], vertexViewSpaceY[var33], vertexViewSpaceY[var34], vertexViewSpaceY[var35], vertexViewSpaceZ[var33], vertexViewSpaceZ[var34], vertexViewSpaceZ[var35], this.faceTextureId[arg0]);
+					Pix3D.textureTriangleAffine(y0, y1, y2, x0, x1, x2, clippedColour[0], clippedColour[1], clippedColour[2], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
 				}
-			} else if (this.faceColourC[arg0] == -1) {
-				Pix3D.flatTriangle(var29, var30, var31, var26, var27, var28, palette[this.faceColourA[arg0]]);
+			} else if (this.faceColourC[face] == -1) {
+				Pix3D.flatTriangle(y0, y1, y2, x0, x1, x2, colourTable[this.faceColourA[face]]);
 			} else {
-				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColour[0], clippedColour[1], clippedColour[2]);
+				Pix3D.gouraudTriangle(y0, y1, y2, x0, x1, x2, clippedColour[0], clippedColour[1], clippedColour[2]);
 			}
 		} else if (elements == 4) {
-			if (var26 < 0 || var27 < 0 || var28 < 0 || var26 > Pix3D.sizeX || var27 > Pix3D.sizeX || var28 > Pix3D.sizeX || clippedX[3] < 0 || clippedX[3] > Pix3D.sizeX) {
+			if (x0 < 0 || x1 < 0 || x2 < 0 || x0 > Pix3D.sizeX || x1 > Pix3D.sizeX || x2 > Pix3D.sizeX || clippedX[3] < 0 || clippedX[3] > Pix3D.sizeX) {
 				Pix3D.hclip = true;
 			}
-			if (this.faceTextureId != null && this.faceTextureId[arg0] != -1) {
-				int var37;
-				int var38;
-				int var39;
-				if (this.faceTextureIndex == null || this.faceTextureIndex[arg0] == -1) {
-					var37 = var5;
-					var38 = var6;
-					var39 = var7;
+
+			if (this.faceTextureId != null && this.faceTextureId[face] != -1) {
+				int tA;
+				int tB;
+				int tC;
+				if (this.faceTextureAxis == null || this.faceTextureAxis[face] == -1) {
+					tA = a;
+					tB = b;
+					tC = c;
 				} else {
-					int var36 = this.faceTextureIndex[arg0] & 0xFF;
-					var37 = this.textureVertexX[var36];
-					var38 = this.textureVertexY[var36];
-					var39 = this.textureVertexZ[var36];
+					int texturedFace = this.faceTextureAxis[face] & 0xFF;
+					tA = this.faceTextureP[texturedFace];
+					tB = this.faceTextureM[texturedFace];
+					tC = this.faceTextureN[texturedFace];
 				}
-				short var40 = this.faceTextureId[arg0];
-				if (this.faceColourC[arg0] == -1) {
-					Pix3D.textureTriangle(var29, var30, var31, var26, var27, var28, this.faceColourA[arg0], this.faceColourA[arg0], this.faceColourA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-					Pix3D.textureTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], this.faceColourA[arg0], this.faceColourA[arg0], this.faceColourA[arg0], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+
+				short textureId = this.faceTextureId[face];
+				if (this.faceColourC[face] == -1) {
+					Pix3D.textureTriangleAffine(y0, y1, y2, x0, x1, x2, this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], textureId);
+					Pix3D.textureTriangleAffine(
+						y0, y2, clippedY[3],
+						x0, x2, clippedX[3],
+						this.faceColourA[face], this.faceColourA[face], this.faceColourA[face],
+						vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC],
+						vertexViewSpaceY[tA], vertexViewSpaceY[tB],
+						vertexViewSpaceY[tC], vertexViewSpaceZ[tA],
+						vertexViewSpaceZ[tB], vertexViewSpaceZ[tC],
+						textureId
+					);
 				} else {
-					Pix3D.textureTriangle(var29, var30, var31, var26, var27, var28, clippedColour[0], clippedColour[1], clippedColour[2], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
-					Pix3D.textureTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColour[0], clippedColour[2], clippedColour[3], vertexViewSpaceX[var37], vertexViewSpaceX[var38], vertexViewSpaceX[var39], vertexViewSpaceY[var37], vertexViewSpaceY[var38], vertexViewSpaceY[var39], vertexViewSpaceZ[var37], vertexViewSpaceZ[var38], vertexViewSpaceZ[var39], var40);
+					Pix3D.textureTriangleAffine(
+						y0, y1, y2,
+						x0, x1, x2,
+						clippedColour[0], clippedColour[1], clippedColour[2],
+						vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC],
+						vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC],
+						vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC],
+						textureId
+					);
+
+					Pix3D.textureTriangleAffine(
+						y0, y2, clippedY[3],
+						x0, x2, clippedX[3],
+						clippedColour[0], clippedColour[2], clippedColour[3],
+						vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC],
+						vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC],
+						vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC],
+						textureId
+					);
 				}
-			} else if (this.faceColourC[arg0] == -1) {
-				int var41 = palette[this.faceColourA[arg0]];
-				Pix3D.flatTriangle(var29, var30, var31, var26, var27, var28, var41);
-				Pix3D.flatTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], var41);
+			} else if (this.faceColourC[face] != -1) {
+				Pix3D.gouraudTriangle(y0, y1, y2, x0, x1, x2, clippedColour[0], clippedColour[1], clippedColour[2]);
+				Pix3D.gouraudTriangle(y0, y2, clippedY[3], x0, x2, clippedX[3], clippedColour[0], clippedColour[2], clippedColour[3]);
 			} else {
-				Pix3D.gouraudTriangle(var29, var30, var31, var26, var27, var28, clippedColour[0], clippedColour[1], clippedColour[2]);
-				Pix3D.gouraudTriangle(var29, var31, clippedY[3], var26, var28, clippedX[3], clippedColour[0], clippedColour[2], clippedColour[3]);
+				int var41 = colourTable[this.faceColourA[face]];
+				Pix3D.flatTriangle(y0, y1, y2, x0, x1, x2, var41);
+				Pix3D.flatTriangle(y0, y2, clippedY[3], x0, x2, clippedX[3], var41);
 			}
 		}
 	}
 
 	// jag::oldscape::dash3d::MousePickingHelper::IsMouseRoughlyInsideTriangle
 	@ObfuscatedName("fo.ay(IIIIIIII)Z")
-	public final boolean isMouseRoughlyInsideTriangle(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-		if (arg1 < arg2 && arg1 < arg3 && arg1 < arg4) {
+	public final boolean isMouseRoughlyInsideTriangle(int x, int y, int yA, int yB, int yC, int xA, int xB, int xC) {
+		if (y < yA && y < yB && y < yC) {
 			return false;
-		} else if (arg1 > arg2 && arg1 > arg3 && arg1 > arg4) {
+		} else if (y > yA && y > yB && y > yC) {
 			return false;
-		} else if (arg0 < arg5 && arg0 < arg6 && arg0 < arg7) {
+		} else if (x < xA && x < xB && x < xC) {
+			return false;
+		} else if (x > xA && x > xB && x > xC) {
 			return false;
 		} else {
-			return arg0 <= arg5 || arg0 <= arg6 || arg0 <= arg7;
+			return true;
 		}
 	}
 }

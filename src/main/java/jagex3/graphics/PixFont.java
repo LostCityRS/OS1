@@ -1,8 +1,6 @@
-package jagex3.dash3d;
+package jagex3.graphics;
 
 import deob.ObfuscatedName;
-import jagex3.graphics.Pix2D;
-import jagex3.graphics.Pix8;
 import jagex3.jstring.StringTools;
 
 import java.util.Random;

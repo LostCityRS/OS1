@@ -13,22 +13,18 @@ plugins {
 }
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
-
-    sourceCompatibility = JavaVersion.VERSION_1_6
-    targetCompatibility = JavaVersion.VERSION_1_6
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 application {
-    mainClass = "jagex3.client.Client"
+    mainClass = 'jagex3.client.Client'
 }
 
 jar {
     manifest {
         attributes(
-            'Main-Class': 'jagex3.client.Client'
+            'Main-Class': application.mainClass
         )
     }
 

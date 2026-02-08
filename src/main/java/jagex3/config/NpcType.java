@@ -277,8 +277,8 @@ public class NpcType extends Linkable2 {
 			return npc == null ? null : npc.getTempModel(primaryAnim, arg1, secondaryAnim, arg3);
 		}
 
-		ModelLit cached = (ModelLit) modelCache.find(this.index);
-		if (cached == null) {
+		ModelLit litModel = (ModelLit) modelCache.find(this.index);
+		if (litModel == null) {
 			boolean needsModel = false;
 			for (int i = 0; i < this.model.length; i++) {
 				if (!models.requestDownload(this.model[i], 0)) {
@@ -314,19 +314,19 @@ public class NpcType extends Linkable2 {
 				}
 			}
 
-			cached = model.light(this.ambient + 64, this.contrast + 850, -30, -50, -30);
-			modelCache.put(cached, this.index);
+			litModel = model.light(this.ambient + 64, this.contrast + 850, -30, -50, -30);
+			modelCache.put(litModel, this.index);
 		}
 
 		ModelLit model;
 		if (primaryAnim != null && secondaryAnim != null) {
-			model = primaryAnim.splitAnimateModel(cached, arg1, secondaryAnim, arg3);
+			model = primaryAnim.splitAnimateModel(litModel, arg1, secondaryAnim, arg3);
 		} else if (primaryAnim != null) {
-			model = primaryAnim.animateModel(cached, arg1);
-		} else if (secondaryAnim == null) {
-			model = cached.copyForAnim(true);
+			model = primaryAnim.animateModel(litModel, arg1);
+		} else if (secondaryAnim != null) {
+			model = secondaryAnim.animateModel(litModel, arg3);
 		} else {
-			model = secondaryAnim.animateModel(cached, arg3);
+			model = litModel.copyForAnim(true);
 		}
 
 		if (this.resizeh != 128 || this.resizev != 128) {

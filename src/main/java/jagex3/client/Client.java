@@ -20,10 +20,7 @@ import jagex3.datastruct.Linkable;
 import jagex3.friends.FriendChatUser;
 import jagex3.friends.PrivateChatFilter;
 import jagex3.friends.TimestampMessage;
-import jagex3.graphics.Pix2D;
-import jagex3.graphics.Pix32;
-import jagex3.graphics.Pix8;
-import jagex3.graphics.PixLoader;
+import jagex3.graphics.*;
 import jagex3.io.ClientStream;
 import jagex3.io.DataFile;
 import jagex3.io.Packet;
@@ -79,7 +76,7 @@ public class Client extends GameShell {
 	public static boolean memServer = false;
 
 	@ObfuscatedName("client.ao")
-	public static boolean lowMemory = false;
+	public static boolean lowMem = false;
 
 	@ObfuscatedName("client.ag")
 	public static int lang = 0;
@@ -102,15 +99,11 @@ public class Client extends GameShell {
 	@ObfuscatedName("dm.ai")
 	public static MouseTracking mouseTracking;
 
-	// guessing placement
-	@ObfuscatedName("az.lu")
-	public static MouseWheelInterface mouseWheel;
-
 	@ObfuscatedName("client.aj")
-	public static int lastWriteX = 0;
+	public static int mouseTrackedX = 0;
 
 	@ObfuscatedName("client.aw")
-	public static int lastWriteY = 0;
+	public static int mouseTrackedY = 0;
 
 	@ObfuscatedName("client.af")
 	public static int mouseTrackedDelta = 0;
@@ -253,7 +246,7 @@ public class Client extends GameShell {
 	public static int loginPort;
 
 	@ObfuscatedName("client.ci")
-	public static ClientNpc[] npcs = new ClientNpc[32768];
+	public static ClientNpc[] npc = new ClientNpc[32768];
 
 	@ObfuscatedName("client.cb")
 	public static int npcCount = 0;
@@ -274,7 +267,7 @@ public class Client extends GameShell {
 	public static PacketBit out = new PacketBit(5000);
 
 	@ObfuscatedName("client.dk")
-	public static PacketBit login = new PacketBit(5000);
+	public static PacketBit loginout = new PacketBit(5000);
 
 	@ObfuscatedName("client.dz")
 	public static PacketBit in = new PacketBit(5000);
@@ -289,7 +282,7 @@ public class Client extends GameShell {
 	public static int timeoutTimer = 0;
 
 	@ObfuscatedName("client.ds")
-	public static int noTimeoutCycle = 0;
+	public static int noTimeoutTimer = 0;
 
 	@ObfuscatedName("client.dh")
 	public static int logoutTimer = 0;
@@ -384,10 +377,10 @@ public class Client extends GameShell {
 	};
 
 	@ObfuscatedName("as.eq")
-	public static int baseX;
+	public static int zoneUpdateX;
 
 	@ObfuscatedName("cx.et")
-	public static int baseZ;
+	public static int zoneUpdateZ;
 
 	@ObfuscatedName("client.ee")
 	public static int tryMoveNearest = 0;
@@ -620,7 +613,7 @@ public class Client extends GameShell {
 	public static int crossMode = 0;
 
 	@ObfuscatedName("be.hf")
-	public static IfType selectedArea;
+	public static IfType selectedCom;
 
 	@ObfuscatedName("client.hi")
 	public static int selectedCycle = 0;
@@ -629,14 +622,10 @@ public class Client extends GameShell {
 	public static int selectedItem = 0;
 
 	@ObfuscatedName("ck.ha")
-	public static IfType objDragInterface;
+	public static IfType objDragCom;
 
 	@ObfuscatedName("cv.hg")
-	public static IfType hoveredSlotParent;
-
-	// guessing placement
-	@ObfuscatedName("l.jy")
-	public static IfType hoveredCom;
+	public static IfType hoveredSlotCom;
 
 	@ObfuscatedName("client.hq")
 	public static int objDragSlot = 0;
@@ -657,7 +646,7 @@ public class Client extends GameShell {
 	public static int objDragCycles = 0;
 
 	@ObfuscatedName("client.hy")
-	public static int overrideChat = 0;
+	public static int chatDisabled = 0;
 
 	@ObfuscatedName("client.iq")
 	public static ClientPlayer[] players = new ClientPlayer[2048];
@@ -773,10 +762,10 @@ public class Client extends GameShell {
 	public static String[] menuSubject = new String[500];
 
 	@ObfuscatedName("client.jz")
-	public static int minimenuMouseOverX = -1;
+	public static int menuMouseX = -1;
 
 	@ObfuscatedName("client.jx")
-	public static int minimenuMouseOverY = -1;
+	public static int menuMouseY = -1;
 
 	// guessing placement
 	@ObfuscatedName("at.jq")
@@ -793,11 +782,11 @@ public class Client extends GameShell {
 
 	// guessing placement
 	@ObfuscatedName("ag.iz")
-	public static int objLayerId;
+	public static int objComId;
 
 	// guessing placement
 	@ObfuscatedName("an.ix")
-	public static int objSelectedLayerId;
+	public static int objSelectedComId;
 
 	// guessing placement
 	@ObfuscatedName("ag.jb")
@@ -829,6 +818,10 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.ky")
 	public static HashTable subinterfaces = new HashTable(8);
 
+	// guessing placement
+	@ObfuscatedName("l.jy")
+	public static IfType overCom;
+
 	@ObfuscatedName("client.ko")
 	public static int chatEffects = 0;
 
@@ -836,13 +829,13 @@ public class Client extends GameShell {
 	public static int bankArrangeMode = 0;
 
 	@ObfuscatedName("client.ka")
-	public static IfType resumedPauseButton = null;
+	public static IfType pauseButtonLayer = null;
 
 	@ObfuscatedName("client.kr")
-	public static int runEnergy = 0;
+	public static int runenergy = 0;
 
 	@ObfuscatedName("client.ku")
-	public static int runWeight = 0;
+	public static int runweight = 0;
 
 	@ObfuscatedName("client.kp")
 	public static int staffmodlevel = 0;
@@ -857,10 +850,10 @@ public class Client extends GameShell {
 	public static boolean showOpIndex = false;
 
 	@ObfuscatedName("client.ke")
-	public static IfType dragComponent = null;
+	public static IfType dragCom = null;
 
 	@ObfuscatedName("client.kx")
-	public static IfType dragParent = null;
+	public static IfType dragLayer = null;
 
 	// guessing placement
 	@ObfuscatedName("dz.lj")
@@ -947,6 +940,10 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.ld")
 	public static String[] varcStr = new String[1000];
 
+	// guessing placement
+	@ObfuscatedName("az.lu")
+	public static MouseWheelInterface mouseWheel;
+
 	@ObfuscatedName("client.le")
 	public static int mouseWheelRotation = 0;
 
@@ -993,16 +990,16 @@ public class Client extends GameShell {
 	public static int componentDrawMode = 0;
 
 	@ObfuscatedName("client.mt")
-	public static int[] messageType = new int[100];
+	public static int[] chatType = new int[100];
 
 	@ObfuscatedName("client.mc")
-	public static String[] messageSender = new String[100];
+	public static String[] chatUsername = new String[100];
 
 	@ObfuscatedName("client.mr")
-	public static String[] messageScreenName = new String[100];
+	public static String[] chatScreenName = new String[100];
 
 	@ObfuscatedName("client.mx")
-	public static String[] messageText = new String[100];
+	public static String[] chatText = new String[100];
 
 	@ObfuscatedName("client.mv")
 	public static int chatHistoryLength = 0;
@@ -1011,14 +1008,14 @@ public class Client extends GameShell {
 	public static int[] CHAT_COLOURS = new int[] { 16776960, 16711680, 65280, 65535, 16711935, 16777215 };
 
 	@ObfuscatedName("client.mf")
-	public static int publicChatFilter = 0;
+	public static int chatPublicMode = 0;
 
 	// placement based on rs3
 	@ObfuscatedName("au.mg")
-	public static PrivateChatFilter privateChatFilter;
+	public static PrivateChatFilter chatPrivateMode;
 
 	@ObfuscatedName("client.mz")
-	public static int tradeChatFilter = 0;
+	public static int chatTradeMode = 0;
 
 	@ObfuscatedName("client.mj")
 	public static long[] messageIds = new long[100];
@@ -1085,7 +1082,7 @@ public class Client extends GameShell {
 	public static int midiVolume = 255;
 
 	@ObfuscatedName("client.nn")
-	public static int previousSong = -1;
+	public static int nextMidiSong = -1;
 
 	@ObfuscatedName("client.nq")
 	public static boolean playingJingle = false;
@@ -1123,60 +1120,6 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.oj")
 	public static int[] camShakeAxis = new int[5];
 
-	// placement based on rs3
-	@ObfuscatedName("be.ox")
-	public static int cutsceneSrcLocalTileX;
-
-	// placement based on rs3
-	@ObfuscatedName("br.om")
-	public static int cutsceneSrcLocalTileZ;
-
-	// placement based on rs3
-	@ObfuscatedName("dq.oq")
-	public static int cutsceneSrcHeight;
-
-	// placement based on rs3
-	@ObfuscatedName("co.op")
-	public static int cutsceneMoveAcceleration;
-
-	@ObfuscatedName("du.oh")
-	public static int cutsceneMoveSpeed;
-
-	// placement based on rs3
-	@ObfuscatedName("ct.or")
-	public static int cutsceneDstLocalTileX;
-
-	// placement based on rs3
-	@ObfuscatedName("bp.og")
-	public static int cutsceneDstLocalTileZ;
-
-	// placement based on rs3
-	@ObfuscatedName("cq.ob")
-	public static int cutsceneDstHeight;
-
-	// placement based on rs3
-	@ObfuscatedName("df.ou")
-	public static int cutsceneRotateAcceleration;
-
-	// placement based on rs3
-	@ObfuscatedName("de.oy")
-	public static int cutsceneRotateSpeed;
-
-	// guessing placement
-	@ObfuscatedName("cq.oc")
-	public static Mixer soundMixer;
-
-	// guessing placement
-	@ObfuscatedName("ev.od")
-	public static Decimator soundDecimator;
-
-	@ObfuscatedName("dr.oi")
-	public static PcmPlayer soundPcmPlayer;
-
-	// guessing placement
-	@ObfuscatedName("l.on")
-	public static PcmPlayer midiPcmPlayer;
-
 	@ObfuscatedName("client.pk")
 	public static int[] camShakeRan = new int[5];
 
@@ -1186,11 +1129,65 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.ps")
 	public static int[] camShakeCycle = new int[5];
 
+	// placement based on rs3
+	@ObfuscatedName("be.ox")
+	public static int camMoveToLx;
+
+	// placement based on rs3
+	@ObfuscatedName("br.om")
+	public static int camMoveToLz;
+
+	// placement based on rs3
+	@ObfuscatedName("dq.oq")
+	public static int camMoveToHei;
+
+	// placement based on rs3
+	@ObfuscatedName("co.op")
+	public static int camMoveToRate;
+
+	@ObfuscatedName("du.oh")
+	public static int camMoveToRate2;
+
+	// placement based on rs3
+	@ObfuscatedName("ct.or")
+	public static int camLookAtLx;
+
+	// placement based on rs3
+	@ObfuscatedName("bp.og")
+	public static int camLookAtLz;
+
+	// placement based on rs3
+	@ObfuscatedName("cq.ob")
+	public static int camLookAtHei;
+
+	// placement based on rs3
+	@ObfuscatedName("df.ou")
+	public static int camLookAtRate;
+
+	// placement based on rs3
+	@ObfuscatedName("de.oy")
+	public static int camLookAtRate2;
+
+	// guessing placement
+	@ObfuscatedName("cq.oc")
+	public static Mixer mixer;
+
+	// guessing placement
+	@ObfuscatedName("ev.od")
+	public static Decimator decimator;
+
+	@ObfuscatedName("dr.oi")
+	public static PcmPlayer synthPlayer;
+
+	// guessing placement
+	@ObfuscatedName("l.on")
+	public static PcmPlayer midiPlayer;
+
 	@ObfuscatedName("client.pi")
 	public static int friendCount = 0;
 
 	@ObfuscatedName("client.pq")
-	public static int friendListStatus = 0;
+	public static int friendServerStatus = 0;
 
 	@ObfuscatedName("client.pf")
 	public static FriendListEntry[] friendList = new FriendListEntry[200];
@@ -1205,24 +1202,24 @@ public class Client extends GameShell {
 	public static IgnoreListEntry[] ignoreList = new IgnoreListEntry[100];
 
 	@ObfuscatedName("client.pd")
-	public static PlayerModel selfModel = new PlayerModel();
+	public static PlayerModel idkDesign = new PlayerModel();
 
 	@ObfuscatedName("client.pv")
-	public static int genderButton1 = -1;
+	public static int idkDesignButton1 = -1;
 
 	@ObfuscatedName("client.pz")
-	public static int genderButton2 = -1;
-
-	// placement relative to other clients
-	public static void setHighMemory() {
-		World.lowMem = false;
-		lowMemory = false;
-	}
+	public static int idkDesignButton2 = -1;
 
 	// "re-added," not exposed as an option as of osrs release :(
 	public static void setLowMemory() {
 		World.lowMem = true;
-		lowMemory = true;
+		lowMem = true;
+	}
+
+	// placement relative to other clients
+	public static void setHighMemory() {
+		World.lowMem = false;
+		lowMem = false;
 	}
 
 	// custom
@@ -1408,8 +1405,8 @@ public class Client extends GameShell {
 	@ObfuscatedName("client.b(I)V")
 	public final void mainredraw() {
 		boolean var1 = MidiManager.updateLoading();
-		if (var1 && playingJingle && midiPcmPlayer != null) {
-			midiPcmPlayer.play();
+		if (var1 && playingJingle && midiPlayer != null) {
+			midiPlayer.play();
 		}
 
 		if (canvasReplaceRecommended) {
@@ -1502,12 +1499,12 @@ public class Client extends GameShell {
 		ClientMouseListener.shutdown();
 		mouseWheel = null;
 
-		if (midiPcmPlayer != null) {
-			midiPcmPlayer.shutdown();
+		if (midiPlayer != null) {
+			midiPlayer.shutdown();
 		}
 
-		if (soundPcmPlayer != null) {
-			soundPcmPlayer.shutdown();
+		if (synthPlayer != null) {
+			synthPlayer.shutdown();
 		}
 
 		if (Js5Net.stream != null) {
@@ -1755,18 +1752,18 @@ public class Client extends GameShell {
 				loadingStep = 45;
 			}
 		} else if (loadingStep == 45) {
-			PcmPlayer.init(22050, !lowMemory, 2);
+			PcmPlayer.init(22050, !lowMem, 2);
 
 			MidiPlayer midiPlayer = new MidiPlayer();
 			midiPlayer.setChannelDefaultPatch(9, 128);
-			midiPcmPlayer = PcmPlayer.getPlayer(GameShell.signLink, GameShell.canvas, 0, 22050);
-			midiPcmPlayer.playStream(midiPlayer);
+			Client.midiPlayer = PcmPlayer.getPlayer(GameShell.signLink, GameShell.canvas, 0, 22050);
+			Client.midiPlayer.playStream(midiPlayer);
 			MidiManager.init(patches, vorbis, jagFX, midiPlayer);
 
-			soundPcmPlayer = PcmPlayer.getPlayer(GameShell.signLink, GameShell.canvas, 1, 2048);
-			soundMixer = new Mixer();
-			soundPcmPlayer.playStream(soundMixer);
-			soundDecimator = new Decimator(22050, PcmPlayer.frequency);
+			synthPlayer = PcmPlayer.getPlayer(GameShell.signLink, GameShell.canvas, 1, 2048);
+			mixer = new Mixer();
+			synthPlayer.playStream(mixer);
+			decimator = new Decimator(22050, PcmPlayer.frequency);
 
 			TitleScreen.loadString = Text.MAINLOAD45;
 			TitleScreen.loadPos = 35;
@@ -1818,7 +1815,7 @@ public class Client extends GameShell {
 				FloType.init(config);
 				FluType.init(config);
 				IdkType.init(config, models);
-				LocType.init(config, models, lowMemory);
+				LocType.init(config, models, lowMem);
 				NpcType.init(config, models);
 				ObjType.init(config, models, memServer, p11);
 				SeqType.init(config, anims, bases);
@@ -1950,7 +1947,7 @@ public class Client extends GameShell {
 				TitleScreen.loadString = Text.MAINLOAD90 + textures.getIndexLoadProgress() + "%";
 				TitleScreen.loadPos = 90;
 			} else {
-				WorldTextureProvider provider = new WorldTextureProvider(textures, sprites, 20, 0.8D, lowMemory ? 64 : 128);
+				WorldTextureProvider provider = new WorldTextureProvider(textures, sprites, 20, 0.8D, lowMem ? 64 : 128);
 				Pix3D.setTextures(provider);
 				Pix3D.initColourTable(0.8D);
 
@@ -2085,20 +2082,20 @@ public class Client extends GameShell {
 				loginStep = 3;
 			}
 			if (loginStep == 3) {
-				if (midiPcmPlayer != null) {
-					midiPcmPlayer.skipNextAcceptedCheck();
+				if (midiPlayer != null) {
+					midiPlayer.skipNextAcceptedCheck();
 				}
-				if (soundPcmPlayer != null) {
-					soundPcmPlayer.skipNextAcceptedCheck();
+				if (synthPlayer != null) {
+					synthPlayer.skipNextAcceptedCheck();
 				}
 
 				int var0 = loginStream.read();
 
-				if (midiPcmPlayer != null) {
-					midiPcmPlayer.skipNextAcceptedCheck();
+				if (midiPlayer != null) {
+					midiPlayer.skipNextAcceptedCheck();
 				}
-				if (soundPcmPlayer != null) {
-					soundPcmPlayer.skipNextAcceptedCheck();
+				if (synthPlayer != null) {
+					synthPlayer.skipNextAcceptedCheck();
 				}
 
 				if (var0 != 0) {
@@ -2128,42 +2125,42 @@ public class Client extends GameShell {
 				out.pjstr(TitleScreen.loginPass);
 				out.rsaenc(PublicKeys.LOGIN_RSAN, PublicKeys.LOGIN_RSAE);
 
-				login.pos = 0;
+				loginout.pos = 0;
 				if (state == 40) {
-					login.p1(18);
+					loginout.p1(18);
 				} else {
-					login.p1(16); // GAMELOGIN
+					loginout.p1(16); // GAMELOGIN
 				}
-				login.p2(0);
-				int start = login.pos;
+				loginout.p2(0);
+				int start = loginout.pos;
 
-				login.p4(1); // revision
-				login.pdata(out.data, 0, out.pos);
+				loginout.p4(1); // revision
+				loginout.pdata(out.data, 0, out.pos);
 
-				int xteaStart = login.pos;
-				login.pjstr(TitleScreen.loginUser);
-				login.p1(lowMemory ? 1 : 0);
-				GameShellCache.pushUID192(login); // 24 bytes
-				login.p4(anims.crc);
-				login.p4(bases.crc);
-				login.p4(config.crc);
-				login.p4(interfaces.crc);
-				login.p4(jagFX.crc);
-				login.p4(maps.crc);
-				login.p4(songs.crc);
-				login.p4(models.crc);
-				login.p4(sprites.crc);
-				login.p4(textures.crc);
-				login.p4(binary.crc);
-				login.p4(jingles.crc);
-				login.p4(scripts.crc);
-				login.p4(fontMetrics.crc);
-				login.p4(vorbis.crc);
-				login.p4(patches.crc);
-				login.tinyenc(seed, xteaStart, login.pos);
+				int xteaStart = loginout.pos;
+				loginout.pjstr(TitleScreen.loginUser);
+				loginout.p1(lowMem ? 1 : 0);
+				GameShellCache.pushUID192(loginout); // 24 bytes
+				loginout.p4(anims.crc);
+				loginout.p4(bases.crc);
+				loginout.p4(config.crc);
+				loginout.p4(interfaces.crc);
+				loginout.p4(jagFX.crc);
+				loginout.p4(maps.crc);
+				loginout.p4(songs.crc);
+				loginout.p4(models.crc);
+				loginout.p4(sprites.crc);
+				loginout.p4(textures.crc);
+				loginout.p4(binary.crc);
+				loginout.p4(jingles.crc);
+				loginout.p4(scripts.crc);
+				loginout.p4(fontMetrics.crc);
+				loginout.p4(vorbis.crc);
+				loginout.p4(patches.crc);
+				loginout.tinyenc(seed, xteaStart, loginout.pos);
 
-				login.psize2(login.pos - start);
-				loginStream.write(login.data, 0, login.pos);
+				loginout.psize2(loginout.pos - start);
+				loginStream.write(loginout.data, 0, loginout.pos);
 
 				out.seed(seed);
 				for (int i = 0; i < 4; i++) {
@@ -2319,11 +2316,11 @@ public class Client extends GameShell {
 						var388 = -1;
 						var390 = 524287;
 					}
-					if (lastWriteX != var389 || lastWriteY != var388) {
-						int var391 = var389 - lastWriteX;
-						lastWriteX = var389;
-						int var392 = var388 - lastWriteY;
-						lastWriteY = var388;
+					if (mouseTrackedX != var389 || mouseTrackedY != var388) {
+						int var391 = var389 - mouseTrackedX;
+						mouseTrackedX = var389;
+						int var392 = var388 - mouseTrackedY;
+						mouseTrackedY = var388;
 						if (mouseTrackedDelta < 8 && var391 >= -32 && var391 <= 31 && var392 >= -32 && var392 <= 31) {
 							var391 += 32;
 							var392 += 32;
@@ -2440,16 +2437,16 @@ public class Client extends GameShell {
 			}
 		}
 
-		if (selectedArea != null) {
+		if (selectedCom != null) {
 			selectedCycle++;
 			if (selectedCycle >= 15) {
-				componentUpdated(selectedArea);
-				selectedArea = null;
+				componentUpdated(selectedCom);
+				selectedCom = null;
 			}
 		}
 
-		if (objDragInterface != null) {
-			componentUpdated(objDragInterface);
+		if (objDragCom != null) {
+			componentUpdated(objDragCom);
 			objDragCycles++;
 
 			if (ClientMouseListener.mouseX > objGrabX + 5 || ClientMouseListener.mouseX < objGrabX - 5 || ClientMouseListener.mouseY > objGrabY + 5 || ClientMouseListener.mouseY < objGrabY - 5) {
@@ -2458,8 +2455,8 @@ public class Client extends GameShell {
 
 			if (ClientMouseListener.mouseButton == 0) {
 				if (objGrabThreshold && objDragCycles >= 5) {
-					if (objDragInterface == hoveredSlotParent && hoveredSlot != objDragSlot) {
-						IfType com = objDragInterface;
+					if (objDragCom == hoveredSlotCom && hoveredSlot != objDragSlot) {
+						IfType com = objDragCom;
 
 						int mode = 0;
 						if (bankArrangeMode == 1 && com.clientCode == 206) {
@@ -2496,7 +2493,7 @@ public class Client extends GameShell {
 
 						// INV_BUTTOND
 						out.p1Enc(2);
-						out.p4_alt2(objDragInterface.parentId);
+						out.p4_alt2(objDragCom.parentId);
 						out.p2_alt3(hoveredSlot);
 						out.p1_alt1(mode);
 						out.p2_alt1(objDragSlot);
@@ -2509,13 +2506,13 @@ public class Client extends GameShell {
 
 				selectedCycle = 10;
 				ClientMouseListener.mouseClickButton = 0;
-				objDragInterface = null;
+				objDragCom = null;
 			}
 		}
 
-		IfType hovered = hoveredCom;
+		IfType over = overCom;
 		IfType tooltip = tooltipCom;
-		hoveredCom = null;
+		overCom = null;
 		tooltipCom = null;
 		dropComponent = null;
 		dragging = false;
@@ -2594,7 +2591,7 @@ public class Client extends GameShell {
 			break;
 		}
 
-		if (dragComponent != null) {
+		if (dragCom != null) {
 			loopIf3Drag();
 		}
 
@@ -2614,12 +2611,12 @@ public class Client extends GameShell {
 
 		mouseLoop();
 
-		if (hoveredCom != hovered) {
-			if (hovered != null) {
-				componentUpdated(hovered);
+		if (overCom != over) {
+			if (over != null) {
+				componentUpdated(over);
 			}
-			if (hoveredCom != null) {
-				componentUpdated(hoveredCom);
+			if (overCom != null) {
+				componentUpdated(overCom);
 			}
 		}
 
@@ -2727,8 +2724,8 @@ public class Client extends GameShell {
 			macroMinimapZoomModifier = -1;
 		}
 
-		noTimeoutCycle++;
-		if (noTimeoutCycle > 50) {
+		noTimeoutTimer++;
+		if (noTimeoutTimer > 50) {
 			// NO_TIMEOUT
 			out.p1Enc(228);
 		}
@@ -2737,7 +2734,7 @@ public class Client extends GameShell {
 			if (loginStream != null && out.pos > 0) {
 				loginStream.write(out.data, 0, out.pos);
 				out.pos = 0;
-				noTimeoutCycle = 0;
+				noTimeoutTimer = 0;
 			}
 		} catch (IOException ex) {
 			lostCon();
@@ -2769,10 +2766,10 @@ public class Client extends GameShell {
 
 		componentDrawTime = loopCycle;
 
-		minimenuMouseOverX = -1;
-		minimenuMouseOverY = -1;
+		menuMouseX = -1;
+		menuMouseY = -1;
 
-		hoveredSlotParent = null;
+		hoveredSlotCom = null;
 
 		if (toplevelinterface != -1) {
 			componentDrawCount = 0;
@@ -2783,8 +2780,8 @@ public class Client extends GameShell {
 		sortMinimenu();
 		if (isMenuOpen) {
 			drawMinimenu();
-		} else if (minimenuMouseOverX != -1) {
-			drawFeedback(minimenuMouseOverX, minimenuMouseOverY);
+		} else if (menuMouseX != -1) {
+			drawFeedback(menuMouseX, menuMouseY);
 		}
 
 		if (componentDrawMode == 3) {
@@ -2832,7 +2829,7 @@ public class Client extends GameShell {
 		ClientMouseListener.setIdleTimer(0);
 
 		for (int var0 = 0; var0 < 100; var0++) {
-			messageText[var0] = null;
+			chatText[var0] = null;
 		}
 		chatHistoryLength = 0;
 
@@ -2862,7 +2859,7 @@ public class Client extends GameShell {
 		}
 
 		for (int var2 = 0; var2 < 32768; var2++) {
-			npcs[var2] = null;
+			npc[var2] = null;
 		}
 
 		localPlayer = players[2047] = new ClientPlayer();
@@ -2878,7 +2875,7 @@ public class Client extends GameShell {
 		}
 		locChanges = new LinkList();
 
-		friendListStatus = 0;
+		friendServerStatus = 0;
 		friendCount = 0;
 
 		for (int var6 = 0; var6 < VarpType.numDefinitions; var6++) {
@@ -2922,12 +2919,12 @@ public class Client extends GameShell {
 
 		toplevelinterface = -1;
 		subinterfaces = new HashTable(8);
-		resumedPauseButton = null;
+		pauseButtonLayer = null;
 
 		isMenuOpen = false;
 		menuNumEntries = 0;
 
-		selfModel.setAppearance(null, new int[] { 0, 0, 0, 0, 0 }, false, -1);
+		idkDesign.setAppearance(null, new int[] { 0, 0, 0, 0, 0 }, false, -1);
 
 		for (int var13 = 0; var13 < 8; var13++) {
 			playerOp[var13] = null;
@@ -3043,9 +3040,9 @@ public class Client extends GameShell {
 			}
 		}
 
-		for (int i = 0; i < npcs.length; i++) {
-			if (npcs[i] != null) {
-				npcs[i].targetId = -1;
+		for (int i = 0; i < npc.length; i++) {
+			if (npc[i] != null) {
+				npc[i].targetId = -1;
 			}
 		}
 
@@ -3075,7 +3072,7 @@ public class Client extends GameShell {
 		System.gc();
 
 		MidiManager.stop2();
-		previousSong = -1;
+		nextMidiSong = -1;
 		playingJingle = false;
 
 		BgSound.reset();
@@ -3145,11 +3142,11 @@ public class Client extends GameShell {
 
 	@ObfuscatedName("da.dj(I)V")
 	public static void doAudio() {
-		if (soundPcmPlayer != null) {
-			soundPcmPlayer.cycle();
+		if (synthPlayer != null) {
+			synthPlayer.cycle();
 		}
-		if (midiPcmPlayer != null) {
-			midiPcmPlayer.cycle();
+		if (midiPlayer != null) {
+			midiPlayer.cycle();
 		}
 	}
 
@@ -3186,11 +3183,11 @@ public class Client extends GameShell {
 	public static void playSongs(int id) {
 		if (id == -1 && !playingJingle) {
 			MidiManager.stop();
-		} else if (id != -1 && previousSong != id && midiVolume != 0 && !playingJingle) {
+		} else if (id != -1 && nextMidiSong != id && midiVolume != 0 && !playingJingle) {
 			MidiManager.swapSongs(2, songs, id, 0, midiVolume, false);
 		}
 
-		previousSong = id;
+		nextMidiSong = id;
 	}
 
 	// jag::oldscape::Client::PlayJingle
@@ -3290,7 +3287,7 @@ public class Client extends GameShell {
 		}
 		for (int var3 = 0; var3 < npcCount; var3++) {
 			int var4 = npcIds[var3];
-			ClientNpc var5 = npcs[var4];
+			ClientNpc var5 = npc[var4];
 			if (var5 != null && var5.chatTimer > 0) {
 				var5.chatTimer--;
 				if (var5.chatTimer == 0) {
@@ -3403,48 +3400,48 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::GlCinemaCamera
 	@ObfuscatedName("ez.dm(B)V")
 	public static void cinemaCamera() {
-		int var0 = cutsceneSrcLocalTileX * 128 + 64;
-		int var1 = cutsceneSrcLocalTileZ * 128 + 64;
-		int var2 = getAvH(var0, var1, minusedlevel) - cutsceneSrcHeight;
+		int var0 = camMoveToLx * 128 + 64;
+		int var1 = camMoveToLz * 128 + 64;
+		int var2 = getAvH(var0, var1, minusedlevel) - camMoveToHei;
 		if (camX < var0) {
-			camX += cutsceneMoveAcceleration * (var0 - camX) / 1000 + cutsceneMoveSpeed;
+			camX += camMoveToRate * (var0 - camX) / 1000 + camMoveToRate2;
 			if (camX > var0) {
 				camX = var0;
 			}
 		}
 		if (camX > var0) {
-			camX -= cutsceneMoveAcceleration * (camX - var0) / 1000 + cutsceneMoveSpeed;
+			camX -= camMoveToRate * (camX - var0) / 1000 + camMoveToRate2;
 			if (camX < var0) {
 				camX = var0;
 			}
 		}
 		if (camY < var2) {
-			camY += cutsceneMoveAcceleration * (var2 - camY) / 1000 + cutsceneMoveSpeed;
+			camY += camMoveToRate * (var2 - camY) / 1000 + camMoveToRate2;
 			if (camY > var2) {
 				camY = var2;
 			}
 		}
 		if (camY > var2) {
-			camY -= cutsceneMoveAcceleration * (camY - var2) / 1000 + cutsceneMoveSpeed;
+			camY -= camMoveToRate * (camY - var2) / 1000 + camMoveToRate2;
 			if (camY < var2) {
 				camY = var2;
 			}
 		}
 		if (camZ < var1) {
-			camZ += cutsceneMoveAcceleration * (var1 - camZ) / 1000 + cutsceneMoveSpeed;
+			camZ += camMoveToRate * (var1 - camZ) / 1000 + camMoveToRate2;
 			if (camZ > var1) {
 				camZ = var1;
 			}
 		}
 		if (camZ > var1) {
-			camZ -= cutsceneMoveAcceleration * (camZ - var1) / 1000 + cutsceneMoveSpeed;
+			camZ -= camMoveToRate * (camZ - var1) / 1000 + camMoveToRate2;
 			if (camZ < var1) {
 				camZ = var1;
 			}
 		}
-		int var3 = cutsceneDstLocalTileX * 128 + 64;
-		int var4 = cutsceneDstLocalTileZ * 128 + 64;
-		int var5 = getAvH(var3, var4, minusedlevel) - cutsceneDstHeight;
+		int var3 = camLookAtLx * 128 + 64;
+		int var4 = camLookAtLz * 128 + 64;
+		int var5 = getAvH(var3, var4, minusedlevel) - camLookAtHei;
 		int var6 = var3 - camX;
 		int var7 = var5 - camY;
 		int var8 = var4 - camZ;
@@ -3458,13 +3455,13 @@ public class Client extends GameShell {
 			var10 = 383;
 		}
 		if (camPitch < var10) {
-			camPitch += cutsceneRotateAcceleration * (var10 - camPitch) / 1000 + cutsceneRotateSpeed;
+			camPitch += camLookAtRate * (var10 - camPitch) / 1000 + camLookAtRate2;
 			if (camPitch > var10) {
 				camPitch = var10;
 			}
 		}
 		if (camPitch > var10) {
-			camPitch -= cutsceneRotateAcceleration * (camPitch - var10) / 1000 + cutsceneRotateSpeed;
+			camPitch -= camLookAtRate * (camPitch - var10) / 1000 + camLookAtRate2;
 			if (camPitch < var10) {
 				camPitch = var10;
 			}
@@ -3477,11 +3474,11 @@ public class Client extends GameShell {
 			var12 += 2048;
 		}
 		if (var12 > 0) {
-			camYaw += cutsceneRotateAcceleration * var12 / 1000 + cutsceneRotateSpeed;
+			camYaw += camLookAtRate * var12 / 1000 + camLookAtRate2;
 			camYaw &= 0x7FF;
 		}
 		if (var12 < 0) {
-			camYaw -= cutsceneRotateAcceleration * -var12 / 1000 + cutsceneRotateSpeed;
+			camYaw -= camLookAtRate * -var12 / 1000 + camLookAtRate2;
 			camYaw &= 0x7FF;
 		}
 		int var13 = var11 - camYaw;
@@ -3499,7 +3496,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::GlCheckMinimap
 	// guessing placement
 	public static void checkMinimap() {
-		if (lowMemory && sceneState != minusedlevel) {
+		if (lowMem && sceneState != minusedlevel) {
 			startRebuild(mapBuildCenterZoneX, mapBuildCenterZoneZ, minusedlevel, localPlayer.routeX[0], localPlayer.routeZ[0]);
 			return;
 		}
@@ -3640,10 +3637,10 @@ public class Client extends GameShell {
 					}
 
 					if (finalVolume > 0) {
-						Wave wave = sound.toWave().decimate(soundDecimator);
+						Wave wave = sound.toWave().decimate(decimator);
 						WaveStream stream = WaveStream.newRatePercent(wave, 100, finalVolume);
 						stream.setLoopCount(waveLoops[i] - 1);
-						soundMixer.playStream(stream);
+						mixer.playStream(stream);
 					}
 
 					waveDelay[i] = -100;
@@ -3664,8 +3661,8 @@ public class Client extends GameShell {
 		}
 
 		if (playingJingle && !MidiManager.isInitialised()) {
-			if (midiVolume != 0 && previousSong != -1) {
-				MidiManager.play(songs, previousSong, 0, midiVolume, false);
+			if (midiVolume != 0 && nextMidiSong != -1) {
+				MidiManager.play(songs, nextMidiSong, 0, midiVolume, false);
 			}
 
 			playingJingle = false;
@@ -3694,7 +3691,7 @@ public class Client extends GameShell {
 	public static void moveNpcs() {
 		for (int var0 = 0; var0 < npcCount; var0++) {
 			int var1 = npcIds[var0];
-			ClientNpc var2 = npcs[var1];
+			ClientNpc var2 = npc[var1];
 			if (var2 != null) {
 				moveEntity(var2, var2.type.size);
 			}
@@ -3937,7 +3934,7 @@ public class Client extends GameShell {
 		}
 
 		if (entity.targetId != -1 && entity.targetId < 32768) {
-			ClientNpc var1 = npcs[entity.targetId];
+			ClientNpc var1 = npc[entity.targetId];
 			if (var1 != null) {
 				int var2 = entity.x - var1.x;
 				int var3 = entity.z - var1.z;
@@ -4247,12 +4244,12 @@ public class Client extends GameShell {
 		int var73 = ClientMouseListener.mouseY;
 
 		if (var72 >= var12 && var72 < var12 + var31 && var73 >= var13 && var73 < var13 + var32) {
-			ModelLit.checkHover = true;
+			ModelLit.mouseCheck = true;
 			ModelLit.pickedCount = 0;
 			ModelLit.mouseX = ClientMouseListener.mouseX - var12;
 			ModelLit.mouseY = ClientMouseListener.mouseY - var13;
 		} else {
-			ModelLit.checkHover = false;
+			ModelLit.mouseCheck = false;
 			ModelLit.pickedCount = 0;
 		}
 
@@ -4314,7 +4311,7 @@ public class Client extends GameShell {
 				continue;
 			}
 			player.lowMemory = false;
-			if ((lowMemory && playerCount > 50 || playerCount > 200) && !local && player.secondarySeqId == player.readyanim) {
+			if ((lowMem && playerCount > 50 || playerCount > 200) && !local && player.secondarySeqId == player.readyanim) {
 				player.lowMemory = true;
 			}
 			int x = player.x >> 7;
@@ -4343,7 +4340,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("dw.do(ZB)V")
 	public static void addNpcs(boolean arg0) {
 		for (int var1 = 0; var1 < npcCount; var1++) {
-			ClientNpc var2 = npcs[npcIds[var1]];
+			ClientNpc var2 = npc[npcIds[var1]];
 			int var3 = (npcIds[var1] << 14) + 0x20000000;
 			if (var2 == null || !var2.ready() || var2.type.alwaysontop != arg0 || !var2.type.isMultiNpcVisible()) {
 				continue;
@@ -4377,7 +4374,7 @@ public class Client extends GameShell {
 
 			if (loopCycle >= proj.t1) {
 				if (proj.target > 0) {
-					ClientNpc npc = npcs[proj.target - 1];
+					ClientNpc npc = Client.npc[proj.target - 1];
 
 					if (npc != null && npc.x >= 0 && npc.x < 13312 && npc.z >= 0 && npc.z < 13312) {
 						proj.setTarget(npc.x, npc.z, getAvH(npc.x, npc.z, proj.level) - proj.h2, loopCycle);
@@ -4555,7 +4552,7 @@ public class Client extends GameShell {
 			} else if (var74 < playerCount) {
 				var75 = players[playerIds[var74]];
 			} else {
-				var75 = npcs[npcIds[var74 - playerCount]];
+				var75 = npc[npcIds[var74 - playerCount]];
 			}
 
 			if (var75 != null && var75.ready()) {
@@ -4608,7 +4605,7 @@ public class Client extends GameShell {
 						}
 					}
 				}
-				if (var75.chat != null && (var74 >= playerCount || publicChatFilter == 0 || publicChatFilter == 3 || publicChatFilter == 1 && isFriend(((ClientPlayer) var75).name))) {
+				if (var75.chat != null && (var74 >= playerCount || chatPublicMode == 0 || chatPublicMode == 3 || chatPublicMode == 1 && isFriend(((ClientPlayer) var75).name))) {
 					getOverlayPos(var75, var75.height);
 					if (projectX > -1 && chatCount < MAX_CHATS) {
 						chatWidth[chatCount] = b12.stringWid(var75.chat) / 2;
@@ -4779,17 +4776,17 @@ public class Client extends GameShell {
 		if (crossMode == 2) {
 			cross[crossCycle / 100 + 4].plotSprite(crossX - 8, crossY - 8);
 		}
-		overrideChat = 0;
+		chatDisabled = 0;
 		int var4 = (localPlayer.x >> 7) + mapBuildBaseX;
 		int var5 = (localPlayer.z >> 7) + mapBuildBaseZ;
 		if (var4 >= 3053 && var4 <= 3156 && var5 >= 3056 && var5 <= 3136) {
-			overrideChat = 1;
+			chatDisabled = 1;
 		}
 		if (var4 >= 3072 && var4 <= 3118 && var5 >= 9492 && var5 <= 9535) {
-			overrideChat = 1;
+			chatDisabled = 1;
 		}
-		if (overrideChat == 1 && var4 >= 3139 && var4 <= 3199 && var5 >= 3008 && var5 <= 3062) {
-			overrideChat = 0;
+		if (chatDisabled == 1 && var4 >= 3139 && var4 <= 3199 && var5 >= 3008 && var5 <= 3062) {
+			chatDisabled = 0;
 		}
 		if (showFps) {
 			int var6 = arg0 + 512 - 5;
@@ -4800,10 +4797,10 @@ public class Client extends GameShell {
 			Runtime var8 = Runtime.getRuntime();
 			int var9 = (int) ((var8.totalMemory() - var8.freeMemory()) / 1024L);
 			int var10 = 0xffff00;
-			if (var9 > 32768 && lowMemory) {
+			if (var9 > 32768 && lowMem) {
 				var10 = 0xff0000;
 			}
-			if (var9 > 65536 && !lowMemory) {
+			if (var9 > 65536 && !lowMem) {
 				var10 = 0xff0000;
 			}
 			p12.rightString("Mem:" + var9 + "k", var6, var11, var10, -1);
@@ -4974,14 +4971,14 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::StartRebuild
 	@ObfuscatedName("as.ef(IIIIII)V")
 	public static void startRebuild(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (mapBuildCenterZoneX == arg0 && mapBuildCenterZoneZ == arg1 && (sceneState == arg2 || !lowMemory)) {
+		if (mapBuildCenterZoneX == arg0 && mapBuildCenterZoneZ == arg1 && (sceneState == arg2 || !lowMem)) {
 			return;
 		}
 
 		mapBuildCenterZoneX = arg0;
 		mapBuildCenterZoneZ = arg1;
 		sceneState = arg2;
-		if (!lowMemory) {
+		if (!lowMem) {
 			sceneState = 0;
 		}
 		setMainState(25);
@@ -4997,7 +4994,7 @@ public class Client extends GameShell {
 		int var10 = mapBuildBaseZ;
 
 		for (int var11 = 0; var11 < 32768; var11++) {
-			ClientNpc var12 = npcs[var11];
+			ClientNpc var12 = npc[var11];
 			if (var12 != null) {
 				for (int var13 = 0; var13 < 10; var13++) {
 					var12.routeX[var13] -= var7;
@@ -5079,12 +5076,12 @@ public class Client extends GameShell {
 	public static void preventTimeout(boolean arg0) {
 		doAudio();
 
-		noTimeoutCycle++;
-		if (noTimeoutCycle < 50 && !arg0) {
+		noTimeoutTimer++;
+		if (noTimeoutTimer < 50 && !arg0) {
 			return;
 		}
 
-		noTimeoutCycle = 0;
+		noTimeoutTimer = 0;
 
 		if (networkError || loginStream == null) {
 			return;
@@ -5298,7 +5295,7 @@ public class Client extends GameShell {
 			int var68 = minusedlevel - 1;
 		}
 
-		if (lowMemory) {
+		if (lowMem) {
 			world.fillBaseLevel(ClientBuild.minusedlevel);
 		} else {
 			world.fillBaseLevel(0);
@@ -5811,9 +5808,9 @@ public class Client extends GameShell {
 				if (var93 != null) {
 					closeSubInterface(var93, true);
 				}
-				if (resumedPauseButton != null) {
-					componentUpdated(resumedPauseButton);
-					resumedPauseButton = null;
+				if (pauseButtonLayer != null) {
+					componentUpdated(pauseButtonLayer);
+					pauseButtonLayer = null;
 				}
 
 				ptype = -1;
@@ -5845,7 +5842,7 @@ public class Client extends GameShell {
 					if (isIgnored(var98)) {
 						var99 = true;
 					}
-					if (!var99 && overrideChat == 0) {
+					if (!var99 && chatDisabled == 0) {
 						addChat(4, var98, Text.TRADEREQ);
 					}
 				} else if (var97.endsWith(":duelreq:")) {
@@ -5854,7 +5851,7 @@ public class Client extends GameShell {
 					if (isIgnored(var100)) {
 						var101 = true;
 					}
-					if (!var101 && overrideChat == 0) {
+					if (!var101 && chatDisabled == 0) {
 						addChat(8, var100, Text.DUELREQ);
 					}
 				} else if (var97.endsWith(":chalreq:")) {
@@ -5863,7 +5860,7 @@ public class Client extends GameShell {
 					if (isIgnored(var102)) {
 						var103 = true;
 					}
-					if (!var103 && overrideChat == 0) {
+					if (!var103 && chatDisabled == 0) {
 						String var104 = var97.substring(var97.indexOf(":") + 1, var97.length() - 9);
 						addChat(8, var102, var104);
 					}
@@ -5873,7 +5870,7 @@ public class Client extends GameShell {
 					if (isIgnored(var105)) {
 						var106 = true;
 					}
-					if (!var106 && overrideChat == 0) {
+					if (!var106 && chatDisabled == 0) {
 						addChat(10, var105, "");
 					}
 				} else if (var97.endsWith(":clan:")) {
@@ -5881,12 +5878,12 @@ public class Client extends GameShell {
 					addChat(11, "", var107);
 				} else if (var97.endsWith(":trade:")) {
 					String var108 = var97.substring(0, var97.indexOf(":trade:"));
-					if (overrideChat == 0) {
+					if (chatDisabled == 0) {
 						addChat(12, "", var108);
 					}
 				} else if (var97.endsWith(":assist:")) {
 					String var109 = var97.substring(0, var97.indexOf(":assist:"));
-					if (overrideChat == 0) {
+					if (chatDisabled == 0) {
 						addChat(13, "", var109);
 					}
 				} else {
@@ -5899,8 +5896,8 @@ public class Client extends GameShell {
 
 			if (ptype == 89) {
 				// UPDATE_ZONE_PARTIAL_FOLLOWS
-				baseZ = in.g1();
-				baseX = in.g1_alt3();
+				zoneUpdateZ = in.g1();
+				zoneUpdateX = in.g1_alt3();
 
 				ptype = -1;
 				return true;
@@ -5964,7 +5961,7 @@ public class Client extends GameShell {
 			if (ptype == 41) {
 				// UPDATE_RUNENERGY
 				legacyUpdated();
-				runEnergy = in.g1();
+				runenergy = in.g1();
 				miscTransmitNum = transmitNum;
 
 				ptype = -1;
@@ -5988,7 +5985,7 @@ public class Client extends GameShell {
 				if (isIgnored(var115)) {
 					var123 = true;
 				}
-				if (!var123 && overrideChat == 0) {
+				if (!var123 && chatDisabled == 0) {
 					messageIds[privateMessageCount] = var121;
 					privateMessageCount = (privateMessageCount + 1) % 100;
 					String var132 = PixFont.escape(StringTools.forceCapitalisationOfWords(WordPack.unpack2(in)));
@@ -6033,8 +6030,8 @@ public class Client extends GameShell {
 
 			if (ptype == 137) {
 				// CHAT_FILTER_SETTINGS
-				publicChatFilter = in.g1();
-				tradeChatFilter = in.g1();
+				chatPublicMode = in.g1();
+				chatTradeMode = in.g1();
 
 				ptype = -1;
 				return true;
@@ -6074,15 +6071,15 @@ public class Client extends GameShell {
 			if (ptype == 225) {
 				// CAM_LOOKAT
 				cinemaCam = true;
-				cutsceneDstLocalTileX = in.g1();
-				cutsceneDstLocalTileZ = in.g1();
-				cutsceneDstHeight = in.g2();
-				cutsceneRotateSpeed = in.g1();
-				cutsceneRotateAcceleration = in.g1();
-				if (cutsceneRotateAcceleration >= 100) {
-					int var140 = cutsceneDstLocalTileX * 128 + 64;
-					int var141 = cutsceneDstLocalTileZ * 128 + 64;
-					int var142 = getAvH(var140, var141, minusedlevel) - cutsceneDstHeight;
+				camLookAtLx = in.g1();
+				camLookAtLz = in.g1();
+				camLookAtHei = in.g2();
+				camLookAtRate2 = in.g1();
+				camLookAtRate = in.g1();
+				if (camLookAtRate >= 100) {
+					int var140 = camLookAtLx * 128 + 64;
+					int var141 = camLookAtLz * 128 + 64;
+					int var142 = getAvH(var140, var141, minusedlevel) - camLookAtHei;
 					int var143 = var140 - camX;
 					int var144 = var142 - camY;
 					int var145 = var141 - camZ;
@@ -6140,7 +6137,7 @@ public class Client extends GameShell {
 			if (ptype == 1) {
 				// UPDATE_RUNWEIGHT
 				legacyUpdated();
-				runWeight = in.g2b();
+				runweight = in.g2b();
 				miscTransmitNum = transmitNum;
 
 				ptype = -1;
@@ -6370,11 +6367,11 @@ public class Client extends GameShell {
 
 			if (ptype == 67) {
 				// UPDATE_ZONE_FULL_FOLLOWS
-				baseZ = in.g1_alt1();
-				baseX = in.g1_alt3();
+				zoneUpdateZ = in.g1_alt1();
+				zoneUpdateX = in.g1_alt3();
 
-				for (int x = baseX; x < baseX + 8; x++) {
-					for (int z = baseZ; z < baseZ + 8; z++) {
+				for (int x = zoneUpdateX; x < zoneUpdateX + 8; x++) {
+					for (int z = zoneUpdateZ; z < zoneUpdateZ + 8; z++) {
 						if (groundObj[minusedlevel][x][z] != null) {
 							groundObj[minusedlevel][x][z] = null;
 							showObject(x, z);
@@ -6383,7 +6380,7 @@ public class Client extends GameShell {
 				}
 
 				for (LocChange var205 = (LocChange) locChanges.head(); var205 != null; var205 = (LocChange) locChanges.next()) {
-					if (var205.x >= baseX && var205.x < baseX + 8 && var205.z >= baseZ && var205.z < baseZ + 8 && minusedlevel == var205.level) {
+					if (var205.x >= zoneUpdateX && var205.x < zoneUpdateX + 8 && var205.z >= zoneUpdateZ && var205.z < zoneUpdateZ + 8 && minusedlevel == var205.level) {
 						var205.endTime = 0;
 					}
 				}
@@ -6433,7 +6430,7 @@ public class Client extends GameShell {
 
 			if (ptype == 95) {
 				// FRIENDLIST_LOADED
-				friendListStatus = 1;
+				friendServerStatus = 1;
 				friendTransmitNum = transmitNum;
 
 				ptype = -1;
@@ -6485,7 +6482,7 @@ public class Client extends GameShell {
 
 			if (ptype == 70) {
 				// CHAT_FILTER_SETTINGS_PRIVATECHAT
-				privateChatFilter = PrivateChatFilter.get(in.g1());
+				chatPrivateMode = PrivateChatFilter.get(in.g1());
 
 				ptype = -1;
 				return true;
@@ -6687,7 +6684,7 @@ public class Client extends GameShell {
 				if (var275 <= 1 && isIgnored(var268)) {
 					var278 = true;
 				}
-				if (!var278 && overrideChat == 0) {
+				if (!var278 && chatDisabled == 0) {
 					messageIds[privateMessageCount] = var276;
 					privateMessageCount = (privateMessageCount + 1) % 100;
 					String var287 = PixFont.escape(StringTools.forceCapitalisationOfWords(WordPack.unpack2(in)));
@@ -6771,7 +6768,7 @@ public class Client extends GameShell {
 					}
 				}
 
-				friendListStatus = 2;
+				friendServerStatus = 2;
 				friendTransmitNum = transmitNum;
 
 				boolean var301 = false;
@@ -6926,8 +6923,8 @@ public class Client extends GameShell {
 
 			if (ptype == 131) {
 				// UPDATE_ZONE_PARTIAL_ENCLOSED
-				baseZ = in.g1_alt2();
-				baseX = in.g1_alt1();
+				zoneUpdateZ = in.g1_alt2();
+				zoneUpdateX = in.g1_alt1();
 
 				while (in.pos < psize) {
 					ptype = in.g1();
@@ -6941,15 +6938,15 @@ public class Client extends GameShell {
 			if (ptype == 169) {
 				// CAM_MOVETO
 				cinemaCam = true;
-				cutsceneSrcLocalTileX = in.g1();
-				cutsceneSrcLocalTileZ = in.g1();
-				cutsceneSrcHeight = in.g2();
-				cutsceneMoveSpeed = in.g1();
-				cutsceneMoveAcceleration = in.g1();
-				if (cutsceneMoveAcceleration >= 100) {
-					camX = cutsceneSrcLocalTileX * 128 + 64;
-					camZ = cutsceneSrcLocalTileZ * 128 + 64;
-					camY = getAvH(camX, camZ, minusedlevel) - cutsceneSrcHeight;
+				camMoveToLx = in.g1();
+				camMoveToLz = in.g1();
+				camMoveToHei = in.g2();
+				camMoveToRate2 = in.g1();
+				camMoveToRate = in.g1();
+				if (camMoveToRate >= 100) {
+					camX = camMoveToLx * 128 + 64;
+					camZ = camMoveToLz * 128 + 64;
+					camY = getAvH(camX, camZ, minusedlevel) - camMoveToHei;
 				}
 
 				ptype = -1;
@@ -6964,9 +6961,9 @@ public class Client extends GameShell {
 					}
 				}
 
-				for (int i = 0; i < npcs.length; i++) {
-					if (npcs[i] != null) {
-						npcs[i].primarySeqId = -1;
+				for (int i = 0; i < npc.length; i++) {
+					if (npc[i] != null) {
+						npc[i].primarySeqId = -1;
 					}
 				}
 
@@ -7202,8 +7199,8 @@ public class Client extends GameShell {
 			int var7 = in.g2_alt1();
 			int pid = in.g2();
 			int var9 = in.g1_alt3();
-			int var10 = (var9 >> 4 & 0x7) + baseX;
-			int var11 = (var9 & 0x7) + baseZ;
+			int var10 = (var9 >> 4 & 0x7) + zoneUpdateX;
+			int var11 = (var9 & 0x7) + zoneUpdateZ;
 			byte var12 = in.g1b_alt1();
 			byte var13 = in.g1b();
 			byte var14 = in.g1b();
@@ -7266,8 +7263,8 @@ public class Client extends GameShell {
 			// OBJ_DEL
 			int var30 = in.g2_alt3();
 			int var31 = in.g1();
-			int var32 = (var31 >> 4 & 0x7) + baseX;
-			int var33 = (var31 & 0x7) + baseZ;
+			int var32 = (var31 >> 4 & 0x7) + zoneUpdateX;
+			int var33 = (var31 & 0x7) + zoneUpdateZ;
 			if (var32 >= 0 && var33 >= 0 && var32 < 104 && var33 < 104) {
 				LinkList var34 = groundObj[minusedlevel][var32][var33];
 				if (var34 != null) {
@@ -7286,8 +7283,8 @@ public class Client extends GameShell {
 		} else if (ptype == 205) {
 			// SOUND_AREA
 			int var36 = in.g1();
-			int var37 = (var36 >> 4 & 0x7) + baseX;
-			int var38 = (var36 & 0x7) + baseZ;
+			int var37 = (var36 >> 4 & 0x7) + zoneUpdateX;
+			int var38 = (var36 & 0x7) + zoneUpdateZ;
 			int var39 = in.g2();
 			int var40 = in.g1();
 			int var41 = var40 >> 4 & 0xF;
@@ -7308,8 +7305,8 @@ public class Client extends GameShell {
 			// LOC_ANIM
 			int var45 = in.g2_alt2();
 			int var46 = in.g1_alt2();
-			int var47 = (var46 >> 4 & 0x7) + baseX;
-			int var48 = (var46 & 0x7) + baseZ;
+			int var47 = (var46 >> 4 & 0x7) + zoneUpdateX;
+			int var48 = (var46 & 0x7) + zoneUpdateZ;
 			int var49 = in.g1_alt3();
 			int var50 = var49 >> 2;
 			int var51 = var49 & 0x3;
@@ -7362,8 +7359,8 @@ public class Client extends GameShell {
 		} else if (ptype == 173) {
 			// OBJ_ADD
 			int var59 = in.g1_alt1();
-			int var60 = (var59 >> 4 & 0x7) + baseX;
-			int var61 = (var59 & 0x7) + baseZ;
+			int var60 = (var59 >> 4 & 0x7) + zoneUpdateX;
+			int var61 = (var59 & 0x7) + zoneUpdateZ;
 			int var62 = in.g2_alt2();
 			int var63 = in.g2_alt3();
 			if (var60 >= 0 && var61 >= 0 && var60 < 104 && var61 < 104) {
@@ -7379,8 +7376,8 @@ public class Client extends GameShell {
 		} else if (ptype == 106) {
 			// OBJ_COUNT
 			int var65 = in.g1();
-			int var66 = (var65 >> 4 & 0x7) + baseX;
-			int var67 = (var65 & 0x7) + baseZ;
+			int var66 = (var65 >> 4 & 0x7) + zoneUpdateX;
+			int var67 = (var65 & 0x7) + zoneUpdateZ;
 			int var68 = in.g2();
 			int var69 = in.g2();
 			int var70 = in.g2();
@@ -7404,16 +7401,16 @@ public class Client extends GameShell {
 			int var76 = var74 & 0x3;
 			int var77 = LOC_SHAPE_TO_LAYER[var75];
 			int var78 = in.g1_alt2();
-			int var79 = (var78 >> 4 & 0x7) + baseX;
-			int var80 = (var78 & 0x7) + baseZ;
+			int var79 = (var78 >> 4 & 0x7) + zoneUpdateX;
+			int var80 = (var78 & 0x7) + zoneUpdateZ;
 			if (var79 >= 0 && var80 >= 0 && var79 < 104 && var80 < 104) {
 				locChangeCreate(minusedlevel, var79, var80, var77, var73, var75, var76, 0, -1);
 			}
 		} else if (ptype == 20) {
 			// MAP_ANIM
 			int var81 = in.g1();
-			int var82 = (var81 >> 4 & 0x7) + baseX;
-			int var83 = (var81 & 0x7) + baseZ;
+			int var82 = (var81 >> 4 & 0x7) + zoneUpdateX;
+			int var83 = (var81 & 0x7) + zoneUpdateZ;
 			int var84 = in.g2();
 			int var85 = in.g1();
 			int var86 = in.g2();
@@ -7426,8 +7423,8 @@ public class Client extends GameShell {
 		} else if (ptype == 32) {
 			// MAP_PROJANIM
 			int var90 = in.g1();
-			int var91 = (var90 >> 4 & 0x7) + baseX;
-			int var92 = (var90 & 0x7) + baseZ;
+			int var91 = (var90 >> 4 & 0x7) + zoneUpdateX;
+			int var92 = (var90 & 0x7) + zoneUpdateZ;
 			int var93 = var91 + in.g1b();
 			int var94 = var92 + in.g1b();
 			int var95 = in.g2b();
@@ -7450,8 +7447,8 @@ public class Client extends GameShell {
 		} else if (ptype == 215) {
 			// OBJ_REVEAL
 			int var108 = in.g1_alt2();
-			int var109 = (var108 >> 4 & 0x7) + baseX;
-			int var110 = (var108 & 0x7) + baseZ;
+			int var109 = (var108 >> 4 & 0x7) + zoneUpdateX;
+			int var110 = (var108 & 0x7) + zoneUpdateZ;
 			int var111 = in.g2();
 			int var112 = in.g2_alt2();
 			int var113 = in.g2();
@@ -7472,8 +7469,8 @@ public class Client extends GameShell {
 			int var117 = var115 & 0x3;
 			int var118 = LOC_SHAPE_TO_LAYER[var116];
 			int var119 = in.g1_alt1();
-			int var120 = (var119 >> 4 & 0x7) + baseX;
-			int var121 = (var119 & 0x7) + baseZ;
+			int var120 = (var119 >> 4 & 0x7) + zoneUpdateX;
+			int var121 = (var119 & 0x7) + zoneUpdateZ;
 			if (var120 >= 0 && var121 >= 0 && var120 < 104 && var121 < 104) {
 				locChangeCreate(minusedlevel, var120, var121, var118, -1, var116, var117, 0, -1);
 			}
@@ -7582,7 +7579,7 @@ public class Client extends GameShell {
 		if (arg2 < 1 || arg3 < 1 || arg2 > 102 || arg3 > 102) {
 			return;
 		}
-		if (lowMemory && minusedlevel != arg0) {
+		if (lowMem && minusedlevel != arg0) {
 			return;
 		}
 		int var7 = 0;
@@ -7865,7 +7862,7 @@ public class Client extends GameShell {
 				if (var29 <= 1 && isIgnored(var26.name)) {
 					var32 = true;
 				}
-				if (!var32 && overrideChat == 0) {
+				if (!var32 && chatDisabled == 0) {
 					tempP.pos = 0;
 					in.gdata(tempP.data, 0, var30);
 
@@ -7978,16 +7975,16 @@ public class Client extends GameShell {
 		getNpcPosExtended();
 		for (int var374 = 0; var374 < entityRemovalCount; var374++) {
 			int var375 = entityRemovalIds[var374];
-			if (loopCycle != npcs[var375].cycle) {
-				npcs[var375].type = null;
-				npcs[var375] = null;
+			if (loopCycle != npc[var375].cycle) {
+				npc[var375].type = null;
+				npc[var375] = null;
 			}
 		}
 		if (psize != in.pos) {
 			throw new RuntimeException("gnp1 pos:" + in.pos + " psize:" + psize);
 		}
 		for (int var376 = 0; var376 < npcCount; var376++) {
-			if (npcs[npcIds[var376]] == null) {
+			if (npc[npcIds[var376]] == null) {
 				throw new RuntimeException("gnp2 pos:" + var376 + " size:" + npcCount);
 			}
 		}
@@ -8008,7 +8005,7 @@ public class Client extends GameShell {
 		npcCount = 0;
 		for (int var364 = 0; var364 < var362; var364++) {
 			int var365 = npcIds[var364];
-			ClientNpc var366 = npcs[var365];
+			ClientNpc var366 = npc[var365];
 			int var367 = in.gBit(1);
 			if (var367 == 0) {
 				npcIds[++npcCount - 1] = var365;
@@ -8056,11 +8053,11 @@ public class Client extends GameShell {
 			}
 
 			boolean var1 = false;
-			if (npcs[var0] == null) {
-				npcs[var0] = new ClientNpc();
+			if (npc[var0] == null) {
+				npc[var0] = new ClientNpc();
 				var1 = true;
 			}
-			ClientNpc var2 = npcs[var0];
+			ClientNpc var2 = npc[var0];
 			npcIds[++npcCount - 1] = var0;
 			var2.cycle = loopCycle;
 			int var3 = ANGLE_TO_DIR[in.gBit(3)];
@@ -8104,7 +8101,7 @@ public class Client extends GameShell {
 	public static void getNpcPosExtended() {
 		for (int var0 = 0; var0 < entityUpdateCount; var0++) {
 			int var1 = entityUpdateIds[var0];
-			ClientNpc var2 = npcs[var1];
+			ClientNpc var2 = npc[var1];
 			int var3 = in.g1();
 			if ((var3 & 0x80) != 0) {
 				int var4 = in.g1();
@@ -8204,7 +8201,7 @@ public class Client extends GameShell {
 	// jag::oldscape::minimenu::Minimenu::GameLoop
 	// guessing placement
 	public static void mouseLoop() {
-		if (objDragInterface != null || dragComponent != null) {
+		if (objDragCom != null || dragCom != null) {
 			return;
 		}
 
@@ -8254,16 +8251,16 @@ public class Client extends GameShell {
 						objGrabThreshold = false;
 						objDragCycles = 0;
 
-						if (objDragInterface != null) {
-							componentUpdated(objDragInterface);
+						if (objDragCom != null) {
+							componentUpdated(objDragCom);
 						}
 
-						objDragInterface = IfType.get(comId);
+						objDragCom = IfType.get(comId);
 						objDragSlot = slot;
 						objGrabX = ClientMouseListener.mouseClickX;
 						objGrabY = ClientMouseListener.mouseClickY;
 
-						componentUpdated(objDragInterface);
+						componentUpdated(objDragCom);
 						return;
 					}
 				}
@@ -8468,12 +8465,12 @@ public class Client extends GameShell {
 			out.p2_alt1(a);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
 		if (action == 8) {
-			ClientNpc var6 = npcs[a];
+			ClientNpc var6 = npc[a];
 			if (var6 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var6.routeX[0], var6.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 				crossX = ClientMouseListener.mouseClickX;
@@ -8533,14 +8530,14 @@ public class Client extends GameShell {
 			// OPHELDU
 			out.p1Enc(70);
 			out.p2_alt1(a);
-			out.p2_alt1(objLayerId);
+			out.p2_alt1(objComId);
 			out.p2(objSelectedSlot);
 			out.p4(c);
 			out.p2_alt1(b);
-			out.p4_alt1(objSelectedLayerId);
+			out.p4_alt1(objSelectedComId);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -8581,7 +8578,7 @@ public class Client extends GameShell {
 			out.p4_alt2(targetCom);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -8620,7 +8617,7 @@ public class Client extends GameShell {
 		}
 
 		if (action == 12) {
-			ClientNpc var14 = npcs[a];
+			ClientNpc var14 = npc[a];
 			if (var14 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var14.routeX[0], var14.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
@@ -8647,10 +8644,10 @@ public class Client extends GameShell {
 
 				// OPPLAYERU
 				out.p1Enc(226);
-				out.p2_alt2(objLayerId);
+				out.p2_alt2(objComId);
 				out.p2_alt1(objSelectedSlot);
 				out.p2_alt2(a);
-				out.p4_alt2(objSelectedLayerId);
+				out.p4_alt2(objSelectedComId);
 			}
 		}
 
@@ -8674,7 +8671,7 @@ public class Client extends GameShell {
 			out.p2_alt3(a);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -8733,7 +8730,7 @@ public class Client extends GameShell {
 			out.p2_alt3(b);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -8741,11 +8738,11 @@ public class Client extends GameShell {
 			if (interactWithLoc(b, c, a)) {
 				// OPLOCU
 				out.p1Enc(241);
-				out.p4_alt1(objSelectedLayerId);
+				out.p4_alt1(objSelectedComId);
 				out.p2(objSelectedSlot);
 				out.p2(a >> 14 & 0x7FFF);
 				out.p2_alt2(mapBuildBaseX + b);
-				out.p2_alt1(objLayerId);
+				out.p2_alt1(objComId);
 				out.p2_alt2(mapBuildBaseZ + c);
 			}
 		}
@@ -8820,9 +8817,9 @@ public class Client extends GameShell {
 			// OPOBJU
 			out.p1Enc(235);
 			out.p2(mapBuildBaseZ + c);
-			out.p2_alt2(objLayerId);
+			out.p2_alt2(objComId);
 			out.p2_alt1(mapBuildBaseX + b);
-			out.p4(objSelectedLayerId);
+			out.p4(objSelectedComId);
 			out.p2_alt1(a);
 			out.p2_alt1(objSelectedSlot);
 		}
@@ -8849,7 +8846,7 @@ public class Client extends GameShell {
 			out.p2_alt2(b);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -8906,7 +8903,7 @@ public class Client extends GameShell {
 		}
 
 		if (action == 9) {
-			ClientNpc var31 = npcs[a];
+			ClientNpc var31 = npc[a];
 			if (var31 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var31.routeX[0], var31.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
@@ -8992,12 +8989,12 @@ public class Client extends GameShell {
 			out.p2(a);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
 		if (action == 10) {
-			ClientNpc var38 = npcs[a];
+			ClientNpc var38 = npc[a];
 			if (var38 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var38.routeX[0], var38.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
@@ -9020,7 +9017,7 @@ public class Client extends GameShell {
 			out.p4_alt1(c);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -9032,7 +9029,7 @@ public class Client extends GameShell {
 			out.p2_alt2(b);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -9042,7 +9039,7 @@ public class Client extends GameShell {
 			crossMode = 2;
 			crossCycle = 0;
 
-			ClientNpc var39 = npcs[a];
+			ClientNpc var39 = npc[a];
 			if (var39 != null) {
 				NpcType var40 = var39.type;
 				if (var40.multinpc != null) {
@@ -9056,7 +9053,7 @@ public class Client extends GameShell {
 			}
 		}
 		if (action == 13) {
-			ClientNpc var41 = npcs[a];
+			ClientNpc var41 = npc[a];
 			if (var41 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var41.routeX[0], var41.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
@@ -9072,7 +9069,7 @@ public class Client extends GameShell {
 		}
 
 		if (action == 11) {
-			ClientNpc var42 = npcs[a];
+			ClientNpc var42 = npc[a];
 			if (var42 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var42.routeX[0], var42.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
@@ -9123,8 +9120,8 @@ public class Client extends GameShell {
 			IfType var45 = IfType.get(c);
 			useMode = 1;
 			objSelectedSlot = b;
-			objSelectedLayerId = c;
-			objLayerId = a;
+			objSelectedComId = c;
+			objComId = a;
 			componentUpdated(var45);
 
 			objSelectedName = StringConstants.TAG_COLOUR(16748608) + ObjType.list(a).name + StringConstants.TAG_COLOUR(16777215);
@@ -9145,14 +9142,14 @@ public class Client extends GameShell {
 		}
 
 		if (action == 30) {
-			if (resumedPauseButton == null) {
+			if (pauseButtonLayer == null) {
 				// RESUME_PAUSEBUTTON
 				out.p1Enc(242);
 				out.p2_alt2(b);
 				out.p4(c);
 
-				resumedPauseButton = IfType.get(c, b);
-				componentUpdated(resumedPauseButton);
+				pauseButtonLayer = IfType.get(c, b);
+				componentUpdated(pauseButtonLayer);
 			}
 		}
 
@@ -9178,7 +9175,7 @@ public class Client extends GameShell {
 			out.p2_alt1(a);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -9208,7 +9205,7 @@ public class Client extends GameShell {
 			out.p2_alt1(b);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
@@ -9222,12 +9219,12 @@ public class Client extends GameShell {
 			}
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
 		if (action == 7) {
-			ClientNpc var49 = npcs[a];
+			ClientNpc var49 = npc[a];
 			if (var49 != null) {
 				tryMove(localPlayer.routeX[0], localPlayer.routeZ[0], var49.routeX[0], var49.routeZ[0], false, 0, 0, 1, 1, 0, 2);
 
@@ -9239,9 +9236,9 @@ public class Client extends GameShell {
 				// OPNPCU
 				out.p1Enc(106);
 				out.p2_alt2(objSelectedSlot);
-				out.p4(objSelectedLayerId);
+				out.p4(objSelectedComId);
 				out.p2_alt1(a);
-				out.p2_alt3(objLayerId);
+				out.p2_alt3(objComId);
 			}
 		}
 
@@ -9271,21 +9268,21 @@ public class Client extends GameShell {
 			out.p2_alt1(a);
 
 			selectedCycle = 0;
-			selectedArea = IfType.get(c);
+			selectedCom = IfType.get(c);
 			selectedItem = b;
 		}
 
 		if (useMode != 0) {
 			useMode = 0;
-			componentUpdated(IfType.get(objSelectedLayerId));
+			componentUpdated(IfType.get(objSelectedComId));
 		}
 
 		if (targetMode) {
 			endTargetMode();
 		}
 
-		if (selectedArea != null && selectedCycle == 0) {
-			componentUpdated(selectedArea);
+		if (selectedCom != null && selectedCycle == 0) {
+			componentUpdated(selectedCom);
 		}
 	}
 
@@ -9523,11 +9520,11 @@ public class Client extends GameShell {
 			}
 
 			if (entityType == 1) {
-				ClientNpc npc = npcs[id];
+				ClientNpc npc = Client.npc[id];
 
 				if (npc.type.size == 1 && (npc.x & 0x7F) == 64 && (npc.z & 0x7F) == 64) {
 					for (int n = 0; n < npcCount; n++) {
-						ClientNpc other = npcs[npcIds[n]];
+						ClientNpc other = Client.npc[npcIds[n]];
 						if (other != null && npc != other && other.type.size == 1 && npc.x == other.x && npc.z == other.z) {
 							addNpcOptions(other.type, npcIds[n], x, z);
 						}
@@ -9549,7 +9546,7 @@ public class Client extends GameShell {
 
 				if ((player.x & 0x7F) == 64 && (player.z & 0x7F) == 64) {
 					for (int n = 0; n < npcCount; n++) {
-						ClientNpc npc = npcs[npcIds[n]];
+						ClientNpc npc = Client.npc[npcIds[n]];
 						if (npc != null && npc.type.size == 1 && player.x == npc.x && player.z == npc.z) {
 							addNpcOptions(npc.type, npcIds[n], x, z);
 						}
@@ -9854,7 +9851,7 @@ public class Client extends GameShell {
 			addMenuOption(com.buttonText, "", 29, 0, 0, com.parentId);
 		}
 
-		if (com.buttonType == 6 && resumedPauseButton == null) {
+		if (com.buttonType == 6 && pauseButtonLayer == null) {
 			addMenuOption(com.buttonText, "", 30, 0, -1, com.parentId);
 		}
 
@@ -9876,7 +9873,7 @@ public class Client extends GameShell {
 					}
 
 					hoveredSlot = slot;
-					hoveredSlotParent = com;
+					hoveredSlotCom = com;
 
 					if (com.linkObjType[slot] <= 0) {
 						slot++;
@@ -9886,7 +9883,7 @@ public class Client extends GameShell {
 					ObjType obj = ObjType.list(com.linkObjType[slot] - 1);
 
 					if (useMode == 1 && ServerActive.isObjOpsEnabled(getActive(com))) {
-						if (objSelectedLayerId != com.parentId || objSelectedSlot != slot) {
+						if (objSelectedComId != com.parentId || objSelectedSlot != slot) {
 							addMenuOption(Text.USE, objSelectedName + " " + StringConstants.TAG_ARROW + " " + StringConstants.TAG_COLOUR(16748608) + obj.name, 31, obj.index, slot, com.parentId);
 						}
 					} else if (targetMode && ServerActive.isObjOpsEnabled(getActive(com))) {
@@ -10037,7 +10034,7 @@ public class Client extends GameShell {
 
 		for (int i = 0; i < children.length; i++) {
 			IfType com = children[i];
-			if (com == null || (com.layerId != layerid && (layerid != 0xabcdabcd || dragComponent != com))) {
+			if (com == null || (com.layerId != layerid && (layerid != 0xabcdabcd || dragCom != com))) {
 				continue;
 			}
 
@@ -10067,7 +10064,7 @@ public class Client extends GameShell {
 			int rendery = com.y + childY;
 			int trans = com.trans;
 
-			if (dragComponent == com) {
+			if (dragCom == com) {
 				if (layerid != 0xabcdabcd && !com.draggablebehavior) {
 					dragChildren = children;
 					dragChildX = childX;
@@ -10086,16 +10083,16 @@ public class Client extends GameShell {
 						var17 = dragParentX;
 					}
 
-					if (com.width + var17 > dragParentX + dragParent.width) {
-						var17 = dragParentX + dragParent.width - com.width;
+					if (com.width + var17 > dragParentX + dragLayer.width) {
+						var17 = dragParentX + dragLayer.width - com.width;
 					}
 
 					if (var18 < dragParentY) {
 						var18 = dragParentY;
 					}
 
-					if (com.height + var18 > dragParentY + dragParent.height) {
-						var18 = dragParentY + dragParent.height - com.height;
+					if (com.height + var18 > dragParentY + dragLayer.height) {
+						var18 = dragParentY + dragLayer.height - com.height;
 					}
 
 					renderx = var17;
@@ -10152,8 +10149,8 @@ public class Client extends GameShell {
 
 			if (com.clientCode != 0) {
 				if (com.clientCode == 1337) {
-					minimenuMouseOverX = renderx;
-					minimenuMouseOverY = rendery;
+					menuMouseX = renderx;
+					menuMouseY = rendery;
 					gameDrawMain(renderx, rendery, com.width, com.height);
 					Pix2D.setClipping(x, y, w, h);
 					continue;
@@ -10174,7 +10171,7 @@ public class Client extends GameShell {
 			}
 
 			if (com.type == 0) {
-				if (!com.v3 && hide(com) && hoveredCom != com) {
+				if (!com.v3 && hide(com) && overCom != com) {
 					continue;
 				}
 
@@ -10234,9 +10231,9 @@ public class Client extends GameShell {
 						if (com.linkObjType[slot] > 0) {
 							int id = com.linkObjType[slot] - 1;
 
-							if (slotX + 32 > x && slotX < w && slotY + 32 > y && slotY < h || objDragInterface == com && objDragSlot == slot) {
+							if (slotX + 32 > x && slotX < w && slotY + 32 > y && slotY < h || objDragCom == com && objDragSlot == slot) {
 								Pix32 sprite;
-								if (useMode == 1 && objSelectedSlot == slot && objSelectedLayerId == com.parentId) {
+								if (useMode == 1 && objSelectedSlot == slot && objSelectedComId == com.parentId) {
 									sprite = ObjType.getSprite(id, com.linkObjNumber[slot], 2, 0, false);
 								} else {
 									sprite = ObjType.getSprite(id, com.linkObjNumber[slot], 1, 0x302020, false);
@@ -10244,7 +10241,7 @@ public class Client extends GameShell {
 
 								if (sprite == null) {
 									componentUpdated(com);
-								} else if (objDragInterface == com && objDragSlot == slot) {
+								} else if (objDragCom == com && objDragSlot == slot) {
 									int dx = ClientMouseListener.mouseX - objGrabX;
 									int dy = ClientMouseListener.mouseY - objGrabY;
 
@@ -10296,7 +10293,7 @@ public class Client extends GameShell {
 											componentUpdated(child);
 										}
 									}
-								} else if (selectedArea == com && selectedItem == slot) {
+								} else if (selectedCom == com && selectedItem == slot) {
 									sprite.transPlotSprite(slotX, slotY, 128);
 								} else {
 									sprite.plotSprite(slotX, slotY);
@@ -10319,12 +10316,12 @@ public class Client extends GameShell {
 				int colour;
 				if (getIfActive(com)) {
 					colour = com.colour2;
-					if (hoveredCom == com && com.colour2Over != 0) {
+					if (overCom == com && com.colour2Over != 0) {
 						colour = com.colour2Over;
 					}
 				} else {
 					colour = com.colour;
-					if (hoveredCom == com && com.colourOver != 0) {
+					if (overCom == com && com.colourOver != 0) {
 						colour = com.colourOver;
 					}
 				}
@@ -10350,7 +10347,7 @@ public class Client extends GameShell {
 
 					if (getIfActive(com)) {
 						colour = com.colour2;
-						if (hoveredCom == com && com.colour2Over != 0) {
+						if (overCom == com && com.colour2Over != 0) {
 							colour = com.colour2Over;
 						}
 						if (com.text2.length() > 0) {
@@ -10358,7 +10355,7 @@ public class Client extends GameShell {
 						}
 					} else {
 						colour = com.colour;
-						if (hoveredCom == com && com.colourOver != 0) {
+						if (overCom == com && com.colourOver != 0) {
 							colour = com.colourOver;
 						}
 					}
@@ -10377,7 +10374,7 @@ public class Client extends GameShell {
 						}
 					}
 
-					if (resumedPauseButton == com) {
+					if (pauseButtonLayer == com) {
 						text = Text.PLEASEWAIT;
 						colour = com.colour;
 					}
@@ -10474,7 +10471,7 @@ public class Client extends GameShell {
 					}
 				} else if (com.model1Type == 5) {
 					if (com.model1Id == 0) {
-						model = selfModel.getTempModel(null, -1, null, -1);
+						model = idkDesign.getTempModel(null, -1, null, -1);
 					} else {
 						model = localPlayer.getTempModel();
 					}
@@ -10880,9 +10877,9 @@ public class Client extends GameShell {
 						}
 					}
 				} else if (opcode == 11) {
-					register = runEnergy;
+					register = runenergy;
 				} else if (opcode == 12) {
-					register = runWeight;
+					register = runweight;
 				} else if (opcode == 13) {
 					int var20 = VarCache.var[script[pc++]];
 					int var21 = script[pc++];
@@ -10940,7 +10937,7 @@ public class Client extends GameShell {
 			IfType var9 = arg0[var8];
 			if (
 				var9 == null ||
-				(var9.v3 && var9.type != 0 && !var9.hashook && getActive(var9) == 0 && dragParent != var9) ||
+				(var9.v3 && var9.type != 0 && !var9.hashook && getActive(var9) == 0 && dragLayer != var9) ||
 				var9.layerId != arg1 ||
 				(var9.v3 && hide(var9))
 			) {
@@ -10988,7 +10985,7 @@ public class Client extends GameShell {
 				var15 = var23 < arg5 ? var23 : arg5;
 			}
 
-			if (dragComponent == var9) {
+			if (dragCom == var9) {
 				dragging = true;
 				dragCurrentX = var10;
 				dragCurrentY = var11;
@@ -11004,7 +11001,7 @@ public class Client extends GameShell {
 				minimapLoop(var10, var11);
 			} else {
 				if (var9.type == 0) {
-					if (!var9.v3 && hide(var9) && hoveredCom != var9) {
+					if (!var9.v3 && hide(var9) && overCom != var9) {
 						continue;
 					}
 
@@ -11041,13 +11038,13 @@ public class Client extends GameShell {
 						dragTryPickup(var9, ClientMouseListener.mouseClickX - var10, ClientMouseListener.mouseClickY - var11);
 					}
 
-					if (dragComponent != null && dragComponent != var9 && var25) {
+					if (dragCom != null && dragCom != var9 && var25) {
 						if (ServerActive.isDragTarget(getActive(var9))) {
 							dropComponent = var9;
 						}
 					}
 
-					if (dragParent == var9) {
+					if (dragLayer == var9) {
 						dragParentFound = true;
 						dragParentX = var10;
 						dragParentY = var11;
@@ -11062,7 +11059,7 @@ public class Client extends GameShell {
 							hookRequests.push(req);
 						}
 
-						if (dragComponent != null || objDragInterface != null || isMenuOpen) {
+						if (dragCom != null || objDragCom != null || isMenuOpen) {
 							var27 = false;
 							var26 = false;
 							var25 = false;
@@ -11273,15 +11270,15 @@ public class Client extends GameShell {
 				}
 
 				if (!var9.v3) {
-					if (dragComponent != null || objDragInterface != null || isMenuOpen) {
+					if (dragCom != null || objDragCom != null || isMenuOpen) {
 						return;
 					}
 
 					if ((var9.overLayerId >= 0 || var9.colourOver != 0) && ClientMouseListener.mouseX >= var12 && ClientMouseListener.mouseY >= var13 && ClientMouseListener.mouseX < var14 && ClientMouseListener.mouseY < var15) {
 						if (var9.overLayerId >= 0) {
-							hoveredCom = arg0[var9.overLayerId];
+							overCom = arg0[var9.overLayerId];
 						} else {
-							hoveredCom = var9;
+							overCom = var9;
 						}
 					}
 
@@ -11351,12 +11348,12 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::DragTryPickup
 	@ObfuscatedName("ch.ff(Leg;IIB)V")
 	public static void dragTryPickup(IfType arg0, int arg1, int arg2) {
-		if (dragComponent != null || isMenuOpen || (arg0 == null || getDragLayer(arg0) == null)) {
+		if (dragCom != null || isMenuOpen || (arg0 == null || getDragLayer(arg0) == null)) {
 			return;
 		}
 
-		dragComponent = arg0;
-		dragParent = getDragLayer(arg0);
+		dragCom = arg0;
+		dragLayer = getDragLayer(arg0);
 		dragPickupX = arg1;
 		dragPickupY = arg2;
 		dragTime = 0;
@@ -11366,7 +11363,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::LoopIf3Drag
 	// placement based on rs3
 	public static void loopIf3Drag() {
-		componentUpdated(dragComponent);
+		componentUpdated(dragCom);
 		dragTime++;
 
 		if (dragging && dragParentFound) {
@@ -11379,51 +11376,51 @@ public class Client extends GameShell {
 			if (var460 < dragParentX) {
 				var460 = dragParentX;
 			}
-			if (dragComponent.width + var460 > dragParentX + dragParent.width) {
-				var460 = dragParentX + dragParent.width - dragComponent.width;
+			if (dragCom.width + var460 > dragParentX + dragLayer.width) {
+				var460 = dragParentX + dragLayer.width - dragCom.width;
 			}
 
 			if (var461 < dragParentY) {
 				var461 = dragParentY;
 			}
-			if (dragComponent.height + var461 > dragParentY + dragParent.height) {
-				var461 = dragParentY + dragParent.height - dragComponent.height;
+			if (dragCom.height + var461 > dragParentY + dragLayer.height) {
+				var461 = dragParentY + dragLayer.height - dragCom.height;
 			}
 
 			int var462 = var460 - dragCurrentX;
 			int var463 = var461 - dragCurrentY;
-			int var464 = dragComponent.dragdeadzone;
-			if (dragTime > dragComponent.dragdeadtime && (var462 > var464 || var462 < -var464 || var463 > var464 || var463 < -var464)) {
+			int var464 = dragCom.dragdeadzone;
+			if (dragTime > dragCom.dragdeadtime && (var462 > var464 || var462 < -var464 || var463 > var464 || var463 < -var464)) {
 				dragAlive = true;
 			}
 
-			int var465 = dragParent.scrollPosX + (var460 - dragParentX);
-			int var466 = dragParent.scrollPosY + (var461 - dragParentY);
+			int var465 = dragLayer.scrollPosX + (var460 - dragParentX);
+			int var466 = dragLayer.scrollPosY + (var461 - dragParentY);
 
-			if (dragComponent.ondrag != null && dragAlive) {
+			if (dragCom.ondrag != null && dragAlive) {
 				HookReq req = new HookReq();
-				req.component = dragComponent;
+				req.component = dragCom;
 				req.mouseX = var465;
 				req.mouseY = var466;
-				req.onop = dragComponent.ondrag;
+				req.onop = dragCom.ondrag;
 				ScriptRunner.executeScript(req);
 			}
 
 			if (ClientMouseListener.mouseButton == 0) {
 				if (dragAlive) {
-					if (dragComponent.ondragcomplete != null) {
+					if (dragCom.ondragcomplete != null) {
 						HookReq req = new HookReq();
-						req.component = dragComponent;
+						req.component = dragCom;
 						req.mouseX = var465;
 						req.mouseY = var466;
 						req.drop = dropComponent;
-						req.onop = dragComponent.ondragcomplete;
+						req.onop = dragCom.ondragcomplete;
 						ScriptRunner.executeScript(req);
 					}
 
 					if (dropComponent != null) {
 						// todo: inlined method (ServerDraggable?)
-						IfType var469 = dragComponent;
+						IfType var469 = dragCom;
 						int var470 = ServerActive.serverDraggable(getActive(var469));
 						IfType var471;
 						if (var470 == 0) {
@@ -11447,10 +11444,10 @@ public class Client extends GameShell {
 						if (var471 != null) {
 							// IF_BUTTOND
 							out.p1Enc(22);
-							out.p2_alt3(dragComponent.subId);
+							out.p2_alt3(dragCom.subId);
 							out.p4_alt2(dropComponent.parentId);
 							out.p2_alt1(dropComponent.subId);
-							out.p4_alt2(dragComponent.parentId);
+							out.p4_alt2(dragCom.parentId);
 						}
 					}
 				} else if ((oneMouseButton == 1 || isAddFriendOption(menuNumEntries - 1)) && menuNumEntries > 2) {
@@ -11459,10 +11456,10 @@ public class Client extends GameShell {
 					doAction(menuNumEntries - 1);
 				}
 
-				dragComponent = null;
+				dragCom = null;
 			}
 		} else if (dragTime > 1) {
-			dragComponent = null;
+			dragCom = null;
 		}
 	}
 
@@ -11592,7 +11589,7 @@ public class Client extends GameShell {
 			}
 
 			if (com.type == 0) {
-				if (!com.v3 && hide(com) && hoveredCom != com) {
+				if (!com.v3 && hide(com) && overCom != com) {
 					continue;
 				}
 
@@ -11697,8 +11694,8 @@ public class Client extends GameShell {
 			}
 
 			if (midiVolume != volume) {
-				if (midiVolume == 0 && previousSong != -1) {
-					MidiManager.play(songs, previousSong, 0, volume, false);
+				if (midiVolume == 0 && nextMidiSong != -1) {
+					MidiManager.play(songs, nextMidiSong, 0, volume, false);
 					playingJingle = false;
 				} else if (volume == 0) {
 					MidiManager.stop();
@@ -11748,26 +11745,26 @@ public class Client extends GameShell {
 		int clientCode = com.clientCode;
 
 		if (clientCode == 324) {
-			if (genderButton1 == -1) {
-				genderButton1 = com.graphic;
-				genderButton2 = com.graphic2;
+			if (idkDesignButton1 == -1) {
+				idkDesignButton1 = com.graphic;
+				idkDesignButton2 = com.graphic2;
 			}
 
-			if (selfModel.gender) {
-				com.graphic = genderButton1;
+			if (idkDesign.gender) {
+				com.graphic = idkDesignButton1;
 			} else {
-				com.graphic = genderButton2;
+				com.graphic = idkDesignButton2;
 			}
 		} else if (clientCode == 325) {
-			if (genderButton1 == -1) {
-				genderButton1 = com.graphic;
-				genderButton2 = com.graphic2;
+			if (idkDesignButton1 == -1) {
+				idkDesignButton1 = com.graphic;
+				idkDesignButton2 = com.graphic2;
 			}
 
-			if (selfModel.gender) {
-				com.graphic = genderButton2;
+			if (idkDesign.gender) {
+				com.graphic = idkDesignButton2;
 			} else {
-				com.graphic = genderButton1;
+				com.graphic = idkDesignButton1;
 			}
 		} else if (clientCode == 327) {
 			com.modelXAn = 150;
@@ -11794,9 +11791,9 @@ public class Client extends GameShell {
 			}
 		}
 
-		if (resumedPauseButton != null) {
-			componentUpdated(resumedPauseButton);
-			resumedPauseButton = null;
+		if (pauseButtonLayer != null) {
+			componentUpdated(pauseButtonLayer);
+			pauseButtonLayer = null;
 		}
 	}
 
@@ -11816,9 +11813,9 @@ public class Client extends GameShell {
 			componentUpdated(var4);
 		}
 
-		if (resumedPauseButton != null) {
-			componentUpdated(resumedPauseButton);
-			resumedPauseButton = null;
+		if (pauseButtonLayer != null) {
+			componentUpdated(pauseButtonLayer);
+			pauseButtonLayer = null;
 		}
 
 		isMenuOpen = false;
@@ -11889,19 +11886,19 @@ public class Client extends GameShell {
 		} else if (clientCode >= 300 && clientCode <= 313) {
 			int var2 = (clientCode - 300) / 2;
 			int var3 = clientCode & 0x1;
-			selfModel.idkChangePart(var2, var3 == 1);
+			idkDesign.idkChangePart(var2, var3 == 1);
 		} else if (clientCode >= 314 && clientCode <= 323) {
 			int var4 = (clientCode - 314) / 2;
 			int var5 = clientCode & 0x1;
-			selfModel.idkChangeColour(var4, var5 == 1);
+			idkDesign.idkChangeColour(var4, var5 == 1);
 		} else if (clientCode == 324) {
-			selfModel.idkChangeGender(false);
+			idkDesign.idkChangeGender(false);
 		} else if (clientCode == 325) {
-			selfModel.idkChangeGender(true);
+			idkDesign.idkChangeGender(true);
 		} else if (clientCode == 326) {
 			// IDK_SAVEDESIGN
 			out.p1Enc(71);
-			selfModel.idkSaveDesign(out);
+			idkDesign.idkSaveDesign(out);
 			return true;
 		}
 
@@ -11941,7 +11938,7 @@ public class Client extends GameShell {
 			}
 
 			for (int var14 = 0; var14 < npcCount; var14++) {
-				ClientNpc var15 = npcs[npcIds[var14]];
+				ClientNpc var15 = npc[npcIds[var14]];
 				if (var15 != null && var15.ready()) {
 					NpcType var16 = var15.type;
 					if (var16 != null && var16.multinpc != null) {
@@ -11979,8 +11976,8 @@ public class Client extends GameShell {
 			}
 
 			if (hintType != 0 && loopCycle % 20 < 10) {
-				if (hintType == 1 && hintNpc >= 0 && hintNpc < npcs.length) {
-					ClientNpc var25 = npcs[hintNpc];
+				if (hintType == 1 && hintNpc >= 0 && hintNpc < npc.length) {
+					ClientNpc var25 = npc[hintNpc];
 					if (var25 != null) {
 						int var26 = var25.x / 32 - localPlayer.x / 32;
 						int var27 = var25.z / 32 - localPlayer.z / 32;
@@ -12081,16 +12078,16 @@ public class Client extends GameShell {
 	@ObfuscatedName("br.gj(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V")
 	public static void addChat(int type, String sender, String message, String arg3) {
 		for (int i = 99; i > 0; i--) {
-			messageType[i] = messageType[i - 1];
-			messageSender[i] = messageSender[i - 1];
-			messageText[i] = messageText[i - 1];
-			messageScreenName[i] = messageScreenName[i - 1];
+			chatType[i] = chatType[i - 1];
+			chatUsername[i] = chatUsername[i - 1];
+			chatText[i] = chatText[i - 1];
+			chatScreenName[i] = chatScreenName[i - 1];
 		}
 
-		messageType[0] = type;
-		messageSender[0] = sender;
-		messageText[0] = message;
-		messageScreenName[0] = arg3;
+		chatType[0] = type;
+		chatUsername[0] = sender;
+		chatText[0] = message;
+		chatScreenName[0] = arg3;
 
 		chatHistoryLength++;
 		chatTransmitNum = transmitNum;

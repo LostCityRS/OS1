@@ -9,8 +9,8 @@ import jagex3.config.VarBitType;
 import jagex3.config.iftype.IfType;
 import jagex3.config.iftype.ServerActive;
 import jagex3.constants.Text;
-import jagex3.dash3d.PixFont;
-import jagex3.dash3d.PixFontGeneric;
+import jagex3.graphics.PixFont;
+import jagex3.graphics.PixFontGeneric;
 import jagex3.friends.PrivateChatFilter;
 import jagex3.io.Packet;
 import jagex3.jstring.JString;
@@ -1576,12 +1576,12 @@ public class ScriptRunner {
 					}
 					if (opcode == 3321) {
 						// runenergy_visible
-						intStack[isp++] = Client.runEnergy;
+						intStack[isp++] = Client.runenergy;
 						continue;
 					}
 					if (opcode == 3322) {
 						// runweight_visible
-						intStack[isp++] = Client.runWeight;
+						intStack[isp++] = Client.runweight;
 						continue;
 					}
 					if (opcode == 3323) {
@@ -1663,9 +1663,9 @@ public class ScriptRunner {
 				} else if (opcode < 3700) {
 					if (opcode == 3600) {
 						// friend_count
-						if (Client.friendListStatus == 0) {
+						if (Client.friendServerStatus == 0) {
 							intStack[isp++] = -2;
-						} else if (Client.friendListStatus == 1) {
+						} else if (Client.friendServerStatus == 1) {
 							intStack[isp++] = -1;
 						} else {
 							intStack[isp++] = Client.friendCount;
@@ -1677,7 +1677,7 @@ public class ScriptRunner {
 						isp--;
 
 						int var161 = intStack[isp];
-						if (Client.friendListStatus == 2 && var161 < Client.friendCount) {
+						if (Client.friendServerStatus == 2 && var161 < Client.friendCount) {
 							stringStack[ssp++] = Client.friendList[var161].name;
 							continue;
 						}
@@ -1690,7 +1690,7 @@ public class ScriptRunner {
 						isp--;
 
 						int var162 = intStack[isp];
-						if (Client.friendListStatus == 2 && var162 < Client.friendCount) {
+						if (Client.friendServerStatus == 2 && var162 < Client.friendCount) {
 							intStack[isp++] = Client.friendList[var162].worldId;
 							continue;
 						}
@@ -1703,7 +1703,7 @@ public class ScriptRunner {
 						isp--;
 						int var163 = intStack[isp];
 
-						if (Client.friendListStatus == 2 && var163 < Client.friendCount) {
+						if (Client.friendServerStatus == 2 && var163 < Client.friendCount) {
 							intStack[isp++] = Client.friendList[var163].rank;
 							continue;
 						}
@@ -1856,7 +1856,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 3621) {
 						// ignore_count
-						if (Client.friendListStatus == 0) {
+						if (Client.friendServerStatus == 0) {
 							intStack[isp++] = -1;
 						} else {
 							intStack[isp++] = Client.ignoreCount;
@@ -1868,7 +1868,7 @@ public class ScriptRunner {
 						isp--;
 						int var188 = intStack[isp];
 
-						if (Client.friendListStatus != 0 && var188 < Client.ignoreCount) {
+						if (Client.friendServerStatus != 0 && var188 < Client.ignoreCount) {
 							stringStack[ssp++] = Client.ignoreList[var188].name;
 							continue;
 						}
@@ -2395,24 +2395,24 @@ public class ScriptRunner {
 				} else if (opcode < 5100) {
 					if (opcode == 5000) {
 						// chat_getfilter_public
-						intStack[isp++] = Client.publicChatFilter;
+						intStack[isp++] = Client.chatPublicMode;
 						continue;
 					}
 					if (opcode == 5001) {
 						// chat_setfilter
 						isp -= 3;
-						Client.publicChatFilter = intStack[isp];
-						Client.privateChatFilter = PrivateChatFilter.get(intStack[isp + 1]);
-						if (Client.privateChatFilter == null) {
-							Client.privateChatFilter = PrivateChatFilter.FRIENDS;
+						Client.chatPublicMode = intStack[isp];
+						Client.chatPrivateMode = PrivateChatFilter.get(intStack[isp + 1]);
+						if (Client.chatPrivateMode == null) {
+							Client.chatPrivateMode = PrivateChatFilter.FRIENDS;
 						}
-						Client.tradeChatFilter = intStack[isp + 2];
+						Client.chatTradeMode = intStack[isp + 2];
 
 						// SET_CHATFILTERSETTINGS
 						Client.out.p1Enc(167);
-						Client.out.p1(Client.publicChatFilter);
-						Client.out.p1(Client.privateChatFilter.index);
-						Client.out.p1(Client.tradeChatFilter);
+						Client.out.p1(Client.chatPublicMode);
+						Client.out.p1(Client.chatPrivateMode.index);
+						Client.out.p1(Client.chatTradeMode);
 						continue;
 					}
 					if (opcode == 5002) {
@@ -2439,7 +2439,7 @@ public class ScriptRunner {
 
 						String var346 = null;
 						if (var345 < 100) {
-							var346 = Client.messageText[var345];
+							var346 = Client.chatText[var345];
 						}
 
 						if (var346 == null) {
@@ -2455,8 +2455,8 @@ public class ScriptRunner {
 						int var347 = intStack[isp];
 
 						int var348 = -1;
-						if (var347 < 100 && Client.messageText[var347] != null) {
-							var348 = Client.messageType[var347];
+						if (var347 < 100 && Client.chatText[var347] != null) {
+							var348 = Client.chatType[var347];
 						}
 
 						intStack[isp++] = var348;
@@ -2465,10 +2465,10 @@ public class ScriptRunner {
 					if (opcode == 5005) {
 						// chat_getfilter_private
 						// rs3
-						if (Client.privateChatFilter == null) {
+						if (Client.chatPrivateMode == null) {
 							intStack[isp++] = -1;
 						} else {
-							intStack[isp++] = Client.privateChatFilter.index;
+							intStack[isp++] = Client.chatPrivateMode.index;
 						}
 						continue;
 					}
@@ -2631,7 +2631,7 @@ public class ScriptRunner {
 
 						String var359 = null;
 						if (var358 < 100) {
-							var359 = Client.messageSender[var358];
+							var359 = Client.chatUsername[var358];
 						}
 
 						if (var359 == null) {
@@ -2647,7 +2647,7 @@ public class ScriptRunner {
 
 						String var361 = null;
 						if (var360 < 100) {
-							var361 = Client.messageScreenName[var360];
+							var361 = Client.chatScreenName[var360];
 						}
 						if (var361 == null) {
 							var361 = "";
@@ -2670,7 +2670,7 @@ public class ScriptRunner {
 					}
 					if (opcode == 5016) {
 						// chat_getfilter_trade
-						intStack[isp++] = Client.tradeChatFilter;
+						intStack[isp++] = Client.chatTradeMode;
 						continue;
 					}
 					if (opcode == 5017) {

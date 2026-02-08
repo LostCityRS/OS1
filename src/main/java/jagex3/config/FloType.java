@@ -18,7 +18,7 @@ public class FloType extends Linkable2 {
 	public static LruCache recentUse = new LruCache(64);
 
 	@ObfuscatedName("fb.z")
-	public int rgb = 0;
+	public int colour = 0;
 
 	@ObfuscatedName("fb.g")
 	public int texture = -1;
@@ -36,7 +36,7 @@ public class FloType extends Linkable2 {
 	public int saturation;
 
 	@ObfuscatedName("fb.v")
-	public int luminance;
+	public int lightness;
 
 	@ObfuscatedName("fb.w")
 	public int mapHue;
@@ -45,7 +45,7 @@ public class FloType extends Linkable2 {
 	public int mapSaturation;
 
 	@ObfuscatedName("fb.b")
-	public int mapLuminance;
+	public int mapLightness;
 
 	// jag::oldscape::configdecoder::FloType::List
 	@ObfuscatedName("cj.z(II)Lfb;")
@@ -73,10 +73,10 @@ public class FloType extends Linkable2 {
 			this.getHsl(this.mapcolour);
 			this.mapHue = this.hue;
 			this.mapSaturation = this.saturation;
-			this.mapLuminance = this.luminance;
+			this.mapLightness = this.lightness;
 		}
 
-		this.getHsl(this.rgb);
+		this.getHsl(this.colour);
 	}
 
 	// jag::oldscape::configdecoder::FloType::Decode
@@ -96,7 +96,7 @@ public class FloType extends Linkable2 {
 	@ObfuscatedName("fb.i(Lev;III)V")
 	public void decode(Packet buf, int code, int id) {
 		if (code == 1) {
-			this.rgb = buf.g3();
+			this.colour = buf.g3();
 		} else if (code == 2) {
 			this.texture = buf.g1();
 		} else if (code == 5) {
@@ -149,16 +149,16 @@ public class FloType extends Linkable2 {
 		double var18 = var12 / 6.0D;
 		this.hue = (int) (var18 * 256.0D);
 		this.saturation = (int) (var14 * 256.0D);
-		this.luminance = (int) (var16 * 256.0D);
+		this.lightness = (int) (var16 * 256.0D);
 		if (this.saturation < 0) {
 			this.saturation = 0;
 		} else if (this.saturation > 255) {
 			this.saturation = 255;
 		}
-		if (this.luminance < 0) {
-			this.luminance = 0;
-		} else if (this.luminance > 255) {
-			this.luminance = 255;
+		if (this.lightness < 0) {
+			this.lightness = 0;
+		} else if (this.lightness > 255) {
+			this.lightness = 255;
 		}
 	}
 

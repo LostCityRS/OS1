@@ -305,7 +305,7 @@ public class ClientBuild {
 					int var15 = arg2 + var11;
 					if (var14 > 0 && var15 > 0 && var14 < 103 && var15 < 103) {
 						LocType var16 = LocType.list(var5);
-						if (var13 != 22 || !Client.lowMemory || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
+						if (var13 != 22 || !Client.lowMem || var16.active != 0 || var16.blockwalk == 1 || var16.forcedecor) {
 							if (!var16.checkModelAll()) {
 								Client.locModelLoadCount++;
 								var3 = false;
@@ -411,7 +411,7 @@ public class ClientBuild {
 	// jag::oldscape::ClientBuild::AddLoc
 	@ObfuscatedName("bi.g(IIIIIILaq;Lck;I)V")
 	public static void addLoc(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, World arg6, CollisionMap arg7) {
-		if (Client.lowMemory && (mapl[0][arg1][arg2] & 0x2) == 0) {
+		if (Client.lowMem && (mapl[0][arg1][arg2] & 0x2) == 0) {
 			if ((mapl[arg0][arg1][arg2] & 0x10) != 0) {
 				return;
 			}
@@ -474,7 +474,7 @@ public class ClientBuild {
 			BgSound.addSound(arg0, arg1, arg2, var9, arg4);
 		}
 		if (arg5 == 22) {
-			if (!Client.lowMemory || var9.active != 0 || var9.blockwalk == 1 || var9.forcedecor) {
+			if (!Client.lowMem || var9.active != 0 || var9.blockwalk == 1 || var9.forcedecor) {
 				ModelSource var22;
 				if (var9.anim == -1 && var9.multiloc == null) {
 					var22 = var9.getModel(22, arg4, var16, var18, var17, var19);
@@ -791,10 +791,10 @@ public class ClientBuild {
 						int var24 = floort1[var6][var23][var22] & 0xFF;
 						if (var24 > 0) {
 							FluType var25 = FluType.list(var24 - 1);
-							huetot[var22] += var25.chroma;
-							sattot[var22] += var25.hue;
-							ligtot[var22] += var25.saturation;
-							comtot[var22] += var25.luminance;
+							huetot[var22] += var25.hue;
+							sattot[var22] += var25.saturation;
+							ligtot[var22] += var25.lightness;
+							comtot[var22] += var25.chroma;
 							var10002 = tot[var22]++;
 						}
 					}
@@ -803,10 +803,10 @@ public class ClientBuild {
 						int var27 = floort1[var6][var26][var22] & 0xFF;
 						if (var27 > 0) {
 							FluType var28 = FluType.list(var27 - 1);
-							huetot[var22] -= var28.chroma;
-							sattot[var22] -= var28.hue;
-							ligtot[var22] -= var28.saturation;
-							comtot[var22] -= var28.luminance;
+							huetot[var22] -= var28.hue;
+							sattot[var22] -= var28.saturation;
+							ligtot[var22] -= var28.lightness;
+							comtot[var22] -= var28.chroma;
 							var10002 = tot[var22]--;
 						}
 					}
@@ -835,7 +835,7 @@ public class ClientBuild {
 							var33 -= tot[var36];
 						}
 						if (var34 >= 1 && var34 < 103) {
-							if (Client.lowMemory && (mapl[0][var21][var34] & 0x2) == 0) {
+							if (Client.lowMem && (mapl[0][var21][var34] & 0x2) == 0) {
 								if ((mapl[var6][var21][var34] & 0x10) != 0) {
 									continue;
 								}
@@ -909,14 +909,14 @@ public class ClientBuild {
 									if (var60 >= 0) {
 										var61 = Pix3D.textureProvider.getAverageRgb(var60);
 										var62 = -1;
-									} else if (var59.rgb == 16711935) {
+									} else if (var59.colour == 16711935) {
 										var62 = -2;
 										var60 = -1;
 										var61 = -2;
 									} else {
-										var62 = getTable(var59.hue, var59.saturation, var59.luminance);
+										var62 = getTable(var59.hue, var59.saturation, var59.lightness);
 										int var63 = hueOff + var59.hue & 0xFF;
-										int var64 = ligOff + var59.luminance;
+										int var64 = ligOff + var59.lightness;
 										if (var64 < 0) {
 											var64 = 0;
 										} else if (var64 > 255) {
@@ -930,7 +930,7 @@ public class ClientBuild {
 									}
 									if (var59.mapcolour != -1) {
 										int var66 = hueOff + var59.mapHue & 0xFF;
-										int var67 = ligOff + var59.mapLuminance;
+										int var67 = ligOff + var59.mapLightness;
 										if (var67 < 0) {
 											var67 = 0;
 										} else if (var67 > 255) {

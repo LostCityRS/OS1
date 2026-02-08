@@ -18,19 +18,19 @@ public class FluType extends Linkable2 {
 	public static LruCache recentUse = new LruCache(64);
 
 	@ObfuscatedName("ec.z")
-	public int rgb = 0;
+	public int colour = 0;
 
 	@ObfuscatedName("ec.g")
-	public int chroma;
-
-	@ObfuscatedName("ec.q")
 	public int hue;
 
-	@ObfuscatedName("ec.i")
+	@ObfuscatedName("ec.q")
 	public int saturation;
 
+	@ObfuscatedName("ec.i")
+	public int lightness;
+
 	@ObfuscatedName("ec.s")
-	public int luminance;
+	public int chroma;
 
 	// jag::oldscape::configdecoder::FluType::Init
 	@ObfuscatedName("u.z(Lch;I)V")
@@ -60,7 +60,7 @@ public class FluType extends Linkable2 {
 	// jag::oldscape::configdecoder::FluType::PostDecode
 	@ObfuscatedName("ec.q(I)V")
 	public void postDecode() {
-		this.getHsl(this.rgb);
+		this.getHsl(this.colour);
 	}
 
 	// jag::oldscape::configdecoder::FluType::Decode
@@ -80,7 +80,7 @@ public class FluType extends Linkable2 {
 	@ObfuscatedName("ec.s(Lev;III)V")
 	public void decode(Packet buf, int code, int id) {
 		if (code == 1) {
-			this.rgb = buf.g3();
+			this.colour = buf.g3();
 		}
 	}
 
@@ -123,27 +123,27 @@ public class FluType extends Linkable2 {
 			}
 		}
 		double var18 = var12 / 6.0D;
-		this.hue = (int) (var14 * 256.0D);
-		this.saturation = (int) (var16 * 256.0D);
-		if (this.hue < 0) {
-			this.hue = 0;
-		} else if (this.hue > 255) {
-			this.hue = 255;
-		}
+		this.saturation = (int) (var14 * 256.0D);
+		this.lightness = (int) (var16 * 256.0D);
 		if (this.saturation < 0) {
 			this.saturation = 0;
 		} else if (this.saturation > 255) {
 			this.saturation = 255;
 		}
+		if (this.lightness < 0) {
+			this.lightness = 0;
+		} else if (this.lightness > 255) {
+			this.lightness = 255;
+		}
 		if (var16 > 0.5D) {
-			this.luminance = (int) ((1.0D - var16) * var14 * 512.0D);
+			this.chroma = (int) ((1.0D - var16) * var14 * 512.0D);
 		} else {
-			this.luminance = (int) (var14 * var16 * 512.0D);
+			this.chroma = (int) (var14 * var16 * 512.0D);
 		}
-		if (this.luminance < 1) {
-			this.luminance = 1;
+		if (this.chroma < 1) {
+			this.chroma = 1;
 		}
-		this.chroma = (int) ((double) this.luminance * var18);
+		this.hue = (int) ((double) this.chroma * var18);
 	}
 
 	@ObfuscatedName("fg.v(I)V")

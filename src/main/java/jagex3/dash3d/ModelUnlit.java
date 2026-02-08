@@ -119,7 +119,7 @@ public class ModelUnlit extends ModelSource {
 	public boolean boundsCalculated = false;
 
 	@ObfuscatedName("fw.aq")
-	public int radius;
+	public int maxY;
 
 	@ObfuscatedName("fw.at")
 	public int minX;
@@ -503,8 +503,8 @@ public class ModelUnlit extends ModelSource {
 	// jag::oldscape::dash3d::ModelUnlitImpl::LoadOb2Engine200
 	@ObfuscatedName("fw.t([B)V")
 	public void loadOb2(byte[] src) {
-		boolean var2 = false;
-		boolean var3 = false;
+		boolean hasRenderType = false;
+		boolean hasTextureId = false;
 
 		Packet trailer = new Packet(src);
 		trailer.pos = src.length - 18;
@@ -692,7 +692,7 @@ public class ModelUnlit extends ModelSource {
 				int var52 = face2.g1();
 				if ((var52 & 0x1) == 1) {
 					this.faceRenderType[f] = 1;
-					var2 = true;
+					hasRenderType = true;
 				} else {
 					this.faceRenderType[f] = 0;
 				}
@@ -701,7 +701,7 @@ public class ModelUnlit extends ModelSource {
 					this.faceTextureId[f] = this.faceColour[f];
 					this.faceColour[f] = 127;
 					if (this.faceTextureId[f] != -1) {
-						var3 = true;
+						hasTextureId = true;
 					}
 				} else {
 					this.faceTextureAxis[f] = -1;
@@ -772,91 +772,107 @@ public class ModelUnlit extends ModelSource {
 		}
 
 		if (this.faceTextureAxis != null) {
-			boolean var63 = false;
+			boolean hasTexture = false;
 			for (int var64 = 0; var64 < faceCount; var64++) {
 				int var65 = this.faceTextureAxis[var64] & 0xFF;
 				if (var65 != 255) {
 					if ((this.faceTextureP[var65] & 0xFFFF) == this.faceVertexA[var64] && (this.faceTextureM[var65] & 0xFFFF) == this.faceVertexB[var64] && (this.faceTextureN[var65] & 0xFFFF) == this.faceVertexC[var64]) {
 						this.faceTextureAxis[var64] = -1;
 					} else {
-						var63 = true;
+						hasTexture = true;
 					}
 				}
 			}
-			if (!var63) {
+			if (!hasTexture) {
 				this.faceTextureAxis = null;
 			}
 		}
 
-		if (!var3) {
+		if (!hasTextureId) {
 			this.faceTextureId = null;
 		}
 
-		if (!var2) {
+		if (!hasRenderType) {
 			this.faceRenderType = null;
 		}
 	}
 
-	public ModelUnlit(ModelUnlit[] arg0, int arg1) {
-		boolean var3 = false;
-		boolean var4 = false;
-		boolean var5 = false;
-		boolean var6 = false;
-		boolean var7 = false;
-		boolean var8 = false;
+	public ModelUnlit(ModelUnlit[] models, int count) {
+		boolean copyRenderType = false;
+		boolean copyPriority = false;
+		boolean copyAlpha = false;
+		boolean copyLabel = false;
+		boolean copyTextureId = false;
+		boolean copyTextureAxis = false;
+
 		this.vertexCount = 0;
 		this.faceCount = 0;
 		this.faceTextureCount = 0;
 		this.priority = -1;
-		for (int var9 = 0; var9 < arg1; var9++) {
-			ModelUnlit var10 = arg0[var9];
-			if (var10 != null) {
-				this.vertexCount += var10.vertexCount;
-				this.faceCount += var10.faceCount;
-				this.faceTextureCount += var10.faceTextureCount;
-				if (var10.facePriority == null) {
+
+		for (int var9 = 0; var9 < count; var9++) {
+			ModelUnlit model = models[var9];
+			if (model != null) {
+				this.vertexCount += model.vertexCount;
+				this.faceCount += model.faceCount;
+				this.faceTextureCount += model.faceTextureCount;
+
+				if (model.facePriority == null) {
 					if (this.priority == -1) {
-						this.priority = var10.priority;
+						this.priority = model.priority;
 					}
-					if (this.priority != var10.priority) {
-						var4 = true;
+
+					if (this.priority != model.priority) {
+						copyPriority = true;
 					}
 				} else {
-					var4 = true;
+					copyPriority = true;
 				}
-				var3 |= var10.faceRenderType != null;
-				var5 |= var10.faceAlpha != null;
-				var6 |= var10.faceLabel != null;
-				var7 |= var10.faceTextureId != null;
-				var8 |= var10.faceTextureAxis != null;
+
+				copyRenderType |= model.faceRenderType != null;
+				copyAlpha |= model.faceAlpha != null;
+				copyLabel |= model.faceLabel != null;
+				copyTextureId |= model.faceTextureId != null;
+				copyTextureAxis |= model.faceTextureAxis != null;
 			}
 		}
+
 		this.vertexX = new int[this.vertexCount];
 		this.vertexY = new int[this.vertexCount];
 		this.vertexZ = new int[this.vertexCount];
+
 		this.vertexLabel = new int[this.vertexCount];
+
 		this.faceVertexA = new int[this.faceCount];
 		this.faceVertexB = new int[this.faceCount];
 		this.faceVertexC = new int[this.faceCount];
-		if (var3) {
+
+		if (copyRenderType) {
 			this.faceRenderType = new byte[this.faceCount];
 		}
-		if (var4) {
+
+		if (copyPriority) {
 			this.facePriority = new byte[this.faceCount];
 		}
-		if (var5) {
+
+		if (copyAlpha) {
 			this.faceAlpha = new byte[this.faceCount];
 		}
-		if (var6) {
+
+		if (copyLabel) {
 			this.faceLabel = new int[this.faceCount];
 		}
-		if (var7) {
+
+		if (copyTextureId) {
 			this.faceTextureId = new short[this.faceCount];
 		}
-		if (var8) {
+
+		if (copyTextureAxis) {
 			this.faceTextureAxis = new byte[this.faceCount];
 		}
+
 		this.faceColour = new short[this.faceCount];
+
 		if (this.faceTextureCount > 0) {
 			this.textureRenderType = new byte[this.faceTextureCount];
 			this.faceTextureP = new short[this.faceTextureCount];
@@ -870,99 +886,118 @@ public class ModelUnlit extends ModelSource {
 			this.textureSpeed = new short[this.faceTextureCount];
 			this.textureDirection = new short[this.faceTextureCount];
 		}
+
 		this.vertexCount = 0;
 		this.faceCount = 0;
 		this.faceTextureCount = 0;
-		for (int var11 = 0; var11 < arg1; var11++) {
-			ModelUnlit var12 = arg0[var11];
-			if (var12 != null) {
-				for (int var13 = 0; var13 < var12.faceCount; var13++) {
-					if (var3 && var12.faceRenderType != null) {
-						this.faceRenderType[this.faceCount] = var12.faceRenderType[var13];
-					}
-					if (var4) {
-						if (var12.facePriority == null) {
-							this.facePriority[this.faceCount] = var12.priority;
-						} else {
-							this.facePriority[this.faceCount] = var12.facePriority[var13];
-						}
-					}
-					if (var5 && var12.faceAlpha != null) {
-						this.faceAlpha[this.faceCount] = var12.faceAlpha[var13];
-					}
-					if (var6 && var12.faceLabel != null) {
-						this.faceLabel[this.faceCount] = var12.faceLabel[var13];
-					}
-					if (var7) {
-						if (var12.faceTextureId == null) {
-							this.faceTextureId[this.faceCount] = -1;
-						} else {
-							this.faceTextureId[this.faceCount] = var12.faceTextureId[var13];
-						}
-					}
-					if (var8) {
-						if (var12.faceTextureAxis == null || var12.faceTextureAxis[var13] == -1) {
-							this.faceTextureAxis[this.faceCount] = -1;
-						} else {
-							this.faceTextureAxis[this.faceCount] = (byte) (var12.faceTextureAxis[var13] + this.faceTextureCount);
-						}
-					}
-					this.faceColour[this.faceCount] = var12.faceColour[var13];
-					this.faceVertexA[this.faceCount] = this.addPoint(var12, var12.faceVertexA[var13]);
-					this.faceVertexB[this.faceCount] = this.addPoint(var12, var12.faceVertexB[var13]);
-					this.faceVertexC[this.faceCount] = this.addPoint(var12, var12.faceVertexC[var13]);
-					this.faceCount++;
+
+		for (int i = 0; i < count; i++) {
+			ModelUnlit model = models[i];
+			if (model == null) {
+				continue;
+			}
+
+			for (int f = 0; f < model.faceCount; f++) {
+				if (copyRenderType && model.faceRenderType != null) {
+					this.faceRenderType[this.faceCount] = model.faceRenderType[f];
 				}
-				for (int var14 = 0; var14 < var12.faceTextureCount; var14++) {
-					byte var15 = this.textureRenderType[this.faceTextureCount] = var12.textureRenderType[var14];
-					if (var15 == 0) {
-						this.faceTextureP[this.faceTextureCount] = (short) this.addPoint(var12, var12.faceTextureP[var14]);
-						this.faceTextureM[this.faceTextureCount] = (short) this.addPoint(var12, var12.faceTextureM[var14]);
-						this.faceTextureN[this.faceTextureCount] = (short) this.addPoint(var12, var12.faceTextureN[var14]);
+
+				if (copyPriority) {
+					if (model.facePriority == null) {
+						this.facePriority[this.faceCount] = model.priority;
+					} else {
+						this.facePriority[this.faceCount] = model.facePriority[f];
 					}
-					if (var15 >= 1 && var15 <= 3) {
-						this.faceTextureP[this.faceTextureCount] = var12.faceTextureP[var14];
-						this.faceTextureM[this.faceTextureCount] = var12.faceTextureM[var14];
-						this.faceTextureN[this.faceTextureCount] = var12.faceTextureN[var14];
-						this.textureScaleX[this.faceTextureCount] = var12.textureScaleX[var14];
-						this.textureScaleY[this.faceTextureCount] = var12.textureScaleY[var14];
-						this.textureScaleZ[this.faceTextureCount] = var12.textureScaleZ[var14];
-						this.textureRotation[this.faceTextureCount] = var12.textureRotation[var14];
-						this.textureTranslation[this.faceTextureCount] = var12.textureTranslation[var14];
-						this.textureSpeed[this.faceTextureCount] = var12.textureSpeed[var14];
-					}
-					if (var15 == 2) {
-						this.textureDirection[this.faceTextureCount] = var12.textureDirection[var14];
-					}
-					this.faceTextureCount++;
 				}
+
+				if (copyAlpha && model.faceAlpha != null) {
+					this.faceAlpha[this.faceCount] = model.faceAlpha[f];
+				}
+
+				if (copyLabel && model.faceLabel != null) {
+					this.faceLabel[this.faceCount] = model.faceLabel[f];
+				}
+
+				if (copyTextureId) {
+					if (model.faceTextureId == null) {
+						this.faceTextureId[this.faceCount] = -1;
+					} else {
+						this.faceTextureId[this.faceCount] = model.faceTextureId[f];
+					}
+				}
+
+				if (copyTextureAxis) {
+					if (model.faceTextureAxis == null || model.faceTextureAxis[f] == -1) {
+						this.faceTextureAxis[this.faceCount] = -1;
+					} else {
+						this.faceTextureAxis[this.faceCount] = (byte) (model.faceTextureAxis[f] + this.faceTextureCount);
+					}
+				}
+
+				this.faceColour[this.faceCount] = model.faceColour[f];
+				this.faceVertexA[this.faceCount] = this.addPoint(model, model.faceVertexA[f]);
+				this.faceVertexB[this.faceCount] = this.addPoint(model, model.faceVertexB[f]);
+				this.faceVertexC[this.faceCount] = this.addPoint(model, model.faceVertexC[f]);
+				this.faceCount++;
+			}
+
+			for (int var14 = 0; var14 < model.faceTextureCount; var14++) {
+				byte type = this.textureRenderType[this.faceTextureCount] = model.textureRenderType[var14];
+
+				if (type == 0) {
+					this.faceTextureP[this.faceTextureCount] = (short) this.addPoint(model, model.faceTextureP[var14]);
+					this.faceTextureM[this.faceTextureCount] = (short) this.addPoint(model, model.faceTextureM[var14]);
+					this.faceTextureN[this.faceTextureCount] = (short) this.addPoint(model, model.faceTextureN[var14]);
+				}
+				if (type >= 1 && type <= 3) {
+					this.faceTextureP[this.faceTextureCount] = model.faceTextureP[var14];
+					this.faceTextureM[this.faceTextureCount] = model.faceTextureM[var14];
+					this.faceTextureN[this.faceTextureCount] = model.faceTextureN[var14];
+					this.textureScaleX[this.faceTextureCount] = model.textureScaleX[var14];
+					this.textureScaleY[this.faceTextureCount] = model.textureScaleY[var14];
+					this.textureScaleZ[this.faceTextureCount] = model.textureScaleZ[var14];
+					this.textureRotation[this.faceTextureCount] = model.textureRotation[var14];
+					this.textureTranslation[this.faceTextureCount] = model.textureTranslation[var14];
+					this.textureSpeed[this.faceTextureCount] = model.textureSpeed[var14];
+				}
+				if (type == 2) {
+					this.textureDirection[this.faceTextureCount] = model.textureDirection[var14];
+				}
+
+				this.faceTextureCount++;
 			}
 		}
 	}
 
 	// jag::oldscape::dash3d::ModelUnlitImpl::AddPoint
 	@ObfuscatedName("fw.f(Lfw;I)I")
-	public final int addPoint(ModelUnlit arg0, int arg1) {
-		int var3 = -1;
-		int var4 = arg0.vertexX[arg1];
-		int var5 = arg0.vertexY[arg1];
-		int var6 = arg0.vertexZ[arg1];
-		for (int var7 = 0; var7 < this.vertexCount; var7++) {
-			if (this.vertexX[var7] == var4 && this.vertexY[var7] == var5 && this.vertexZ[var7] == var6) {
-				var3 = var7;
+	public final int addPoint(ModelUnlit src, int vertex) {
+		int index = -1;
+
+		int x = src.vertexX[vertex];
+		int y = src.vertexY[vertex];
+		int z = src.vertexZ[vertex];
+
+		for (int v = 0; v < this.vertexCount; v++) {
+			if (this.vertexX[v] == x && this.vertexY[v] == y && this.vertexZ[v] == z) {
+				index = v;
 				break;
 			}
 		}
-		if (var3 == -1) {
-			this.vertexX[this.vertexCount] = var4;
-			this.vertexY[this.vertexCount] = var5;
-			this.vertexZ[this.vertexCount] = var6;
-			if (arg0.vertexLabel != null) {
-				this.vertexLabel[this.vertexCount] = arg0.vertexLabel[arg1];
+
+		if (index == -1) {
+			this.vertexX[this.vertexCount] = x;
+			this.vertexY[this.vertexCount] = y;
+			this.vertexZ[this.vertexCount] = z;
+
+			if (src.vertexLabel != null) {
+				this.vertexLabel[this.vertexCount] = src.vertexLabel[vertex];
 			}
-			var3 = this.vertexCount++;
+
+			index = this.vertexCount++;
 		}
-		return var3;
+
+		return index;
 	}
 
 	public ModelUnlit(ModelUnlit arg0, boolean arg1, boolean arg2, boolean arg3, boolean arg4) {
@@ -1045,139 +1080,157 @@ public class ModelUnlit extends ModelSource {
 	// jag::oldscape::dash3d::ModelUnlitImpl::CopyForShareLight
 	@ObfuscatedName("fw.k()Lfw;")
 	public ModelUnlit copyForShareLight() {
-		ModelUnlit var1 = new ModelUnlit();
+		ModelUnlit copy = new ModelUnlit();
+
 		if (this.faceRenderType != null) {
-			var1.faceRenderType = new byte[this.faceCount];
-			for (int var2 = 0; var2 < this.faceCount; var2++) {
-				var1.faceRenderType[var2] = this.faceRenderType[var2];
+			copy.faceRenderType = new byte[this.faceCount];
+
+			for (int f = 0; f < this.faceCount; f++) {
+				copy.faceRenderType[f] = this.faceRenderType[f];
 			}
 		}
-		var1.vertexCount = this.vertexCount;
-		var1.faceCount = this.faceCount;
-		var1.faceTextureCount = this.faceTextureCount;
-		var1.vertexX = this.vertexX;
-		var1.vertexY = this.vertexY;
-		var1.vertexZ = this.vertexZ;
-		var1.faceVertexA = this.faceVertexA;
-		var1.faceVertexB = this.faceVertexB;
-		var1.faceVertexC = this.faceVertexC;
-		var1.facePriority = this.facePriority;
-		var1.faceAlpha = this.faceAlpha;
-		var1.faceTextureAxis = this.faceTextureAxis;
-		var1.faceColour = this.faceColour;
-		var1.faceTextureId = this.faceTextureId;
-		var1.priority = this.priority;
-		var1.textureRenderType = this.textureRenderType;
-		var1.faceTextureP = this.faceTextureP;
-		var1.faceTextureM = this.faceTextureM;
-		var1.faceTextureN = this.faceTextureN;
-		var1.textureScaleX = this.textureScaleX;
-		var1.textureScaleY = this.textureScaleY;
-		var1.textureScaleZ = this.textureScaleZ;
-		var1.textureRotation = this.textureRotation;
-		var1.textureTranslation = this.textureTranslation;
-		var1.textureSpeed = this.textureSpeed;
-		var1.textureDirection = this.textureDirection;
-		var1.vertexLabel = this.vertexLabel;
-		var1.faceLabel = this.faceLabel;
-		var1.labelVertices = this.labelVertices;
-		var1.labelFaces = this.labelFaces;
-		var1.vertexNormal = this.vertexNormal;
-		var1.faceNormal = this.faceNormal;
-		var1.ambient = this.ambient;
-		var1.contrast = this.contrast;
-		return var1;
+
+		copy.vertexCount = this.vertexCount;
+		copy.faceCount = this.faceCount;
+		copy.faceTextureCount = this.faceTextureCount;
+
+		copy.vertexX = this.vertexX;
+		copy.vertexY = this.vertexY;
+		copy.vertexZ = this.vertexZ;
+
+		copy.faceVertexA = this.faceVertexA;
+		copy.faceVertexB = this.faceVertexB;
+		copy.faceVertexC = this.faceVertexC;
+
+		copy.facePriority = this.facePriority;
+		copy.faceAlpha = this.faceAlpha;
+		copy.faceTextureAxis = this.faceTextureAxis;
+		copy.faceColour = this.faceColour;
+		copy.faceTextureId = this.faceTextureId;
+		copy.priority = this.priority;
+
+		copy.textureRenderType = this.textureRenderType;
+		copy.faceTextureP = this.faceTextureP;
+		copy.faceTextureM = this.faceTextureM;
+		copy.faceTextureN = this.faceTextureN;
+		copy.textureScaleX = this.textureScaleX;
+		copy.textureScaleY = this.textureScaleY;
+		copy.textureScaleZ = this.textureScaleZ;
+		copy.textureRotation = this.textureRotation;
+		copy.textureTranslation = this.textureTranslation;
+		copy.textureSpeed = this.textureSpeed;
+		copy.textureDirection = this.textureDirection;
+
+		copy.vertexLabel = this.vertexLabel;
+		copy.faceLabel = this.faceLabel;
+		copy.labelVertices = this.labelVertices;
+		copy.labelFaces = this.labelFaces;
+
+		copy.vertexNormal = this.vertexNormal;
+		copy.faceNormal = this.faceNormal;
+
+		copy.ambient = this.ambient;
+		copy.contrast = this.contrast;
+
+		return copy;
 	}
 
 	// jag::oldscape::dash3d::ModelUnlitImpl::HillSkew
 	@ObfuscatedName("fw.o([[IIIIZI)Lfw;")
-	public ModelUnlit hillSkew(int[][] arg0, int arg1, int arg2, int arg3, boolean arg4, int arg5) {
+	public ModelUnlit hillSkew(int[][] groundh, int x, int y, int z, boolean copy, int blend) {
 		this.calcBoundingCube();
-		int var7 = this.minX + arg1;
-		int var8 = this.maxX + arg1;
-		int var9 = this.maxZ + arg3;
-		int var10 = this.minZ + arg3;
-		if (var7 < 0 || var8 + 128 >> 7 >= arg0.length || var9 < 0 || var10 + 128 >> 7 >= arg0[0].length) {
+
+		int var7 = this.minX + x;
+		int var8 = this.maxX + x;
+		int var9 = this.maxZ + z;
+		int var10 = this.minZ + z;
+
+		if (var7 < 0 || var8 + 128 >> 7 >= groundh.length || var9 < 0 || var10 + 128 >> 7 >= groundh[0].length) {
 			return this;
 		}
+
 		int var11 = var7 >> 7;
 		int var12 = var8 + 127 >> 7;
 		int var13 = var9 >> 7;
 		int var14 = var10 + 127 >> 7;
-		if (arg0[var11][var13] == arg2 && arg0[var12][var13] == arg2 && arg0[var11][var14] == arg2 && arg0[var12][var14] == arg2) {
+
+		if (groundh[var11][var13] == y && groundh[var12][var13] == y && groundh[var11][var14] == y && groundh[var12][var14] == y) {
 			return this;
 		}
-		ModelUnlit var15;
-		if (arg4) {
-			var15 = new ModelUnlit();
-			var15.vertexCount = this.vertexCount;
-			var15.faceCount = this.faceCount;
-			var15.faceTextureCount = this.faceTextureCount;
-			var15.vertexX = this.vertexX;
-			var15.vertexZ = this.vertexZ;
-			var15.faceVertexA = this.faceVertexA;
-			var15.faceVertexB = this.faceVertexB;
-			var15.faceVertexC = this.faceVertexC;
-			var15.faceRenderType = this.faceRenderType;
-			var15.facePriority = this.facePriority;
-			var15.faceAlpha = this.faceAlpha;
-			var15.faceTextureAxis = this.faceTextureAxis;
-			var15.faceColour = this.faceColour;
-			var15.faceTextureId = this.faceTextureId;
-			var15.priority = this.priority;
-			var15.textureRenderType = this.textureRenderType;
-			var15.faceTextureP = this.faceTextureP;
-			var15.faceTextureM = this.faceTextureM;
-			var15.faceTextureN = this.faceTextureN;
-			var15.textureScaleX = this.textureScaleX;
-			var15.textureScaleY = this.textureScaleY;
-			var15.textureScaleZ = this.textureScaleZ;
-			var15.textureRotation = this.textureRotation;
-			var15.textureTranslation = this.textureTranslation;
-			var15.textureSpeed = this.textureSpeed;
-			var15.textureDirection = this.textureDirection;
-			var15.vertexLabel = this.vertexLabel;
-			var15.faceLabel = this.faceLabel;
-			var15.labelVertices = this.labelVertices;
-			var15.labelFaces = this.labelFaces;
-			var15.ambient = this.ambient;
-			var15.contrast = this.contrast;
-			var15.vertexY = new int[var15.vertexCount];
+
+		ModelUnlit model;
+		if (copy) {
+			model = new ModelUnlit();
+			model.vertexCount = this.vertexCount;
+			model.faceCount = this.faceCount;
+			model.faceTextureCount = this.faceTextureCount;
+			model.vertexX = this.vertexX;
+			model.vertexZ = this.vertexZ;
+			model.faceVertexA = this.faceVertexA;
+			model.faceVertexB = this.faceVertexB;
+			model.faceVertexC = this.faceVertexC;
+			model.faceRenderType = this.faceRenderType;
+			model.facePriority = this.facePriority;
+			model.faceAlpha = this.faceAlpha;
+			model.faceTextureAxis = this.faceTextureAxis;
+			model.faceColour = this.faceColour;
+			model.faceTextureId = this.faceTextureId;
+			model.priority = this.priority;
+			model.textureRenderType = this.textureRenderType;
+			model.faceTextureP = this.faceTextureP;
+			model.faceTextureM = this.faceTextureM;
+			model.faceTextureN = this.faceTextureN;
+			model.textureScaleX = this.textureScaleX;
+			model.textureScaleY = this.textureScaleY;
+			model.textureScaleZ = this.textureScaleZ;
+			model.textureRotation = this.textureRotation;
+			model.textureTranslation = this.textureTranslation;
+			model.textureSpeed = this.textureSpeed;
+			model.textureDirection = this.textureDirection;
+			model.vertexLabel = this.vertexLabel;
+			model.faceLabel = this.faceLabel;
+			model.labelVertices = this.labelVertices;
+			model.labelFaces = this.labelFaces;
+			model.ambient = this.ambient;
+			model.contrast = this.contrast;
+			model.vertexY = new int[model.vertexCount];
 		} else {
-			var15 = this;
+			model = this;
 		}
-		if (arg5 == 0) {
-			for (int var16 = 0; var16 < var15.vertexCount; var16++) {
-				int var17 = this.vertexX[var16] + arg1;
-				int var18 = this.vertexZ[var16] + arg3;
+
+		if (blend == 0) {
+			for (int var16 = 0; var16 < model.vertexCount; var16++) {
+				int var17 = this.vertexX[var16] + x;
+				int var18 = this.vertexZ[var16] + z;
 				int var19 = var17 & 0x7F;
 				int var20 = var18 & 0x7F;
 				int var21 = var17 >> 7;
 				int var22 = var18 >> 7;
-				int var23 = (128 - var19) * arg0[var21][var22] + arg0[var21 + 1][var22] * var19 >> 7;
-				int var24 = (128 - var19) * arg0[var21][var22 + 1] + arg0[var21 + 1][var22 + 1] * var19 >> 7;
+				int var23 = (128 - var19) * groundh[var21][var22] + groundh[var21 + 1][var22] * var19 >> 7;
+				int var24 = (128 - var19) * groundh[var21][var22 + 1] + groundh[var21 + 1][var22 + 1] * var19 >> 7;
 				int var25 = (128 - var20) * var23 + var20 * var24 >> 7;
-				var15.vertexY[var16] = this.vertexY[var16] + var25 - arg2;
+				model.vertexY[var16] = this.vertexY[var16] + var25 - y;
 			}
 		} else {
-			for (int var26 = 0; var26 < var15.vertexCount; var26++) {
+			for (int var26 = 0; var26 < model.vertexCount; var26++) {
 				int var27 = (-this.vertexY[var26] << 16) / this.minY;
-				if (var27 < arg5) {
-					int var28 = this.vertexX[var26] + arg1;
-					int var29 = this.vertexZ[var26] + arg3;
+				if (var27 < blend) {
+					int var28 = this.vertexX[var26] + x;
+					int var29 = this.vertexZ[var26] + z;
 					int var30 = var28 & 0x7F;
 					int var31 = var29 & 0x7F;
 					int var32 = var28 >> 7;
 					int var33 = var29 >> 7;
-					int var34 = (128 - var30) * arg0[var32][var33] + arg0[var32 + 1][var33] * var30 >> 7;
-					int var35 = (128 - var30) * arg0[var32][var33 + 1] + arg0[var32 + 1][var33 + 1] * var30 >> 7;
+					int var34 = (128 - var30) * groundh[var32][var33] + groundh[var32 + 1][var33] * var30 >> 7;
+					int var35 = (128 - var30) * groundh[var32][var33 + 1] + groundh[var32 + 1][var33 + 1] * var30 >> 7;
 					int var36 = (128 - var31) * var34 + var31 * var35 >> 7;
-					var15.vertexY[var26] = (var36 - arg2) * (arg5 - var27) / arg5 + this.vertexY[var26];
+					model.vertexY[var26] = (var36 - y) * (blend - var27) / blend + this.vertexY[var26];
 				}
 			}
 		}
-		var15.geometryChanged();
-		return var15;
+
+		model.geometryChanged();
+		return model;
 	}
 
 	// jag::oldscape::dash3d::ModelUnlitImpl::PrepareAnim
@@ -1376,14 +1429,14 @@ public class ModelUnlit extends ModelSource {
 			int var17 = ny * 256 / length;
 			int var18 = nz * 256 / length;
 
-			byte var19;
+			byte type;
 			if (this.faceRenderType == null) {
-				var19 = 0;
+				type = 0;
 			} else {
-				var19 = this.faceRenderType[f];
+				type = this.faceRenderType[f];
 			}
 
-			if (var19 == 0) {
+			if (type == 0) {
 				PointNormal n = this.vertexNormal[a];
 				n.x += var16;
 				n.y += var17;
@@ -1401,7 +1454,7 @@ public class ModelUnlit extends ModelSource {
 				n.y += var17;
 				n.z += var18;
 				n.w++;
-			} else if (var19 == 1) {
+			} else if (type == 1) {
 				if (this.faceNormal == null) {
 					this.faceNormal = new FaceNormal[this.faceCount];
 				}
@@ -1431,7 +1484,7 @@ public class ModelUnlit extends ModelSource {
 		}
 
 		this.minY = 0;
-		this.radius = 0;
+		this.maxY = 0;
 		this.minX = 999999;
 		this.maxX = -999999;
 		this.minZ = -99999;
@@ -1462,8 +1515,8 @@ public class ModelUnlit extends ModelSource {
 				this.minY = -y;
 			}
 
-			if (y > this.radius) {
-				this.radius = y;
+			if (y > this.maxY) {
+				this.maxY = y;
 			}
 		}
 
@@ -1472,79 +1525,93 @@ public class ModelUnlit extends ModelSource {
 
 	// jag::oldscape::dash3d::ModelUnlitImpl::ShareLight
 	@ObfuscatedName("fw.an(Lfw;Lfw;IIIZ)V")
-	public static void shareLight(ModelUnlit arg0, ModelUnlit arg1, int arg2, int arg3, int arg4, boolean arg5) {
-		arg0.calcBoundingCube();
-		arg0.calculateNormals();
-		arg1.calcBoundingCube();
-		arg1.calculateNormals();
+	public static void shareLight(ModelUnlit model1, ModelUnlit model2, int arg2, int arg3, int arg4, boolean arg5) {
+		model1.calcBoundingCube();
+		model1.calculateNormals();
+		model2.calcBoundingCube();
+		model2.calculateNormals();
 
 		shareTic++;
+
 		int var6 = 0;
-		int[] var7 = arg1.vertexX;
-		int var8 = arg1.vertexCount;
-		for (int var9 = 0; var9 < arg0.vertexCount; var9++) {
-			PointNormal var10 = arg0.vertexNormal[var9];
+		int[] var7 = model2.vertexX;
+		int var8 = model2.vertexCount;
+		for (int var9 = 0; var9 < model1.vertexCount; var9++) {
+			PointNormal var10 = model1.vertexNormal[var9];
 			if (var10.w == 0) {
 				continue;
 			}
-			int var11 = arg0.vertexY[var9] - arg3;
-			if (var11 <= arg1.radius) {
-				int var12 = arg0.vertexX[var9] - arg2;
-				if (var12 < arg1.minX || var12 > arg1.maxX) {
+
+			int var11 = model1.vertexY[var9] - arg3;
+			if (var11 <= model2.maxY) {
+				int var12 = model1.vertexX[var9] - arg2;
+				if (var12 < model2.minX || var12 > model2.maxX) {
 					continue;
 				}
-				int var13 = arg0.vertexZ[var9] - arg4;
-				if (var13 < arg1.maxZ || var13 > arg1.minZ) {
+
+				int var13 = model1.vertexZ[var9] - arg4;
+				if (var13 < model2.maxZ || var13 > model2.minZ) {
 					continue;
 				}
+
 				for (int var14 = 0; var14 < var8; var14++) {
-					PointNormal var15 = arg1.vertexNormal[var14];
-					if (var7[var14] != var12 || arg1.vertexZ[var14] != var13 || arg1.vertexY[var14] != var11 || var15.w == 0) {
+					PointNormal var15 = model2.vertexNormal[var14];
+					if (var7[var14] != var12 || model2.vertexZ[var14] != var13 || model2.vertexY[var14] != var11 || var15.w == 0) {
 						continue;
 					}
-					if (arg0.sharedVertexNormals == null) {
-						arg0.sharedVertexNormals = new PointNormal[arg0.vertexCount];
+
+					if (model1.sharedVertexNormals == null) {
+						model1.sharedVertexNormals = new PointNormal[model1.vertexCount];
 					}
-					if (arg1.sharedVertexNormals == null) {
-						arg1.sharedVertexNormals = new PointNormal[var8];
+
+					if (model2.sharedVertexNormals == null) {
+						model2.sharedVertexNormals = new PointNormal[var8];
 					}
-					PointNormal var16 = arg0.sharedVertexNormals[var9];
+
+					PointNormal var16 = model1.sharedVertexNormals[var9];
 					if (var16 == null) {
-						var16 = arg0.sharedVertexNormals[var9] = new PointNormal(var10);
+						var16 = model1.sharedVertexNormals[var9] = new PointNormal(var10);
 					}
-					PointNormal var17 = arg1.sharedVertexNormals[var14];
+
+					PointNormal var17 = model2.sharedVertexNormals[var14];
 					if (var17 == null) {
-						var17 = arg1.sharedVertexNormals[var14] = new PointNormal(var15);
+						var17 = model2.sharedVertexNormals[var14] = new PointNormal(var15);
 					}
+
 					var16.x += var15.x;
 					var16.y += var15.y;
 					var16.z += var15.z;
 					var16.w += var15.w;
+
 					var17.x += var10.x;
 					var17.y += var10.y;
 					var17.z += var10.z;
 					var17.w += var10.w;
+
 					var6++;
+
 					shareTickA[var9] = shareTic;
 					shareTickB[var14] = shareTic;
 				}
 			}
 		}
+
 		if (var6 >= 3 && arg5) {
-			for (int var18 = 0; var18 < arg0.faceCount; var18++) {
-				if (shareTickA[arg0.faceVertexA[var18]] == shareTic && shareTickA[arg0.faceVertexB[var18]] == shareTic && shareTickA[arg0.faceVertexC[var18]] == shareTic) {
-					if (arg0.faceRenderType == null) {
-						arg0.faceRenderType = new byte[arg0.faceCount];
+			for (int var18 = 0; var18 < model1.faceCount; var18++) {
+				if (shareTickA[model1.faceVertexA[var18]] == shareTic && shareTickA[model1.faceVertexB[var18]] == shareTic && shareTickA[model1.faceVertexC[var18]] == shareTic) {
+					if (model1.faceRenderType == null) {
+						model1.faceRenderType = new byte[model1.faceCount];
 					}
-					arg0.faceRenderType[var18] = 2;
+					model1.faceRenderType[var18] = 2;
 				}
 			}
-			for (int var19 = 0; var19 < arg1.faceCount; var19++) {
-				if (shareTickB[arg1.faceVertexA[var19]] == shareTic && shareTickB[arg1.faceVertexB[var19]] == shareTic && shareTickB[arg1.faceVertexC[var19]] == shareTic) {
-					if (arg1.faceRenderType == null) {
-						arg1.faceRenderType = new byte[arg1.faceCount];
+
+			for (int var19 = 0; var19 < model2.faceCount; var19++) {
+				if (shareTickB[model2.faceVertexA[var19]] == shareTic && shareTickB[model2.faceVertexB[var19]] == shareTic && shareTickB[model2.faceVertexC[var19]] == shareTic) {
+					if (model2.faceRenderType == null) {
+						model2.faceRenderType = new byte[model2.faceCount];
 					}
-					arg1.faceRenderType[var19] = 2;
+					model2.faceRenderType[var19] = 2;
 				}
 			}
 		}
@@ -1552,163 +1619,187 @@ public class ModelUnlit extends ModelSource {
 
 	// jag::oldscape::dash3d::ModelUnlitImpl::Light
 	@ObfuscatedName("fw.ah(IIIII)Lfo;")
-	public final ModelLit light(int arg0, int arg1, int arg2, int arg3, int arg4) {
+	public final ModelLit light(int ambient, int contrast, int x, int y, int z) {
 		this.calculateNormals();
-		int var6 = (int) Math.sqrt(arg4 * arg4 + arg2 * arg2 + arg3 * arg3);
-		int var7 = arg1 * var6 >> 8;
-		ModelLit var8 = new ModelLit();
-		var8.faceColourA = new int[this.faceCount];
-		var8.faceColourB = new int[this.faceCount];
-		var8.faceColourC = new int[this.faceCount];
+
+		int distance = (int) Math.sqrt(z * z + x * x + y * y);
+		int scale = contrast * distance >> 8;
+
+		ModelLit lit = new ModelLit();
+		lit.faceColourA = new int[this.faceCount];
+		lit.faceColourB = new int[this.faceCount];
+		lit.faceColourC = new int[this.faceCount];
+
 		if (this.faceTextureCount > 0 && this.faceTextureAxis != null) {
-			int[] var9 = new int[this.faceTextureCount];
-			for (int var10 = 0; var10 < this.faceCount; var10++) {
-				if (this.faceTextureAxis[var10] != -1) {
-					var9[this.faceTextureAxis[var10] & 0xFF]++;
+			int[] axis = new int[this.faceTextureCount];
+			for (int f = 0; f < this.faceCount; f++) {
+				if (this.faceTextureAxis[f] != -1) {
+					axis[this.faceTextureAxis[f] & 0xFF]++;
 				}
 			}
-			var8.faceTextureCount = 0;
-			for (int var11 = 0; var11 < this.faceTextureCount; var11++) {
-				if (var9[var11] > 0 && this.textureRenderType[var11] == 0) {
-					var8.faceTextureCount++;
+
+			lit.faceTextureCount = 0;
+			for (int f = 0; f < this.faceTextureCount; f++) {
+				if (axis[f] > 0 && this.textureRenderType[f] == 0) {
+					lit.faceTextureCount++;
 				}
 			}
-			var8.textureVertexX = new int[var8.faceTextureCount];
-			var8.textureVertexY = new int[var8.faceTextureCount];
-			var8.textureVertexZ = new int[var8.faceTextureCount];
-			int var12 = 0;
-			for (int var13 = 0; var13 < this.faceTextureCount; var13++) {
-				if (var9[var13] > 0 && this.textureRenderType[var13] == 0) {
-					var8.textureVertexX[var12] = this.faceTextureP[var13] & 0xFFFF;
-					var8.textureVertexY[var12] = this.faceTextureM[var13] & 0xFFFF;
-					var8.textureVertexZ[var12] = this.faceTextureN[var13] & 0xFFFF;
-					var9[var13] = var12++;
+
+			lit.faceTextureP = new int[lit.faceTextureCount];
+			lit.faceTextureM = new int[lit.faceTextureCount];
+			lit.faceTextureN = new int[lit.faceTextureCount];
+
+			int textureCount = 0;
+			for (int f = 0; f < this.faceTextureCount; f++) {
+				if (axis[f] > 0 && this.textureRenderType[f] == 0) {
+					lit.faceTextureP[textureCount] = this.faceTextureP[f] & 0xFFFF;
+					lit.faceTextureM[textureCount] = this.faceTextureM[f] & 0xFFFF;
+					lit.faceTextureN[textureCount] = this.faceTextureN[f] & 0xFFFF;
+					axis[f] = textureCount++;
 				} else {
-					var9[var13] = -1;
+					axis[f] = -1;
 				}
 			}
-			var8.faceTextureIndex = new byte[this.faceCount];
-			for (int var14 = 0; var14 < this.faceCount; var14++) {
-				if (this.faceTextureAxis[var14] == -1) {
-					var8.faceTextureIndex[var14] = -1;
+
+			lit.faceTextureAxis = new byte[this.faceCount];
+			for (int f = 0; f < this.faceCount; f++) {
+				if (this.faceTextureAxis[f] == -1) {
+					lit.faceTextureAxis[f] = -1;
 				} else {
-					var8.faceTextureIndex[var14] = (byte) var9[this.faceTextureAxis[var14] & 0xFF];
+					lit.faceTextureAxis[f] = (byte) axis[this.faceTextureAxis[f] & 0xFF];
 				}
 			}
 		}
-		for (int var15 = 0; var15 < this.faceCount; var15++) {
-			byte var16;
+
+		for (int f = 0; f < this.faceCount; f++) {
+			byte type;
 			if (this.faceRenderType == null) {
-				var16 = 0;
+				type = 0;
 			} else {
-				var16 = this.faceRenderType[var15];
+				type = this.faceRenderType[f];
 			}
-			byte var17;
+
+			byte alpha;
 			if (this.faceAlpha == null) {
-				var17 = 0;
+				alpha = 0;
 			} else {
-				var17 = this.faceAlpha[var15];
+				alpha = this.faceAlpha[f];
 			}
-			short var18;
+
+			short textureId;
 			if (this.faceTextureId == null) {
-				var18 = -1;
+				textureId = -1;
 			} else {
-				var18 = this.faceTextureId[var15];
+				textureId = this.faceTextureId[f];
 			}
-			if (var17 == -2) {
-				var16 = 3;
+
+			if (alpha == -2) {
+				type = 3;
 			}
-			if (var17 == -1) {
-				var16 = 2;
+
+			if (alpha == -1) {
+				type = 2;
 			}
-			if (var18 == -1) {
-				if (var16 == 0) {
-					int var19 = this.faceColour[var15] & 0xFFFF;
-					PointNormal var20;
-					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexA[var15]] == null) {
-						var20 = this.vertexNormal[this.faceVertexA[var15]];
+
+			if (textureId == -1) {
+				if (type == 0) {
+					int colour = this.faceColour[f] & 0xFFFF;
+
+					PointNormal normalA;
+					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexA[f]] == null) {
+						normalA = this.vertexNormal[this.faceVertexA[f]];
 					} else {
-						var20 = this.sharedVertexNormals[this.faceVertexA[var15]];
+						normalA = this.sharedVertexNormals[this.faceVertexA[f]];
 					}
-					int var21 = (var20.z * arg4 + var20.x * arg2 + var20.y * arg3) / (var20.w * var7) + arg0;
-					var8.faceColourA[var15] = getColour(var19, var21);
-					PointNormal var22;
-					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexB[var15]] == null) {
-						var22 = this.vertexNormal[this.faceVertexB[var15]];
+					int intensityA = (normalA.z * z + normalA.x * x + normalA.y * y) / (normalA.w * scale) + ambient;
+					lit.faceColourA[f] = getColour(colour, intensityA);
+
+					PointNormal normalB;
+					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexB[f]] == null) {
+						normalB = this.vertexNormal[this.faceVertexB[f]];
 					} else {
-						var22 = this.sharedVertexNormals[this.faceVertexB[var15]];
+						normalB = this.sharedVertexNormals[this.faceVertexB[f]];
 					}
-					int var23 = (var22.z * arg4 + var22.x * arg2 + var22.y * arg3) / (var22.w * var7) + arg0;
-					var8.faceColourB[var15] = getColour(var19, var23);
-					PointNormal var24;
-					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexC[var15]] == null) {
-						var24 = this.vertexNormal[this.faceVertexC[var15]];
+					int intensityB = (normalB.z * z + normalB.x * x + normalB.y * y) / (normalB.w * scale) + ambient;
+					lit.faceColourB[f] = getColour(colour, intensityB);
+
+					PointNormal normalC;
+					if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexC[f]] == null) {
+						normalC = this.vertexNormal[this.faceVertexC[f]];
 					} else {
-						var24 = this.sharedVertexNormals[this.faceVertexC[var15]];
+						normalC = this.sharedVertexNormals[this.faceVertexC[f]];
 					}
-					int var25 = (var24.z * arg4 + var24.x * arg2 + var24.y * arg3) / (var24.w * var7) + arg0;
-					var8.faceColourC[var15] = getColour(var19, var25);
-				} else if (var16 == 1) {
-					FaceNormal var26 = this.faceNormal[var15];
-					int var27 = (var26.z * arg4 + var26.x * arg2 + var26.y * arg3) / (var7 / 2 + var7) + arg0;
-					var8.faceColourA[var15] = getColour(this.faceColour[var15] & 0xFFFF, var27);
-					var8.faceColourC[var15] = -1;
-				} else if (var16 == 3) {
-					var8.faceColourA[var15] = 128;
-					var8.faceColourC[var15] = -1;
+					int intensityC = (normalC.z * z + normalC.x * x + normalC.y * y) / (normalC.w * scale) + ambient;
+					lit.faceColourC[f] = getColour(colour, intensityC);
+				} else if (type == 1) {
+					FaceNormal normal = this.faceNormal[f];
+					int intensity = (normal.z * z + normal.x * x + normal.y * y) / (scale / 2 + scale) + ambient;
+					lit.faceColourA[f] = getColour(this.faceColour[f] & 0xFFFF, intensity);
+					lit.faceColourC[f] = -1;
+				} else if (type == 3) {
+					lit.faceColourA[f] = 128;
+					lit.faceColourC[f] = -1;
 				} else {
-					var8.faceColourC[var15] = -2;
+					lit.faceColourC[f] = -2;
 				}
-			} else if (var16 == 0) {
-				PointNormal var28;
-				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexA[var15]] == null) {
-					var28 = this.vertexNormal[this.faceVertexA[var15]];
+			} else if (type == 0) {
+				PointNormal normalA;
+				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexA[f]] == null) {
+					normalA = this.vertexNormal[this.faceVertexA[f]];
 				} else {
-					var28 = this.sharedVertexNormals[this.faceVertexA[var15]];
+					normalA = this.sharedVertexNormals[this.faceVertexA[f]];
 				}
-				int var29 = (var28.z * arg4 + var28.x * arg2 + var28.y * arg3) / (var28.w * var7) + arg0;
-				var8.faceColourA[var15] = getTexLight(var29);
-				PointNormal var30;
-				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexB[var15]] == null) {
-					var30 = this.vertexNormal[this.faceVertexB[var15]];
+				int intensityA = (normalA.z * z + normalA.x * x + normalA.y * y) / (normalA.w * scale) + ambient;
+				lit.faceColourA[f] = getTexLight(intensityA);
+
+				PointNormal normalB;
+				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexB[f]] == null) {
+					normalB = this.vertexNormal[this.faceVertexB[f]];
 				} else {
-					var30 = this.sharedVertexNormals[this.faceVertexB[var15]];
+					normalB = this.sharedVertexNormals[this.faceVertexB[f]];
 				}
-				int var31 = (var30.z * arg4 + var30.x * arg2 + var30.y * arg3) / (var30.w * var7) + arg0;
-				var8.faceColourB[var15] = getTexLight(var31);
-				PointNormal var32;
-				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexC[var15]] == null) {
-					var32 = this.vertexNormal[this.faceVertexC[var15]];
+				int intensityB = (normalB.z * z + normalB.x * x + normalB.y * y) / (normalB.w * scale) + ambient;
+				lit.faceColourB[f] = getTexLight(intensityB);
+
+				PointNormal normalC;
+				if (this.sharedVertexNormals == null || this.sharedVertexNormals[this.faceVertexC[f]] == null) {
+					normalC = this.vertexNormal[this.faceVertexC[f]];
 				} else {
-					var32 = this.sharedVertexNormals[this.faceVertexC[var15]];
+					normalC = this.sharedVertexNormals[this.faceVertexC[f]];
 				}
-				int var33 = (var32.z * arg4 + var32.x * arg2 + var32.y * arg3) / (var32.w * var7) + arg0;
-				var8.faceColourC[var15] = getTexLight(var33);
-			} else if (var16 == 1) {
-				FaceNormal var34 = this.faceNormal[var15];
-				int var35 = (var34.z * arg4 + var34.x * arg2 + var34.y * arg3) / (var7 / 2 + var7) + arg0;
-				var8.faceColourA[var15] = getTexLight(var35);
-				var8.faceColourC[var15] = -1;
+				int intensityC = (normalC.z * z + normalC.x * x + normalC.y * y) / (normalC.w * scale) + ambient;
+				lit.faceColourC[f] = getTexLight(intensityC);
+			} else if (type == 1) {
+				FaceNormal normal = this.faceNormal[f];
+				int intensity = (normal.z * z + normal.x * x + normal.y * y) / (scale / 2 + scale) + ambient;
+				lit.faceColourA[f] = getTexLight(intensity);
+				lit.faceColourC[f] = -1;
 			} else {
-				var8.faceColourC[var15] = -2;
+				lit.faceColourC[f] = -2;
 			}
 		}
+
 		this.prepareAnim();
-		var8.vertexCount = this.vertexCount;
-		var8.vertexX = this.vertexX;
-		var8.vertexY = this.vertexY;
-		var8.vertexZ = this.vertexZ;
-		var8.faceCount = this.faceCount;
-		var8.faceVertexA = this.faceVertexA;
-		var8.faceVertexB = this.faceVertexB;
-		var8.faceVertexC = this.faceVertexC;
-		var8.facePriority = this.facePriority;
-		var8.faceAlpha = this.faceAlpha;
-		var8.priority = this.priority;
-		var8.labelVertices = this.labelVertices;
-		var8.labelFaces = this.labelFaces;
-		var8.faceTextureId = this.faceTextureId;
-		return var8;
+
+		lit.vertexCount = this.vertexCount;
+		lit.vertexX = this.vertexX;
+		lit.vertexY = this.vertexY;
+		lit.vertexZ = this.vertexZ;
+
+		lit.faceCount = this.faceCount;
+		lit.faceVertexA = this.faceVertexA;
+		lit.faceVertexB = this.faceVertexB;
+		lit.faceVertexC = this.faceVertexC;
+		lit.facePriority = this.facePriority;
+		lit.faceAlpha = this.faceAlpha;
+		lit.priority = this.priority;
+
+		lit.labelVertices = this.labelVertices;
+		lit.labelFaces = this.labelFaces;
+
+		lit.faceTextureId = this.faceTextureId;
+
+		return lit;
 	}
 
 	// jag::oldscape::dash3d::ModelUnlit::GetColour

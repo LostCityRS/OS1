@@ -5,7 +5,7 @@ import jagex3.constants.Text;
 import jagex3.dash3d.ModelLit;
 import jagex3.dash3d.ModelUnlit;
 import jagex3.dash3d.Pix3D;
-import jagex3.dash3d.PixFontGeneric;
+import jagex3.graphics.PixFontGeneric;
 import jagex3.datastruct.Linkable2;
 import jagex3.datastruct.LruCache;
 import jagex3.graphics.Pix2D;

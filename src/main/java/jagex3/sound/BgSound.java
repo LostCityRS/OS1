@@ -70,11 +70,11 @@ public class BgSound extends Linkable {
 	public static void reset() {
 		for (BgSound bg = (BgSound) soundlist.head(); bg != null; bg = (BgSound) soundlist.next()) {
 			if (bg.continuousStream != null) {
-				Client.soundMixer.stopStream(bg.continuousStream);
+				Client.mixer.stopStream(bg.continuousStream);
 				bg.continuousStream = null;
 			}
 			if (bg.randomStream != null) {
-				Client.soundMixer.stopStream(bg.randomStream);
+				Client.mixer.stopStream(bg.randomStream);
 				bg.randomStream = null;
 			}
 		}
@@ -102,7 +102,7 @@ public class BgSound extends Linkable {
 		}
 
 		if (this.sound != sound && this.continuousStream != null) {
-			Client.soundMixer.stopStream(this.continuousStream);
+			Client.mixer.stopStream(this.continuousStream);
 			this.continuousStream = null;
 		}
 	}
@@ -159,11 +159,11 @@ public class BgSound extends Linkable {
 			}
 			if (var5 - 64 > var4.range || Client.ambientVolume == 0 || var4.level != arg0) {
 				if (var4.continuousStream != null) {
-					Client.soundMixer.stopStream(var4.continuousStream);
+					Client.mixer.stopStream(var4.continuousStream);
 					var4.continuousStream = null;
 				}
 				if (var4.randomStream != null) {
-					Client.soundMixer.stopStream(var4.randomStream);
+					Client.mixer.stopStream(var4.randomStream);
 					var4.randomStream = null;
 				}
 			} else {
@@ -177,10 +177,10 @@ public class BgSound extends Linkable {
 				} else if (var4.sound >= 0) {
 					JagFx var7 = JagFx.load(Client.jagFX, var4.sound, 0);
 					if (var7 != null) {
-						Wave var8 = var7.toWave().decimate(Client.soundDecimator);
+						Wave var8 = var7.toWave().decimate(Client.decimator);
 						WaveStream var9 = WaveStream.newRatePercent(var8, 100, var6);
 						var9.setLoopCount(-1);
-						Client.soundMixer.playStream(var9);
+						Client.mixer.playStream(var9);
 						var4.continuousStream = var9;
 					}
 				}
@@ -193,10 +193,10 @@ public class BgSound extends Linkable {
 					int var10 = (int) (Math.random() * (double) var4.random.length);
 					JagFx var11 = JagFx.load(Client.jagFX, var4.random[var10], 0);
 					if (var11 != null) {
-						Wave var12 = var11.toWave().decimate(Client.soundDecimator);
+						Wave var12 = var11.toWave().decimate(Client.decimator);
 						WaveStream var13 = WaveStream.newRatePercent(var12, 100, var6);
 						var13.setLoopCount(0);
-						Client.soundMixer.playStream(var13);
+						Client.mixer.playStream(var13);
 						var4.randomStream = var13;
 						var4.randomSoundTimer = var4.mindelay + (int) (Math.random() * (double) (var4.maxdelay - var4.mindelay));
 					}
