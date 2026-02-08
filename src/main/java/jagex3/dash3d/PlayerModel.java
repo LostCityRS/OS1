@@ -324,7 +324,7 @@ public class PlayerModel {
 	@ObfuscatedName("ct.g(I)I")
 	public int method1176() {
 		if (this.transmog != -1) {
-			return NpcType.list(this.transmog).index + 0x12345678;
+			return NpcType.list(this.transmog).id + 0x12345678;
 		}
 
 		return (this.appearance[11] << 5) + (this.appearance[8] << 10) + (this.appearance[0] << 15) + (this.colour[4] << 20) + (this.colour[0] << 25) + this.appearance[1];

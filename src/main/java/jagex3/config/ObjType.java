@@ -44,7 +44,7 @@ public class ObjType extends Linkable2 {
 	public static PixFontGeneric countFont;
 
 	@ObfuscatedName("fj.u")
-	public int index;
+	public int id;
 
 	@ObfuscatedName("fj.v")
 	public int model;
@@ -173,7 +173,7 @@ public class ObjType extends Linkable2 {
 
 		byte[] files = configClient.getFile(10, id);
 		ObjType obj = new ObjType();
-		obj.index = id;
+		obj.id = id;
 		if (files != null) {
 			obj.decode(new Packet(files));
 		}
@@ -392,7 +392,7 @@ public class ObjType extends Linkable2 {
 			}
 		}
 
-		ModelLit cached = (ModelLit) modelCache.find(this.index);
+		ModelLit cached = (ModelLit) modelCache.find(this.id);
 		if (cached != null) {
 			return cached;
 		}
@@ -420,7 +420,7 @@ public class ObjType extends Linkable2 {
 
 		ModelLit litModel = model.light(this.ambient + 64, this.contrast + 768, -50, -10, -50);
 		litModel.useAABBMouseCheck = true;
-		modelCache.put(litModel, this.index);
+		modelCache.put(litModel, this.id);
 		return litModel;
 	}
 

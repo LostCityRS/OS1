@@ -22,25 +22,9 @@ public class InvType extends Linkable2 {
 	@ObfuscatedName("fp.z")
 	public int size = 0;
 
-	// jag::oldscape::configdecoder::InvType::Decode
-	@ObfuscatedName("fp.z(Lev;I)V")
-	public void decode(Packet buf) {
-		while (true) {
-			int code = buf.g1();
-			if (code == 0) {
-				return;
-			}
-
-			this.decode(buf, code);
-		}
-	}
-
-	// jag::oldscape::configdecoder::InvType::Decode
-	@ObfuscatedName("fp.g(Lev;II)V")
-	public void decode(Packet buf, int code) {
-		if (code == 2) {
-			this.size = buf.g2();
-		}
+	// jag::oldscape::configdecoder::InvType::Init
+	public static void init(Js5Loader config) {
+		configClient = config;
 	}
 
 	// jag::oldscape::configdecoder::InvType::List
@@ -60,8 +44,24 @@ public class InvType extends Linkable2 {
 		return inv;
 	}
 
-	// jag::oldscape::configdecoder::InvType::Init
-	public static void init(Js5Loader config) {
-		configClient = config;
+	// jag::oldscape::configdecoder::InvType::Decode
+	@ObfuscatedName("fp.z(Lev;I)V")
+	public void decode(Packet buf) {
+		while (true) {
+			int code = buf.g1();
+			if (code == 0) {
+				return;
+			}
+
+			this.decode(buf, code);
+		}
+	}
+
+	// jag::oldscape::configdecoder::InvType::Decode
+	@ObfuscatedName("fp.g(Lev;II)V")
+	public void decode(Packet buf, int code) {
+		if (code == 2) {
+			this.size = buf.g2();
+		}
 	}
 }

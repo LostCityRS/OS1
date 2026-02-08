@@ -108,6 +108,7 @@ public class Pix3D extends Pix2D {
 		resetOrigin();
 
 		if (scanline.length < sizeY) {
+			// todo: inlined method
 			int var4 = sizeY;
 			int var13 = var4 - 1;
 			int var5 = var13 | var13 >>> 1;

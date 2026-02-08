@@ -81,9 +81,6 @@ public class IfType extends Linkable {
 	@ObfuscatedName("eg.b")
 	public int type;
 
-	@ObfuscatedName("eg.y")
-	public int dataX = 0;
-
 	@ObfuscatedName("eg.t")
 	public int buttonType = 0;
 
@@ -95,6 +92,9 @@ public class IfType extends Linkable {
 
 	@ObfuscatedName("eg.o")
 	public int y = 0;
+
+	@ObfuscatedName("eg.y")
+	public int dataX = 0;
 
 	@ObfuscatedName("eg.a")
 	public int dataY = 0;
@@ -625,7 +625,7 @@ public class IfType extends Linkable {
 		}
 
 		if (this.type == 3) {
-			// rect
+			// rectcg
 			this.fill = buf.g1() == 1;
 		}
 

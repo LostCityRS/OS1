@@ -529,61 +529,61 @@ public class Pix32 extends Pix2D {
 
 	// jag::oldscape::graphics::NXTPix2D::TransPlotSprite
 	@ObfuscatedName("fq.cu(III)V")
-	public void transPlotSprite(int arg0, int arg1, int arg2) {
-		int var4 = this.xof + arg0;
-		int var5 = this.yof + arg1;
+	public void transPlotSprite(int x, int y, int alpha) {
+		int var4 = this.xof + x;
+		int var5 = this.yof + y;
 		int var6 = Pix2D.width * var5 + var4;
 		int var7 = 0;
-		int var8 = this.hi;
-		int var9 = this.wi;
-		int var10 = Pix2D.width - var9;
-		int var11 = 0;
+		int h = this.hi;
+		int w = this.wi;
+		int dstOff = Pix2D.width - w;
+		int srcOff = 0;
 		if (var5 < clipMinY) {
 			int var12 = clipMinY - var5;
-			var8 -= var12;
+			h -= var12;
 			var5 = clipMinY;
-			var7 += var9 * var12;
+			var7 += w * var12;
 			var6 += Pix2D.width * var12;
 		}
-		if (var5 + var8 > clipMaxY) {
-			var8 -= var5 + var8 - clipMaxY;
+		if (var5 + h > clipMaxY) {
+			h -= var5 + h - clipMaxY;
 		}
 		if (var4 < clipMinX) {
 			int var13 = clipMinX - var4;
-			var9 -= var13;
+			w -= var13;
 			var4 = clipMinX;
 			var7 += var13;
 			var6 += var13;
-			var11 += var13;
-			var10 += var13;
+			srcOff += var13;
+			dstOff += var13;
 		}
-		if (var4 + var9 > clipMaxX) {
-			int var14 = var4 + var9 - clipMaxX;
-			var9 -= var14;
-			var11 += var14;
-			var10 += var14;
+		if (var4 + w > clipMaxX) {
+			int cutoff = var4 + w - clipMaxX;
+			w -= cutoff;
+			srcOff += cutoff;
+			dstOff += cutoff;
 		}
-		if (var9 > 0 && var8 > 0) {
-			tranSprite(Pix2D.pixels, this.data, 0, var7, var6, var9, var8, var10, var11, arg2);
+		if (w > 0 && h > 0) {
+			tranSprite(Pix2D.pixels, this.data, 0, var7, var6, w, h, dstOff, srcOff, alpha);
 		}
 	}
 
 	// jag::oldscape::graphics::NXTPix2D::TranSprite
 	@ObfuscatedName("fq.cc([I[IIIIIIIII)V")
-	public static void tranSprite(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
-		int var10 = 256 - arg9;
-		for (int var11 = -arg6; var11 < 0; var11++) {
-			for (int var12 = -arg5; var12 < 0; var12++) {
-				int var13 = arg1[arg3++];
+	public static void tranSprite(int[] dst, int[] src, int arg2, int srcOff, int dstOff, int w, int h, int dstStep, int srcStep, int alpha) {
+		int var10 = 256 - alpha;
+		for (int var11 = -h; var11 < 0; var11++) {
+			for (int var12 = -w; var12 < 0; var12++) {
+				int var13 = src[srcOff++];
 				if (var13 == 0) {
-					arg4++;
+					dstOff++;
 				} else {
-					int var14 = arg0[arg4];
-					arg0[arg4++] = ((var13 & 0xFF00FF) * arg9 + (var14 & 0xFF00FF) * var10 & 0xFF00FF00) + ((var13 & 0xFF00) * arg9 + (var14 & 0xFF00) * var10 & 0xFF0000) >> 8;
+					int var14 = dst[dstOff];
+					dst[dstOff++] = ((var13 & 0xFF00FF) * alpha + (var14 & 0xFF00FF) * var10 & 0xFF00FF00) + ((var13 & 0xFF00) * alpha + (var14 & 0xFF00) * var10 & 0xFF0000) >> 8;
 				}
 			}
-			arg4 += arg7;
-			arg3 += arg8;
+			dstOff += dstStep;
+			srcOff += srcStep;
 		}
 	}
 
@@ -668,23 +668,23 @@ public class Pix32 extends Pix2D {
 
 	// jag::oldscape::graphics::NXTPix2D::ScanlineRotatePlotSprite
 	@ObfuscatedName("fq.cz(IIIIIIII[I[I)V")
-	public void scanlineRotatePlotSprite(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int[] arg8, int[] arg9) {
+	public void scanlineRotatePlotSprite(int x, int y, int w, int h, int anchorX, int anchorY, int theta, int zoom, int[] lineStart, int[] lineWidth) {
 		try {
-			int var11 = -arg2 / 2;
-			int var12 = -arg3 / 2;
-			int var13 = (int) (Math.sin((double) arg6 / 326.11D) * 65536.0D);
-			int var14 = (int) (Math.cos((double) arg6 / 326.11D) * 65536.0D);
-			int var15 = arg7 * var13 >> 8;
-			int var16 = arg7 * var14 >> 8;
-			int var17 = (arg4 << 16) + var11 * var16 + var12 * var15;
-			int var18 = (arg5 << 16) + (var12 * var16 - var11 * var15);
-			int var19 = Pix2D.width * arg1 + arg0;
-			for (int var20 = 0; var20 < arg3; var20++) {
-				int var21 = arg8[var20];
+			int var11 = -w / 2;
+			int var12 = -h / 2;
+			int var13 = (int) (Math.sin((double) theta / 326.11D) * 65536.0D);
+			int var14 = (int) (Math.cos((double) theta / 326.11D) * 65536.0D);
+			int var15 = zoom * var13 >> 8;
+			int var16 = zoom * var14 >> 8;
+			int var17 = (anchorX << 16) + var11 * var16 + var12 * var15;
+			int var18 = (anchorY << 16) + (var12 * var16 - var11 * var15);
+			int var19 = Pix2D.width * y + x;
+			for (int var20 = 0; var20 < h; var20++) {
+				int var21 = lineStart[var20];
 				int var22 = var19 + var21;
 				int var23 = var16 * var21 + var17;
 				int var24 = var18 - var15 * var21;
-				for (int var25 = -arg9[var20]; var25 < 0; var25++) {
+				for (int var25 = -lineWidth[var20]; var25 < 0; var25++) {
 					Pix2D.pixels[var22++] = this.data[(var23 >> 16) + (var24 >> 16) * this.wi];
 					var23 += var16;
 					var24 -= var15;
@@ -699,22 +699,22 @@ public class Pix32 extends Pix2D {
 
 	// jag::oldscape::graphics::NXTPix2D::RotateTransPlotSprite
 	@ObfuscatedName("fq.cv(IIIIIIDI)V")
-	public void rotateTransPlotSprite(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, double arg6, int arg7) {
+	public void rotateTransPlotSprite(int x, int y, int w, int h, int anchorX, int anchorY, double theta, int zoom) {
 		try {
-			int var10 = -arg2 / 2;
-			int var11 = -arg3 / 2;
-			int var12 = (int) (Math.sin(arg6) * 65536.0D);
-			int var13 = (int) (Math.cos(arg6) * 65536.0D);
-			int var14 = arg7 * var12 >> 8;
-			int var15 = arg7 * var13 >> 8;
-			int var16 = (arg4 << 16) + var10 * var15 + var11 * var14;
-			int var17 = (arg5 << 16) + (var11 * var15 - var10 * var14);
-			int var18 = Pix2D.width * arg1 + arg0;
-			for (int var19 = 0; var19 < arg3; var19++) {
+			int var10 = -w / 2;
+			int var11 = -h / 2;
+			int var12 = (int) (Math.sin(theta) * 65536.0D);
+			int var13 = (int) (Math.cos(theta) * 65536.0D);
+			int var14 = zoom * var12 >> 8;
+			int var15 = zoom * var13 >> 8;
+			int var16 = (anchorX << 16) + var10 * var15 + var11 * var14;
+			int var17 = (anchorY << 16) + (var11 * var15 - var10 * var14);
+			int var18 = Pix2D.width * y + x;
+			for (int var19 = 0; var19 < h; var19++) {
 				int var20 = var18;
 				int var21 = var16;
 				int var22 = var17;
-				for (int var23 = -arg2; var23 < 0; var23++) {
+				for (int var23 = -w; var23 < 0; var23++) {
 					int var24 = this.data[(var21 >> 16) + (var22 >> 16) * this.wi];
 					if (var24 == 0) {
 						var20++;
@@ -1187,12 +1187,12 @@ public class Pix32 extends Pix2D {
 
 	// jag::oldscape::graphics::NXTPix2D::ScanlinePlotSprite
 	@ObfuscatedName("fq.cy(Lft;II)V")
-	public void scanlinePlotSprite(Pix8 arg0, int arg1, int arg2) {
-		if (clipMaxX - clipMinX != arg0.wi || clipMaxY - clipMinY != arg0.hi) {
+	public void scanlinePlotSprite(Pix8 mask, int x, int y) {
+		if (clipMaxX - clipMinX != mask.wi || clipMaxY - clipMinY != mask.hi) {
 			throw new IllegalStateException();
 		}
-		int var4 = this.xof + arg1;
-		int var5 = this.yof + arg2;
+		int var4 = this.xof + x;
+		int var5 = this.yof + y;
 		int var6 = Pix2D.width * var5 + var4;
 		int var7 = 0;
 		int var8 = this.hi;
@@ -1225,59 +1225,59 @@ public class Pix32 extends Pix2D {
 			var10 += var14;
 		}
 		if (var9 > 0 && var8 > 0) {
-			int var15 = (var5 - clipMinY) * arg0.wi + (var4 - clipMinX);
-			int var16 = arg0.wi - var9;
-			plotScanline(Pix2D.pixels, this.data, 0, var7, var6, var15, var9, var8, var10, var11, var16, arg0.data);
+			int var15 = (var5 - clipMinY) * mask.wi + (var4 - clipMinX);
+			int var16 = mask.wi - var9;
+			plotScanline(Pix2D.pixels, this.data, 0, var7, var6, var15, var9, var8, var10, var11, var16, mask.data);
 		}
 	}
 
 	@ObfuscatedName("fq.cq([I[IIIIIIIIII[B)V")
-	public static void plotScanline(int[] arg0, int[] arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, byte[] arg11) {
-		int var12 = -(arg6 >> 2);
-		int var13 = -(arg6 & 0x3);
-		for (int var14 = -arg7; var14 < 0; var14++) {
+	public static void plotScanline(int[] dst, int[] src, int arg2, int srcOff, int dstOff, int maskOff, int w, int h, int dstStep, int srcStep, int maskStep, byte[] mask) {
+		int var12 = -(w >> 2);
+		int var13 = -(w & 0x3);
+		for (int var14 = -h; var14 < 0; var14++) {
 			for (int var15 = var12; var15 < 0; var15++) {
-				int var16 = arg1[arg3++];
-				if (var16 != 0 && arg11[arg5] == 0) {
-					arg0[arg4++] = var16;
+				int var16 = src[srcOff++];
+				if (var16 != 0 && mask[maskOff] == 0) {
+					dst[dstOff++] = var16;
 				} else {
-					arg4++;
+					dstOff++;
 				}
-				arg5++;
-				int var17 = arg1[arg3++];
-				if (var17 != 0 && arg11[arg5] == 0) {
-					arg0[arg4++] = var17;
+				maskOff++;
+				int var17 = src[srcOff++];
+				if (var17 != 0 && mask[maskOff] == 0) {
+					dst[dstOff++] = var17;
 				} else {
-					arg4++;
+					dstOff++;
 				}
-				arg5++;
-				int var18 = arg1[arg3++];
-				if (var18 != 0 && arg11[arg5] == 0) {
-					arg0[arg4++] = var18;
+				maskOff++;
+				int var18 = src[srcOff++];
+				if (var18 != 0 && mask[maskOff] == 0) {
+					dst[dstOff++] = var18;
 				} else {
-					arg4++;
+					dstOff++;
 				}
-				arg5++;
-				int var19 = arg1[arg3++];
-				if (var19 != 0 && arg11[arg5] == 0) {
-					arg0[arg4++] = var19;
+				maskOff++;
+				int var19 = src[srcOff++];
+				if (var19 != 0 && mask[maskOff] == 0) {
+					dst[dstOff++] = var19;
 				} else {
-					arg4++;
+					dstOff++;
 				}
-				arg5++;
+				maskOff++;
 			}
 			for (int var20 = var13; var20 < 0; var20++) {
-				int var21 = arg1[arg3++];
-				if (var21 != 0 && arg11[arg5] == 0) {
-					arg0[arg4++] = var21;
+				int var21 = src[srcOff++];
+				if (var21 != 0 && mask[maskOff] == 0) {
+					dst[dstOff++] = var21;
 				} else {
-					arg4++;
+					dstOff++;
 				}
-				arg5++;
+				maskOff++;
 			}
-			arg4 += arg8;
-			arg3 += arg9;
-			arg5 += arg10;
+			dstOff += dstStep;
+			srcOff += srcStep;
+			maskOff += maskStep;
 		}
 	}
 }

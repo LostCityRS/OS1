@@ -64,7 +64,7 @@ public class ClientPlayer extends ClientEntity {
 	public int maxTileZ;
 
 	@ObfuscatedName("fi.cl")
-	public boolean lowMemory = false;
+	public boolean lowMem = false;
 
 	@ObfuscatedName("fi.cp")
 	public int team = 0;
@@ -154,14 +154,14 @@ public class ClientPlayer extends ClientEntity {
 			return null;
 		}
 		SeqType var1 = this.primarySeqId != -1 && this.primarySeqDelay == 0 ? SeqType.list(this.primarySeqId) : null;
-		SeqType var2 = this.secondarySeqId == -1 || this.lowMemory || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.list(this.secondarySeqId);
+		SeqType var2 = this.secondarySeqId == -1 || this.lowMem || this.secondarySeqId == this.readyanim && var1 != null ? null : SeqType.list(this.secondarySeqId);
 		ModelLit var3 = this.model.getTempModel(var1, this.primarySeqFrame, var2, this.secondarySeqFrame);
 		if (var3 == null) {
 			return null;
 		}
 		var3.calcBoundingCylinder();
 		this.height = var3.minY;
-		if (!this.lowMemory && this.spotanimId != -1 && this.spotanimFrame != -1) {
+		if (!this.lowMem && this.spotanimId != -1 && this.spotanimFrame != -1) {
 			ModelLit var4 = SpotType.list(this.spotanimId).getTempModel2(this.spotanimFrame);
 			if (var4 != null) {
 				var4.translate(0, -this.spotanimHeight, 0);
@@ -169,7 +169,7 @@ public class ClientPlayer extends ClientEntity {
 				var3 = new ModelLit(var5, 2);
 			}
 		}
-		if (!this.lowMemory && this.locModel != null) {
+		if (!this.lowMem && this.locModel != null) {
 			if (Client.loopCycle >= this.locEndCycle) {
 				this.locModel = null;
 			}

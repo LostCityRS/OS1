@@ -35,6 +35,7 @@ public class JagException extends RuntimeException {
 		try {
 			String var2 = "";
 			if (arg1 != null) {
+				// todo: inlined method
 				Throwable var3 = arg1;
 				String var5;
 				if (arg1 instanceof JagException) {

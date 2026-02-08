@@ -31,7 +31,7 @@ public class NpcType extends Linkable2 {
 	public static LruCache modelCache = new LruCache(50);
 
 	@ObfuscatedName("em.q")
-	public int index;
+	public int id;
 
 	@ObfuscatedName("em.i")
 	public String name = "null";
@@ -140,7 +140,7 @@ public class NpcType extends Linkable2 {
 
 		byte[] buf = configClient.getFile(9, id);
 		NpcType npc = new NpcType();
-		npc.index = id;
+		npc.id = id;
 		if (buf != null) {
 			npc.decode(new Packet(buf));
 		}
@@ -277,7 +277,7 @@ public class NpcType extends Linkable2 {
 			return npc == null ? null : npc.getTempModel(primaryAnim, arg1, secondaryAnim, arg3);
 		}
 
-		ModelLit litModel = (ModelLit) modelCache.find(this.index);
+		ModelLit litModel = (ModelLit) modelCache.find(this.id);
 		if (litModel == null) {
 			boolean needsModel = false;
 			for (int i = 0; i < this.model.length; i++) {
@@ -315,7 +315,7 @@ public class NpcType extends Linkable2 {
 			}
 
 			litModel = model.light(this.ambient + 64, this.contrast + 850, -30, -50, -30);
-			modelCache.put(litModel, this.index);
+			modelCache.put(litModel, this.id);
 		}
 
 		ModelLit model;

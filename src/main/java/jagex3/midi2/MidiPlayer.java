@@ -1,7 +1,7 @@
 package jagex3.midi2;
 
 import deob.ObfuscatedName;
-import jagex3.datastruct.ByteArrayNode;
+import jagex3.io.ByteArrayNode;
 import jagex3.datastruct.HashTable;
 import jagex3.js5.Js5;
 import jagex3.sound.*;

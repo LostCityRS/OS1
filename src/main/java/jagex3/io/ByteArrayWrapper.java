@@ -43,6 +43,7 @@ public abstract class ByteArrayWrapper {
 		if (node instanceof byte[]) {
 			byte[] buf = (byte[]) node;
 			if (copy) {
+				// todo: inlined
 				int len = buf.length;
 				byte[] tmp = new byte[len];
 				System.arraycopy(buf, 0, tmp, 0, len);

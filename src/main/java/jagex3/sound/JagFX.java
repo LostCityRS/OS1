@@ -6,7 +6,7 @@ import jagex3.js5.Js5;
 
 // jag::oldscape::sound::JagFX
 @ObfuscatedName("o")
-public class JagFx {
+public class JagFX {
 
 	@ObfuscatedName("o.d")
 	public Tone[] tones = new Tone[10];
@@ -19,12 +19,12 @@ public class JagFx {
 
 	// jag::oldscape::sound::JagFX::Load
 	@ObfuscatedName("o.r(Lch;II)Lo;")
-	public static JagFx load(Js5 arg0, int arg1, int arg2) {
+	public static JagFX load(Js5 arg0, int arg1, int arg2) {
 		byte[] src = arg0.getFile(arg1, arg2);
-		return src == null ? null : new JagFx(new Packet(src));
+		return src == null ? null : new JagFX(new Packet(src));
 	}
 
-	public JagFx(Packet arg0) {
+	public JagFX(Packet arg0) {
 		for (int var2 = 0; var2 < 10; var2++) {
 			int var3 = arg0.g1();
 			if (var3 != 0) {
@@ -75,31 +75,36 @@ public class JagFx {
 	// jag::oldscape::sound::JagFX::MakeSound
 	@ObfuscatedName("o.m()[B")
 	public final byte[] makeSound() {
-		int var1 = 0;
-		for (int var2 = 0; var2 < 10; var2++) {
-			if (this.tones[var2] != null && this.tones[var2].start + this.tones[var2].length > var1) {
-				var1 = this.tones[var2].start + this.tones[var2].length;
+		int duration = 0;
+		for (int i = 0; i < 10; i++) {
+			if (this.tones[i] != null && this.tones[i].start + this.tones[i].length > duration) {
+				duration = this.tones[i].start + this.tones[i].length;
 			}
 		}
-		if (var1 == 0) {
+
+		if (duration == 0) {
 			return new byte[0];
 		}
-		int var3 = var1 * 22050 / 1000;
-		byte[] var4 = new byte[var3];
-		for (int var5 = 0; var5 < 10; var5++) {
-			if (this.tones[var5] != null) {
-				int var6 = this.tones[var5].length * 22050 / 1000;
-				int var7 = this.tones[var5].start * 22050 / 1000;
-				int[] var8 = this.tones[var5].generate(var6, this.tones[var5].length);
-				for (int var9 = 0; var9 < var6; var9++) {
-					int var10 = (var8[var9] >> 8) + var4[var7 + var9];
-					if ((var10 + 128 & 0xFFFFFF00) != 0) {
-						var10 = var10 >> 31 ^ 0x7F;
+
+		int sampleCount = duration * 22050 / 1000;
+
+		byte[] buf = new byte[sampleCount];
+		for (int i = 0; i < 10; i++) {
+			if (this.tones[i] != null) {
+				int toneSampleCount = this.tones[i].length * 22050 / 1000;
+				int start = this.tones[i].start * 22050 / 1000;
+				int[] samples = this.tones[i].generate(toneSampleCount, this.tones[i].length);
+
+				for (int sample = 0; sample < toneSampleCount; sample++) {
+					int value = (samples[sample] >> 8) + buf[start + sample];
+					if ((value + 128 & 0xFFFFFF00) != 0) {
+						value = value >> 31 ^ 0x7F;
 					}
-					var4[var7 + var9] = (byte) var10;
+					buf[start + sample] = (byte) value;
 				}
 			}
 		}
-		return var4;
+
+		return buf;
 	}
 }

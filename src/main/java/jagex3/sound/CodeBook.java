@@ -30,6 +30,7 @@ public class CodeBook {
 	public static int lookup1Values(int arg0, int arg1) {
 		int var2 = (int) Math.pow((double) arg0, 1.0D / (double) arg1) + 1;
 		while (true) {
+			// todo: inlined method
 			int var3 = var2;
 			int var4 = arg1;
 			int var5 = 1;
@@ -49,6 +50,7 @@ public class CodeBook {
 			if (var6 <= arg0) {
 				return var2;
 			}
+
 			var2--;
 		}
 	}

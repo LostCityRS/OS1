@@ -115,72 +115,72 @@ public class Tone {
 
 	// jag::oldscape::sound::Tone::Generate
 	@ObfuscatedName("t.r(II)[I")
-	public final int[] generate(int arg0, int arg1) {
-		ArrayUtil.clear(buf, 0, arg0);
+	public final int[] generate(int sampleCount, int length) {
+		ArrayUtil.clear(buf, 0, sampleCount);
 
-		if (arg1 < 10) {
+		if (length < 10) {
 			return buf;
 		}
 
-		double var3 = (double) arg0 / ((double) arg1 + 0.0D);
+		double samplesPerStep = (double) sampleCount / ((double) length + 0.0D);
 
 		this.frequencyBase.genInit();
 		this.amplitudeBase.genInit();
 
-		int var5 = 0;
-		int var6 = 0;
-		int var7 = 0;
+		int frequencyStart = 0;
+		int frequencyDuration = 0;
+		int frequencyPhase = 0;
 		if (this.frequencyModRate != null) {
 			this.frequencyModRate.genInit();
 			this.frequencyModRange.genInit();
-			var5 = (int) ((double) (this.frequencyModRate.end - this.frequencyModRate.start) * 32.768D / var3);
-			var6 = (int) ((double) this.frequencyModRate.start * 32.768D / var3);
+			frequencyStart = (int) ((double) (this.frequencyModRate.end - this.frequencyModRate.start) * 32.768D / samplesPerStep);
+			frequencyDuration = (int) ((double) this.frequencyModRate.start * 32.768D / samplesPerStep);
 		}
 
-		int var8 = 0;
-		int var9 = 0;
-		int var10 = 0;
+		int amplitudeStart = 0;
+		int amplitudeDuration = 0;
+		int amplitudePhase = 0;
 		if (this.amplitudeModRate != null) {
 			this.amplitudeModRate.genInit();
 			this.amplitudeModRange.genInit();
-			var8 = (int) ((double) (this.amplitudeModRate.end - this.amplitudeModRate.start) * 32.768D / var3);
-			var9 = (int) ((double) this.amplitudeModRate.start * 32.768D / var3);
+			amplitudeStart = (int) ((double) (this.amplitudeModRate.end - this.amplitudeModRate.start) * 32.768D / samplesPerStep);
+			amplitudeDuration = (int) ((double) this.amplitudeModRate.start * 32.768D / samplesPerStep);
 		}
 
-		for (int var11 = 0; var11 < 5; var11++) {
-			if (this.harmonicVolume[var11] != 0) {
-				fPos[var11] = 0;
-				fDel[var11] = (int) ((double) this.harmonicDelay[var11] * var3);
-				fAmp[var11] = (this.harmonicVolume[var11] << 14) / 100;
-				fMulti[var11] = (int) ((double) (this.frequencyBase.end - this.frequencyBase.start) * 32.768D * Math.pow(1.0057929410678534D, (double) this.harmonicSemitone[var11]) / var3);
-				fOffset[var11] = (int) ((double) this.frequencyBase.start * 32.768D / var3);
+		for (int harmonic = 0; harmonic < 5; harmonic++) {
+			if (this.harmonicVolume[harmonic] != 0) {
+				fPos[harmonic] = 0;
+				fDel[harmonic] = (int) ((double) this.harmonicDelay[harmonic] * samplesPerStep);
+				fAmp[harmonic] = (this.harmonicVolume[harmonic] << 14) / 100;
+				fMulti[harmonic] = (int) ((double) (this.frequencyBase.end - this.frequencyBase.start) * 32.768D * Math.pow(1.0057929410678534D, (double) this.harmonicSemitone[harmonic]) / samplesPerStep);
+				fOffset[harmonic] = (int) ((double) this.frequencyBase.start * 32.768D / samplesPerStep);
 			}
 		}
 
-		for (int var12 = 0; var12 < arg0; var12++) {
-			int var13 = this.frequencyBase.genNext(arg0);
-			int var14 = this.amplitudeBase.genNext(arg0);
+		for (int sample = 0; sample < sampleCount; sample++) {
+			int frequency = this.frequencyBase.genNext(sampleCount);
+			int amplitude = this.amplitudeBase.genNext(sampleCount);
 
 			if (this.frequencyModRate != null) {
-				int var15 = this.frequencyModRate.genNext(arg0);
-				int var16 = this.frequencyModRange.genNext(arg0);
-				var13 += this.waveFunc(var7, var16, this.frequencyModRate.form) >> 1;
-				var7 += (var5 * var15 >> 16) + var6;
+				int rate = this.frequencyModRate.genNext(sampleCount);
+				int range = this.frequencyModRange.genNext(sampleCount);
+				frequency += this.waveFunc(frequencyPhase, range, this.frequencyModRate.form) >> 1;
+				frequencyPhase += (frequencyStart * rate >> 16) + frequencyDuration;
 			}
 
 			if (this.amplitudeModRate != null) {
-				int var17 = this.amplitudeModRate.genNext(arg0);
-				int var18 = this.amplitudeModRange.genNext(arg0);
-				var14 = var14 * ((this.waveFunc(var10, var18, this.amplitudeModRate.form) >> 1) + 32768) >> 15;
-				var10 += (var8 * var17 >> 16) + var9;
+				int rate = this.amplitudeModRate.genNext(sampleCount);
+				int range = this.amplitudeModRange.genNext(sampleCount);
+				amplitude = amplitude * ((this.waveFunc(amplitudePhase, range, this.amplitudeModRate.form) >> 1) + 32768) >> 15;
+				amplitudePhase += (amplitudeStart * rate >> 16) + amplitudeDuration;
 			}
 
-			for (int var19 = 0; var19 < 5; var19++) {
-				if (this.harmonicVolume[var19] != 0) {
-					int var20 = fDel[var19] + var12;
-					if (var20 < arg0) {
-						buf[var20] += this.waveFunc(fPos[var19], fAmp[var19] * var14 >> 15, this.frequencyBase.form);
-						fPos[var19] += (fMulti[var19] * var13 >> 16) + fOffset[var19];
+			for (int harmonic = 0; harmonic < 5; harmonic++) {
+				if (this.harmonicVolume[harmonic] != 0) {
+					int position = fDel[harmonic] + sample;
+					if (position < sampleCount) {
+						buf[position] += this.waveFunc(fPos[harmonic], fAmp[harmonic] * amplitude >> 15, this.frequencyBase.form);
+						fPos[harmonic] += (fMulti[harmonic] * frequency >> 16) + fOffset[harmonic];
 					}
 				}
 			}
@@ -190,122 +190,126 @@ public class Tone {
 			this.release.genInit();
 			this.attack.genInit();
 
-			int var21 = 0;
-			boolean var23 = true;
+			int counter = 0;
+			boolean muted = true;
 
-			for (int var24 = 0; var24 < arg0; var24++) {
-				int var25 = this.release.genNext(arg0);
-				int var26 = this.attack.genNext(arg0);
+			for (int sample = 0; sample < sampleCount; sample++) {
+				int releaseValue = this.release.genNext(sampleCount);
+				int attackValue = this.attack.genNext(sampleCount);
 
-				int var27;
-				if (var23) {
-					var27 = ((this.release.end - this.release.start) * var25 >> 8) + this.release.start;
+				int threshold;
+				if (muted) {
+					threshold = ((this.release.end - this.release.start) * releaseValue >> 8) + this.release.start;
 				} else {
-					var27 = ((this.release.end - this.release.start) * var26 >> 8) + this.release.start;
+					threshold = ((this.release.end - this.release.start) * attackValue >> 8) + this.release.start;
 				}
 
-				var21 += 256;
-				if (var21 >= var27) {
-					var21 = 0;
-					var23 = !var23;
+				counter += 256;
+				if (counter >= threshold) {
+					counter = 0;
+					muted = !muted;
 				}
 
-				if (var23) {
-					buf[var24] = 0;
+				if (muted) {
+					buf[sample] = 0;
 				}
 			}
 		}
 
 		if (this.reverbDelay > 0 && this.reverbVolume > 0) {
-			int var28 = (int) ((double) this.reverbDelay * var3);
-			for (int var29 = var28; var29 < arg0; var29++) {
-				buf[var29] += buf[var29 - var28] * this.reverbVolume / 100;
+			int start = (int) ((double) this.reverbDelay * samplesPerStep);
+
+			for (int sample = start; sample < sampleCount; sample++) {
+				buf[sample] += buf[sample - start] * this.reverbVolume / 100;
 			}
 		}
 
 		if (this.filter.pairs[0] > 0 || this.filter.pairs[1] > 0) {
 			this.filterRange.genInit();
 
-			int var30 = this.filterRange.genNext(arg0 + 1);
+			int range = this.filterRange.genNext(sampleCount + 1);
+			int forward = this.filter.calculateCoeffs(0, (float) range / 65536.0F);
+			int backward = this.filter.calculateCoeffs(1, (float) range / 65536.0F);
 
-			int var31 = this.filter.calculateCoeffs(0, (float) var30 / 65536.0F);
-			int var32 = this.filter.calculateCoeffs(1, (float) var30 / 65536.0F);
+			if (sampleCount >= forward + backward) {
+				int index = 0;
 
-			if (arg0 >= var31 + var32) {
-				int var33 = 0;
-				int var34 = var32;
-				if (var32 > arg0 - var31) {
-					var34 = arg0 - var31;
+				int interval = backward;
+				if (backward > sampleCount - forward) {
+					interval = sampleCount - forward;
 				}
 
-				while (var33 < var34) {
-					int var35 = (int) ((long) buf[var31 + var33] * (long) Filter.reduceCoeffInt >> 16);
-					for (int var36 = 0; var36 < var31; var36++) {
-						var35 += (int) ((long) buf[var31 + var33 - 1 - var36] * (long) Filter.coeffInt[0][var36] >> 16);
+				while (index < interval) {
+					int sample = (int) ((long) buf[forward + index] * (long) Filter.reduceCoeffInt >> 16);
+
+					for (int offset = 0; offset < forward; offset++) {
+						sample += (int) ((long) buf[forward + index - 1 - offset] * (long) Filter.coeffInt[0][offset] >> 16);
 					}
 
-					for (int var37 = 0; var37 < var33; var37++) {
-						var35 -= (int) ((long) buf[var33 - 1 - var37] * (long) Filter.coeffInt[1][var37] >> 16);
+					for (int offset = 0; offset < index; offset++) {
+						sample -= (int) ((long) buf[index - 1 - offset] * (long) Filter.coeffInt[1][offset] >> 16);
 					}
 
-					buf[var33] = var35;
-					var30 = this.filterRange.genNext(arg0 + 1);
-					var33++;
+					buf[index] = sample;
+					range = this.filterRange.genNext(sampleCount + 1);
+					index++;
 				}
 
-				int var38 = 128;
+				interval = 128;
 				while (true) {
-					if (var38 > arg0 - var31) {
-						var38 = arg0 - var31;
+					if (interval > sampleCount - forward) {
+						interval = sampleCount - forward;
 					}
 
-					while (var33 < var38) {
-						int var39 = (int) ((long) buf[var31 + var33] * (long) Filter.reduceCoeffInt >> 16);
-						for (int var40 = 0; var40 < var31; var40++) {
-							var39 += (int) ((long) buf[var31 + var33 - 1 - var40] * (long) Filter.coeffInt[0][var40] >> 16);
+					while (index < interval) {
+						int sample = (int) ((long) buf[forward + index] * (long) Filter.reduceCoeffInt >> 16);
+
+						for (int offset = 0; offset < forward; offset++) {
+							sample += (int) ((long) buf[forward + index - 1 - offset] * (long) Filter.coeffInt[0][offset] >> 16);
 						}
 
-						for (int var41 = 0; var41 < var32; var41++) {
-							var39 -= (int) ((long) buf[var33 - 1 - var41] * (long) Filter.coeffInt[1][var41] >> 16);
+						for (int offset = 0; offset < backward; offset++) {
+							sample -= (int) ((long) buf[index - 1 - offset] * (long) Filter.coeffInt[1][offset] >> 16);
 						}
 
-						buf[var33] = var39;
-						var30 = this.filterRange.genNext(arg0 + 1);
-						var33++;
+						buf[index] = sample;
+						range = this.filterRange.genNext(sampleCount + 1);
+						index++;
 					}
 
-					if (var33 >= arg0 - var31) {
-						while (var33 < arg0) {
-							int var42 = 0;
-							for (int var43 = var31 + var33 - arg0; var43 < var31; var43++) {
-								var42 += (int) ((long) buf[var31 + var33 - 1 - var43] * (long) Filter.coeffInt[0][var43] >> 16);
+					if (index >= sampleCount - forward) {
+						while (index < sampleCount) {
+							int sample = 0;
+
+							for (int offset = forward + index - sampleCount; offset < forward; offset++) {
+								sample += (int) ((long) buf[forward + index - 1 - offset] * (long) Filter.coeffInt[0][offset] >> 16);
 							}
 
-							for (int var44 = 0; var44 < var32; var44++) {
-								var42 -= (int) ((long) buf[var33 - 1 - var44] * (long) Filter.coeffInt[1][var44] >> 16);
+							for (int offset = 0; offset < backward; offset++) {
+								sample -= (int) ((long) buf[index - 1 - offset] * (long) Filter.coeffInt[1][offset] >> 16);
 							}
 
-							buf[var33] = var42;
-							this.filterRange.genNext(arg0 + 1);
-							var33++;
+							buf[index] = sample;
+							this.filterRange.genNext(sampleCount + 1);
+							index++;
 						}
 
 						break;
 					}
 
-					var31 = this.filter.calculateCoeffs(0, (float) var30 / 65536.0F);
-					var32 = this.filter.calculateCoeffs(1, (float) var30 / 65536.0F);
-					var38 += 128;
+					forward = this.filter.calculateCoeffs(0, (float) range / 65536.0F);
+					backward = this.filter.calculateCoeffs(1, (float) range / 65536.0F);
+					interval += 128;
 				}
 			}
 		}
 
-		for (int var46 = 0; var46 < arg0; var46++) {
-			if (buf[var46] < -32768) {
-				buf[var46] = -32768;
+		for (int sample = 0; sample < sampleCount; sample++) {
+			if (buf[sample] < -32768) {
+				buf[sample] = -32768;
 			}
-			if (buf[var46] > 32767) {
-				buf[var46] = 32767;
+			if (buf[sample] > 32767) {
+				buf[sample] = 32767;
 			}
 		}
 
@@ -314,15 +318,15 @@ public class Tone {
 
 	// jag::oldscape::sound::Tone::WaveFunc
 	@ObfuscatedName("t.d(III)I")
-	public final int waveFunc(int arg0, int arg1, int arg2) {
-		if (arg2 == 1) {
-			return (arg0 & 0x7FFF) < 16384 ? arg1 : -arg1;
-		} else if (arg2 == 2) {
-			return sine[arg0 & 0x7FFF] * arg1 >> 14;
-		} else if (arg2 == 3) {
-			return ((arg0 & 0x7FFF) * arg1 >> 14) - arg1;
-		} else if (arg2 == 4) {
-			return noise[arg0 / 2607 & 0x7FFF] * arg1;
+	public final int waveFunc(int phase, int amplitude, int form) {
+		if (form == 1) {
+			return (phase & 0x7FFF) < 16384 ? amplitude : -amplitude;
+		} else if (form == 2) {
+			return sine[phase & 0x7FFF] * amplitude >> 14;
+		} else if (form == 3) {
+			return ((phase & 0x7FFF) * amplitude >> 14) - amplitude;
+		} else if (form == 4) {
+			return noise[phase / 2607 & 0x7FFF] * amplitude;
 		} else {
 			return 0;
 		}

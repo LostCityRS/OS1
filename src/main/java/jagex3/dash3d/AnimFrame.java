@@ -42,7 +42,7 @@ public class AnimFrame {
 	public int[] tz;
 
 	@ObfuscatedName("ae.i")
-	public boolean hasAlpha = false;
+	public boolean animateTransparencies = false;
 
 	public AnimFrame(byte[] src, AnimBase base) {
 		this.base = base;
@@ -102,7 +102,7 @@ public class AnimFrame {
 			length++;
 
 			if (this.base.type[var8] == 5) {
-				this.hasAlpha = true;
+				this.animateTransparencies = true;
 			}
 		}
 

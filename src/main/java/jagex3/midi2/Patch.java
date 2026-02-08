@@ -315,9 +315,11 @@ public class Patch extends Linkable {
 				int var77 = (var75 - var71) / 2 + (var75 - var71) * var72;
 
 				for (int var78 = var71; var78 < var75; var78++) {
+					// todo: inlined method
 					int var79 = var75 - var71;
 					int var80 = var77 >>> 31;
 					int var81 = (var77 + var80) / var79 - var80;
+
 					this.noteVolume[var78] = (byte) (this.noteVolume[var78] * var81 + 32 >> 6);
 					var77 += var76 - var72;
 				}

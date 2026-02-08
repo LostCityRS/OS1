@@ -175,7 +175,7 @@ public class BgSound extends Linkable {
 				if (var4.continuousStream != null) {
 					var4.continuousStream.applyVolume(var6);
 				} else if (var4.sound >= 0) {
-					JagFx var7 = JagFx.load(Client.jagFX, var4.sound, 0);
+					JagFX var7 = JagFX.load(Client.jagFX, var4.sound, 0);
 					if (var7 != null) {
 						Wave var8 = var7.toWave().decimate(Client.decimator);
 						WaveStream var9 = WaveStream.newRatePercent(var8, 100, var6);
@@ -191,7 +191,7 @@ public class BgSound extends Linkable {
 					}
 				} else if (var4.random != null && (var4.randomSoundTimer -= arg3) <= 0) {
 					int var10 = (int) (Math.random() * (double) var4.random.length);
-					JagFx var11 = JagFx.load(Client.jagFX, var4.random[var10], 0);
+					JagFX var11 = JagFX.load(Client.jagFX, var4.random[var10], 0);
 					if (var11 != null) {
 						Wave var12 = var11.toWave().decimate(Client.decimator);
 						WaveStream var13 = WaveStream.newRatePercent(var12, 100, var6);

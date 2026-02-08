@@ -22,7 +22,7 @@ import java.net.URL;
 public abstract class GameShell extends Applet implements Runnable, FocusListener, WindowListener {
 
 	@ObfuscatedName("dj.r")
-	public static SignLink signLink;
+	public static SignLink signlink;
 
 	@ObfuscatedName("dj.d")
 	public static GameShell shell = null;
@@ -70,10 +70,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 	public static int updatePos;
 
 	@ObfuscatedName("dj.b")
-	public static int canvasWid;
+	public static int sWid;
 
 	@ObfuscatedName("ao.t")
-	public static int canvasHei;
+	public static int sHei;
 
 	@ObfuscatedName("cd.ad")
 	public static Image progressBar;
@@ -144,15 +144,15 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			}
 
 			shell = this;
-			canvasWid = arg0;
-			canvasHei = arg1;
+			sWid = arg0;
+			sHei = arg1;
 			JagException.revision = arg2;
 			JagException.applet = this;
 
-			if (signLink == null) {
-				signLink = new SignLink();
+			if (signlink == null) {
+				signlink = new SignLink();
 			}
-			signLink.threadreq(this, 1);
+			signlink.threadreq(this, 1);
 		} catch (Exception ex) {
 			JagException.report(null, ex);
 			this.error("crash");
@@ -174,7 +174,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 		}
 		canvas = new GameCanvas(this);
 		var1.add(canvas);
-		canvas.setSize(canvasWid, canvasHei);
+		canvas.setSize(sWid, sHei);
 		canvas.setVisible(true);
 		if (frame != null) {
 			Insets var2 = frame.getInsets();
@@ -259,8 +259,9 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			this.setFocusCycleRoot(true);
 			this.addcanvas();
 
-			int wid = canvasWid;
-			int hei = canvasHei;
+			// todo: inlined
+			int wid = sWid;
+			int hei = sHei;
 			Canvas target = canvas;
 			PixMap newDrawArea;
 			try {
@@ -276,6 +277,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 			this.maininit();
 
+			// todo: inlined method
 			Timer newTimer;
 			try {
 				newTimer = new NanoTimer();
@@ -293,7 +295,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 				this.mainredrawwrapper();
 
-				SignLink.flushEvents(signLink, canvas);
+				SignLink.flushEvents(signlink, canvas);
 			}
 		} catch (Exception ex) {
 			JagException.report(null, ex);
@@ -339,7 +341,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			redrawNum -= 50;
 
 			fullredraw = true;
-			canvas.setSize(canvasWid, canvasHei);
+			canvas.setSize(sWid, sHei);
 			canvas.setVisible(true);
 			if (frame == null) {
 				canvas.setLocation(0, 0);
@@ -378,9 +380,9 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			}
 		}
 
-		if (signLink != null) {
+		if (signlink != null) {
 			try {
-				signLink.close();
+				signlink.close();
 			} catch (Exception ignore) {
 			}
 		}
@@ -448,7 +450,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 
 		if (SignLink.javaVersion != null && SignLink.javaVersion.startsWith("1.5") && MonotonicTime.currentTime() - lastCanvasReplace > 1000L) {
 			Rectangle bounds = g.getClipBounds();
-			if (bounds == null || bounds.width >= canvasWid && bounds.height >= canvasHei) {
+			if (bounds == null || bounds.width >= sWid && bounds.height >= sHei) {
 				canvasReplaceRecommended = true;
 			}
 		}
@@ -540,7 +542,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			if (fullredraw) {
 				fullredraw = false;
 				g.setColor(Color.black);
-				g.fillRect(0, 0, canvasWid, canvasHei);
+				g.fillRect(0, 0, sWid, sHei);
 			}
 
 			if (color == null) {
@@ -566,10 +568,10 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 				bar.setColor(Color.white);
 				bar.drawString(message, (304 - progressFontMetrics.stringWidth(message)) / 2, 22);
 
-				g.drawImage(progressBar, canvasWid / 2 - 152, canvasHei / 2 - 18, null);
+				g.drawImage(progressBar, sWid / 2 - 152, sHei / 2 - 18, null);
 			} catch (Exception ex) {
-				int x = canvasWid / 2 - 152;
-				int y = canvasHei / 2 - 18;
+				int x = sWid / 2 - 152;
+				int y = sHei / 2 - 18;
 
 				g.setColor(color);
 				g.drawRect(x, y, 303, 33);

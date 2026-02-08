@@ -11,7 +11,7 @@ import jagex3.config.SeqType;
 public class ClientLocAnim extends ModelSource {
 
 	@ObfuscatedName("ff.j")
-	public int index;
+	public int id;
 
 	@ObfuscatedName("ff.z")
 	public int shape;
@@ -38,7 +38,7 @@ public class ClientLocAnim extends ModelSource {
 	public int animCycle;
 
 	public ClientLocAnim(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, boolean arg7, ModelSource arg8) {
-		this.index = arg0;
+		this.id = arg0;
 		this.shape = arg1;
 		this.angle = arg2;
 		this.level = arg3;
@@ -87,7 +87,7 @@ public class ClientLocAnim extends ModelSource {
 			}
 			this.animCycle = Client.loopCycle - var1;
 		}
-		LocType var2 = LocType.list(this.index);
+		LocType var2 = LocType.list(this.id);
 		if (var2.multiloc != null) {
 			var2 = var2.getMultiLoc();
 		}

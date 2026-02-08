@@ -330,7 +330,7 @@ public class Packet extends Linkable {
 
 	@ObfuscatedName("ev.av(S)I")
 	public int gSmart2or4() {
-		return this.data[this.pos] < 0 ? this.g4() & Integer.MAX_VALUE : this.g2();
+		return this.data[this.pos] < 0 ? this.g4() & 0x7fffffff : this.g2();
 	}
 
 	@ObfuscatedName("ev.ak(B)I")

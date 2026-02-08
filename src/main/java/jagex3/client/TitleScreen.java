@@ -278,6 +278,7 @@ public class TitleScreen {
 
 		if (Client.lang == 0) {
 			if (ClientMouseListener.mouseClickButton == 1) {
+				// todo: inlined method
 				byte var4 = 5;
 				short var5 = 463;
 				byte var6 = 100;
@@ -530,6 +531,7 @@ public class TitleScreen {
 		}
 
 		if (flameCycle > 0) {
+			// todo: inlined method
 			int var28 = flameCycle;
 
 			short var29 = 256;
@@ -1080,7 +1082,7 @@ public class TitleScreen {
 	public static void listFetch() {
 		try {
 			if (gameworldListDownloadRequest == null) {
-				gameworldListDownloadRequest = new HTTPRequest(GameShell.signLink, new URL(worldlistUrl));
+				gameworldListDownloadRequest = new HTTPRequest(GameShell.signlink, new URL(worldlistUrl));
 				return;
 			}
 

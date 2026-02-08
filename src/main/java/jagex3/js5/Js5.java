@@ -414,6 +414,7 @@ public abstract class Js5 {
 		try {
 			var10 = getUncompressedPacket(var8);
 		} catch (RuntimeException ex) {
+			// todo: inlined method
 			String var13 = "" + (key != null) + "," + groupId + "," + var8.length + ",";
 
 			// todo: inlined method (getcrc)

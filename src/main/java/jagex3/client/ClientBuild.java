@@ -423,7 +423,7 @@ public class ClientBuild {
 			} else {
 				var8 = arg0 - 1;
 			}
-			if (Client.sceneState != var8) {
+			if (Client.lastBuiltLevel != var8) {
 				return;
 			}
 		}
@@ -847,7 +847,7 @@ public class ClientBuild {
 								} else {
 									var37 = var6 - 1;
 								}
-								if (Client.sceneState != var37) {
+								if (Client.lastBuiltLevel != var37) {
 									continue;
 								}
 							}

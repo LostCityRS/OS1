@@ -51,6 +51,7 @@ public class Js5Loader extends Js5 {
 		this.archive = archive;
 		this.remoteEnabled = arg5;
 
+		// todo: inlined method
 		int var8 = this.archive;
 		if (Js5Net.masterIndexBuffer == null) {
 			Js5Net.queueRequest(null, 255, 255, 0, (byte) 0, true);
@@ -112,7 +113,7 @@ public class Js5Loader extends Js5 {
 			arg1[arg1.length - 2] = (byte) (this.groupVersions[arg0] >> 8);
 			arg1[arg1.length - 1] = (byte) this.groupVersions[arg0];
 			if (this.dataFile != null) {
-				// todo: inlined method?
+				// todo: inlined method
 				DataFile var12 = this.dataFile;
 				Js5WorkerRequest var13 = new Js5WorkerRequest();
 				var13.type = 0;
@@ -126,7 +127,7 @@ public class Js5Loader extends Js5 {
 				Object var16 = Js5NetThread.lock;
 				synchronized (var16) {
 					if (Js5NetThread.keepAlive == 0) {
-						GameShell.signLink.threadreq(new Js5NetThread(), 5);
+						GameShell.signlink.threadreq(new Js5NetThread(), 5);
 					}
 					Js5NetThread.keepAlive = 600;
 				}
@@ -141,6 +142,7 @@ public class Js5Loader extends Js5 {
 			throw new RuntimeException();
 		}
 		if (this.indexDataFile != null) {
+			// todo: inlined method
 			int var5 = this.archive;
 			DataFile var6 = this.indexDataFile;
 			Js5WorkerRequest var7 = new Js5WorkerRequest();
@@ -155,7 +157,7 @@ public class Js5Loader extends Js5 {
 			Object var10 = Js5NetThread.lock;
 			synchronized (var10) {
 				if (Js5NetThread.keepAlive == 0) {
-					GameShell.signLink.threadreq(new Js5NetThread(), 5);
+					GameShell.signlink.threadreq(new Js5NetThread(), 5);
 				}
 				Js5NetThread.keepAlive = 600;
 			}
@@ -248,6 +250,7 @@ public class Js5Loader extends Js5 {
 		this.field1581 = -1;
 		for (int var2 = 0; var2 < this.loadedGroups.length; var2++) {
 			if (this.groupSizes[var2] > 0) {
+				// todo: inlined method
 				DataFile var3 = this.dataFile;
 				Js5WorkerRequest var5 = new Js5WorkerRequest();
 				var5.type = 1;
@@ -261,7 +264,7 @@ public class Js5Loader extends Js5 {
 				Object var8 = Js5NetThread.lock;
 				synchronized (var8) {
 					if (Js5NetThread.keepAlive == 0) {
-						GameShell.signLink.threadreq(new Js5NetThread(), 5);
+						GameShell.signlink.threadreq(new Js5NetThread(), 5);
 					}
 					Js5NetThread.keepAlive = 600;
 				}

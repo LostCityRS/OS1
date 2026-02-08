@@ -36,7 +36,7 @@ public class WaveCache {
 		if (var8 != null) {
 			return var8;
 		} else if (arg2 == null || arg2[0] > 0) {
-			JagFx var9 = JagFx.load(this.synthArchive, arg0, arg1);
+			JagFX var9 = JagFX.load(this.synthArchive, arg0, arg1);
 			if (var9 == null) {
 				return null;
 			}
@@ -54,7 +54,6 @@ public class WaveCache {
 	// jag::oldscape::sound::WaveCache::GetJagVorbis
 	@ObfuscatedName("a.d(II[II)Leq;")
 	public Wave getJagVorbis(int arg0, int arg1, int[] arg2) {
-		// todo: inlined hashAudioID?
 		int var4 = arg1 ^ (arg0 << 4 & 0xFFFF | arg0 >>> 12);
 		int var5 = var4 | arg0 << 16;
 		long var6 = (long) var5 ^ 0x100000000L;

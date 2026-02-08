@@ -132,27 +132,27 @@ public class Pix2D extends Linkable2 {
 
 	// jag::oldscape::graphics::NXTPix2D::FillRectTrans
 	@ObfuscatedName("fv.w(IIIIII)V")
-	public static void fillRectTrans(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-		if (arg0 < clipMinX) {
-			arg2 -= clipMinX - arg0;
-			arg0 = clipMinX;
+	public static void fillRectTrans(int x, int y, int width, int height, int rgb, int alpha) {
+		if (x < clipMinX) {
+			width -= clipMinX - x;
+			x = clipMinX;
 		}
-		if (arg1 < clipMinY) {
-			arg3 -= clipMinY - arg1;
-			arg1 = clipMinY;
+		if (y < clipMinY) {
+			height -= clipMinY - y;
+			y = clipMinY;
 		}
-		if (arg0 + arg2 > clipMaxX) {
-			arg2 = clipMaxX - arg0;
+		if (x + width > clipMaxX) {
+			width = clipMaxX - x;
 		}
-		if (arg1 + arg3 > clipMaxY) {
-			arg3 = clipMaxY - arg1;
+		if (y + height > clipMaxY) {
+			height = clipMaxY - y;
 		}
-		int var6 = ((arg4 & 0xFF00FF) * arg5 >> 8 & 0xFF00FF) + ((arg4 & 0xFF00) * arg5 >> 8 & 0xFF00);
-		int var7 = 256 - arg5;
-		int var8 = width - arg2;
-		int var9 = width * arg1 + arg0;
-		for (int var10 = 0; var10 < arg3; var10++) {
-			for (int var11 = -arg2; var11 < 0; var11++) {
+		int var6 = ((rgb & 0xFF00FF) * alpha >> 8 & 0xFF00FF) + ((rgb & 0xFF00) * alpha >> 8 & 0xFF00);
+		int var7 = 256 - alpha;
+		int var8 = Pix2D.width - width;
+		int var9 = Pix2D.width * y + x;
+		for (int var10 = 0; var10 < height; var10++) {
+			for (int var11 = -width; var11 < 0; var11++) {
 				int var12 = pixels[var9];
 				int var13 = ((var12 & 0xFF00FF) * var7 >> 8 & 0xFF00FF) + ((var12 & 0xFF00) * var7 >> 8 & 0xFF00);
 				pixels[var9++] = var6 + var13;
@@ -163,26 +163,26 @@ public class Pix2D extends Linkable2 {
 
 	// jag::oldscape::graphics::NXTPix2D::FillRect
 	@ObfuscatedName("fv.e(IIIII)V")
-	public static void fillRect(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (arg0 < clipMinX) {
-			arg2 -= clipMinX - arg0;
-			arg0 = clipMinX;
+	public static void fillRect(int x, int y, int width, int height, int rgb) {
+		if (x < clipMinX) {
+			width -= clipMinX - x;
+			x = clipMinX;
 		}
-		if (arg1 < clipMinY) {
-			arg3 -= clipMinY - arg1;
-			arg1 = clipMinY;
+		if (y < clipMinY) {
+			height -= clipMinY - y;
+			y = clipMinY;
 		}
-		if (arg0 + arg2 > clipMaxX) {
-			arg2 = clipMaxX - arg0;
+		if (x + width > clipMaxX) {
+			width = clipMaxX - x;
 		}
-		if (arg1 + arg3 > clipMaxY) {
-			arg3 = clipMaxY - arg1;
+		if (y + height > clipMaxY) {
+			height = clipMaxY - y;
 		}
-		int var5 = width - arg2;
-		int var6 = width * arg1 + arg0;
-		for (int var7 = -arg3; var7 < 0; var7++) {
-			for (int var8 = -arg2; var8 < 0; var8++) {
-				pixels[var6++] = arg4;
+		int var5 = Pix2D.width - width;
+		int var6 = Pix2D.width * y + x;
+		for (int var7 = -height; var7 < 0; var7++) {
+			for (int var8 = -width; var8 < 0; var8++) {
+				pixels[var6++] = rgb;
 			}
 			var6 += var5;
 		}
@@ -224,62 +224,62 @@ public class Pix2D extends Linkable2 {
 
 	// jag::oldscape::graphics::Pix2D::DrawRect
 	@ObfuscatedName("fv.y(IIIII)V")
-	public static void drawRect(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		hline(arg0, arg1, arg2, arg4);
-		hline(arg0, arg1 + arg3 - 1, arg2, arg4);
-		vline(arg0, arg1, arg3, arg4);
-		vline(arg0 + arg2 - 1, arg1, arg3, arg4);
+	public static void drawRect(int x, int y, int w, int h, int rgb) {
+		hline(x, y, w, rgb);
+		hline(x, y + h - 1, w, rgb);
+		vline(x, y, h, rgb);
+		vline(x + w - 1, y, h, rgb);
 	}
 
 	// jag::oldscape::graphics::Pix2D::DrawRectTrans
 	@ObfuscatedName("fv.t(IIIIII)V")
-	public static void drawRectTrans(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-		hlineTrans(arg0, arg1, arg2, arg4, arg5);
-		hlineTrans(arg0, arg1 + arg3 - 1, arg2, arg4, arg5);
-		if (arg3 >= 3) {
-			vlineTrans(arg0, arg1 + 1, arg3 - 2, arg4, arg5);
-			vlineTrans(arg0 + arg2 - 1, arg1 + 1, arg3 - 2, arg4, arg5);
+	public static void drawRectTrans(int x, int y, int w, int h, int rgb, int alpha) {
+		hlineTrans(x, y, w, rgb, alpha);
+		hlineTrans(x, y + h - 1, w, rgb, alpha);
+		if (h >= 3) {
+			vlineTrans(x, y + 1, h - 2, rgb, alpha);
+			vlineTrans(x + w - 1, y + 1, h - 2, rgb, alpha);
 		}
 	}
 
 	// jag::oldscape::graphics::NXTPix2D::HLine
 	@ObfuscatedName("fv.f(IIII)V")
-	public static void hline(int arg0, int arg1, int arg2, int arg3) {
-		if (arg1 < clipMinY || arg1 >= clipMaxY) {
+	public static void hline(int x, int y, int width, int rgb) {
+		if (y < clipMinY || y >= clipMaxY) {
 			return;
 		}
-		if (arg0 < clipMinX) {
-			arg2 -= clipMinX - arg0;
-			arg0 = clipMinX;
+		if (x < clipMinX) {
+			width -= clipMinX - x;
+			x = clipMinX;
 		}
-		if (arg0 + arg2 > clipMaxX) {
-			arg2 = clipMaxX - arg0;
+		if (x + width > clipMaxX) {
+			width = clipMaxX - x;
 		}
-		int var4 = width * arg1 + arg0;
-		for (int var5 = 0; var5 < arg2; var5++) {
-			pixels[var4 + var5] = arg3;
+		int var4 = Pix2D.width * y + x;
+		for (int var5 = 0; var5 < width; var5++) {
+			pixels[var4 + var5] = rgb;
 		}
 	}
 
 	// jag::oldscape::graphics::NXTPix2D::HLineTrans
 	@ObfuscatedName("fv.k(IIIII)V")
-	public static void hlineTrans(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (arg1 < clipMinY || arg1 >= clipMaxY) {
+	public static void hlineTrans(int x, int y, int w, int rgb, int alpha) {
+		if (y < clipMinY || y >= clipMaxY) {
 			return;
 		}
-		if (arg0 < clipMinX) {
-			arg2 -= clipMinX - arg0;
-			arg0 = clipMinX;
+		if (x < clipMinX) {
+			w -= clipMinX - x;
+			x = clipMinX;
 		}
-		if (arg0 + arg2 > clipMaxX) {
-			arg2 = clipMaxX - arg0;
+		if (x + w > clipMaxX) {
+			w = clipMaxX - x;
 		}
-		int var5 = 256 - arg4;
-		int var6 = (arg3 >> 16 & 0xFF) * arg4;
-		int var7 = (arg3 >> 8 & 0xFF) * arg4;
-		int var8 = (arg3 & 0xFF) * arg4;
-		int var9 = width * arg1 + arg0;
-		for (int var10 = 0; var10 < arg2; var10++) {
+		int var5 = 256 - alpha;
+		int var6 = (rgb >> 16 & 0xFF) * alpha;
+		int var7 = (rgb >> 8 & 0xFF) * alpha;
+		int var8 = (rgb & 0xFF) * alpha;
+		int var9 = width * y + x;
+		for (int var10 = 0; var10 < w; var10++) {
 			int var11 = (pixels[var9] >> 16 & 0xFF) * var5;
 			int var12 = (pixels[var9] >> 8 & 0xFF) * var5;
 			int var13 = (pixels[var9] & 0xFF) * var5;
@@ -290,42 +290,42 @@ public class Pix2D extends Linkable2 {
 
 	// jag::oldscape::graphics::NXTPix2D::VLine
 	@ObfuscatedName("fv.o(IIII)V")
-	public static void vline(int arg0, int arg1, int arg2, int arg3) {
-		if (arg0 < clipMinX || arg0 >= clipMaxX) {
+	public static void vline(int x, int y, int height, int rgb) {
+		if (x < clipMinX || x >= clipMaxX) {
 			return;
 		}
-		if (arg1 < clipMinY) {
-			arg2 -= clipMinY - arg1;
-			arg1 = clipMinY;
+		if (y < clipMinY) {
+			height -= clipMinY - y;
+			y = clipMinY;
 		}
-		if (arg1 + arg2 > clipMaxY) {
-			arg2 = clipMaxY - arg1;
+		if (y + height > clipMaxY) {
+			height = clipMaxY - y;
 		}
-		int var4 = width * arg1 + arg0;
-		for (int var5 = 0; var5 < arg2; var5++) {
-			pixels[width * var5 + var4] = arg3;
+		int var4 = width * y + x;
+		for (int var5 = 0; var5 < height; var5++) {
+			pixels[width * var5 + var4] = rgb;
 		}
 	}
 
 	// jag::oldscape::graphics::NXTPix2D::VLineTrans
 	@ObfuscatedName("fv.a(IIIII)V")
-	public static void vlineTrans(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		if (arg0 < clipMinX || arg0 >= clipMaxX) {
+	public static void vlineTrans(int x, int y, int height, int rgb, int alpha) {
+		if (x < clipMinX || x >= clipMaxX) {
 			return;
 		}
-		if (arg1 < clipMinY) {
-			arg2 -= clipMinY - arg1;
-			arg1 = clipMinY;
+		if (y < clipMinY) {
+			height -= clipMinY - y;
+			y = clipMinY;
 		}
-		if (arg1 + arg2 > clipMaxY) {
-			arg2 = clipMaxY - arg1;
+		if (y + height > clipMaxY) {
+			height = clipMaxY - y;
 		}
-		int var5 = 256 - arg4;
-		int var6 = (arg3 >> 16 & 0xFF) * arg4;
-		int var7 = (arg3 >> 8 & 0xFF) * arg4;
-		int var8 = (arg3 & 0xFF) * arg4;
-		int var9 = width * arg1 + arg0;
-		for (int var10 = 0; var10 < arg2; var10++) {
+		int var5 = 256 - alpha;
+		int var6 = (rgb >> 16 & 0xFF) * alpha;
+		int var7 = (rgb >> 8 & 0xFF) * alpha;
+		int var8 = (rgb & 0xFF) * alpha;
+		int var9 = width * y + x;
+		for (int var10 = 0; var10 < height; var10++) {
 			int var11 = (pixels[var9] >> 16 & 0xFF) * var5;
 			int var12 = (pixels[var9] >> 8 & 0xFF) * var5;
 			int var13 = (pixels[var9] & 0xFF) * var5;
@@ -337,69 +337,81 @@ public class Pix2D extends Linkable2 {
 
 	// jag::oldscape::graphics::NXTPix2D::Line
 	@ObfuscatedName("fv.h(IIIII)V")
-	public static void line(int arg0, int arg1, int arg2, int arg3, int arg4) {
-		int var5 = arg2 - arg0;
-		int var6 = arg3 - arg1;
-		if (var6 == 0) {
-			if (var5 >= 0) {
-				hline(arg0, arg1, var5 + 1, arg4);
+	public static void line(int x1, int y1, int x2, int y2, int rgb) {
+		int dx = x2 - x1;
+		int dy = y2 - y1;
+
+		if (dy == 0) {
+			if (dx >= 0) {
+				hline(x1, y1, dx + 1, rgb);
 			} else {
-				hline(arg0 + var5, arg1, -var5 + 1, arg4);
+				hline(x1 + dx, y1, -dx + 1, rgb);
 			}
-		} else if (var5 != 0) {
-			if (var5 + var6 < 0) {
-				arg0 += var5;
-				var5 = -var5;
-				arg1 += var6;
-				var6 = -var6;
-			}
-			if (var5 > var6) {
-				int var7 = arg1 << 16;
-				int var8 = var7 + 32768;
-				int var9 = var6 << 16;
-				int var10 = (int) Math.floor((double) var9 / (double) var5 + 0.5D);
-				int var11 = arg0 + var5;
-				if (arg0 < clipMinX) {
-					var8 += (clipMinX - arg0) * var10;
-					arg0 = clipMinX;
-				}
-				if (var11 >= clipMaxX) {
-					var11 = clipMaxX - 1;
-				}
-				while (arg0 <= var11) {
-					int var12 = var8 >> 16;
-					if (var12 >= clipMinY && var12 < clipMaxY) {
-						pixels[width * var12 + arg0] = arg4;
-					}
-					var8 += var10;
-					arg0++;
-				}
+		} else if (dx == 0) {
+			if (dy >= 0) {
+				vline(x1, y1, dy + 1, rgb);
 			} else {
-				int var13 = arg0 << 16;
-				int var14 = var13 + 32768;
-				int var15 = var5 << 16;
-				int var16 = (int) Math.floor((double) var15 / (double) var6 + 0.5D);
-				int var17 = arg1 + var6;
-				if (arg1 < clipMinY) {
-					var14 += (clipMinY - arg1) * var16;
-					arg1 = clipMinY;
-				}
-				if (var17 >= clipMaxY) {
-					var17 = clipMaxY - 1;
-				}
-				while (arg1 <= var17) {
-					int var18 = var14 >> 16;
-					if (var18 >= clipMinX && var18 < clipMaxX) {
-						pixels[width * arg1 + var18] = arg4;
-					}
-					var14 += var16;
-					arg1++;
-				}
+				vline(x1, y1 + dy, -dy + 1, rgb);
 			}
-		} else if (var6 >= 0) {
-			vline(arg0, arg1, var6 + 1, arg4);
 		} else {
-			vline(arg0, arg1 + var6, -var6 + 1, arg4);
+			if (dx + dy < 0) {
+				x1 += dx;
+				dx = -dx;
+				y1 += dy;
+				dy = -dy;
+			}
+
+			if (dx > dy) {
+				int yFine = y1 << 16;
+				int yOffset = yFine + 32768;
+				int dyFine = dy << 16;
+				int yStep = (int) Math.floor((double) dyFine / (double) dx + 0.5D);
+
+				int endX = x1 + dx;
+				if (x1 < clipMinX) {
+					yOffset += (clipMinX - x1) * yStep;
+					x1 = clipMinX;
+				}
+
+				if (endX >= clipMaxX) {
+					endX = clipMaxX - 1;
+				}
+
+				while (x1 <= endX) {
+					int drawY = yOffset >> 16;
+					if (drawY >= clipMinY && drawY < clipMaxY) {
+						pixels[width * drawY + x1] = rgb;
+					}
+
+					yOffset += yStep;
+					x1++;
+				}
+			} else {
+				int xFine = x1 << 16;
+				int xOffset = xFine + 32768;
+				int dxFine = dx << 16;
+				int xStep = (int) Math.floor((double) dxFine / (double) dy + 0.5D);
+
+				int endY = y1 + dy;
+				if (y1 < clipMinY) {
+					xOffset += (clipMinY - y1) * xStep;
+					y1 = clipMinY;
+				}
+
+				if (endY >= clipMaxY) {
+					endY = clipMaxY - 1;
+				}
+
+				while (y1 <= endY) {
+					int drawY = xOffset >> 16;
+					if (drawY >= clipMinX && drawY < clipMaxX) {
+						pixels[width * y1 + drawY] = rgb;
+					}
+
+					xOffset += xStep;
+					y1++;
+				}
+			}
 		}
 	}
 

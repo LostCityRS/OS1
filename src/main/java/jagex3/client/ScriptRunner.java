@@ -233,6 +233,7 @@ public class ScriptRunner {
 						isp--;
 						int var21 = intStack[isp];
 
+						// todo: inlined method
 						VarBitType var22 = VarBitType.list(var20);
 						int var23 = var22.basevar;
 						int var24 = var22.startbit;
@@ -241,9 +242,9 @@ public class ScriptRunner {
 						if (var21 < 0 || var21 > var26) {
 							var21 = 0;
 						}
-
 						int var27 = var26 << var24;
 						VarCache.var[var23] = VarCache.var[var23] & ~var27 | var21 << var24 & var27;
+
 						continue;
 					}
 					if (opcode == 31) {
@@ -2161,6 +2162,7 @@ public class ScriptRunner {
 						int var282 = intStack[isp];
 						int var283 = intStack[isp + 1];
 
+						// todo: inlined method?
 						byte[] var284 = Client.fontMetrics.getFile(var283, 0);
 						PixFontGeneric var285 = new PixFontGeneric(var284);
 						intStack[isp++] = var285.predictLinesMultiline(var281, var282);
@@ -2175,6 +2177,7 @@ public class ScriptRunner {
 						int var287 = intStack[isp];
 						int var288 = intStack[isp + 1];
 
+						// todo: inlined method?
 						byte[] var289 = Client.fontMetrics.getFile(var288, 0);
 						PixFontGeneric var290 = new PixFontGeneric(var289);
 						intStack[isp++] = var290.predictWidthMultiline(var286, var287);

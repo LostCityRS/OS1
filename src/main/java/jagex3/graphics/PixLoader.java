@@ -99,8 +99,10 @@ public class PixLoader {
 	public static Pix32[] makePix32Array(Js5 arg0, String arg1, String arg2) {
 		int var3 = arg0.getGroupId(arg1);
 		int var4 = arg0.getFileId(var3, arg2);
+		// todo: inlined method
 		Pix32[] var5;
 		if (depack(arg0, var3, var4)) {
+			// todo: inlined method
 			Pix32[] var6 = new Pix32[count];
 			for (int var7 = 0; var7 < count; var7++) {
 				Pix32 var8 = var6[var7] = new Pix32();
@@ -117,6 +119,7 @@ public class PixLoader {
 					var8.data[var11] = bpal[var10[var11] & 0xFF];
 				}
 			}
+			// todo: inlined method
 			xof = null;
 			yof = null;
 			wi = null;
@@ -180,6 +183,7 @@ public class PixLoader {
 		var0.hi = hi[0];
 		var0.bpal = bpal;
 		var0.data = bspr[0];
+		// todo: inlined method
 		xof = null;
 		yof = null;
 		wi = null;
@@ -205,6 +209,7 @@ public class PixLoader {
 		for (int var3 = 0; var3 < var1; var3++) {
 			var0.data[var3] = bpal[var2[var3] & 0xFF];
 		}
+		// todo: inlined method
 		xof = null;
 		yof = null;
 		wi = null;
@@ -221,6 +226,7 @@ public class PixLoader {
 			return null;
 		}
 		PixFontGeneric var1 = new PixFontGeneric(arg0, xof, yof, wi, hi, bpal, bspr);
+		// todo: inlined method
 		xof = null;
 		yof = null;
 		wi = null;

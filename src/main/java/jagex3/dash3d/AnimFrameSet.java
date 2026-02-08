@@ -44,6 +44,6 @@ public class AnimFrameSet extends Linkable2 {
 	// jag::oldscape::dash3d::AnimFrameSet::GetAnimateTransparencies
 	@ObfuscatedName("fr.z(IB)Z")
 	public boolean getAnimateTransparencies(int arg0) {
-		return this.list[arg0].hasAlpha;
+		return this.list[arg0].animateTransparencies;
 	}
 }

@@ -37,68 +37,73 @@ public class Filter {
 
 	// jag::oldscape::sound::Filter::Radius
 	@ObfuscatedName("ad.r(IIF)F")
-	public float radius(int arg0, int arg1, float arg2) {
-		float var4 = (float) (this.ranges[arg0][1][arg1] - this.ranges[arg0][0][arg1]) * arg2 + (float) this.ranges[arg0][0][arg1];
-		float var5 = var4 * 0.0015258789F;
-		return 1.0F - (float) Math.pow(10.0D, -var5 / 20.0F);
+	public float radius(int direction, int pair, float delta) {
+		float g = (float) (this.ranges[direction][1][pair] - this.ranges[direction][0][pair]) * delta + (float) this.ranges[direction][0][pair];
+		float g2 = g * 0.0015258789F;
+		return 1.0F - (float) Math.pow(10.0D, -g2 / 20.0F);
 	}
 
 	// jag::oldscape::sound::Filter::Frequency
 	@ObfuscatedName("ad.d(F)F")
-	public static float frequency(float arg0) {
-		float var1 = (float) Math.pow(2.0D, arg0) * 32.703197F;
-		return var1 * 3.1415927F / 11025.0F;
+	public static float frequency(float f) {
+		float f1 = (float) Math.pow(2.0D, f) * 32.703197F;
+		return f1 * 3.1415927F / 11025.0F;
 	}
 
 	// jag::oldscape::sound::Filter::Frequency
 	@ObfuscatedName("ad.l(IIF)F")
-	public float frequency(int arg0, int arg1, float arg2) {
-		float var4 = (float) (this.frequencies[arg0][1][arg1] - this.frequencies[arg0][0][arg1]) * arg2 + (float) this.frequencies[arg0][0][arg1];
-		float var5 = var4 * 1.2207031E-4F;
-		return frequency(var5);
+	public float frequency(int direction, int pair, float delta) {
+		float f1 = (float) (this.frequencies[direction][1][pair] - this.frequencies[direction][0][pair]) * delta + (float) this.frequencies[direction][0][pair];
+		float f2 = f1 * 1.2207031E-4F;
+		return frequency(f2);
 	}
 
 	// jag::oldscape::sound::Filter::CalculateCoeffs
 	@ObfuscatedName("ad.m(IF)I")
-	public int calculateCoeffs(int arg0, float arg1) {
-		if (arg0 == 0) {
-			float var3 = (float) (this.unities[1] - this.unities[0]) * arg1 + (float) this.unities[0];
-			float var4 = var3 * 0.0030517578F;
-			reduceCoeff = (float) Math.pow(0.1D, (double) (var4 / 20.0F));
+	public int calculateCoeffs(int direction, float delta) {
+		if (direction == 0) {
+			float u = (float) (this.unities[1] - this.unities[0]) * delta + (float) this.unities[0];
+			float u2 = u * 0.0030517578F;
+			reduceCoeff = (float) Math.pow(0.1D, u2 / 20.0F);
 			reduceCoeffInt = (int) (reduceCoeff * 65536.0F);
 		}
 
-		if (this.pairs[arg0] == 0) {
+		if (this.pairs[direction] == 0) {
 			return 0;
 		}
 
-		float var5 = this.radius(arg0, 0, arg1);
-		coeff[arg0][0] = var5 * -2.0F * (float) Math.cos((double) this.frequency(arg0, 0, arg1));
-		coeff[arg0][1] = var5 * var5;
-		for (int var6 = 1; var6 < this.pairs[arg0]; var6++) {
-			float var7 = this.radius(arg0, var6, arg1);
-			float var8 = var7 * -2.0F * (float) Math.cos((double) this.frequency(arg0, var6, arg1));
-			float var9 = var7 * var7;
-			coeff[arg0][var6 * 2 + 1] = coeff[arg0][var6 * 2 - 1] * var9;
-			coeff[arg0][var6 * 2] = coeff[arg0][var6 * 2 - 1] * var8 + coeff[arg0][var6 * 2 - 2] * var9;
-			for (int var10 = var6 * 2 - 1; var10 >= 2; var10--) {
-				coeff[arg0][var10] += coeff[arg0][var10 - 1] * var8 + coeff[arg0][var10 - 2] * var9;
+		float u = this.radius(direction, 0, delta);
+
+		coeff[direction][0] = u * -2.0F * (float) Math.cos(this.frequency(direction, 0, delta));
+		coeff[direction][1] = u * u;
+
+		for (int pair = 1; pair < this.pairs[direction]; pair++) {
+			float g = this.radius(direction, pair, delta);
+			float a = g * -2.0F * (float) Math.cos(this.frequency(direction, pair, delta));
+			float b = g * g;
+
+			coeff[direction][pair * 2 + 1] = coeff[direction][pair * 2 - 1] * b;
+			coeff[direction][pair * 2] = coeff[direction][pair * 2 - 1] * a + coeff[direction][pair * 2 - 2] * b;
+
+			for (int i = pair * 2 - 1; i >= 2; i--) {
+				coeff[direction][i] += coeff[direction][i - 1] * a + coeff[direction][i - 2] * b;
 			}
-			coeff[arg0][1] += coeff[arg0][0] * var8 + var9;
-			coeff[arg0][0] += var8;
+
+			coeff[direction][1] += coeff[direction][0] * a + b;
+			coeff[direction][0] += a;
 		}
 
-		if (arg0 == 0) {
-			for (int var11 = 0; var11 < this.pairs[0] * 2; var11++) {
-				coeff[0][var11] *= reduceCoeff;
+		if (direction == 0) {
+			for (int i = 0; i < this.pairs[0] * 2; i++) {
+				coeff[0][i] *= reduceCoeff;
 			}
 		}
 
-		for (int var12 = 0; var12 < this.pairs[arg0] * 2; var12++) {
-			coeffInt[arg0][var12] = (int) (coeff[arg0][var12] * 65536.0F);
+		for (int i = 0; i < this.pairs[direction] * 2; i++) {
+			coeffInt[direction][i] = (int) (coeff[direction][i] * 65536.0F);
 		}
 
-		return this.pairs[arg0] * 2;
+		return this.pairs[direction] * 2;
 	}
 
 	// jag::oldscape::sound::Filter::Load
