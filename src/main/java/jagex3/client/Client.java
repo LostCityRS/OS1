@@ -847,7 +847,7 @@ public class Client extends GameShell {
 	public static boolean field2092 = false;
 
 	@ObfuscatedName("client.km")
-	public static boolean qaOpTest = false;
+	public static boolean showOpIndex = false;
 
 	@ObfuscatedName("client.ke")
 	public static IfType dragCom = null;
@@ -874,7 +874,7 @@ public class Client extends GameShell {
 	public static int dragPickupY = 0;
 
 	@ObfuscatedName("client.kj")
-	public static IfType dropComponent = null;
+	public static IfType dropCom = null;
 
 	@ObfuscatedName("client.kd")
 	public static boolean dragParentFound = false;
@@ -987,7 +987,7 @@ public class Client extends GameShell {
 	public static int[] componentDrawHeight = new int[100];
 
 	@ObfuscatedName("client.ms")
-	public static int componentDrawMode = 0;
+	public static int componentRectDebug = 0;
 
 	@ObfuscatedName("client.mt")
 	public static int[] chatType = new int[100];
@@ -1141,11 +1141,11 @@ public class Client extends GameShell {
 	@ObfuscatedName("dq.oq")
 	public static int camMoveToHei;
 
-	// placement based on rs3
-	@ObfuscatedName("co.op")
+	@ObfuscatedName("du.oh")
 	public static int camMoveToRate;
 
-	@ObfuscatedName("du.oh")
+	// placement based on rs3
+	@ObfuscatedName("co.op")
 	public static int camMoveToRate2;
 
 	// placement based on rs3
@@ -1161,11 +1161,11 @@ public class Client extends GameShell {
 	public static int camLookAtHei;
 
 	// placement based on rs3
-	@ObfuscatedName("df.ou")
+	@ObfuscatedName("de.oy")
 	public static int camLookAtRate;
 
 	// placement based on rs3
-	@ObfuscatedName("de.oy")
+	@ObfuscatedName("df.ou")
 	public static int camLookAtRate2;
 
 	// guessing placement
@@ -1366,11 +1366,11 @@ public class Client extends GameShell {
 		loopCycle++;
 
 		this.serviceNetClient();
-
 		imethod1();
 		MidiManager.updateFadeOut();
 
 		doAudio();
+
 		ClientKeyboardListener.cycle();
 		ClientMouseListener.cycle();
 
@@ -1456,7 +1456,7 @@ public class Client extends GameShell {
 			messageBox(Text.CONLOST + StringConstants.TAG_BREAK + Text.ATTEMPT_TO_REESTABLISH, false);
 		}
 
-		if (state == 30 && componentDrawMode == 0 && !fullredraw) {
+		if (state == 30 && componentRectDebug == 0 && !fullredraw) {
 			try {
 				Graphics g = GameShell.canvas.getGraphics();
 				for (int i = 0; i < componentDrawCount; i++) {
@@ -2513,7 +2513,7 @@ public class Client extends GameShell {
 		IfType tooltip = tooltipCom;
 		overCom = null;
 		tooltipCom = null;
-		dropComponent = null;
+		dropCom = null;
 		dragging = false;
 		dragParentFound = false;
 
@@ -2783,7 +2783,7 @@ public class Client extends GameShell {
 			drawFeedback(menuMouseX, menuMouseY);
 		}
 
-		if (componentDrawMode == 3) {
+		if (componentRectDebug == 3) {
 			for (int i = 0; i < componentDrawCount; i++) {
 				if (componentDrawSomething2[i]) {
 					Pix2D.fillRectTrans(componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i], 0xff00ff, 0x80);
@@ -3406,37 +3406,37 @@ public class Client extends GameShell {
 		int var1 = camMoveToLz * 128 + 64;
 		int var2 = getAvH(var0, var1, minusedlevel) - camMoveToHei;
 		if (camX < var0) {
-			camX += camMoveToRate * (var0 - camX) / 1000 + camMoveToRate2;
+			camX += camMoveToRate2 * (var0 - camX) / 1000 + camMoveToRate;
 			if (camX > var0) {
 				camX = var0;
 			}
 		}
 		if (camX > var0) {
-			camX -= camMoveToRate * (camX - var0) / 1000 + camMoveToRate2;
+			camX -= camMoveToRate2 * (camX - var0) / 1000 + camMoveToRate;
 			if (camX < var0) {
 				camX = var0;
 			}
 		}
 		if (camY < var2) {
-			camY += camMoveToRate * (var2 - camY) / 1000 + camMoveToRate2;
+			camY += camMoveToRate2 * (var2 - camY) / 1000 + camMoveToRate;
 			if (camY > var2) {
 				camY = var2;
 			}
 		}
 		if (camY > var2) {
-			camY -= camMoveToRate * (camY - var2) / 1000 + camMoveToRate2;
+			camY -= camMoveToRate2 * (camY - var2) / 1000 + camMoveToRate;
 			if (camY < var2) {
 				camY = var2;
 			}
 		}
 		if (camZ < var1) {
-			camZ += camMoveToRate * (var1 - camZ) / 1000 + camMoveToRate2;
+			camZ += camMoveToRate2 * (var1 - camZ) / 1000 + camMoveToRate;
 			if (camZ > var1) {
 				camZ = var1;
 			}
 		}
 		if (camZ > var1) {
-			camZ -= camMoveToRate * (camZ - var1) / 1000 + camMoveToRate2;
+			camZ -= camMoveToRate2 * (camZ - var1) / 1000 + camMoveToRate;
 			if (camZ < var1) {
 				camZ = var1;
 			}
@@ -3457,13 +3457,13 @@ public class Client extends GameShell {
 			var10 = 383;
 		}
 		if (camPitch < var10) {
-			camPitch += camLookAtRate * (var10 - camPitch) / 1000 + camLookAtRate2;
+			camPitch += camLookAtRate2 * (var10 - camPitch) / 1000 + camLookAtRate;
 			if (camPitch > var10) {
 				camPitch = var10;
 			}
 		}
 		if (camPitch > var10) {
-			camPitch -= camLookAtRate * (camPitch - var10) / 1000 + camLookAtRate2;
+			camPitch -= camLookAtRate2 * (camPitch - var10) / 1000 + camLookAtRate;
 			if (camPitch < var10) {
 				camPitch = var10;
 			}
@@ -3476,11 +3476,11 @@ public class Client extends GameShell {
 			var12 += 2048;
 		}
 		if (var12 > 0) {
-			camYaw += camLookAtRate * var12 / 1000 + camLookAtRate2;
+			camYaw += camLookAtRate2 * var12 / 1000 + camLookAtRate;
 			camYaw &= 0x7FF;
 		}
 		if (var12 < 0) {
-			camYaw -= camLookAtRate * -var12 / 1000 + camLookAtRate2;
+			camYaw -= camLookAtRate2 * -var12 / 1000 + camLookAtRate;
 			camYaw &= 0x7FF;
 		}
 		int var13 = var11 - camYaw;
@@ -3773,7 +3773,7 @@ public class Client extends GameShell {
 		}
 
 		if (var9) {
-			if (entity.yaw != entity.dstYaw && entity.targetId == -1 && entity.turnSpeed != 0) {
+			if (entity.yaw != entity.dstYaw && entity.targetId == -1 && entity.turnspeed != 0) {
 				var8 = 2;
 			}
 			if (entity.routeLength > 2) {
@@ -3841,7 +3841,7 @@ public class Client extends GameShell {
 	// jag::oldscape::Client::GlEntityFace
 	@ObfuscatedName("dk.dy(Lfz;I)V")
 	public static void entityFace(ClientEntity entity) {
-		if (entity.turnSpeed == 0) {
+		if (entity.turnspeed == 0) {
 			return;
 		}
 
@@ -3891,10 +3891,10 @@ public class Client extends GameShell {
 		entity.turnCycle++;
 
 		if (var10 > 1024) {
-			entity.yaw -= entity.turnSpeed;
+			entity.yaw -= entity.turnspeed;
 
 			boolean var11 = true;
-			if (var10 < entity.turnSpeed || var10 > 2048 - entity.turnSpeed) {
+			if (var10 < entity.turnspeed || var10 > 2048 - entity.turnspeed) {
 				entity.yaw = entity.dstYaw;
 				var11 = false;
 			}
@@ -3907,10 +3907,10 @@ public class Client extends GameShell {
 				}
 			}
 		} else {
-			entity.yaw += entity.turnSpeed;
+			entity.yaw += entity.turnspeed;
 
 			boolean var12 = true;
-			if (var10 < entity.turnSpeed || var10 > 2048 - entity.turnSpeed) {
+			if (var10 < entity.turnspeed || var10 > 2048 - entity.turnspeed) {
 				entity.yaw = entity.dstYaw;
 				var12 = false;
 			}
@@ -4687,6 +4687,8 @@ public class Client extends GameShell {
 		if (crossMode == 2) {
 			cross[crossCycle / 100 + 4].plotSprite(crossX - 8, crossY - 8);
 		}
+
+		// todo: inlined method
 		chatDisabled = 0;
 		int var4 = (localPlayer.x >> 7) + mapBuildBaseX;
 		int var5 = (localPlayer.z >> 7) + mapBuildBaseZ;
@@ -4699,6 +4701,7 @@ public class Client extends GameShell {
 		if (chatDisabled == 1 && var4 >= 3139 && var4 <= 3199 && var5 >= 3008 && var5 <= 3062) {
 			chatDisabled = 0;
 		}
+
 		if (showFps) {
 			int var6 = arg0 + 512 - 5;
 			int var7 = arg1 + 20;
@@ -6075,9 +6078,9 @@ public class Client extends GameShell {
 				camLookAtLx = in.g1();
 				camLookAtLz = in.g1();
 				camLookAtHei = in.g2();
-				camLookAtRate2 = in.g1();
 				camLookAtRate = in.g1();
-				if (camLookAtRate >= 100) {
+				camLookAtRate2 = in.g1();
+				if (camLookAtRate2 >= 100) {
 					int var140 = camLookAtLx * 128 + 64;
 					int var141 = camLookAtLz * 128 + 64;
 					int var142 = getAvH(var140, var141, minusedlevel) - camLookAtHei;
@@ -6944,9 +6947,9 @@ public class Client extends GameShell {
 				camMoveToLx = in.g1();
 				camMoveToLz = in.g1();
 				camMoveToHei = in.g2();
-				camMoveToRate2 = in.g1();
 				camMoveToRate = in.g1();
-				if (camMoveToRate >= 100) {
+				camMoveToRate2 = in.g1();
+				if (camMoveToRate2 >= 100) {
 					camX = camMoveToLx * 128 + 64;
 					camZ = camMoveToLz * 128 + 64;
 					camY = getAvH(camX, camZ, minusedlevel) - camMoveToHei;
@@ -8082,8 +8085,8 @@ public class Client extends GameShell {
 				var7 -= 32;
 			}
 			var2.size = var2.type.size;
-			var2.turnSpeed = var2.type.turnspeed;
-			if (var2.turnSpeed == 0) {
+			var2.turnspeed = var2.type.turnspeed;
+			if (var2.turnspeed == 0) {
 				var2.yaw = 0;
 			}
 			var2.walkanim = var2.type.walkanim;
@@ -8167,7 +8170,7 @@ public class Client extends GameShell {
 			if ((var3 & 0x40) != 0) {
 				var2.type = NpcType.list(in.g2());
 				var2.size = var2.type.size;
-				var2.turnSpeed = var2.type.turnspeed;
+				var2.turnspeed = var2.type.turnspeed;
 				var2.walkanim = var2.type.walkanim;
 				var2.walkanim_b = var2.type.walkanim_b;
 				var2.walkanim_l = var2.type.walkanim_r;
@@ -9489,7 +9492,7 @@ public class Client extends GameShell {
 					}
 				} else {
 					String[] op = loc.op;
-					if (qaOpTest) {
+					if (showOpIndex) {
 						op = prependOpIndex(op);
 					}
 
@@ -9583,7 +9586,7 @@ public class Client extends GameShell {
 						}
 					} else {
 						String[] op = type.op;
-						if (qaOpTest) {
+						if (showOpIndex) {
 							op = prependOpIndex(op);
 						}
 
@@ -9671,7 +9674,7 @@ public class Client extends GameShell {
 			}
 		} else {
 			String[] op = npc.op;
-			if (qaOpTest) {
+			if (showOpIndex) {
 				op = prependOpIndex(op);
 			}
 
@@ -9895,7 +9898,7 @@ public class Client extends GameShell {
 						}
 					} else {
 						String[] objIop = obj.iop;
-						if (qaOpTest) {
+						if (showOpIndex) {
 							objIop = prependOpIndex(objIop);
 						}
 
@@ -9940,7 +9943,7 @@ public class Client extends GameShell {
 						}
 
 						String[] iop = com.iop;
-						if (qaOpTest) {
+						if (showOpIndex) {
 							iop = prependOpIndex(iop);
 						}
 
@@ -10210,7 +10213,7 @@ public class Client extends GameShell {
 				Pix3D.setRenderClipping();
 			}
 
-			if (!componentDrawSomething2[drawCount] && componentDrawMode <= 1) {
+			if (!componentDrawSomething2[drawCount] && componentRectDebug <= 1) {
 				continue;
 			}
 
@@ -11043,7 +11046,7 @@ public class Client extends GameShell {
 
 					if (dragCom != null && dragCom != var9 && var25) {
 						if (ServerActive.isDragTarget(getActive(var9))) {
-							dropComponent = var9;
+							dropCom = var9;
 						}
 					}
 
@@ -11416,12 +11419,12 @@ public class Client extends GameShell {
 						req.component = dragCom;
 						req.mouseX = var465;
 						req.mouseY = var466;
-						req.drop = dropComponent;
+						req.drop = dropCom;
 						req.onop = dragCom.ondragcomplete;
 						ScriptRunner.executeScript(req);
 					}
 
-					if (dropComponent != null) {
+					if (dropCom != null) {
 						// todo: inlined method (ServerDraggable?)
 						IfType var469 = dragCom;
 						int var470 = ServerActive.serverDraggable(getActive(var469));
@@ -11448,8 +11451,8 @@ public class Client extends GameShell {
 							// IF_BUTTOND
 							out.p1Enc(22);
 							out.p2_alt3(dragCom.subId);
-							out.p4_alt2(dropComponent.parentId);
-							out.p2_alt1(dropComponent.subId);
+							out.p4_alt2(dropCom.parentId);
+							out.p2_alt1(dropCom.subId);
 							out.p4_alt2(dragCom.parentId);
 						}
 					}

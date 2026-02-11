@@ -158,7 +158,7 @@ public abstract class ClientEntity extends ModelSource {
 	public int turnCycle = 0;
 
 	@ObfuscatedName("fz.bg")
-	public int turnSpeed = 32;
+	public int turnspeed = 32;
 
 	@ObfuscatedName("fz.bl")
 	public int routeLength = 0;
