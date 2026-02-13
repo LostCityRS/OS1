@@ -333,7 +333,7 @@ public class ScriptRunner {
 						frame.pc = pc;
 						frame.intLocals = intLocals;
 						frame.stringLocals = stringLocals;
-						frames[++fp - 1] = frame;
+						frames[fp++] = frame;
 
 						script = proc;
 						instructions = proc.instructions;

@@ -829,7 +829,7 @@ public class Client extends GameShell {
 	public static int bankArrangeMode = 0;
 
 	@ObfuscatedName("client.ka")
-	public static IfType pauseButtonLayer = null;
+	public static IfType resumePausedButton = null;
 
 	@ObfuscatedName("client.kr")
 	public static int runenergy = 0;
@@ -2919,7 +2919,7 @@ public class Client extends GameShell {
 
 		toplevelinterface = -1;
 		subinterfaces = new HashTable(8);
-		pauseButtonLayer = null;
+		resumePausedButton = null;
 
 		isMenuOpen = false;
 		menuNumEntries = 0;
@@ -5789,7 +5789,7 @@ public class Client extends GameShell {
 					VarCache.var[var81] = var82;
 					clientVar(var81);
 				}
-				varTransmit[++varTransmitNum - 1 & 0x1F] = var81;
+				varTransmit[varTransmitNum++ & 0x1F] = var81;
 
 				ptype = -1;
 				return true;
@@ -5812,9 +5812,9 @@ public class Client extends GameShell {
 				if (var93 != null) {
 					closeSubInterface(var93, true);
 				}
-				if (pauseButtonLayer != null) {
-					componentUpdated(pauseButtonLayer);
-					pauseButtonLayer = null;
+				if (resumePausedButton != null) {
+					componentUpdated(resumePausedButton);
+					resumePausedButton = null;
 				}
 
 				ptype = -1;
@@ -5928,7 +5928,7 @@ public class Client extends GameShell {
 					VarCache.var[var113] = var114;
 					clientVar(var113);
 				}
-				varTransmit[++varTransmitNum - 1 & 0x1F] = var113;
+				varTransmit[varTransmitNum++ & 0x1F] = var113;
 
 				ptype = -1;
 				return true;
@@ -6246,7 +6246,7 @@ public class Client extends GameShell {
 				}
 
 				legacyUpdated();
-				invTransmit[++invTransmitNum - 1 & 0x1F] = invId & 0x7FFF;
+				invTransmit[invTransmitNum++ & 0x1F] = invId & 0x7FFF;
 
 				ptype = -1;
 				return true;
@@ -6426,7 +6426,7 @@ public class Client extends GameShell {
 					}
 				}
 
-				statTransmit[++statTransmitNum - 1 & 0x1F] = stat;
+				statTransmit[statTransmitNum++ & 0x1F] = stat;
 
 				ptype = -1;
 				return true;
@@ -6468,7 +6468,6 @@ public class Client extends GameShell {
 					com.linkObjType[i] = -1;
 					com.linkObjType[i] = 0;
 				}
-
 				componentUpdated(com);
 
 				ptype = -1;
@@ -6479,7 +6478,7 @@ public class Client extends GameShell {
 				// UPDATE_INV_STOPTRANSMIT
 				int var219 = in.g2_alt2();
 				ClientInvCache.delete(var219);
-				invTransmit[++invTransmitNum - 1 & 0x1F] = var219 & 0x7FFF;
+				invTransmit[invTransmitNum++ & 0x1F] = var219 & 0x7FFF;
 
 				ptype = -1;
 				return true;
@@ -6921,7 +6920,7 @@ public class Client extends GameShell {
 				}
 
 				legacyUpdated();
-				invTransmit[++invTransmitNum - 1 & 0x1F] = invId & 0x7FFF;
+				invTransmit[invTransmitNum++ & 0x1F] = invId & 0x7FFF;
 
 				ptype = -1;
 				return true;
@@ -7144,7 +7143,7 @@ public class Client extends GameShell {
 					if (VarCache.varServ[i] != VarCache.var[i]) {
 						VarCache.var[i] = VarCache.varServ[i];
 						clientVar(i);
-						varTransmit[++varTransmitNum - 1 & 0x1F] = i;
+						varTransmit[varTransmitNum++ & 0x1F] = i;
 					}
 				}
 
@@ -7721,13 +7720,13 @@ public class Client extends GameShell {
 		}
 		int var1 = in.gBit(2);
 		if (var1 == 0) {
-			entityUpdateIds[++entityUpdateCount - 1] = 2047;
+			entityUpdateIds[entityUpdateCount++] = 2047;
 		} else if (var1 == 1) {
 			int var2 = in.gBit(3);
 			localPlayer.moveCode(var2, false);
 			int var3 = in.gBit(1);
 			if (var3 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = 2047;
+				entityUpdateIds[entityUpdateCount++] = 2047;
 			}
 		} else if (var1 == 2) {
 			int var4 = in.gBit(3);
@@ -7736,14 +7735,14 @@ public class Client extends GameShell {
 			localPlayer.moveCode(var5, true);
 			int var6 = in.gBit(1);
 			if (var6 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = 2047;
+				entityUpdateIds[entityUpdateCount++] = 2047;
 			}
 		} else if (var1 == 3) {
 			minusedlevel = in.gBit(2);
 			int var7 = in.gBit(7);
 			int var8 = in.gBit(1);
 			if (var8 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = 2047;
+				entityUpdateIds[entityUpdateCount++] = 2047;
 			}
 			int var9 = in.gBit(7);
 			int var10 = in.gBit(1);
@@ -7756,7 +7755,7 @@ public class Client extends GameShell {
 		int var11 = in.gBit(8);
 		if (var11 < playerCount) {
 			for (int var12 = var11; var12 < playerCount; var12++) {
-				entityRemovalIds[++entityRemovalCount - 1] = playerIds[var12];
+				entityRemovalIds[entityRemovalCount++] = playerIds[var12];
 			}
 		}
 		if (var11 > playerCount) {
@@ -7768,25 +7767,25 @@ public class Client extends GameShell {
 			ClientPlayer var15 = players[var14];
 			int var16 = in.gBit(1);
 			if (var16 == 0) {
-				playerIds[++playerCount - 1] = var14;
+				playerIds[playerCount++] = var14;
 				var15.cycle = loopCycle;
 			} else {
 				int var17 = in.gBit(2);
 				if (var17 == 0) {
-					playerIds[++playerCount - 1] = var14;
+					playerIds[playerCount++] = var14;
 					var15.cycle = loopCycle;
-					entityUpdateIds[++entityUpdateCount - 1] = var14;
+					entityUpdateIds[entityUpdateCount++] = var14;
 				} else if (var17 == 1) {
-					playerIds[++playerCount - 1] = var14;
+					playerIds[playerCount++] = var14;
 					var15.cycle = loopCycle;
 					int var18 = in.gBit(3);
 					var15.moveCode(var18, false);
 					int var19 = in.gBit(1);
 					if (var19 == 1) {
-						entityUpdateIds[++entityUpdateCount - 1] = var14;
+						entityUpdateIds[entityUpdateCount++] = var14;
 					}
 				} else if (var17 == 2) {
-					playerIds[++playerCount - 1] = var14;
+					playerIds[playerCount++] = var14;
 					var15.cycle = loopCycle;
 					int var20 = in.gBit(3);
 					var15.moveCode(var20, true);
@@ -7794,10 +7793,10 @@ public class Client extends GameShell {
 					var15.moveCode(var21, true);
 					int var22 = in.gBit(1);
 					if (var22 == 1) {
-						entityUpdateIds[++entityUpdateCount - 1] = var14;
+						entityUpdateIds[entityUpdateCount++] = var14;
 					}
 				} else if (var17 == 3) {
-					entityRemovalIds[++entityRemovalCount - 1] = var14;
+					entityRemovalIds[entityRemovalCount++] = var14;
 				}
 			}
 		}
@@ -7818,7 +7817,7 @@ public class Client extends GameShell {
 				}
 				var47 = true;
 			}
-			playerIds[++playerCount - 1] = var23;
+			playerIds[playerCount++] = var23;
 			ClientPlayer var48 = players[var23];
 			var48.cycle = loopCycle;
 			int var49 = in.gBit(5);
@@ -7836,7 +7835,7 @@ public class Client extends GameShell {
 			int var52 = in.gBit(1);
 			int var53 = in.gBit(1);
 			if (var53 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = var23;
+				entityUpdateIds[entityUpdateCount++] = var23;
 			}
 			var48.teleport(localPlayer.routeX[0] + var51, localPlayer.routeZ[0] + var49, var52 == 1);
 		}
@@ -8002,7 +8001,7 @@ public class Client extends GameShell {
 		int var362 = in.gBit(8);
 		if (var362 < npcCount) {
 			for (int var363 = var362; var363 < npcCount; var363++) {
-				entityRemovalIds[++entityRemovalCount - 1] = npcIds[var363];
+				entityRemovalIds[entityRemovalCount++] = npcIds[var363];
 			}
 		}
 		if (var362 > npcCount) {
@@ -8014,25 +8013,25 @@ public class Client extends GameShell {
 			ClientNpc var366 = npc[var365];
 			int var367 = in.gBit(1);
 			if (var367 == 0) {
-				npcIds[++npcCount - 1] = var365;
+				npcIds[npcCount++] = var365;
 				var366.cycle = loopCycle;
 			} else {
 				int var368 = in.gBit(2);
 				if (var368 == 0) {
-					npcIds[++npcCount - 1] = var365;
+					npcIds[npcCount++] = var365;
 					var366.cycle = loopCycle;
-					entityUpdateIds[++entityUpdateCount - 1] = var365;
+					entityUpdateIds[entityUpdateCount++] = var365;
 				} else if (var368 == 1) {
-					npcIds[++npcCount - 1] = var365;
+					npcIds[npcCount++] = var365;
 					var366.cycle = loopCycle;
 					int var369 = in.gBit(3);
 					var366.moveCode(var369, false);
 					int var370 = in.gBit(1);
 					if (var370 == 1) {
-						entityUpdateIds[++entityUpdateCount - 1] = var365;
+						entityUpdateIds[entityUpdateCount++] = var365;
 					}
 				} else if (var368 == 2) {
-					npcIds[++npcCount - 1] = var365;
+					npcIds[npcCount++] = var365;
 					var366.cycle = loopCycle;
 					int var371 = in.gBit(3);
 					var366.moveCode(var371, true);
@@ -8040,10 +8039,10 @@ public class Client extends GameShell {
 					var366.moveCode(var372, true);
 					int var373 = in.gBit(1);
 					if (var373 == 1) {
-						entityUpdateIds[++entityUpdateCount - 1] = var365;
+						entityUpdateIds[entityUpdateCount++] = var365;
 					}
 				} else if (var368 == 3) {
-					entityRemovalIds[++entityRemovalCount - 1] = var365;
+					entityRemovalIds[entityRemovalCount++] = var365;
 				}
 			}
 		}
@@ -8064,7 +8063,7 @@ public class Client extends GameShell {
 				var1 = true;
 			}
 			ClientNpc var2 = npc[var0];
-			npcIds[++npcCount - 1] = var0;
+			npcIds[npcCount++] = var0;
 			var2.cycle = loopCycle;
 			int var3 = ANGLE_TO_DIR[in.gBit(3)];
 			if (var1) {
@@ -8076,7 +8075,7 @@ public class Client extends GameShell {
 			}
 			int var5 = in.gBit(1);
 			if (var5 == 1) {
-				entityUpdateIds[++entityUpdateCount - 1] = var0;
+				entityUpdateIds[entityUpdateCount++] = var0;
 			}
 			int var6 = in.gBit(1);
 			var2.type = NpcType.list(in.gBit(14));
@@ -8945,7 +8944,7 @@ public class Client extends GameShell {
 			if (var33 != null) {
 				endTargetMode();
 
-				// todo: inlined method (minimenuEnterTargetMode?)
+				// todo: inlined method (enterTargetMode)
 				int var34 = ServerActive.targetMask(getActive(var33));
 				IfType var35 = IfType.get(c, b);
 				if (var35 != null && var35.ontargetenter != null) {
@@ -8962,7 +8961,7 @@ public class Client extends GameShell {
 
 				useMode = 0;
 
-				// todo: inlined method (getComponentTargetVerb?)
+				// todo: inlined method (getComponentTargetVerb)
 				String var37;
 				if (ServerActive.targetMask(getActive(var33)) == 0) {
 					var37 = null;
@@ -9148,14 +9147,14 @@ public class Client extends GameShell {
 		}
 
 		if (action == 30) {
-			if (pauseButtonLayer == null) {
+			if (resumePausedButton == null) {
 				// RESUME_PAUSEBUTTON
 				out.p1Enc(242);
 				out.p2_alt2(b);
 				out.p4(c);
 
-				pauseButtonLayer = IfType.get(c, b);
-				componentUpdated(pauseButtonLayer);
+				resumePausedButton = IfType.get(c, b);
+				componentUpdated(resumePausedButton);
 			}
 		}
 
@@ -9857,7 +9856,7 @@ public class Client extends GameShell {
 			addMenuOption(com.buttonText, "", 29, 0, 0, com.parentId);
 		}
 
-		if (com.buttonType == 6 && pauseButtonLayer == null) {
+		if (com.buttonType == 6 && resumePausedButton == null) {
 			addMenuOption(com.buttonText, "", 30, 0, -1, com.parentId);
 		}
 
@@ -10050,7 +10049,7 @@ public class Client extends GameShell {
 				componentDrawY[componentDrawCount] = com.y + childY;
 				componentDrawWidth[componentDrawCount] = com.width;
 				componentDrawHeight[componentDrawCount] = com.height;
-				drawCount = ++componentDrawCount - 1;
+				drawCount = componentDrawCount++;
 			} else {
 				drawCount = childCount;
 			}
@@ -10380,7 +10379,7 @@ public class Client extends GameShell {
 						}
 					}
 
-					if (pauseButtonLayer == com) {
+					if (resumePausedButton == com) {
 						text = Text.PLEASEWAIT;
 						colour = com.colour;
 					}
@@ -11797,9 +11796,9 @@ public class Client extends GameShell {
 			}
 		}
 
-		if (pauseButtonLayer != null) {
-			componentUpdated(pauseButtonLayer);
-			pauseButtonLayer = null;
+		if (resumePausedButton != null) {
+			componentUpdated(resumePausedButton);
+			resumePausedButton = null;
 		}
 	}
 
@@ -11819,9 +11818,9 @@ public class Client extends GameShell {
 			componentUpdated(var4);
 		}
 
-		if (pauseButtonLayer != null) {
-			componentUpdated(pauseButtonLayer);
-			pauseButtonLayer = null;
+		if (resumePausedButton != null) {
+			componentUpdated(resumePausedButton);
+			resumePausedButton = null;
 		}
 
 		isMenuOpen = false;

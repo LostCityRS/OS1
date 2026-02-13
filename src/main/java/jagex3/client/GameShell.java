@@ -337,7 +337,7 @@ public abstract class GameShell extends Applet implements Runnable, FocusListene
 			fps = ((var5 >> 1) + 32000) / var5;
 		}
 
-		if (++redrawNum - 1 > 50) {
+		if (redrawNum++ > 50) {
 			redrawNum -= 50;
 
 			fullredraw = true;
