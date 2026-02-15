@@ -829,7 +829,7 @@ public class Client extends GameShell {
 	public static int bankArrangeMode = 0;
 
 	@ObfuscatedName("client.ka")
-	public static IfType resumePausedButton = null;
+	public static IfType resumePauseCom = null;
 
 	@ObfuscatedName("client.kr")
 	public static int runenergy = 0;
@@ -966,13 +966,13 @@ public class Client extends GameShell {
 	public static int componentDrawTime = -2;
 
 	@ObfuscatedName("client.mq")
-	public static boolean[] componentRedrawRequested1 = new boolean[100];
+	public static boolean[] componentDirtyArea = new boolean[100];
 
 	@ObfuscatedName("client.me")
-	public static boolean[] componentRedrawRequested2 = new boolean[100];
+	public static boolean[] componentBlitArea = new boolean[100];
 
 	@ObfuscatedName("client.mn")
-	public static boolean[] componentDrawSomething2 = new boolean[100];
+	public static boolean[] componentRedraw = new boolean[100];
 
 	@ObfuscatedName("client.mi")
 	public static int[] componentDrawX = new int[100];
@@ -1460,9 +1460,9 @@ public class Client extends GameShell {
 			try {
 				Graphics g = GameShell.canvas.getGraphics();
 				for (int i = 0; i < componentDrawCount; i++) {
-					if (componentRedrawRequested2[i]) {
+					if (componentBlitArea[i]) {
 						GameShell.drawArea.draw(g, componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i]);
-						componentRedrawRequested2[i] = false;
+						componentBlitArea[i] = false;
 					}
 				}
 			} catch (Exception ex) {
@@ -1474,7 +1474,7 @@ public class Client extends GameShell {
 				GameShell.drawArea.draw(g, 0, 0);
 				fullredraw = false;
 				for (int i = 0; i < componentDrawCount; i++) {
-					componentRedrawRequested2[i] = false;
+					componentBlitArea[i] = false;
 				}
 			} catch (Exception ex) {
 				GameShell.canvas.repaint();
@@ -2755,12 +2755,12 @@ public class Client extends GameShell {
 		}
 
 		for (int i = 0; i < componentDrawCount; i++) {
-			if (componentRedrawRequested1[i]) {
-				componentRedrawRequested2[i] = true;
+			if (componentDirtyArea[i]) {
+				componentBlitArea[i] = true;
 			}
 
-			componentDrawSomething2[i] = componentRedrawRequested1[i];
-			componentRedrawRequested1[i] = false;
+			componentRedraw[i] = componentDirtyArea[i];
+			componentDirtyArea[i] = false;
 		}
 
 		componentDrawTime = loopCycle;
@@ -2785,9 +2785,9 @@ public class Client extends GameShell {
 
 		if (componentRectDebug == 3) {
 			for (int i = 0; i < componentDrawCount; i++) {
-				if (componentDrawSomething2[i]) {
+				if (componentRedraw[i]) {
 					Pix2D.fillRectTrans(componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i], 0xff00ff, 0x80);
-				} else if (componentRedrawRequested2[i]) {
+				} else if (componentBlitArea[i]) {
 					Pix2D.fillRectTrans(componentDrawX[i], componentDrawY[i], componentDrawWidth[i], componentDrawHeight[i], 0xff0000, 0x80);
 				}
 			}
@@ -2919,7 +2919,7 @@ public class Client extends GameShell {
 
 		toplevelinterface = -1;
 		subinterfaces = new HashTable(8);
-		resumePausedButton = null;
+		resumePauseCom = null;
 
 		isMenuOpen = false;
 		menuNumEntries = 0;
@@ -2937,7 +2937,7 @@ public class Client extends GameShell {
 		js5Loading = true;
 
 		for (int var14 = 0; var14 < 100; var14++) {
-			componentRedrawRequested1[var14] = true;
+			componentDirtyArea[var14] = true;
 		}
 
 		chatDisplayName = null;
@@ -3052,7 +3052,7 @@ public class Client extends GameShell {
 		setMainState(30);
 
 		for (int i = 0; i < 100; i++) {
-			componentRedrawRequested1[i] = true;
+			componentDirtyArea[i] = true;
 		}
 	}
 
@@ -4079,7 +4079,7 @@ public class Client extends GameShell {
 		int var12 = var6;
 		for (int var13 = 0; var13 < componentDrawCount; var13++) {
 			if (componentDrawWidth[var13] + componentDrawX[var13] > var9 && componentDrawX[var13] < var9 + var11 && componentDrawHeight[var13] + componentDrawY[var13] > var10 && componentDrawY[var13] < var10 + var12) {
-				componentRedrawRequested2[var13] = true;
+				componentBlitArea[var13] = true;
 			}
 		}
 	}
@@ -5812,9 +5812,9 @@ public class Client extends GameShell {
 				if (var93 != null) {
 					closeSubInterface(var93, true);
 				}
-				if (resumePausedButton != null) {
-					componentUpdated(resumePausedButton);
-					resumePausedButton = null;
+				if (resumePauseCom != null) {
+					componentUpdated(resumePauseCom);
+					resumePauseCom = null;
 				}
 
 				ptype = -1;
@@ -5946,16 +5946,16 @@ public class Client extends GameShell {
 
 			if (
 				ptype == 205 ||
-					ptype == 106 ||
-					ptype == 245 ||
-					ptype == 215 ||
-					ptype == 20 ||
-					ptype == 32 ||
-					ptype == 207 ||
-					ptype == 173 ||
-					ptype == 6 ||
-					ptype == 7 ||
-					ptype == 154
+				ptype == 106 ||
+				ptype == 245 ||
+				ptype == 215 ||
+				ptype == 20 ||
+				ptype == 32 ||
+				ptype == 207 ||
+				ptype == 173 ||
+				ptype == 6 ||
+				ptype == 7 ||
+				ptype == 154
 			) {
 				zonePacket();
 				ptype = -1;
@@ -6056,7 +6056,7 @@ public class Client extends GameShell {
 				ifAnimReset(var137);
 				ScriptRunner.executeOnLoad(toplevelinterface);
 				for (int var138 = 0; var138 < 100; var138++) {
-					componentRedrawRequested1[var138] = true;
+					componentDirtyArea[var138] = true;
 				}
 
 				ptype = -1;
@@ -6262,7 +6262,7 @@ public class Client extends GameShell {
 					ifAnimReset(toplevelinterface);
 					ScriptRunner.executeOnLoad(toplevelinterface);
 					for (int var181 = 0; var181 < 100; var181++) {
-						componentRedrawRequested1[var181] = true;
+						componentDirtyArea[var181] = true;
 					}
 				}
 				while (var180-- > 0) {
@@ -8198,7 +8198,7 @@ public class Client extends GameShell {
 	public static void dirtyArea(int arg0, int arg1, int arg2, int arg3) {
 		for (int i = 0; i < componentDrawCount; i++) {
 			if (componentDrawWidth[i] + componentDrawX[i] > arg0 && componentDrawX[i] < arg0 + arg2 && componentDrawHeight[i] + componentDrawY[i] > arg1 && componentDrawY[i] < arg1 + arg3) {
-				componentRedrawRequested1[i] = true;
+				componentDirtyArea[i] = true;
 			}
 		}
 	}
@@ -8328,7 +8328,7 @@ public class Client extends GameShell {
 	public static void imethod26(int var37, int var38, int var39, int var40) {
 		for (int var41 = 0; var41 < componentDrawCount; var41++) {
 			if (componentDrawWidth[var41] + componentDrawX[var41] > var37 && componentDrawX[var41] < var37 + var39 && componentDrawHeight[var41] + componentDrawY[var41] > var38 && componentDrawY[var41] < var38 + var40) {
-				componentRedrawRequested2[var41] = true;
+				componentBlitArea[var41] = true;
 			}
 		}
 	}
@@ -9147,14 +9147,14 @@ public class Client extends GameShell {
 		}
 
 		if (action == 30) {
-			if (resumePausedButton == null) {
+			if (resumePauseCom == null) {
 				// RESUME_PAUSEBUTTON
 				out.p1Enc(242);
 				out.p2_alt2(b);
 				out.p4(c);
 
-				resumePausedButton = IfType.get(c, b);
-				componentUpdated(resumePausedButton);
+				resumePauseCom = IfType.get(c, b);
+				componentUpdated(resumePauseCom);
 			}
 		}
 
@@ -9856,7 +9856,7 @@ public class Client extends GameShell {
 			addMenuOption(com.buttonText, "", 29, 0, 0, com.parentId);
 		}
 
-		if (com.buttonType == 6 && resumePausedButton == null) {
+		if (com.buttonType == 6 && resumePauseCom == null) {
 			addMenuOption(com.buttonText, "", 30, 0, -1, com.parentId);
 		}
 
@@ -10023,10 +10023,10 @@ public class Client extends GameShell {
 				dragChildren = null;
 			}
 		} else if (arg7 != -1) {
-			componentRedrawRequested1[arg7] = true;
+			componentDirtyArea[arg7] = true;
 		} else {
 			for (int i = 0; i < 100; i++) {
-				componentRedrawRequested1[i] = true;
+				componentDirtyArea[i] = true;
 			}
 		}
 	}
@@ -10212,7 +10212,7 @@ public class Client extends GameShell {
 				Pix3D.setRenderClipping();
 			}
 
-			if (!componentDrawSomething2[drawCount] && componentRectDebug <= 1) {
+			if (!componentRedraw[drawCount] && componentRectDebug <= 1) {
 				continue;
 			}
 
@@ -10379,7 +10379,7 @@ public class Client extends GameShell {
 						}
 					}
 
-					if (resumePausedButton == com) {
+					if (resumePauseCom == com) {
 						text = Text.PLEASEWAIT;
 						colour = com.colour;
 					}
@@ -11472,14 +11472,14 @@ public class Client extends GameShell {
 	@ObfuscatedName("cq.fy(Leg;I)V")
 	public static void componentUpdated(IfType com) {
 		if (componentDrawTime == com.drawTime) {
-			componentRedrawRequested1[com.drawCount] = true;
+			componentDirtyArea[com.drawCount] = true;
 		}
 	}
 
 	// todo: guessing that this may be inlined from repeat use
 	public static void redrawAllComponents() {
 		for (int i = 0; i < 100; i++) {
-			componentRedrawRequested1[i] = true;
+			componentDirtyArea[i] = true;
 		}
 	}
 
@@ -11796,9 +11796,9 @@ public class Client extends GameShell {
 			}
 		}
 
-		if (resumePausedButton != null) {
-			componentUpdated(resumePausedButton);
-			resumePausedButton = null;
+		if (resumePauseCom != null) {
+			componentUpdated(resumePauseCom);
+			resumePauseCom = null;
 		}
 	}
 
@@ -11818,9 +11818,9 @@ public class Client extends GameShell {
 			componentUpdated(var4);
 		}
 
-		if (resumePausedButton != null) {
-			componentUpdated(resumePausedButton);
-			resumePausedButton = null;
+		if (resumePauseCom != null) {
+			componentUpdated(resumePauseCom);
+			resumePauseCom = null;
 		}
 
 		isMenuOpen = false;
@@ -12022,11 +12022,11 @@ public class Client extends GameShell {
 			Pix2D.fillScanLine(arg0, arg1, 0, compassMaskLineOffsets, compassMaskLineLengths);
 		}
 
-		if (componentDrawSomething2[arg2]) {
+		if (componentRedraw[arg2]) {
 			mapback.plotSprite(arg0, arg1);
 		}
 
-		componentRedrawRequested2[arg2] = true;
+		componentBlitArea[arg2] = true;
 	}
 
 	// jag::oldscape::minimap::Minimap::DrawArrow

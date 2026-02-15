@@ -415,6 +415,8 @@ public class ClientBuild {
 			if ((mapl[arg0][arg1][arg2] & 0x10) != 0) {
 				return;
 			}
+
+			// todo: inlined method
 			int var8;
 			if ((mapl[arg0][arg1][arg2] & 0x8) != 0) {
 				var8 = 0;
@@ -948,6 +950,7 @@ public class ClientBuild {
 			}
 			for (int var69 = 1; var69 < 103; var69++) {
 				for (int var70 = 1; var70 < 103; var70++) {
+					// todo: inlined method
 					int var75;
 					if ((mapl[var6][var70][var69] & 0x8) != 0) {
 						var75 = 0;
