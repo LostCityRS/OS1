@@ -1695,7 +1695,7 @@ public class Client extends GameShell {
 				int var5 = Pix3D.sinTable[var3];
 				var1[var2] = var4 * var5 >> 16;
 			}
-			World.init(var1, 500, 800, 512, 334);
+			World.resetVisCalc(var1, 500, 800, 512, 334);
 
 			TitleScreen.loadString = Text.MAINLOAD20;
 			TitleScreen.loadPos = 10;

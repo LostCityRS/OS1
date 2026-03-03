@@ -21,20 +21,25 @@ public class ModelLit extends ModelSource {
 	@ObfuscatedName("fo.q")
 	public static byte[] tempFTran2 = new byte[1];
 
+	// jag::oldscape::dash3d::ModelLit::m_numPoints
 	@ObfuscatedName("fo.i")
-	public int vertexCount = 0;
+	public int numPoints = 0;
 
+	// jag::oldscape::dash3d::ModelLit::m_pointX
 	@ObfuscatedName("fo.s")
-	public int[] vertexX;
+	public int[] pointX;
 
+	// jag::oldscape::dash3d::ModelLit::m_pointY
 	@ObfuscatedName("fo.u")
-	public int[] vertexY;
+	public int[] pointY;
 
+	// jag::oldscape::dash3d::ModelLit::m_pointZ
 	@ObfuscatedName("fo.v")
-	public int[] vertexZ;
+	public int[] pointZ;
 
+	// jag::oldscape::dash3d::ModelLit::m_numFaces
 	@ObfuscatedName("fo.w")
-	public int faceCount = 0;
+	public int numFaces = 0;
 
 	@ObfuscatedName("fo.e")
 	public int[] faceVertexA;
@@ -69,8 +74,9 @@ public class ModelLit extends ModelSource {
 	@ObfuscatedName("fo.p")
 	public byte priority = 0;
 
+	// jag::oldscape::dash3d::ModelLit::m_numT
 	@ObfuscatedName("fo.ad")
-	public int faceTextureCount = 0;
+	public int numT = 0;
 
 	@ObfuscatedName("fo.ac")
 	public int[] faceTextureP;
@@ -213,16 +219,16 @@ public class ModelLit extends ModelSource {
 		boolean var4 = false;
 		boolean var5 = false;
 		boolean var6 = false;
-		this.vertexCount = 0;
-		this.faceCount = 0;
-		this.faceTextureCount = 0;
+		this.numPoints = 0;
+		this.numFaces = 0;
+		this.numT = 0;
 		this.priority = -1;
 		for (int var7 = 0; var7 < count; var7++) {
 			ModelLit var8 = models[var7];
 			if (var8 != null) {
-				this.vertexCount += var8.vertexCount;
-				this.faceCount += var8.faceCount;
-				this.faceTextureCount += var8.faceTextureCount;
+				this.numPoints += var8.numPoints;
+				this.numFaces += var8.numFaces;
+				this.numT += var8.numT;
 				if (var8.facePriority == null) {
 					if (this.priority == -1) {
 						this.priority = var8.priority;
@@ -238,82 +244,82 @@ public class ModelLit extends ModelSource {
 				var6 |= var8.faceTextureAxis != null;
 			}
 		}
-		this.vertexX = new int[this.vertexCount];
-		this.vertexY = new int[this.vertexCount];
-		this.vertexZ = new int[this.vertexCount];
-		this.faceVertexA = new int[this.faceCount];
-		this.faceVertexB = new int[this.faceCount];
-		this.faceVertexC = new int[this.faceCount];
-		this.faceColourA = new int[this.faceCount];
-		this.faceColourB = new int[this.faceCount];
-		this.faceColourC = new int[this.faceCount];
+		this.pointX = new int[this.numPoints];
+		this.pointY = new int[this.numPoints];
+		this.pointZ = new int[this.numPoints];
+		this.faceVertexA = new int[this.numFaces];
+		this.faceVertexB = new int[this.numFaces];
+		this.faceVertexC = new int[this.numFaces];
+		this.faceColourA = new int[this.numFaces];
+		this.faceColourB = new int[this.numFaces];
+		this.faceColourC = new int[this.numFaces];
 		if (var3) {
-			this.facePriority = new byte[this.faceCount];
+			this.facePriority = new byte[this.numFaces];
 		}
 		if (var4) {
-			this.faceAlpha = new byte[this.faceCount];
+			this.faceAlpha = new byte[this.numFaces];
 		}
 		if (var5) {
-			this.faceTextureId = new short[this.faceCount];
+			this.faceTextureId = new short[this.numFaces];
 		}
 		if (var6) {
-			this.faceTextureAxis = new byte[this.faceCount];
+			this.faceTextureAxis = new byte[this.numFaces];
 		}
-		if (this.faceTextureCount > 0) {
-			this.faceTextureP = new int[this.faceTextureCount];
-			this.faceTextureM = new int[this.faceTextureCount];
-			this.faceTextureN = new int[this.faceTextureCount];
+		if (this.numT > 0) {
+			this.faceTextureP = new int[this.numT];
+			this.faceTextureM = new int[this.numT];
+			this.faceTextureN = new int[this.numT];
 		}
-		this.vertexCount = 0;
-		this.faceCount = 0;
-		this.faceTextureCount = 0;
+		this.numPoints = 0;
+		this.numFaces = 0;
+		this.numT = 0;
 		for (int var9 = 0; var9 < count; var9++) {
 			ModelLit var10 = models[var9];
 			if (var10 != null) {
-				for (int var11 = 0; var11 < var10.faceCount; var11++) {
-					this.faceVertexA[this.faceCount] = var10.faceVertexA[var11] + this.vertexCount;
-					this.faceVertexB[this.faceCount] = var10.faceVertexB[var11] + this.vertexCount;
-					this.faceVertexC[this.faceCount] = var10.faceVertexC[var11] + this.vertexCount;
-					this.faceColourA[this.faceCount] = var10.faceColourA[var11];
-					this.faceColourB[this.faceCount] = var10.faceColourB[var11];
-					this.faceColourC[this.faceCount] = var10.faceColourC[var11];
+				for (int var11 = 0; var11 < var10.numFaces; var11++) {
+					this.faceVertexA[this.numFaces] = var10.faceVertexA[var11] + this.numPoints;
+					this.faceVertexB[this.numFaces] = var10.faceVertexB[var11] + this.numPoints;
+					this.faceVertexC[this.numFaces] = var10.faceVertexC[var11] + this.numPoints;
+					this.faceColourA[this.numFaces] = var10.faceColourA[var11];
+					this.faceColourB[this.numFaces] = var10.faceColourB[var11];
+					this.faceColourC[this.numFaces] = var10.faceColourC[var11];
 					if (var3) {
 						if (var10.facePriority == null) {
-							this.facePriority[this.faceCount] = var10.priority;
+							this.facePriority[this.numFaces] = var10.priority;
 						} else {
-							this.facePriority[this.faceCount] = var10.facePriority[var11];
+							this.facePriority[this.numFaces] = var10.facePriority[var11];
 						}
 					}
 					if (var4 && var10.faceAlpha != null) {
-						this.faceAlpha[this.faceCount] = var10.faceAlpha[var11];
+						this.faceAlpha[this.numFaces] = var10.faceAlpha[var11];
 					}
 					if (var5) {
 						if (var10.faceTextureId == null) {
-							this.faceTextureId[this.faceCount] = -1;
+							this.faceTextureId[this.numFaces] = -1;
 						} else {
-							this.faceTextureId[this.faceCount] = var10.faceTextureId[var11];
+							this.faceTextureId[this.numFaces] = var10.faceTextureId[var11];
 						}
 					}
 					if (var6) {
 						if (var10.faceTextureAxis == null || var10.faceTextureAxis[var11] == -1) {
-							this.faceTextureAxis[this.faceCount] = -1;
+							this.faceTextureAxis[this.numFaces] = -1;
 						} else {
-							this.faceTextureAxis[this.faceCount] = (byte) (var10.faceTextureAxis[var11] + this.faceTextureCount);
+							this.faceTextureAxis[this.numFaces] = (byte) (var10.faceTextureAxis[var11] + this.numT);
 						}
 					}
-					this.faceCount++;
+					this.numFaces++;
 				}
-				for (int var12 = 0; var12 < var10.faceTextureCount; var12++) {
-					this.faceTextureP[this.faceTextureCount] = var10.faceTextureP[var12] + this.vertexCount;
-					this.faceTextureM[this.faceTextureCount] = var10.faceTextureM[var12] + this.vertexCount;
-					this.faceTextureN[this.faceTextureCount] = var10.faceTextureN[var12] + this.vertexCount;
-					this.faceTextureCount++;
+				for (int var12 = 0; var12 < var10.numT; var12++) {
+					this.faceTextureP[this.numT] = var10.faceTextureP[var12] + this.numPoints;
+					this.faceTextureM[this.numT] = var10.faceTextureM[var12] + this.numPoints;
+					this.faceTextureN[this.numT] = var10.faceTextureN[var12] + this.numPoints;
+					this.numT++;
 				}
-				for (int var13 = 0; var13 < var10.vertexCount; var13++) {
-					this.vertexX[this.vertexCount] = var10.vertexX[var13];
-					this.vertexY[this.vertexCount] = var10.vertexY[var13];
-					this.vertexZ[this.vertexCount] = var10.vertexZ[var13];
-					this.vertexCount++;
+				for (int var13 = 0; var13 < var10.numPoints; var13++) {
+					this.pointX[this.numPoints] = var10.pointX[var13];
+					this.pointY[this.numPoints] = var10.pointY[var13];
+					this.pointZ[this.numPoints] = var10.pointZ[var13];
+					this.numPoints++;
 				}
 			}
 		}
@@ -340,11 +346,11 @@ public class ModelLit extends ModelSource {
 		ModelLit var15;
 		if (arg4) {
 			var15 = new ModelLit();
-			var15.vertexCount = this.vertexCount;
-			var15.faceCount = this.faceCount;
-			var15.faceTextureCount = this.faceTextureCount;
-			var15.vertexX = this.vertexX;
-			var15.vertexZ = this.vertexZ;
+			var15.numPoints = this.numPoints;
+			var15.numFaces = this.numFaces;
+			var15.numT = this.numT;
+			var15.pointX = this.pointX;
+			var15.pointZ = this.pointZ;
 			var15.faceVertexA = this.faceVertexA;
 			var15.faceVertexB = this.faceVertexB;
 			var15.faceVertexC = this.faceVertexC;
@@ -362,14 +368,14 @@ public class ModelLit extends ModelSource {
 			var15.labelVertices = this.labelVertices;
 			var15.labelFaces = this.labelFaces;
 			var15.useAABBMouseCheck = this.useAABBMouseCheck;
-			var15.vertexY = new int[var15.vertexCount];
+			var15.pointY = new int[var15.numPoints];
 		} else {
 			var15 = this;
 		}
 		if (arg5 == 0) {
-			for (int var16 = 0; var16 < var15.vertexCount; var16++) {
-				int var17 = this.vertexX[var16] + arg1;
-				int var18 = this.vertexZ[var16] + arg3;
+			for (int var16 = 0; var16 < var15.numPoints; var16++) {
+				int var17 = this.pointX[var16] + arg1;
+				int var18 = this.pointZ[var16] + arg3;
 				int var19 = var17 & 0x7F;
 				int var20 = var18 & 0x7F;
 				int var21 = var17 >> 7;
@@ -377,14 +383,14 @@ public class ModelLit extends ModelSource {
 				int var23 = (128 - var19) * arg0[var21][var22] + arg0[var21 + 1][var22] * var19 >> 7;
 				int var24 = (128 - var19) * arg0[var21][var22 + 1] + arg0[var21 + 1][var22 + 1] * var19 >> 7;
 				int var25 = (128 - var20) * var23 + var20 * var24 >> 7;
-				var15.vertexY[var16] = this.vertexY[var16] + var25 - arg2;
+				var15.pointY[var16] = this.pointY[var16] + var25 - arg2;
 			}
 		} else {
-			for (int var26 = 0; var26 < var15.vertexCount; var26++) {
-				int var27 = (-this.vertexY[var26] << 16) / this.minY;
+			for (int var26 = 0; var26 < var15.numPoints; var26++) {
+				int var27 = (-this.pointY[var26] << 16) / this.minY;
 				if (var27 < arg5) {
-					int var28 = this.vertexX[var26] + arg1;
-					int var29 = this.vertexZ[var26] + arg3;
+					int var28 = this.pointX[var26] + arg1;
+					int var29 = this.pointZ[var26] + arg3;
 					int var30 = var28 & 0x7F;
 					int var31 = var29 & 0x7F;
 					int var32 = var28 >> 7;
@@ -392,7 +398,7 @@ public class ModelLit extends ModelSource {
 					int var34 = (128 - var30) * arg0[var32][var33] + arg0[var32 + 1][var33] * var30 >> 7;
 					int var35 = (128 - var30) * arg0[var32][var33 + 1] + arg0[var32 + 1][var33 + 1] * var30 >> 7;
 					int var36 = (128 - var31) * var34 + var31 * var35 >> 7;
-					var15.vertexY[var26] = (var36 - arg2) * (arg5 - var27) / arg5 + this.vertexY[var26];
+					var15.pointY[var26] = (var36 - arg2) * (arg5 - var27) / arg5 + this.pointY[var26];
 				}
 			}
 		}
@@ -403,73 +409,73 @@ public class ModelLit extends ModelSource {
 	// jag::oldscape::dash3d::ModelLitImpl::CopyForAnim
 	@ObfuscatedName("fo.y(Z)Lfo;")
 	public ModelLit copyForAnim(boolean copyAlpha) {
-		if (!copyAlpha && tempFTran.length < this.faceCount) {
-			tempFTran = new byte[this.faceCount + 100];
+		if (!copyAlpha && tempFTran.length < this.numFaces) {
+			tempFTran = new byte[this.numFaces + 100];
 		}
 		return this.copyForAnim(copyAlpha, tempModel, tempFTran);
 	}
 
 	@ObfuscatedName("fo.t(Z)Lfo;")
 	public ModelLit copyForAnim2(boolean copyAlpha) {
-		if (!copyAlpha && tempFTran2.length < this.faceCount) {
-			tempFTran2 = new byte[this.faceCount + 100];
+		if (!copyAlpha && tempFTran2.length < this.numFaces) {
+			tempFTran2 = new byte[this.numFaces + 100];
 		}
 		return this.copyForAnim(copyAlpha, tempModel2, tempFTran2);
 	}
 
 	// jag::oldscape::dash3d::ModelLitImpl::CopyForAnim
 	@ObfuscatedName("fo.f(ZLfo;[B)Lfo;")
-	public ModelLit copyForAnim(boolean copyAlpha, ModelLit model, byte[] alpha) {
-		model.vertexCount = this.vertexCount;
-		model.faceCount = this.faceCount;
-		model.faceTextureCount = this.faceTextureCount;
+	public ModelLit copyForAnim(boolean copyAlpha, ModelLit modelb, byte[] alpha) {
+		modelb.numPoints = this.numPoints;
+		modelb.numFaces = this.numFaces;
+		modelb.numT = this.numT;
 
-		if (model.vertexX == null || model.vertexX.length < this.vertexCount) {
-			model.vertexX = new int[this.vertexCount + 100];
-			model.vertexY = new int[this.vertexCount + 100];
-			model.vertexZ = new int[this.vertexCount + 100];
+		if (modelb.pointX == null || modelb.pointX.length < this.numPoints) {
+			modelb.pointX = new int[this.numPoints + 100];
+			modelb.pointY = new int[this.numPoints + 100];
+			modelb.pointZ = new int[this.numPoints + 100];
 		}
 
-		for (int var4 = 0; var4 < this.vertexCount; var4++) {
-			model.vertexX[var4] = this.vertexX[var4];
-			model.vertexY[var4] = this.vertexY[var4];
-			model.vertexZ[var4] = this.vertexZ[var4];
+		for (int var4 = 0; var4 < this.numPoints; var4++) {
+			modelb.pointX[var4] = this.pointX[var4];
+			modelb.pointY[var4] = this.pointY[var4];
+			modelb.pointZ[var4] = this.pointZ[var4];
 		}
 
 		if (copyAlpha) {
-			model.faceAlpha = this.faceAlpha;
+			modelb.faceAlpha = this.faceAlpha;
 		} else {
-			model.faceAlpha = alpha;
+			modelb.faceAlpha = alpha;
 
 			if (this.faceAlpha == null) {
-				for (int f = 0; f < this.faceCount; f++) {
-					model.faceAlpha[f] = 0;
+				for (int f = 0; f < this.numFaces; f++) {
+					modelb.faceAlpha[f] = 0;
 				}
 			} else {
-				for (int f = 0; f < this.faceCount; f++) {
-					model.faceAlpha[f] = this.faceAlpha[f];
+				for (int f = 0; f < this.numFaces; f++) {
+					modelb.faceAlpha[f] = this.faceAlpha[f];
 				}
 			}
 		}
 
-		model.faceVertexA = this.faceVertexA;
-		model.faceVertexB = this.faceVertexB;
-		model.faceVertexC = this.faceVertexC;
-		model.faceColourA = this.faceColourA;
-		model.faceColourB = this.faceColourB;
-		model.faceColourC = this.faceColourC;
-		model.facePriority = this.facePriority;
-		model.faceTextureAxis = this.faceTextureAxis;
-		model.faceTextureId = this.faceTextureId;
-		model.priority = this.priority;
-		model.faceTextureP = this.faceTextureP;
-		model.faceTextureM = this.faceTextureM;
-		model.faceTextureN = this.faceTextureN;
-		model.labelVertices = this.labelVertices;
-		model.labelFaces = this.labelFaces;
-		model.useAABBMouseCheck = this.useAABBMouseCheck;
-		model.boundingCalc = 0;
-		return model;
+		modelb.faceVertexA = this.faceVertexA;
+		modelb.faceVertexB = this.faceVertexB;
+		modelb.faceVertexC = this.faceVertexC;
+		modelb.faceColourA = this.faceColourA;
+		modelb.faceColourB = this.faceColourB;
+		modelb.faceColourC = this.faceColourC;
+		modelb.facePriority = this.facePriority;
+		modelb.faceTextureAxis = this.faceTextureAxis;
+		modelb.faceTextureId = this.faceTextureId;
+		modelb.priority = this.priority;
+		modelb.faceTextureP = this.faceTextureP;
+		modelb.faceTextureM = this.faceTextureM;
+		modelb.faceTextureN = this.faceTextureN;
+		modelb.labelVertices = this.labelVertices;
+		modelb.labelFaces = this.labelFaces;
+		modelb.useAABBMouseCheck = this.useAABBMouseCheck;
+		modelb.boundingCalc = 0;
+		return modelb;
 	}
 
 	// jag::oldscape::dash3d::ModelLitImpl::CalcBoundingCylinder
@@ -482,10 +488,10 @@ public class ModelLit extends ModelSource {
 		this.minY = 0;
 		this.maxY = 0;
 		this.radius = 0;
-		for (int var1 = 0; var1 < this.vertexCount; var1++) {
-			int var2 = this.vertexX[var1];
-			int var3 = this.vertexY[var1];
-			int var4 = this.vertexZ[var1];
+		for (int var1 = 0; var1 < this.numPoints; var1++) {
+			int var2 = this.pointX[var1];
+			int var3 = this.pointY[var1];
+			int var4 = this.pointZ[var1];
 			if (-var3 > this.minY) {
 				this.minY = -var3;
 			}
@@ -510,10 +516,10 @@ public class ModelLit extends ModelSource {
 		}
 		this.boundingCalc = 2;
 		this.radius = 0;
-		for (int var1 = 0; var1 < this.vertexCount; var1++) {
-			int var2 = this.vertexX[var1];
-			int var3 = this.vertexY[var1];
-			int var4 = this.vertexZ[var1];
+		for (int var1 = 0; var1 < this.numPoints; var1++) {
+			int var2 = this.pointX[var1];
+			int var3 = this.pointY[var1];
+			int var4 = this.pointZ[var1];
 			int var5 = var3 * var3 + var2 * var2 + var4 * var4;
 			if (var5 > this.radius) {
 				this.radius = var5;
@@ -613,9 +619,9 @@ public class ModelLit extends ModelSource {
 					int[] var10 = this.labelVertices[var9];
 					for (int var11 = 0; var11 < var10.length; var11++) {
 						int var12 = var10[var11];
-						oX += this.vertexX[var12];
-						oY += this.vertexY[var12];
-						oZ += this.vertexZ[var12];
+						oX += this.pointX[var12];
+						oY += this.pointY[var12];
+						oZ += this.pointZ[var12];
 						count++;
 					}
 				}
@@ -636,9 +642,9 @@ public class ModelLit extends ModelSource {
 					int[] var15 = this.labelVertices[var14];
 					for (int var16 = 0; var16 < var15.length; var16++) {
 						int var17 = var15[var16];
-						this.vertexX[var17] += arg2;
-						this.vertexY[var17] += arg3;
-						this.vertexZ[var17] += arg4;
+						this.pointX[var17] += arg2;
+						this.pointY[var17] += arg3;
+						this.pointZ[var17] += arg4;
 					}
 				}
 			}
@@ -649,36 +655,36 @@ public class ModelLit extends ModelSource {
 					int[] var20 = this.labelVertices[var19];
 					for (int var21 = 0; var21 < var20.length; var21++) {
 						int var22 = var20[var21];
-						this.vertexX[var22] -= oX;
-						this.vertexY[var22] -= oY;
-						this.vertexZ[var22] -= oZ;
+						this.pointX[var22] -= oX;
+						this.pointY[var22] -= oY;
+						this.pointZ[var22] -= oZ;
 						int var23 = (arg2 & 0xFF) * 8;
 						int var24 = (arg3 & 0xFF) * 8;
 						int var25 = (arg4 & 0xFF) * 8;
 						if (var25 != 0) {
 							int var26 = sinTable[var25];
 							int var27 = cosTable[var25];
-							int var28 = this.vertexY[var22] * var26 + this.vertexX[var22] * var27 >> 16;
-							this.vertexY[var22] = this.vertexY[var22] * var27 - this.vertexX[var22] * var26 >> 16;
-							this.vertexX[var22] = var28;
+							int var28 = this.pointY[var22] * var26 + this.pointX[var22] * var27 >> 16;
+							this.pointY[var22] = this.pointY[var22] * var27 - this.pointX[var22] * var26 >> 16;
+							this.pointX[var22] = var28;
 						}
 						if (var23 != 0) {
 							int var29 = sinTable[var23];
 							int var30 = cosTable[var23];
-							int var31 = this.vertexY[var22] * var30 - this.vertexZ[var22] * var29 >> 16;
-							this.vertexZ[var22] = this.vertexZ[var22] * var30 + this.vertexY[var22] * var29 >> 16;
-							this.vertexY[var22] = var31;
+							int var31 = this.pointY[var22] * var30 - this.pointZ[var22] * var29 >> 16;
+							this.pointZ[var22] = this.pointZ[var22] * var30 + this.pointY[var22] * var29 >> 16;
+							this.pointY[var22] = var31;
 						}
 						if (var24 != 0) {
 							int var32 = sinTable[var24];
 							int var33 = cosTable[var24];
-							int var34 = this.vertexZ[var22] * var32 + this.vertexX[var22] * var33 >> 16;
-							this.vertexZ[var22] = this.vertexZ[var22] * var33 - this.vertexX[var22] * var32 >> 16;
-							this.vertexX[var22] = var34;
+							int var34 = this.pointZ[var22] * var32 + this.pointX[var22] * var33 >> 16;
+							this.pointZ[var22] = this.pointZ[var22] * var33 - this.pointX[var22] * var32 >> 16;
+							this.pointX[var22] = var34;
 						}
-						this.vertexX[var22] += oX;
-						this.vertexY[var22] += oY;
-						this.vertexZ[var22] += oZ;
+						this.pointX[var22] += oX;
+						this.pointY[var22] += oY;
+						this.pointZ[var22] += oZ;
 					}
 				}
 			}
@@ -689,15 +695,15 @@ public class ModelLit extends ModelSource {
 					int[] var37 = this.labelVertices[var36];
 					for (int var38 = 0; var38 < var37.length; var38++) {
 						int var39 = var37[var38];
-						this.vertexX[var39] -= oX;
-						this.vertexY[var39] -= oY;
-						this.vertexZ[var39] -= oZ;
-						this.vertexX[var39] = this.vertexX[var39] * arg2 / 128;
-						this.vertexY[var39] = this.vertexY[var39] * arg3 / 128;
-						this.vertexZ[var39] = this.vertexZ[var39] * arg4 / 128;
-						this.vertexX[var39] += oX;
-						this.vertexY[var39] += oY;
-						this.vertexZ[var39] += oZ;
+						this.pointX[var39] -= oX;
+						this.pointY[var39] -= oY;
+						this.pointZ[var39] -= oZ;
+						this.pointX[var39] = this.pointX[var39] * arg2 / 128;
+						this.pointY[var39] = this.pointY[var39] * arg3 / 128;
+						this.pointZ[var39] = this.pointZ[var39] * arg4 / 128;
+						this.pointX[var39] += oX;
+						this.pointY[var39] += oY;
+						this.pointZ[var39] += oZ;
 					}
 				}
 			}
@@ -724,10 +730,10 @@ public class ModelLit extends ModelSource {
 	// jag::oldscape::dash3d::ModelLitImpl::Rotate90
 	@ObfuscatedName("fo.ad()V")
 	public void rotate90() {
-		for (int var1 = 0; var1 < this.vertexCount; var1++) {
-			int var2 = this.vertexX[var1];
-			this.vertexX[var1] = this.vertexZ[var1];
-			this.vertexZ[var1] = -var2;
+		for (int var1 = 0; var1 < this.numPoints; var1++) {
+			int var2 = this.pointX[var1];
+			this.pointX[var1] = this.pointZ[var1];
+			this.pointZ[var1] = -var2;
 		}
 		this.boundingCalc = 0;
 	}
@@ -735,9 +741,9 @@ public class ModelLit extends ModelSource {
 	// jag::oldscape::dash3d::ModelLitImpl::Rotate180
 	@ObfuscatedName("fo.ac()V")
 	public void rotate180() {
-		for (int var1 = 0; var1 < this.vertexCount; var1++) {
-			this.vertexX[var1] = -this.vertexX[var1];
-			this.vertexZ[var1] = -this.vertexZ[var1];
+		for (int var1 = 0; var1 < this.numPoints; var1++) {
+			this.pointX[var1] = -this.pointX[var1];
+			this.pointZ[var1] = -this.pointZ[var1];
 		}
 		this.boundingCalc = 0;
 	}
@@ -745,10 +751,10 @@ public class ModelLit extends ModelSource {
 	// jag::oldscape::dash3d::ModelLitImpl::Rotate270
 	@ObfuscatedName("fo.aa()V")
 	public void rotate270() {
-		for (int var1 = 0; var1 < this.vertexCount; var1++) {
-			int var2 = this.vertexZ[var1];
-			this.vertexZ[var1] = this.vertexX[var1];
-			this.vertexX[var1] = -var2;
+		for (int var1 = 0; var1 < this.numPoints; var1++) {
+			int var2 = this.pointZ[var1];
+			this.pointZ[var1] = this.pointX[var1];
+			this.pointX[var1] = -var2;
 		}
 		this.boundingCalc = 0;
 	}
@@ -758,10 +764,10 @@ public class ModelLit extends ModelSource {
 	public void rotateXAxis(int arg0) {
 		int var2 = sinTable[arg0];
 		int var3 = cosTable[arg0];
-		for (int var4 = 0; var4 < this.vertexCount; var4++) {
-			int var5 = this.vertexY[var4] * var3 - this.vertexZ[var4] * var2 >> 16;
-			this.vertexZ[var4] = this.vertexZ[var4] * var3 + this.vertexY[var4] * var2 >> 16;
-			this.vertexY[var4] = var5;
+		for (int var4 = 0; var4 < this.numPoints; var4++) {
+			int var5 = this.pointY[var4] * var3 - this.pointZ[var4] * var2 >> 16;
+			this.pointZ[var4] = this.pointZ[var4] * var3 + this.pointY[var4] * var2 >> 16;
+			this.pointY[var4] = var5;
 		}
 		this.boundingCalc = 0;
 	}
@@ -769,10 +775,10 @@ public class ModelLit extends ModelSource {
 	// jag::oldscape::dash3d::ModelLitImpl::Translate
 	@ObfuscatedName("fo.am(III)V")
 	public void translate(int arg0, int arg1, int arg2) {
-		for (int var4 = 0; var4 < this.vertexCount; var4++) {
-			this.vertexX[var4] += arg0;
-			this.vertexY[var4] += arg1;
-			this.vertexZ[var4] += arg2;
+		for (int var4 = 0; var4 < this.numPoints; var4++) {
+			this.pointX[var4] += arg0;
+			this.pointY[var4] += arg1;
+			this.pointZ[var4] += arg2;
 		}
 		this.boundingCalc = 0;
 	}
@@ -780,10 +786,10 @@ public class ModelLit extends ModelSource {
 	// jag::oldscape::dash3d::ModelLitImpl::Resize
 	@ObfuscatedName("fo.ap(III)V")
 	public void resize(int arg0, int arg1, int arg2) {
-		for (int var4 = 0; var4 < this.vertexCount; var4++) {
-			this.vertexX[var4] = this.vertexX[var4] * arg0 / 128;
-			this.vertexY[var4] = this.vertexY[var4] * arg1 / 128;
-			this.vertexZ[var4] = this.vertexZ[var4] * arg2 / 128;
+		for (int var4 = 0; var4 < this.numPoints; var4++) {
+			this.pointX[var4] = this.pointX[var4] * arg0 / 128;
+			this.pointY[var4] = this.pointY[var4] * arg1 / 128;
+			this.pointZ[var4] = this.pointZ[var4] * arg2 / 128;
 		}
 		this.boundingCalc = 0;
 	}
@@ -808,10 +814,10 @@ public class ModelLit extends ModelSource {
 		int var16 = sinTable[arg3];
 		int var17 = cosTable[arg3];
 		int var18 = arg5 * var16 + arg6 * var17 >> 16;
-		for (int var19 = 0; var19 < this.vertexCount; var19++) {
-			int var20 = this.vertexX[var19];
-			int var21 = this.vertexY[var19];
-			int var22 = this.vertexZ[var19];
+		for (int var19 = 0; var19 < this.numPoints; var19++) {
+			int var20 = this.pointX[var19];
+			int var21 = this.pointY[var19];
+			int var22 = this.pointZ[var19];
 			if (arg2 != 0) {
 				int var23 = var14 * var21 + var15 * var20 >> 16;
 				var21 = var15 * var21 - var14 * var20 >> 16;
@@ -835,7 +841,7 @@ public class ModelLit extends ModelSource {
 			vertexScreenZ[var19] = var30 - var18;
 			vertexScreenX[var19] = (var26 << 9) / var30 + var8;
 			vertexScreenY[var19] = (var29 << 9) / var30 + var9;
-			if (this.faceTextureCount > 0) {
+			if (this.numT > 0) {
 				vertexViewSpaceX[var19] = var26;
 				vertexViewSpaceY[var19] = var29;
 				vertexViewSpaceZ[var19] = var30;
@@ -865,10 +871,10 @@ public class ModelLit extends ModelSource {
 		int var17 = sinTable[arg3];
 		int var18 = cosTable[arg3];
 		int var19 = arg5 * var17 + arg6 * var18 >> 16;
-		for (int var20 = 0; var20 < this.vertexCount; var20++) {
-			int var21 = this.vertexX[var20];
-			int var22 = this.vertexY[var20];
-			int var23 = this.vertexZ[var20];
+		for (int var20 = 0; var20 < this.numPoints; var20++) {
+			int var21 = this.pointX[var20];
+			int var22 = this.pointY[var20];
+			int var23 = this.pointZ[var20];
 			if (arg2 != 0) {
 				int var24 = var15 * var22 + var16 * var21 >> 16;
 				var22 = var16 * var22 - var15 * var21 >> 16;
@@ -892,7 +898,7 @@ public class ModelLit extends ModelSource {
 			vertexScreenZ[var20] = var31 - var19;
 			vertexScreenX[var20] = (var27 << 9) / arg7 + var9;
 			vertexScreenY[var20] = (var30 << 9) / arg7 + var10;
-			if (this.faceTextureCount > 0) {
+			if (this.numT > 0) {
 				vertexViewSpaceX[var20] = var27;
 				vertexViewSpaceY[var20] = var30;
 				vertexViewSpaceZ[var20] = var31;
@@ -955,7 +961,7 @@ public class ModelLit extends ModelSource {
 			clipped = true;
 		}
 
-		boolean textured = clipped || this.faceTextureCount > 0;
+		boolean textured = clipped || this.numT > 0;
 		boolean picking = false;
 
 		if (typecode > 0 && mouseCheck) {
@@ -1002,10 +1008,10 @@ public class ModelLit extends ModelSource {
 			var37 = cosTable[arg0];
 		}
 
-		for (int var38 = 0; var38 < this.vertexCount; var38++) {
-			int var39 = this.vertexX[var38];
-			int var40 = this.vertexY[var38];
-			int var41 = this.vertexZ[var38];
+		for (int var38 = 0; var38 < this.numPoints; var38++) {
+			int var39 = this.pointX[var38];
+			int var40 = this.pointY[var38];
+			int var41 = this.pointZ[var38];
 
 			if (arg0 != 0) {
 				int var42 = var36 * var41 + var37 * var39 >> 16;
@@ -1054,7 +1060,7 @@ public class ModelLit extends ModelSource {
 			tmpDepthFaceCount[i] = 0;
 		}
 
-		for (int f = 0; f < this.faceCount; f++) {
+		for (int f = 0; f < this.numFaces; f++) {
 			if (this.faceColourC[f] == -2) {
 				continue;
 			}

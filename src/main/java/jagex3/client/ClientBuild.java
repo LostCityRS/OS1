@@ -573,7 +573,7 @@ public class ClientBuild {
 				arg7.addWall(arg1, arg2, arg5, arg4, var9.blockrange);
 			}
 			if (var9.wallwidth != 16) {
-				arg6.setDecorOffset(arg0, arg1, arg2, var9.wallwidth);
+				arg6.moveDecor(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 1) {
 			ModelSource var25;
@@ -628,7 +628,7 @@ public class ClientBuild {
 				arg7.addWall(arg1, arg2, arg5, arg4, var9.blockrange);
 			}
 			if (var9.wallwidth != 16) {
-				arg6.setDecorOffset(arg0, arg1, arg2, var9.wallwidth);
+				arg6.moveDecor(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 3) {
 			ModelSource var29;
@@ -664,7 +664,7 @@ public class ClientBuild {
 				arg7.addLoc(arg1, arg2, var10, var11, var9.blockrange);
 			}
 			if (var9.wallwidth != 16) {
-				arg6.setDecorOffset(arg0, arg1, arg2, var9.wallwidth);
+				arg6.moveDecor(arg0, arg1, arg2, var9.wallwidth);
 			}
 		} else if (arg5 == 4) {
 			ModelSource var31;
