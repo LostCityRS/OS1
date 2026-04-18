@@ -650,6 +650,7 @@ public class TitleScreen {
 			flameCycle = 0;
 		}
 
+		// todo: inlined method
 		short var55 = 256;
 		if (flameGradientCycle0 > 0) {
 			for (int var56 = 0; var56 < 256; var56++) {

@@ -12314,6 +12314,7 @@ public class Client extends GameShell {
 				}
 
 				friendTransmitNum = transmitNum;
+
 				// IGNORELIST_DEL
 				out.p1Enc(248);
 				out.p1(Packet.pjstrlen(var169));
