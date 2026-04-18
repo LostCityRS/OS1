@@ -4015,7 +4015,7 @@ public class Client extends GameShell {
 					}
 				}
 
-				entity.needsForwardDrawPadding = seq.stretches;
+				entity.needsForwardDrawPadding = seq.reachforward;
 			}
 		}
 
@@ -4028,7 +4028,7 @@ public class Client extends GameShell {
 	@ObfuscatedName("co.dw(Lfi;III)V")
 	public static void triggerPlayerAnim(ClientPlayer arg0, int arg1, int arg2) {
 		if (arg0.primarySeqId == arg1 && arg1 != -1) {
-			int var3 = SeqType.list(arg1).duplicatebehavior;
+			int var3 = SeqType.list(arg1).duplicatebehaviour;
 
 			if (var3 == 1) {
 				arg0.primarySeqFrame = 0;
@@ -8147,7 +8147,7 @@ public class Client extends GameShell {
 				}
 				int var8 = in.g1_alt1();
 				if (var2.primarySeqId == var7 && var7 != -1) {
-					int var9 = SeqType.list(var7).duplicatebehavior;
+					int var9 = SeqType.list(var7).duplicatebehaviour;
 					if (var9 == 1) {
 						var2.primarySeqFrame = 0;
 						var2.primarySeqCycle = 0;

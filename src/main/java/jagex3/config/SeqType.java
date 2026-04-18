@@ -51,7 +51,7 @@ public class SeqType extends Linkable2 {
 	public int[] walkmerge;
 
 	@ObfuscatedName("eo.b")
-	public boolean stretches = false;
+	public boolean reachforward = false;
 
 	@ObfuscatedName("eo.y")
 	public int priority = 5;
@@ -72,7 +72,7 @@ public class SeqType extends Linkable2 {
 	public int postanim_move = -1;
 
 	@ObfuscatedName("eo.h")
-	public int duplicatebehavior = 2;
+	public int duplicatebehaviour = 2;
 
 	// jag::oldscape::configdecoder::SeqType::Init
 	@ObfuscatedName("ai.z(Lch;Lch;Lch;I)V")
@@ -137,7 +137,7 @@ public class SeqType extends Linkable2 {
 			}
 			this.walkmerge[var7] = 9999999;
 		} else if (arg1 == 4) {
-			this.stretches = true;
+			this.reachforward = true;
 		} else if (arg1 == 5) {
 			this.priority = arg0.g1();
 		} else if (arg1 == 6) {
@@ -151,7 +151,7 @@ public class SeqType extends Linkable2 {
 		} else if (arg1 == 10) {
 			this.postanim_move = arg0.g1();
 		} else if (arg1 == 11) {
-			this.duplicatebehavior = arg0.g1();
+			this.duplicatebehaviour = arg0.g1();
 		} else if (arg1 == 12) {
 			int var9 = arg0.g1();
 			this.iframes = new int[var9];

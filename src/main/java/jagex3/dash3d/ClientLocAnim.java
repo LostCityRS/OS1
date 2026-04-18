@@ -48,7 +48,7 @@ public class ClientLocAnim extends ModelSource {
 			this.anim = SeqType.list(arg6);
 			this.animFrame = 0;
 			this.animCycle = Client.loopCycle - 1;
-			if (this.anim.duplicatebehavior == 0 && arg8 != null && arg8 instanceof ClientLocAnim) {
+			if (this.anim.duplicatebehaviour == 0 && arg8 != null && arg8 instanceof ClientLocAnim) {
 				ClientLocAnim var10 = (ClientLocAnim) arg8;
 				if (this.anim == var10.anim) {
 					this.animFrame = var10.animFrame;
