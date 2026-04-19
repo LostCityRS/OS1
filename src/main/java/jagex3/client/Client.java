@@ -1274,6 +1274,7 @@ public class Client extends GameShell {
 			return;
 		}
 
+		// jag::oldscape::Client::ReadJavConfigParameters
 		JavConfigParameter[] var1 = new JavConfigParameter[] { JavConfigParameter.MEMBERS, JavConfigParameter.LANG, JavConfigParameter.WORLDLIST_URL, JavConfigParameter.PLUG, JavConfigParameter.WORLDID, JavConfigParameter.MODEWHERE, JavConfigParameter.JS, JavConfigParameter.GAME, JavConfigParameter.MODEWHAT };
 		JavConfigParameter[] var2 = var1;
 
@@ -1688,6 +1689,7 @@ public class Client extends GameShell {
 			TitleScreen.loadPos = 5;
 			loadingStep = 20;
 		} else if (loadingStep == 20) {
+			// jag::oldscape::Client::RecalcCameraFrustumTileVisibility
 			int[] var1 = new int[9];
 			for (int var2 = 0; var2 < 9; var2++) {
 				int var3 = var2 * 32 + 128 + 15;

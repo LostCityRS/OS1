@@ -187,9 +187,10 @@ public class ModelUnlit extends ModelSource {
 		Packet var8 = new Packet(src);
 
 		var1.pos = src.length - 23;
-		int var9 = var1.g2();
-		int var10 = var1.g2();
-		int var11 = var1.g1();
+		int numPoints = var1.g2();
+		int numFaces = var1.g2();
+		int numT = var1.g1();
+
 		int var12 = var1.g1();
 		int hasPriorities = var1.g1();
 		int var14 = var1.g1();
@@ -202,133 +203,133 @@ public class ModelUnlit extends ModelSource {
 		int var21 = var1.g2();
 		int var22 = var1.g2();
 
-		int var23 = 0;
-		int var24 = 0;
-		int var25 = 0;
-		if (var11 > 0) {
-			this.textureRenderType = new byte[var11];
+		int simpleTextureCount = 0;
+		int complexTextureCount = 0;
+		int cubeTextureCount = 0;
+		if (numT > 0) {
+			this.textureRenderType = new byte[numT];
 			var1.pos = 0;
 
-			for (int var26 = 0; var26 < var11; var26++) {
-				byte var27 = this.textureRenderType[var26] = var1.g1b();
-				if (var27 == 0) {
-					var23++;
+			for (int i = 0; i < numT; i++) {
+				byte ttype = this.textureRenderType[i] = var1.g1b();
+				if (ttype == 0) {
+					simpleTextureCount++;
 				}
-				if (var27 >= 1 && var27 <= 3) {
-					var24++;
+				if (ttype >= 1 && ttype <= 3) {
+					complexTextureCount++;
 				}
-				if (var27 == 2) {
-					var25++;
+				if (ttype == 2) {
+					cubeTextureCount++;
 				}
 			}
 		}
 
-		int var30 = var9 + var11;
+		int var30 = numPoints + numT;
 		int var31 = var30;
 		if (var12 == 1) {
-			var30 += var10;
+			var30 += numFaces;
 		}
 
-		int var33 = var10 + var30;
+		int var33 = numFaces + var30;
 		int var34 = var33;
 		if (hasPriorities == 255) {
-			var33 += var10;
+			var33 += numFaces;
 		}
 
 		int var35 = var33;
 		if (var15 == 1) {
-			var33 += var10;
+			var33 += numFaces;
 		}
 
 		int var36 = var33;
 		if (var17 == 1) {
-			var33 += var9;
+			var33 += numPoints;
 		}
 
 		int var37 = var33;
 		if (var14 == 1) {
-			var33 += var10;
+			var33 += numFaces;
 		}
 
 		int var39 = var21 + var33;
 		int var40 = var39;
 		if (var16 == 1) {
-			var39 += var10 * 2;
+			var39 += numFaces * 2;
 		}
 
 		int var42 = var22 + var39;
-		int var44 = var10 * 2 + var42;
+		int var44 = numFaces * 2 + var42;
 		int var46 = var18 + var44;
 		int var48 = var19 + var46;
 		int var50 = var20 + var48;
-		int var52 = var23 * 6 + var50;
-		int var54 = var24 * 6 + var52;
-		int var56 = var24 * 6 + var54;
-		int var58 = var24 * 2 + var56;
-		int var60 = var24 + var58;
-		int var62 = var24 * 2 + var25 * 2 + var60;
+		int var52 = simpleTextureCount * 6 + var50;
+		int var54 = complexTextureCount * 6 + var52;
+		int var56 = complexTextureCount * 6 + var54;
+		int var58 = complexTextureCount * 2 + var56;
+		int var60 = complexTextureCount + var58;
+		int var62 = complexTextureCount * 2 + cubeTextureCount * 2 + var60;
 
-		this.numPoints = var9;
-		this.numFaces = var10;
-		this.numT = var11;
-		this.pointX = new int[var9];
-		this.pointY = new int[var9];
-		this.pointZ = new int[var9];
-		this.faceVertexA = new int[var10];
-		this.faceVertexB = new int[var10];
-		this.faceVertexC = new int[var10];
+		this.numPoints = numPoints;
+		this.numFaces = numFaces;
+		this.numT = numT;
+		this.pointX = new int[numPoints];
+		this.pointY = new int[numPoints];
+		this.pointZ = new int[numPoints];
+		this.faceVertexA = new int[numFaces];
+		this.faceVertexB = new int[numFaces];
+		this.faceVertexC = new int[numFaces];
 
 		if (var17 == 1) {
-			this.vertexLabel = new int[var9];
+			this.vertexLabel = new int[numPoints];
 		}
 
 		if (var12 == 1) {
-			this.faceRenderType = new byte[var10];
+			this.faceRenderType = new byte[numFaces];
 		}
 
 		if (hasPriorities == 255) {
-			this.facePriority = new byte[var10];
+			this.facePriority = new byte[numFaces];
 		} else {
 			this.priority = (byte) hasPriorities;
 		}
 
 		if (var14 == 1) {
-			this.faceAlpha = new byte[var10];
+			this.faceAlpha = new byte[numFaces];
 		}
 
 		if (var15 == 1) {
-			this.faceLabel = new int[var10];
+			this.faceLabel = new int[numFaces];
 		}
 
 		if (var16 == 1) {
-			this.faceTextureId = new short[var10];
+			this.faceTextureId = new short[numFaces];
 		}
 
-		if (var16 == 1 && var11 > 0) {
-			this.faceTextureAxis = new byte[var10];
+		if (var16 == 1 && numT > 0) {
+			this.faceTextureAxis = new byte[numFaces];
 		}
 
-		this.faceColour = new short[var10];
-		if (var11 > 0) {
-			this.faceTextureP = new short[var11];
-			this.faceTextureM = new short[var11];
-			this.faceTextureN = new short[var11];
+		this.faceColour = new short[numFaces];
+		if (numT > 0) {
+			this.faceTextureP = new short[numT];
+			this.faceTextureM = new short[numT];
+			this.faceTextureN = new short[numT];
 
-			if (var24 > 0) {
-				this.textureScaleX = new short[var24];
-				this.textureScaleY = new short[var24];
-				this.textureScaleZ = new short[var24];
-				this.textureRotation = new short[var24];
-				this.textureTranslation = new byte[var24];
-				this.textureSpeed = new short[var24];
+			if (complexTextureCount > 0) {
+				this.textureScaleX = new short[complexTextureCount];
+				this.textureScaleY = new short[complexTextureCount];
+				this.textureScaleZ = new short[complexTextureCount];
+				this.textureRotation = new short[complexTextureCount];
+				this.textureTranslation = new byte[complexTextureCount];
+				this.textureSpeed = new short[complexTextureCount];
 			}
 
-			if (var25 > 0) {
-				this.textureDirection = new short[var25];
+			if (cubeTextureCount > 0) {
+				this.textureDirection = new short[cubeTextureCount];
 			}
 		}
 
-		var1.pos = var11;
+		var1.pos = numT;
 		var3.pos = var44;
 		var4.pos = var46;
 		var5.pos = var48;
@@ -337,7 +338,7 @@ public class ModelUnlit extends ModelSource {
 		int var64 = 0;
 		int var65 = 0;
 		int var66 = 0;
-		for (int var67 = 0; var67 < var9; var67++) {
+		for (int var67 = 0; var67 < numPoints; var67++) {
 			int var68 = var1.g1();
 			int var69 = 0;
 			if ((var68 & 0x1) != 0) {
@@ -373,7 +374,7 @@ public class ModelUnlit extends ModelSource {
 		var7.pos = var40;
 		var8.pos = var39;
 
-		for (int var72 = 0; var72 < var10; var72++) {
+		for (int var72 = 0; var72 < numFaces; var72++) {
 			this.faceColour[var72] = (short) var1.g2();
 
 			if (var12 == 1) {
@@ -408,7 +409,7 @@ public class ModelUnlit extends ModelSource {
 		int var74 = 0;
 		int var75 = 0;
 		int var76 = 0;
-		for (int var77 = 0; var77 < var10; var77++) {
+		for (int var77 = 0; var77 < numFaces; var77++) {
 			int var78 = var3.g1();
 			if (var78 == 1) {
 				var73 = var1.gsmarts() + var76;
@@ -454,7 +455,7 @@ public class ModelUnlit extends ModelSource {
 		var6.pos = var58;
 		var7.pos = var60;
 
-		for (int var82 = 0; var82 < var11; var82++) {
+		for (int var82 = 0; var82 < numT; var82++) {
 			int var83 = this.textureRenderType[var82] & 0xFF;
 			if (var83 == 0) {
 				this.faceTextureP[var82] = (short) var1.g2();
