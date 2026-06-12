@@ -1040,12 +1040,12 @@ public class ScriptRunner {
 				} else if (opcode < 1600) {
 					IfType var81 = secondary ? activeComponent2 : activeComponent;
 					if (opcode == 1500) {
-						// cc_x
+						// cc_getx
 						intStack[isp++] = var81.x;
 						continue;
 					}
 					if (opcode == 1501) {
-						// cc_y
+						// cc_gety
 						intStack[isp++] = var81.y;
 						continue;
 					}

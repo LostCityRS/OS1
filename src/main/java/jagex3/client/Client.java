@@ -2548,10 +2548,17 @@ public class Client extends GameShell {
 
 				com = IfType.get(child.layerId);
 			} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
-			if (req != null) {
-				ScriptRunner.executeScript(req);
-				continue;
+			if (req == null) {
+				break;
 			}
+
+			ScriptRunner.executeScript(req);
+		}
+
+		while (true) {
+			HookReq req;
+			IfType child;
+			IfType com;
 
 			do {
 				req = (HookReq) hookRequestsMouseStop.popFront();
@@ -2566,10 +2573,17 @@ public class Client extends GameShell {
 
 				com = IfType.get(child.layerId);
 			} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
-			if (req != null) {
-				ScriptRunner.executeScript(req);
-				continue;
+			if (req == null) {
+				break;
 			}
+
+			ScriptRunner.executeScript(req);
+		}
+
+		while (true) {
+			HookReq req;
+			IfType child;
+			IfType com;
 
 			do {
 				req = (HookReq) hookRequests.popFront();
@@ -2584,12 +2598,11 @@ public class Client extends GameShell {
 
 				com = IfType.get(child.layerId);
 			} while (com == null || com.subcomponents == null || child.subId >= com.subcomponents.length || com.subcomponents[child.subId] != child);
-			if (req != null) {
-				ScriptRunner.executeScript(req);
-				continue;
+			if (req == null) {
+				break;
 			}
 
-			break;
+			ScriptRunner.executeScript(req);
 		}
 
 		if (dragCom != null) {

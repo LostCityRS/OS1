@@ -186,6 +186,7 @@ public class ClientBuild {
 			for (int var13 = 0; var13 < 64; var13++) {
 				for (int var14 = 0; var14 < 64; var14++) {
 					if (arg4 == var12 && var13 >= arg5 && var13 < arg5 + 8 && var14 >= arg6 && var14 < arg6 + 8) {
+						// inlined method
 						int var18 = var13 & 0x7;
 						int var19 = var14 & 0x7;
 						int var21 = arg7 & 0x3;
@@ -199,6 +200,7 @@ public class ClientBuild {
 						} else {
 							var22 = 7 - var19;
 						}
+						// inlined method
 						int var25 = arg2 + var22;
 						int var27 = var13 & 0x7;
 						int var28 = var14 & 0x7;
@@ -1141,10 +1143,13 @@ public class ClientBuild {
 		int var8 = smoothNoise(var3 + 1, var5);
 		int var9 = smoothNoise(var3, var5 + 1);
 		int var10 = smoothNoise(var3 + 1, var5 + 1);
+		// inlined
 		int var11 = 65536 - Pix3D.cosTable[var4 * 1024 / arg2] >> 1;
 		int var12 = ((65536 - var11) * var7 >> 16) + (var8 * var11 >> 16);
+		// inlined
 		int var14 = 65536 - Pix3D.cosTable[var4 * 1024 / arg2] >> 1;
 		int var15 = ((65536 - var14) * var9 >> 16) + (var10 * var14 >> 16);
+		// inlined
 		int var17 = 65536 - Pix3D.cosTable[var6 * 1024 / arg2] >> 1;
 		return ((65536 - var17) * var12 >> 16) + (var15 * var17 >> 16);
 	}
