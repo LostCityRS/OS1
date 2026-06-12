@@ -1304,9 +1304,9 @@ public class ModelLit extends ModelSource {
 				tC = this.faceTextureN[texturedFace];
 			}
 			if (this.faceColourC[face] == -1) {
-				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
+				Pix3D.textureTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
 			} else {
-				Pix3D.textureTriangleAffine(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourB[face], this.faceColourC[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
+				Pix3D.textureTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourB[face], this.faceColourC[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
 			}
 		} else if (this.faceColourC[face] != -1) {
 			Pix3D.gouraudTriangle(vertexScreenY[a], vertexScreenY[b], vertexScreenY[c], vertexScreenX[a], vertexScreenX[b], vertexScreenX[c], this.faceColourA[face], this.faceColourB[face], this.faceColourC[face]);
@@ -1435,9 +1435,9 @@ public class ModelLit extends ModelSource {
 				}
 
 				if (this.faceColourC[face] == -1) {
-					Pix3D.textureTriangleAffine(y0, y1, y2, x0, x1, x2, this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
+					Pix3D.textureTriangle(y0, y1, y2, x0, x1, x2, this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
 				} else {
-					Pix3D.textureTriangleAffine(y0, y1, y2, x0, x1, x2, clippedColour[0], clippedColour[1], clippedColour[2], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
+					Pix3D.textureTriangle(y0, y1, y2, x0, x1, x2, clippedColour[0], clippedColour[1], clippedColour[2], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], this.faceTextureId[face]);
 				}
 			} else if (this.faceColourC[face] == -1) {
 				Pix3D.flatTriangle(y0, y1, y2, x0, x1, x2, colourTable[this.faceColourA[face]]);
@@ -1466,8 +1466,8 @@ public class ModelLit extends ModelSource {
 
 				short textureId = this.faceTextureId[face];
 				if (this.faceColourC[face] == -1) {
-					Pix3D.textureTriangleAffine(y0, y1, y2, x0, x1, x2, this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], textureId);
-					Pix3D.textureTriangleAffine(
+					Pix3D.textureTriangle(y0, y1, y2, x0, x1, x2, this.faceColourA[face], this.faceColourA[face], this.faceColourA[face], vertexViewSpaceX[tA], vertexViewSpaceX[tB], vertexViewSpaceX[tC], vertexViewSpaceY[tA], vertexViewSpaceY[tB], vertexViewSpaceY[tC], vertexViewSpaceZ[tA], vertexViewSpaceZ[tB], vertexViewSpaceZ[tC], textureId);
+					Pix3D.textureTriangle(
 						y0, y2, clippedY[3],
 						x0, x2, clippedX[3],
 						this.faceColourA[face], this.faceColourA[face], this.faceColourA[face],
@@ -1478,7 +1478,7 @@ public class ModelLit extends ModelSource {
 						textureId
 					);
 				} else {
-					Pix3D.textureTriangleAffine(
+					Pix3D.textureTriangle(
 						y0, y1, y2,
 						x0, x1, x2,
 						clippedColour[0], clippedColour[1], clippedColour[2],
@@ -1488,7 +1488,7 @@ public class ModelLit extends ModelSource {
 						textureId
 					);
 
-					Pix3D.textureTriangleAffine(
+					Pix3D.textureTriangle(
 						y0, y2, clippedY[3],
 						x0, x2, clippedX[3],
 						clippedColour[0], clippedColour[2], clippedColour[3],
